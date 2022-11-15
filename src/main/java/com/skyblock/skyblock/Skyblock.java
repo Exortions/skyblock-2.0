@@ -1,5 +1,6 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import lombok.Getter;
@@ -36,7 +37,8 @@ public final class Skyblock extends JavaPlugin {
 
         this.commandHandler = new CommandHandler(this,
                 // add commands here
-                new HelpCommand()
+                new HelpCommand(),
+                new ClearCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
