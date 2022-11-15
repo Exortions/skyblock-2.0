@@ -36,7 +36,7 @@ public interface Command {
         return this.getClass().getSimpleName().split("Command")[0];
     }
 
-    default void execute(CommandSender player, String[] args, Skyblock plugin) {}
+    default void execute(CommandSender sender, String[] args, Skyblock plugin) {}
     default void execute(Player player, String[] args, Skyblock plugin) {}
 
 }
