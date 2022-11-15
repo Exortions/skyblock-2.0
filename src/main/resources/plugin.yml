@@ -1,0 +1,5 @@
+name: Skyblock
+version: '${project.version}'
+main: com.skyblock.skyblock.Skyblock
+authors: [ Exortions, OptimusChen ]
+description: Hypixel Skyblock Remake
