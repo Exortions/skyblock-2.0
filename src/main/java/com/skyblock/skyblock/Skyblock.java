@@ -1,6 +1,6 @@
 package com.skyblock.skyblock;
 
-import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -34,9 +34,9 @@ public final class Skyblock extends JavaPlugin {
     public void registerCommands() {
         this.sendMessage("Registering commands...");
 
-        this.commandHandler = new CommandHandler(this
+        this.commandHandler = new CommandHandler(this,
                 // add commands here
-                // ,
+                new HelpCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
