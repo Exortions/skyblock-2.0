@@ -1,5 +1,11 @@
 package com.skyblock.skyblock.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum ReforgeType {
 
     NO_REFORGE(0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -10,7 +16,7 @@ public enum ReforgeType {
     EPIC(0, 0, 0, 0, 0, 0, 0, 0, 0),
     SHARP(0, 0, 0, 0, 0, 0, 0, 0, 0),
     HEROIC(0, 0, 0, 0, 0, 0, 0, 0, 0),
-    SPICY(0, 0, 0, 0, 0, 0, 0, 0, 0),
+    SPICY(0, 0, 12, 0, 1, 100, 15, 0, 0),
     LEGENDARY(0, 0, 0, 0, 0, 0, 0, 0, 0),
     DIRTY(0, 0, 0, 0, 0, 0, 0, 0, 0),
     FABLED(0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -85,7 +91,22 @@ public enum ReforgeType {
     MITHRAIC(0, 0, 0, 0, 0, 0, 0, 0, 0),
     AUSPICIOUS(0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-    ReforgeType(int health, int defense, int strength, int speed, int crit_chance, int crit_damage, int mana, int atkSpeed, int seaCC) {
+    private final int health;
+    private final int defense;
+    private final int strength;
+    private final int speed;
+    private final int critChance;
+    private final int critDamage;
+    private final int attackSpeed;
+    private final int mana;
+    private final int seaCreatureChance;
 
+    public static ReforgeType getReforge(String name) {
+        for (ReforgeType type : ReforgeType.values()) {
+            if (type.name().equalsIgnoreCase(name)) {
+                return type;
+            }
+        }
+        return null;
     }
 }

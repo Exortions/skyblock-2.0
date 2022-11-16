@@ -1,8 +1,9 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
-import com.skyblock.skyblock.commands.misc.ItemDataCommand;
+import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import lombok.Getter;
@@ -42,7 +43,8 @@ public final class Skyblock extends JavaPlugin {
                 new HelpCommand(),
                 new ClearCommand(),
                 new TestCommand(),
-                new ItemDataCommand()
+                new ItemDataCommand(),
+                new ReforgeCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
