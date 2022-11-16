@@ -1,3 +1,0 @@
-#
-#Sat Aug 29 20:59:16 CEST 2020
-WorldName=Skyblock Hub
