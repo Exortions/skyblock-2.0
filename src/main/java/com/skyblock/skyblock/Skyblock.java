@@ -2,6 +2,8 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
+import com.skyblock.skyblock.commands.misc.ItemDataCommand;
+import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -38,7 +40,9 @@ public final class Skyblock extends JavaPlugin {
         this.commandHandler = new CommandHandler(this,
                 // add commands here
                 new HelpCommand(),
-                new ClearCommand()
+                new ClearCommand(),
+                new TestCommand(),
+                new ItemDataCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
