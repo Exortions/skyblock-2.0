@@ -5,10 +5,12 @@ import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
+import com.skyblock.skyblock.listeners.BlockBreakListener;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -24,6 +26,9 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Found Bukkit server v" + Bukkit.getVersion());
         long start = System.currentTimeMillis();
 
+        this.initializeGameRules();
+
+        this.registerListeners();
         this.registerCommands();
 
         long end = System.currentTimeMillis();
@@ -33,6 +38,14 @@ public final class Skyblock extends JavaPlugin {
     @Override
     public void onDisable() {
         sendMessage("Disabled Skyblock!");
+    }
+
+    public void registerListeners() {
+        registerListener(new BlockBreakListener());
+    }
+
+    public void registerListener(Listener listener) {
+        this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
     public void registerCommands() {
@@ -48,6 +61,15 @@ public final class Skyblock extends JavaPlugin {
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
+    }
+
+    public void initializeGameRules() {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doDaylightCycle false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doWeatherCycle false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doTileDrops false");
     }
 
     public void sendMessage(String message) {
