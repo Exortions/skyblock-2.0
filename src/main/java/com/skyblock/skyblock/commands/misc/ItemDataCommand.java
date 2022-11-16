@@ -28,7 +28,22 @@ public class ItemDataCommand implements Command {
             return;
         }
 
+        player.sendMessage(plugin.getPrefix() + "Name: " + nbt.getString("name"));
         player.sendMessage(plugin.getPrefix() + "Rarity: " + nbt.getString("rarity"));
-        player.sendMessage(plugin.getPrefix() + "Type: " + nbt.getString("type"));
+        player.sendMessage(plugin.getPrefix() + "Reforge Type: " + nbt.getInteger("reforgeType"));
+        player.sendMessage(plugin.getPrefix() + "Reforgeable: " + nbt.getBoolean("reforgeable"));
+        player.sendMessage(plugin.getPrefix() + "Has Ability: " + nbt.getBoolean("hasAbility"));
+        player.sendMessage(plugin.getPrefix() + "Ability Name: " + nbt.getString("abilityName"));
+        player.sendMessage(plugin.getPrefix() + "Ability Type: " + nbt.getString("abilityType"));
+        player.sendMessage(plugin.getPrefix() + "Ability Cost: " + nbt.getInteger("abilityCost"));
+        player.sendMessage(plugin.getPrefix() + "Ability Cooldown: " + nbt.getString("abilityCooldown"));
+        player.sendMessage(plugin.getPrefix() + "Damage: " + nbt.getInteger("damage"));
+        player.sendMessage(plugin.getPrefix() + "Strength: " + nbt.getInteger("strength"));
+        player.sendMessage(plugin.getPrefix() + "Crit Chance: " + nbt.getInteger("critChance"));
+        player.sendMessage(plugin.getPrefix() + "Crit Damage: " + nbt.getInteger("critDamage"));
+        player.sendMessage(plugin.getPrefix() + "Attack Speed: " + nbt.getInteger("attackSpeed"));
+        player.sendMessage(plugin.getPrefix() + "Intelligence: " + nbt.getInteger("intelligence"));
+        player.sendMessage(plugin.getPrefix() + "Speed: " + nbt.getInteger("speed"));
+        player.sendMessage(plugin.getPrefix() + "Defense: " + nbt.getInteger("defense"));
     }
 }
