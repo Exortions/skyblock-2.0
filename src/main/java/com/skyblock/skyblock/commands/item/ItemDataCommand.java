@@ -33,6 +33,8 @@ public class ItemDataCommand implements Command {
         player.sendMessage(plugin.getPrefix() + "Reforge Type: " + nbt.getInteger("reforgeType"));
         player.sendMessage(plugin.getPrefix() + "Reforgeable: " + nbt.getBoolean("reforgeable"));
         player.sendMessage(plugin.getPrefix() + "Has Ability: " + nbt.getBoolean("hasAbility"));
+        player.sendMessage(plugin.getPrefix() + "Description: " + nbt.getString("description"));
+        player.sendMessage(plugin.getPrefix() + "Ability Description: " + nbt.getString("abilityDescription"));
         player.sendMessage(plugin.getPrefix() + "Ability Name: " + nbt.getString("abilityName"));
         player.sendMessage(plugin.getPrefix() + "Ability Type: " + nbt.getString("abilityType"));
         player.sendMessage(plugin.getPrefix() + "Ability Cost: " + nbt.getInteger("abilityCost"));

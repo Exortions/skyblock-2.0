@@ -6,6 +6,7 @@ import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -21,10 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ItemHandler {
     private final HashMap<String, ItemStack> items = new HashMap<>();
@@ -97,6 +95,9 @@ public class ItemHandler {
             nbt.setBoolean("enchantGlint", true);
         }
 
+        boolean passedAbility = false;
+        boolean finishedAbilityLore = false;
+
         for (int i = 0; i < lore.size(); i++) {
             String string = lore.get(i);
 
@@ -140,6 +141,11 @@ public class ItemHandler {
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 if (line.startsWith("this item can be reforged!")) {
                     nbt.setBoolean("reforgeable", true);
+                    continue;
+                } else if (line.startsWith("mana cost: ")) {
+                    nbt.setInteger("abilityCost", Integer.parseInt(line.substring(11)));
+                    Bukkit.getConsoleSender().sendMessage("ABILITYCOST: " + nbt.getInteger("abilityCost"));
+                    continue;
                 } else if (line.startsWith("item ability: ")) {
                     nbt.setBoolean("hasAbility", true);
 
@@ -155,9 +161,46 @@ public class ItemHandler {
 
                     nbt.setString("abilityName", abilityName.replaceAll(type, ""));
                     nbt.setString("abilityType", type.toUpperCase());
-                    nbt.setInteger("abilityCost", 0);
+                    passedAbility = true;
+                    continue;
                 } else if (line.startsWith("cooldown: ")) {
                     nbt.setString("abilityCooldown", line.substring(10));
+                    continue;
+                } else if (passedAbility && !finishedAbilityLore) {
+                    List<String> ability = new ArrayList<>();
+                    for (int j = i; j < lore.size(); j++) {
+                        String raw = ChatColor.stripColor(lore.get(j)).toLowerCase();
+                        if (raw.startsWith("this item can be reforged!") ||
+                                raw.startsWith("cooldown: ") ||
+                                raw.startsWith("mana cost: ") ||
+                            j == lore.size() - 1){
+                            i = j-1;
+                            break;
+                        }
+
+                        ability.add(lore.get(j));
+                    }
+
+                    nbt.setString("abilityDescription", ability.toString());
+                    finishedAbilityLore = true;
+                    continue;
+                } else if (!line.isEmpty()) {
+                    List<String> desc = new ArrayList<>();
+                    for (int j = i; j < lore.size(); j++) {
+                        String raw = ChatColor.stripColor(lore.get(j)).toLowerCase();
+                        if (raw.startsWith("this item can be reforged!") ||
+                            raw.startsWith("item ability: ") ||
+                            j == lore.size() - 1){
+                            i = j;
+                            break;
+                        }
+
+                        desc.add(lore.get(j));
+                    }
+
+                    if (desc.size() > 1) {
+                        nbt.setString("description", desc.toString());
+                    }
                 }
 
                 if (i == lore.size() - 1) {
@@ -166,8 +209,13 @@ public class ItemHandler {
             }
         }
 
-        nbt.setString("abilityDescription", "placeholder description");
-        nbt.setString("description", "placeholder description");
+        if (!nbt.hasKey("description")) {
+            nbt.setString("description", "placeholder description");
+        }
+
+        if (!passedAbility) {
+            nbt.setString("abilityDescription", "placeholder description");
+        }
 
         ItemBase base = new ItemBase(nbt.getItem());
 
