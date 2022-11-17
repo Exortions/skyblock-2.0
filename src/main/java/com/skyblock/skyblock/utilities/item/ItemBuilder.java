@@ -1,0 +1,209 @@
+package com.skyblock.skyblock.utilities.item;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * ItemBuilder utility
+ * class.
+ *
+ * All constructors will
+ * unless specified in
+ * constructor directly:
+ * <code>
+ *     Default material to Material.DIRT,
+ *     Default amount to 1
+ *     Default name to material's default name
+ *     Default damage value to default damage value
+ * </code>
+ *
+ * @author Exortions
+ * @since 0.3.10.13
+ */
+@SuppressWarnings({"unused"})
+public class ItemBuilder {
+
+    private final ItemStack item;
+    private final ItemMeta meta;
+
+    public ItemBuilder() {
+        item = new ItemStack(Material.DIRT);
+        meta = item.getItemMeta();
+    }
+
+    public ItemBuilder(String name) {
+        item = new ItemStack(Material.DIRT);
+        meta = item.getItemMeta();
+        setDisplayName(name);
+    }
+
+    public ItemBuilder(Material material) {
+        item = new ItemStack(material);
+        meta = item.getItemMeta();
+    }
+
+    public ItemBuilder(String name, int amount) {
+        item = new ItemStack(Material.DIRT, amount);
+        meta = item.getItemMeta();
+        setDisplayName(name);
+    }
+
+    public ItemBuilder(String name, Material material) {
+        item = new ItemStack(material);
+        meta = item.getItemMeta();
+        setDisplayName(name);
+    }
+
+    public ItemBuilder(String name, Material material, short dmg) {
+        item = new ItemStack(material, 1, dmg);
+        meta = item.getItemMeta();
+        setDisplayName(name);
+    }
+
+    public ItemBuilder(String name, Material material, int amount) {
+        item = new ItemStack(material, amount);
+        meta = item.getItemMeta();
+        setDisplayName(name);
+    }
+
+    public ItemBuilder(String name, Material material, int amount, short damage) {
+        item = new ItemStack(material, amount, damage);
+        meta = item.getItemMeta();
+        setDisplayName(name);
+    }
+
+    public ItemBuilder setDamage(int damage) {
+        item.setDurability((short) damage);
+        return this;
+    }
+
+    public ItemBuilder setDamage(short damage) {
+        item.setDurability(damage);
+        return this;
+    }
+
+    public ItemBuilder setAmount(int amount) {
+        item.setAmount(amount);
+        return this;
+    }
+
+    public ItemBuilder setDisplayName(String name) {
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder setMaterial(Material material) {
+        item.setType(material);
+        return this;
+    }
+
+    public ItemBuilder setLore(List<String> lore) {
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder setLore(String... lore) {
+        List<String> ls = new ArrayList<>();
+        for(String s : lore) {
+            ls.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+        meta.setLore(ls);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addLore(String lore) {
+        List<String> ls;
+        if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();
+        ls.add(ChatColor.translateAlternateColorCodes('&', lore));
+        meta.setLore(ls);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addLore(String... lore) {
+        List<String> ls;
+        if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();
+        for(String s : lore) {
+            ls.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+        meta.setLore(ls);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addEnchantment(Enchantment enchantment) {
+        meta.addEnchant(enchantment, 1, false);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addEnchantment(Enchantment enchantment, int level) {
+        meta.addEnchant(enchantment, level, false);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addEnchantment(Enchantment enchantment, int level, boolean ignoreMaxLevel) {
+        meta.addEnchant(enchantment, level, ignoreMaxLevel);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder removeEnchantment(Enchantment enchantment) {
+        meta.removeEnchant(enchantment);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addEnchantmentGlint() {
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder removeEnchantmentGlint() {
+        meta.removeEnchant(Enchantment.LUCK);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addItemFlag(ItemFlag itemFlag) {
+        meta.addItemFlags(itemFlag);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder addItemFlags(ItemFlag... itemFlags) {
+        meta.addItemFlags(itemFlags);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder removeItemFlag(ItemFlag itemFlag) {
+        meta.removeItemFlags(itemFlag);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder removeItemFlags(ItemFlag... itemFlags) {
+        meta.removeItemFlags(itemFlags);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemStack toItemStack(){
+        return item;
+    }
+
+}
