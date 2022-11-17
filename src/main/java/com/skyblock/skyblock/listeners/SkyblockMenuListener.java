@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -21,6 +23,8 @@ public class SkyblockMenuListener implements Listener {
 
     public static final String MENU_NAME = "Skyblock Menu";
     public static final String EMPTY_NAME = " ";
+
+    public static final String ITEM_NAME = ChatColor.GREEN + "Skyblock Menu" + ChatColor.GRAY + " (Right Click)";
 
     private final Skyblock skyblock;
 
@@ -298,6 +302,20 @@ public class SkyblockMenuListener implements Listener {
             default:
                 break;
         }
+    }
+
+    @EventHandler
+    public void onSkyblockMenuOpen(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+
+        if (player.getItemInHand() == null) return;
+
+        if (player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NAME)) skyblock.getGuiHandler().show("skyblock_menu", player);
+    }
+
+    @EventHandler
+    public void onSkyblockMenuDrag(InventoryDragEvent event) {
+        if (event.getInventory().getTitle().equals(MENU_NAME)) event.setCancelled(true);
     }
 
 }

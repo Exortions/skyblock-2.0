@@ -6,10 +6,7 @@ import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
-import com.skyblock.skyblock.listeners.BlockBreakListener;
-import com.skyblock.skyblock.listeners.HungerListener;
-import com.skyblock.skyblock.listeners.PlayerListener;
-import com.skyblock.skyblock.listeners.SkyblockMenuListener;
+import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
@@ -60,6 +57,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new HungerListener());
         registerListener(new PlayerListener());
         registerListener(new SkyblockMenuListener(this));
+        registerListener(new PlayerJoinListener());
     }
 
     public void registerListener(Listener listener) {
