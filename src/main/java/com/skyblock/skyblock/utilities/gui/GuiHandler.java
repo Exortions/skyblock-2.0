@@ -24,11 +24,19 @@ public class GuiHandler {
     }
 
     public void show(String name, Player player) {
-        this.guis.get(name).show(player);
+        Gui gui = this.guis.get(name);
+
+        if (gui == null) return;
+
+        gui.show(player);
     }
 
     public void hide(String name, Player player) {
-        this.guis.get(name).hide(player);
+        Gui gui = this.guis.get(name);
+
+        if (gui == null) return;
+
+        gui.hide(player);
     }
 
 }

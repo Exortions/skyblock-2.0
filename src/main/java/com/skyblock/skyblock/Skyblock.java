@@ -8,6 +8,7 @@ import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.listeners.BlockBreakListener;
 import com.skyblock.skyblock.listeners.HungerListener;
 import com.skyblock.skyblock.listeners.PlayerListener;
+import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
@@ -57,6 +58,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new BlockBreakListener());
         registerListener(new HungerListener());
         registerListener(new PlayerListener());
+        registerListener(new SkyblockMenuListener(this));
     }
 
     public void registerListener(Listener listener) {
@@ -67,7 +69,6 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Registering commands...");
 
         this.commandHandler = new CommandHandler(this,
-                // add commands here
                 new HelpCommand(),
                 new ClearCommand(),
                 new TestCommand(),
