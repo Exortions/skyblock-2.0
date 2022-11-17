@@ -86,9 +86,130 @@ public class SkyblockMenuListener implements Listener {
                         ChatColor.GRAY + "SkyBlock!",
                         "",
                         ChatColor.GRAY + "Collection Unlocked: " + ChatColor.YELLOW + "82.1" + ChatColor.GOLD + "%",
-                        ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.WHITE + ChatColor.BOLD + "⎯⎯⎯⎯ " + ChatColor.YELLOW + "55" + ChatColor.GOLD + "/" + ChatColor.YELLOW + "67",
+                        ChatColor.DARK_GREEN + "" + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.WHITE + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯" + ChatColor.YELLOW + " 55" + ChatColor.GOLD + "/" + ChatColor.YELLOW + "67",
                         "",
                         ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(21, new ItemBuilder(
+            ChatColor.GREEN + "Recipe Book",
+            Material.BOOK)
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+            .addLore(
+                    ChatColor.GRAY + "Through your adventure, you will",
+                    ChatColor.GRAY + "unlock recipes for all kinds of",
+                    ChatColor.GRAY + "special items! You can view how",
+                    ChatColor.GRAY + "to craft these items here.",
+                    "",
+                    ChatColor.GRAY + "Recipe Book Unlocked: " + ChatColor.YELLOW + "38.4" + ChatColor.GOLD + "%",
+                    ChatColor.DARK_GREEN + "" + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.WHITE + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.YELLOW + " 324" + ChatColor.GOLD + "/" + ChatColor.YELLOW + "844",
+                    "",
+                    ChatColor.YELLOW + "Click to view!"
+            )
+            .toItemStack());
+
+        skyblockMenu.addItem(22, new ItemBuilder(
+                ChatColor.GREEN + "Trades",
+                Material.EMERALD)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "View your available trades.",
+                        ChatColor.GRAY + "These trades are always",
+                        ChatColor.GRAY + "Availiable and accessible through",
+                        ChatColor.GRAY + "the SkyBlock Menu.",
+                        "",
+                        ChatColor.GRAY + "Trades Unlocked: " + ChatColor.YELLOW + "83.3" + ChatColor.GOLD + "%",
+                        ChatColor.DARK_GREEN + "" + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.WHITE + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯" + ChatColor.YELLOW + " 20" + ChatColor.GOLD + "/" + ChatColor.YELLOW + "24",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(23, new ItemBuilder(
+                ChatColor.GREEN + "Quest Log",
+                Material.BOOK_AND_QUILL)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "View your active quests,",
+                        ChatColor.GRAY + "progress, and rewards.",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(24, new ItemBuilder(
+                ChatColor.GREEN + "Calendar and Events",
+                Material.WATCH)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "View the SkyBlock Calendar,",
+                        ChatColor.GRAY + "upcoming events, and event",
+                        ChatColor.GRAY + "rewards!",
+                        "",
+                        ChatColor.GRAY + "Next Event: " + ChatColor.RED + "211th Season of Jerry",
+                        ChatColor.GRAY + "Starting in: " + ChatColor.YELLOW + "0d 22h 24m 35s",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(25, new ItemBuilder(
+                ChatColor.GREEN + "Ender Chest",
+                Material.ENDER_CHEST)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "Store global items that you want",
+                        ChatColor.GRAY + "to access at any time from",
+                        ChatColor.GRAY + "anywhere here.",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(32, new ItemBuilder(
+                ChatColor.GREEN + "Active Effects",
+                Material.POTION)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "View and manage all of your",
+                        ChatColor.GRAY + "active potion effects.",
+                        "",
+                        ChatColor.GRAY + "Drink Potions or splash them",
+                        ChatColor.GRAY + "on the ground to buff yourself!",
+                        "",
+                        ChatColor.GRAY + "Currently Active: " + ChatColor.YELLOW + "0",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(30, new ItemBuilder(
+                ChatColor.GREEN + "Pets",
+                Material.BONE)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "View and manage all of your",
+                        ChatColor.GRAY + "Pets.",
+                        "",
+                        ChatColor.GRAY + "Level up your pets faster by",
+                        ChatColor.GRAY + "gaining xp in their favorite",
+                        ChatColor.GRAY + "skill!",
+                        "",
+                        ChatColor.GRAY + "Selected pet: " + ChatColor.DARK_PURPLE + "Lion",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack());
+
+        skyblockMenu.addItem(31, new ItemBuilder(
+                ChatColor.GREEN + "Crafting Table",
+                Material.WORKBENCH)
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .addLore(
+                        ChatColor.GRAY + "Opens the crafting grid.",
+                        "",
+                        ChatColor.YELLOW + "Click to open!"
                 )
                 .toItemStack());
 
