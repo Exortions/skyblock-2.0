@@ -8,6 +8,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import com.skyblock.skyblock.utilities.item.ItemBase;
+import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,5 +29,7 @@ public class TestCommand implements Command {
         player.sendMessage(nbt.getString("rarity"));
 
         thick_scorpion_foil.give(player);
+
+        player.getInventory().addItem(plugin.getItemHandler().getItem(args[0]));
     }
 }

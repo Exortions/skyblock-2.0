@@ -7,6 +7,7 @@ import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.listeners.BlockBreakListener;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
+import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,6 +21,7 @@ import java.util.Objects;
 public final class Skyblock extends JavaPlugin {
 
     private CommandHandler commandHandler;
+    private ItemHandler itemHandler;
 
     @Override
     public void onEnable() {
@@ -27,6 +29,7 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.initializeGameRules();
+        this.initializeNEUItems();
 
         this.registerListeners();
         this.registerCommands();
@@ -70,6 +73,11 @@ public final class Skyblock extends JavaPlugin {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doTileDrops false");
+    }
+
+    public void initializeNEUItems() {
+        this.itemHandler = new ItemHandler(this);
+        this.itemHandler.init();
     }
 
     public void sendMessage(String message) {

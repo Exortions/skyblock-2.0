@@ -1,13 +1,10 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.enums.ReforgeType;
-import de.tr7zw.nbtapi.NBTEntity;
 import de.tr7zw.nbtapi.NBTItem;
-import de.tr7zw.nbtapi.plugin.NBTAPI;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -53,7 +50,6 @@ public class ItemBase {
     private int speed;
 
     private ItemStack stack;
-
     public ItemBase(ItemStack item) {
         NBTItem nbt = new NBTItem(item);
 
