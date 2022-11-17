@@ -308,13 +308,15 @@ public class SkyblockMenuListener implements Listener {
     public void onSkyblockMenuOpen(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getItemInHand() == null) return;
+        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR)) return;
 
         if (player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NAME)) skyblock.getGuiHandler().show("skyblock_menu", player);
     }
 
     @EventHandler
     public void onSkyblockMenuDrag(InventoryDragEvent event) {
+        if (event.getWhoClicked().getInventory().getItemInHand() == null || event.getWhoClicked().getInventory().getItemInHand().getType().equals(Material.AIR)) return;
+
         if (event.getInventory().getTitle().equals(MENU_NAME)) event.setCancelled(true);
     }
 
