@@ -315,9 +315,9 @@ public class SkyblockMenuListener implements Listener {
 
     @EventHandler
     public void onSkyblockMenuDrag(InventoryDragEvent event) {
-        if (event.getWhoClicked().getInventory().getItemInHand() == null || event.getWhoClicked().getInventory().getItemInHand().getType().equals(Material.AIR)) return;
+        if (event.getCursor() == null || event.getCursor().getType().equals(Material.AIR)) return;
 
-        if (event.getInventory().getTitle().equals(MENU_NAME)) event.setCancelled(true);
+        if (event.getCursor().getItemMeta().getDisplayName().equals(ITEM_NAME)) event.setCancelled(true);
     }
 
 }
