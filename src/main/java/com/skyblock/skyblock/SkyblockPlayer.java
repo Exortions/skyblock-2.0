@@ -1,6 +1,8 @@
 package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.collections.Collection;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -54,11 +56,11 @@ public class SkyblockPlayer {
         setStat(stat, getStat(stat) - val);
     }
 
-    public Object getValue(String path){
+    public Object getValue(String path) {
         return config.get(path);
     }
 
-    public void setValue(String path, Object item){
+    public void setValue(String path, Object item) {
         try {
             config.set(path, item);
             config.save(configFile);
@@ -76,14 +78,12 @@ public class SkyblockPlayer {
 
     private void initConfig() {
         File folder = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "Players");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
+        if (!folder.exists())  folder.mkdirs();
         configFile = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "Players" + File.separator + getBukkitPlayer().getUniqueId() + ".yml");
+        this.config = YamlConfiguration.loadConfiguration(configFile);
         if (!configFile.exists()) {
-            try{
+            try {
                 configFile.createNewFile();
-                config = YamlConfiguration.loadConfiguration(configFile);
 
                 forEachStat((s) -> {
                     config.set("stats." + s.name().toLowerCase(), 0);
@@ -99,8 +99,13 @@ public class SkyblockPlayer {
 
                 config.set("stats.purse", 0);
 
+                for (Collection collection : Collection.getCollections()) {
+                    config.set("collection." + collection.getName().toLowerCase() + ".level", 0);
+                    config.set("collection." + collection.getName().toLowerCase() + ".exp", 0);
+                }
+
                 config.save(configFile);
-            }catch (IOException e){
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
