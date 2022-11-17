@@ -2,6 +2,7 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.misc.ClearCommand;
+import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
@@ -36,6 +37,8 @@ public final class Skyblock extends JavaPlugin {
         this.initializeGameRules();
         this.initializeNEUItems();
 
+        this.registerGuis();
+
         this.registerListeners();
         this.registerCommands();
 
@@ -50,8 +53,6 @@ public final class Skyblock extends JavaPlugin {
 
     public void registerGuis() {
         this.guiHandler = new GuiHandler(this);
-
-        // TODO: register guis
     }
 
     public void registerListeners() {
@@ -73,7 +74,8 @@ public final class Skyblock extends JavaPlugin {
                 new ClearCommand(),
                 new TestCommand(),
                 new ItemDataCommand(),
-                new ReforgeCommand()
+                new ReforgeCommand(),
+                new GuiCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

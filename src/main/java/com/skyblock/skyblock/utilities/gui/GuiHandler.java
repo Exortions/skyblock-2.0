@@ -15,8 +15,8 @@ public class GuiHandler {
         this.guis = new HashMap<>();
     }
 
-    public void registerGui(Gui gui) {
-        this.guis.put(gui.getName(), gui);
+    public void registerGui(String name, Gui gui) {
+        this.guis.put(name, gui);
     }
 
     public Gui getGui(String name) {

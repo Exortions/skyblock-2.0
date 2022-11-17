@@ -1,13 +1,17 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.gui.Gui;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class SkyblockMenuListener implements Listener {
@@ -19,6 +23,16 @@ public class SkyblockMenuListener implements Listener {
 
     public SkyblockMenuListener(Skyblock skyblock) {
         this.skyblock = skyblock;
+
+        this.registerGui();
+    }
+
+    public void registerGui() {
+        Gui skyblockMenu = new Gui(MENU_NAME, 54, new HashMap<>());
+
+        skyblockMenu.addItem(19, new ItemBuilder(ChatColor.GREEN + "Your Skills", Material.DIAMOND_SWORD).addLore(ChatColor.GRAY + "View your Skill progression and", ChatColor.GRAY + "rewards.", "", ChatColor.GOLD + "14.8 Skill Avg. " + ChatColor.DARK_GRAY + "(non-cosmetic)", "", ChatColor.YELLOW + "Click to view!").toItemStack());
+
+        skyblock.getGuiHandler().registerGui("skyblock_menu", skyblockMenu);
     }
 
     @EventHandler
