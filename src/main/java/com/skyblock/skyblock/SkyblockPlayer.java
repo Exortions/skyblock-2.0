@@ -89,16 +89,15 @@ public class SkyblockPlayer {
                     config.set(s.name(), 0);
                 });
 
-                config.set(SkyblockStat.MAX_HEALTH.name(), 100);
-                config.set(SkyblockStat.HEALTH.name(), 100);
-                config.set(SkyblockStat.MAX_MANA.name(), 100);
-                config.set(SkyblockStat.MANA.name(), 100);
-                config.set(SkyblockStat.SPEED.name(), 100);
-                config.set(SkyblockStat.CRIT_CHANCE.name(), 30);
-                config.set(SkyblockStat.CRIT_DAMAGE.name(), 50);
+                config.set("stats." + SkyblockStat.MAX_HEALTH.name(), 100);
+                config.set("stats." + SkyblockStat.HEALTH.name(), 100);
+                config.set("stats." + SkyblockStat.MAX_MANA.name(), 100);
+                config.set("stats." + SkyblockStat.MANA.name(), 100);
+                config.set("stats." + SkyblockStat.SPEED.name(), 100);
+                config.set("stats." + SkyblockStat.CRIT_CHANCE.name(), 30);
+                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name(), 50);
 
-                config.set("purse", 0);
-                config.set("bits", 0);
+                config.set("stats.purse", 0);
 
                 config.save(configFile);
             }catch (IOException e){
