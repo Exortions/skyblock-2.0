@@ -7,6 +7,7 @@ import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.listeners.BlockBreakListener;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
+import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ public final class Skyblock extends JavaPlugin {
 
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
+    private GuiHandler guiHandler;
 
     @Override
     public void onEnable() {
@@ -41,6 +43,12 @@ public final class Skyblock extends JavaPlugin {
     @Override
     public void onDisable() {
         sendMessage("Disabled Skyblock!");
+    }
+
+    public void registerGuis() {
+        this.guiHandler = new GuiHandler(this);
+
+        // TODO: register guis
     }
 
     public void registerListeners() {
