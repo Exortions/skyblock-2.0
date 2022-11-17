@@ -5,6 +5,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -77,6 +78,7 @@ public class ItemBase {
         this.defense = nbt.getInteger("defense");
         this.damage = nbt.getInteger("damage");
         this.speed = nbt.getInteger("speed");
+
         String descriptionStr = nbt.getString("description");
         String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split(", ");
         String[] descriptionArrClone = Arrays.copyOf(descriptionArr, descriptionArr.length + 1);
@@ -153,16 +155,16 @@ public class ItemBase {
         /*
           Description
          */
-        if (description != null) lore.addAll(description);
+        if (description != null && !description.get(0).equals("laceholder descriptio")) lore.addAll(description);
 
         /*
           Ability
          */
         if (hasAbility) {
-            lore.add(ChatColor.GOLD + "Item Ability: " + abilityName + " " + ChatColor.YELLOW + ChatColor.BOLD  + abilityType);
+            lore.add(ChatColor.GOLD + "Item Ability: " + abilityName + "" + ChatColor.YELLOW + ChatColor.BOLD  + abilityType);
             lore.addAll(abilityDescription);
 
-            if(abilityCost != 0)  lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + abilityCost);
+            if(abilityCost != 0)  lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.DARK_AQUA + abilityCost);
             if(!Objects.equals(abilityCooldown, "")) lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + abilityCooldown);
 
             lore.add("");
@@ -215,7 +217,11 @@ public class ItemBase {
         nbt.setString("name", name);
         nbt.setString("rarity", rarity);
         nbt.setString("reforgeType", reforgeType.toString());
-        nbt.setString("description", description.toString());
+
+        if (description != null) {
+            nbt.setString("description", description.toString());
+        }
+
         nbt.setBoolean("reforgeable", reforgeable);
         nbt.setBoolean("enchantGlint", enchantGlint);
         nbt.setBoolean("hasAbility", hasAbility);
