@@ -19,55 +19,68 @@ import java.util.List;
 import java.util.Map;
 
 @RequiresPlayer
-@Usage(usage = "/sb itembrowser <page>/search <name>")
+@Usage(usage = "/sb itembrowser <page> <query>")
 @Description(description = "Shows a list of all items in the game")
 public class ItemBrowserCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        if (args[0].equalsIgnoreCase("search")) {
+        List<ItemStack> items = new ArrayList<>();
+        String command;
 
-        } else {
-            try {
-                int page = Integer.parseInt(args[0]) - 1;
-                Gui itemBrowser = new Gui("ItemBrowser", 54, new HashMap<>());
+        try {
+            int page = Integer.parseInt(args[0]) - 1;
 
-                int start = page * 45;
-                int end = page * 45 + 45;
+            if (args.length == 2) {
+                String query = args[1];
+                for (Map.Entry<String, ItemStack> entry : plugin.getItemHandler().getItems().entrySet()) {
+                    if (entry.getValue().getItemMeta().getDisplayName().toLowerCase().contains(query.toLowerCase())) {
+                        items.add(entry.getValue());
+                    }
+                }
 
-                int index = 0;
-                int setItemIndex = 0;
-                List<ItemStack> items = new ArrayList<>();
-
+                command = "sb itembrowser " + (page + 2) + query;
+            } else {
                 for (Map.Entry<String, ItemStack> entry : plugin.getItemHandler().getItems().entrySet()) {
                     items.add(entry.getValue());
                 }
 
-                for (int i = start; i < end; i++) {
-                    try {
-                        ItemStack item = items.get(i);
-                        itemBrowser.addItem(setItemIndex, item);
-                        itemBrowser.clickEvents.put(item.getItemMeta().getDisplayName(), () -> {
-                            player.getInventory().addItem(item);
-                        });
-                        setItemIndex++;
-                    } catch (IndexOutOfBoundsException e) {
-                        break;
-                    }
-                }
-
-                itemBrowser.fillEmpty(new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
-                itemBrowser.addItem(53, new ItemBuilder(ChatColor.GREEN + "Next Page", Material.ARROW).toItemStack());
-                itemBrowser.clickEvents.put(ChatColor.GREEN + "Next Page", () -> {
-                    player.closeInventory();
-                    player.performCommand("sb itembrowser " + (page + 2));
-                    itemBrowser.clickEvents.clear();
-                });
-
-                itemBrowser.show(player);
-            } catch (NumberFormatException e) {
-                player.sendMessage(ChatColor.RED + "Not a number");
+                command = "sb itembrowser " + (page + 2);
             }
+
+            Gui itemBrowser = new Gui("ItemBrowser", 54, new HashMap<>());
+
+            int start = page * 45;
+            int end = page * 45 + 45;
+
+            int setItemIndex = 0;
+
+            for (int i = start; i < end; i++) {
+                try {
+                    ItemStack item = items.get(i);
+                    itemBrowser.addItem(setItemIndex, item);
+                    itemBrowser.clickEvents.put(item.getItemMeta().getDisplayName(), () -> {
+                        player.getInventory().addItem(item);
+                    });
+                    setItemIndex++;
+                } catch (IndexOutOfBoundsException e) {
+                    break;
+                }
+            }
+
+            for (int i = 45; i < 54; i++) {
+                itemBrowser.addItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
+            }
+
+            itemBrowser.addItem(53, new ItemBuilder(ChatColor.GREEN + "Next Page", Material.ARROW).toItemStack());
+            itemBrowser.clickEvents.put(ChatColor.GREEN + "Next Page", () -> {
+                player.performCommand(command);
+                itemBrowser.clickEvents.clear();
+            });
+
+            itemBrowser.show(player);
+        } catch (NumberFormatException e) {
+            player.sendMessage(ChatColor.RED + "Not a number");
         }
     }
 }
