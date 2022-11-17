@@ -86,7 +86,7 @@ public class SkyblockPlayer {
                 config = YamlConfiguration.loadConfiguration(configFile);
 
                 forEachStat((s) -> {
-                    config.set(s.name(), 0);
+                    config.set("stats." + s.name(), 0);
                 });
 
                 config.set("stats." + SkyblockStat.MAX_HEALTH.name(), 100);
