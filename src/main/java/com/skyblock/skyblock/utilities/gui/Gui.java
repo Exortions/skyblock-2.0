@@ -1,8 +1,10 @@
 package com.skyblock.skyblock.utilities.gui;
 
+import com.skyblock.skyblock.Skyblock;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,6 +35,8 @@ public class Gui implements Listener {
         this.clickEvents = clickEvents;
 
         this.items = new HashMap<>();
+
+        Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin(Skyblock.class));
     }
 
     public void show(Player player) {

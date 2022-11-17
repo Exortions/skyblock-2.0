@@ -1,5 +1,6 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.GuiCommand;
@@ -73,6 +74,7 @@ public final class Skyblock extends JavaPlugin {
                 new TestCommand(),
                 new ItemDataCommand(),
                 new ReforgeCommand(),
+                new ItemBrowserCommand(),
                 new GuiCommand()
         );
 
@@ -80,12 +82,12 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void initializeGameRules() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doDaylightCycle false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doWeatherCycle false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doTileDrops false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doDaylightCycle false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doWeatherCycle false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doFireTick false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doMobSpawning false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doMobLoot false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doTileDrops false");
     }
 
     public void initializeNEUItems() {

@@ -2,6 +2,7 @@ package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
 import de.tr7zw.nbtapi.NBTItem;
+import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
@@ -24,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 
+@Getter
 public class ItemHandler {
     private final HashMap<String, ItemStack> items = new HashMap<>();
     private final Skyblock skyblock;
