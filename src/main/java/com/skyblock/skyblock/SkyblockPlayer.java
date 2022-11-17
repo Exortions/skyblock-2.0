@@ -86,16 +86,16 @@ public class SkyblockPlayer {
                 config = YamlConfiguration.loadConfiguration(configFile);
 
                 forEachStat((s) -> {
-                    config.set("stats." + s.name(), 0);
+                    config.set("stats." + s.name().toLowerCase(), 0);
                 });
 
-                config.set("stats." + SkyblockStat.MAX_HEALTH.name(), 100);
-                config.set("stats." + SkyblockStat.HEALTH.name(), 100);
-                config.set("stats." + SkyblockStat.MAX_MANA.name(), 100);
-                config.set("stats." + SkyblockStat.MANA.name(), 100);
-                config.set("stats." + SkyblockStat.SPEED.name(), 100);
-                config.set("stats." + SkyblockStat.CRIT_CHANCE.name(), 30);
-                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name(), 50);
+                config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100);
+                config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100);
+                config.set("stats." + SkyblockStat.MAX_MANA.name().toLowerCase(), 100);
+                config.set("stats." + SkyblockStat.MANA.name().toLowerCase(), 100);
+                config.set("stats." + SkyblockStat.SPEED.name().toLowerCase(), 100);
+                config.set("stats." + SkyblockStat.CRIT_CHANCE.name().toLowerCase(), 30);
+                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name().toLowerCase(), 50);
 
                 config.set("stats.purse", 0);
 
