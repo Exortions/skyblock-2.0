@@ -1,0 +1,266 @@
+{
+  "category": "Farming",
+  "collections": [
+    {
+      "name": "Cocoa Beans",
+      "material": "INK_SACK",
+      "data": 3,
+      "rewards": [
+        "75;Cocoa Beans Minion",
+        "200;+20 Farming Experience",
+        "500;Portal to Mushroom Desert",
+        "2000;Enchanted",
+        "5000;Cocoa Bean Travel Scroll to Mushroom Desert",
+        "10000;Enchanted Cookie",
+        "20000;Adrenaline Potion",
+        "50000;Enchanted Book (Replenish I)",
+        "100000;+10000 Farming Experience"
+      ],
+      "commands": [
+        "sb unlockminion cocoa_bean"
+      ]
+    },
+    {
+      "name": "Feather",
+      "material": "FEATHER",
+      "data": 0,
+      "rewards": [
+        "50;Enchanted Book (Projectile Protection IV)",
+        "100;Enchanted Book (Feather Falling IV)",
+        "250;Archery Potion",
+        "1000;Feather Talisman",
+        "2500;Enchanted Feather",
+        "5000;Enchanted Book (Dragon Tracer IV)",
+        "10000;Feather Ring",
+        "25000;Enchanted Book (Snipe II)",
+        "50000;Feather Artifact"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Leather",
+      "material": "LEATHER",
+      "data": 0,
+      "rewards": [
+        "50;Cow Minion",
+        "100;Cow Head;Milk Bucket Trade",
+        "250;Small Backpack",
+        "1000;Enchanted Raw Beef",
+        "2500;Medium Backpack",
+        "5000;Enchanted Leather",
+        "10000;Saddle",
+        "25000;Large Backpack",
+        "50000;Horse Pet",
+        "100000;Greater Backpack"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Melon",
+      "material": "MELON",
+      "data": 0,
+      "rewards": [
+        "250;Melon Minion",
+        "500;+50 Farming Experience",
+        "1250;+125 Farming Experience",
+        "5000;Enchanted Melon",
+        "15500;Enchanted Glistering Melon",
+        "25000;Enchanted Melon Block",
+        "50000;+5000 Farming Experience",
+        "100000;+10000 Farming Experience",
+        "250000;+25000 Farming Experience"
+      ]
+    },
+    {
+      "name": "Mushroom",
+      "material": "RED_MUSHROOM",
+      "data": 0,
+      "rewards": [
+        "50;Mushroom Minion",
+        "100;Mycelium Trade",
+        "250;Mushroom Armor Set",
+        "1000;Magical Mushroom Soup",
+        "2500;Brown / Red Mushroom Block",
+        "5000;Enchanted Brown / Red Mushroom",
+        "10000;Night Vision Charm;Mystical Mushroom Soup",
+        "25000;Enchanted Brown / Red Mushroom Block",
+        "50000;Bat Pet"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Mutton",
+      "material": "MUTTON",
+      "data": 0,
+      "rewards": [
+        "50;Sheep Minion",
+        "100;+10 Farming Experience",
+        "250;+25 Farming Experience",
+        "1000;Mana Potion",
+        "2500;Enchanted Mutton;Small Husbandry Sack",
+        "5000;Enchanted Book (Rainbow I)",
+        "10000;Sheep Pet;Medium Husbandry Sack",
+        "25000;Enchanted Cooked Mutton",
+        "50000;Polymorph Wand;Large Husbandry Sack",
+        "100000;Large Enchanted Husbandry Sack"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Nether Wart",
+      "material": "NETHER_WARTS",
+      "data": 0,
+      "rewards": [
+        "50;Nether Wart Minion",
+        "100;Small Potion Bag Upgrade (9 Slots)",
+        "250;Potion Affinity Talisman",
+        "1000;Enchanted Nether Wart",
+        "2500;Medium Potion Bag Upgrade (18 Slots)",
+        "5000;+500 Alchemy Experience",
+        "10000;Potion Affinity Ring",
+        "25000;Large Potion Bag Upgrade (27 Slots)",
+        "50000;Potion Affinity Artifact",
+        "75000;Giant Potion Bag Upgrade (36 slots)",
+        "100000;Massive Potion Bag Upgrade (45 Slots)",
+        "250000;Mutant Nether Wart"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Potato",
+      "material": "POTATO_ITEM",
+      "data": 0,
+      "rewards": [
+        "100;Potato Minion",
+        "200;Portal to the Barn",
+        "500;Vaccine Talisman",
+        "1750;Enchanted Potato",
+        "5000;Venomous Potion",
+        "10000;Travel Scroll to the Barn",
+        "25000;Enchanted Baked Potato",
+        "50000;Hot Potato Book",
+        "100000;+10000 Farming Experience"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Pumpkin",
+      "material": "PUMPKIN",
+      "rewards": [
+        "40;Pumpkin Minion",
+        "100;Pumpkin Armor Set",
+        "250;Enchanted Pumpkin",
+        "1000;Enchanted Book (Cubism IV)",
+        "2500;Training Dummy",
+        "5000;Farmer Orb",
+        "10000;Lantern Helmet",
+        "25000;Farm Crystal",
+        "50000;Farmer Boots",
+        "100000;Polished Pumpkin",
+        "250000;Rancher's Boots"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Raw Chicken",
+      "material": "RAW_CHICKEN",
+      "data": 0,
+      "rewards": [
+        "50;Chicken Minion",
+        "100;Bridge Egg",
+        "250;Chicken Head",
+        "1000;Enchanted Raw Chicken",
+        "2500;Enchanted Egg",
+        "5000;Chicken Pet",
+        "10000;Enchanted Cake",
+        "25000;Agility Potion",
+        "50000;Super Enchanted Egg"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Raw Porkchop",
+      "material": "PORK",
+      "data": 0,
+      "rewards": [
+        "50;Pig Minion",
+        "100;+10 Farming Experience",
+        "250;Pig Pet",
+        "1000;Enchanted Pork",
+        "2500;Piggy Bank",
+        "5000;+500 Farming Experience",
+        "10000;Enchanted Grilled Pork",
+        "25000;Pigman Pet",
+        "50000;Pigman Sword"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Raw Rabbit",
+      "material": "RABBIT",
+      "data": 0,
+      "rewards": [
+        "50;Rabbit Minion",
+        "100;Rabbit Pet",
+        "250;Rabbit Potion",
+        "1000;Enchanted Rabbit Foot",
+        "2500;Enchanted Book (Luck IV)",
+        "5000;Enchanted Rabbit Hide",
+        "10000;Enchanted Book (Luck of the Sea IV)",
+        "25000;Pet Luck Potion",
+        "50000;+5000 Farming Experience"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Seeds",
+      "material": "SEEDS",
+      "data": 0,
+      "rewards": [
+        "50;Dirt Trade",
+        "100;Clay Trade",
+        "250;Long Grass Trade",
+        "1000;Fern Trade",
+        "2500;Dead Bush Trade",
+        "5000;Double Tallgrass Trade"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Sugar Cane",
+      "material": "SUGAR_CANE",
+      "data": 0,
+      "rewards": [
+        "100;Sugar Cane Minion",
+        "250;Speed Talisman",
+        "500;+50 Farming Experience",
+        "1000;Enchanted Sugar",
+        "2000;Enchanted Paper;Speed Ring",
+        "5000;Enchanted Bookshelf",
+        "10000;Random Book",
+        "20000;Enchanted Sugar Cane;Speed Artifact",
+        "50000;Speedster Armor Set"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Wheat",
+      "material": "WHEAT",
+      "data": 0,
+      "rewards": [
+        "50;Wheat Minion",
+        "100;Enchanted Book (Harvesting V)",
+        "250;Farm Suit Set",
+        "500;Farming Talisman",
+        "1000;Enchanted Bread",
+        "2500;Farming Island",
+        "10000;Enchanted Hay Bale;Small Agronomy Sack",
+        "15000;Medium Agronomy Sack",
+        "25000;Farm Armor Set",
+        "50000;Large Agronomy Sack",
+        "100000;Tightly-Tied Hay Bale"
+      ],
+      "commands": []
+    }
+  ]
+}
