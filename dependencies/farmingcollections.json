@@ -2,7 +2,7 @@
   "category": "Farming",
   "collections": [
     {
-      "name": "Cocoa Bean",
+      "name": "Cocoa Beans",
       "material": "INK_SACK",
       "data": 3,
       "rewards": [
@@ -21,41 +21,55 @@
       ]
     },
     {
-      "ID": "Feather",
-      "I": "50;Enchanted Book (Projectile Protection IV)",
-      "II": "100;Enchanted Book (Feather Falling IV)",
-      "III": "250;Archery Potion",
-      "IV": "1000;Feather Talisman",
-      "V": "2500;Enchanted Feather",
-      "VI": "5000;Enchanted Book (Dragon Tracer IV)",
-      "VII": "10000;Feather Ring",
-      "VIII": "25000;Enchanted Book (Snipe II)",
-      "IX": "50000;Feather Artifact"
+      "name": "Feather",
+      "material": "FEATHER",
+      "data": 0,
+      "rewards": [
+        "50;Enchanted Book (Projectile Protection IV)",
+        "100;Enchanted Book (Feather Falling IV)",
+        "250;Archery Potion",
+        "1000;Feather Talisman",
+        "2500;Enchanted Feather",
+        "5000;Enchanted Book (Dragon Tracer IV)",
+        "10000;Feather Ring",
+        "25000;Enchanted Book (Snipe II)",
+        "50000;Feather Artifact"
+      ],
+      "commands": []
     },
     {
-      "ID": "Leather",
-      "I": "50;Cow Minion",
-      "II": "100;Cow Head;Milk Bucket Trade",
-      "III": "250;Small Backpack",
-      "IV": "1000;Enchanted Raw Beef",
-      "V": "2500;Medium Backpack",
-      "VI": "5000;Enchanted Leather",
-      "VII": "10000;Saddle",
-      "VIII": "25000;Large Backpack",
-      "IX": "50000;Horse Pet",
-      "X": "100000;Greater Backpack"
+      "name": "Leather",
+      "material": "LEATHER",
+      "data": 0,
+      "rewards": [
+        "50;Cow Minion",
+        "100;Cow Head;Milk Bucket Trade",
+        "250;Small Backpack",
+        "1000;Enchanted Raw Beef",
+        "2500;Medium Backpack",
+        "5000;Enchanted Leather",
+        "10000;Saddle",
+        "25000;Large Backpack",
+        "50000;Horse Pet",
+        "100000;Greater Backpack"
+      ],
+      "commands": []
     },
     {
-      "ID": "Melon",
-      "I": "250;Melon Minion",
-      "II": "500;+50 Farming Experience",
-      "III": "1250;+125 Farming Experience",
-      "IV": "5000;Enchanted Melon",
-      "V": "15500;Enchanted Glistering Melon",
-      "VI": "25000;Enchanted Melon Block",
-      "VII": "50000;+5000 Farming Experience",
-      "VIII": "100000;+10000 Farming Experience",
-      "IX": "250000;+25000 Farming Experience"
+      "name": "Melon",
+      "material": "MELON",
+      "data": 0,
+      "rewards": [
+        "250;Melon Minion",
+        "500;+50 Farming Experience",
+        "1250;+125 Farming Experience",
+        "5000;Enchanted Melon",
+        "15500;Enchanted Glistering Melon",
+        "25000;Enchanted Melon Block",
+        "50000;+5000 Farming Experience",
+        "100000;+10000 Farming Experience",
+        "250000;+25000 Farming Experience"
+      ]
     },
     {
       "ID": "Mushroom",
