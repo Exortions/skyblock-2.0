@@ -57,6 +57,8 @@ public class Collection {
             return;
         }
 
+        System.out.println(levelToExp.get(level));
+
         if (newExp >= levelToExp.get(level)) {
             this.rewards.reward(player, level);
 
@@ -72,6 +74,8 @@ public class Collection {
 
             for (String s : this.rewards.stringify(level + 1)) builder.add("  " + s);
 
+            if (this.rewards.stringify(level + 1).size() == 0) builder.add("    &cComing soon");
+
             builder.add("&e&l&m================================");
 
             builder.build(player);
@@ -81,6 +85,7 @@ public class Collection {
     public static List<Collection> getCollections() {
         List<Collection> collections = new ArrayList<>();
 
+        collections.add(new Collection("Cactus", Material.CACTUS, (short) 0, "Farming", 9, new CollectionRewards(), 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000));
         collections.add(new Collection("Carrot", Material.CARROT_ITEM, (short) 0, "Farming", 9, new CollectionRewards(new CollectionRewards.Reward(ChatColor.BLUE + "Carrot Minion" + ChatColor.GRAY + " Recipes", "sb recipe carrot_minion", 1), new CollectionRewards.Reward(ChatColor.GREEN + "Simple Carrot Candy" + ChatColor.GRAY + " Recipe", "sb recipe simple_carrot_candy", 2)), 100, 250, 500, 1700, 5000, 10000, 25000, 50000, 100000));
 
         return collections;
