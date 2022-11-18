@@ -84,10 +84,10 @@ public abstract class SkyblockEntity {
                         plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                     }else{
                         vanilla.setCustomNameVisible(true);
-                        vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().entityName + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().level + " " + ChatColor.GREEN + (getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
+                        vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
 
                         if (getEntityData().health <= 0) {
-                            vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().entityName + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().level + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
+                            vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             living.setHealth(0);
                         }
