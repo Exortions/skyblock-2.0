@@ -2,6 +2,8 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.scoreboard.HubScoreboard;
+import com.skyblock.skyblock.scoreboard.Scoreboard;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -18,6 +20,7 @@ import java.util.function.Consumer;
 @Data
 public class SkyblockPlayer {
 
+    private static int EVERY_SECOND = 20;
     public static HashMap<UUID, SkyblockPlayer> playerRegistry = new HashMap<>();
 
     public static SkyblockPlayer getPlayer(Player player) {
@@ -32,12 +35,25 @@ public class SkyblockPlayer {
     private HashMap<SkyblockStat, Integer> stats;
     private FileConfiguration config;
     private File configFile;
+    private Scoreboard board;
+    private int tick;
 
     public SkyblockPlayer(UUID uuid) {
         bukkitPlayer = Bukkit.getPlayer(uuid);
         stats = new HashMap<>();
+        tick = 0;
 
         initConfig();
+    }
+
+    public void tick() {
+        if (board == null) board = new HubScoreboard(getBukkitPlayer());
+
+        if (tick % EVERY_SECOND == 0) {
+            board.updateScoreboard();
+        }
+
+        tick++;
     }
 
     public int getStat(SkyblockStat stat) { return stats.get(stat); }

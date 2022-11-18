@@ -66,7 +66,7 @@ public final class Skyblock extends JavaPlugin {
     public void registerListeners() {
         registerListener(new BlockBreakListener());
         registerListener(new HungerListener());
-        registerListener(new PlayerListener());
+        registerListener(new PlayerListener(this));
         registerListener(new SkyblockMenuListener(this));
         registerListener(new PlayerJoinListener());
         registerListener(new CollectionListener());
