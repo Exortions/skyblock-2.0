@@ -284,7 +284,7 @@ public class SkyblockMenuListener implements Listener {
     public void onSkyblockMenuOpen(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR)) return;
+        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR) || player.getItemInHand().getItemMeta().getDisplayName() == null) return;
 
         if (player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NAME)) skyblock.getGuiHandler().show("skyblock_menu", player);
     }
