@@ -15,7 +15,8 @@
         "10000;Enchanted Book (Thorns II)",
         "25000;Enchanted Cactus",
         "50000;+5,000 Farming Experience"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Carrot",
@@ -31,7 +32,8 @@
         "25000;Enchanted Golden Carrot",
         "50000;Superb Carrot Candy",
         "100000;Mega Catching Egg"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Cocoa Beans",
@@ -101,7 +103,8 @@
         "50000;+5000 Farming Experience",
         "100000;+10000 Farming Experience",
         "250000;+25000 Farming Experience"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Mushroom",
@@ -178,6 +181,7 @@
     {
       "name": "Pumpkin",
       "material": "PUMPKIN",
+      "data": 0,
       "rewards": [
         "40;Pumpkin Minion",
         "100;Pumpkin Armor Set",

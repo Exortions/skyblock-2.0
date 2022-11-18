@@ -93,8 +93,8 @@ public class CollectionCommand implements Command {
             inventory.setItem(49, Util.buildCloseButton());
 
             player.openInventory(inventory);
-        } else if (Collection.getCollections().stream().anyMatch(col -> col.getName().equalsIgnoreCase(inv))) {
-            Collection collection = Collection.getCollections().stream().filter(col -> col.getName().equalsIgnoreCase(inv)).findFirst().get();
+        } else if (Collection.getCollections().stream().anyMatch(col -> col.getName().replace(" ", "_").equalsIgnoreCase(inv))) {
+            Collection collection = Collection.getCollections().stream().filter(col -> col.getName().replace(" ", "_").equalsIgnoreCase(inv)).findFirst().get();
 
             inventory = Bukkit.createInventory(null, 54, collection.getName() + " Collection");
 

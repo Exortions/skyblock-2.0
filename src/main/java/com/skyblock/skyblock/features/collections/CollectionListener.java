@@ -56,10 +56,12 @@ public class CollectionListener implements Listener {
         possibleInventories.remove(0);
 
         if (possibleInventories.contains(event.getInventory().getName())) {
-            if (item.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) player.performCommand("sb collection");
+            if (item.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back"))
+                player.performCommand("sb collection");
 
-            if (Collection.getCollections().stream().anyMatch(col -> col.getMaterial().equals(item.getType())))
-                player.performCommand("sb collection " + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase());
+            if (Collection.getCollections().stream().anyMatch(col -> col.getMaterial().equals(item.getType()))) {
+                player.performCommand("sb collection " + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase().replace(" ", "_"));
+            }
         }
 
         event.setCancelled(true);

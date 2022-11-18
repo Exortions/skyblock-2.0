@@ -8,6 +8,7 @@ import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
+import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
@@ -41,6 +42,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeGameRules();
         this.initializeNEUItems();
 
+        this.registerCollections();
         this.registerGuis();
         this.registerMobs();
 
@@ -61,8 +63,12 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler.registerGuiCommand("collection", "sb collection");
     }
 
-    private void registerMobs() {
+    public void registerMobs() {
         this.entityHandler = new SkyblockEntityHandler();
+    }
+
+    public void registerCollections() {
+        if (!Collection.INITIALIZED) Collection.initializeCollections(this);
     }
 
     public void registerListeners() {

@@ -35,6 +35,8 @@ public class CollectionRewards {
 
     public void reward(Player player, int reward) {
         for (Reward r : this.getReward(reward)) {
+            if (r.getCommand() == null) return;
+
             player.performCommand(r.getCommand());
         }
     }
@@ -43,7 +45,7 @@ public class CollectionRewards {
         List<String> list = new ArrayList<>();
 
         for (Reward reward : this.getReward(tier)) {
-            list.add("  " + reward.getName());
+            list.add("&7  " + reward.getName());
         }
 
         return list;
