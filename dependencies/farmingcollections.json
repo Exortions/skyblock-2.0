@@ -1,16 +1,21 @@
 {
-  "Collections": [
+  "category": "Farming",
+  "collections": [
     {
-      "ID": "Cocoa Beans",
-      "I": "75;Cocoa Beans Minion",
-      "II": "200;+20 Farming Experience",
-      "III": "500;Portal to Mushroom Desert",
-      "IV": "2000;Enchanted",
-      "V": "5000;Cocoa Bean Travel Scroll to Mushroom Desert",
-      "VI": "10000;Enchanted Cookie",
-      "VII": "20000;Adrenaline Potion",
-      "VIII": "50000;Enchanted Book (Replenish I)",
-      "IX": "100000;+10000 Farming Experience"
+      "name": "Cocoa Beans",
+      "material": "",
+      "data": 0,
+      "rewards": [
+          "75;Cocoa Beans Minion",
+          "200;+20 Farming Experience",
+          "500;Portal to Mushroom Desert",
+          "2000;Enchanted",
+          "5000;Cocoa Bean Travel Scroll to Mushroom Desert",
+          "10000;Enchanted Cookie",
+          "20000;Adrenaline Potion",
+          "50000;Enchanted Book (Replenish I)",
+          "100000;+10000 Farming Experience"
+      ]
     },
     {
       "ID": "Feather",
