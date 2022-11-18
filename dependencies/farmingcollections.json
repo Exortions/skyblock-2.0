@@ -3,18 +3,21 @@
   "collections": [
     {
       "name": "Cocoa Beans",
-      "material": "",
-      "data": 0,
+      "material": "INK_SACK",
+      "data": 3,
       "rewards": [
-          "75;Cocoa Beans Minion",
-          "200;+20 Farming Experience",
-          "500;Portal to Mushroom Desert",
-          "2000;Enchanted",
-          "5000;Cocoa Bean Travel Scroll to Mushroom Desert",
-          "10000;Enchanted Cookie",
-          "20000;Adrenaline Potion",
-          "50000;Enchanted Book (Replenish I)",
-          "100000;+10000 Farming Experience"
+        "75;Cocoa Beans Minion",
+        "200;+20 Farming Experience",
+        "500;Portal to Mushroom Desert",
+        "2000;Enchanted",
+        "5000;Cocoa Bean Travel Scroll to Mushroom Desert",
+        "10000;Enchanted Cookie",
+        "20000;Adrenaline Potion",
+        "50000;Enchanted Book (Replenish I)",
+        "100000;+10000 Farming Experience"
+      ],
+      "commands": [
+        "sb unlockminion cocoa_bean"
       ]
     },
     {
