@@ -27,6 +27,7 @@ public class ItemBrowserCommand implements Command {
     public void execute(Player player, String[] args, Skyblock plugin) {
         List<ItemStack> items = new ArrayList<>();
         String command;
+        String backCommand;
 
         try {
             int page = Integer.parseInt(args[0]) - 1;
@@ -40,12 +41,14 @@ public class ItemBrowserCommand implements Command {
                 }
 
                 command = "sb itembrowser " + (page + 2) + query;
+                backCommand = "sb itembrowser " + (page) + query;
             } else {
                 for (Map.Entry<String, ItemStack> entry : plugin.getItemHandler().getItems().entrySet()) {
                     items.add(entry.getValue());
                 }
 
                 command = "sb itembrowser " + (page + 2);
+                backCommand = "sb itembrowser " + (page);
             }
 
             Gui itemBrowser = new Gui("ItemBrowser", 54, new HashMap<>());
@@ -74,9 +77,19 @@ public class ItemBrowserCommand implements Command {
 
             itemBrowser.addItem(53, new ItemBuilder(ChatColor.GREEN + "Next Page", Material.ARROW).toItemStack());
             itemBrowser.clickEvents.put(ChatColor.GREEN + "Next Page", () -> {
+                player.closeInventory();
                 player.performCommand(command);
                 itemBrowser.clickEvents.clear();
             });
+
+            if (page != 0) {
+                itemBrowser.addItem(45, new ItemBuilder(ChatColor.GREEN + "Previous Page", Material.ARROW).toItemStack());
+                itemBrowser.clickEvents.put(ChatColor.GREEN + "Previous Page", () -> {
+                    player.closeInventory();
+                    player.performCommand(backCommand);
+                    itemBrowser.clickEvents.clear();
+                });
+            }
 
             itemBrowser.show(player);
         } catch (NumberFormatException e) {
