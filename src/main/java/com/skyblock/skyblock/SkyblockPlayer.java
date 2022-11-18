@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class SkyblockPlayer {
 
     private Player bukkitPlayer;
     private HashMap<SkyblockStat, Integer> stats;
+    private HashMap<String, Boolean> cooldowns;
     private FileConfiguration config;
     private File configFile;
     private Scoreboard board;
@@ -39,6 +41,7 @@ public class SkyblockPlayer {
 
     public SkyblockPlayer(UUID uuid) {
         bukkitPlayer = Bukkit.getPlayer(uuid);
+        cooldowns = new HashMap<>();
         stats = new HashMap<>();
         tick = 0;
 
@@ -61,6 +64,25 @@ public class SkyblockPlayer {
         stats.put(stat, val);
 
         setValue(stat.name(), val);
+    }
+
+    public boolean getCooldown(String id) {
+        if (!cooldowns.containsKey(id)) {
+            cooldowns.put(id, true);
+        }
+
+        return cooldowns.get(id);
+    }
+
+    public void setCooldown(String id, int secondsDelay) {
+        cooldowns.put(id, false);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                cooldowns.put(id, true);
+            }
+        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), 40);
     }
 
     public void addStat(SkyblockStat stat, int val) {

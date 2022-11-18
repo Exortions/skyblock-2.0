@@ -10,6 +10,7 @@ import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
+import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
@@ -28,6 +29,7 @@ public final class Skyblock extends JavaPlugin {
 
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
+    private SkyblockItemHandler skyblockItemHandler;
     private GuiHandler guiHandler;
     private SkyblockEntityHandler entityHandler;
 
@@ -70,6 +72,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new SkyblockMenuListener(this));
         registerListener(new PlayerJoinListener());
         registerListener(new CollectionListener());
+        registerListener(new ItemListener(this));
     }
 
     public void registerListener(Listener listener) {
@@ -105,6 +108,8 @@ public final class Skyblock extends JavaPlugin {
     public void initializeNEUItems() {
         this.itemHandler = new ItemHandler(this);
         this.itemHandler.init();
+
+        this.skyblockItemHandler = new SkyblockItemHandler(this);
     }
 
     public void sendMessage(String message) {
