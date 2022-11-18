@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.scoreboard;
+package com.skyblock.skyblock.features.scoreboard;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import org.bukkit.Bukkit;

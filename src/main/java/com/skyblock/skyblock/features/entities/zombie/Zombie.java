@@ -1,9 +1,8 @@
-package com.skyblock.skyblock.entities.zombie;
+package com.skyblock.skyblock.features.entities.zombie;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.entities.SkyblockEntity;
+import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
