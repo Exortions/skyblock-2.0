@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.collections;
 
+import com.skyblock.skyblock.SkyblockPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,7 +10,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +56,27 @@ public class CollectionListener implements Listener {
         possibleInventories.remove(0);
 
         if (possibleInventories.contains(event.getInventory().getName())) {
-            if (item.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back"))
-                player.performCommand("sb collection");
+            if (item.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
+                Collection collection = null;
+
+                for (Collection col : Collection.getCollections()) {
+                    if (col.getName().equalsIgnoreCase(event.getInventory().getName().replace(" Collection", "")))
+                        collection = col;
+                }
+
+                if (collection == null) player.performCommand("sb collection");
+                else player.performCommand("sb collection " + collection.getCategory().toLowerCase());
+            }
 
             if (Collection.getCollections().stream().anyMatch(col -> col.getMaterial().equals(item.getType()))) {
+                if (new SkyblockPlayer(player.getUniqueId()).getValue("collection." + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase() + ".unlocked").equals(false)) {
+                    player.sendMessage(ChatColor.RED + "You have not unlocked this collection yet!");
+
+                    event.setCancelled(true);
+
+                    return;
+                }
+
                 player.performCommand("sb collection " + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase().replace(" ", "_"));
             }
         }
