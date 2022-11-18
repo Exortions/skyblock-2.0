@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,9 +72,21 @@ public class Collection {
     public static List<Collection> getCollections() {
         List<Collection> collections = new ArrayList<>();
 
-        collections.add(new Collection("Carrot", Material.CARROT_ITEM, "Farming", 9, new CollectionRewards(new CollectionRewards.Reward(ChatColor.BLUE + "Carrot Minion " + ChatColor.GRAY + " Recipes", "sb recipe carrot_minion", 1), new CollectionRewards.Reward(ChatColor.GREEN + "Simple Carrot Candy" + ChatColor.GRAY + " Recipe", "sb recipe simple_carrot_candy", 2)), 100, 250, 500, 1700, 5000, 10000, 25000, 50000, 100000));
+        collections.add(new Collection("Carrot", Material.CARROT_ITEM, "Farming", 9, new CollectionRewards(new CollectionRewards.Reward(ChatColor.BLUE + "Carrot Minion" + ChatColor.GRAY + " Recipes", "sb recipe carrot_minion", 1), new CollectionRewards.Reward(ChatColor.GREEN + "Simple Carrot Candy" + ChatColor.GRAY + " Recipe", "sb recipe simple_carrot_candy", 2)), 100, 250, 500, 1700, 5000, 10000, 25000, 50000, 100000));
 
         return collections;
+    }
+
+    public static List<CollectionCategory> getCollectionCategories() {
+        List<CollectionCategory> categories = new ArrayList<>();
+
+        categories.add(new CollectionCategory("Farming", Material.GOLD_HOE));
+        categories.add(new CollectionCategory("Mining", Material.STONE_PICKAXE));
+        categories.add(new CollectionCategory("Combat", Material.STONE_SWORD));
+        categories.add(new CollectionCategory("Foraging", Material.SAPLING, (short) 3));
+        categories.add(new CollectionCategory("Fishing", Material.FISHING_ROD));
+
+        return categories;
     }
 
 }

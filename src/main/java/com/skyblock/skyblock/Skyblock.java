@@ -2,6 +2,7 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
+import com.skyblock.skyblock.commands.menu.CollectionCommand;
 import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
@@ -52,6 +53,8 @@ public final class Skyblock extends JavaPlugin {
 
     public void registerGuis() {
         this.guiHandler = new GuiHandler(this);
+
+        this.guiHandler.registerGuiCommand("collection", "sb collection");
     }
 
     public void registerListeners() {
@@ -77,19 +80,20 @@ public final class Skyblock extends JavaPlugin {
                 new ItemDataCommand(),
                 new ReforgeCommand(),
                 new ItemBrowserCommand(),
-                new GuiCommand()
+                new GuiCommand(),
+                new CollectionCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
     }
 
     public void initializeGameRules() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doDaylightCycle false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doWeatherCycle false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doFireTick false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doMobSpawning false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doMobLoot false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/gamerule doTileDrops false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doDaylightCycle false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doWeatherCycle false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doTileDrops false");
     }
 
     public void initializeNEUItems() {

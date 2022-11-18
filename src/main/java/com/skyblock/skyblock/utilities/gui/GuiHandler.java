@@ -7,12 +7,14 @@ import java.util.HashMap;
 
 public class GuiHandler {
 
+    private final HashMap<String, String> guiCommands;
     private final HashMap<String, Gui> guis;
     private final Skyblock skyblock;
 
     public GuiHandler(Skyblock skyblock) {
         this.skyblock = skyblock;
         this.guis = new HashMap<>();
+        this.guiCommands = new HashMap<>();
     }
 
     public void registerGui(String name, Gui gui) {
@@ -25,10 +27,15 @@ public class GuiHandler {
 
     public void show(String name, Player player) {
         Gui gui = this.guis.get(name);
+        String command = this.guiCommands.get(name);
 
-        if (gui == null) return;
+        if (gui == null && command == null) return;
 
-        gui.show(player);
+        if (gui != null) {
+            gui.show(player);
+        } else {
+            player.performCommand(command);
+        }
     }
 
     public void hide(String name, Player player) {
@@ -37,6 +44,10 @@ public class GuiHandler {
         if (gui == null) return;
 
         gui.hide(player);
+    }
+
+    public void registerGuiCommand(String name, String command) {
+        this.guiCommands.put(name, command);
     }
 
 }
