@@ -43,7 +43,7 @@ public class CollectionRewards {
         List<String> list = new ArrayList<>();
 
         for (Reward reward : this.getReward(tier)) {
-            list.add("    " + reward.getName());
+            list.add("  " + reward.getName());
         }
 
         return list;

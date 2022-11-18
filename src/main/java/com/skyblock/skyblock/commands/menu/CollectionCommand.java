@@ -19,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -57,11 +58,14 @@ public class CollectionCommand implements Command {
 
             inventory.setItem(4, new ItemBuilder(ChatColor.GREEN + "Collection", Material.ITEM_FRAME).addLore(Util.buildLore("&7View all of the items available\n&7in SkyBlock. Collect more of an\n&7item to unlock rewards on your\n&7way to becoming the master of\n&7SkyBlock!\n\n&7Collection Unlocked: &e" + collectionPercentage + "&6%\n" + bar + " &e" + collectionUnlocked + "&6/&e" + collectionTotal + "\n\n&eClick to show rankings!")).toItemStack());
 
-            inventory.setItem(20, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(0)));
-            inventory.setItem(21, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(1)));
-            inventory.setItem(22, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(2)));
-            inventory.setItem(23, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(3)));
-            inventory.setItem(24, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(4)));
+            inventory.setItem(20, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(0), true));
+            inventory.setItem(21, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(1), true));
+            inventory.setItem(22, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(2), true));
+            inventory.setItem(23, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(3), true));
+            inventory.setItem(24, generateCollectionCategory(skyblockPlayer, Collection.getCollectionCategories().get(4), true));
+
+            inventory.setItem(48, Util.buildBackButton());
+            inventory.setItem(49, Util.buildCloseButton());
 
             player.openInventory(inventory);
 
@@ -73,17 +77,43 @@ public class CollectionCommand implements Command {
         if (Collection.getCollectionCategories().stream().anyMatch(cat -> cat.getName().equalsIgnoreCase(inv))) {
             CollectionCategory category = Collection.getCollectionCategories().stream().filter(cat -> cat.getName().equalsIgnoreCase(inv)).findFirst().get();
 
-            inventory = Bukkit.createInventory(null, 54, category.getName());
+            List<Collection> collections = Collection.getCollections().stream().filter(col -> col.getCategory().equals(category.getName())).collect(Collectors.toList());
 
-            fillEmpty(inventory);
+            inventory = Bukkit.createInventory(null, 54, category.getName() + " Collection");
+
+            fillBorder(inventory);
+
+            inventory.setItem(4, generateCollectionCategory(skyblockPlayer, category, false));
+
+            for (Collection collection : collections) {
+                inventory.addItem(generateCollectionItem(skyblockPlayer, collection, false));
+            }
+
+            inventory.setItem(48, Util.buildBackButton());
+            inventory.setItem(49, Util.buildCloseButton());
 
             player.openInventory(inventory);
         } else if (Collection.getCollections().stream().anyMatch(col -> col.getName().equalsIgnoreCase(inv))) {
             Collection collection = Collection.getCollections().stream().filter(col -> col.getName().equalsIgnoreCase(inv)).findFirst().get();
 
-            inventory = Bukkit.createInventory(null, 54, collection.getName());
+            inventory = Bukkit.createInventory(null, 54, collection.getName() + " Collection");
 
             fillEmpty(inventory);
+
+            inventory.setItem(4, generateCollectionItem(skyblockPlayer, collection, true));
+
+            List<ItemStack> levelPanes = new ArrayList<>();
+
+            for (int i = 0; i < collection.getMaxLevel(); i++) {
+                levelPanes.add(generateCollectionLevel(skyblockPlayer, collection, i));
+            }
+
+            for (int i = 0; i < levelPanes.size(); i++) {
+                inventory.setItem(18 + i, levelPanes.get(i));
+            }
+
+            inventory.setItem(48, Util.buildBackButton());
+            inventory.setItem(49, Util.buildCloseButton());
 
             player.openInventory(inventory);
         } else {
@@ -92,11 +122,129 @@ public class CollectionCommand implements Command {
 
     }
 
+    private ItemStack generateCollectionLevel(SkyblockPlayer skyblockPlayer, Collection collection, int i) {
+        int currentLevel = 0;
+        int currentExp = 0;
+        int nextLevel = currentLevel + 1;
+        int requiredExp = 0;
+
+        if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level") != null) {
+            currentLevel = (int) skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level") + 1;
+            currentExp = (int) skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".exp");
+            requiredExp = collection.getLevelToExp().get(i);
+        }
+
+        ChatColor color;
+        int stainedGlassPaneColor;
+
+        if (currentLevel == i + 1) {
+            color = ChatColor.YELLOW;
+            stainedGlassPaneColor = 4;
+        } else if (currentLevel > i + 1) {
+            color = ChatColor.GREEN;
+            stainedGlassPaneColor = 5;
+        } else {
+            color = ChatColor.RED;
+            stainedGlassPaneColor = 14;
+        }
+
+        ItemBuilder builder = new ItemBuilder(color + collection.getName() + " " + Util.toRoman(i + 1), Material.STAINED_GLASS_PANE, (short) stainedGlassPaneColor);
+
+        builder.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+        double percentage = Math.round((double) currentExp / (double) requiredExp * 1000) / 10.0;
+
+        double barMax = 20;
+        double barCharPerPercent = 5;
+
+        int barFilled = (int) Math.round(percentage / barCharPerPercent);
+
+        int barEmpty = (int) (barMax - barFilled);
+
+        if (barFilled > barMax) barFilled = (int) barMax;
+
+        if (percentage > 100) percentage = 100;
+
+        String bar = "&2" + StringUtils.repeat("-", barFilled) + "&7" + StringUtils.repeat("-", barEmpty);
+
+        List<String> rewards = collection.getRewards().stringify(i + 1);
+
+        if (rewards.size() == 0) rewards.add("  &cComing soon");
+
+        String rewardsString = String.join("\n", rewards);
+
+        builder.addLore(
+                Util.buildLore("\n&7Progress: &e" + percentage + "&6%\n" + bar + " &e" + currentExp + "&6/&e" + requiredExp + "\n\n&7Rewards:\n" + rewardsString + "\n\n&eClick to view rewards!")
+        );
+
+        return builder.toItemStack();
+    }
+
+    private ItemStack generateCollectionItem(SkyblockPlayer skyblockPlayer, Collection collection, boolean inItemMenu) {
+        if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".unlocked").equals(false)) return new ItemBuilder(ChatColor.RED + collection.getName(), Material.INK_SACK, (short) 8).addLore(Util.buildLore("&7Find this item to add it to your\n&7collection and unlock collection\n&7rewards!")).toItemStack();
+
+        ItemBuilder builder = new ItemBuilder(ChatColor.YELLOW + collection.getName(), collection.getMaterial(), collection.getData());
+
+        builder.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+        int currentLevel = 0;
+        int currentExp = 0;
+        int nextLevel = currentLevel + 1;
+        int requiredExp = 0;
+
+        if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level") != null) {
+            currentLevel = (int) skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level");
+            currentExp = (int) skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".exp");
+            nextLevel = currentLevel + 1;
+            requiredExp = collection.getLevelToExp().get(currentLevel);
+        }
+
+        String nameSuffix = currentLevel == 0 ? "" : " " + Util.toRoman(currentLevel);
+
+        builder.setDisplayName(ChatColor.YELLOW + collection.getName() + nameSuffix);
+
+        double percentage = Math.round((double) currentExp / (double) requiredExp * 1000) / 10.0;
+
+        double barMax = 20;
+        double barCharPerPercent = 5;
+
+        int barFilled = (int) Math.round(percentage / barCharPerPercent);
+
+        int barEmpty = (int) (barMax - barFilled);
+
+        String bar = "&2" + StringUtils.repeat("-", barFilled) + "&7" + StringUtils.repeat("-", barEmpty);
+
+        builder.addLore(
+                Util.buildLore("&7View all of your " + collection.getName() + " Collection\n&7progress and rewards!")
+        );
+
+        if (!inItemMenu) {
+            builder.addLore(
+                    Util.buildLore("\n\n&7Progress to " + collection.getName() + " " + Util.toRoman(nextLevel) + ": &e" + percentage + "&6%\n" + bar + " &e" + currentExp + "&6/&e" + requiredExp + "\n\n&eClick to view!")
+            );
+        } else {
+            builder.setDisplayName(ChatColor.YELLOW + collection.getName() + " Collection");
+
+            builder.addLore(
+                    Util.buildLore("\n&7Total Collected: &e" + currentExp)
+            );
+        }
+
+        return builder.toItemStack();
+    }
+
     public void fillEmpty(Inventory inventory) {
         for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
     }
 
-    public ItemStack generateCollectionCategory(SkyblockPlayer player, CollectionCategory category) {
+    public void fillBorder(Inventory inventory) {
+        for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
+        for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
+        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
+        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
+    }
+
+    public ItemStack generateCollectionCategory(SkyblockPlayer player, CollectionCategory category, boolean clickToView) {
         ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + category.getName() + " Collection", category.getIcon()).setDamage(category.getData());
 
         builder.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -122,8 +270,10 @@ public class CollectionCommand implements Command {
         String bar = "&2" + StringUtils.repeat("-", barFilled) + "&7" + StringUtils.repeat("-", barEmpty);
 
         builder.addLore(
-                Util.buildLore("&7View your " + category.getName() + " collection!\n\n&7Collection Unlocked: &e" + percentUnlocked + "&6%\n" + bar + " &e" + unlocked + "&6/&e" + total + "\n\n&eClick to view!")
+                Util.buildLore("&7View your " + category.getName() + " collection!\n\n&7Collection Unlocked: &e" + percentUnlocked + "&6%\n" + bar + " &e" + unlocked + "&6/&e" + total)
         );
+
+        if (clickToView) builder.addLore(Util.buildLore("\n&eClick to view!"));
 
         return builder.toItemStack();
     }

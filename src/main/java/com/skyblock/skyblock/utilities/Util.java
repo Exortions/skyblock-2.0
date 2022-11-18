@@ -53,7 +53,7 @@ public class Util {
         return new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack();
     }
 
-    public ItemStack generateBackButton() {
+    public ItemStack buildBackButton() {
         return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack();
     }
 

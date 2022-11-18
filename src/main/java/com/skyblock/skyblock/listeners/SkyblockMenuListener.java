@@ -240,63 +240,39 @@ public class SkyblockMenuListener implements Listener {
 
         switch (name) {
             case "Your SkyBlock Profile":
-                player.sendMessage("Your SkyBlock Profile");
-
                 skyblock.getGuiHandler().show("profile", player);
                 break;
             case "Your Skills":
-                player.sendMessage("Your Skills");
-
                 skyblock.getGuiHandler().show("skills", player);
                 break;
             case "Collection":
-                player.sendMessage("Collection");
-
                 skyblock.getGuiHandler().show("collection", player);
                 break;
             case "Recipe Book":
-                player.sendMessage("Recipe Book");
-
                 skyblock.getGuiHandler().show("recipe_book", player);
                 break;
             case "Trades":
-                player.sendMessage("Trades");
-
                 skyblock.getGuiHandler().show("trades", player);
                 break;
             case "Quest Log":
-                player.sendMessage("Quest Log");
-
                 skyblock.getGuiHandler().show("quest_log", player);
                 break;
             case "Calendar and Events":
-                player.sendMessage("Calendar and Events");
-
                 skyblock.getGuiHandler().show("calendar_and_events", player);
                 break;
             case "Ender Chest":
-                player.sendMessage("Ender Chest");
-
                 skyblock.getGuiHandler().show("ender_chest", player);
                 break;
             case "Settings":
-                player.sendMessage("Settings");
-
                 skyblock.getGuiHandler().show("settings", player);
                 break;
             case "Active Effects":
-                player.sendMessage("Active Effects");
-
                 skyblock.getGuiHandler().show("active_effects", player);
                 break;
             case "Pets":
-                player.sendMessage("Pets");
-
                 skyblock.getGuiHandler().show("pets", player);
                 break;
             case "Crafting Table":
-                player.sendMessage("Crafting Table");
-
                 skyblock.getGuiHandler().show("crafting_table", player);
                 break;
             default:

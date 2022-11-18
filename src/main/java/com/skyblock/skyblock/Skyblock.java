@@ -8,7 +8,7 @@ import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
-import com.skyblock.skyblock.entities.SkyblockEntityHandler;
+import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.command.CommandHandler;

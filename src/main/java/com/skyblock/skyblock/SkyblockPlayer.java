@@ -2,9 +2,8 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
-import com.skyblock.skyblock.scoreboard.HubScoreboard;
-import com.skyblock.skyblock.scoreboard.Scoreboard;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
+import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
