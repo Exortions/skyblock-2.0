@@ -8,6 +8,7 @@ import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
+import com.skyblock.skyblock.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -28,6 +29,7 @@ public final class Skyblock extends JavaPlugin {
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
     private GuiHandler guiHandler;
+    private SkyblockEntityHandler entityHandler;
 
     @Override
     public void onEnable() {
@@ -38,6 +40,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeNEUItems();
 
         this.registerGuis();
+        this.registerMobs();
 
         this.registerListeners();
         this.registerCommands();
@@ -45,7 +48,6 @@ public final class Skyblock extends JavaPlugin {
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + (end - start) + "ms.");
     }
-
     @Override
     public void onDisable() {
         sendMessage("Disabled Skyblock!");
@@ -55,6 +57,10 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler = new GuiHandler(this);
 
         this.guiHandler.registerGuiCommand("collection", "sb collection");
+    }
+
+    private void registerMobs() {
+        this.entityHandler = new SkyblockEntityHandler();
     }
 
     public void registerListeners() {
