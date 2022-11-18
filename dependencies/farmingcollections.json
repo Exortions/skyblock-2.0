@@ -2,7 +2,7 @@
   "category": "Farming",
   "collections": [
     {
-      "name": "Cocoa Beans",
+      "name": "Cocoa Bean",
       "material": "INK_SACK",
       "data": 3,
       "rewards": [
