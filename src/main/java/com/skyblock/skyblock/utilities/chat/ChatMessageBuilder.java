@@ -3,6 +3,7 @@ package com.skyblock.skyblock.utilities.chat;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,22 +11,24 @@ public class ChatMessageBuilder {
 
     private final List<String> messages;
 
-    public ChatMessageBuilder(List<String> messages) {
-        this.messages = messages;
+    public ChatMessageBuilder() {
+        this.messages = new ArrayList<>();
     }
 
     public ChatMessageBuilder add(ChatColor color, String message) {
-        Arrays.stream(message.split("\n")).forEach(s -> this.messages.add(color + s));
+        Arrays.stream(ChatColor.translateAlternateColorCodes('&', message).split("\n")).forEach(s -> this.messages.add(color + s));
         return this;
     }
 
     public ChatMessageBuilder add(String message) {
-        this.messages.addAll(Arrays.asList(message.split("\n")));
+        this.messages.addAll(Arrays.asList(ChatColor.translateAlternateColorCodes('&', message).split("\n")));
         return this;
     }
 
     public ChatMessageBuilder add(String... messages) {
-        this.messages.addAll(Arrays.asList(messages));
+        for (String message : messages) {
+            this.messages.addAll(Arrays.asList(ChatColor.translateAlternateColorCodes('&', message).split("\n")));
+        }
         return this;
     }
 
