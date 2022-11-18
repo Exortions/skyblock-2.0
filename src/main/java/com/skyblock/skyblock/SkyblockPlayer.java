@@ -102,6 +102,7 @@ public class SkyblockPlayer {
                 for (Collection collection : Collection.getCollections()) {
                     config.set("collection." + collection.getName().toLowerCase() + ".level", 0);
                     config.set("collection." + collection.getName().toLowerCase() + ".exp", 0);
+                    config.set("collection." + collection.getName().toLowerCase() + ".unlocked", false);
                 }
 
                 config.save(configFile);

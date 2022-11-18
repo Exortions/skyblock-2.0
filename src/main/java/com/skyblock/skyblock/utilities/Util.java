@@ -1,6 +1,10 @@
 package com.skyblock.skyblock.utilities;
 
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.experimental.UtilityClass;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +43,18 @@ public class Util {
             return romanMap.get(number);
         }
         return romanMap.get(l) + toRoman(number - l);
+    }
+
+    public String[] buildLore(String lore) {
+        return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
+    }
+
+    public ItemStack buildCloseButton() {
+        return new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack();
+    }
+
+    public ItemStack generateBackButton() {
+        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack();
     }
 
 }
