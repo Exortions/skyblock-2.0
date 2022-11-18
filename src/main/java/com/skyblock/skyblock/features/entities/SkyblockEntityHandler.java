@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.entities;
+package com.skyblock.skyblock.features.entities;
 
 import org.bukkit.entity.Entity;
 
