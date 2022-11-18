@@ -34,7 +34,7 @@ public class HubScoreboard extends Scoreboard {
         addLine(6, ChatColor.GRAY + " " + hours + ":" + minutes + "pm " + ChatColor.YELLOW + "☀");
         addLine(5, ChatColor.WHITE + " ⏣ " + ChatColor.GRAY + "None");
         addLine(4, ChatColor.WHITE + " ");
-        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("purse")));
+        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
         addLine(2, ChatColor.WHITE + "  ");
         addLine(1, ChatColor.YELLOW + "www.hypixel.net");
     }
