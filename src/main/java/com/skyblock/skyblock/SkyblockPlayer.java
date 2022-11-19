@@ -165,21 +165,18 @@ public class SkyblockPlayer {
         subtractStat(SkyblockStat.MANA, mana);
     }
 
+    // hearts = max * (health / max)
     public void damage(double damage, EntityDamageEvent.DamageCause cause, Entity attacker) {
         double d = (damage - (damage * ((getStat(SkyblockStat.DEFENSE) / (getStat(SkyblockStat.DEFENSE) + 100F)))));
-        double vanillaD = bukkitPlayer.getHealth() - (d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH)))) / 2F;
 
-        if ((getStat(SkyblockStat.HEALTH) - damage) <= 0 ||
-            bukkitPlayer.getHealth() - vanillaD <= 0) {
+        if ((getStat(SkyblockStat.HEALTH) - d) <= 0) {
             kill(cause, attacker);
             return;
         }
 
         Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d), true);
         setStat(SkyblockStat.HEALTH, (int) (getStat(SkyblockStat.HEALTH) - d));
-        bukkitPlayer.sendMessage("" + bukkitPlayer.getHealth())  ;
-        bukkitPlayer.sendMessage("" + (d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH)))) / 2);
-        bukkitPlayer.setHealth(vanillaD);
+        bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH)));
     }
 
     public void kill(EntityDamageEvent.DamageCause cause, Entity killer) {
@@ -190,8 +187,9 @@ public class SkyblockPlayer {
         bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.commaify(sub) + " coins!");
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
-        bukkitPlayer.teleport(new Location(bukkitPlayer.getWorld(), -2 , 70,  -84,  -180, 0));
         bukkitPlayer.setVelocity(new Vector(0, 0, 0));
+        bukkitPlayer.setFallDistance(0.0f);
+        bukkitPlayer.teleport(new Location(bukkitPlayer.getWorld(), -2 , 70,  -84,  -180, 0));
 
         setValue("stats.purse", sub);
     }
