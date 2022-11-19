@@ -220,7 +220,7 @@ public class CollectionCommand implements Command {
 
         if (!inItemMenu) {
             builder.addLore(
-                    Util.buildLore("\n\n&7Progress to " + collection.getName() + " " + Util.toRoman(nextLevel) + ": &e" + percentage + "&6%\n" + bar + " &e" + currentExp + "&6/&e" + requiredExp + "\n\n&eClick to view!")
+                    Util.buildLore("\n&7Progress to " + collection.getName() + " " + Util.toRoman(nextLevel) + ": &e" + percentage + "&6%\n" + bar + " &e" + currentExp + "&6/&e" + requiredExp + "\n\n&eClick to view!")
             );
         } else {
             builder.setDisplayName(ChatColor.YELLOW + collection.getName() + " Collection");
