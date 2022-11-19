@@ -82,7 +82,7 @@ public class HubScoreboard extends Scoreboard {
                 break;
         }
 
-        addLine(9, ChatColor.GRAY + "" + dateString + " " + "Skyblock");
+        addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
         addLine(8, ChatColor.GRAY + "   ");
         addLine(7, ChatColor.WHITE + " Spring 10th");
         addLine(6, ChatColor.GRAY + " " + hours + ":" + minutes + "pm " + ChatColor.YELLOW + "☀");
