@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class SkyblockPlayer {
         }
 
         if (tick % EVERY_THREE_SECONDS == 0) {
-            if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100)) {
+            if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH) / 100)) {
                 updateHealth((int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100));
             }else{
                 setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
@@ -102,7 +103,7 @@ public class SkyblockPlayer {
         }
 
         bukkitPlayer.setWalkSpeed(Math.min((float) (getStat(SkyblockStat.SPEED) / 500.0), 1.0f));
-        bukkitPlayer.setHealthScale(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0)));
+        bukkitPlayer.setMaxHealth(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0)));
 
         tick++;
     }
@@ -144,20 +145,14 @@ public class SkyblockPlayer {
         addStat(SkyblockStat.STRENGTH, mult * base.getStrength());
     }
 
-    private void updateHealth(int i){
-        try {
-            int hp = getStat(SkyblockStat.HEALTH);
-            int mhp = getStat(SkyblockStat.MAX_HEALTH);
+    private void updateHealth(int i) {
+        int hp = getStat(SkyblockStat.HEALTH);
+        int mhp = getStat(SkyblockStat.MAX_HEALTH);
 
-            if (bukkitPlayer.getHealth() <= bukkitPlayer.getMaxHealth()){
-                bukkitPlayer.setHealth(bukkitPlayer.getHealth() + i/(mhp/bukkitPlayer.getMaxHealth()));
-            }
-            setStat(SkyblockStat.HEALTH, hp + i);
-        } catch (IllegalArgumentException e) { }
-    }
-
-    public boolean willDie(double damage) {
-        return (getStat(SkyblockStat.HEALTH) - damage) <= 0;
+        if (bukkitPlayer.getHealth() <= bukkitPlayer.getMaxHealth()){
+            bukkitPlayer.setHealth(Math.min(bukkitPlayer.getMaxHealth(), bukkitPlayer.getHealth() + i/(mhp/bukkitPlayer.getMaxHealth())));
+        }
+        setStat(SkyblockStat.HEALTH, hp + i);
     }
 
     public boolean checkMana(int mana) {
@@ -172,15 +167,19 @@ public class SkyblockPlayer {
 
     public void damage(double damage, EntityDamageEvent.DamageCause cause, Entity attacker) {
         double d = (damage - (damage * ((getStat(SkyblockStat.DEFENSE) / (getStat(SkyblockStat.DEFENSE) + 100F)))));
+        double vanillaD = bukkitPlayer.getHealth() - (d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH)))) / 2F;
 
-        if (willDie(d)) {
+        if ((getStat(SkyblockStat.HEALTH) - damage) <= 0 ||
+            bukkitPlayer.getHealth() - vanillaD <= 0) {
             kill(cause, attacker);
             return;
         }
 
         Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d), true);
         setStat(SkyblockStat.HEALTH, (int) (getStat(SkyblockStat.HEALTH) - d));
-        bukkitPlayer.setHealth(bukkitPlayer.getHealth() - ((d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH))))));
+        bukkitPlayer.sendMessage("" + bukkitPlayer.getHealth())  ;
+        bukkitPlayer.sendMessage("" + (d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH)))) / 2);
+        bukkitPlayer.setHealth(vanillaD);
     }
 
     public void kill(EntityDamageEvent.DamageCause cause, Entity killer) {
@@ -192,6 +191,7 @@ public class SkyblockPlayer {
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         bukkitPlayer.teleport(new Location(bukkitPlayer.getWorld(), -2 , 70,  -84,  -180, 0));
+        bukkitPlayer.setVelocity(new Vector(0, 0, 0));
 
         setValue("stats.purse", sub);
     }

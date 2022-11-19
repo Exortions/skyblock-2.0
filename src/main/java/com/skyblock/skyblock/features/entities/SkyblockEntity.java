@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -119,6 +116,14 @@ public abstract class SkyblockEntity {
                             vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             living.setHealth(0);
+                        }
+
+                        if (getEntityData().isHostile) {
+                            for (Entity entity : getVanilla().getNearbyEntities(5, 2, 5)){
+                                if (entity instanceof Player && living instanceof Monster) {
+                                    ((Monster) living).setTarget((LivingEntity) entity);
+                                }
+                            }
                         }
 
                         lifeSpan--;

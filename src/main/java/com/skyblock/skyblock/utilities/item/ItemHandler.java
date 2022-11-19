@@ -66,6 +66,7 @@ public class ItemHandler {
                 meta.setDisplayName(displayName);
 
                 meta.setLore(lore);
+                meta.spigot().setUnbreakable(true);
 
                 item.setItemMeta(meta);
 

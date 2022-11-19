@@ -271,6 +271,8 @@ public class ItemBase {
 
         if (enchantGlint) meta.addEnchant(Enchantment.DURABILITY, 1, true);
 
+        meta.spigot().setUnbreakable(true);
+
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
