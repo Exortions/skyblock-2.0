@@ -27,6 +27,7 @@ public class ItemBase {
     private Material material;
     private String name;
     private String rarity;
+    private String skyblockId;
     private int amount;
 
     private ReforgeType reforgeType;
@@ -78,6 +79,7 @@ public class ItemBase {
         this.defense = nbt.getInteger("defense");
         this.damage = nbt.getInteger("damage");
         this.speed = nbt.getInteger("speed");
+        this.skyblockId = nbt.getString("skyblockId");
 
         String descriptionStr = nbt.getString("description");
         String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split(", ");
@@ -238,6 +240,7 @@ public class ItemBase {
         nbt.setInteger("intelligence", intelligence + reforgeType.getMana());
         nbt.setInteger("speed", speed + reforgeType.getSpeed());
         nbt.setInteger("defense", defense + reforgeType.getDefense());
+        nbt.setString("skyblockId", skyblockId);
 
         this.stack = nbt.getItem();
 

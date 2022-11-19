@@ -82,7 +82,7 @@ public class SkyblockPlayer {
             public void run() {
                 cooldowns.put(id, true);
             }
-        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), 40);
+        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), secondsDelay* 20L);
     }
 
     public void addStat(SkyblockStat stat, int val) {

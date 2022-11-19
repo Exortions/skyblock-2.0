@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.items;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheEnd;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -50,7 +51,8 @@ public class SkyblockItemHandler {
         if (item.getItemMeta() == null) return null;
 
         if (item.getItemMeta().hasDisplayName()) {
-            return items.get(ChatColor.stripColor(item.getItemMeta().getDisplayName().toLowerCase().replaceAll(" ", "_")));
+            NBTItem nbtItem = new NBTItem(item);
+            return items.get(nbtItem.getString("skyblockId"));
         }
 
         return null;

@@ -67,7 +67,10 @@ public class ItemHandler {
                 net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
                 nms.setTag(MojangsonParser.parse(nbt));
 
-                register(file.getName(), CraftItemStack.asBukkitCopy(nms));
+                NBTItem nbtItem = new NBTItem(CraftItemStack.asBukkitCopy(nms));
+                nbtItem.setString("skyblockId", file.getName().replace(".json", "").toLowerCase());
+
+                register(file.getName(), nbtItem.getItem());
             } catch (MojangsonParseException | ParseException | IOException e) {
                 throw new RuntimeException(e);
             }
