@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.entities;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -155,4 +156,12 @@ public abstract class SkyblockEntity {
     public void subtractHealth(long health) {
         setHealth(getEntityData().health - health);
     }
+
+    public void damage(long damage, SkyblockPlayer damager, boolean crit) {
+        this.subtractHealth(damage);
+        this.setLastDamager(damager);
+
+        Util.setDamageIndicator(this.vanilla.getLocation(), crit ? Util.addCritTexture(Math.round(damage)) : ChatColor.GRAY + "" + Math.round(damage), false);
+    }
+
 }

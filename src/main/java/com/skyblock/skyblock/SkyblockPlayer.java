@@ -212,6 +212,11 @@ public class SkyblockPlayer {
         return cooldowns.get(id);
     }
 
+
+    public boolean isOnCooldown(String id) {
+        return !getCooldown(id);
+    }
+
     public void setCooldown(String id, int secondsDelay) {
         cooldowns.put(id, false);
 

@@ -22,8 +22,8 @@ public class AspectOfTheEnd extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
+    public void onRightClick(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
@@ -39,9 +39,7 @@ public class AspectOfTheEnd extends SkyblockItem {
                 skyblockPlayer.addStat(SkyblockStat.SPEED, 50);
                 skyblockPlayer.setCooldown(getInternalName(), 3);
 
-                skyblockPlayer.delay(() -> {
-                    skyblockPlayer.subtractStat(SkyblockStat.SPEED, 50);
-                }, 3);
+                skyblockPlayer.delay(() -> skyblockPlayer.subtractStat(SkyblockStat.SPEED, 50), 3);
             }
 
             Util.sendAbility(skyblockPlayer, "Instant Transmission", 50);

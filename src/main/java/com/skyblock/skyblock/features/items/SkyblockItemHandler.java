@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
+import com.skyblock.skyblock.features.items.weapons.AspectOfTheDragons;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheEnd;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -19,8 +20,12 @@ public class SkyblockItemHandler {
     public SkyblockItemHandler(Skyblock plugin){
         items = new HashMap<>();
 
-        registerItem(new AspectOfTheEnd(plugin));
+        // Misc
         registerItem(new GrapplingHook(plugin));
+
+        // Weapons
+        registerItem(new AspectOfTheDragons(plugin));
+        registerItem(new AspectOfTheEnd(plugin));
     }
 
     public ArrayList<ItemStack> getItems() {

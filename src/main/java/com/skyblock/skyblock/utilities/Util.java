@@ -162,22 +162,22 @@ public class Util {
             new_string = "§f\u2726§e" + str + "§c\u2726";
         }
         if (str.length() == 2) {
-            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§c\u2726";
+            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§c\u2726";
         }
         if (str.length() == 3) {
-            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c\u2726";
+            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c\u2726";
         }
         if (str.length() == 4) {
-            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c" + String.valueOf(str.charAt(3)) + "\u2726";
+            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c" + str.charAt(3) + "\u2726";
         }
         if (str.length() == 5) {
-            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c" + String.valueOf(str.charAt(3)) + String.valueOf(str.charAt(4)) + "§f\u2726";
+            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c" + str.charAt(3) + str.charAt(4) + "§f\u2726";
         }
         if (str.length() == 6) {
-            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c" + String.valueOf(str.charAt(3)) + String.valueOf(str.charAt(4)) + String.valueOf(str.charAt(5)) + "§f\u2726";
+            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c" + str.charAt(3) + str.charAt(4) + str.charAt(5) + "§f\u2726";
         }
         if (str.length() == 7) {
-            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + String.valueOf(str.charAt(3)) + "§c" + String.valueOf(str.charAt(4)) + String.valueOf(str.charAt(5)) + String.valueOf(str.charAt(6)) + "§f\u2726";
+            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + str.charAt(3) + "§c" + str.charAt(4) + str.charAt(5) + str.charAt(6) + "§f\u2726";
         }
         return new_string;
     }

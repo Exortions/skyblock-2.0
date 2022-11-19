@@ -18,11 +18,11 @@ public class GrapplingHook extends ListeningItem {
     }
 
     @EventHandler
-    public void onFish(PlayerFishEvent e){
-        if (e.getState().equals(PlayerFishEvent.State.CAUGHT_ENTITY)
-            || e.getState().equals(PlayerFishEvent.State.FAILED_ATTEMPT)
-            || e.getState().equals(PlayerFishEvent.State.IN_GROUND)){
-            Player player = e.getPlayer();
+    public void onFish(PlayerFishEvent event){
+        if (event.getState().equals(PlayerFishEvent.State.CAUGHT_ENTITY)
+            || event.getState().equals(PlayerFishEvent.State.FAILED_ATTEMPT)
+            || event.getState().equals(PlayerFishEvent.State.IN_GROUND)){
+            Player player = event.getPlayer();
             if (player.getItemInHand() != null) {
                 if (player.getItemInHand().equals(getItem())) {
                     SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);

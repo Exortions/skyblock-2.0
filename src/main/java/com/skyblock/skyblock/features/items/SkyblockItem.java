@@ -18,13 +18,13 @@ public abstract class SkyblockItem {
         this.internalName = internalName;
     }
 
-    public void onRightClick(PlayerInteractEvent e){ }
+    public void onRightClick(PlayerInteractEvent event) { }
 
-    public void onLeftClick(PlayerInteractEvent e){ }
+    public void onLeftClick(PlayerInteractEvent event) { }
 
-    public void onBowShoot(EntityShootBowEvent e){ }
+    public void onBowShoot(EntityShootBowEvent event) { }
 
-    public void onEntityDamage(EntityDamageByEntityEvent e){ }
+    public void onEntityDamage(EntityDamageByEntityEvent event) { }
 
     /*
 
