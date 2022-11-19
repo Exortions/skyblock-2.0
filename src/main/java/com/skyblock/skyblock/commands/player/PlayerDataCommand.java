@@ -16,15 +16,23 @@ public class PlayerDataCommand implements Command {
 
     @Override
     public void execute(CommandSender sender, String[] args, Skyblock plugin) {
-        if (args.length == 3) {
-            Player target = Bukkit.getPlayer(args[0]);
+        if (args.length != 3) {
+            sender.sendMessage(plugin.getPrefix() + ChatColor.RED + "Usage: /sb playerdata <player> <path> <value>");
+            return;
+        }
 
-            if (target.isOnline()) {
-                SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(target);
-                skyblockPlayer.setValue(args[1], Integer.valueOf(args[2]));
-            }
-        } else {
-            sender.sendMessage(ChatColor.RED + "Invalid args");
+        Player target = Bukkit.getPlayer(args[0]);
+
+        if (target == null) {
+            sender.sendMessage(plugin.getPrefix() + ChatColor.RED + "Player not found");
+            return;
+        }
+
+        if (target.isOnline()) {
+            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(target);
+
+            if (args[2].equals("true") || args[2].equals("false")) skyblockPlayer.setValue(args[1], Boolean.parseBoolean(args[2]));
+            else skyblockPlayer.setValue(args[1], Integer.valueOf(args[2]));
         }
     }
 }
