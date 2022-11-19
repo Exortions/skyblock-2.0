@@ -207,4 +207,21 @@ public class Util {
         head.setItemMeta(headMeta);
         return head;
     }
+
+    public String getTimeDifferenceAndColor(long start, long end) {
+        return getColorBasedOnSize((end - start), 1, 2, 3) + "" + (end - start) + "ms";
+    }
+
+    public ChatColor getColorBasedOnSize(long num, int low, int med, int high) {
+        if (num <= low) {
+            return ChatColor.GREEN;
+        } else if (num <= med) {
+            return ChatColor.YELLOW;
+        } else if (num <= high) {
+            return ChatColor.RED;
+        } else {
+            return ChatColor.DARK_RED;
+        }
+    }
+
 }

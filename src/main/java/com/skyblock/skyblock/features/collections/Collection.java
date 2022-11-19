@@ -5,7 +5,6 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -93,7 +92,8 @@ public class Collection {
     }
 
     public static void initializeCollections(Skyblock skyblock) {
-        skyblock.sendMessage("Initializing collections...");
+        skyblock.sendMessage("Registering collections...");
+        long start = System.currentTimeMillis();
 
         Collection.INITIALIZED = true;
 
@@ -182,7 +182,7 @@ public class Collection {
             }
         }
 
-        skyblock.sendMessage("Initialized " + Collection.collections.size() + " collections");
+        skyblock.sendMessage("Successfully registered " + ChatColor.GREEN + Collection.collections.size() + ChatColor.WHITE + " collections [" + (System.currentTimeMillis() - start) + "ms]");
     }
 
     public static List<Collection> getCollections() {
