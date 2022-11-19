@@ -11,6 +11,8 @@ import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
+import com.skyblock.skyblock.commands.player.VisitCommand;
+import com.skyblock.skyblock.commands.player.WarpCommand;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
@@ -96,6 +98,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new PlayerJoinListener());
         registerListener(new CollectionListener());
         registerListener(new ItemListener(this));
+        registerListener(new VisitMenuListener());
     }
 
     public void registerListener(Listener listener) {
@@ -116,7 +119,9 @@ public final class Skyblock extends JavaPlugin {
                 new CollectionCommand(),
                 new MenuCommand(),
                 new PlayerDataCommand(),
-                new AddEnchantmentCommand()
+                new AddEnchantmentCommand(),
+                new WarpCommand(),
+                new VisitCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
