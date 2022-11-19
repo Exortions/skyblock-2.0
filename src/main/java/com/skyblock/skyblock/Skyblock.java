@@ -19,13 +19,16 @@ import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
+import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -40,12 +43,15 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockEntityHandler entityHandler;
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
+    private ServerData serverData;
     private GuiHandler guiHandler;
 
     @Override
     public void onEnable() {
         this.sendMessage("Found Bukkit server v" + Bukkit.getVersion());
         long start = System.currentTimeMillis();
+
+        this.initializeServerData();
 
         this.registerEnchantments();
 
@@ -61,10 +67,33 @@ public final class Skyblock extends JavaPlugin {
 
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + (end - start) + "ms.");
+
+        this.initializeAlreadyOnlinePlayers();
     }
     @Override
     public void onDisable() {
-        sendMessage("Disabled Skyblock!");
+        this.sendMessage("Disabling Skyblock...");
+        long start = System.currentTimeMillis();
+
+        this.serverData.disable();
+
+        sendMessage("Successfully disabled Skyblock [" + (System.currentTimeMillis() - start) + "ms]");
+    }
+
+    public void initializeAlreadyOnlinePlayers() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Bukkit.getPluginManager().callEvent(new PlayerJoinEvent(player, ""));
+        }
+    }
+
+    public void initializeServerData() {
+        this.sendMessage("Initializing server data...");
+
+        long start = System.currentTimeMillis();
+
+        this.serverData = new ServerData(this);
+
+        this.sendMessage("Sucessfully initialized server data in " + (System.currentTimeMillis() - start) + "ms.");
     }
 
     public void registerGuis() {
@@ -89,7 +118,13 @@ public final class Skyblock extends JavaPlugin {
         if (!Collection.INITIALIZED) Collection.initializeCollections(this);
     }
 
+    private int registeredListeners = 0;
+
     public void registerListeners() {
+        this.sendMessage("Registering listeners...");
+
+        long start = System.currentTimeMillis();
+
         registerListener(new BlockBreakListener());
         registerListener(new HungerListener());
         registerListener(new PlayerListener(this));
@@ -99,10 +134,14 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new ItemListener(this));
         registerListener(new VisitMenuListener());
         registerListener(new EnderChestListener());
+
+        this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + (System.currentTimeMillis() - start) + "ms]");
     }
 
     public void registerListener(Listener listener) {
         this.getServer().getPluginManager().registerEvents(listener, this);
+
+        this.registeredListeners++;
     }
 
     public void registerCommands() {
@@ -152,7 +191,7 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void sendMessage(String message) {
-        Bukkit.getConsoleSender().sendMessage(getPrefix() + ChatColor.translateAlternateColorCodes('&', message));
+        Bukkit.getConsoleSender().sendMessage(getPrefix() + ChatColor.translateAlternateColorCodes('&', message) + ChatColor.RESET + " ");
     }
 
     public String getVersion() {
