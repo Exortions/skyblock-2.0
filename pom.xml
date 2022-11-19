@@ -107,5 +107,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/dependencies/item-nbt-api-plugin-2.6.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.connorlinfoot</groupId>
+            <artifactId>actionbarapi</artifactId>
+            <version>1.5.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/dependencies/ActionBarAPI-1.5.4.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

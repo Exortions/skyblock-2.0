@@ -1,11 +1,13 @@
 package com.skyblock.skyblock;
 
+import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import lombok.Data;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -50,9 +52,19 @@ public class SkyblockPlayer {
 
     public void tick() {
         if (board == null) board = new HubScoreboard(getBukkitPlayer());
+        if (tick == 0) {
+            forEachStat((s) -> {
+                setStat(s, (int) getValue(s.name()));
+            });
+        }
 
         if (tick % EVERY_SECOND == 0) {
             board.updateScoreboard();
+
+            String actionBar = ChatColor.RED + "" + getStat(SkyblockStat.HEALTH) + "/" + getStat(SkyblockStat.MAX_HEALTH) + "❤   " +
+                    ChatColor.GREEN + "" + getStat(SkyblockStat.DEFENSE) + "❈ Defense   " +
+                    ChatColor.AQUA + "" + getStat(SkyblockStat.MANA) + "/" + getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
+            ActionBarAPI.sendActionBar(getBukkitPlayer(), actionBar);
         }
 
         tick++;
