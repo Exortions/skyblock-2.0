@@ -10,23 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ItemBuilder utility
- * class.
- *
- * All constructors will
- * unless specified in
- * constructor directly:
- * <code>
- *     Default material to Material.DIRT,
- *     Default amount to 1
- *     Default name to material's default name
- *     Default damage value to default damage value
- * </code>
- *
- * @author Exortions
- * @since 0.3.10.13
- */
 @SuppressWarnings({"unused"})
 public class ItemBuilder {
 
