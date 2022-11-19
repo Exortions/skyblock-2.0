@@ -54,7 +54,7 @@ public class SkyblockPlayer {
         if (board == null) board = new HubScoreboard(getBukkitPlayer());
         if (tick == 0) {
             forEachStat((s) -> {
-                setStat(s, (int) getValue(s.name()));
+                setStat(s, (int) getValue("stats." + s.name().toLowerCase()));
             });
         }
 
