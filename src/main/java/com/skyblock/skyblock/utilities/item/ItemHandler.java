@@ -3,6 +3,7 @@ package com.skyblock.skyblock.utilities.item;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.ReforgeType;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Item;
@@ -120,7 +121,7 @@ public class ItemHandler {
                 false
         ).createStack());
 
-        skyblock.sendMessage("Sucessfully Registered custom items [" + (System.currentTimeMillis() - start) + "ms]");
+        skyblock.sendMessage("Sucessfully Registered custom items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + "]");
     }
 
     public void register(String id, ItemStack item) {

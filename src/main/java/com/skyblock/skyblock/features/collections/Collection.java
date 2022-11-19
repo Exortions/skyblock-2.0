@@ -182,7 +182,7 @@ public class Collection {
             }
         }
 
-        skyblock.sendMessage("Successfully registered " + ChatColor.GREEN + Collection.collections.size() + ChatColor.WHITE + " collections [" + (System.currentTimeMillis() - start) + "ms]");
+        skyblock.sendMessage("Successfully registered " + ChatColor.GREEN + Collection.collections.size() + ChatColor.WHITE + " collections [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + "]");
     }
 
     public static List<Collection> getCollections() {
