@@ -30,6 +30,22 @@ public class HubScoreboard extends Scoreboard {
         LocalDate l_date = LocalDate.now();
         String dateString = l_date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
 
+        this.animateTitle();
+
+        addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
+        addLine(8, ChatColor.GRAY + "   ");
+        addLine(7, ChatColor.WHITE + " Spring 10th");
+        addLine(6, ChatColor.GRAY + " " + hours + ":" + minutes + "pm " + ChatColor.YELLOW + "☀");
+        addLine(5, ChatColor.WHITE + " ⏣ " + ChatColor.GRAY + "None");
+        addLine(4, ChatColor.WHITE + " ");
+        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
+        addLine(2, ChatColor.WHITE + "  ");
+        addLine(1, ChatColor.YELLOW + "www.hypixel.net");
+
+        tick++;
+    }
+
+    public void animateTitle() {
         switch (tick) {
             case 0:
             case 1:
@@ -81,17 +97,6 @@ public class HubScoreboard extends Scoreboard {
                 tick = 0;
                 break;
         }
-
-        addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
-        addLine(8, ChatColor.GRAY + "   ");
-        addLine(7, ChatColor.WHITE + " Spring 10th");
-        addLine(6, ChatColor.GRAY + " " + hours + ":" + minutes + "pm " + ChatColor.YELLOW + "☀");
-        addLine(5, ChatColor.WHITE + " ⏣ " + ChatColor.GRAY + "None");
-        addLine(4, ChatColor.WHITE + " ");
-        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
-        addLine(2, ChatColor.WHITE + "  ");
-        addLine(1, ChatColor.YELLOW + "www.hypixel.net");
-
-        tick++;
     }
+
 }
