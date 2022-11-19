@@ -4,6 +4,7 @@ import com.skyblock.skyblock.commands.enchantment.AddEnchantmentCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
+import com.skyblock.skyblock.commands.menu.EnderChestCommand;
 import com.skyblock.skyblock.commands.menu.MenuCommand;
 import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.GuiCommand;
@@ -74,6 +75,7 @@ public final class Skyblock extends JavaPlugin {
 
         this.guiHandler.registerGuiCommand("collection", "sb collection");
         this.guiHandler.registerGuiCommand("skyblock_menu", "sb menu");
+        this.guiHandler.registerGuiCommand("ender_chest", "sb enderchest");
     }
 
     public void registerEnchantments() {
@@ -99,6 +101,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new CollectionListener());
         registerListener(new ItemListener(this));
         registerListener(new VisitMenuListener());
+        registerListener(new EnderChestListener());
     }
 
     public void registerListener(Listener listener) {
@@ -121,7 +124,8 @@ public final class Skyblock extends JavaPlugin {
                 new PlayerDataCommand(),
                 new AddEnchantmentCommand(),
                 new WarpCommand(),
-                new VisitCommand()
+                new VisitCommand(),
+                new EnderChestCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
