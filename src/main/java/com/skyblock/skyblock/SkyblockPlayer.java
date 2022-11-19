@@ -5,17 +5,22 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
+import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Data;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -23,6 +28,7 @@ import java.util.function.Consumer;
 public class SkyblockPlayer {
 
     private static int EVERY_SECOND = 20;
+    private static int EVERY_THREE_SECONDS = 60;
     public static HashMap<UUID, SkyblockPlayer> playerRegistry = new HashMap<>();
 
     public static SkyblockPlayer getPlayer(Player player) {
@@ -39,6 +45,7 @@ public class SkyblockPlayer {
     private FileConfiguration config;
     private File configFile;
     private Scoreboard board;
+    private ItemStack hand;
     private int tick;
 
     public SkyblockPlayer(UUID uuid) {
@@ -46,6 +53,7 @@ public class SkyblockPlayer {
         cooldowns = new HashMap<>();
         stats = new HashMap<>();
         tick = 0;
+        hand = Util.getEmptyItemBase();
 
         initConfig();
     }
@@ -53,21 +61,136 @@ public class SkyblockPlayer {
     public void tick() {
         if (board == null) board = new HubScoreboard(getBukkitPlayer());
         if (tick == 0) {
-            forEachStat((s) -> {
-                setStat(s, (int) getValue("stats." + s.name().toLowerCase()));
-            });
+            loadStats();
         }
 
         if (tick % EVERY_SECOND == 0) {
             board.updateScoreboard();
 
             String actionBar = ChatColor.RED + "" + getStat(SkyblockStat.HEALTH) + "/" + getStat(SkyblockStat.MAX_HEALTH) + "❤   " +
-                    ChatColor.GREEN + "" + getStat(SkyblockStat.DEFENSE) + "❈ Defense   " +
-                    ChatColor.AQUA + "" + getStat(SkyblockStat.MANA) + "/" + getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
+                    (getStat(SkyblockStat.DEFENSE) > 0 ? ChatColor.GREEN + "" + getStat(SkyblockStat.DEFENSE) + "❈ Defense   " : "")
+                    +  ChatColor.AQUA + "" + getStat(SkyblockStat.MANA) + "/" + getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
             ActionBarAPI.sendActionBar(getBukkitPlayer(), actionBar);
+
+            if (getStat(SkyblockStat.MANA) < getStat(SkyblockStat.MAX_MANA) - ((getStat(SkyblockStat.MAX_MANA) + 100)/50)) {
+                setStat(SkyblockStat.MANA, getStat(SkyblockStat.MANA) + ((getStat(SkyblockStat.MAX_MANA) + 100)/50));
+            }else{
+                setStat(SkyblockStat.MANA, getStat(SkyblockStat.MAX_MANA));
+            }
         }
 
+        if (tick % EVERY_THREE_SECONDS == 0) {
+            if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100)) {
+                updateHealth((int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100));
+            }else{
+                setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
+                getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
+            }
+        }
+
+        if (!hand.equals(bukkitPlayer.getItemInHand())) {
+            ItemStack itemStack = bukkitPlayer.getItemInHand();
+
+            if (itemStack.getType().equals(Material.AIR)){
+                updateStats(Util.getEmptyItemBase(), hand);
+            }else{
+                updateStats(itemStack, hand);
+            }
+
+            hand = itemStack;
+        }
+
+        bukkitPlayer.setWalkSpeed(Math.min((float) (getStat(SkyblockStat.SPEED) / 500.0), 1.0f));
+        bukkitPlayer.setHealthScale(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0)));
+
         tick++;
+    }
+
+    public void updateStats(ItemStack newItem, ItemStack oldItem) {
+        if (!Util.isSkyblockItem(newItem)) newItem = Util.getEmptyItemBase();
+        if (!Util.isSkyblockItem(oldItem)) oldItem = Util.getEmptyItemBase();
+
+        if (Util.notNull(newItem) && Util.notNull(oldItem)) {
+            ItemBase newBase = new ItemBase(newItem);
+            ItemBase oldBase = new ItemBase(oldItem);
+
+            changeStats(false, newBase);
+            changeStats(true, oldBase);
+        } else if (Util.notNull(newItem)){
+            ItemBase newBase = new ItemBase(newItem);
+
+            changeStats(false, newBase);
+        } else if (Util.notNull(oldItem)) {
+            ItemBase oldBase = new ItemBase(oldItem);
+
+            changeStats(true, oldBase);
+        }
+    }
+
+    public void changeStats(boolean subtract, ItemBase base) {
+        int mult = subtract ? -1 : 1;
+
+        addStat(SkyblockStat.HEALTH, mult * base.getHealth());
+        addStat(SkyblockStat.MAX_HEALTH, mult * base.getHealth());
+        addStat(SkyblockStat.CRIT_CHANCE, mult * base.getCritChance());
+        addStat(SkyblockStat.CRIT_DAMAGE, mult * base.getCritDamage());
+        addStat(SkyblockStat.ATTACK_SPEED, mult * base.getAttackSpeed());
+        addStat(SkyblockStat.DAMAGE, mult * base.getDamage());
+        addStat(SkyblockStat.DEFENSE, mult * base.getDefense());
+        addStat(SkyblockStat.MANA, mult * base.getIntelligence());
+        addStat(SkyblockStat.MAX_MANA, mult * base.getIntelligence());
+        addStat(SkyblockStat.SPEED, mult * base.getSpeed());
+        addStat(SkyblockStat.STRENGTH, mult * base.getStrength());
+    }
+
+    private void updateHealth(int i){
+        try {
+            int hp = getStat(SkyblockStat.HEALTH);
+            int mhp = getStat(SkyblockStat.MAX_HEALTH);
+
+            if (bukkitPlayer.getHealth() <= bukkitPlayer.getMaxHealth()){
+                bukkitPlayer.setHealth(bukkitPlayer.getHealth() + i/(mhp/bukkitPlayer.getMaxHealth()));
+            }
+            setStat(SkyblockStat.HEALTH, hp + i);
+        } catch (IllegalArgumentException e) { }
+    }
+
+    public boolean willDie(double damage) {
+        return (getStat(SkyblockStat.HEALTH) - damage) <= 0;
+    }
+
+    public boolean checkMana(int mana) {
+        return getStat(SkyblockStat.MANA) - mana < 0;
+    }
+
+    public void subtractMana(int mana) {
+        subtractStat(SkyblockStat.MANA, mana);
+    }
+
+    public void damage(double damage, EntityDamageEvent.DamageCause cause, Entity attacker) {
+        double d = (damage - (damage * ((getStat(SkyblockStat.DEFENSE) / (getStat(SkyblockStat.DEFENSE) + 100F)))));
+
+        if (willDie(d)) {
+            kill(cause, attacker);
+            return;
+        }
+
+        Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d));
+        setStat(SkyblockStat.HEALTH, (int) (getStat(SkyblockStat.HEALTH) - d));
+        bukkitPlayer.setHealth(bukkitPlayer.getHealth() - ((d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH))))));
+    }
+
+    public void kill(EntityDamageEvent.DamageCause cause, Entity killer) {
+        bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
+        setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
+
+        int sub = (int) getValue("stats.purse") / 2;
+        bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.commaify(sub) + " coins!");
+        bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
+
+        bukkitPlayer.teleport(new Location(bukkitPlayer.getWorld(), -2 , 70,  -84,  -180, 0));
+
+        setValue("stats.purse", sub);
     }
 
     public int getStat(SkyblockStat stat) { return stats.get(stat); }
@@ -75,7 +198,7 @@ public class SkyblockPlayer {
     public void setStat(SkyblockStat stat, int val) {
         stats.put(stat, val);
 
-        setValue(stat.name(), val);
+        setValue("stats." + stat.name().toLowerCase(), val);
     }
 
     public boolean getCooldown(String id) {
@@ -89,12 +212,18 @@ public class SkyblockPlayer {
     public void setCooldown(String id, int secondsDelay) {
         cooldowns.put(id, false);
 
+        delay(() -> {
+            cooldowns.put(id, true);
+        }, secondsDelay);
+    }
+
+    public void delay(Runnable runnable, int delay) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                cooldowns.put(id, true);
+                runnable.run();
             }
-        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), secondsDelay* 20L);
+        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), delay * 20L);
     }
 
     public void addStat(SkyblockStat stat, int val) {
@@ -114,6 +243,10 @@ public class SkyblockPlayer {
             config.set(path, item);
             config.save(configFile);
             config = YamlConfiguration.loadConfiguration(configFile);
+
+            forEachStat((s) -> {
+                stats.put(s, (int) getValue("stats." + s.name().toLowerCase()));
+            });
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -123,6 +256,12 @@ public class SkyblockPlayer {
         for (SkyblockStat stat : SkyblockStat.values()) {
             cons.accept(stat);
         }
+    }
+
+    private void loadStats() {
+        forEachStat((s) -> {
+            setStat(s, (int) getValue("stats." + s.name().toLowerCase()));
+        });
     }
 
     private void initConfig() {

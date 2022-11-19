@@ -114,5 +114,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/dependencies/ActionBarAPI-1.5.4.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.inkzzz</groupId>
+            <artifactId>armoreventplugin</artifactId>
+            <version>1.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/dependencies/ArmorEventPlugin.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
