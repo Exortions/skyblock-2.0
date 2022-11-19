@@ -121,7 +121,7 @@ public class ItemHandler {
                 false
         ).createStack());
 
-        skyblock.sendMessage("Sucessfully Registered custom items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + "]");
+        skyblock.sendMessage("Sucessfully Registered custom items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void register(String id, ItemStack item) {
