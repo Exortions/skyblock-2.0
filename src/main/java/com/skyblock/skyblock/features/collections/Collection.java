@@ -69,7 +69,7 @@ public class Collection {
             return;
         }
 
-        if (level == maxLevel || newExp>= levelToExp.get(0) || newExp >= levelToExp.get(level)) {
+        if (level == maxLevel || (level < 1 && newExp >= levelToExp.get(0)) || newExp >= levelToExp.get(level)) {
             this.rewards.reward(player, level);
 
             skyblockPlayer.setValue("collection." + this.name.toLowerCase() + ".level", level + 1);
@@ -82,7 +82,7 @@ public class Collection {
                     .add("")
                     .add("&a&l  REWARDS");
 
-            for (String s : this.rewards.stringify(level + 1)) builder.add("  " + s);
+            for (String s : this.rewards.stringify(level + 1)) builder.add(Util.buildLore("  " + s.replace("  \n", "    \n")));
 
             if (this.rewards.stringify(level + 1).size() == 0) builder.add("    &cComing soon");
 

@@ -6,15 +6,15 @@
       "material": "CACTUS",
       "data": 0,
       "rewards": [
-        "100;Cactus Minion",
-        "250;Cactus Armor Set",
-        "500;Resistance Potion",
-        "1000;Enchanted Cactus Green",
-        "2500;Desert Island",
-        "5000;Enchanted Book (Piercing I)",
-        "10000;Enchanted Book (Thorns II)",
-        "25000;Enchanted Cactus",
-        "50000;+5,000 Farming Experience"
+        "100;&9Cactus Minion &7Recipes",
+        "250;&fCactus Helmet &7Recipe\n  &fCactus Chestplate &7Recipe\n  &fCactus Leggings &7Recipe\n  &fCactus Boots &7Recipe",
+        "500;&aResistance Potion &7Recipe",
+        "1000;&aEnchanted Cactus Green\n  &7Recipe",
+        "2500;&fDesert Island &7Recipe",
+        "5000;&fEnchanted Book (Piercing I)\n  &7Recipe",
+        "10000;&fEnchanted Book (Thorns II)\n  &7Recipe",
+        "25000;&9Enchanted Cactus &7Recipe",
+        "50000;&8+&35,000 &7Experience"
       ],
       "commands": []
     },
