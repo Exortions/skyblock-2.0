@@ -140,6 +140,16 @@ public class PlayerListener implements Listener {
             } else {
                 Util.setDamageIndicator(e.getEntity().getLocation(), org.bukkit.ChatColor.GRAY + "" + Math.round(display), true);
             }
+        } else if (e.getDamager().hasMetadata("skyblockEntityData")) {
+            if (e.getEntity() instanceof Player) {
+                Player p = (Player) e.getEntity();
+                SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
+
+                SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getDamager());
+                sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
+
+                player.damage(sentity.getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, sentity.getVanilla());
+            }
         }
     }
 }

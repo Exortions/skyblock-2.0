@@ -6,11 +6,8 @@ import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
 import com.skyblock.skyblock.commands.menu.EnderChestCommand;
 import com.skyblock.skyblock.commands.menu.MenuCommand;
-import com.skyblock.skyblock.commands.misc.ClearCommand;
-import com.skyblock.skyblock.commands.misc.GuiCommand;
-import com.skyblock.skyblock.commands.misc.HelpCommand;
+import com.skyblock.skyblock.commands.misc.*;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
-import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
@@ -123,6 +120,7 @@ public final class Skyblock extends JavaPlugin {
                 new MenuCommand(),
                 new PlayerDataCommand(),
                 new AddEnchantmentCommand(),
+                new SummonCommand(),
                 new WarpCommand(),
                 new VisitCommand(),
                 new EnderChestCommand()

@@ -22,6 +22,23 @@ import java.util.HashMap;
 @Getter
 public abstract class SkyblockEntity {
 
+    public static class Equipment {
+        public ItemStack hand;
+        public ItemStack helmet;
+        public ItemStack chest;
+        public ItemStack legs;
+        public ItemStack boots;
+        public Equipment(ItemStack hand, ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots){
+            this.hand = hand;
+            this.helmet = helmet;
+            this.chest = chest;
+            this.legs = legs;
+            this.boots = boots;
+        }
+
+        public Equipment() { }
+    }
+
     public static final String HELMET = "HELMET";
     public static final String CHEST = "CHEST";
     public static final String LEGS = "LEGS";
@@ -46,7 +63,7 @@ public abstract class SkyblockEntity {
     }
 
     protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
-                           boolean isHostile, HashMap<String, ItemStack> equipment, String name, int level) {
+                           boolean isHostile, Equipment equipment, String name, int level) {
         entityData = new SkyblockEntityData();
 
         entityData.maximumHealth = health;
@@ -60,11 +77,11 @@ public abstract class SkyblockEntity {
         entityData.entityName = name;
         entityData.level = level;
 
-        entityData.helmet = equipment.get(HELMET);
-        entityData.chestplate = equipment.get(CHEST);
-        entityData.leggings = equipment.get(LEGS);
-        entityData.boots = equipment.get(BOOTS);
-        entityData.hand = equipment.get(HAND);
+        entityData.helmet = equipment.helmet;
+        entityData.chestplate = equipment.chest;
+        entityData.leggings = equipment.legs;
+        entityData.boots = equipment.boots;
+        entityData.hand = equipment.hand;
     }
 
     public Entity spawn(Location location) {
