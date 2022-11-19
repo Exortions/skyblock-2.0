@@ -38,7 +38,7 @@ public class CollectionCommand implements Command {
         if (args.length == 0) {
             inventory = Bukkit.createInventory(null, 54, "Collection");
 
-            fillEmpty(inventory);
+            Util.fillEmpty(inventory);
 
             AtomicInteger collectionUnlocked = new AtomicInteger();
             AtomicInteger collectionTotal = new AtomicInteger();
@@ -81,7 +81,7 @@ public class CollectionCommand implements Command {
 
             inventory = Bukkit.createInventory(null, 54, category.getName() + " Collection");
 
-            fillBorder(inventory);
+            Util.fillBorder(inventory);
 
             inventory.setItem(4, generateCollectionCategory(skyblockPlayer, category, false));
 
@@ -98,7 +98,7 @@ public class CollectionCommand implements Command {
 
             inventory = Bukkit.createInventory(null, 54, collection.getName() + " Collection");
 
-            fillEmpty(inventory);
+            Util.fillEmpty(inventory);
 
             inventory.setItem(4, generateCollectionItem(skyblockPlayer, collection, true));
 
@@ -231,17 +231,6 @@ public class CollectionCommand implements Command {
         }
 
         return builder.toItemStack();
-    }
-
-    public void fillEmpty(Inventory inventory) {
-        for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-    }
-
-    public void fillBorder(Inventory inventory) {
-        for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-        for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
     }
 
     public ItemStack generateCollectionCategory(SkyblockPlayer player, CollectionCategory category, boolean clickToView) {

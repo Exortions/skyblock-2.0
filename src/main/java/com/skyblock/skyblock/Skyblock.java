@@ -3,6 +3,7 @@ package com.skyblock.skyblock;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
+import com.skyblock.skyblock.commands.menu.MenuCommand;
 import com.skyblock.skyblock.commands.misc.ClearCommand;
 import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
@@ -61,6 +62,7 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler = new GuiHandler(this);
 
         this.guiHandler.registerGuiCommand("collection", "sb collection");
+        this.guiHandler.registerGuiCommand("skyblock_menu", "sb menu");
     }
 
     public void registerMobs() {
@@ -96,7 +98,8 @@ public final class Skyblock extends JavaPlugin {
                 new ReforgeCommand(),
                 new ItemBrowserCommand(),
                 new GuiCommand(),
-                new CollectionCommand()
+                new CollectionCommand(),
+                new MenuCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
