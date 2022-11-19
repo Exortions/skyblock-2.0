@@ -23,15 +23,15 @@
       "material": "CARROT_ITEM",
       "data": 0,
       "rewards": [
-        "100;Carrot Minion",
-        "250;Simple Carrot Candy",
-        "500;Carrot Bait",
-        "1700;Enchanted Carrot",
-        "5000;Enchanted Carrot on a Stick",
-        "10000;Great Carrot Candy;Super Catching Egg",
-        "25000;Enchanted Golden Carrot",
-        "50000;Superb Carrot Candy",
-        "100000;Mega Catching Egg"
+        "100;&9Carrot Minion &7Recipes",
+        "250;&aSimple Carrot Candy &7Recipe",
+        "500;&fCarrot Bait &7Recipe",
+        "1700;&aEnchanted Carrot &7Recipe",
+        "5000;&aEnchanted Carrot on a Stick\n  &7Recipe",
+        "10000;&9Great Carrot Candy &7Recipe\n  &5Super Catching Egg &8(&4COMING\n  &4SOON&8)",
+        "25000;&aEnchanted Golden Carrot\n  &7Recipe",
+        "50000;&5Superb Carrot Candy &7Recipe",
+        "100000;&5Mega Catching Egg &8(&4COMING\n  &4SOON&8)"
       ],
       "commands": []
     },
