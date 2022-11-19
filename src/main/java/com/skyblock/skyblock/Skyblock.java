@@ -10,6 +10,7 @@ import com.skyblock.skyblock.commands.misc.GuiCommand;
 import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
+import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
@@ -23,9 +24,11 @@ import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
@@ -112,6 +115,7 @@ public final class Skyblock extends JavaPlugin {
                 new GuiCommand(),
                 new CollectionCommand(),
                 new MenuCommand(),
+                new PlayerDataCommand(),
                 new AddEnchantmentCommand()
         );
 
@@ -119,12 +123,18 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void initializeGameRules() {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doDaylightCycle false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doWeatherCycle false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doTileDrops false");
+        List<World> worlds = Bukkit.getWorlds();
+        
+        for (World world : worlds) {
+            world.setGameRuleValue("doDaylightCycle", "false");
+            world.setGameRuleValue("doWeatherCycle", "false");
+            world.setGameRuleValue("doFireTick", "false");
+            world.setGameRuleValue("doMobSpawning", "false");
+            world.setGameRuleValue("doMobLoot", "false");
+            world.setGameRuleValue("doTileDrops", "false");
+            world.setGameRuleValue("naturalRegeneration", "false");
+            world.setGameRuleValue("showDeathMessages", "false");
+        }
     }
 
     public void initializeNEUItems() {

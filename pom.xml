@@ -115,11 +115,11 @@
             <systemPath>${basedir}/dependencies/ActionBarAPI-1.5.4.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit-bukkit</artifactId>
-            <version>6.1.0</version>
+            <groupId>com.inkzzz</groupId>
+            <artifactId>armoreventplugin</artifactId>
+            <version>1.4</version>
             <scope>system</scope>
-            <systemPath>${basedir}/dependencies/worldedit-bukkit-6.1.jar</systemPath>
+            <systemPath>${basedir}/dependencies/ArmorEventPlugin.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
