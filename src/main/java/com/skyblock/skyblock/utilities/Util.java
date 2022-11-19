@@ -50,6 +50,10 @@ public class Util {
         return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
     }
 
+    public List<String> buildLoreList(String lore) {
+        return Arrays.asList(ChatColor.translateAlternateColorCodes('&', lore).split("\n"));
+    }
+
     public ItemStack buildCloseButton() {
         return new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack();
     }

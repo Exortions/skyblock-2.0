@@ -1,14 +1,13 @@
 package com.skyblock.skyblock.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public enum ReforgeType {
 
-    NO_REFORGE(0, 0, 0, 0, 0, 0, 0, 0, 0),
+    NONE(0, 0, 0, 0, 0, 0, 0, 0, 0),
     GENTLE(0, 0, 0, 0, 0, 0, 0, 0, 0),
     ODD(0, 0, 0, 0, 0, 0, 0, 0, 0),
     FAST(0, 0, 0, 0, 0, 0, 0, 0, 0),

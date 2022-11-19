@@ -1,6 +1,8 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.enums.ReforgeType;
+import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Item;
@@ -9,6 +11,7 @@ import net.minecraft.server.v1_8_R3.MojangsonParser;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -40,6 +43,8 @@ public class ItemHandler {
         File folder = new File(skyblock.getDataFolder() + File.separator + "items");
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
+            if (file.getName().equals("FANCY_SWORD.json")) continue;
+
             try {
                 JSONParser parser = new JSONParser();
                 Object obj = parser.parse(new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8)));
@@ -76,7 +81,43 @@ public class ItemHandler {
             }
         }
 
+        registerCustomItems();
+
         skyblock.sendMessage("Finished Initializing Items.");
+    }
+
+    public void registerCustomItems() {
+        skyblock.sendMessage("Registering Custom Items...");
+
+        List<ItemEnchantment> enchantments = new ArrayList<>();
+
+        enchantments.add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("Test"), 3));
+
+        items.put("fancy_sword", new ItemBase(
+                Material.GOLD_SWORD,
+                ChatColor.WHITE + "Fancy Sword",
+                ReforgeType.NONE,
+                1,
+                new ArrayList<>(),
+                enchantments,
+                true,
+                false,
+                "",
+                new ArrayList<>(),
+                "",
+                0,
+                "",
+                "COMMON SWORD",
+                20,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                false
+        ).createStack());
     }
 
     public void register(String id, ItemStack item) {
@@ -220,6 +261,10 @@ public class ItemHandler {
 
         if (!passedAbility) {
             nbt.setString("abilityDescription", "placeholder description");
+        }
+
+        if (!nbt.hasKey("enchantments")) {
+            nbt.setString("enchantments", "[]");
         }
 
         ItemBase base = new ItemBase(nbt.getItem());

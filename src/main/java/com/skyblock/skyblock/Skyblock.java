@@ -1,5 +1,6 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.enchantment.AddEnchantmentCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
@@ -10,6 +11,8 @@ import com.skyblock.skyblock.commands.misc.HelpCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.misc.TestCommand;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
+import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
@@ -29,16 +32,19 @@ import java.util.Objects;
 @Getter
 public final class Skyblock extends JavaPlugin {
 
+    private SkyblockEnchantmentHandler enchantmentHandler;
+    private SkyblockItemHandler skyblockItemHandler;
+    private SkyblockEntityHandler entityHandler;
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
-    private SkyblockItemHandler skyblockItemHandler;
     private GuiHandler guiHandler;
-    private SkyblockEntityHandler entityHandler;
 
     @Override
     public void onEnable() {
         this.sendMessage("Found Bukkit server v" + Bukkit.getVersion());
         long start = System.currentTimeMillis();
+
+        this.registerEnchantments();
 
         this.initializeGameRules();
         this.initializeNEUItems();
@@ -63,6 +69,12 @@ public final class Skyblock extends JavaPlugin {
 
         this.guiHandler.registerGuiCommand("collection", "sb collection");
         this.guiHandler.registerGuiCommand("skyblock_menu", "sb menu");
+    }
+
+    public void registerEnchantments() {
+        this.enchantmentHandler = new SkyblockEnchantmentHandler(this);
+
+        this.enchantmentHandler.registerEnchantment(new TestEnchantment());
     }
 
     public void registerMobs() {
@@ -99,7 +111,8 @@ public final class Skyblock extends JavaPlugin {
                 new ItemBrowserCommand(),
                 new GuiCommand(),
                 new CollectionCommand(),
-                new MenuCommand()
+                new MenuCommand(),
+                new AddEnchantmentCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
