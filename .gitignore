@@ -1,8 +1,6 @@
 # User-specific stuff
 .idea/
 
-!dependencies/item-nbt-api-plugin-2.6.0.jar
-
 server/
 
 *.iml
