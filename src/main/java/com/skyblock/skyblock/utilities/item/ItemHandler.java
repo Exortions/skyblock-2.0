@@ -3,6 +3,7 @@ package com.skyblock.skyblock.utilities.item;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.ReforgeType;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Item;
@@ -38,8 +39,6 @@ public class ItemHandler {
     }
 
     public void init() {
-        skyblock.sendMessage("Initializing Items...");
-
         File folder = new File(skyblock.getDataFolder() + File.separator + "items");
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
@@ -83,12 +82,12 @@ public class ItemHandler {
         }
 
         registerCustomItems();
-
-        skyblock.sendMessage("Finished Initializing Items.");
     }
 
     public void registerCustomItems() {
-        skyblock.sendMessage("Registering Custom Items...");
+        skyblock.sendMessage("Registering custom items...");
+
+        long start = System.currentTimeMillis();
 
         List<ItemEnchantment> enchantments = new ArrayList<>();
 
@@ -121,6 +120,8 @@ public class ItemHandler {
                 0,
                 false
         ).createStack());
+
+        skyblock.sendMessage("Sucessfully Registered custom items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void register(String id, ItemStack item) {

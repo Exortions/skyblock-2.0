@@ -18,6 +18,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.listeners.*;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
@@ -65,10 +66,11 @@ public final class Skyblock extends JavaPlugin {
         this.registerListeners();
         this.registerCommands();
 
-        long end = System.currentTimeMillis();
-        this.sendMessage("Successfully enabled Skyblock in " + (end - start) + "ms.");
-
         this.initializeAlreadyOnlinePlayers();
+
+        long end = System.currentTimeMillis();
+        this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");
+
     }
     @Override
     public void onDisable() {
@@ -77,13 +79,17 @@ public final class Skyblock extends JavaPlugin {
 
         this.serverData.disable();
 
-        sendMessage("Successfully disabled Skyblock [" + (System.currentTimeMillis() - start) + "ms]");
+        sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeAlreadyOnlinePlayers() {
+        this.sendMessage("Reloading already online players...");
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             Bukkit.getPluginManager().callEvent(new PlayerJoinEvent(player, ""));
         }
+
+        this.sendMessage("Successfully reloaded already online players.");
     }
 
     public void initializeServerData() {
@@ -93,28 +99,45 @@ public final class Skyblock extends JavaPlugin {
 
         this.serverData = new ServerData(this);
 
-        this.sendMessage("Sucessfully initialized server data in " + (System.currentTimeMillis() - start) + "ms.");
+        this.sendMessage("Sucessfully initialized server data [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerGuis() {
+        this.sendMessage("Registering guis...");
+        long start = System.currentTimeMillis();
+
         this.guiHandler = new GuiHandler(this);
 
         this.guiHandler.registerGuiCommand("collection", "sb collection");
         this.guiHandler.registerGuiCommand("skyblock_menu", "sb menu");
         this.guiHandler.registerGuiCommand("ender_chest", "sb enderchest");
+
+        this.sendMessage("Successfully registered guis [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerEnchantments() {
+        this.sendMessage("Registering enchantments...");
+
+        long start = System.currentTimeMillis();
+
         this.enchantmentHandler = new SkyblockEnchantmentHandler(this);
 
         this.enchantmentHandler.registerEnchantment(new TestEnchantment());
+
+        this.sendMessage("Successfully registered enchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerMobs() {
+        this.sendMessage("Registering mobs...");
+        long start = System.currentTimeMillis();
+
         this.entityHandler = new SkyblockEntityHandler();
+
+        this.sendMessage("Successfully registered mobs [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerCollections() {
+        long start = System.currentTimeMillis();
         if (!Collection.INITIALIZED) Collection.initializeCollections(this);
     }
 
@@ -135,7 +158,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new VisitMenuListener());
         registerListener(new EnderChestListener());
 
-        this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + (System.currentTimeMillis() - start) + "ms]");
+        this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerListener(Listener listener) {
@@ -146,6 +169,7 @@ public final class Skyblock extends JavaPlugin {
 
     public void registerCommands() {
         this.sendMessage("Registering commands...");
+        long start = System.currentTimeMillis();
 
         this.commandHandler = new CommandHandler(this,
                 new HelpCommand(),
@@ -166,9 +190,13 @@ public final class Skyblock extends JavaPlugin {
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
+
+        this.sendMessage("Successfully registered commands [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeGameRules() {
+        this.sendMessage("Initializing game rules...");
+        long start = System.currentTimeMillis();
         List<World> worlds = Bukkit.getWorlds();
         
         for (World world : worlds) {
@@ -181,13 +209,19 @@ public final class Skyblock extends JavaPlugin {
             world.setGameRuleValue("naturalRegeneration", "false");
             world.setGameRuleValue("showDeathMessages", "false");
         }
+
+        this.sendMessage("Successfully initialized game rules [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeNEUItems() {
+        this.sendMessage("Initializing items...");
+        long start = System.currentTimeMillis();
         this.itemHandler = new ItemHandler(this);
         this.itemHandler.init();
 
         this.skyblockItemHandler = new SkyblockItemHandler(this);
+
+        this.sendMessage("Successfully initialized items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void sendMessage(String message) {
