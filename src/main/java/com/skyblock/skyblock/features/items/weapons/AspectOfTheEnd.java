@@ -4,6 +4,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.items.SkyblockItem;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,20 +27,24 @@ public class AspectOfTheEnd extends SkyblockItem {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        Location location = player.getTargetBlock((Set<Material>) null, 8).getLocation();
-        location.setYaw(player.getLocation().getYaw());
-        location.setPitch(player.getLocation().getPitch());
-        player.teleport(location);
+        if (skyblockPlayer.checkMana(50)) {
+            Location location = player.getTargetBlock((Set<Material>) null, 8).getLocation();
+            location.setYaw(player.getLocation().getYaw());
+            location.setPitch(player.getLocation().getPitch());
+            player.teleport(location);
 
-        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 3f, 1f);
+            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 3f, 1f);
 
-        if (skyblockPlayer.getCooldown(getInternalName())) {
-            skyblockPlayer.addStat(SkyblockStat.SPEED, 50);
-            skyblockPlayer.setCooldown(getInternalName(), 3);
+            if (skyblockPlayer.getCooldown(getInternalName())) {
+                skyblockPlayer.addStat(SkyblockStat.SPEED, 50);
+                skyblockPlayer.setCooldown(getInternalName(), 3);
 
-            skyblockPlayer.delay(() -> {
-                skyblockPlayer.subtractStat(SkyblockStat.SPEED, 50);
-            }, 3);
+                skyblockPlayer.delay(() -> {
+                    skyblockPlayer.subtractStat(SkyblockStat.SPEED, 50);
+                }, 3);
+            }
+
+            Util.sendAbility(skyblockPlayer, "Instant Transmission", 50);
         }
     }
 }

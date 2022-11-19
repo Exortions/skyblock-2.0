@@ -160,7 +160,9 @@ public class SkyblockPlayer {
     }
 
     public boolean checkMana(int mana) {
-        return getStat(SkyblockStat.MANA) - mana < 0;
+        boolean b = getStat(SkyblockStat.MANA) - mana < 0;
+        if (b) bukkitPlayer.sendMessage(ChatColor.RED + "Not enough mana!");
+        return !b;
     }
 
     public void subtractMana(int mana) {

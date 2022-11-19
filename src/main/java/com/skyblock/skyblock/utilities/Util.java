@@ -103,7 +103,8 @@ public class Util {
 
     public void sendAbility(SkyblockPlayer player, String abilityName, int mana) {
         player.subtractMana(mana);
-        player.getBukkitPlayer().sendMessage("");
+        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "Used " + ChatColor.GOLD + abilityName + ChatColor.GREEN +
+                "! " + ChatColor.AQUA + "(" + mana + " Mana)");
     }
 
     public void setDamageIndicator(final Location loc, final String displayname) {
