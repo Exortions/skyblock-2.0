@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.scoreboard;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +32,13 @@ public abstract class Scoreboard {
 
         display();
         updateScoreboard();
+    }
+
+    public void runTask() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(Skyblock.getPlugin(Skyblock.class), () -> {
+            display();
+            player.setScoreboard(board);
+        }, 0, 3);
     }
 
     abstract void display();
