@@ -5,12 +5,16 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.entities.SkyblockEntity;
+import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +22,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Random;
 
 public class PlayerListener implements Listener {
 
@@ -70,20 +75,70 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent e){
-        if (e.getEntity() instanceof Player){
-            if (!e.isCancelled()) {
-                SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) e.getEntity());
-                double damage = e.getDamage();
+        if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+            if (e.getEntity() instanceof Player){
+                if (!e.isCancelled()) {
+                    SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) e.getEntity());
+                    double damage = e.getDamage();
 
-                e.setDamage(0);
+                    e.setDamage(0);
 
-                player.damage(damage, e.getCause(), null);
-            }
-        }else{
-            if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){
-                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
-                    Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(e.getFinalDamage()));
+                    player.damage(damage, e.getCause(), null);
                 }
+            } else {
+                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+                    if (e.getEntity().hasMetadata("skyblockEntityData")) {
+                        SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
+                        int damage = (int) (e.getFinalDamage() / sentity.getEntityData().maximumHealth);
+
+                        sentity.getEntityData().health = sentity.getEntityData().health - damage;
+                    }
+
+                    Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(e.getFinalDamage()), true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof ArmorStand) return;
+
+        if (e.getDamager() instanceof Player) {
+            Player p = (Player) e.getDamager();
+
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
+            double damage = 5 + player.getStat((SkyblockStat.DAMAGE)) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
+            double display = damage;
+
+            if (e.getEntity().hasMetadata("skyblockEntityData")) {
+                SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
+
+                sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
+                sentity.setLastDamager(player);
+
+                if (player.crit()) {
+                    damage = (damage * ((100 + player.getStat(SkyblockStat.CRIT_DAMAGE))) / 100) / sentity.getEntityData().maximumHealth;
+                } else {
+                    damage = damage / sentity.getEntityData().maximumHealth;
+                }
+
+                display = damage * sentity.getEntityData().maximumHealth;
+                sentity.getEntityData().health = (long) (sentity.getEntityData().health - display);
+            } else {
+                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+                    if (player.crit()) {
+                        damage = damage * ((100 + player.getStat(SkyblockStat.CRIT_DAMAGE))) / 100;
+                    }
+                }
+            }
+
+            e.setDamage(damage);
+
+            if (player.crit()) {
+                Util.setDamageIndicator(e.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
+            } else {
+                Util.setDamageIndicator(e.getEntity().getLocation(), org.bukkit.ChatColor.GRAY + "" + Math.round(display), true);
             }
         }
     }

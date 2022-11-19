@@ -1,7 +1,10 @@
 package com.skyblock.skyblock.features.entities;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Enderman;
@@ -10,6 +13,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -27,11 +32,17 @@ public abstract class SkyblockEntity {
     private SkyblockEntityData entityData;
     private final Skyblock plugin;
     protected int tick;
+    @Setter
+    private int lifeSpan;
+    @Setter
+    private SkyblockPlayer lastDamager;
 
     public SkyblockEntity(Skyblock sb, EntityType type) {
         entityType = type;
         plugin = sb;
         tick = 0;
+        lifeSpan = 15 * 20;
+        lastDamager = null;
     }
 
     protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
@@ -85,11 +96,20 @@ public abstract class SkyblockEntity {
                     }else{
                         vanilla.setCustomNameVisible(true);
                         vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
+                        ((LivingEntity) vanilla).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 5, true, false));
 
                         if (getEntityData().health <= 0) {
                             vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             living.setHealth(0);
+                        }
+
+                        lifeSpan--;
+
+                        if (lifeSpan < 0) {
+                            plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
+                            vanilla.remove();
+                            cancel();
                         }
 
                         tick();

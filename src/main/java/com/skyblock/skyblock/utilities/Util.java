@@ -16,6 +16,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -107,7 +108,7 @@ public class Util {
                 "! " + ChatColor.AQUA + "(" + mana + " Mana)");
     }
 
-    public void setDamageIndicator(final Location loc, final String displayname) {
+    public void setDamageIndicator(final Location loc, final String displayname, boolean format) {
         double randomX = Math.random();
         double randomY = Math.random();
         double randomZ = Math.random();
@@ -115,17 +116,21 @@ public class Util {
         randomY += 0.25;
         randomZ -= 0.5;
 
-        ArmorStand as = (ArmorStand)loc.getWorld().spawnEntity(loc.add(randomX, randomY, randomZ), EntityType.ARMOR_STAND);
+        final ArmorStand as = (ArmorStand)loc.getWorld().spawnEntity(loc.add(randomX, randomY, randomZ), EntityType.ARMOR_STAND);
         as.setVisible(false);
         as.setGravity(false);
 
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        formatter.setGroupingUsed(true);
+        if (format) {
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setGroupingUsed(true);
 
-        String noColor = ChatColor.stripColor(displayname);
-        String formatted = formatter.format(Integer.parseInt(noColor));
+            String noColor = ChatColor.stripColor(displayname);
+            String formatted = formatter.format(Integer.parseInt(noColor));
 
-        as.setCustomName(displayname.replaceAll(noColor, formatted));
+            as.setCustomName(displayname.replaceAll(noColor, formatted));
+        } else {
+            as.setCustomName(displayname);
+        }
 
         final NBTEntity nbtas = new NBTEntity(as);
         nbtas.setBoolean("Invisible", true);
@@ -134,35 +139,42 @@ public class Util {
         nbtas.setBoolean("Marker", true);
         nbtas.setBoolean("Invulnerable", true);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Skyblock.getPlugin(Skyblock.class), () -> {
-            if (!as.isDead()) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
                 as.remove();
+                as.teleport(new Location(as.getWorld(), Integer.MAX_VALUE, 100, Integer.MAX_VALUE));
             }
-        }, 20L);
+        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), 20L);
     }
 
-    public String addCritTexture(String str) {
+    public static String addCritTexture(int number) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        formatter.setGroupingUsed(true);
+
+        String str = formatter.format(number);
+
         String new_string = null;
         if (str.length() == 1) {
             new_string = "§f\u2726§e" + str + "§c\u2726";
         }
         if (str.length() == 2) {
-            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§c\u2726";
+            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§c\u2726";
         }
         if (str.length() == 3) {
-            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c\u2726";
+            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c\u2726";
         }
         if (str.length() == 4) {
-            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c" + str.charAt(3) + "\u2726";
+            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c" + String.valueOf(str.charAt(3)) + "\u2726";
         }
         if (str.length() == 5) {
-            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c" + str.charAt(3) + str.charAt(4) + "§f\u2726";
+            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c" + String.valueOf(str.charAt(3)) + String.valueOf(str.charAt(4)) + "§f\u2726";
         }
         if (str.length() == 6) {
-            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + "§c" + str.charAt(3) + str.charAt(4) + str.charAt(5) + "§f\u2726";
+            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + "§c" + String.valueOf(str.charAt(3)) + String.valueOf(str.charAt(4)) + String.valueOf(str.charAt(5)) + "§f\u2726";
         }
         if (str.length() == 7) {
-            new_string = "§f\u2726" + str.charAt(0) + "§e" + str.charAt(1) + "§6" + str.charAt(2) + str.charAt(3) + "§c" + str.charAt(4) + str.charAt(5) + str.charAt(6) + "§f\u2726";
+            new_string = "§f\u2726" + String.valueOf(str.charAt(0)) + "§e" + String.valueOf(str.charAt(1)) + "§6" + String.valueOf(str.charAt(2)) + String.valueOf(str.charAt(3)) + "§c" + String.valueOf(str.charAt(4)) + String.valueOf(str.charAt(5)) + String.valueOf(str.charAt(6)) + "§f\u2726";
         }
         return new_string;
     }

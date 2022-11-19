@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -177,7 +178,7 @@ public class SkyblockPlayer {
             return;
         }
 
-        Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d));
+        Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d), true);
         setStat(SkyblockStat.HEALTH, (int) (getStat(SkyblockStat.HEALTH) - d));
         bukkitPlayer.setHealth(bukkitPlayer.getHealth() - ((d * (bukkitPlayer.getMaxHealth() / (getStat(SkyblockStat.MAX_HEALTH))))));
     }
@@ -226,6 +227,10 @@ public class SkyblockPlayer {
                 runnable.run();
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), delay * 20L);
+    }
+
+    public boolean crit() {
+        return new Random().nextInt(100) <= getStat(SkyblockStat.CRIT_CHANCE);
     }
 
     public void addStat(SkyblockStat stat, int val) {
