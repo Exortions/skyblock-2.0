@@ -60,7 +60,6 @@ public class HubScoreboard extends Scoreboard {
             case 10:
             case 21:
             case 22:
-
                 objective.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "SKYBLOCK");
                 break;
             case 11:

@@ -23,6 +23,7 @@ import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
+import com.skyblock.skyblock.utilities.time.SkyblockTimeManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,6 +43,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockEnchantmentHandler enchantmentHandler;
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
+    private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
     private ServerData serverData;
@@ -53,6 +55,7 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.initializeServerData();
+        this.registerTimeHandlers();
 
         this.registerEnchantments();
 
@@ -90,6 +93,15 @@ public final class Skyblock extends JavaPlugin {
         }
 
         this.sendMessage("Successfully reloaded already online players.");
+    }
+
+    public void registerTimeHandlers() {
+        this.sendMessage("Registering time handlers...");
+        long start = System.currentTimeMillis();
+
+        this.timeManager = new SkyblockTimeManager(this);
+
+        this.sendMessage("Successfully registered time handlers [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeServerData() {

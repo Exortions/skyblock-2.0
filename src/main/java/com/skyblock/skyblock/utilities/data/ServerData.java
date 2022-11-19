@@ -21,7 +21,8 @@ public class ServerData {
     static {
         defaultFields.put("date.season", "spring");
         defaultFields.put("date.day", 1);
-        defaultFields.put("date.seconds", 0);
+        defaultFields.put("date.minutes", 0);
+        defaultFields.put("date.ampm", "am");
     }
 
     public ServerData(Skyblock skyblock) {
