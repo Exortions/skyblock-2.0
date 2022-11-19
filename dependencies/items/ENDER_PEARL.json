@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:ender_pearl",
+  "displayname": "§fEnder Pearl",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fEnder Pearl\"},ExtraAttributes:{id:\"ENDER_PEARL\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "ENDER_PEARL",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Ender_Pearl"
+  ]
+}

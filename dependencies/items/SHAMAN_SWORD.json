@@ -1,0 +1,37 @@
+{
+  "itemid": "minecraft:iron_sword",
+  "displayname": "§5Shaman Sword",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Damage: §c+100\",1:\"§7Strength: §c+20\",2:\"\",3:\"§7Speed: §a+5\",4:\"\",5:\"§7Deal §c+1 Damage §7per §c50 max ❤§7.\",6:\"§7Receive §a-20% §7damage from wolves.\",7:\"\",8:\"§7§8This item can be reforged!\",9:\"§c☠ §5Requires Wolf LVL 3\",10:\"§5§lEPIC SWORD\"],Name:\"§5Shaman Sword\"},ExtraAttributes:{id:\"SHAMAN_SWORD\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+100",
+    "§7Strength: §c+20",
+    "",
+    "§7Speed: §a+5",
+    "",
+    "§7Deal §c+1 Damage §7per §c50 max ❤§7.",
+    "§7Receive §a-20% §7damage from wolves.",
+    "",
+    "§7§8This item can be reforged!",
+    "§c☠ §5Requires Wolf LVL 3",
+    "§5§lEPIC SWORD"
+  ],
+  "recipe": {
+    "A1": "",
+    "A2": "GOLDEN_TOOTH:2",
+    "A3": "",
+    "B1": "",
+    "B2": "ENCHANTED_IRON:8",
+    "B3": "",
+    "C1": "",
+    "C2": "ENCHANTED_BONE:4",
+    "C3": ""
+  },
+  "internalname": "SHAMAN_SWORD",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Shaman_Sword"
+  ]
+}

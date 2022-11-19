@@ -1,0 +1,13 @@
+{
+  "itemid": "minecraft:rabbit_foot",
+  "displayname": "§fRabbit's Foot",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§8Brewing Ingredient\",1:\"§f§lCOMMON\"],Name:\"§fRabbit's Foot\"},ExtraAttributes:{id:\"RABBIT_FOOT\"}}",
+  "damage": 0,
+  "lore": [
+    "§8Brewing Ingredient",
+    "§f§lCOMMON"
+  ],
+  "internalname": "RABBIT_FOOT",
+  "clickcommand": "",
+  "modver": "1.0.0"
+}

@@ -1,0 +1,12 @@
+{
+  "itemid": "minecraft:log",
+  "displayname": "§fOak Wood",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fOak Wood\"},ExtraAttributes:{id:\"LOG\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "LOG",
+  "clickcommand": "",
+  "modver": "1.0.0"
+}

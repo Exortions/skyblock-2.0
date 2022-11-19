@@ -1,0 +1,12 @@
+{
+  "itemid": "minecraft:clay_ball",
+  "displayname": "§fClay",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fClay\"},ExtraAttributes:{id:\"CLAY_BALL\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "CLAY_BALL",
+  "clickcommand": "",
+  "modver": "1.0.0"
+}

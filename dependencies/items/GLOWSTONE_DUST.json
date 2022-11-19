@@ -1,0 +1,17 @@
+{
+  "itemid": "minecraft:glowstone_dust",
+  "displayname": "§fGlowstone Dust",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§8Brewing Ingredient\",1:\"§f§lCOMMON\"],Name:\"§fGlowstone Dust\"},ExtraAttributes:{id:\"GLOWSTONE_DUST\"}}",
+  "damage": 0,
+  "lore": [
+    "§8Brewing Ingredient",
+    "§f§lCOMMON"
+  ],
+  "internalname": "GLOWSTONE_DUST",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Glowstone_Dust"
+  ]
+}
