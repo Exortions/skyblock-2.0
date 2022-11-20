@@ -269,4 +269,17 @@ public class Util {
         return stack;
     }
 
+    public String abbreviate(int num) {
+        if (num < 1000) return num + "";
+        int exp = (int) (Math.log(num) / Math.log(1000));
+        return String.format("%.1f%c", num / Math.pow(1000, exp), "kMGTPE".charAt(exp - 1)).replaceAll("\\.0", "");
+    }
+
+    public String formatInt(int num) {
+        DecimalFormat format = new DecimalFormat("#,###");
+        format.setGroupingUsed(true);
+
+        return format.format(num);
+    }
+
 }

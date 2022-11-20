@@ -174,7 +174,7 @@ public class CollectionCommand implements Command {
         String rewardsString = String.join("\n", rewards);
 
         builder.addLore(
-                Util.buildLore("\n&7Progress: &e" + percentage + "&6%\n" + bar + " &e" + currentExp + "&6/&e" + requiredExp + "\n\n&7Rewards:\n" + rewardsString + "\n\n&eClick to view rewards!")
+                Util.buildLore("\n&7Progress: &e" + percentage + "&6%\n" + bar + " &e" + Util.formatInt(currentExp) + "&6/&e" + Util.abbreviate(requiredExp) + "\n\n&7Rewards:\n" + rewardsString + "\n\n&eClick to view rewards!")
         );
 
         return builder.toItemStack();
@@ -220,7 +220,9 @@ public class CollectionCommand implements Command {
 
         if (!inItemMenu) {
             builder.addLore(
-                    Util.buildLore("\n&7Progress to " + collection.getName() + " " + Util.toRoman(nextLevel) + ": &e" + percentage + "&6%\n" + bar + " &e" + currentExp + "&6/&e" + requiredExp + "\n\n&eClick to view!")
+                    Util.buildLore("\n&7Progress to " + collection.getName() + " " + Util.toRoman(nextLevel) + ": &e" + percentage + "&6%\n" + bar + " &e" + Util.formatInt(currentExp) + "&6/&e" + Util.abbreviate(requiredExp) +
+                            "\n\n&7Co-op Contributions:\n&b" + skyblockPlayer.getBukkitPlayer().getDisplayName() + "&7: &e" + Util.abbreviate(currentExp) +
+                            "\n\n&7" + collection.getName() + " " + Util.toRoman(nextLevel) + " Rewards:\n" + String.join("\n", collection.getRewards().stringify(nextLevel)) + "\n\n&eClick to view!")
             );
         } else {
             builder.setDisplayName(ChatColor.YELLOW + collection.getName() + " Collection");
