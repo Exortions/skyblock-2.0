@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.commands.misc;
+package com.skyblock.skyblock.commands.menu;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.crafting.CraftingGUI;

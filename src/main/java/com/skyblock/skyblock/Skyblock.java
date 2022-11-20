@@ -5,6 +5,7 @@ import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
+import com.skyblock.skyblock.commands.menu.CraftCommand;
 import com.skyblock.skyblock.commands.menu.EnderChestCommand;
 import com.skyblock.skyblock.commands.menu.MenuCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
@@ -170,6 +171,7 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler.registerGuiCommand("collection", "sb collection");
         this.guiHandler.registerGuiCommand("skyblock_menu", "sb menu");
         this.guiHandler.registerGuiCommand("ender_chest", "sb enderchest");
+        this.guiHandler.registerGuiCommand("crafting_table", "sb craft");
 
         this.sendMessage("Successfully registered guis [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

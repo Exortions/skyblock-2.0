@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.swing.*;
 import java.util.*;
 
 public class CraftingGUI extends CraftInventoryCustom implements Listener {
@@ -109,6 +110,8 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
                 }
             }
         }
+
+        setItem(49, Util.buildBackButton());
     }
 
     private void updateStatus(boolean b) {
@@ -138,6 +141,12 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
                     }
                 }
                 e.setCancelled(true);
+            }
+
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
+                Player player = (Player) e.getWhoClicked();
+
+                player.performCommand("sb menu");
             }
         }
     }
