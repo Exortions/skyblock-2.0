@@ -6,6 +6,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -16,6 +17,8 @@ public class EnderChestCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
+        player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);
+
         Inventory inventory = Bukkit.createInventory(null, 27, "Ender Chest");
 
         inventory.setContents(player.getEnderChest().getContents());
