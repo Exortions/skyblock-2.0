@@ -1,20 +1,120 @@
-Test Location:
+Village:
   pos1:
     ==: org.bukkit.Location
     world: world
-    x: 6.0
-    y: 69.0
-    z: -84.0
+    x: 196.0
+    y: 179.0
+    z: 218.0
     pitch: 0.0
     yaw: 0.0
   pos2:
     ==: org.bukkit.Location
     world: world
-    x: -10.0
-    y: 81.0
-    z: -68.0
+    x: -228.0
+    y: 53.0
+    z: -225.0
     pitch: 0.0
     yaw: 0.0
-  name: Test Location
+  name: Village
+  color: AQUA
+  weight: 0
+Auction House:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 14.0
+    y: 70.0
+    z: -89.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 29.0
+    y: 91.0
+    z: -67.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Auction House
+  color: GOLD
+  weight: 1
+Bank:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 9.0
+    y: 69.0
+    z: -49.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 25.0
+    y: 92.0
+    z: -33.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Bank
+  color: GOLD
+  weight: 1
+Flower House:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 1.0
+    y: 69.0
+    z: -23.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -13.0
+    y: 78.0
+    z: -8.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Flower House
+  color: AQUA
+  weight: 1
+Bazaar Alley:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 29.0
+    y: 69.0
+    z: -70.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 37.0
+    y: 71.0
+    z: -87.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Bazaar Alley
+  color: YELLOW
+  weight: 2
+Builder's House:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -54.0
+    y: 69.0
+    z: -52.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 32.0
+    y: 93.0
+    z: -37.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Builder's House
   color: AQUA
   weight: 1
