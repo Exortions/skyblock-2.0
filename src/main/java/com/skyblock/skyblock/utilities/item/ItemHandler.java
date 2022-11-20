@@ -2,6 +2,7 @@ package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.ReforgeType;
+import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -32,6 +33,7 @@ import java.util.*;
 @Getter
 public class ItemHandler {
     private final HashMap<String, ItemStack> items = new HashMap<>();
+    private final HashMap<ItemStack, String> reversed = new HashMap<>();
     private final Skyblock skyblock;
 
     public ItemHandler(Skyblock plugin) {
@@ -76,6 +78,12 @@ public class ItemHandler {
                 nbtItem.setString("skyblockId", file.getName().replace(".json", "").toLowerCase());
 
                 register(file.getName(), nbtItem.getItem());
+
+                if (jsonObject.get("recipe") != null) {
+                    JSONObject recipe = (JSONObject) jsonObject.get("recipe");
+                    Skyblock.getPlugin(Skyblock.class).getRecipeHandler().getRecipes().add(
+                            new SkyblockRecipe(recipe, getItem(file.getName())));
+                }
             } catch (MojangsonParseException | ParseException | IOException e) {
                 throw new RuntimeException(e);
             }
@@ -126,6 +134,7 @@ public class ItemHandler {
 
     public void register(String id, ItemStack item) {
         items.put(id, parseLore(item));
+        reversed.put(parseLore(item), id.replace(".json", ""));
     }
 
     public ItemStack getItem(String s) {

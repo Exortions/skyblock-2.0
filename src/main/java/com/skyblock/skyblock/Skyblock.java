@@ -14,6 +14,7 @@ import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
@@ -52,6 +53,7 @@ public final class Skyblock extends JavaPlugin {
     private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
+    private RecipeHandler recipeHandler;
     private ItemHandler itemHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
@@ -68,6 +70,7 @@ public final class Skyblock extends JavaPlugin {
 
         this.registerLocations();
 
+        this.initializeRecipes();
         this.initializeGameRules();
         this.initializeNEUItems();
 
@@ -112,6 +115,12 @@ public final class Skyblock extends JavaPlugin {
         }
 
         this.sendMessage("Successfully registered merchants [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void initializeRecipes() {
+        this.recipeHandler = new RecipeHandler();
+
+        this.recipeHandler.init();
     }
 
     public void registerLocations() {
@@ -239,6 +248,7 @@ public final class Skyblock extends JavaPlugin {
                 new EnderChestCommand(),
                 new CreateLocationCommand(),
                 new SpawnMerchantCommand(),
+                new CraftCommand(),
                 new ItemCommand()
         );
 
