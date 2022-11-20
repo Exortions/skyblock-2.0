@@ -3,6 +3,7 @@ package com.skyblock.skyblock;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
@@ -104,8 +105,11 @@ public class SkyblockPlayer {
             hand = itemStack;
         }
 
+        if (bukkitPlayer.getLocation().getY() <= -11) kill(EntityDamageEvent.DamageCause.VOID, null);
+
         bukkitPlayer.setWalkSpeed(Math.min((float) (getStat(SkyblockStat.SPEED) / 500.0), 1.0f));
         bukkitPlayer.setMaxHealth(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0)));
+        bukkitPlayer.setHealth(Math.max(1, bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH))));
 
         tick++;
     }
@@ -178,12 +182,55 @@ public class SkyblockPlayer {
 
         Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d), true);
         setStat(SkyblockStat.HEALTH, (int) (getStat(SkyblockStat.HEALTH) - d));
-        bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH)));
     }
 
     public void kill(EntityDamageEvent.DamageCause cause, Entity killer) {
         bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
         setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
+
+        String entityName = "";
+
+        if (killer != null) {
+            SkyblockEntity sentity = Skyblock.getPlugin(Skyblock.class).getEntityHandler().getEntity(killer);
+
+            if (sentity != null) entityName = sentity.getEntityData().entityName;
+        }
+
+        String message;
+        String out;
+        switch (cause) {
+            case VOID:
+                message = "You fell into the void.";
+                out = "%s fell into the void.";
+                break;
+            case FALL:
+                message = "You fell to your death.";
+                out = "%s fell to their death.";
+                break;
+            case ENTITY_ATTACK:
+                message = "You were killed by " + entityName + ChatColor.GRAY + ".";
+                out = "%s was killed by " + entityName + ChatColor.GRAY + ".";
+                break;
+            case FIRE:
+            case LAVA:
+                message = "You burned to death.";
+                out = "%s burned to death.";
+                break;
+            default:
+                message = "You died.";
+                out = "%s died.";
+                break;
+        }
+
+        for (Player player : bukkitPlayer.getWorld().getPlayers()) {
+            if (player != bukkitPlayer) {
+                player.sendMessage(ChatColor.RED + " ☠ " + ChatColor.GRAY + String.format(out, bukkitPlayer.getName()));
+            }
+        }
+
+        bukkitPlayer.sendMessage(ChatColor.RED + " ☠ " + ChatColor.GRAY + message);
+
+        if (isOnIsland()) return;
 
         int sub = (int) getValue("stats.purse") / 2;
         bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.commaify(sub) + " coins!");
@@ -194,6 +241,10 @@ public class SkyblockPlayer {
         bukkitPlayer.teleport(new Location(bukkitPlayer.getWorld(), -2 , 70,  -84,  -180, 0));
 
         setValue("stats.purse", sub);
+    }
+
+    public boolean isOnIsland() {
+        return bukkitPlayer.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX);
     }
 
     public int getStat(SkyblockStat stat) { return stats.get(stat); }
@@ -314,10 +365,6 @@ public class SkyblockPlayer {
 
     public SkyblockLocation getCurrentLocation() {
         return Skyblock.getPlugin(Skyblock.class).getLocationManager().getLocation(bukkitPlayer.getLocation());
-    }
-
-    public boolean isOnPrivateIsland() {
-        return bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
     }
 
 }
