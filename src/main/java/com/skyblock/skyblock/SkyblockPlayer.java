@@ -23,9 +23,7 @@ import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Data
@@ -355,6 +353,10 @@ public class SkyblockPlayer {
                     config.set("collection." + collection.getName().toLowerCase() + ".unlocked", false);
                 }
 
+                config.set("bank.balance", 0);
+                config.set("bank.interest", 2);
+                config.set("bank.recent_transactions", new ArrayList<>());
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();
@@ -368,6 +370,42 @@ public class SkyblockPlayer {
 
     public boolean isOnPrivateIsland() {
         return bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
+    }
+
+    public void addTransaction(int amount, String by) {
+        List<String> transactions = (List<String>) getValue("bank.recent_transactions");
+
+        if (transactions.size() >= 10) transactions.remove(0);
+
+        transactions.add("" + amount + ";" + System.currentTimeMillis() + ";" + by);
+
+        setValue("bank.recent_transactions", transactions);
+    }
+
+    public boolean deposit(int amount, boolean self) {
+        int balance = (int) getValue("bank.balance");
+        int purse = (int) getValue("stats.purse");
+
+        if (purse < amount) return false;
+
+        setValue("bank.balance", balance + amount);
+        setValue("stats.purse", purse - amount);
+
+        this.addTransaction(amount, self ? getBukkitPlayer().getDisplayName() : "Bank Interest");
+
+        return true;
+    }
+
+    public boolean withdraw(int amount) {
+        int balance = (int) getValue("bank.balance");
+        int purse = (int) getValue("stats.purse");
+
+        if (balance < amount) return false;
+
+        setValue("bank.balance", balance - amount);
+        setValue("stats.purse", purse + amount);
+
+        return true;
     }
 
 }

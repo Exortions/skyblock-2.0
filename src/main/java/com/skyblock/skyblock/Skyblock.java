@@ -1,5 +1,6 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.economy.DepositCommand;
 import com.skyblock.skyblock.commands.enchantment.AddEnchantmentCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
@@ -259,6 +260,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new ItemListener(this));
         registerListener(new VisitMenuListener());
         registerListener(new EnderChestListener());
+        registerListener(new BankerListener());
 
         this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -293,7 +295,8 @@ public final class Skyblock extends JavaPlugin {
                 new SpawnMerchantCommand(),
                 new CraftCommand(),
                 new ItemCommand(),
-                new BankerCommand()
+                new BankerCommand(),
+                new DepositCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

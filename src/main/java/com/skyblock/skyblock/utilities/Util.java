@@ -26,6 +26,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.*;
 
 @UtilityClass
@@ -77,6 +81,10 @@ public class Util {
 
     public ItemStack buildBackButton() {
         return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack();
+    }
+
+    public ItemStack buildBackButton(String lore) {
+        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(Util.buildLore(lore)).toItemStack();
     }
 
     public void fillEmpty(Inventory inventory) {
@@ -280,6 +288,26 @@ public class Util {
         format.setGroupingUsed(true);
 
         return format.format(num);
+    }
+
+    public String calculateTimeAgoWithPeriodAndDuration(LocalDateTime pastTime, ZoneId zone) {
+        Period period = Period.between(pastTime.toLocalDate(), new Date().toInstant().atZone(zone).toLocalDate());
+        Duration duration = Duration.between(pastTime, new Date().toInstant().atZone(zone));
+        if (period.getYears() != 0) {
+            return "several years ago";
+        } else if (period.getMonths() != 0) {
+            return "several months ago";
+        } else if (period.getDays() != 0) {
+            return "several days ago";
+        } else if (duration.toHours() != 0) {
+            return "several hours ago";
+        } else if (duration.toMinutes() != 0) {
+            return "several minutes ago";
+        } else if (duration.getSeconds() != 0) {
+            return "several seconds ago";
+        } else {
+            return "moments ago";
+        }
     }
 
 }
