@@ -10,6 +10,7 @@ depend:
   - ArmorEvent
   - NBTAPI
   - ActionBarAPI
+  - Citizens
 commands:
   sb:
     description: Skyblock

@@ -6,6 +6,7 @@ import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
 import com.skyblock.skyblock.commands.menu.EnderChestCommand;
 import com.skyblock.skyblock.commands.menu.MenuCommand;
+import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
@@ -18,6 +19,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
+import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -45,6 +47,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockLocationManager locationManager;
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
+    private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
     private ItemHandler itemHandler;
@@ -67,6 +70,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeNEUItems();
 
         this.registerCollections();
+        this.registerMerchants();
         this.registerGuis();
         this.registerMobs();
 
@@ -87,6 +91,15 @@ public final class Skyblock extends JavaPlugin {
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerMerchants() {
+        this.sendMessage("Registering merchants...");
+        long start = System.currentTimeMillis();
+
+        this.merchantHandler = new MerchantHandler();
+
+        this.sendMessage("Successfully registered merchants [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerLocations() {
@@ -212,7 +225,8 @@ public final class Skyblock extends JavaPlugin {
                 new WarpCommand(),
                 new VisitCommand(),
                 new EnderChestCommand(),
-                new CreateLocationCommand()
+                new CreateLocationCommand(),
+                new SpawnMerchantCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

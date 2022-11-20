@@ -6,7 +6,6 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
-import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.ArmorStand;
@@ -20,9 +19,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.Random;
 
 public class PlayerListener implements Listener {
 
@@ -75,6 +72,8 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent e){
+        if (e.getEntity().hasMetadata("merchantw")) return;
+
         if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
             if (e.getEntity() instanceof Player){
                 if (!e.isCancelled()) {
@@ -102,7 +101,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof ArmorStand) return;
+        if (e.getEntity() instanceof ArmorStand || e.getEntity().hasMetadata("merchant")) return;
 
         if (e.getDamager() instanceof Player) {
             Player p = (Player) e.getDamager();
