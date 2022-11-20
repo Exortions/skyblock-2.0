@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.scoreboard;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,20 +23,18 @@ public class HubScoreboard extends Scoreboard {
     @Override
     void display() {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
         DecimalFormat formatter = new DecimalFormat("#,###");
         formatter.setGroupingUsed(true);
 
-        int hours=java.util.Calendar.getInstance().getTime().getHours();
-        int minutes=java.util.Calendar.getInstance().getTime().getMinutes();
-        LocalDate l_date = LocalDate.now();
-        String dateString = l_date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+        String dateString = LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
 
         this.animateTitle();
 
         addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
         addLine(8, ChatColor.GRAY + "   ");
-        addLine(7, ChatColor.WHITE + " Spring 10th");
-        addLine(6, ChatColor.GRAY + " " + hours + ":" + minutes + "pm " + ChatColor.YELLOW + "☀");
+        addLine(7, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
+        addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + ChatColor.YELLOW + "☀");
         addLine(5, ChatColor.WHITE + " ⏣ " + ChatColor.GRAY + "None");
         addLine(4, ChatColor.WHITE + " ");
         addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));

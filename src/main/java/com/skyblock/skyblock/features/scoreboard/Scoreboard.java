@@ -35,9 +35,9 @@ public abstract class Scoreboard {
     }
 
     public void runTask() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Skyblock.getPlugin(Skyblock.class), () -> {
+        Skyblock.getPlugin(Skyblock.class).getServer().getScheduler().scheduleSyncRepeatingTask(Skyblock.getPlugin(Skyblock.class), () -> {
             display();
-            player.setScoreboard(board);
+            updateScoreboard();
         }, 0, 3);
     }
 
