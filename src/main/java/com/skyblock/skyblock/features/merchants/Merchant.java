@@ -119,11 +119,14 @@ public class Merchant implements Listener {
 
         for (MerchantItem item : this.items) {
             ItemStack stack = item.getItem();
-            ItemMeta meta = stack.getItemMeta();
-            List<String> lore = meta.getLore();
-            lore.addAll(Arrays.asList(Util.buildLore("\n&7Cost\n&6" + item.getCost() + " &6coins\n\n&eClick to trade!\n&eRight-Click for more trading options!")));
-            meta.setLore(lore);
-            stack.setItemMeta(meta);
+
+            if (stack.getItemMeta().getLore().stream().noneMatch(l -> l.contains("Right-Click for more trading options!"))) {
+                ItemMeta meta = stack.getItemMeta();
+                List<String> lore = meta.getLore();
+                lore.addAll(Arrays.asList(Util.buildLore("\n&7Cost\n&6" + item.getCost() + " &6coins\n\n&eClick to trade!\n&eRight-Click for more trading options!")));
+                meta.setLore(lore);
+                stack.setItemMeta(meta);
+            }
 
             NBTItem nbt = new NBTItem(stack);
 
