@@ -2,6 +2,7 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.enchantment.AddEnchantmentCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
+import com.skyblock.skyblock.commands.item.ItemCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
 import com.skyblock.skyblock.commands.menu.EnderChestCommand;
@@ -19,6 +20,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
+import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
@@ -88,6 +90,12 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Disabling Skyblock...");
         long start = System.currentTimeMillis();
 
+        for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
+            merchant.getNpc().destroy();
+            merchant.getStand().remove();
+            merchant.getClick().remove();
+        }
+
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
@@ -98,6 +106,10 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.merchantHandler = new MerchantHandler();
+
+        for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
+            merchant.createNpc();
+        }
 
         this.sendMessage("Successfully registered merchants [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -226,7 +238,8 @@ public final class Skyblock extends JavaPlugin {
                 new VisitCommand(),
                 new EnderChestCommand(),
                 new CreateLocationCommand(),
-                new SpawnMerchantCommand()
+                new SpawnMerchantCommand(),
+                new ItemCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

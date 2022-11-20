@@ -30,6 +30,6 @@ public class SpawnMerchantCommand implements Command {
             return;
         }
 
-        merchant.createNpc(player.getLocation());
+        merchant.createNpc();
     }
 }

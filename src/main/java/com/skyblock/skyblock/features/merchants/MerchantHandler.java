@@ -2,8 +2,10 @@ package com.skyblock.skyblock.features.merchants;
 
 import com.skyblock.skyblock.Skyblock;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class MerchantHandler {
@@ -22,13 +24,14 @@ public class MerchantHandler {
         registerMerchant("mine_merchant", new Merchant(
                 "Mine Merchant",
                 "akhunta",
-                Arrays.asList(
+                Collections.singletonList(
                         new MerchantItem(
                                 Skyblock.getPlugin(Skyblock.class).getItemHandler().getItem("ASPECT_OF_THE_END.json"),
-                                "say hello",
+                                "sb item ASPECT_OF_THE_END.json",
                                 100
                         )
-                )
+                ),
+                new Location(Bukkit.getWorld("world"), -19, 70, -48)
         ));
     }
 

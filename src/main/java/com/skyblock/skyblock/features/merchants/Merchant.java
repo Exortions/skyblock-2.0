@@ -6,6 +6,7 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTEntity;
 import de.tr7zw.nbtapi.NBTItem;
+import lombok.Data;
 import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -18,8 +19,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,9 +31,9 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.Arrays;
 import java.util.List;
 
+@Data
 public class Merchant implements Listener {
 
-    @Getter
     private final String name;
     private final String skin;
 
@@ -42,17 +45,19 @@ public class Merchant implements Listener {
     private LookClose lookClose;
     private SkinTrait skinTrait;
 
-    @Getter
     private final List<MerchantItem> items;
+    private final Location location;
 
-    protected Merchant(String name, String skin, List<MerchantItem> items) {
+    protected Merchant(String name, String skin, List<MerchantItem> items, Location location) {
         this.name = name;
         this.skin = skin;
 
         this.items = items;
+
+        this.location = location;
     }
 
-    public void createNpc(Location location) {
+    public void createNpc() {
         this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
         this.npc.spawn(location);
 
@@ -141,6 +146,36 @@ public class Merchant implements Listener {
         inventory.setItem(49, new ItemBuilder(ChatColor.GREEN + "Sell Item", Material.HOPPER).setLore(Util.buildLore("&7Click items in your inventory to\n&7sell them to this shop!")).toItemStack());
 
         player.getBukkitPlayer().openInventory(inventory);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (!event.getView().getTitle().equals(this.name)) return;
+
+        if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
+
+        ItemStack item = event.getCurrentItem();
+
+        event.setCancelled(true);
+
+        NBTItem nbt = new NBTItem(item);
+
+        if (nbt.hasKey("merchantItem")) {
+            SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
+
+            if (player == null) return;
+
+            if ((int) player.getValue("stats.purse") < nbt.getInteger("merchantCost")) {
+                player.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have enough coins to purchase this item!");
+                return;
+            }
+
+            player.setValue("stats.purse", (int) player.getValue("stats.purse") - nbt.getInteger("merchantCost"));
+
+            player.getBukkitPlayer().performCommand(nbt.getString("merchantReward"));
+
+            player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + nbt.getInteger("merchantCost") + " coins" + ChatColor.GREEN + "!");
+        }
     }
 
 }
