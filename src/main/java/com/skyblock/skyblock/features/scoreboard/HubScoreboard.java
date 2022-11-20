@@ -35,6 +35,8 @@ public class HubScoreboard extends Scoreboard {
 
         String loc = currentLocation == null ? ChatColor.GRAY + "None" : currentLocation.getColor() + currentLocation.getName();
 
+        if (currentLocation == null) loc = ChatColor.GRAY + "None";
+
         if (player.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) loc = ChatColor.GREEN + "Private Island";
 
         this.animateTitle();
@@ -43,7 +45,7 @@ public class HubScoreboard extends Scoreboard {
         addLine(8, ChatColor.GRAY + "   ");
         addLine(7, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
         addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getIcon());
-        addLine(5, ChatColor.WHITE + " ⏣ " + loc);
+        addLine(5, currentLocation == null ? "" + ChatColor.WHITE : currentLocation.getColor() + " ⏣ " + loc);
         addLine(4, ChatColor.WHITE + " ");
         addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
         addLine(2, ChatColor.WHITE + "  ");
