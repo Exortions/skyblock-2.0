@@ -110,6 +110,7 @@ public class PlayerListener implements Listener {
             SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
             double damage = 5 + player.getStat((SkyblockStat.DAMAGE)) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
             double display = damage;
+            boolean crit = player.crit();
 
             if (e.getEntity().hasMetadata("skyblockEntityData")) {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
@@ -117,7 +118,7 @@ public class PlayerListener implements Listener {
                 sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
                 sentity.setLastDamager(player);
 
-                if (player.crit()) {
+                if (crit) {
                     damage = (damage * ((100 + player.getStat(SkyblockStat.CRIT_DAMAGE))) / 100) / sentity.getEntityData().maximumHealth;
                 } else {
                     damage = damage / sentity.getEntityData().maximumHealth;
@@ -127,7 +128,7 @@ public class PlayerListener implements Listener {
                 sentity.getEntityData().health = (long) (sentity.getEntityData().health - display);
             } else {
                 if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
-                    if (player.crit()) {
+                    if (crit) {
                         damage = damage * ((100 + player.getStat(SkyblockStat.CRIT_DAMAGE))) / 100;
                     }
                 }
@@ -135,7 +136,7 @@ public class PlayerListener implements Listener {
 
             e.setDamage(damage);
 
-            if (player.crit()) {
+            if (crit) {
                 Util.setDamageIndicator(e.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
             } else {
                 Util.setDamageIndicator(e.getEntity().getLocation(), org.bukkit.ChatColor.GRAY + "" + Math.round(display), true);
