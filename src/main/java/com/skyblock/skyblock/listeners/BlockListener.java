@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.listeners;
 
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Util;
 import net.minecraft.server.v1_8_R3.ItemSword;
 import net.minecraft.server.v1_8_R3.ItemTool;
@@ -26,12 +27,12 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        event.setCancelled(true);
+        event.setCancelled(!SkyblockPlayer.getPlayer(event.getPlayer()).isOnPrivateIsland());
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        event.setCancelled(true);
+        event.setCancelled(!SkyblockPlayer.getPlayer(event.getPlayer()).isOnPrivateIsland());
     }
 
 }

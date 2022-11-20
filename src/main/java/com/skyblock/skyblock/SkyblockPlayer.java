@@ -3,6 +3,7 @@ package com.skyblock.skyblock;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
@@ -313,6 +314,10 @@ public class SkyblockPlayer {
 
     public SkyblockLocation getCurrentLocation() {
         return Skyblock.getPlugin(Skyblock.class).getLocationManager().getLocation(bukkitPlayer.getLocation());
+    }
+
+    public boolean isOnPrivateIsland() {
+        return bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
     }
 
 }
