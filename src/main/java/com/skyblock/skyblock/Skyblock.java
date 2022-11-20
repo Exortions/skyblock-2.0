@@ -8,6 +8,7 @@ import com.skyblock.skyblock.commands.menu.CollectionCommand;
 import com.skyblock.skyblock.commands.menu.CraftCommand;
 import com.skyblock.skyblock.commands.menu.EnderChestCommand;
 import com.skyblock.skyblock.commands.menu.MenuCommand;
+import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
@@ -25,6 +26,8 @@ import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
+import com.skyblock.skyblock.features.npc.NPC;
+import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -35,6 +38,7 @@ import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -58,6 +62,7 @@ public final class Skyblock extends JavaPlugin {
     private CommandHandler commandHandler;
     private RecipeHandler recipeHandler;
     private ItemHandler itemHandler;
+    private NPCHandler npcHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
 
@@ -79,6 +84,7 @@ public final class Skyblock extends JavaPlugin {
 
         this.registerCollections();
         this.registerMerchants();
+        this.registerNpcs();
         this.registerGuis();
         this.registerMobs();
         this.registerLaunchPads();
@@ -103,6 +109,8 @@ public final class Skyblock extends JavaPlugin {
             merchant.getClick().remove();
         }
 
+        this.npcHandler.killAll();
+
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
@@ -110,6 +118,31 @@ public final class Skyblock extends JavaPlugin {
 
     public void registerLaunchPads() {
         this.launchPadHandler = new LaunchPadHandler();
+    }
+
+    public void registerNpcs() {
+        this.sendMessage("Registering NPCs...");
+        long start = System.currentTimeMillis();
+
+        this.npcHandler = new NPCHandler();
+
+        // TODO: Load from file
+        this.npcHandler.registerNPC(
+                "banker",
+                new NPC(
+                        "Banker",
+                        true,
+                        true,
+                        new Location(Bukkit.getWorld("world"), 20.5, 71, -40.5),
+                        (player) -> this.getGuiHandler().show("banker", player),
+                        "ewogICJ0aW1lc3RhbXAiIDogMTY1NTg0NTIwODg3OSwKICAicHJvZmlsZUlkIiA6ICI2NmI0ZDRlMTFlNmE0YjhjYTFkN2Q5YzliZTBhNjQ5OSIsCiAgInByb2ZpbGVOYW1lIiA6ICJBcmFzdG9vWXNmIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYyYTExMGIwMmVmYzU4ZjJiYTc3YWVlZjE3ZGY3ZTMyOWQ4OTZjNDU5MDI0NDIzMzg0OWY0MmRhMDIzMjhhOSIKICAgIH0KICB9Cn0=",
+                        "EBEcNTFPKGK8a1kGPyV0rHzZlwjp3s6jH3NBpVnrt0dgiieIChfiknBr8AAeC6Petrw1YAeHPwq5hC358BLggCNQQOgcJ0vcrZpISSPMfxi03WliH7lY6l5kboc6ht1vEdAZgCt/Sn9mKXqw4DzuHK2+2kl1hPkBX3rE5swVcqm9e/xLGsftE6NWWVpxw90YobRYF3NMzHX4PlFXHpndbDdMaPMTIAwSjDyR+scuOJKgV8tVYRp27aGBKevJXafYxxg9v8P06rFYif6DlyhDgU5/qnwFZdxnYUPrT7CeyLKptxPUzjy+G9iOiH7rkSJwkj22zk4BEdrcmAL0jNFr4dXq9n9d9MFtZ6KEqjBwPfB1T5ixMYS6tdmnbZYSamFAKUuKv1Jxs6WqwS3FesA7lALNNuZfXdsWaSBlT7d+TCsqjhlUccOEW5KyeLdgBsmACiPfQ+EGH6NET+plxDAdoVU21YPJJosqHvWR5+RZUlaXZIEXnPfeN/2BzYjoQVktn1T44Qdv0MfYerfDG0GsyrVAMcoi6I2zzB97OeQi/eUtOxv4KIvTHLtmULJtvrr6jqeodg+RoL9twIPLfG/+CBm9lznYnp5kIJxIGCUJ8fk7mzSnO5vW/Ej0vxADYYwpJStrkapaspWe1LNRGEqYBw2kTnk10wFQiVeYdhTJH1I="
+                )
+        );
+
+        this.npcHandler.spawnAll();
+
+        this.sendMessage("Successfully registered NPCs [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerMerchants() {
@@ -179,6 +212,7 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler.registerGuiCommand("skyblock_menu", "sb menu");
         this.guiHandler.registerGuiCommand("ender_chest", "sb enderchest");
         this.guiHandler.registerGuiCommand("crafting_table", "sb craft");
+        this.guiHandler.registerGuiCommand("banker", "sb banker");
 
         this.sendMessage("Successfully registered guis [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -258,7 +292,8 @@ public final class Skyblock extends JavaPlugin {
                 new CreateLocationCommand(),
                 new SpawnMerchantCommand(),
                 new CraftCommand(),
-                new ItemCommand()
+                new ItemCommand(),
+                new BankerCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
