@@ -174,11 +174,14 @@ public class Merchant implements Listener {
                 return;
             }
 
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setGroupingUsed(true);
+
             player.setValue("stats.purse", (int) player.getValue("stats.purse") - nbt.getInteger("merchantCost"));
 
             player.getBukkitPlayer().performCommand(nbt.getString("merchantReward"));
 
-            player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + nbt.getInteger("merchantCost") + " coins" + ChatColor.GREEN + "!");
+            player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + formatter.format(nbt.getInteger("merchantCost")) + " coins" + ChatColor.GREEN + "!");
         }
     }
 
