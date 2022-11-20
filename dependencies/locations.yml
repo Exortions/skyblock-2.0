@@ -1,0 +1,20 @@
+Test Location:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 6.0
+    y: 69.0
+    z: -84.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -10.0
+    y: 81.0
+    z: -68.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Test Location
+  color: AQUA
+  weight: 1

@@ -3,6 +3,7 @@ package com.skyblock.skyblock;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import com.skyblock.skyblock.utilities.Util;
@@ -309,4 +310,9 @@ public class SkyblockPlayer {
             }
         }
     }
+
+    public SkyblockLocation getCurrentLocation() {
+        return Skyblock.getPlugin(Skyblock.class).getLocationManager().getLocation(bukkitPlayer.getLocation());
+    }
+
 }

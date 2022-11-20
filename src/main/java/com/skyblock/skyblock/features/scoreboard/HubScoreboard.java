@@ -30,13 +30,17 @@ public class HubScoreboard extends Scoreboard {
 
         String dateString = LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
 
+        SkyblockLocation currentLocation = skyblockPlayer.getCurrentLocation();
+
+        String loc = currentLocation == null ? ChatColor.GRAY + "None" : currentLocation.getColor() + currentLocation.getName();
+
         this.animateTitle();
 
         addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
         addLine(8, ChatColor.GRAY + "   ");
         addLine(7, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
         addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getIcon());
-        addLine(5, ChatColor.WHITE + " ⏣ " + ChatColor.GRAY + "None");
+        addLine(5, ChatColor.WHITE + " ⏣ " + loc);
         addLine(4, ChatColor.WHITE + " ");
         addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
         addLine(2, ChatColor.WHITE + "  ");
