@@ -4,6 +4,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -64,6 +65,18 @@ public class SkyblockTimeManager {
 
     public String getDate() {
         return StringUtils.capitalize(serverData.get("date.season") + " " + Util.ordinalSuffixOf((int) serverData.get("date.day")));
+    }
+
+    public String getIcon() {
+        int minutes = (int) serverData.get("date.minutes");
+        int hours = minutes / 60;
+        minutes = minutes % 60;
+
+        if (hours >= 6 && hours < 18) {
+            return ChatColor.YELLOW +  "☀";
+        } else {
+            return ChatColor.AQUA + "☽";
+        }
     }
 
     public String getNextSeason() {

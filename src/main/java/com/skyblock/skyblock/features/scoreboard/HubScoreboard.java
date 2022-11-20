@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.scoreboard;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.location.SkyblockLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -34,7 +35,7 @@ public class HubScoreboard extends Scoreboard {
         addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
         addLine(8, ChatColor.GRAY + "   ");
         addLine(7, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
-        addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + ChatColor.YELLOW + "☀");
+        addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getIcon());
         addLine(5, ChatColor.WHITE + " ⏣ " + ChatColor.GRAY + "None");
         addLine(4, ChatColor.WHITE + " ");
         addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
