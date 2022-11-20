@@ -17,6 +17,7 @@ import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
+import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -41,6 +42,7 @@ import java.util.Objects;
 public final class Skyblock extends JavaPlugin {
 
     private SkyblockEnchantmentHandler enchantmentHandler;
+    private SkyblockLocationManager locationManager;
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
     private SkyblockTimeManager timeManager;
@@ -58,6 +60,8 @@ public final class Skyblock extends JavaPlugin {
         this.registerTimeHandlers();
 
         this.registerEnchantments();
+
+        this.registerLocations();
 
         this.initializeGameRules();
         this.initializeNEUItems();
@@ -83,6 +87,15 @@ public final class Skyblock extends JavaPlugin {
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerLocations() {
+        this.sendMessage("Registering locations...");
+        long start = System.currentTimeMillis();
+
+        this.locationManager = new SkyblockLocationManager(this);
+
+        this.sendMessage("Successfully registered &a" + this.locationManager.getLocations().size() + " &flocations [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeAlreadyOnlinePlayers() {
@@ -198,7 +211,8 @@ public final class Skyblock extends JavaPlugin {
                 new SummonCommand(),
                 new WarpCommand(),
                 new VisitCommand(),
-                new EnderChestCommand()
+                new EnderChestCommand(),
+                new CreateLocationCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

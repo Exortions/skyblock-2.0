@@ -12,6 +12,7 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTEntity;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang.math.IntRange;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -196,7 +197,7 @@ public class Util {
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         byte[] encodedData = org.apache.commons.codec.binary.Base64.encodeBase64(("{textures:{SKIN:{url:\"" + skinUrl + "\"}}}").getBytes());
         profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
-        Field profileField = null;
+        Field profileField;
         try {
             profileField = headMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
@@ -233,6 +234,23 @@ public class Util {
         if (j == 3 && k != 13) return i + "rd";
 
         return i + "th";
+    }
+
+    public boolean inCuboid(Location origin, Location position1, Location position2) {
+        double x1 = position1.getX();
+        double y1 = position1.getY();
+        double z1 = position1.getZ();
+        double x2 = position2.getX();
+        double y2 = position2.getY();
+        double z2 = position2.getZ();
+
+        double x = origin.getX();
+        double y = origin.getY();
+        double z = origin.getZ();
+
+        return new IntRange(x1, x2).containsDouble(x)
+                && new IntRange(y1, y2).containsDouble(y)
+                && new IntRange(z1, z2).containsDouble(z);
     }
 
 }
