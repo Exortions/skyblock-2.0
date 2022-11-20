@@ -9,11 +9,15 @@ import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
 
 public class AspectOfTheDragons extends SkyblockItem {
 
@@ -66,6 +70,15 @@ public class AspectOfTheDragons extends SkyblockItem {
             skyblockPlayer.setCooldown(getInternalName(), 5);
         }
 
+        this.playEffect(player.getLocation().add(player.getLocation().getDirection().multiply(2)), player.getLocation().getDirection());
+
         Util.sendAbility(skyblockPlayer, "Dragon Rage", cost);
     }
+
+    public void playEffect(Location location, Vector direction) {
+        location.setY(location.getY() + 2);
+
+        ParticleEffect.FLAME.display(location);
+    }
+
 }

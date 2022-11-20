@@ -128,5 +128,10 @@
             <scope>system</scope>
             <systemPath>${basedir}/dependencies/plugins/worldedit-bukkit-6.1.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs</groupId>
+            <artifactId>particle</artifactId>
+            <version>1.7.1</version>
+        </dependency>
     </dependencies>
 </project>
