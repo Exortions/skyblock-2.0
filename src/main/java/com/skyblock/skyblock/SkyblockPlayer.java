@@ -367,4 +367,8 @@ public class SkyblockPlayer {
         return Skyblock.getPlugin(Skyblock.class).getLocationManager().getLocation(bukkitPlayer.getLocation());
     }
 
+    public boolean isOnPrivateIsland() {
+        return bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
+    }
+
 }
