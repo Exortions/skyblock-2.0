@@ -20,6 +20,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -250,6 +251,22 @@ public class Util {
         return new IntRange(x1, x2).containsDouble(x)
                 && new IntRange(y1, y2).containsDouble(y)
                 && new IntRange(z1, z2).containsDouble(z);
+    }
+
+    public ItemStack stripMerchantLore(ItemStack stack) {
+        ItemMeta meta = stack.getItemMeta();
+
+        if (meta == null || !meta.hasLore()) return stack;
+
+        if (!meta.getLore().get(meta.getLore().size() - 1).contains("Right-Click for more trading options!")) return stack;
+
+        List<String> lore = meta.getLore();
+        for (int i = 1; i < 7; i++) lore.remove(lore.size() - 1);
+
+        meta.setLore(lore);
+
+        stack.setItemMeta(meta);
+        return stack;
     }
 
 }

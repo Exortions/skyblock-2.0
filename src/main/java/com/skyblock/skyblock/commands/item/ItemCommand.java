@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.commands.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
@@ -30,6 +31,6 @@ public class ItemCommand implements Command {
             return;
         }
 
-        player.getInventory().addItem(stack);
+        player.getInventory().addItem(Util.stripMerchantLore(stack));
     }
 }

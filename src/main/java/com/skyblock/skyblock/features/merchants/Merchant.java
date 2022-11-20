@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -125,10 +126,13 @@ public class Merchant implements Listener {
         for (MerchantItem item : this.items) {
             ItemStack stack = item.getItem();
 
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setGroupingUsed(true);
+
             if (stack.getItemMeta().getLore().stream().noneMatch(l -> l.contains("Right-Click for more trading options!"))) {
                 ItemMeta meta = stack.getItemMeta();
                 List<String> lore = meta.getLore();
-                lore.addAll(Arrays.asList(Util.buildLore("\n&7Cost\n&6" + item.getCost() + " &6coins\n\n&eClick to trade!\n&eRight-Click for more trading options!")));
+                lore.addAll(Arrays.asList(Util.buildLore("\n&7Cost\n&6" + formatter.format(item.getCost()) + " &6coins\n\n&eClick to trade!\n&eRight-Click for more trading options!")));
                 meta.setLore(lore);
                 stack.setItemMeta(meta);
             }
