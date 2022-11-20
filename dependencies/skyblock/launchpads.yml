@@ -69,6 +69,76 @@ launchpads:
       z: -228.0
       pitch: 0.0
       yaw: 0.0
+  Gold_to_Deep:
+    start: The Gold Mine
+    end: The Deep Caverns
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -8
+      y: 68
+      z: -396
+      pitch: 0
+      yaw: -180
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -4
+      y: 126
+      z: -486
+      pitch: 0
+      yaw: -180
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -8
+      y: 74
+      z: -399
+      pitch: 0.0
+      yaw: -180
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -5
+      y: 119
+      z: -490
+      pitch: 0.0
+      yaw: -180.0
+  Deep_to_Gold:
+    start: The Deep Caverns
+    end: The Gold Mine
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -5
+      y: 119
+      z: -487
+      pitch: 0.0
+      yaw: 0.0
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -8
+      y: 74
+      z: -399
+      pitch: 0.0
+      yaw: 0.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -4
+      y: 126
+      z: -486
+      pitch: 0
+      yaw: 0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -8
+      y: 68
+      z: -393
+      pitch: 0
+      yaw: 0
   Park_to_Hub:
     start: The Park
     end: The Hub
@@ -170,7 +240,7 @@ launchpads:
       ==: org.bukkit.Location
       world: world
       x: -201.0
-      y: 83.0
+      y: 84.0
       z: -232.0
       pitch: 0.0
       yaw: 135.0
@@ -209,3 +279,283 @@ launchpads:
       z: -159.0
       pitch: 0.0
       yaw: -45.0
+  Spider_to_End:
+    start: Spider's Den
+    end: The End
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -385
+      y: 89
+      z: -268
+      pitch: 0
+      yaw: 90
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -492
+      y: 107
+      z: -275
+      pitch: 0.0
+      yaw: 90
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -389
+      y: 86
+      z: -268
+      pitch: 0
+      yaw: 90
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -499
+      y: 101
+      z: -275
+      pitch: 0.0
+      yaw: 90
+  End_to_Spider:
+    start: The End
+    end: Spider's Den
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -495.42572027018326
+      y: 101.0
+      z: -274.99563556713014
+      pitch: 4.9926825
+      yaw: 270.97427
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -389
+      y: 86
+      z: -268
+      pitch: 0
+      yaw: 90
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -492
+      y: 107
+      z: -275
+      pitch: 0.0
+      yaw: -90
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -383.5
+      y: 89
+      z: -267.5
+      pitch: 0.0
+      yaw: -90.0
+  Spider_to_Nether:
+    start: Spider's Den
+    end: Blazing Fortress
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -254
+      y: 132
+      z: -294
+      pitch: 0
+      yaw: 180
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -310
+      y: 90
+      z: -376
+      pitch: 0
+      yaw: 180
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -254
+      y: 140
+      z: -296
+      pitch: 0
+      yaw: 180
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -310
+      y: 83
+      z: -381
+      pitch: 0
+      yaw: 180
+  Nether_to_Spider:
+    start: Blazing Fortress
+    end: Spider's Den
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -310
+      y: 83
+      z: -378
+      pitch: 0
+      yaw: 0
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -254
+      y: 140
+      z: -296
+      pitch: 0
+      yaw: 0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -310
+      y: 90
+      z: -376
+      pitch: 0
+      yaw: 0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -254
+      y: 132
+      z: -290
+      pitch: 0
+      yaw: 0
+  Hub_to_Barn:
+    start: The Hub
+    end: The Barn
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: 78
+      y: 72
+      z: -184
+      pitch: 0
+      yaw: -145
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: 109
+      y: 76
+      z: -202
+      pitch: 0
+      yaw: -145
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: 81
+      y: 78
+      z: -187
+      pitch: 0
+      yaw: -145
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: 113
+      y: 71
+      z: -206
+      pitch: 0
+      yaw: -145
+  Barn_to_Hub:
+    start: The Barn
+    end: The Hub
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: 111
+      y: 70
+      z: -203
+      pitch: 0
+      yaw: 45
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: 109
+      y: 76
+      z: -202
+      pitch: 0
+      yaw: 45
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: 81
+      y: 78
+      z: -187
+      pitch: 0
+      yaw: 45
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: 76
+      y: 72
+      z: -182
+      pitch: 0
+      yaw: 45
+  Barn_to_Desert:
+    start: The Barn
+    end: Mushroom Desert
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: 142
+      y: 92
+      z: -311
+      pitch: 0
+      yaw: 180
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: 142
+      y: 100
+      z: -314
+      pitch: 0
+      yaw: 180
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: 148
+      y: 82
+      z: -358
+      pitch: 0
+      yaw: 180
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: 154
+      y: 77
+      z: -364
+      pitch: 0
+      yaw: -145
+  Desert_to_Barn:
+    start: Mushroom Desert
+    end: The Barn
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: 150
+      y: 76
+      z: -359
+      pitch: 0
+      yaw: 180
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: 142
+      y: 100
+      z: -314
+      pitch: 0
+      yaw: 180
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: 148
+      y: 82
+      z: -358
+      pitch: 0
+      yaw: 180
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: 142
+      y: 92
+      z: -307
+      pitch: 0
+      yaw: 0
