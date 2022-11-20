@@ -6,8 +6,11 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
+import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -16,10 +19,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class PlayerListener implements Listener {
 
@@ -149,6 +154,20 @@ public class PlayerListener implements Listener {
                 sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
 
                 player.damage(sentity.getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, sentity.getVanilla());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        Location to = e.getTo();
+        Player player = e.getPlayer();
+        if (new Location(to.getWorld(), to.getX(), to.getY() - 1, to.getZ())
+                .getBlock().getType().equals(Material.SLIME_BLOCK)) {
+            LaunchPadHandler padHandler = plugin.getLaunchPadHandler();
+            String pad = padHandler.closeTo(player);
+            if (!pad.equals("NONE")) {
+                padHandler.launch(player, pad);
             }
         }
     }

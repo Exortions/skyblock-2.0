@@ -1,0 +1,211 @@
+launchpads:
+  Coal_to_Gold:
+    start: The Coal Mine
+    end: The Gold Mine
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -9.559029659788845
+      y: 64.0
+      z: -230.42227861928936
+      pitch: -5.1537786
+      yaw: -179.11131
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -4.0
+      y: 78.0
+      z: -266.0
+      pitch: 0.0
+      yaw: -180.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -9.0
+      y: 68.0
+      z: -233.0
+      pitch: 0.0
+      yaw: 0.0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -4.0
+      y: 74.0
+      z: -273.0
+      pitch: 0.0
+      yaw: -180.0
+  Gold_to_Coal:
+    start: The Gold Mine
+    end: The Coal Mine
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -4.493677354077985
+      y: 74.0
+      z: -269.40401468174684
+      pitch: 4.549807
+      yaw: -358.6901
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -9.0
+      y: 68.0
+      z: -233.0
+      pitch: 0.0
+      yaw: 0.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -4.0
+      y: 78.0
+      z: -266.0
+      pitch: 0.0
+      yaw: 0.0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -9.0
+      y: 64.0
+      z: -228.0
+      pitch: 0.0
+      yaw: 0.0
+  Park_to_Hub:
+    start: The Park
+    end: The Hub
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -273.3072321093645
+      y: 82.0
+      z: -13.445065509537404
+      pitch: 6.9253907
+      yaw: 268.9207
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -227.0
+      y: 78.0
+      z: -15.0
+      pitch: 0.0
+      yaw: -90.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -269.0
+      y: 85.0
+      z: -13.0
+      pitch: 0.0
+      yaw: 0.0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -220.0
+      y: 73.0
+      z: -15.0
+      pitch: 0.0
+      yaw: -90.0
+  Hub_to_Park:
+    start: The Hub
+    end: The Park
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -224.62847917124358
+      y: 73.0
+      z: -15.493010325054406
+      pitch: -3.3821566
+      yaw: 91.14594
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -269.0
+      y: 85.0
+      z: -13.0
+      pitch: 0.0
+      yaw: 90.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -227.0
+      y: 78.0
+      z: -15.0
+      pitch: 0.0
+      yaw: 0.0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -276.0
+      y: 82.0
+      z: -12.0
+      pitch: 0.0
+      yaw: 90.0
+  Hub_to_Spider:
+    start: Hub
+    end: Spider's Den
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -162.5246093938436
+      y: 73.0
+      z: -161.45749373644358
+      pitch: -3.341909
+      yaw: 135.08401
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -195.0
+      y: 89.0
+      z: -226.0
+      pitch: 0.0
+      yaw: 135.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -164.0
+      y: 77.0
+      z: -163.0
+      pitch: 0.0
+      yaw: 0.0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -201.0
+      y: 83.0
+      z: -232.0
+      pitch: 0.0
+      yaw: 135.0
+  Spider_to_Hub:
+    start: Spider's Den
+    end: The Hub
+    from:
+      ==: org.bukkit.Location
+      world: world
+      x: -197.46231699787526
+      y: 84.0
+      z: -228.90950928341766
+      pitch: 3.502939
+      yaw: -40.911743
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: -164.0
+      y: 77.0
+      z: -163.0
+      pitch: 0.0
+      yaw: -45.0
+    infront:
+      ==: org.bukkit.Location
+      world: world
+      x: -195.0
+      y: 89.0
+      z: -226.0
+      pitch: 0.0
+      yaw: 0.0
+    teleport:
+      ==: org.bukkit.Location
+      world: world
+      x: -160.0
+      y: 73.0
+      z: -159.0
+      pitch: 0.0
+      yaw: -45.0

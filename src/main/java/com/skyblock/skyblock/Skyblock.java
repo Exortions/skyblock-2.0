@@ -21,6 +21,7 @@ import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
+import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
@@ -51,6 +52,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockLocationManager locationManager;
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
+    private LaunchPadHandler launchPadHandler;
     private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
@@ -79,6 +81,7 @@ public final class Skyblock extends JavaPlugin {
         this.registerMerchants();
         this.registerGuis();
         this.registerMobs();
+        this.registerLaunchPads();
 
         this.registerListeners();
         this.registerCommands();
@@ -103,6 +106,10 @@ public final class Skyblock extends JavaPlugin {
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerLaunchPads() {
+        this.launchPadHandler = new LaunchPadHandler();
     }
 
     public void registerMerchants() {
