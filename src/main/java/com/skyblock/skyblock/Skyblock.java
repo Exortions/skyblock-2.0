@@ -105,7 +105,7 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Registering merchants...");
         long start = System.currentTimeMillis();
 
-        this.merchantHandler = new MerchantHandler();
+        this.merchantHandler = new MerchantHandler(this);
 
         for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
             merchant.createNpc();

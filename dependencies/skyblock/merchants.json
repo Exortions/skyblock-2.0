@@ -1,0 +1,23 @@
+{
+  "merchants": [
+    {
+      "name": "Mine Merchant",
+      "id": "mine_merchant",
+      "skin": "akhunta",
+      "items": [
+        {
+          "id": "ROOKIE_PICKAXE.json",
+          "cost": 12,
+          "amount": 1,
+          "command": "sb item ROOKIE_PICKAXE.json"
+        }
+      ],
+      "location": {
+        "world": "world",
+        "x": -19.0,
+        "y": 70.0,
+        "z": -48.0
+      }
+    }
+  ]
+}
