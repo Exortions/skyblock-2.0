@@ -51,7 +51,7 @@ public class Collection {
     }
 
     public void collect(Player player, int amount) {
-        SkyblockPlayer skyblockPlayer = new SkyblockPlayer(player.getUniqueId());
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         int level = (int) skyblockPlayer.getValue("collection." + this.name.toLowerCase() + ".level");
         int exp = (int) skyblockPlayer.getValue("collection." + this.name.toLowerCase() + ".exp");

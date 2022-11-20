@@ -69,7 +69,7 @@ public class CollectionListener implements Listener {
             }
 
             if (Collection.getCollections().stream().anyMatch(col -> col.getMaterial().equals(item.getType()))) {
-                if (new SkyblockPlayer(player.getUniqueId()).getValue("collection." + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase() + ".unlocked").equals(false)) {
+                if (SkyblockPlayer.getPlayer(player).getValue("collection." + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase() + ".unlocked").equals(false)) {
                     player.sendMessage(ChatColor.RED + "You have not unlocked this collection yet!");
 
                     event.setCancelled(true);
