@@ -17,6 +17,9 @@ public class SkyblockTimeManager {
 
     private final ServerData serverData;
 
+    public static final int REAL_SECONDS_PER_SKYBLOCK_MINUTE = 1;
+    public static final int TIME_BETWEEN_UPDATE = 10;
+
     public SkyblockTimeManager(Skyblock skyblock) {
         this.skyblock = skyblock;
 
@@ -31,7 +34,7 @@ public class SkyblockTimeManager {
             public void run() {
                 tick();
             }
-        }.runTaskTimer(skyblock, 0, 200);
+        }.runTaskTimer(skyblock, (20 * REAL_SECONDS_PER_SKYBLOCK_MINUTE) * TIME_BETWEEN_UPDATE, (20 * REAL_SECONDS_PER_SKYBLOCK_MINUTE) * TIME_BETWEEN_UPDATE);
     }
 
     public void tick() {
@@ -44,12 +47,12 @@ public class SkyblockTimeManager {
             serverData.set("date.day", (int) serverData.get("date.day") + 1);
         }
 
-        if (minutes >= 30) {
+        if ((int) serverData.get("date.day") >= 30) {
             serverData.set("date.day", 1);
             serverData.set("date.season", getNextSeason());
         }
 
-        int realLifeSeconds = minutes / 10;
+        int realLifeSeconds = minutes / REAL_SECONDS_PER_SKYBLOCK_MINUTE * TIME_BETWEEN_UPDATE;
         int realLifeMinutes = realLifeSeconds / 60;
         int realLifeHours = realLifeMinutes / 24;
 
