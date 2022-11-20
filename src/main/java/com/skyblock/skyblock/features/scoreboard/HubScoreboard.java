@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.scoreboard;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,6 +34,8 @@ public class HubScoreboard extends Scoreboard {
         SkyblockLocation currentLocation = skyblockPlayer.getCurrentLocation();
 
         String loc = currentLocation == null ? ChatColor.GRAY + "None" : currentLocation.getColor() + currentLocation.getName();
+
+        if (player.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) loc = ChatColor.GREEN + "Private Island";
 
         this.animateTitle();
 
