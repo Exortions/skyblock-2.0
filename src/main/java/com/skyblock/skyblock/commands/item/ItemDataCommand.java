@@ -6,6 +6,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -28,24 +29,25 @@ public class ItemDataCommand implements Command {
             return;
         }
 
-        player.sendMessage(plugin.getPrefix() + "Name: " + nbt.getString("name"));
-        player.sendMessage(plugin.getPrefix() + "Rarity: " + nbt.getString("rarity"));
-        player.sendMessage(plugin.getPrefix() + "Reforge Type: " + nbt.getInteger("reforgeType"));
-        player.sendMessage(plugin.getPrefix() + "Reforgeable: " + nbt.getBoolean("reforgeable"));
-        player.sendMessage(plugin.getPrefix() + "Has Ability: " + nbt.getBoolean("hasAbility"));
-        player.sendMessage(plugin.getPrefix() + "Description: " + nbt.getString("description"));
-        player.sendMessage(plugin.getPrefix() + "Ability Description: " + nbt.getString("abilityDescription"));
-        player.sendMessage(plugin.getPrefix() + "Ability Name: " + nbt.getString("abilityName"));
-        player.sendMessage(plugin.getPrefix() + "Ability Type: " + nbt.getString("abilityType"));
-        player.sendMessage(plugin.getPrefix() + "Ability Cost: " + nbt.getInteger("abilityCost"));
-        player.sendMessage(plugin.getPrefix() + "Ability Cooldown: " + nbt.getString("abilityCooldown"));
-        player.sendMessage(plugin.getPrefix() + "Damage: " + nbt.getInteger("damage"));
-        player.sendMessage(plugin.getPrefix() + "Strength: " + nbt.getInteger("strength"));
-        player.sendMessage(plugin.getPrefix() + "Crit Chance: " + nbt.getInteger("critChance"));
-        player.sendMessage(plugin.getPrefix() + "Crit Damage: " + nbt.getInteger("critDamage"));
-        player.sendMessage(plugin.getPrefix() + "Attack Speed: " + nbt.getInteger("attackSpeed"));
-        player.sendMessage(plugin.getPrefix() + "Intelligence: " + nbt.getInteger("intelligence"));
-        player.sendMessage(plugin.getPrefix() + "Speed: " + nbt.getInteger("speed"));
-        player.sendMessage(plugin.getPrefix() + "Defense: " + nbt.getInteger("defense"));
+        player.sendMessage(plugin.getPrefix() + "Skyblock item data:");
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Name: " + nbt.getString("name"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Rarity: " + nbt.getString("rarity"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Reforge Type: " + nbt.getInteger("reforgeType"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Reforgeable: " + nbt.getBoolean("reforgeable"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Has Ability: " + nbt.getBoolean("hasAbility"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Description: " + nbt.getString("description"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Ability Description: " + nbt.getString("abilityDescription"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Ability Name: " + nbt.getString("abilityName"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Ability Type: " + nbt.getString("abilityType"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Ability Cost: " + nbt.getInteger("abilityCost"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Ability Cooldown: " + nbt.getString("abilityCooldown"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Damage: " + nbt.getInteger("damage"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Strength: " + nbt.getInteger("strength"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Crit Chance: " + nbt.getInteger("critChance"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Crit Damage: " + nbt.getInteger("critDamage"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Attack Speed: " + nbt.getInteger("attackSpeed"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Intelligence: " + nbt.getInteger("intelligence"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Speed: " + nbt.getInteger("speed"));
+        player.sendMessage(ChatColor.AQUA + " - " + ChatColor.WHITE + "Defense: " + nbt.getInteger("defense"));
     }
 }
