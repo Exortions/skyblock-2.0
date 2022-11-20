@@ -1,6 +1,7 @@
 package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.economy.DepositCommand;
+import com.skyblock.skyblock.commands.economy.WithdrawCommand;
 import com.skyblock.skyblock.commands.enchantment.AddEnchantmentCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
@@ -296,7 +297,8 @@ public final class Skyblock extends JavaPlugin {
                 new CraftCommand(),
                 new ItemCommand(),
                 new BankerCommand(),
-                new DepositCommand()
+                new DepositCommand(),
+                new WithdrawCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

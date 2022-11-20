@@ -405,6 +405,8 @@ public class SkyblockPlayer {
         setValue("bank.balance", balance - amount);
         setValue("stats.purse", purse + amount);
 
+        this.addTransaction(-amount, getBukkitPlayer().getDisplayName());
+
         return true;
     }
 

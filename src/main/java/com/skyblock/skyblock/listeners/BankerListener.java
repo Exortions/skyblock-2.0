@@ -41,12 +41,16 @@ public class BankerListener implements Listener {
             if (stack.getType().equals(Material.CHEST)) {
                 if (stack.getAmount() == 64) player.performCommand("sb deposit all");
                 else if (stack.getAmount() == 32) player.performCommand("sb deposit half");
+
+                player.performCommand("sb banker deposit");
             }
         } else if (event.getClickedInventory().getTitle().equals("Bank Withdrawal")) {
             if (stack.getType().equals(Material.DROPPER)) {
                 if (stack.getAmount() == 64) player.performCommand("sb withdraw all");
                 else if (stack.getAmount() == 32) player.performCommand("sb withdraw half");
                 else if (stack.getAmount() == 1) player.performCommand("sb withdraw 20%");
+
+                player.performCommand("sb banker withdraw");
             }
         }
     }

@@ -43,7 +43,12 @@ public class BankerCommand implements Command {
         int interestRate = (int) skyblockPlayer.getValue("bank.interest");
         int nextInterestHours = 31; // TODO: Calculate this
 
-        List<String> recentTransactions = (List<String>) skyblockPlayer.getValue("bank.recent_transactions");
+        List<String> original = (List<String>) skyblockPlayer.getValue("bank.recent_transactions");
+
+        List<String> recentTransactions = new ArrayList<>();
+        for (int i = original.size() - 1; i >= 0; i--) {
+            recentTransactions.add(original.get(i));
+        }
 
         if (menu.equalsIgnoreCase("banker")) {
             inventory = Bukkit.createInventory(null, 36, "Personal Bank Account");
