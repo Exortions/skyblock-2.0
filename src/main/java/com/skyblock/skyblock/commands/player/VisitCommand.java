@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.commands.player;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
@@ -15,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
-import java.util.List;
 
 @RequiresPlayer
 @Usage(usage = "/sb visit <player>")

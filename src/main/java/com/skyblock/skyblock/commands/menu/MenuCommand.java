@@ -4,7 +4,6 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
-import com.skyblock.skyblock.features.collections.CollectionCategory;
 import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
@@ -20,8 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-
-import java.lang.reflect.UndeclaredThrowableException;
 
 @RequiresPlayer
 @Usage(usage = "/sb menu")

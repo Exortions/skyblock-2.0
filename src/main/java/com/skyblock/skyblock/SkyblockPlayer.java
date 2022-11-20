@@ -24,7 +24,6 @@ import org.bukkit.util.Vector;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.function.Consumer;

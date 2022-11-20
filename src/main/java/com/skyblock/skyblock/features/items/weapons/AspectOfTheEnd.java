@@ -5,13 +5,11 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
 

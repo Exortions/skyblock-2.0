@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.features.entities.zombie.Zombie;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;

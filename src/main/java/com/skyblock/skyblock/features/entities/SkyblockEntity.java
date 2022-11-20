@@ -3,7 +3,6 @@ package com.skyblock.skyblock.features.entities;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Util;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
@@ -14,8 +13,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.HashMap;
 
 @Getter
 public abstract class SkyblockEntity {
