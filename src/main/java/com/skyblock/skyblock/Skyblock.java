@@ -173,7 +173,7 @@ public final class Skyblock extends JavaPlugin {
 
         long start = System.currentTimeMillis();
 
-        registerListener(new BlockBreakListener());
+        registerListener(new BlockListener());
         registerListener(new HungerListener());
         registerListener(new PlayerListener(this));
         registerListener(new SkyblockMenuListener(this));
