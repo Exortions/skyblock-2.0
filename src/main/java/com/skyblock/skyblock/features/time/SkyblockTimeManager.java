@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.utilities.time;
+package com.skyblock.skyblock.features.time;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;

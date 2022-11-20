@@ -24,7 +24,7 @@ import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
-import com.skyblock.skyblock.utilities.time.SkyblockTimeManager;
+import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
