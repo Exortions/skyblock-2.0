@@ -5,6 +5,7 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -36,14 +37,29 @@ public class SkyblockTimeManager {
     public void tick() {
         serverData.set("date.minutes", (int) serverData.get("date.minutes") + 10);
 
-        if ((int) serverData.get("date.minutes") >= (60 * 24)) {
+        int minutes = (int) serverData.get("date.minutes");
+
+        if (minutes >= (60 * 24)) {
             serverData.set("date.minutes", 0);
             serverData.set("date.day", (int) serverData.get("date.day") + 1);
         }
 
-        if ((int) serverData.get("date.day") >= 30) {
+        if (minutes >= 30) {
             serverData.set("date.day", 1);
             serverData.set("date.season", getNextSeason());
+        }
+
+        int realLifeSeconds = minutes / 10;
+        int realLifeMinutes = realLifeSeconds / 60;
+        int realLifeHours = realLifeMinutes / 24;
+
+        int inGameTime = ((realLifeHours * 1000) + (realLifeMinutes * 100) / 5994) % 24000;
+        if (inGameTime < 0) inGameTime += 24000;
+
+        inGameTime -= 6000;
+
+        for (World world : skyblock.getServer().getWorlds()) {
+            world.setTime(inGameTime);
         }
     }
 
@@ -70,7 +86,6 @@ public class SkyblockTimeManager {
     public String getIcon() {
         int minutes = (int) serverData.get("date.minutes");
         int hours = minutes / 60;
-        minutes = minutes % 60;
 
         if (hours >= 6 && hours < 18) {
             return ChatColor.YELLOW +  "☀";
