@@ -59,8 +59,6 @@ public class SkyblockTimeManager {
         int inGameTime = ((realLifeHours * 1000) + (realLifeMinutes * 100) / 5994) % 24000;
         if (inGameTime < 0) inGameTime += 24000;
 
-        inGameTime -= 6000;
-
         for (World world : skyblock.getServer().getWorlds()) {
             world.setTime(inGameTime);
         }
