@@ -5,6 +5,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
@@ -44,7 +45,9 @@ public class SkyblockPlayer {
     private Player bukkitPlayer;
     private HashMap<SkyblockStat, Integer> stats;
     private HashMap<String, Boolean> cooldowns;
+    private HashMap<String, HashMap<SkyblockStat, Integer>> extraData;
     private FileConfiguration config;
+    private ArmorSet armorSet;
     private File configFile;
     private Scoreboard board;
     private ItemStack hand;
@@ -53,9 +56,11 @@ public class SkyblockPlayer {
     public SkyblockPlayer(UUID uuid) {
         bukkitPlayer = Bukkit.getPlayer(uuid);
         cooldowns = new HashMap<>();
+        extraData = new HashMap<>();
         stats = new HashMap<>();
         tick = 0;
         hand = Util.getEmptyItemBase();
+        armorSet = null;
 
         initConfig();
     }
@@ -102,10 +107,12 @@ public class SkyblockPlayer {
             hand = itemStack;
         }
 
+        if (getStat(SkyblockStat.SPEED) > 400) setStat(SkyblockStat.SPEED, 400);
+
         if (bukkitPlayer.getLocation().getY() <= -11) kill(EntityDamageEvent.DamageCause.VOID, null);
 
         bukkitPlayer.setWalkSpeed(Math.min((float) (getStat(SkyblockStat.SPEED) / 500.0), 1.0f));
-        bukkitPlayer.setMaxHealth(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0)));
+        bukkitPlayer.setMaxHealth(Math.round(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0))));
         bukkitPlayer.setHealth(Math.max(1, bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH))));
 
         tick++;
@@ -250,6 +257,14 @@ public class SkyblockPlayer {
         stats.put(stat, val);
 
         setValue("stats." + stat.name().toLowerCase(), val);
+    }
+
+    public HashMap<SkyblockStat, Integer> getExtraData(String id) {
+        return extraData.get(id);
+    }
+
+    public void setExtraData(String id, HashMap<SkyblockStat, Integer> map) {
+        extraData.put(id, map);
     }
 
     public boolean getCooldown(String id) {

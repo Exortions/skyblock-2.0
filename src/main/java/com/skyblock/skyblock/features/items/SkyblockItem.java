@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.features.items;
 
+import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
+import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import lombok.Getter;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -26,13 +28,7 @@ public abstract class SkyblockItem {
 
     public void onEntityDamage(EntityDamageByEntityEvent event) { }
 
-    /*
-
-    Currently unused
-
     public void onArmorEquip(PlayerArmorEquipEvent e) { }
 
     public void onArmorUnEquip(PlayerArmorUnequipEvent e) {}
-
-     */
 }
