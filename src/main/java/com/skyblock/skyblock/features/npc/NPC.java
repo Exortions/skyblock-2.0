@@ -36,14 +36,10 @@ public class NPC implements Listener {
 
     private net.citizensnpcs.api.npc.NPC npc;
     private ArmorStand stand;
-    private NBTEntity nbtas;
     private ArmorStand click;
-    private NBTEntity nbtEntity;
-    private LookClose lookClose;
-    private SkinTrait skinTrait;
 
     public void spawn() {
-        this.npc = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose);
+        this.npc = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose, this.stand, this.click);
     }
 
     @EventHandler

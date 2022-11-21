@@ -313,7 +313,7 @@ public class Util {
         return num < 0 ? num * -1 : num;
     }
 
-    public NPC spawnSkyblockNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
+    public NPC spawnSkyblockNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look, ArmorStand stand, ArmorStand click) {
         NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
 
         npc.spawn(location);
@@ -323,7 +323,7 @@ public class Util {
         npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
         npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
 
-        ArmorStand stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.95, 0), ArmorStand.class);
+        stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.95, 0), ArmorStand.class);
         stand.setGravity(false);
         stand.setVisible(false);
         stand.setCustomNameVisible(true);
@@ -341,7 +341,7 @@ public class Util {
         stand.setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
         stand.setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
 
-        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.7, 0), ArmorStand.class);
+        click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.7, 0), ArmorStand.class);
         click.setCustomName(ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
         click.setGravity(false);
         click.setVisible(false);

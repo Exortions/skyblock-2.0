@@ -9,6 +9,7 @@ import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +34,8 @@ public class Merchant implements Listener {
     private final List<String> initialDialogue;
 
     private NPC npc;
+    private ArmorStand stand;
+    private ArmorStand click;
 
     private final List<MerchantItem> items;
     private final Location location;
@@ -51,7 +54,7 @@ public class Merchant implements Listener {
     }
 
     public void createNpc() {
-        this.npc = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true);
+        this.npc = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true, stand, click);
     }
 
     private int interactionIteration = 0;
