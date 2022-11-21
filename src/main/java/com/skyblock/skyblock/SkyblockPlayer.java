@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
+import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import com.skyblock.skyblock.features.skills.Skill;
@@ -394,6 +395,11 @@ public class SkyblockPlayer {
 
                 for (String skill : Skill.SKILLS) {
                     config.set("skill." + skill.toLowerCase() + ".exp", 0.0);
+                }
+
+                for (Merchant merchant : Skyblock.getPlugin(Skyblock.class).getMerchantHandler().getMerchants().values()) {
+                    config.set("merchant." + merchant.getName().toLowerCase().replace(" ", "_") + ".interacted", false);
+                    config.set("merchant." + merchant.getName().toLowerCase().replace(" ", "_") + ".interacting", false);
                 }
 
                 config.save(configFile);

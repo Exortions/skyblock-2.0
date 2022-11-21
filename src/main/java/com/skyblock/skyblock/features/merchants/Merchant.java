@@ -13,10 +13,7 @@ import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -31,6 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -40,6 +38,8 @@ public class Merchant implements Listener {
 
     private final String skinSignature;
     private final String skinValue;
+
+    private final List<String> initialDialogue;
 
     private NPC npc;
     private ArmorStand stand;
@@ -52,7 +52,7 @@ public class Merchant implements Listener {
     private final List<MerchantItem> items;
     private final Location location;
 
-    protected Merchant(String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location) {
+    protected Merchant(String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location, List<String> initialDialogue) {
         this.name = name;
 
         this.skinSignature = skinSignature;
@@ -61,6 +61,8 @@ public class Merchant implements Listener {
         this.items = items;
 
         this.location = location;
+
+        this.initialDialogue = initialDialogue;
     }
 
     public void createNpc() {
@@ -118,6 +120,8 @@ public class Merchant implements Listener {
         this.npc.addTrait(lookClose);
     }
 
+    private int interactionIteration = 0;
+
     @EventHandler
     public void onRightClick(NPCRightClickEvent event) {
         if (!event.getNPC().equals(this.npc)) return;
@@ -125,6 +129,36 @@ public class Merchant implements Listener {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getClicker());
 
         if (player == null) return;
+
+        if ((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacting")) return;
+
+        if (!((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacted")) && this.initialDialogue.size() > 0) {
+            int delay = 0;
+
+            player.setValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacting", true);
+
+            for (String s : this.initialDialogue) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.getBukkitPlayer().sendMessage(ChatColor.YELLOW + "[NPC] " + getName() + ChatColor.WHITE + ": " + s);
+
+                        if (interactionIteration >= initialDialogue.size() - 1) {
+                            player.setValue("merchant." + getName().toLowerCase().replace(" ", "_") + ".interacted", true);
+                            player.setValue("merchant." + getName().toLowerCase().replace(" ", "_") + ".interacting", false);
+                        }
+
+                        interactionIteration += 1;
+
+                        player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.VILLAGER_YES, 1, 1);
+                    }
+                }.runTaskLater(Skyblock.getPlugin(Skyblock.class), delay);
+
+                delay += 40;
+            }
+
+            return;
+        }
 
         Inventory inventory = Bukkit.createInventory(null, 54, this.name);
 

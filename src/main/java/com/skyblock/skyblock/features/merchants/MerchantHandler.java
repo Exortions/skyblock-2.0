@@ -103,12 +103,23 @@ public class MerchantHandler {
                         (double) locationObject.get("z")
                 );
 
+                JSONArray interaction = (JSONArray) merchant.get("interaction");
+
+                List<String> initialInteraction = new ArrayList<>();
+
+                if (interaction != null) {
+                    for (Object interactionObject : interaction) {
+                        initialInteraction.add((String) interactionObject);
+                    }
+                }
+
                 this.registerMerchant(id, new Merchant(
                         name,
                         skinValue,
                         skinSignature,
                         merchantItems,
-                        location
+                        location,
+                        initialInteraction
                 ));
             }
         } catch (IOException | ParseException ex) {

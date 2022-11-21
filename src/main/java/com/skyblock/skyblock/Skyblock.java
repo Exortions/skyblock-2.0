@@ -87,8 +87,9 @@ public final class Skyblock extends JavaPlugin {
         this.initializeGameRules();
         this.initializeNEUItems();
 
-        this.registerCollections();
         this.registerMerchants();
+
+        this.registerCollections();
         this.registerNpcs();
         this.registerGuis();
         this.registerMobs();
