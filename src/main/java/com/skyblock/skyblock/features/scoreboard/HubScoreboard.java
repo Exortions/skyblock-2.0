@@ -8,9 +8,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Date;
 
 public class HubScoreboard extends Scoreboard {
 
@@ -29,7 +31,7 @@ public class HubScoreboard extends Scoreboard {
         DecimalFormat formatter = new DecimalFormat("#,###");
         formatter.setGroupingUsed(true);
 
-        String dateString = LocalDate.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+        String date = new SimpleDateFormat("MM/dd/yy").format(new Date());
 
         SkyblockLocation currentLocation = skyblockPlayer.getCurrentLocation();
 
@@ -41,7 +43,7 @@ public class HubScoreboard extends Scoreboard {
 
         this.animateTitle();
 
-        addLine(9, ChatColor.GRAY + "" + dateString + ChatColor.DARK_GRAY + " Skyblock");
+        addLine(9, ChatColor.GRAY + "" + date + ChatColor.DARK_GRAY + " Skyblock");
         addLine(8, ChatColor.GRAY + "   ");
         addLine(7, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
         addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getIcon());
