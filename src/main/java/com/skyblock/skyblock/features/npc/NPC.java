@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -26,8 +27,10 @@ public class NPC implements Listener {
     private final String name;
 
     private final boolean doesLookClose;
-    private final boolean villager;
     private final boolean hasSkin;
+
+    private final boolean villager;
+    private final Villager.Profession profession;
 
     private final Location location;
 
@@ -41,7 +44,7 @@ public class NPC implements Listener {
     private ArmorStand click;
 
     public void spawn() {
-        List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose, this.villager);
+        List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose, this.villager, this.profession);
 
         this.npc = (net.citizensnpcs.api.npc.NPC) npcData.get(0);
         this.stand = (ArmorStand) npcData.get(1);

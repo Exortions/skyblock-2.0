@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ReforgeType {
+public enum Reforge {
 
     NONE(0, 0, 0, 0, 0, 0, 0, 0, 0),
     GENTLE(0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -100,8 +100,8 @@ public enum ReforgeType {
     private final int mana;
     private final int seaCreatureChance;
 
-    public static ReforgeType getReforge(String name) {
-        for (ReforgeType type : ReforgeType.values()) {
+    public static Reforge getReforge(String name) {
+        for (Reforge type : Reforge.values()) {
             if (type.name().equalsIgnoreCase(name)) {
                 return type;
             }

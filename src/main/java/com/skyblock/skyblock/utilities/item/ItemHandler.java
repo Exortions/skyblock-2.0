@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.enums.ReforgeType;
+import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.utilities.Util;
@@ -104,7 +104,7 @@ public class ItemHandler {
         items.put("fancy_sword", new ItemBase(
                 Material.GOLD_SWORD,
                 ChatColor.WHITE + "Fancy Sword",
-                ReforgeType.NONE,
+                Reforge.NONE,
                 1,
                 new ArrayList<>(),
                 enchantments,

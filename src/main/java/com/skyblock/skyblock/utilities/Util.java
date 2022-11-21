@@ -6,7 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.ReforgeType;
+import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTEntity;
@@ -22,6 +22,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -81,11 +82,19 @@ public class Util {
     }
 
     public ItemStack buildCloseButton() {
-        return new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack();
+        NBTItem item = new NBTItem(new ItemBuilder(ChatColor.RED + "Close", Material.BARRIER).toItemStack());
+
+        item.setBoolean("close", true);
+
+        return item.getItem();
     }
 
     public ItemStack buildBackButton() {
-        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack();
+        NBTItem item = new NBTItem(new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(ChatColor.GRAY + "To SkyBlock Menu").toItemStack());
+
+        item.setBoolean("back", true);
+
+        return item.getItem();
     }
 
     public ItemStack buildBackButton(String lore) {
@@ -93,14 +102,46 @@ public class Util {
     }
 
     public void fillEmpty(Inventory inventory) {
-        for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
+        fillEmpty(inventory, Material.STAINED_GLASS_PANE, 15);
+    }
+
+    public void fillEmpty(Inventory inventory, Material material, int data) {
+        for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillBorder(Inventory inventory) {
-        for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-        for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
-        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) 15).toItemStack());
+        fillBorder(inventory, Material.STAINED_GLASS_PANE, 15);
+    }
+
+    public void fillBorder(Inventory inventory, Material material, int data) {
+        for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+    }
+
+    public void fillSides(Inventory inventory) {
+        fillSides(inventory, Material.STAINED_GLASS_PANE, 15);
+    }
+
+    public void fillSides(Inventory inventory, Material material, int data) {
+        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+
+        inventory.setItem(0, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(45, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
+    }
+
+    public void fillSides45Slots(Inventory inventory, Material material, int data) {
+        for (int i = 9; i < 36; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 36; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+
+        inventory.setItem(0, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(36, new ItemBuilder(" ", material, (short) data).toItemStack());
+        inventory.setItem(44, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public boolean notNull(ItemStack item) {
@@ -116,7 +157,7 @@ public class Util {
     private final static String EMPTY = "PLACEHOLDER STRING";
 
     public ItemStack getEmptyItemBase() {
-        return new ItemBase(Material.DIRT, EMPTY, ReforgeType.NONE, 1, listOf(EMPTY, EMPTY), Collections.emptyList(), false, false, EMPTY, listOf(EMPTY, EMPTY), EMPTY, 0, "0s", EMPTY, EMPTY, 0, 0, 0, 0, 0, 0, 0, 0, 0, true).getStack();
+        return new ItemBase(Material.DIRT, EMPTY, Reforge.NONE, 1, listOf(EMPTY, EMPTY), Collections.emptyList(), false, false, EMPTY, listOf(EMPTY, EMPTY), EMPTY, 0, "0s", EMPTY, EMPTY, 0, 0, 0, 0, 0, 0, 0, 0, 0, true).getStack();
     }
 
     public void sendAbility(SkyblockPlayer player, String abilityName, int mana) {
@@ -313,8 +354,8 @@ public class Util {
         return num < 0 ? num * -1 : num;
     }
 
-    public List<Object> spawnSkyblockNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look, boolean villager) {
-        NPC npc = CitizensAPI.getNPCRegistry().createNPC(villager ? EntityType.VILLAGER : EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
+    public List<Object> spawnSkyblockNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look, boolean villager, Villager.Profession profession) {
+        NPC npc = CitizensAPI.getNPCRegistry().createNPC(villager ? EntityType.VILLAGER : EntityType.PLAYER, "");
 
         npc.spawn(location);
 
@@ -323,7 +364,9 @@ public class Util {
         npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
         npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
 
-        ArmorStand stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.95, 0), ArmorStand.class);
+        if (villager) ((Villager) npc.getEntity()).setProfession(profession);
+
+        ArmorStand stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0), ArmorStand.class);
         stand.setGravity(false);
         stand.setVisible(false);
         stand.setCustomNameVisible(true);
@@ -336,12 +379,12 @@ public class Util {
         nbtas.setBoolean("Marker", true);
         nbtas.setBoolean("Invulnerable", true);
 
-        stand.teleport(npc.getEntity().getLocation().add(0, 1.95, 0));
+        stand.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
         stand.setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
         stand.setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
         stand.setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
 
-        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.7, 0), ArmorStand.class);
+        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.9, 0), ArmorStand.class);
         click.setCustomName(ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
         click.setGravity(false);
         click.setVisible(false);
@@ -354,7 +397,7 @@ public class Util {
         nbtEntity.setBoolean("Marker", true);
         nbtEntity.setBoolean("Invulnerable", true);
 
-        click.teleport(npc.getEntity().getLocation().add(0, 1.7, 0));
+        click.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.9 : 2, 0));
 
         if (skin) {
             SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
@@ -373,6 +416,18 @@ public class Util {
         }
 
         return new ArrayList<>(Arrays.asList(npc, stand, click));
+    }
+
+    public boolean isItemReforgeable(ItemStack stack) {
+        ItemBase base;
+
+        try {
+            base = new ItemBase(stack);
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+
+        return base.isReforgeable();
     }
 
 }

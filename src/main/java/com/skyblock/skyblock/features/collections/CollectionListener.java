@@ -26,7 +26,7 @@ public class CollectionListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getCurrentItem() == null | event.getCurrentItem().getType().equals(Material.AIR)) return;
+        if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
 
         if (event.getClickedInventory() == null) return;
 

@@ -27,7 +27,8 @@ public class SkyblockMenuListener implements Listener {
     @EventHandler
     public void onSkyblockMenuClick(InventoryClickEvent event) {
         if (
-                !Objects.equals(event.getClickedInventory().getTitle(), MENU_NAME)
+                event.getClickedInventory() == null
+                || !Objects.equals(event.getClickedInventory().getTitle(), MENU_NAME)
                 || event.getCurrentItem() == null
         ) return;
 

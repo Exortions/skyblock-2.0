@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.enums.ReforgeType;
+import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
 import com.skyblock.skyblock.utilities.Util;
@@ -33,7 +33,7 @@ public class ItemBase {
     private String skyblockId;
     private int amount;
 
-    private ReforgeType reforgeType;
+    private Reforge reforge;
     private boolean reforgeable;
 
     private List<ItemEnchantment> enchantments;
@@ -67,7 +67,7 @@ public class ItemBase {
         this.amount = item.getAmount();
         this.name = nbt.getString("name");
         this.rarity = nbt.getString("rarity");
-        this.reforgeType = ReforgeType.getReforge(nbt.getString("reforgeType"));
+        this.reforge = Reforge.getReforge(nbt.getString("reforgeType"));
         this.reforgeable = nbt.getBoolean("reforgeable");
         this.enchantments = new ArrayList<>();
         String enchantmentsStr = nbt.getString("enchantments");
@@ -109,14 +109,14 @@ public class ItemBase {
         this.stack = item;
     }
 
-    public ItemBase(Material material, String name, ReforgeType reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
+    public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
         this.description = description;
         this.material = material;
         this.name = name;
         this.rarity = rarity;
         this.amount = amount;
 
-        this.reforgeType = reforgeType;
+        this.reforge = reforgeType;
         this.reforgeable = reforgeable;
 
         this.enchantments = enchantments;
@@ -151,34 +151,34 @@ public class ItemBase {
 
         List<String> lore = new ArrayList<>();
 
-        if (this.reforgeType == null) this.reforgeType = ReforgeType.NONE;
+        if (this.reforge == null) this.reforge = Reforge.NONE;
 
         /*
           Stats
          */
         if (damage != 0) lore.add(ChatColor.GRAY + "Damage: " + ChatColor.RED + "+" + damage);
-        if (strength != 0 || reforgeType.getStrength() > 0) lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + reforgeType.getStrength()) + (reforgeType != ReforgeType.NONE && reforgeType.getStrength() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getStrength() + ")" : ""));
-        if (critChance != 0 || reforgeType.getCritChance() > 0) lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + reforgeType.getCritChance()) + "%" + (reforgeType != ReforgeType.NONE && reforgeType.getCritChance() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getCritChance() + "%)" : ""));
-        if (critDamage != 0 || reforgeType.getCritDamage() > 0) lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + reforgeType.getCritDamage()) + "%" + (reforgeType != ReforgeType.NONE && reforgeType.getCritDamage() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getCritDamage() + "%)" : ""));
-        if (attackSpeed != 0 || reforgeType.getAttackSpeed() > 0) lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + reforgeType.getAttackSpeed()) + "%" + (reforgeType != ReforgeType.NONE && reforgeType.getAttackSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getAttackSpeed() + "%)" : ""));
-        if ((speed != 0 || reforgeType.getSpeed() > 0) && (intelligence != 0 || reforgeType.getMana() > 0) && (defense != 0 || reforgeType.getDefense() > 0) && (health != 0 || reforgeType.getHealth() > 0)) {
+        if (strength != 0 || reforge.getStrength() > 0) lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + reforge.getStrength()) + (reforge != Reforge.NONE && reforge.getStrength() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getStrength() + ")" : ""));
+        if (critChance != 0 || reforge.getCritChance() > 0) lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + reforge.getCritChance()) + "%" + (reforge != Reforge.NONE && reforge.getCritChance() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getCritChance() + "%)" : ""));
+        if (critDamage != 0 || reforge.getCritDamage() > 0) lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + reforge.getCritDamage()) + "%" + (reforge != Reforge.NONE && reforge.getCritDamage() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getCritDamage() + "%)" : ""));
+        if (attackSpeed != 0 || reforge.getAttackSpeed() > 0) lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + reforge.getAttackSpeed()) + "%" + (reforge != Reforge.NONE && reforge.getAttackSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getAttackSpeed() + "%)" : ""));
+        if ((speed != 0 || reforge.getSpeed() > 0) && (intelligence != 0 || reforge.getMana() > 0) && (defense != 0 || reforge.getDefense() > 0) && (health != 0 || reforge.getHealth() > 0)) {
             lore.add("");
-            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + reforgeType.getMana()) + (reforgeType != ReforgeType.NONE && reforgeType.getHealth() > 0 ? " HP " + ChatColor.BLUE + "(+" + reforgeType.getHealth() + ")" : ""));
-            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + reforgeType.getDefense()) + (reforgeType != ReforgeType.NONE && reforgeType.getDefense() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getDefense() + ")" : ""));
-            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + reforgeType.getSpeed()) + (reforgeType != ReforgeType.NONE && reforgeType.getSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getSpeed() + ")" : ""));
-            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + reforgeType.getMana()) + (reforgeType != ReforgeType.NONE && reforgeType.getMana() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getMana() + ")" : ""));
-        } else if (health != 0 || reforgeType.getHealth() > 0){
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + reforge.getMana()) + (reforge != Reforge.NONE && reforge.getHealth() > 0 ? " HP " + ChatColor.BLUE + "(+" + reforge.getHealth() + ")" : ""));
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + reforge.getDefense()) + (reforge != Reforge.NONE && reforge.getDefense() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getDefense() + ")" : ""));
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + reforge.getSpeed()) + (reforge != Reforge.NONE && reforge.getSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getSpeed() + ")" : ""));
+            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + reforge.getMana()) + (reforge != Reforge.NONE && reforge.getMana() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getMana() + ")" : ""));
+        } else if (health != 0 || reforge.getHealth() > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + reforgeType.getHealth()) + (reforgeType != ReforgeType.NONE && reforgeType.getHealth() > 0 ? " HP " + ChatColor.BLUE + "(+" + reforgeType.getHealth() + ")" : ""));
-        } else if (defense != 0 || reforgeType.getDefense() > 0){
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + reforge.getHealth()) + (reforge != Reforge.NONE && reforge.getHealth() > 0 ? " HP " + ChatColor.BLUE + "(+" + reforge.getHealth() + ")" : ""));
+        } else if (defense != 0 || reforge.getDefense() > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + reforgeType.getDefense()) + (reforgeType != ReforgeType.NONE && reforgeType.getDefense() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getDefense() + ")" : ""));
-        } else if (speed != 0 || reforgeType.getSpeed() > 0){
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + reforge.getDefense()) + (reforge != Reforge.NONE && reforge.getDefense() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getDefense() + ")" : ""));
+        } else if (speed != 0 || reforge.getSpeed() > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + reforgeType.getSpeed()) + (reforgeType != ReforgeType.NONE && reforgeType.getSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getSpeed() + ")" : ""));
-        } else if (intelligence != 0 || reforgeType.getMana() > 0){
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + reforge.getSpeed()) + (reforge != Reforge.NONE && reforge.getSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getSpeed() + ")" : ""));
+        } else if (intelligence != 0 || reforge.getMana() > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + reforgeType.getMana()) + (reforgeType != ReforgeType.NONE && reforgeType.getMana() > 0 ? " " + ChatColor.BLUE + "(+" + reforgeType.getMana() + ")" : ""));
+            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + reforge.getMana()) + (reforge != Reforge.NONE && reforge.getMana() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getMana() + ")" : ""));
         }
 
         lore.add("");
@@ -264,7 +264,7 @@ public class ItemBase {
             lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
         }
 
-        if (!(reforgeType == ReforgeType.NONE)) meta.setDisplayName(nameColor + StringUtils.capitalize(reforgeType.toString().toLowerCase()) + " " + name);
+        if (!(reforge == Reforge.NONE)) meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + " " + name);
         else meta.setDisplayName(name);
 
         meta.setLore(lore);
@@ -284,7 +284,7 @@ public class ItemBase {
         nbt.setBoolean("skyblockItem", true);
         nbt.setString("name", name);
         nbt.setString("rarity", rarity);
-        nbt.setString("reforgeType", reforgeType.toString());
+        nbt.setString("reforgeType", reforge.toString());
 
         if (description != null) {
             nbt.setString("description", description.toString());
@@ -304,14 +304,14 @@ public class ItemBase {
         nbt.setInteger("abilityCost", abilityCost);
         nbt.setString("abilityDescription", abilityDescription.toString());
         nbt.setInteger("damage", damage);
-        nbt.setInteger("strength", strength + reforgeType.getStrength());
-        nbt.setInteger("critChance", critChance + reforgeType.getCritChance());
-        nbt.setInteger("critDamage", critDamage + reforgeType.getCritDamage());
-        nbt.setInteger("attackSpeed", attackSpeed + reforgeType.getAttackSpeed());
-        nbt.setInteger("intelligence", intelligence + reforgeType.getMana());
-        nbt.setInteger("speed", speed + reforgeType.getSpeed());
-        nbt.setInteger("defense", defense + reforgeType.getDefense());
-        nbt.setInteger("health", health + reforgeType.getHealth());
+        nbt.setInteger("strength", strength + reforge.getStrength());
+        nbt.setInteger("critChance", critChance + reforge.getCritChance());
+        nbt.setInteger("critDamage", critDamage + reforge.getCritDamage());
+        nbt.setInteger("attackSpeed", attackSpeed + reforge.getAttackSpeed());
+        nbt.setInteger("intelligence", intelligence + reforge.getMana());
+        nbt.setInteger("speed", speed + reforge.getSpeed());
+        nbt.setInteger("defense", defense + reforge.getDefense());
+        nbt.setInteger("health", health + reforge.getHealth());
         nbt.setString("skyblockId", skyblockId);
 
         this.stack = nbt.getItem();
@@ -347,5 +347,13 @@ public class ItemBase {
     }
 
     public void set(Player player, int slot) { player.getInventory().setItem(slot, createStack()); }
+
+    public static ItemStack reforge(ItemStack stack, Reforge reforge) {
+        ItemBase base = new ItemBase(stack);
+
+        base.setReforge(reforge);
+
+        return base.createStack();
+    }
 
 }
