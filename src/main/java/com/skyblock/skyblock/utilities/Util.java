@@ -314,7 +314,7 @@ public class Util {
     }
 
     public List<Object> spawnSkyblockNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look, boolean villager) {
-        NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
+        NPC npc = CitizensAPI.getNPCRegistry().createNPC(villager ? EntityType.VILLAGER : EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
 
         npc.spawn(location);
 
