@@ -256,7 +256,7 @@ public class SkyblockPlayer {
         if (isOnIsland()) return;
 
         int sub = (int) getValue("stats.purse") / 2;
-        bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.commaify(sub) + " coins!");
+        bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatInt(sub) + " coins!");
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         bukkitPlayer.setVelocity(new Vector(0, 0, 0));
