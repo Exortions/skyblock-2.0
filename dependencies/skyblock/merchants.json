@@ -70,12 +70,6 @@
           "cost": 2,
           "amount": 4,
           "command": "sb item STONE.json 4"
-        },
-        {
-          "id": "ONYX.json",
-          "cost": 100,
-          "amount": 1,
-          "command": "sb item ONYX.json"
         }
       ],
       "location": {
@@ -97,6 +91,7 @@
         "y": 70.0,
         "z": -90.0
       }
-    },
+    }
+    }
   ]
 }
