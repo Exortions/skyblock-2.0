@@ -12,4 +12,8 @@ public class MerchantItem {
     private final String rewardCommand;
     private final int cost;
 
+    private final boolean trade;
+    private final String tradeItem;
+    private final int tradeAmount;
+
 }

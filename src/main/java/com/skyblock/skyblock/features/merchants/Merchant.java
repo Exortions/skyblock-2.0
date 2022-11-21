@@ -36,7 +36,9 @@ import java.util.List;
 public class Merchant implements Listener {
 
     private final String name;
-    private final String skin;
+
+    private final String skinSignature;
+    private final String skinValue;
 
     private NPC npc;
     private ArmorStand stand;
@@ -49,9 +51,11 @@ public class Merchant implements Listener {
     private final List<MerchantItem> items;
     private final Location location;
 
-    protected Merchant(String name, String skin, List<MerchantItem> items, Location location) {
+    protected Merchant(String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location) {
         this.name = name;
-        this.skin = skin;
+
+        this.skinSignature = skinSignature;
+        this.skinValue = skinValue;
 
         this.items = items;
 
@@ -60,6 +64,7 @@ public class Merchant implements Listener {
 
     public void createNpc() {
         this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
+
         this.npc.spawn(location);
 
         this.npc.getEntity().setCustomNameVisible(false);
@@ -99,16 +104,17 @@ public class Merchant implements Listener {
 
         this.click.teleport(this.npc.getEntity().getLocation().add(0, 1.7, 0));
 
-        this.lookClose = this.npc.getTrait(LookClose.class);
-        this.lookClose.lookClose(true);
+        this.skinTrait = this.npc.getOrAddTrait(SkinTrait.class);
+        this.skinTrait.setSkinPersistent("banker", this.skinSignature, this.skinValue);
 
-        this.skinTrait = this.npc.getTrait(SkinTrait.class);
-        this.skinTrait.setSkinName(this.skin);
+        this.npc.addTrait(skinTrait);
+
+        this.lookClose = this.npc.getOrAddTrait(LookClose.class);
+        this.lookClose.lookClose(true);
 
         this.npc.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
 
         this.npc.addTrait(lookClose);
-        this.npc.addTrait(skinTrait);
     }
 
     @EventHandler
@@ -125,6 +131,8 @@ public class Merchant implements Listener {
 
         for (MerchantItem item : this.items) {
             ItemStack stack = item.getItem();
+
+            if (item.isTrade()) continue; // TODO: Implement trades
 
             DecimalFormat formatter = new DecimalFormat("#,###");
             formatter.setGroupingUsed(true);

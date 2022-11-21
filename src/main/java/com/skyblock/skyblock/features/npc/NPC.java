@@ -82,11 +82,11 @@ public class NPC implements Listener {
 
         this.click.teleport(this.npc.getEntity().getLocation().add(0, 1.7, 0));
 
-        this.lookClose = this.npc.getTrait(LookClose.class);
+        this.lookClose = this.npc.getOrAddTrait(LookClose.class);
         this.lookClose.lookClose(this.doesLookClose);
 
-        this.skinTrait = this.npc.getTrait(SkinTrait.class);
-        this.skinTrait.setTexture(this.skinValue, this.skinSignature);
+        this.skinTrait = this.npc.getOrAddTrait(SkinTrait.class);
+        this.skinTrait.setSkinPersistent(this.getName(), this.skinSignature, this.skinValue);
 
         this.npc.data().set(net.citizensnpcs.api.npc.NPC.NAMEPLATE_VISIBLE_METADATA, false);
 

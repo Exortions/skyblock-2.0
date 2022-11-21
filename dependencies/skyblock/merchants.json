@@ -3,13 +3,79 @@
     {
       "name": "Mine Merchant",
       "id": "mine_merchant",
-      "skin": "akhunta",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTYyMTQxMDQwNTU1NSwKICAicHJvZmlsZUlkIiA6ICJlNTRmMjJkZTgwZTU0ZTg1ODUyNGU4MTVlZThmMDY2MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJha2h1bnRhIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzUyYWU4NmE3OWRiNzc4ODMyYWM4YmI3ZDY3YTNkODJmYmE2Y2E2YTNlYzVlOWNiOGZmYjM3Nzc5N2MxYWIxOTkiCiAgICB9CiAgfQp9",
+      "skinSignature": "aVfFKbL/3iqqGQMgAawoCDv0xGwYUeSgfJRI48rJszpbVIcO3FEJVNycKz+8Kt1rZ2Seb3am//nnn+XOk0P40SXAPcHs8gPwKtASEdS1hyncE/xxVpjibDFczyGYkjmfPcy+ZYrYJ7DxwfNilb4acJCxJ/ux6rGfVa7o3h9FEf+IcucFE6iJYNupz4PeC4t2MVPzfcIjCpBrTu6xrfASM9RBOLOOsYKwQXeuaW3OGg0Z5KTEY8llkzslSnkTo5SzdogfwsroTxIY3uGtMwxdeUr1X22t0xNP7Zoy0DEdMNeOp3ys568HMrpQi1whOPSQL4nZ1aplZN0+tokh7hpGzVsmJnsO+W0NPAvaEGqULhVA95wUDI/NBBI4Fec2g++YEORsex1fr/k04cwpVvaKLnDTCmD65Pm9Dn5lX/auQ3jZT9sGdplx2hZomEVigwH1MKNRIUwCdPaWjMDMF3K2oRaron3RwkAxfwSyH3zN4PHCA9ylKyCHxsoy/VyQRrGkoHiCOrUNwCWZFDzqxLKChSNqb5onwD2pylS910Ooc4704hWqg99XWfJ7dVaaNNENgeq46UUvYc/K/nFTDQLZP6UbOV3kNSvEe8jn5WxmawRkXvhESLrFY7uKyI37GZ92g0jITY7M3Rw1MDPmSy66RcjiXlbuRCBU4dNu69Wf9oU=",
       "items": [
+        {
+          "id": "COAL.json",
+          "cost": 8,
+          "amount": 2,
+          "command": "sb item COAL.json 2"
+        },
+        {
+          "id": "IRON_INGOT.json",
+          "cost": 22,
+          "amount": 4,
+          "command": "sb item IRON_INGOT.json 4"
+        },
+        {
+          "id": "GOLD_INGOT.json",
+          "cost": 12,
+          "amount": 2,
+          "command": "sb item GOLD_INGOT.json 2"
+        },
         {
           "id": "ROOKIE_PICKAXE.json",
           "cost": 12,
           "amount": 1,
           "command": "sb item ROOKIE_PICKAXE.json"
+        },
+        {
+          "id": "PROMISING_PICKAXE.json",
+          "cost": 35,
+          "amount": 1,
+          "command": "sb item PROMISING_PICKAXE.json"
+        },
+        {
+          "id": "GOLD_PICKAXE.json",
+          "cost": 0,
+          "trade": true,
+          "trade_item": {
+            "id": "GOLD_INGOT.json",
+            "amount": 3
+          },
+          "amount": 1,
+          "command": "sb item GOLD_PICKAXE.json"
+        },
+        {
+          "id": "TORCH.json",
+          "cost": 16,
+          "amount": 32,
+          "command": "sb item TORCH.json 32"
+        },
+        {
+          "id": "GRAVEL.json",
+          "cost": 12,
+          "amount": 2,
+          "command": "sb item GRAVEL.json 2"
+        },
+        {
+          "id": "COBBLESTONE.json",
+          "cost": 3,
+          "amount": 1,
+          "command": "sb item COBBLESTONE.json"
+        },
+        {
+          "id": "STONE.json",
+          "cost": 2,
+          "amount": 4,
+          "command": "sb item STONE.json 4"
+        },
+        {
+          "id": "ONYX.json",
+          "cost": 100,
+          "amount": 1,
+          "command": "sb item ONYX.json"
         }
       ],
       "location": {
@@ -18,6 +84,19 @@
         "y": 70.0,
         "z": -48.0
       }
-    }
+    },
+    {
+      "name": "Lumber Merchant",
+      "id": "lumber_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU4ODQyNjI5ODI1NywKICAicHJvZmlsZUlkIiA6ICIyM2YxYTU5ZjQ2OWI0M2RkYmRiNTM3YmZlYzEwNDcxZiIsCiAgInByb2ZpbGVOYW1lIiA6ICIyODA3IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y5ODhiNTRkMTFiOWVkMWMwZGI2ZmQ4NWJkM2Y4ZDNjNDIxY2RmZWM2ZmNjN2I0MzdlMTYwMmJjOGZjNWE4NzAiCiAgICB9CiAgfQp9",
+      "skinSignature": "lwPRbrzB8SaKqLXaKIHWZlaCObG1stxtEyq79YYpJpz+YwUN+L9vnpjRatgjUIrjTBP+MRXaijlXbmq56FO7lC2O+6731YNjw3DNQfjrei93CZw7jzKGrydRhV8q9AEttwrt6TpiFXdLfhbV1Oh2Em/uvBVwNGLSkntlAf4r0x1HELPVfs/hHS435zCr5Lf4Ja0ko797HYhbtO8UheQUXsueXkuorhMLtuFg+OpE5hxU0/53X2MtVgoF9f1OAz2qFO6B+h7eqWpouim2P3PvnZNZCWFz2cEMJ2yzI8R4EeNnd9cKj+qWik8BKO2BiMJ8ydmAfvlDr7Qq/yUXufUTysffbeLTj4Q6CcDESz3/c8Tr2l2V52eTu/d8bMWIYhyezG2pk/0UCvBhro8eOluDXzEMamClqv7u1Aqj/E2TQcGS/zjx37Vqia635m7gC659sMLltQuVyiRKcD43Xq/Vd9UPAEKNVCgPQRbE8pzA4gTszPNLOdU521F8O6xG9UygYsqyeMJtr04n+FKOMJ8qoQxHP6RLUIcDS9z6JD9x6cww9n3nUPtl5XPelmEqQZTUb/Ijo+vXAT4Iu3pp3xxKHFBHkKaRoKvo/X0B9Zidlb59Te2b9uOwbl1II9gRtW3fuOKVJyjIIViuftMSDiysGCjrTM77sxKXLF5FbIc2AnY=",
+      "items": [],
+      "location": {
+        "world": "world",
+        "x": -19.0,
+        "y": 70.0,
+        "z": -90.0
+      }
+    },
   ]
 }

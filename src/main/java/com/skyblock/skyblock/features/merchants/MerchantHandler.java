@@ -45,7 +45,8 @@ public class MerchantHandler {
                 String name = (String) merchant.get("name");
                 String id = (String) merchant.get("id");
 
-                String skin = (String) merchant.get("skin");
+                String skinValue = (String) merchant.get("skinValue");
+                String skinSignature = (String) merchant.get("skinSignature");
 
                 JSONArray items = (JSONArray) merchant.get("items");
 
@@ -57,6 +58,21 @@ public class MerchantHandler {
                     String command = (String) item.get("command");
                     int cost = ((Long) item.get("cost")).intValue();
                     int amount = ((Long) item.get("amount")).intValue();
+
+                    boolean trade = false;
+                    String tradeItem = null;
+                    int tradeAmount = 0;
+
+                    if (item.get("trade") != null) {
+                        trade = (boolean) item.get("trade");
+
+                        JSONObject tradeObject = (JSONObject) item.get("trade_item");
+
+                        if (trade) {
+                            tradeItem = (String) tradeObject.get("id");
+                            tradeAmount = ((Long) tradeObject.get("amount")).intValue();
+                        }
+                    }
 
                     String identifier = (String) item.get("id");
 
@@ -72,7 +88,10 @@ public class MerchantHandler {
                     merchantItems.add(new MerchantItem(
                             this.skyblock.getItemHandler().getItem(identifier),
                             command,
-                            cost
+                            cost,
+                            trade,
+                            tradeItem,
+                            tradeAmount
                     ));
                 }
 
@@ -86,7 +105,8 @@ public class MerchantHandler {
 
                 this.registerMerchant(id, new Merchant(
                         name,
-                        skin,
+                        skinValue,
+                        skinSignature,
                         merchantItems,
                         location
                 ));
