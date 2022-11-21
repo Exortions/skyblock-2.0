@@ -128,7 +128,7 @@ public abstract class Skill {
             for (String s : getRewards(level, prevLevel)) {
                 builder.append("   ").append(s).append("\n");
             }
-            builder.append(ChatColor.DARK_GRAY).append("   +").append(ChatColor.GOLD).append(Util.commaify(COINS.get(level))).append(ChatColor.GRAY).append(" Coins");
+            builder.append(ChatColor.DARK_GRAY).append("   +").append(ChatColor.GOLD).append(Util.formatInt(COINS.get(level))).append(ChatColor.GRAY).append(" Coins");
 
             builder.append("\n").append(ChatColor.DARK_AQUA).append(ChatColor.BOLD).append("------------------------------------------");
             player.addCoins(COINS.get(level));

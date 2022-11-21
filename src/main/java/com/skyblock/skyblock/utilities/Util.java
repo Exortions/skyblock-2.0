@@ -191,12 +191,6 @@ public class Util {
         return new_string;
     }
 
-    public String commaify(int i) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        formatter.setGroupingUsed(true);
-        return formatter.format(i);
-    }
-
     public ItemStack IDtoSkull(ItemStack head, String id) {
         JsonParser parser = new JsonParser();
         JsonObject o = parser.parse(new String(org.apache.commons.codec.binary.Base64.decodeBase64(id))).getAsJsonObject();
