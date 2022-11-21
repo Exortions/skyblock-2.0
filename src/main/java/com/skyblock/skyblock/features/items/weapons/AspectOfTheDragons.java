@@ -59,7 +59,14 @@ public class AspectOfTheDragons extends SkyblockItem {
             if (skyblockEntity == null) continue;
 
             skyblockEntity.getVanilla().setVelocity(player.getLocation().getDirection().multiply(5));
-            skyblockEntity.damage(700, skyblockPlayer, true);
+
+            int damage = 700;
+
+            if (skyblockPlayer.hasFullSetBonus() && skyblockPlayer.getFullSetBonusType().equals("superior_dragon_armor")) {
+                damage += (damage / 2);
+            }
+
+            skyblockEntity.damage(damage, skyblockPlayer, true);
         }
 
         if (skyblockPlayer.getCooldown(getInternalName())) {
@@ -72,6 +79,8 @@ public class AspectOfTheDragons extends SkyblockItem {
     }
 
     public void playEffect(Location location, Vector direction) {
+        // TODO: Create effect
+
         location.setY(location.getY() + 2);
 
         ParticleEffect.FLAME.display(location);

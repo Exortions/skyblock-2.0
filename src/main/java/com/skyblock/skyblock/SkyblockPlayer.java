@@ -62,6 +62,9 @@ public class SkyblockPlayer {
         hand = Util.getEmptyItemBase();
         armorSet = null;
 
+        this.extraData.put("fullSetBonus", false);
+        this.extraData.put("fullSetBonusType", null);
+
         initConfig();
     }
 
