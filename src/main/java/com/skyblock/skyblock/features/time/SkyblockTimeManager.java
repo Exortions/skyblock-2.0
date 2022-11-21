@@ -25,6 +25,8 @@ public class SkyblockTimeManager {
 
         this.serverData = skyblock.getServerData();
 
+        this.updateInGameTime();
+
         this.registerTask();
     }
 
@@ -52,15 +54,24 @@ public class SkyblockTimeManager {
             serverData.set("date.season", getNextSeason());
         }
 
-        int realLifeSeconds = minutes / REAL_SECONDS_PER_SKYBLOCK_MINUTE * TIME_BETWEEN_UPDATE;
-        int realLifeMinutes = realLifeSeconds / 60;
-        int realLifeHours = realLifeMinutes / 24;
+        this.updateInGameTime();
+    }
 
-        int inGameTime = ((realLifeHours * 1000) + (realLifeMinutes * 100) / 5994) % 24000;
-        if (inGameTime < 0) inGameTime += 24000;
+    public void updateInGameTime() {
+        int gameMinutes = (int) serverData.get("date.minutes");
+        int gameHours = gameMinutes / 60;
+        gameMinutes = gameMinutes % 60;
+
+        int worldTime = (gameHours * 1000 + gameMinutes * 1000 / 60) % 24000;
+
+        worldTime -= 6000;
+
+        if (worldTime < 0) {
+            worldTime += 24000;
+        }
 
         for (World world : skyblock.getServer().getWorlds()) {
-            world.setTime(inGameTime);
+            world.setTime(worldTime);
         }
     }
 
