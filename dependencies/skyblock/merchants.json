@@ -91,6 +91,84 @@
         "y": 70.0,
         "z": -90.0
       }
+    },
+    {
+      "name": "Farm Merchant",
+      "id": "farm_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU4OTE5MDgwODI5MiwKICAicHJvZmlsZUlkIiA6ICI3NzI3ZDM1NjY5Zjk0MTUxODAyM2Q2MmM2ODE3NTkxOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJsaWJyYXJ5ZnJlYWsiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTNmNGRjM2U2NWI2NzkyNjAzM2IwYWY4M2E4ZGFlNmM2MzhkMzc3MDc3ODlmM2E2MWQ3OGI2ZmRiZGY5MjliZiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9",
+      "skinSignature": "Eq4+sXhgFY9iICwFYzPF5sF6fMJJGM4Wp3ECGYNJ6e5O1jhSMGJcQnpRyF7a770pNniz56gTlH6C6AT+aYIEUVjscBBAaAWIxNxR17mUmp0Ggy/6aMKzv8SPO9e5s7G6uMznOYdxEUiSUvSQ4qfM5mC1BAHcv5CnP68i8rGGFcGgEz7rkcHyiQpUkxJzJ1ACbbLmr8BfIINIBYgQVUXYLzZuT/XlutyGDkEy+DSB8IzgsLFlS0jSzVTPJZ3Ev45REsswUugZ8+LLampxHp+L1yehDetlAXM0h20m2mjxV+RpFC0XuPwi6xlhadSjBRCnr9o0Yf2NFBz1sXbAWr7d9xeVABw7X2FzcDCdcmWCO1aL60oagzzuxOYmnKxY9WnlZFpbLyJdq1UbQq+8ec9YsP+EPPrqPPA4L3pPlW23pOR3IFA2jU7/hZoTlPnPZoaMJhV+P+eMqhxSVFANE1Ls02Wzv3/vgv9zJQoCSEJht7i8XzmQ8j7iXrMpftCRl+S+09CCOG8vs/6T2ePmvRk458zz1Oi9XvXQmWl6gMfCnT8btWXdOD7T4f2npxzwVFsUBMKOEBFQGSCCx5lu8fcdGFM0gX1yz9zvoR3SAYcizvk+d6uH8W5EU6GPpYrz5RQ4a5tOilpxRBJkABfxF7lFmTHfRBojuc0QVBr69lmJrsk=",
+      "items": [],
+      "location": {
+        "world": "world",
+        "x": -7.0,
+        "y": 70.0,
+        "z": -48.0
+      }
+    },
+    {
+      "name": "Fish Merchant",
+      "id": "fish_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU5MDI5MTQ5OTgzMCwKICAicHJvZmlsZUlkIiA6ICJhNzdkNmQ2YmFjOWE0NzY3YTFhNzU1NjYxOTllYmY5MiIsCiAgInByb2ZpbGVOYW1lIiA6ICIwOEJFRDUiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDY0YjY3YjI3YWMwN2NmZDg3M2VkMWQwMTRjNzM1ODEyYzQ5MGNmODY1OGM5NTc1ODk1OWNiM2NjYThiN2YiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==",
+      "skinSignature": "oYVLax2lAqpGbvm5UCZGllSRflH3YIlGp8V+P4E3yzgXKBZE8BeuED54Gh/wwjW2p3bqKatbkFGCmxJnHl78p78jQYRjgeivdhyulK91cEMuWbZytFXrtzoPE1QHmjnyFAyihDKDhqFsIkmV+8qrL333sBmBTKE8AMcoge9Xxv1YCyedHkZsUifekh3u5xCAOnfsorRZnc/0wNR/7bzA4kWSUbKjsss5KpffRvuRQjcEUFxBQAfDjlSdCEU4qz7HPNy3zybQCBOBPtrT8CgxBs2p5pn8Qp6pYubCc4mm8pPuj7WUmlja1YHGvx1zMaoXmoxqvOz1DXgeylG0thIhiV5fMS0jVfPWyw4XN3XgK5xYfpW79xjt8VM5+i1CHuSiiWLhri8+hxFideY8rXWTmUwf/8nV5a4e8LG3/JbeGYT9uSA373F8yeoOffh7+QPuQXkZl2/Oz++KyH1I0a1e4wElWLEHvB8JjhYA+ZgLX+Kbhiz+JQg57YpZQz0j+8FxK7L3MKL4vITVbN0Vj2e6lyUsNFvXOJTcQloaCfB/eHIseLDEUAaiv4d0naD/EoMZBCjywwhEoJHxjAGJ+2COHao59OfOMwaq7nwSRROymolIcmGwMtMTPpP9b7yMuJBxDHPB9uqwdN6yr3V/40F0jOOcWbg8SkqUMkWElMdzAT0=",
+      "items": [],
+      "location": {
+        "world": "world",
+        "x": -25.0,
+        "y": 70.0,
+        "z": -77.0
+      }
+    },
+    {
+      "name": "Armorsmith",
+      "id": "armorsmith_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU5MDE5MjUyMDQ4MywKICAicHJvZmlsZUlkIiA6ICJmZDYwZjM2ZjU4NjE0ZjEyYjNjZDQ3YzJkODU1Mjk5YSIsCiAgInByb2ZpbGVOYW1lIiA6ICJSZWFkIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzQwMDA2OThiOTc0MTYwYWZlOWIxZmI3YzA2ZTUyMmM2OGJkNDRiZDc1YjMzZjFjOTZlN2E0Y2JkNDlmZmZiZGUiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==",
+      "skinSignature": "iXBdURFaTzpa7JBd5Sc4zeJDmjm25fnO4+mvwFJbnWIyfv02gZ+KpZ/GXzqBPrgDXVWw9NR8/oEcUzLZbSqY/qXWx4kFtuecsw5P5ELp6a9VXBdDgkdCPdYUnIoKn0w3p4sbcsFct1OrA5TfgVOWD7ZkRn11WgreY0gPxo7sgyiZBfpnNEby5CGDESodXdMbHACxvnr9/DfPrDI+5ryxQ2JwnXCNeNyAcEJxw8pe/tyA239MOic9hh3qVJbTxJxjA6NZrlbiGcRaiIQoG1PnlfIMdaQhkD8ZvQzmI1jrouTObOW7IY4JWOsqdsSN+z52mzjTIifOh2ybOa44XviS1797AxTrOH6Rnk1EUR80VacIdD9NFlOauUjxznyEFcwj04mdwt7NBn2KbVvTq7PiIBzSlQ5SsF0C9ak/VqFB0kN42q+KHvRs9icOl0N49iNLCeh5jpzLaSn1BMeGTnHVbP1lSy0QU0ntQe2VYqIlOsE1k6UAyikUczK6SPwhvDgO5UE3TrgOZNyzD8DAv7JaQylRnWm63JJxTrg3QttR2JWyEfmCU9Iv/LZD45du3aZ89depvNeActnQDtBlI2L0OhYQxm8K8PkPW88sPXfcQ9bJ50afjm7Qen6GkP5Ed4xuB9bLWPyZQ5X9SOlhCStkCrbC86f+V97k1zFizroYqXg=",
+      "items": [],
+      "location": {
+        "world": "world",
+        "x": -25.0,
+        "y": 70.0,
+        "z": -90.0
+      }
+    },
+    {
+      "name": "Adventurer",
+      "id": "adventurer_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU5MDMzOTU3MTYyNiwKICAicHJvZmlsZUlkIiA6ICI3ZGEyYWIzYTkzY2E0OGVlODMwNDhhZmMzYjgwZTY4ZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJHb2xkYXBmZWwiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjMwN2IwMjJhOGQ0M2NiZTA1ODIxMDM0MGRjMmQ1YWE1ZGQ0YTRkMjk5YTNhOWI1MjM4ZmFiY2QxYmMzMGY3NiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9",
+      "skinSignature": "C7NTw+/QteppeCR49nKp/c9u9y+mgw/myqIMUs/mKoQjQG7g5VdBA0NE33c5/sOh/lh7CO82bGTawgmT6vm46XPO1L1+iYeBwljmj/9rjgily1V73p1Dmm5/0IRyLwVlSpc6NwVmrKOnNpBgsNe3SRtt5m+vZYIaRSakEbuDw9Z8X+QsBtNhLL4+UzCn7FNxzZ72bxCvKKdntpPIR3/X90ho4Y6n2k7UxVFECo/keUdURnon7FKSdAsdT6ARng1rnjNM2aD2iq+OUs88r7kleahK6o86cgc28Eg87KNwd4oIh9GrZV+5Arp3EKWXz+hqYPf1v14EjzAHA+0pD4EzHODTsVlKqExqcdh9TNJnEfbZ2CuZN6ZB9PGTdGwPAEj1FcT53Q0CQDIZ460mrqxYUn6yF8zbb6fPRt+X0FZ8kCOEox9kkynsCO/l80P5SBVgwD4R2nDsCjPE0JqEoGNEw9atzH976okk19fJMA/raoixxC3qkTwAWJ9ysD8LM/sBcscyMOzZEylM+L/HW5WWsSnMgl1vNoJ1lbUawH+cpOYxQxz8zOjQyNnMTZTai0ghcwdx6vfmiUk6RYjXVVn17ypTYRPmq2Ntx9SVn/hg8bhY2EaY6nUImDuDnxxHoN7AWUpqhzGGFcsGa2UOnfW3p8GzOftg2a7I+uCITvoYvHM=",
+      "items": [],
+      "location": {
+          "world": "world",
+          "x": -19.0,
+          "y": 70.0,
+          "z": -77.0
+      }
+    },
+    {
+      "name": "Weaponsmith",
+      "id": "weaponsmith_merchant",
+      "skinValue": "eyJ0aW1lc3RhbXAiOjE1ODcwMzE3NTE2OTEsInByb2ZpbGVJZCI6ImRkZWQ1NmUxZWY4YjQwZmU4YWQxNjI5MjBmN2FlY2RhIiwicHJvZmlsZU5hbWUiOiJEaXNjb3JkQXBwIiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8zMDFiN2VmZGNmNjFmM2IwNTMyOTU3YmU0M2VmOTdkMTQ4ZTIyM2Y2ZDRhODcxMDcyMTM4M2U1ZGEwNzQ1ZDgzIn19fQ==",
+      "skinSignature": "YNkSkn3ZTdExl/RAG/0i2ENlR5YOnCc80Yl6e1z/LpLztBiyuZtvr+7oBTaPaJKtxWdiP2sQFslC4lGT2kjCOrRRiPzKj9Ywldwh0qabjgz1m9GEdw3cCdvzHMQrwFAShpgM1pxfbpUH25NdHjpDnU423q17CsUQFT/poaCTcXgml0hGeOBq97uXh4jv9nc5D9WiKjFynh0tAFUwcUJfZjN5F5o0V0QizTv0B3ebugsGT3q/ql1A/KOpaSVPBbjYBz3PbDxbYWMViZoC0ntdeHMwxCBvKY9ITPqgolBC2D6uKSHRMkoow1GeqpVCXlecqz2bvTRhgTs6q6J62Nk/F8QLkbQ88HR0tcqSwV4+6EGbVyO+AFEHNu6q9PSoOOB9UBNFoLNZ0KtkUZMHxLiu6F5m8t2TUigpf5SO+QBWSAABFHsrlm4a48J2weAyc5t2nHZl8CA9FiEbuaHzt7VnBrUnidoFPF+bftf637CV4vSC40lVp9TKhnEbm7Iu+GhE0mnWspVKqZcn1MCh1A91f8TXweMmEi6m6ArEpxM4CK/dznYzCczp3yCbEhjQpW4OveDcfTDGxkj4D1YWn9jcb3cvNvMVOgypeeuABBO19ojJJ66ZLb4OQWzlISIWPHhrTN3opsZIG4aXFWC9UNQm2Vgqo6LGH1bPxgW2K5U9+b4=",
+      "items": [],
+        "location": {
+            "world": "world",
+            "x": -19.0,
+            "y": 70.0,
+            "z": -42.0
+        }
+    },
+    {
+      "name": "Builder",
+      "id": "builder_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU5MDMzOTk0OTU3MywKICAicHJvZmlsZUlkIiA6ICJkNjBmMzQ3MzZhMTI0N2EyOWI4MmNjNzE1YjAwNDhkYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJCSl9EYW5pZWwiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTIzMWU4ZGEzMjkxOTg3MDk1Y2YyYjhiYzFkMjY5NjE1NmMwOTBiNWUxZmFhMWEzMGYyYzRlOGEyNmZhZDhkYyIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9",
+      "skinSignature": "LmyRtvfjp3d+s97W51oEwXTTanW2mVMh2RJO25h8hhm7E52oIj8RbJxqA7liIzcCo0oNzrvp0W8HZ+Yxt0SbtlmsxAtFckWVfODYWkBv3seW2nJpZgybrzeEif2sevU8sfZGqqfS7Y81aB/Ah2dfR9/jkYUqwRb2tUSewKkGQtIxZOs/H7tn8KjyKhhaSF6qzcalSQW+TA2I+c70Tk4+QMcKfIHo5EiXoZ3P6X+KVnR6VoUHbn52DKEUafFAXKMl7gvv3e8WIEbsgrOtFblscsqvUmQgR4joB476av2qDKw9IXxcu0hzhiBJ4upBXc7+RS8xBlQOQwH1xC+mEW59RvwcjhJZ1Wuqj2dlU9ctzih4/jporEiPZhsI/zmw0u8ubFd07g5eq3YpDtctCFf6CN1OF+ifVzJq5INEIJbvlk8OB2/iMbq4im+SJwYc+NCbJJEk297xbx6nDdELYT6T0RNHM3KoYrQscDEbJQ/YTVlaadUOB4Hi/YGXIqhzrnBjEioaEuIlUt45cjX2mkRVer+DY/159UkJMjG/lqEYKlHJxNCZLzEDX7EQQjYwTGwdFMa0uJXx2VN4ExKKHqrE4Vj7WiTYvNKQ+puowPG1D3yjEkwa/wHENrmd838I2e/miPMaaZI8t0J4WfkRhOS/GzeC0w+/k2gQQUH3rW9z4e8=",
+      "items": [],
+      "location": {
+          "world": "world",
+          "x": -7.0,
+          "y": 70.0,
+          "z": -42.0
+      }
     }
   ]
 }
