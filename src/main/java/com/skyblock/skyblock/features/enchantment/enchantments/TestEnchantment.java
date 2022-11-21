@@ -37,8 +37,6 @@ public class TestEnchantment extends SwordEnchantment {
 
             NBTItem nbtItem = new NBTItem(player.getInventory().getItemInHand());
 
-            System.out.println("Enchantments: " + nbtItem.getString("enchantments"));
-
             try {
                 item = new ItemBase(player.getInventory().getItemInHand());
             } catch (IllegalArgumentException ex) {
