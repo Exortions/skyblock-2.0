@@ -9,6 +9,7 @@ import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
+import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Data;
@@ -390,6 +391,10 @@ public class SkyblockPlayer {
                 config.set("bank.balance", 0);
                 config.set("bank.interest", 2);
                 config.set("bank.recent_transactions", new ArrayList<>());
+
+                for (String skill : Skill.SKILLS) {
+                    config.set("skill." + skill.toLowerCase() + ".exp", 0.0);
+                }
 
                 config.save(configFile);
             } catch (IOException e){
