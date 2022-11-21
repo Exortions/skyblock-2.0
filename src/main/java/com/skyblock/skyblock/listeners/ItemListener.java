@@ -1,16 +1,22 @@
 package com.skyblock.skyblock.listeners;
 
+import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
+import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public class ItemListener implements Listener {
 
@@ -61,6 +67,41 @@ public class ItemListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onArmorEquip(PlayerArmorEquipEvent e){
+        ItemStack item = e.getItemStack();
+
+        if (item != null) {
+            if (handler.isRegistered(item)) {
+                handler.getRegistered(item).onArmorEquip(e);
+            }
+        }
+
+        ItemStack[] armor = e.getPlayer().getInventory().getArmorContents();
+        if (handler.isRegistered(armor)) {
+            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(e.getPlayer());
+            skyblockPlayer.setArmorSet(handler.getRegistered(armor));
+            skyblockPlayer.getArmorSet().fullSetBonus(e.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void onArmorUnEquip(PlayerArmorUnequipEvent e){
+        ItemStack item = e.getItemStack();
+
+        if (item != null) {
+            if (handler.isRegistered(item)) {
+                handler.getRegistered(item).onArmorUnEquip(e);
+            }
+        }
+
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(e.getPlayer());
+
+        if (skyblockPlayer.getArmorSet() == null) return;
+        skyblockPlayer.getArmorSet().stopFullSetBonus(e.getPlayer());
+        skyblockPlayer.setArmorSet(null);
     }
 
     @EventHandler
