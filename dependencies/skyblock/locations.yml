@@ -77,7 +77,7 @@ Flower House:
     yaw: 0.0
   name: Flower House
   color: AQUA
-  weight: 1
+  weight: 2
 Bazaar Alley:
   pos1:
     ==: org.bukkit.Location
@@ -118,3 +118,203 @@ Builder's House:
   name: Builder's House
   color: AQUA
   weight: 1
+Colosseum Arena:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 145.0
+    y: 102.0
+    z: -95.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 65.0
+    y: 65.0
+    z: -15.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Colosseum Arena
+  color: AQUA
+  weight: 1
+Bar:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -82.0
+    y: 65.0
+    z: -64.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -96.0
+    y: 82.0
+    z: -76.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Bar
+  color: AQUA
+  weight: 1
+Blacksmith's House:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -11.0
+    y: 70.0
+    z: -118.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -33.0
+    y: 90.0
+    z: -133.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Blacksmith's House
+  color: AQUA
+  weight: 1
+Canvas Room:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 22.0
+    y: 11.0
+    z: -23.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -45.0
+    y: 55.0
+    z: -73.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Canvas Room
+  color: AQUA
+  weight: 1
+Mountain:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 62.0
+    y: 65.0
+    z: -21.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -80.0
+    y: 212.0
+    z: 110.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Mountain
+  color: AQUA
+  weight: 1
+Library:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 11.0
+    y: 69.0
+    z: -27.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 26.0
+    y: 91.0
+    z: -10.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Library
+  color: AQUA
+  weight: 2
+Ruins:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -146.0
+    y: 69.0
+    z: 9.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -295.0
+    y: 151.0
+    z: 162.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Ruins
+  color: AQUA
+  weight: 1
+Graveyard:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -72.0
+    y: 65.0
+    z: -169.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -218.0
+    y: 104.0
+    z: -82.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Graveyard
+  color: RED
+  weight: 1
+Wizard Tower:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 52.0
+    y: 79.0
+    z: 62.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 31.0
+    y: 164.0
+    z: 82.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Wizard Tower
+  color: LIGHT_PURPLE
+  weight: 2
+Fisherman's Hut:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 163.0
+    y: 61.0
+    z: 56.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 178.0
+    y: 85.0
+    z: 31.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Fisherman's Hut
+  color: AQUA
+  weight: 2
