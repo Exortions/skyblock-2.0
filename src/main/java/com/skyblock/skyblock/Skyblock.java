@@ -38,7 +38,6 @@ import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import lombok.Getter;
-import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -104,7 +103,7 @@ public final class Skyblock extends JavaPlugin {
             public void run() {
                 date = new Date();
             }
-        }.runTaskTimer(this, 0, 20 * 10);
+        }.runTaskTimer(this, 0, 20 * 60 * 5);
 
         this.registerListeners();
         this.registerCommands();
@@ -318,7 +317,8 @@ public final class Skyblock extends JavaPlugin {
                 new ItemCommand(),
                 new BankerCommand(),
                 new DepositCommand(),
-                new WithdrawCommand()
+                new WithdrawCommand(),
+                new ReloadCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
