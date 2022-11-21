@@ -98,13 +98,6 @@ public final class Skyblock extends JavaPlugin {
         this.registerMobs();
         this.registerLaunchPads();
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                date = new Date();
-            }
-        }.runTaskTimer(this, 0, 20 * 60 * 5);
-
         this.registerListeners();
         this.registerCommands();
 
@@ -209,6 +202,23 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.timeManager = new SkyblockTimeManager(this);
+
+        this.date = new Date();
+        this.date.setHours(0);
+        this.date.setMinutes(0);
+        this.date.setSeconds(0);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (System.currentTimeMillis() - date.getTime() >= 86400000) {
+                    date = new Date();
+                    date.setHours(0);
+                    date.setMinutes(0);
+                    date.setSeconds(0);
+                }
+            }
+        }.runTaskTimer(this, 0, 200);
 
         this.sendMessage("Successfully registered time handlers [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
