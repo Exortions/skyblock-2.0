@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.npc;
 
 import com.skyblock.skyblock.Skyblock;
+import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
@@ -24,6 +25,9 @@ public class NPCHandler {
             npc.getNpc().destroy();
             npc.getStand().remove();
             npc.getClick().remove();
+
+            npc.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
+            npc.getNpc().getOwningRegistry().deregisterAll();
         }
     }
 

@@ -38,6 +38,8 @@ import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import lombok.Getter;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -47,6 +49,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -98,7 +101,6 @@ public final class Skyblock extends JavaPlugin {
 
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");
-
     }
     @Override
     public void onDisable() {
@@ -109,9 +111,15 @@ public final class Skyblock extends JavaPlugin {
             merchant.getNpc().destroy();
             merchant.getStand().remove();
             merchant.getClick().remove();
+
+            merchant.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
+            merchant.getNpc().getOwningRegistry().deregisterAll();
         }
 
         this.npcHandler.killAll();
+
+        File file = new File("plugins/Citizens/saves.yml");
+        if (file.exists()) file.delete();
 
         this.serverData.disable();
 
