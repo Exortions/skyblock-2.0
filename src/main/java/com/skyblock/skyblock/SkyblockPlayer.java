@@ -51,6 +51,7 @@ public class SkyblockPlayer {
     private File configFile;
     private Scoreboard board;
     private ItemStack hand;
+    private String actionBar;
     private int tick;
 
     public SkyblockPlayer(UUID uuid) {
@@ -75,14 +76,12 @@ public class SkyblockPlayer {
         if (board == null) board = new HubScoreboard(getBukkitPlayer());
         if (tick == 0) {
             loadStats();
+            resetActionBar();
         }
 
         if (tick % EVERY_SECOND == 0) {
             board.updateScoreboard();
 
-            String actionBar = ChatColor.RED + "" + getStat(SkyblockStat.HEALTH) + "/" + getStat(SkyblockStat.MAX_HEALTH) + "❤   " +
-                    (getStat(SkyblockStat.DEFENSE) > 0 ? ChatColor.GREEN + "" + getStat(SkyblockStat.DEFENSE) + "❈ Defense   " : "")
-                    +  ChatColor.AQUA + "" + getStat(SkyblockStat.MANA) + "/" + getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
             ActionBarAPI.sendActionBar(getBukkitPlayer(), actionBar);
 
             if (getStat(SkyblockStat.MANA) < getStat(SkyblockStat.MAX_MANA) - ((getStat(SkyblockStat.MAX_MANA) + 100)/50)) {
@@ -128,6 +127,12 @@ public class SkyblockPlayer {
         bukkitPlayer.setHealth(Math.max(1, bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH))));
 
         tick++;
+    }
+
+    public void resetActionBar() {
+        actionBar = ChatColor.RED + "" + getStat(SkyblockStat.HEALTH) + "/" + getStat(SkyblockStat.MAX_HEALTH) + "❤   " +
+                (getStat(SkyblockStat.DEFENSE) > 0 ? ChatColor.GREEN + "" + getStat(SkyblockStat.DEFENSE) + "❈ Defense   " : "")
+                +  ChatColor.AQUA + "" + getStat(SkyblockStat.MANA) + "/" + getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
     }
 
     public void updateStats(ItemStack newItem, ItemStack oldItem) {
@@ -269,6 +274,8 @@ public class SkyblockPlayer {
         stats.put(stat, val);
 
         setValue("stats." + stat.name().toLowerCase(), val);
+
+        resetActionBar();
     }
 
     public Object getExtraData(String id) {
@@ -445,4 +452,11 @@ public class SkyblockPlayer {
         return (String) this.getExtraData().get("fullSetBonusType");
     }
 
+    public void addCoins(int coins) {
+        setValue("stats.purse", getCoins() + coins);
+    }
+
+    public int getCoins() {
+        return (int) getValue("stats.purse");
+    }
 }

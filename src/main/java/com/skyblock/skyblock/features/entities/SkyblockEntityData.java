@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.skyblock.skyblock.features.skills.Skill;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,6 +30,8 @@ public class SkyblockEntityData {
     public ItemStack hand = null;
 
     public String entityName = "";
+    public Skill skill;
+    public int xp;
 
     @Override
     public String toString() {
@@ -44,6 +47,9 @@ public class SkyblockEntityData {
         object.addProperty("isHostile", isHostile);
         object.addProperty("isUndead", isUndead);
         object.addProperty("isArthropod", isArthropod);
+
+        object.addProperty("skill", skill.getName());
+        object.addProperty("skillXP", xp);
 
         return object.toString();
     }
@@ -69,6 +75,9 @@ public class SkyblockEntityData {
         data.isHostile = jsonObject.get("isHostile").getAsBoolean();
         data.isUndead = jsonObject.get("isUndead").getAsBoolean();
         data.isArthropod = jsonObject.get("isArthropod").getAsBoolean();
+
+        data.skill = Skill.parseSkill(jsonObject.get("skill").getAsString());
+        data.xp = jsonObject.get("skillXP").getAsInt();
 
         return data;
     }

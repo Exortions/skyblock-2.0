@@ -6,6 +6,7 @@ public enum EndermanType {
     SIX_K,
     NINE_K,
     ZEALOT,
+    ZEALOT_ENDERCHEST,
     SPECIAL_ZEALOT
 
 }

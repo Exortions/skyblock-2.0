@@ -30,7 +30,7 @@ public class Zombie extends SkyblockEntity {
 
         switch (this.type) {
             case GRAVEYARD:
-                loadStats(100, 20, true, false, true, equipment, "Zombie", 1);
+                loadStats(100, 20, true, false, true, equipment, "Zombie", 1, 6);
                 break;
             case SEA_WALKER:
                 equipment.hand = Util.IDtoSkull(new ItemStack(Material.SKULL, SkullType.PLAYER.ordinal()), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJlN2ZhMmY5YjhkNmQxZTczNGVkYTVlM2NlMDI2Njg4MTM0MjkyZmNhZmMzMjViMWVhZDQzZDg5Y2MxZTEifX19");
@@ -38,14 +38,14 @@ public class Zombie extends SkyblockEntity {
                 equipment.legs = new ItemBuilder("", Material.LEATHER_LEGGINGS).dyeColor(Color.BLUE).toItemStack();
                 equipment.boots = new ItemBuilder("", Material.LEATHER_BOOTS).dyeColor(Color.BLUE).toItemStack();
 
-                loadStats(1500, 60, true, false, true, equipment, "Sea Walker", 4);
+                loadStats(1500, 60, true, false, true, equipment, "Sea Walker", 4, 68, "Fishing");
                 break;
             case CRYPT_GHOUL:
                 equipment.chest = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
                 equipment.legs = new ItemStack(Material.CHAINMAIL_LEGGINGS);
                 equipment.boots = new ItemStack(Material.CHAINMAIL_BOOTS);
 
-                loadStats(2000, 350, true, false, true, equipment, "Crypt Ghoul", 30);
+                loadStats(2000, 350, true, false, true, equipment, "Crypt Ghoul", 30, 30);
                 break;
             case GOLDEN_GHOUL:
                 equipment.hand = new ItemStack(Material.GOLD_SWORD);
@@ -53,7 +53,7 @@ public class Zombie extends SkyblockEntity {
                 equipment.legs = new ItemStack(Material.GOLD_LEGGINGS);
                 equipment.boots = new ItemStack(Material.GOLD_BOOTS);
 
-                loadStats(45000, 800, true, false, true, equipment, "Golden Ghoul", 50);
+                loadStats(45000, 800, true, false, true, equipment, "Golden Ghoul", 50, 45);
                 break;
             case LAPIS_ZOMBIE:
                 equipment.helmet = new ItemStack(Material.SEA_LANTERN);
@@ -61,7 +61,7 @@ public class Zombie extends SkyblockEntity {
                 equipment.legs = new ItemBuilder("", Material.LEATHER_LEGGINGS).dyeColor(Color.BLUE).toItemStack();
                 equipment.boots = new ItemBuilder("", Material.LEATHER_BOOTS).dyeColor(Color.BLUE).toItemStack();
 
-                loadStats(200, 50, true, false, true, equipment, "Lapis Zombie", 7);
+                loadStats(200, 50, true, false, true, equipment, "Lapis Zombie", 7, 12);
                 break;
             case ZOMBIE_VILLAGER:
                 equipment.helmet = new ItemStack(Material.LEATHER_HELMET);
@@ -69,7 +69,7 @@ public class Zombie extends SkyblockEntity {
                 equipment.legs = new ItemStack(Material.LEATHER_LEGGINGS);
                 equipment.boots = new ItemStack(Material.LEATHER_BOOTS);
 
-                loadStats(120, 24, true, false, true, equipment, "Zombie Villager", 1);
+                loadStats(120, 24, true, false, true, equipment, "Zombie Villager", 1, 7);
                 break;
             case DIAMOND_RESERVE:
                 equipment.helmet = new ItemStack(Material.DIAMOND_HELMET);
@@ -78,7 +78,7 @@ public class Zombie extends SkyblockEntity {
                 equipment.boots = new ItemStack(Material.DIAMOND_BOOTS);
                 equipment.hand = new ItemStack(Material.DIAMOND_SWORD);
 
-                loadStats(250, 200, true, false, true, equipment, "Zombie", 15);
+                loadStats(250, 200, true, false, true, equipment, "Zombie", 15, 20);
                 break;
             case OBSIDIAN_SANCTUARY:
                 equipment.helmet = new ItemBuilder(Material.DIAMOND_HELMET).addEnchantmentGlint().toItemStack();
@@ -87,7 +87,7 @@ public class Zombie extends SkyblockEntity {
                 equipment.boots = new ItemBuilder(Material.DIAMOND_BOOTS).addEnchantmentGlint().toItemStack();
                 equipment.hand = new ItemBuilder(Material.DIAMOND_SWORD).addEnchantmentGlint().toItemStack();
                 
-                loadStats(300, 275, true, false, true, equipment, "Zombie", 20);
+                loadStats(300, 275, true, false, true, equipment, "Zombie", 20, 20);
                 break;
         }
     }

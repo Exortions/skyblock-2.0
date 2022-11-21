@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -170,5 +171,10 @@ public class PlayerListener implements Listener {
                 padHandler.launch(player, pad);
             }
         }
+    }
+
+    @EventHandler
+    public void onTeleport(EntityTeleportEvent e) {
+        if (e.getEntityType().equals(EntityType.ENDERMAN)) e.setCancelled(true);
     }
 }

@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.entities;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import lombok.Setter;
@@ -58,7 +59,12 @@ public abstract class SkyblockEntity {
     }
 
     protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
-                           boolean isHostile, Equipment equipment, String name, int level) {
+                             boolean isHostile, Equipment equipment, String name, int level, int xp) {
+        loadStats(health, damage, isUndead, isArthropod, isHostile, equipment, name, level, xp, "Combat");
+    }
+
+    protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
+                           boolean isHostile, Equipment equipment, String name, int level, int xp, String skill) {
         entityData = new SkyblockEntityData();
 
         entityData.maximumHealth = health;
@@ -71,6 +77,9 @@ public abstract class SkyblockEntity {
 
         entityData.entityName = name;
         entityData.level = level;
+
+        entityData.skill = Skill.parseSkill(skill);
+        entityData.xp = xp;
 
         entityData.helmet = equipment.helmet;
         entityData.chestplate = equipment.chest;
@@ -111,6 +120,8 @@ public abstract class SkyblockEntity {
                         ((LivingEntity) vanilla).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 5, true, false));
 
                         if (getEntityData().health <= 0) {
+                            if (getLastDamager() != null) Skill.reward(getEntityData().skill, getEntityData().xp, getLastDamager());
+
                             vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             living.setHealth(0);
