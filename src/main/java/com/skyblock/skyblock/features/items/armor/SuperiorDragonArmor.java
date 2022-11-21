@@ -12,8 +12,6 @@ import java.util.HashMap;
 
 public class SuperiorDragonArmor extends ArmorSet {
 
-    private final static ItemHandler handler = Skyblock.getPlugin(Skyblock.class).getItemHandler();
-
     public SuperiorDragonArmor() {
         super(handler.getItem("SUPERIOR_DRAGON_HELMET.json"),
             handler.getItem("SUPERIOR_DRAGON_CHESTPLATE.json"),
@@ -40,7 +38,7 @@ public class SuperiorDragonArmor extends ArmorSet {
     public void stopFullSetBonus(Player player) {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        HashMap<SkyblockStat, Integer> extraData = skyblockPlayer.getExtraData("superior_dragon_bonus");
+        HashMap<SkyblockStat, Integer> extraData = (HashMap<SkyblockStat, Integer>) skyblockPlayer.getExtraData("superior_dragon_bonus");
 
         skyblockPlayer.forEachStat((s) -> {
             skyblockPlayer.subtractStat(s, extraData.get(s));

@@ -45,7 +45,7 @@ public class SkyblockPlayer {
     private Player bukkitPlayer;
     private HashMap<SkyblockStat, Integer> stats;
     private HashMap<String, Boolean> cooldowns;
-    private HashMap<String, HashMap<SkyblockStat, Integer>> extraData;
+    private HashMap<String, Object> extraData;
     private FileConfiguration config;
     private ArmorSet armorSet;
     private File configFile;
@@ -107,7 +107,13 @@ public class SkyblockPlayer {
             hand = itemStack;
         }
 
-        if (getStat(SkyblockStat.SPEED) > 400) setStat(SkyblockStat.SPEED, 400);
+        Object young = getExtraData("young_dragon_bonus");
+        int speedCap = 400;
+        if (young != null) {
+           speedCap = (boolean) young ? 500 : 400;
+        }
+
+        if (getStat(SkyblockStat.SPEED) > speedCap) setStat(SkyblockStat.SPEED, speedCap);
 
         if (bukkitPlayer.getLocation().getY() <= -11) kill(EntityDamageEvent.DamageCause.VOID, null);
 
@@ -259,12 +265,12 @@ public class SkyblockPlayer {
         setValue("stats." + stat.name().toLowerCase(), val);
     }
 
-    public HashMap<SkyblockStat, Integer> getExtraData(String id) {
+    public Object getExtraData(String id) {
         return extraData.get(id);
     }
 
-    public void setExtraData(String id, HashMap<SkyblockStat, Integer> map) {
-        extraData.put(id, map);
+    public void setExtraData(String id, Object obj) {
+        extraData.put(id, obj);
     }
 
     public boolean getCooldown(String id) {
