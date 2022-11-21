@@ -5,6 +5,7 @@ import com.skyblock.skyblock.features.items.armor.SuperiorDragonArmor;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheDragons;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheEnd;
+import com.skyblock.skyblock.features.items.weapons.EndStoneSword;
 import com.skyblock.skyblock.features.items.weapons.RogueSword;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -32,6 +33,7 @@ public class SkyblockItemHandler {
         // Weapons
         registerItem(new AspectOfTheDragons(plugin));
         registerItem(new AspectOfTheEnd(plugin));
+        registerItem(new EndStoneSword(plugin));
         registerItem(new RogueSword(plugin));
 
         // Armor Sets

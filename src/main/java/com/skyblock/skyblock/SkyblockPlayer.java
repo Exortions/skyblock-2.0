@@ -65,6 +65,9 @@ public class SkyblockPlayer {
         this.extraData.put("fullSetBonus", false);
         this.extraData.put("fullSetBonusType", null);
 
+        this.extraData.put("isEndStoneSwordActive", false);
+        this.extraData.put("endStoneSwordDamage", 0);
+
         initConfig();
     }
 
