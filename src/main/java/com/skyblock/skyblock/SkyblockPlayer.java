@@ -74,10 +74,10 @@ public class SkyblockPlayer {
     }
 
     public void tick() {
-        if (board == null) board = new HubScoreboard(getBukkitPlayer());
         if (tick == 0) {
             loadStats();
             resetActionBar();
+            board = new HubScoreboard(getBukkitPlayer());
         }
 
         if (tick % EVERY_SECOND == 0) {

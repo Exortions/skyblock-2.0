@@ -17,7 +17,7 @@ public class HubScoreboard extends Scoreboard {
     public HubScoreboard(Player player) {
         super(player);
 
-        runTask();
+        // runTask();
     }
 
     private int tick = 0;
