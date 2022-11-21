@@ -54,7 +54,11 @@ public class Merchant implements Listener {
     }
 
     public void createNpc() {
-        this.npc = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true, stand, click);
+        List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true, false);
+
+        this.npc = (net.citizensnpcs.api.npc.NPC) npcData.get(0);
+        this.stand = (ArmorStand) npcData.get(1);
+        this.click = (ArmorStand) npcData.get(2);
     }
 
     private int interactionIteration = 0;
