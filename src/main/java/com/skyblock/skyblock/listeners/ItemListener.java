@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ItemListener implements Listener {
 
@@ -82,6 +83,13 @@ public class ItemListener implements Listener {
         ItemStack[] armor = e.getPlayer().getInventory().getArmorContents();
         if (handler.isRegistered(armor)) {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(e.getPlayer());
+            HashMap<String, Object> extraData = skyblockPlayer.getExtraData();
+
+            extraData.put("fullSetBonus", true);
+            extraData.put("fullSetBonusType", handler.getRegistered(armor).getId());
+
+            skyblockPlayer.setExtraData(extraData);
+
             skyblockPlayer.setArmorSet(handler.getRegistered(armor));
             skyblockPlayer.getArmorSet().fullSetBonus(e.getPlayer());
         }
@@ -100,6 +108,14 @@ public class ItemListener implements Listener {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(e.getPlayer());
 
         if (skyblockPlayer.getArmorSet() == null) return;
+
+        HashMap<String, Object> extraData = skyblockPlayer.getExtraData();
+
+        extraData.put("fullSetBonus", false);
+        extraData.put("fullSetBonusType", null);
+
+        skyblockPlayer.setExtraData(extraData);
+
         skyblockPlayer.getArmorSet().stopFullSetBonus(e.getPlayer());
         skyblockPlayer.setArmorSet(null);
     }

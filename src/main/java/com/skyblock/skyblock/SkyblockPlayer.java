@@ -431,4 +431,12 @@ public class SkyblockPlayer {
         return true;
     }
 
+    public boolean hasFullSetBonus() {
+        return (boolean) this.getExtraData().get("fullSetBonus");
+    }
+
+    public String getFullSetBonusType() {
+        return (String) this.getExtraData().get("fullSetBonusType");
+    }
+
 }
