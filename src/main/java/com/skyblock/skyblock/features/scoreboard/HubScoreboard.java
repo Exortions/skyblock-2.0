@@ -31,7 +31,7 @@ public class HubScoreboard extends Scoreboard {
         DecimalFormat formatter = new DecimalFormat("#,###");
         formatter.setGroupingUsed(true);
 
-        String date = new SimpleDateFormat("MM/dd/yy").format(new Date());
+        String date = new SimpleDateFormat("MM/dd/yy").format(Skyblock.getPlugin(Skyblock.class).getDate());
 
         SkyblockLocation currentLocation = skyblockPlayer.getCurrentLocation();
 

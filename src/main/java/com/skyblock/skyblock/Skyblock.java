@@ -48,8 +48,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,6 +72,8 @@ public final class Skyblock extends JavaPlugin {
     private NPCHandler npcHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
+
+    private Date date;
 
     @Override
     public void onEnable() {
@@ -94,6 +98,13 @@ public final class Skyblock extends JavaPlugin {
         this.registerGuis();
         this.registerMobs();
         this.registerLaunchPads();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                date = new Date();
+            }
+        }.runTaskTimer(this, 0, 20 * 10);
 
         this.registerListeners();
         this.registerCommands();
