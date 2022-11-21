@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.npc;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
 import net.citizensnpcs.api.CitizensAPI;
@@ -42,57 +43,7 @@ public class NPC implements Listener {
     private SkinTrait skinTrait;
 
     public void spawn() {
-        this.npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
-        this.npc.spawn(location);
-
-        this.npc.getEntity().setCustomNameVisible(false);
-
-        this.npc.getEntity().setMetadata("isSkyblockNpc", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
-        this.npc.getEntity().setMetadata("npcName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
-
-        this.stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.95, 0), ArmorStand.class);
-        this.stand.setGravity(false);
-        this.stand.setVisible(false);
-        this.stand.setCustomNameVisible(true);
-        this.stand.setCustomName(this.name);
-
-        this.nbtas = new NBTEntity(this.stand);
-        this.nbtas.setBoolean("Invisible", true);
-        this.nbtas.setBoolean("Gravity", false);
-        this.nbtas.setBoolean("CustomNameVisible", true);
-        this.nbtas.setBoolean("Marker", true);
-        this.nbtas.setBoolean("Invulnerable", true);
-
-        this.stand.teleport(this.npc.getEntity().getLocation().add(0, 1.95, 0));
-        this.stand.setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
-        this.stand.setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), this.name));
-        this.stand.setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
-
-        this.click = this.npc.getEntity().getWorld().spawn(this.npc.getEntity().getLocation().add(0, 1.7, 0), ArmorStand.class);
-        this.click.setCustomName(ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
-        this.click.setGravity(false);
-        this.click.setVisible(false);
-        this.click.setCustomNameVisible(true);
-        this.nbtEntity = new NBTEntity(this.click);
-        this.nbtEntity.setBoolean("Invisible", true);
-        this.nbtEntity.setBoolean("Gravity", false);
-        this.nbtEntity.setBoolean("CustomNameVisible", true);
-        this.nbtEntity.setBoolean("Marker", true);
-        this.nbtEntity.setBoolean("Invulnerable", true);
-
-        this.click.teleport(this.npc.getEntity().getLocation().add(0, 1.7, 0));
-
-        this.lookClose = this.npc.getOrAddTrait(LookClose.class);
-        this.lookClose.lookClose(this.doesLookClose);
-
-        this.skinTrait = this.npc.getOrAddTrait(SkinTrait.class);
-        this.skinTrait.setSkinPersistent(this.getName(), this.skinSignature, this.skinValue);
-
-        this.npc.data().set(net.citizensnpcs.api.npc.NPC.NAMEPLATE_VISIBLE_METADATA, false);
-
-        this.npc.addTrait(lookClose);
-
-        if (this.hasSkin) this.npc.addTrait(skinTrait);
+        this.npc = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose);
     }
 
     @EventHandler

@@ -12,6 +12,10 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTEntity;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.experimental.UtilityClass;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.trait.LookClose;
+import net.citizensnpcs.trait.SkinTrait;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -22,6 +26,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
@@ -306,6 +311,68 @@ public class Util {
 
     public int assertPositive(int num) {
         return num < 0 ? num * -1 : num;
+    }
+
+    public NPC spawnSkyblockNpc(Location location, String name, String skinValue, String skinSignature, boolean skin, boolean look) {
+        NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
+
+        npc.spawn(location);
+
+        npc.getEntity().setCustomNameVisible(false);
+
+        npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
+        npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
+
+        ArmorStand stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.95, 0), ArmorStand.class);
+        stand.setGravity(false);
+        stand.setVisible(false);
+        stand.setCustomNameVisible(true);
+        stand.setCustomName(name);
+
+        NBTEntity nbtas = new NBTEntity(stand);
+        nbtas.setBoolean("Invisible", true);
+        nbtas.setBoolean("Gravity", false);
+        nbtas.setBoolean("CustomNameVisible", true);
+        nbtas.setBoolean("Marker", true);
+        nbtas.setBoolean("Invulnerable", true);
+
+        stand.teleport(npc.getEntity().getLocation().add(0, 1.95, 0));
+        stand.setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
+        stand.setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
+        stand.setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
+
+        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, 1.7, 0), ArmorStand.class);
+        click.setCustomName(ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
+        click.setGravity(false);
+        click.setVisible(false);
+        click.setCustomNameVisible(true);
+
+        NBTEntity nbtEntity = new NBTEntity(click);
+        nbtEntity.setBoolean("Invisible", true);
+        nbtEntity.setBoolean("Gravity", false);
+        nbtEntity.setBoolean("CustomNameVisible", true);
+        nbtEntity.setBoolean("Marker", true);
+        nbtEntity.setBoolean("Invulnerable", true);
+
+        click.teleport(npc.getEntity().getLocation().add(0, 1.7, 0));
+
+        if (skin) {
+            SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
+            skinTrait.setSkinPersistent("banker", skinSignature, skinValue);
+
+            npc.addTrait(skinTrait);
+        }
+
+        npc.data().set(net.citizensnpcs.api.npc.NPC.NAMEPLATE_VISIBLE_METADATA, false);
+
+        if (look) {
+            LookClose lookClose = npc.getOrAddTrait(LookClose.class);
+            lookClose.lookClose(true);
+
+            npc.addTrait(lookClose);
+        }
+
+        return npc;
     }
 
 }
