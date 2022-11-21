@@ -399,6 +399,7 @@ public class SkyblockPlayer {
 
                 for (Merchant merchant : Skyblock.getPlugin(Skyblock.class).getMerchantHandler().getMerchants().values()) {
                     config.set("merchant." + merchant.getName().toLowerCase().replace(" ", "_") + ".interacted", false);
+                    config.set("merchant." + merchant.getName().toLowerCase().replace(" ", "_") + ".interacting", false);
                 }
 
                 config.save(configFile);

@@ -130,8 +130,12 @@ public class Merchant implements Listener {
 
         if (player == null) return;
 
+        if ((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacting")) return;
+
         if (!((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacted")) && this.initialDialogue.size() > 0) {
             int delay = 0;
+
+            player.setValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacting", true);
 
             for (String s : this.initialDialogue) {
                 new BukkitRunnable() {
@@ -139,7 +143,10 @@ public class Merchant implements Listener {
                     public void run() {
                         player.getBukkitPlayer().sendMessage(ChatColor.YELLOW + "[NPC] " + getName() + ChatColor.WHITE + ": " + s);
 
-                        if (interactionIteration >= initialDialogue.size() - 1) player.setValue("merchant." + getName().toLowerCase().replace(" ", "_") + ".interacted", true);
+                        if (interactionIteration >= initialDialogue.size() - 1) {
+                            player.setValue("merchant." + getName().toLowerCase().replace(" ", "_") + ".interacted", true);
+                            player.setValue("merchant." + getName().toLowerCase().replace(" ", "_") + ".interacting", false);
+                        }
 
                         interactionIteration += 1;
 
