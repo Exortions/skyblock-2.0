@@ -129,7 +129,11 @@
         "x": -25.0,
         "y": 70.0,
         "z": -90.0
-      }
+      },
+      "interaction": [
+        "A great warrior is nothing without their armor!",
+        "Click me again to open the Armorsmith Shop!"
+      ]
     },
     {
       "name": "Adventurer",
