@@ -31,10 +31,14 @@ public class ItemBrowserCommand implements Command {
         try {
             int page = Integer.parseInt(args[0]) - 1;
 
-            if (args.length == 2) {
-                String query = args[1];
+            if (args.length >= 2) {
+                StringBuilder query = new StringBuilder();
+                for (int i = 1; i < args.length; i++) query.append(args[i]).append(" ");
+
+                player.sendMessage(ChatColor.GREEN + "Searching for " + ChatColor.GOLD + query.toString().trim() + ChatColor.GREEN + "...");
+
                 for (Map.Entry<String, ItemStack> entry : plugin.getItemHandler().getItems().entrySet()) {
-                    if (entry.getValue().getItemMeta().getDisplayName().toLowerCase().contains(query.toLowerCase())) {
+                    if (entry.getValue().getItemMeta().getDisplayName().toLowerCase().contains(query.toString().toLowerCase())) {
                         items.add(entry.getValue());
                     }
                 }
