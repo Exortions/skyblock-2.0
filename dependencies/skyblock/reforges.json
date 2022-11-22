@@ -437,6 +437,54 @@
           }
         }
       ]
+    },
+    {
+      "name": "Deadly",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "CRIT_CHANCE": 10,
+            "CRIT_DAMAGE": 5
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "CRIT_CHANCE": 13,
+            "CRIT_DAMAGE": 10
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "CRIT_CHANCE": 16,
+            "CRIT_DAMAGE": 18
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "CRIT_CHANCE": 19,
+            "CRIT_DAMAGE": 32
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "CRIT_CHANCE": 22,
+            "CRIT_DAMAGE": 50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "CRIT_CHANCE": 25,
+            "CRIT_DAMAGE": 78
+          }
+        }
+      ]
     }
   ]
 }
