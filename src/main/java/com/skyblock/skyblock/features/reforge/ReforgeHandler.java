@@ -30,6 +30,12 @@ public class ReforgeHandler {
 
         this.reforges = new HashMap<>();
 
+        this.index();
+    }
+
+    public void index() {
+        this.reforges.clear();
+
         this.reforges.put(Reforge.NONE, new ReforgeData(Reforge.NONE, Item.NONE, new HashMap<Rarity, ReforgeStat>() {{
             put(Rarity.COMMON, new ReforgeStat(Rarity.COMMON, new HashMap<>()));
             put(Rarity.UNCOMMON, new ReforgeStat(Rarity.UNCOMMON, new HashMap<>()));
@@ -39,10 +45,6 @@ public class ReforgeHandler {
             put(Rarity.MYTHIC, new ReforgeStat(Rarity.MYTHIC, new HashMap<>()));
         }}));
 
-        this.index();
-    }
-
-    public void index() {
         File file = new File(this.skyblock.getDataFolder(), "reforges.json");
 
         if (!file.exists()) {

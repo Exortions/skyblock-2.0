@@ -23,6 +23,16 @@ import org.bukkit.inventory.ItemStack;
 public class ReforgeCommand implements Command {
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
+        if (args.length > 0) {
+            if (args[0].equalsIgnoreCase("reload")) {
+                Skyblock.getPlugin(Skyblock.class).getReforgeHandler().index();
+
+                player.sendMessage(plugin.getPrefix() + ChatColor.GREEN + "Successfully reloaded all reforges.");
+
+                return;
+            }
+        }
+
         if (args.length == 0) {
             Inventory inventory = Bukkit.createInventory(null, 45, "Reforge Item");
 

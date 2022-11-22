@@ -47,6 +47,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Odd",
+      "applicable": "SWORD",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+              "CRIT_CHANCE": 12,
+              "CRIT_DAMAGE": 10,
+              "MANA": -5
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+              "CRIT_CHANCE": 15,
+              "CRIT_DAMAGE": 15,
+              "MANA": -10
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+              "CRIT_CHANCE": 15,
+              "CRIT_DAMAGE": 15,
+              "MANA": -18
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+              "CRIT_CHANCE": 20,
+              "CRIT_DAMAGE": 22,
+              "MANA": -32
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+              "CRIT_CHANCE": 25,
+              "CRIT_DAMAGE": 30,
+              "MANA": -50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+              "CRIT_CHANCE": 30,
+              "CRIT_DAMAGE": 40,
+              "MANA": -75
+          }
+        }
+      ]
     }
   ]
 }

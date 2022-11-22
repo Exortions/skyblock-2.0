@@ -190,7 +190,7 @@ public class ItemBase {
         if (critChance != 0 || rCritChance > 0) lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + rCritChance) + "%" + (reforge != Reforge.NONE && rCritChance > 0 ? " " + ChatColor.BLUE + "(+" + rCritChance + "%)" : ""));
         if (critDamage != 0 || rCritDamage > 0) lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + rCritDamage) + "%" + (reforge != Reforge.NONE && rCritDamage > 0 ? " " + ChatColor.BLUE + "(+" + rCritDamage + "%)" : ""));
         if (attackSpeed != 0 || rAttackSpeed > 0) lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + rAttackSpeed + "%" + (reforge != Reforge.NONE && rAttackSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rAttackSpeed + "%)" : "")));
-        if ((speed != 0 || rSpeed > 0) && (intelligence != 0 || rMana > 0) && (defense != 0 || rDefense > 0) && (health != 0 || rHealth > 0)) {
+        if ((speed != 0 || rSpeed > 0) && (intelligence != 0 || rMana != 0) && (defense != 0 || rDefense > 0) && (health != 0 || rHealth > 0)) {
             lore.add("");
             lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + rMana) + (reforge != Reforge.NONE && rHealth > 0 ? " HP " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
             lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
@@ -418,8 +418,41 @@ public class ItemBase {
         }
     }
 
+    public void setStat(SkyblockStat stat, int value) {
+        if (stat.equals(SkyblockStat.DAMAGE)) this.damage = value;
+        else if (stat.equals(SkyblockStat.STRENGTH)) this.strength = value;
+        else if (stat.equals(SkyblockStat.CRIT_CHANCE)) this.critChance = value;
+        else if (stat.equals(SkyblockStat.CRIT_DAMAGE)) this.critDamage = value;
+        else if (stat.equals(SkyblockStat.ATTACK_SPEED)) this.attackSpeed = value;
+        else if (stat.equals(SkyblockStat.MANA)) this.intelligence = value;
+        else if (stat.equals(SkyblockStat.SPEED)) this.speed = value;
+        else if (stat.equals(SkyblockStat.DEFENSE)) this.defense = value;
+        else if (stat.equals(SkyblockStat.HEALTH)) this.health = value;
+    }
+    
+    public int getStat(SkyblockStat stat) {
+        if (stat.equals(SkyblockStat.DAMAGE)) return this.damage;
+        else if (stat.equals(SkyblockStat.STRENGTH)) return this.strength;
+        else if (stat.equals(SkyblockStat.CRIT_CHANCE)) return this.critChance;
+        else if (stat.equals(SkyblockStat.CRIT_DAMAGE)) return this.critDamage;
+        else if (stat.equals(SkyblockStat.ATTACK_SPEED)) return this.attackSpeed;
+        else if (stat.equals(SkyblockStat.MANA)) return this.intelligence;
+        else if (stat.equals(SkyblockStat.SPEED)) return this.speed;
+        else if (stat.equals(SkyblockStat.DEFENSE)) return this.defense;
+        else if (stat.equals(SkyblockStat.HEALTH)) return this.health;
+        else return 0;
+    }
+
     public static ItemStack reforge(ItemStack stack, Reforge reforge) {
         ItemBase base = new ItemBase(stack);
+
+        Rarity r = base.getRarityEnum();
+
+        for (SkyblockStat stat : base.getReforge().getReforgeData(r).getStats().keySet()) {
+            base.setStat(stat, base.getStat(stat) - base.getReforge().getReforgeData(r).getStats().get(stat));
+        }
+        
+        base.createStack();
 
         base.setReforge(reforge);
 

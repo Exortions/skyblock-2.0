@@ -132,7 +132,7 @@ public class ReforgeListener implements Listener {
                 return;
             }
 
-            Reforge reforge = reforges.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges().size()));
+            Reforge reforge = reforges.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges().size() - 1));
             int cost = Util.calculateReforgeCost(event.getClickedInventory().getItem(13));
 
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
