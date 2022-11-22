@@ -86,7 +86,7 @@ public class ReforgeHandler {
                 Reforge reforgeEnum = Reforge.valueOf(name.toUpperCase().replace(" ", "_"));
                 Item item = Item.valueOf(applicable);
 
-                this.reforges.put(reforgeEnum, new ReforgeData(reforgeEnum, item, stats));
+                this.registerReforge(reforgeEnum, new ReforgeData(reforgeEnum, item, stats));
             }
         } catch (IOException | ParseException ex) {
             throw new RuntimeException(ex);
@@ -103,6 +103,16 @@ public class ReforgeHandler {
 
     public HashMap<Reforge, ReforgeData> getReforges() {
         return this.reforges;
+    }
+
+    public List<Reforge> getRegisteredReforges(Reforge... exclude) {
+        List<Reforge> reforges = new ArrayList<>(this.reforges.keySet());
+
+        reforges.remove(Reforge.NONE);
+
+        for (Reforge reforge : exclude) reforges.remove(reforge);
+
+        return reforges;
     }
 
 }

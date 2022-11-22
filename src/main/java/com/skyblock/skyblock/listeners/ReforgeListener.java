@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
 import javax.swing.*;
+import java.util.List;
 
 public class ReforgeListener implements Listener {
 
@@ -124,7 +125,14 @@ public class ReforgeListener implements Listener {
 
             if (item.getItemMeta().getLore().stream().noneMatch(s -> s.contains("Click to reforge!"))) return;
 
-            Reforge reforge = Reforge.values()[Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Reforge.values().length)];
+            List<Reforge> reforges = Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges(new ItemBase(event.getClickedInventory().getItem(13)).getReforge());
+
+            if (reforges.size() <= 0) {
+                player.sendMessage(ChatColor.RED + "There are no availiable reforges that can be applied to this item!");
+                return;
+            }
+
+            Reforge reforge = reforges.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges().size()));
             int cost = Util.calculateReforgeCost(event.getClickedInventory().getItem(13));
 
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
