@@ -210,7 +210,7 @@ public class ItemBase {
             lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
         }
 
-        if (lore.size() != 0 && !lore.get(lore.size() - 1).equals("")) lore.add("");
+        lore.add("");
 
         if (!(this.enchantments.size() < 1)) {
             if (this.enchantments.size() <= 3) {
@@ -243,9 +243,9 @@ public class ItemBase {
 
                 lore.addAll(enchantmentLore);
             }
-        }
 
-        lore.add("");
+            lore.add("");
+        }
 
         /*
           Description
