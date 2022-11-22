@@ -30,6 +30,7 @@ import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
+import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -54,6 +55,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 @Getter
@@ -67,12 +69,14 @@ public final class Skyblock extends JavaPlugin {
     private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
+    private ReforgeHandler reforgeHandler;
     private RecipeHandler recipeHandler;
     private ItemHandler itemHandler;
     private NPCHandler npcHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
 
+    private Random random;
     private Date date;
 
     @Override
@@ -82,6 +86,8 @@ public final class Skyblock extends JavaPlugin {
 
         this.initializeServerData();
         this.registerTimeHandlers();
+
+        this.registerReforges();
 
         this.registerEnchantments();
 
@@ -131,8 +137,22 @@ public final class Skyblock extends JavaPlugin {
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
+    public void registerReforges() {
+        this.sendMessage("Registering reforges...");
+        long start = System.currentTimeMillis();
+
+        this.reforgeHandler = new ReforgeHandler(this);
+
+        this.sendMessage("Successfully registered &a" + this.reforgeHandler.getReforges().size() + "&f reforges [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
     public void registerLaunchPads() {
+        this.sendMessage("Registering launch pads...");
+        long start = System.currentTimeMillis();
+
         this.launchPadHandler = new LaunchPadHandler();
+
+        this.sendMessage("Successfully registered launch pads [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerNpcs() {
@@ -247,6 +267,8 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.serverData = new ServerData(this);
+
+        this.random = new Random();
 
         this.sendMessage("Sucessfully initialized server data [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

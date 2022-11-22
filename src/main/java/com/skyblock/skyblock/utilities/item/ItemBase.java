@@ -1,9 +1,13 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
+import com.skyblock.skyblock.features.reforge.ReforgeData;
+import com.skyblock.skyblock.features.reforge.ReforgeStat;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
@@ -30,6 +34,7 @@ public class ItemBase {
     private Material material;
     private String name;
     private String rarity;
+    private Rarity rarityEnum;
     private String skyblockId;
     private int amount;
 
@@ -67,7 +72,18 @@ public class ItemBase {
         this.amount = item.getAmount();
         this.name = nbt.getString("name");
         this.rarity = nbt.getString("rarity");
-        this.reforge = Reforge.getReforge(nbt.getString("reforgeType"));
+        try {
+            if (!ChatColor.stripColor(this.rarity).startsWith("VERY")) {
+                this.rarityEnum = Rarity.valueOf(ChatColor.stripColor(rarity.split(" ")[0]).toUpperCase().replace(" ", "_"));
+            } else this.rarityEnum = Rarity.VERY_SPECIAL;
+        } catch (Exception ex) {
+            this.rarityEnum = Rarity.COMMON;
+        }
+        try {
+            this.reforge = Reforge.getReforge(nbt.getString("reforgeType"));
+        } catch (Exception ex) {
+            this.reforge = Reforge.NONE;
+        }
         this.reforgeable = nbt.getBoolean("reforgeable");
         this.enchantments = new ArrayList<>();
         String enchantmentsStr = nbt.getString("enchantments");
@@ -153,35 +169,48 @@ public class ItemBase {
 
         if (this.reforge == null) this.reforge = Reforge.NONE;
 
+        this.rarityEnum = this.getRarity(this.rarity);
+
+        ReforgeStat reforgeData = this.reforge.getReforgeData(this.rarityEnum);
+
+        int rStrength = reforgeData.get(SkyblockStat.STRENGTH);
+        int rCritChance = reforgeData.get(SkyblockStat.CRIT_CHANCE);
+        int rCritDamage = reforgeData.get(SkyblockStat.CRIT_DAMAGE);
+        int rAttackSpeed = reforgeData.get(SkyblockStat.ATTACK_SPEED);
+        int rSpeed = reforgeData.get(SkyblockStat.SPEED);
+        int rMana = reforgeData.get(SkyblockStat.MANA);
+        int rDefense = reforgeData.get(SkyblockStat.DEFENSE);
+        int rHealth = reforgeData.get(SkyblockStat.HEALTH);
+
         /*
           Stats
          */
         if (damage != 0) lore.add(ChatColor.GRAY + "Damage: " + ChatColor.RED + "+" + damage);
-        if (strength != 0 || reforge.getStrength() > 0) lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + reforge.getStrength()) + (reforge != Reforge.NONE && reforge.getStrength() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getStrength() + ")" : ""));
-        if (critChance != 0 || reforge.getCritChance() > 0) lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + reforge.getCritChance()) + "%" + (reforge != Reforge.NONE && reforge.getCritChance() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getCritChance() + "%)" : ""));
-        if (critDamage != 0 || reforge.getCritDamage() > 0) lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + reforge.getCritDamage()) + "%" + (reforge != Reforge.NONE && reforge.getCritDamage() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getCritDamage() + "%)" : ""));
-        if (attackSpeed != 0 || reforge.getAttackSpeed() > 0) lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + reforge.getAttackSpeed()) + "%" + (reforge != Reforge.NONE && reforge.getAttackSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getAttackSpeed() + "%)" : ""));
-        if ((speed != 0 || reforge.getSpeed() > 0) && (intelligence != 0 || reforge.getMana() > 0) && (defense != 0 || reforge.getDefense() > 0) && (health != 0 || reforge.getHealth() > 0)) {
+        if (strength != 0 || rStrength > 0) lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + rStrength) + (reforge != Reforge.NONE && rStrength > 0 ? " " + ChatColor.BLUE + "(+" + rStrength + ")" : ""));
+        if (critChance != 0 || rCritChance > 0) lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + rCritChance) + "%" + (reforge != Reforge.NONE && rCritChance > 0 ? " " + ChatColor.BLUE + "(+" + rCritChance + "%)" : ""));
+        if (critDamage != 0 || rCritDamage > 0) lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + rCritDamage) + "%" + (reforge != Reforge.NONE && rCritDamage > 0 ? " " + ChatColor.BLUE + "(+" + rCritDamage + "%)" : ""));
+        if (attackSpeed != 0 || rAttackSpeed > 0) lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + rAttackSpeed + "%" + (reforge != Reforge.NONE && rAttackSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rAttackSpeed + "%)" : "")));
+        if ((speed != 0 || rSpeed > 0) && (intelligence != 0 || rMana > 0) && (defense != 0 || rDefense > 0) && (health != 0 || rHealth > 0)) {
             lore.add("");
-            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + reforge.getMana()) + (reforge != Reforge.NONE && reforge.getHealth() > 0 ? " HP " + ChatColor.BLUE + "(+" + reforge.getHealth() + ")" : ""));
-            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + reforge.getDefense()) + (reforge != Reforge.NONE && reforge.getDefense() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getDefense() + ")" : ""));
-            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + reforge.getSpeed()) + (reforge != Reforge.NONE && reforge.getSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getSpeed() + ")" : ""));
-            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + reforge.getMana()) + (reforge != Reforge.NONE && reforge.getMana() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getMana() + ")" : ""));
-        } else if (health != 0 || reforge.getHealth() > 0){
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + rMana) + (reforge != Reforge.NONE && rHealth > 0 ? " HP " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + rSpeed) + (reforge != Reforge.NONE && rSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rSpeed + ")" : ""));
+            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
+        } else if (health != 0 || rHealth > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + reforge.getHealth()) + (reforge != Reforge.NONE && reforge.getHealth() > 0 ? " HP " + ChatColor.BLUE + "(+" + reforge.getHealth() + ")" : ""));
-        } else if (defense != 0 || reforge.getDefense() > 0){
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " HP " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
+        } else if (defense != 0 || rDefense > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + reforge.getDefense()) + (reforge != Reforge.NONE && reforge.getDefense() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getDefense() + ")" : ""));
-        } else if (speed != 0 || reforge.getSpeed() > 0){
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
+        } else if (speed != 0 || rSpeed > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + reforge.getSpeed()) + (reforge != Reforge.NONE && reforge.getSpeed() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getSpeed() + ")" : ""));
-        } else if (intelligence != 0 || reforge.getMana() > 0){
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + rSpeed) + (reforge != Reforge.NONE && rSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rSpeed + ")" : ""));
+        } else if (intelligence != 0 || rMana > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + reforge.getMana()) + (reforge != Reforge.NONE && reforge.getMana() > 0 ? " " + ChatColor.BLUE + "(+" + reforge.getMana() + ")" : ""));
+            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
         }
 
-        lore.add("");
+        if (lore.size() != 0 && !lore.get(lore.size() - 1).equals("")) lore.add("");
 
         if (!(this.enchantments.size() < 1)) {
             if (this.enchantments.size() <= 3) {
@@ -248,19 +277,19 @@ public class ItemBase {
 
         ChatColor nameColor = ChatColor.WHITE;
 
-        if (rarity.contains("LEGENDARY") || rarity.contains("legendary")){
+        if (this.getRarity(rarity).equals(Rarity.LEGENDARY)) {
             lore.add("" + ChatColor.GOLD + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.GOLD;
-        } else if (rarity.contains("EPIC") || rarity.contains("epic")){
+        } else if (this.getRarity(rarity).equals(Rarity.EPIC)) {
             lore.add("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.DARK_PURPLE;
-        } else if (rarity.contains("RARE") || rarity.contains("rare")){
+        } else if (this.getRarity(rarity).equals(Rarity.RARE)) {
             lore.add("" + ChatColor.BLUE + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.BLUE;
-        } else if (rarity.contains("UNCOMMON") || rarity.contains("uncommon")) {
+        } else if (this.getRarity(rarity).equals(Rarity.UNCOMMON)) {
             lore.add("" + ChatColor.GREEN + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.GREEN;
-        } else if (rarity.contains("COMMON") || rarity.contains("common")) {
+        } else if (this.getRarity(rarity).equals(Rarity.COMMON)) {
             lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
         }
 
@@ -304,14 +333,14 @@ public class ItemBase {
         nbt.setInteger("abilityCost", abilityCost);
         nbt.setString("abilityDescription", abilityDescription.toString());
         nbt.setInteger("damage", damage);
-        nbt.setInteger("strength", strength + reforge.getStrength());
-        nbt.setInteger("critChance", critChance + reforge.getCritChance());
-        nbt.setInteger("critDamage", critDamage + reforge.getCritDamage());
-        nbt.setInteger("attackSpeed", attackSpeed + reforge.getAttackSpeed());
-        nbt.setInteger("intelligence", intelligence + reforge.getMana());
-        nbt.setInteger("speed", speed + reforge.getSpeed());
-        nbt.setInteger("defense", defense + reforge.getDefense());
-        nbt.setInteger("health", health + reforge.getHealth());
+        nbt.setInteger("strength", strength + rStrength);
+        nbt.setInteger("critChance", critChance + rCritChance);
+        nbt.setInteger("critDamage", critDamage + rCritDamage);
+        nbt.setInteger("attackSpeed", attackSpeed + rAttackSpeed);
+        nbt.setInteger("intelligence", intelligence + rMana);
+        nbt.setInteger("speed", speed + rSpeed);
+        nbt.setInteger("defense", defense + rDefense);
+        nbt.setInteger("health", health + rHealth);
         nbt.setString("skyblockId", skyblockId);
 
         this.stack = nbt.getItem();
@@ -347,6 +376,47 @@ public class ItemBase {
     }
 
     public void set(Player player, int slot) { player.getInventory().setItem(slot, createStack()); }
+
+    public int getReforgeCost() {
+        switch (this.rarityEnum) {
+            case VERY_SPECIAL:
+                return 50000;
+            case SPECIAL:
+                return 25000;
+            case DIVINE:
+                return 15000;
+            case MYTHIC:
+                return 10000;
+            case LEGENDARY:
+                return 5000;
+            case EPIC:
+                return 2500;
+            case RARE:
+                return 1000;
+            case UNCOMMON:
+                return 500;
+            case COMMON:
+                return 250;
+            default:
+                return 0;
+        }
+    }
+
+    public Rarity getRarity(String rarity) {
+        if (rarity.contains("LEGENDARY") || rarity.contains("legendary")){
+            return Rarity.LEGENDARY;
+        } else if (rarity.contains("EPIC") || rarity.contains("epic")){
+            return Rarity.EPIC;
+        } else if (rarity.contains("RARE") || rarity.contains("rare")){
+            return Rarity.RARE;
+        } else if (rarity.contains("UNCOMMON") || rarity.contains("uncommon")) {
+            return Rarity.UNCOMMON;
+        } else if (rarity.contains("COMMON") || rarity.contains("common")) {
+            return Rarity.COMMON;
+        } else {
+            return Rarity.COMMON;
+        }
+    }
 
     public static ItemStack reforge(ItemStack stack, Reforge reforge) {
         ItemBase base = new ItemBase(stack);

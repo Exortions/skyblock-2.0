@@ -1,0 +1,52 @@
+{
+  "reforges": [
+    {
+      "name": "Gentle",
+      "applicable": "SWORD",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 3,
+            "ATTACK_SPEED": 8
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 5,
+            "ATTACK_SPEED": 10
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 7,
+            "ATTACK_SPEED": 15
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+              "STRENGTH": 10,
+              "ATTACK_SPEED": 20
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+              "STRENGTH": 15,
+              "ATTACK_SPEED": 25
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+              "STRENGTH": 20,
+              "ATTACK_SPEED": 30
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -430,4 +430,16 @@ public class Util {
         return base.isReforgeable();
     }
 
+    public int calculateReforgeCost(ItemStack stack) {
+        ItemBase base;
+
+        try {
+            base = new ItemBase(stack);
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+
+        return base.getReforgeCost();
+    }
+
 }
