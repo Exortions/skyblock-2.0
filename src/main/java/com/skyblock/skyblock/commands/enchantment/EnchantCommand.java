@@ -10,13 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @RequiresPlayer
-@Usage(usage = "/sb addenchantment <enchantment> <level>")
-public class AddEnchantmentCommand implements Command {
+@Usage(usage = "/sb enchant <enchantment> <level>")
+public class EnchantCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         if (args.length < 1 || args.length > 2) {
-            player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Usage: /sb addenchantment <enchantment> <level>");
+            player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Usage: /sb enchant <enchantment> <level>");
             return;
         }
 

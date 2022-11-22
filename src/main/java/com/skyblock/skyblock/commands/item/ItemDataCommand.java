@@ -2,6 +2,7 @@ package com.skyblock.skyblock.commands.item;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.utilities.command.annotations.Alias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -10,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
+@Alias(aliases = {"data"})
 @Usage(usage = "/sb itemdata")
 @Description(description = "Shows the skyblock data of the item in your hand.")
 public class ItemDataCommand implements Command {

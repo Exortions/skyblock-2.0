@@ -2,7 +2,7 @@ package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.economy.DepositCommand;
 import com.skyblock.skyblock.commands.economy.WithdrawCommand;
-import com.skyblock.skyblock.commands.enchantment.AddEnchantmentCommand;
+import com.skyblock.skyblock.commands.enchantment.EnchantCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
@@ -358,7 +358,7 @@ public final class Skyblock extends JavaPlugin {
                 new CollectionCommand(),
                 new MenuCommand(),
                 new PlayerDataCommand(),
-                new AddEnchantmentCommand(),
+                new EnchantCommand(),
                 new SummonCommand(),
                 new WarpCommand(),
                 new VisitCommand(),
