@@ -104,9 +104,9 @@ public class ReforgeListener implements Listener {
                 }
 
                 if (!(isReforgeable && !item.getType().equals(Material.AIR))) {
-                    Util.fillSides(event.getClickedInventory(), Material.STAINED_GLASS_PANE, 5);
+                    Util.fillSides45Slots(event.getClickedInventory(), Material.STAINED_GLASS_PANE, 5);
                 } else {
-                    Util.fillSides(event.getClickedInventory(), Material.STAINED_GLASS_PANE, 14);
+                    Util.fillSides45Slots(event.getClickedInventory(), Material.STAINED_GLASS_PANE, 14);
                 }
 
                 return;
