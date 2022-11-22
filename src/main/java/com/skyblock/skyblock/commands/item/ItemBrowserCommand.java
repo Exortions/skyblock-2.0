@@ -3,6 +3,7 @@ package com.skyblock.skyblock.commands.item;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.utilities.command.annotations.Alias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 @RequiresPlayer
+@Alias(aliases = { "ib" })
 @Usage(usage = "/sb itembrowser <page> <query>")
 @Description(description = "Shows a list of all items in the game")
 public class ItemBrowserCommand implements Command {

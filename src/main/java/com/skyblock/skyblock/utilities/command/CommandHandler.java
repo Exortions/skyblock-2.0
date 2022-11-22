@@ -65,7 +65,16 @@ public class CommandHandler implements CommandExecutor {
             Permission permission = command.permission();
             String name = command.name();
 
-            if (!this.args[0].equalsIgnoreCase(name)) continue;
+            boolean isAlias = false;
+
+            for (String alias : command.aliases()) {
+                if (alias.equalsIgnoreCase(args[0])) {
+                    isAlias = true;
+                    break;
+                }
+            }
+
+            if (!this.args[0].equalsIgnoreCase(name) && !isAlias) continue;
             if (!this.sender.hasPermission(permission) && !command.permission().getName().equalsIgnoreCase("skyblock.*"))
                 return executeCommandMessage("no-permission");
 

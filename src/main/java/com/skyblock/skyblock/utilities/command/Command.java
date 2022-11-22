@@ -1,14 +1,15 @@
 package com.skyblock.skyblock.utilities.command;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.utilities.command.annotations.Description;
-import com.skyblock.skyblock.utilities.command.annotations.Permission;
-import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
-import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import com.skyblock.skyblock.utilities.command.annotations.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public interface Command {
+
+    default String[] aliases() {
+        return getClass().getAnnotation(Alias.class) == null ? new String[0] : getClass().getAnnotation(Alias.class).aliases();
+    }
 
     default boolean requiresPlayer() {
         return getClass().getAnnotation(RequiresPlayer.class) != null;
