@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.commands.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
@@ -12,10 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiresPlayer
 @Usage(usage = "/sb itembrowser <page> <query>")
@@ -50,6 +48,8 @@ public class ItemBrowserCommand implements Command {
                     items.add(entry.getValue());
                 }
 
+                items.sort(Comparator.comparing(o -> ChatColor.stripColor(o.getItemMeta().getDisplayName())));
+
                 command = "sb itembrowser " + (page + 2);
                 backCommand = "sb itembrowser " + (page);
             }
@@ -61,22 +61,19 @@ public class ItemBrowserCommand implements Command {
 
             int setItemIndex = 0;
 
+            Util.fillEmpty(itemBrowser);
+
             for (int i = start; i < end; i++) {
                 try {
                     ItemStack item = items.get(i);
                     itemBrowser.addItem(setItemIndex, item);
-                    itemBrowser.clickEvents.put(item.getItemMeta().getDisplayName(), () -> {
-                        player.getInventory().addItem(item);
-                    });
+                    itemBrowser.clickEvents.put(item.getItemMeta().getDisplayName(), () -> player.getInventory().addItem(item));
                     setItemIndex++;
                 } catch (IndexOutOfBoundsException e) {
                     break;
                 }
             }
 
-            for (int i = 45; i < 54; i++) {
-                itemBrowser.addItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
-            }
 
             itemBrowser.addItem(53, new ItemBuilder(ChatColor.GREEN + "Next Page", Material.ARROW).toItemStack());
             itemBrowser.clickEvents.put(ChatColor.GREEN + "Next Page", () -> {

@@ -7,6 +7,7 @@ import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Reforge;
+import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTEntity;
@@ -103,6 +104,10 @@ public class Util {
 
     public void fillEmpty(Inventory inventory) {
         fillEmpty(inventory, Material.STAINED_GLASS_PANE, 15);
+    }
+
+    public void fillEmpty(Gui gui) {
+        for (int i = 0; i < gui.getSlots(); i++) gui.addItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
     }
 
     public void fillEmpty(Inventory inventory, Material material, int data) {
