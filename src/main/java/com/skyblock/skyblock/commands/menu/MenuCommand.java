@@ -3,6 +3,7 @@ package com.skyblock.skyblock.commands.menu;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.Util;
@@ -243,6 +244,12 @@ public class MenuCommand implements Command {
         inventory.setItem(30, pets);
         inventory.setItem(31, craftingTable);
         inventory.setItem(32, activeEffects);
+
+        for (Bag bag : plugin.getBagManager().getBags().values()) {
+            if ((boolean) skyblockPlayer.getValue("bag." + bag.getId() + ".unlocked")) {
+                inventory.setItem(bag.getSkyblockMenuSlot(), bag.toItemStack());
+            }
+        }
 
         player.openInventory(inventory);
     }

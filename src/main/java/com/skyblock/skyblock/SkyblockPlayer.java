@@ -2,6 +2,7 @@ package com.skyblock.skyblock;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
@@ -400,6 +401,13 @@ public class SkyblockPlayer {
                 for (Merchant merchant : Skyblock.getPlugin(Skyblock.class).getMerchantHandler().getMerchants().values()) {
                     config.set("merchant." + merchant.getName().toLowerCase().replace(" ", "_") + ".interacted", false);
                     config.set("merchant." + merchant.getName().toLowerCase().replace(" ", "_") + ".interacting", false);
+                }
+
+                for (Bag bag : Skyblock.getPlugin(Skyblock.class).getBagManager().getBags().values()) {
+                    config.set("bag." + bag.getId() + ".unlocked", false);
+                    config.set("bag." + bag.getId() + ".slots", 0);
+
+                    config.set("bag." + bag.getId() + ".items", new HashMap<Integer, ItemStack>());
                 }
 
                 config.save(configFile);

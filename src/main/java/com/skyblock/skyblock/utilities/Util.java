@@ -139,6 +139,10 @@ public class Util {
         inventory.setItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
+    public void fillBottom(Inventory inventory, Material material, int data) {
+        for (int i = inventory.getSize() - 9; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+    }
+
     public void fillSides45Slots(Inventory inventory, Material material, int data) {
         for (int i = 9; i < 36; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
         for (int i = 17; i < 36; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());

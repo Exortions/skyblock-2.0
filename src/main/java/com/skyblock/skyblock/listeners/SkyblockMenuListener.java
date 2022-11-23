@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -37,6 +38,14 @@ public class SkyblockMenuListener implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         ItemStack clicked = event.getCurrentItem();
+        NBTItem item = new NBTItem(clicked);
+
+        if (item.hasKey("isBag") && item.getBoolean("isBag")) {
+            this.skyblock.getBagManager().show(item.getString("bagId"), player);
+
+            return;
+        }
+
         String name = ChatColor.stripColor(clicked.getItemMeta().getDisplayName());
 
         if (name.equals(" ")) return;

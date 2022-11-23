@@ -17,6 +17,8 @@ import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
+import com.skyblock.skyblock.features.bags.Bag;
+import com.skyblock.skyblock.features.bags.BagManager;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
@@ -36,6 +38,7 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
+import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import lombok.Getter;
@@ -72,6 +75,7 @@ public final class Skyblock extends JavaPlugin {
     private ReforgeHandler reforgeHandler;
     private RecipeHandler recipeHandler;
     private ItemHandler itemHandler;
+    private BagManager bagManager;
     private NPCHandler npcHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
@@ -105,6 +109,8 @@ public final class Skyblock extends JavaPlugin {
         this.registerMobs();
         this.registerLaunchPads();
 
+        this.registerBags();
+
         this.registerListeners();
         this.registerCommands();
 
@@ -135,6 +141,37 @@ public final class Skyblock extends JavaPlugin {
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerBags() {
+        this.sendMessage("Registering bags...");
+        long start = System.currentTimeMillis();
+
+        this.bagManager = new BagManager();
+
+        this.bagManager.registerBag(
+                new Bag(
+                        "accessory_bag",
+                        "Accessory Bag",
+                        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTYxYTkxOGMwYzQ5YmE4ZDA1M2U1MjJjYjkxYWJjNzQ2ODkzNjdiNGQ4YWEwNmJmYzFiYTkxNTQ3MzA5ODVmZiJ9fX0=",
+                        "&7A special bag which can hold\n&7Talismans, Rings, Artifacts and\n&7Orbs within it. All will still\n&7work while in this bag!",
+                        53,
+                        (stack -> {
+                            ItemBase base;
+
+                            try {
+                                base = new ItemBase(stack);
+                            } catch (Exception ex) {
+                                return false;
+                            }
+
+                            return base.getRarity().toUpperCase().contains("ACCESSORY");
+                        }),
+                        (player, inventory) -> player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have opened your Accessory Bag!")
+                )
+        );
+
+        this.sendMessage("Successfully registered " + ChatColor.GREEN + this.bagManager.getBags().size() + ChatColor.WHITE + " bags [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerReforges() {
