@@ -16,3 +16,4 @@ commands:
     description: Skyblock
     aliases:
       - skyblock
+      - sky
