@@ -485,6 +485,420 @@
           }
         }
       ]
+    },
+    {
+      "name": "Fine",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_CHANCE": 5,
+            "CRIT_DAMAGE": 2
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 7,
+            "CRIT_CHANCE": 7,
+            "CRIT_DAMAGE": 4
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 12,
+            "CRIT_CHANCE": 9,
+            "CRIT_DAMAGE": 7
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 18,
+            "CRIT_CHANCE": 12,
+            "CRIT_DAMAGE": 10
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 25,
+            "CRIT_CHANCE": 15,
+            "CRIT_DAMAGE": 15
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 33,
+            "CRIT_CHANCE": 18,
+            "CRIT_DAMAGE": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grand",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 25
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 32
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 40
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 50
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 60
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 75
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hasty",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_CHANCE": 20
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 5,
+            "CRIT_CHANCE": 25
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 7,
+            "CRIT_CHANCE": 30
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 10,
+            "CRIT_CHANCE": 40
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 15,
+            "CRIT_CHANCE": 50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 20,
+            "CRIT_CHANCE": 60
+          }
+        }
+      ]
+    },
+    {
+      "name": "Neat",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "CRIT_CHANCE": 10,
+            "CRIT_DAMAGE": 4,
+            "MANA": 3
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "CRIT_CHANCE": 12,
+            "CRIT_DAMAGE": 8,
+            "MANA": 6
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "CRIT_CHANCE": 14,
+            "CRIT_DAMAGE": 14,
+            "MANA": 10
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "CRIT_CHANCE": 17,
+            "CRIT_DAMAGE": 20,
+            "MANA": 15
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "CRIT_CHANCE": 20,
+            "CRIT_DAMAGE": 30,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "CRIT_CHANCE": 25,
+            "CRIT_DAMAGE": 40,
+            "MANA": 25
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rapid",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": 35
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_DAMAGE": 45
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 4,
+            "CRIT_DAMAGE": 55
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 7,
+            "CRIT_DAMAGE": 65
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 10,
+            "CRIT_DAMAGE": 75
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 15,
+            "CRIT_DAMAGE": 90
+          }
+        }
+      ]
+    },
+    {
+      "name": "Unreal",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_CHANCE": 8,
+            "CRIT_DAMAGE": 5
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 7,
+            "CRIT_CHANCE": 9,
+            "CRIT_DAMAGE": 10
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 12,
+            "CRIT_CHANCE": 10,
+            "CRIT_DAMAGE": 10
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 18,
+            "CRIT_CHANCE": 11,
+            "CRIT_DAMAGE": 32
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 25,
+            "CRIT_CHANCE": 13,
+            "CRIT_DAMAGE": 50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 34,
+            "CRIT_CHANCE": 15,
+            "CRIT_DAMAGE": 70
+          }
+        }
+      ]
+    },
+    {
+      "name": "Awkward",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "CRIT_CHANCE": 10,
+            "CRIT_DAMAGE": 5,
+            "MANA": -5
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "CRIT_CHANCE": 12,
+            "CRIT_DAMAGE": 10,
+            "MANA": -10
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "CRIT_CHANCE": 15,
+            "CRIT_DAMAGE": 15,
+            "MANA": -18
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "CRIT_CHANCE": 20,
+            "CRIT_DAMAGE": 22,
+            "MANA": -32
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "CRIT_CHANCE": 25,
+            "CRIT_DAMAGE": 30,
+            "MANA": -50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "CRIT_CHANCE": 30,
+            "CRIT_DAMAGE": 35,
+            "MANA": -72
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rich",
+      "applicable": "RANGED",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_CHANCE": 10,
+            "CRIT_DAMAGE": 1,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_CHANCE": 12,
+            "CRIT_DAMAGE": 2,
+            "MANA": 25
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 4,
+            "CRIT_CHANCE": 14,
+            "CRIT_DAMAGE": 4,
+            "MANA": 30
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 7,
+            "CRIT_CHANCE": 17,
+            "CRIT_DAMAGE": 7,
+            "MANA": 40
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 10,
+            "CRIT_CHANCE": 20,
+            "CRIT_DAMAGE": 10,
+            "MANA": 50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 15,
+            "CRIT_CHANCE": 25,
+            "CRIT_DAMAGE": 15,
+            "MANA": 60
+          }
+        }
+      ]
     }
   ]
 }
