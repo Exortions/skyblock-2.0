@@ -190,26 +190,30 @@ public class ItemBase {
           Stats
          */
         if (damage != 0) lore.add(ChatColor.GRAY + "Damage: " + ChatColor.RED + "+" + damage);
-        if (strength != 0 || rStrength > 0) lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + rStrength) + (reforge != Reforge.NONE && rStrength > 0 ? " " + ChatColor.BLUE + "(+" + rStrength + ")" : ""));
-        if (critChance != 0 || rCritChance > 0) lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + rCritChance) + "%" + (reforge != Reforge.NONE && rCritChance > 0 ? " " + ChatColor.BLUE + "(+" + rCritChance + "%)" : ""));
-        if (critDamage != 0 || rCritDamage > 0) lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + rCritDamage) + "%" + (reforge != Reforge.NONE && rCritDamage > 0 ? " " + ChatColor.BLUE + "(+" + rCritDamage + "%)" : ""));
-        if (attackSpeed != 0 || rAttackSpeed > 0) lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + rAttackSpeed + "%" + (reforge != Reforge.NONE && rAttackSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rAttackSpeed + "%)" : "")));
-        if ((speed != 0 || rSpeed > 0) && (intelligence != 0 || rMana != 0) && (defense != 0 || rDefense > 0) && (health != 0 || rHealth > 0)) {
+        if (strength != 0 || rStrength > 0)
+            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + rStrength) + (reforge != Reforge.NONE && rStrength > 0 ? " " + ChatColor.BLUE + "(+" + rStrength + ")" : ""));
+        if (critChance != 0 || rCritChance > 0)
+            lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + rCritChance) + "%" + (reforge != Reforge.NONE && rCritChance > 0 ? " " + ChatColor.BLUE + "(+" + rCritChance + "%)" : ""));
+        if (critDamage != 0 || rCritDamage > 0)
+            lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + rCritDamage) + "%" + (reforge != Reforge.NONE && rCritDamage > 0 ? " " + ChatColor.BLUE + "(+" + rCritDamage + "%)" : ""));
+        if (attackSpeed != 0 || rAttackSpeed > 0)
+            lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + rAttackSpeed + "%" + (reforge != Reforge.NONE && rAttackSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rAttackSpeed + "%)" : "")));
+        if ((speed != 0 || rSpeed != 0) && (intelligence != 0 || rMana != 0) && (defense != 0 || rDefense != 0) && (health != 0 || rHealth > 0)) {
             lore.add("");
             lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + rMana) + (reforge != Reforge.NONE && rHealth > 0 ? " HP " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
             lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
             lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + rSpeed) + (reforge != Reforge.NONE && rSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rSpeed + ")" : ""));
             lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
-        } else if (health != 0 || rHealth > 0){
+        } else if (health != 0 || rHealth > 0) {
             lore.add("");
             lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " HP " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
-        } else if (defense != 0 || rDefense > 0){
+        } else if (defense != 0 || rDefense != 0) {
             lore.add("");
             lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rDefense > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
-        } else if (speed != 0 || rSpeed > 0){
+        } else if (speed != 0 || rSpeed != 0) {
             lore.add("");
             lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + rSpeed) + (reforge != Reforge.NONE && rSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rSpeed + ")" : ""));
-        } else if (intelligence != 0 || rMana > 0){
+        } else if (intelligence != 0 || rMana != 0) {
             lore.add("");
             lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
         }
@@ -258,17 +262,19 @@ public class ItemBase {
         /*
           Description
          */
-        if (description != null && description.size() != 0 && !description.get(0).equals("laceholder descriptio")) lore.addAll(description);
+        if (description != null && description.size() != 0 && !description.get(0).equals("laceholder descriptio"))
+            lore.addAll(description);
 
         /*
           Ability
          */
         if (hasAbility) {
-            lore.add(ChatColor.GOLD + "Item Ability: " + abilityName + "" + ChatColor.YELLOW + ChatColor.BOLD  + abilityType);
+            lore.add(ChatColor.GOLD + "Item Ability: " + abilityName + "" + ChatColor.YELLOW + ChatColor.BOLD + abilityType);
             lore.addAll(abilityDescription);
 
-            if(abilityCost != 0)  lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.DARK_AQUA + abilityCost);
-            if(!Objects.equals(abilityCooldown, "")) lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + abilityCooldown);
+            if (abilityCost != 0) lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.DARK_AQUA + abilityCost);
+            if (!Objects.equals(abilityCooldown, ""))
+                lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + abilityCooldown);
 
             lore.add("");
         }
@@ -300,9 +306,11 @@ public class ItemBase {
         } else if (this.rarityEnum.equals(Rarity.UNCOMMON)) {
             lore.add("" + ChatColor.GREEN + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.GREEN;
-        } else if (this.rarityEnum.equals(Rarity.COMMON)) lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
+        } else if (this.rarityEnum.equals(Rarity.COMMON))
+            lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
 
-        if (!(reforge == Reforge.NONE)) meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + " " + name);
+        if (!(reforge == Reforge.NONE))
+            meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + " " + name);
         else meta.setDisplayName(name);
 
         meta.setLore(lore);
@@ -407,7 +415,9 @@ public class ItemBase {
         player.getInventory().addItem(createStack());
     }
 
-    public void set(Player player, int slot) { player.getInventory().setItem(slot, createStack()); }
+    public void set(Player player, int slot) {
+        player.getInventory().setItem(slot, createStack());
+    }
 
     public int getReforgeCost() {
         switch (this.rarityEnum) {
@@ -463,7 +473,7 @@ public class ItemBase {
         else if (stat.equals(SkyblockStat.DEFENSE)) this.defense = value;
         else if (stat.equals(SkyblockStat.HEALTH)) this.health = value;
     }
-    
+
     public int getStat(SkyblockStat stat) {
         if (stat.equals(SkyblockStat.DAMAGE)) return this.damage;
         else if (stat.equals(SkyblockStat.STRENGTH)) return this.strength;
@@ -485,7 +495,7 @@ public class ItemBase {
         for (SkyblockStat stat : base.getReforge().getReforgeData(r).getStats().keySet()) {
             base.setStat(stat, base.getStat(stat) - base.getReforge().getReforgeData(r).getStats().get(stat));
         }
-        
+
         base.createStack();
 
         base.setReforge(reforge);
