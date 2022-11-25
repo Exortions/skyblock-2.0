@@ -482,7 +482,8 @@ public class SkyblockPlayer {
         this.predicateDamageModifiers.add(damageModifier);
     }
 
-    public void removePredicateDamageModifier(BiFunction<SkyblockPlayer, Entity, Integer> damageModifier) {
-        this.predicateDamageModifiers.remove(damageModifier);
+    public void removePredicateDamageModifier(int index) {
+        this.predicateDamageModifiers.remove(index);
     }
+
 }

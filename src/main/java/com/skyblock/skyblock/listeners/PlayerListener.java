@@ -121,15 +121,11 @@ public class PlayerListener implements Listener {
             double display = damage;
             boolean crit = player.crit();
 
-            List<BiFunction<SkyblockPlayer, Entity, Integer>> toRemove = new ArrayList<>();
-
             for (BiFunction<SkyblockPlayer, Entity, Integer> func : player.getPredicateDamageModifiers()) {
+                if (func == null) return;
+
                 damage += (damage * func.apply(player, e.getEntity()) / 100);
-
-                toRemove.add(func);
             }
-
-            toRemove.forEach(player::removePredicateDamageModifier);
 
             if (e.getEntity().hasMetadata("skyblockEntityData")) {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
