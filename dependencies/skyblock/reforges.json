@@ -1289,6 +1289,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Smart",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 4,
+            "DEFENSE": 4,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 6,
+            "DEFENSE": 6,
+            "MANA": 40
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 9,
+            "DEFENSE": 9,
+            "MANA": 60
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 12,
+            "DEFENSE": 12,
+            "MANA": 80
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 15,
+            "MANA": 100
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 20,
+            "MANA": 120
+          }
+        }
+      ]
     }
   ]
 }
