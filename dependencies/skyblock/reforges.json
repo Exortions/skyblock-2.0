@@ -1391,6 +1391,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Wise",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 6,
+            "SPEED": 1,
+            "MANA": 25
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 8,
+            "SPEED": 1,
+            "MANA": 50
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 10,
+            "SPEED": 1,
+            "MANA": 75
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 12,
+            "SPEED": 2,
+            "MANA": 100
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 15,
+            "SPEED": 2,
+            "MANA": 125
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 20,
+            "SPEED": 3,
+            "MANA": 150
+          }
+        }
+      ]
     }
   ]
 }
