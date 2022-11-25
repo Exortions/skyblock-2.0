@@ -5,11 +5,13 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -54,7 +56,19 @@ public class Collection {
         for (int i = 0; i < levelToExp.length; i++) this.levelToExp.put(i, levelToExp[i]);
     }
 
-    public void collect(Player player, int amount) {
+    public boolean collect(Player player, int amount, ItemStack stack) {
+        NBTItem item;
+
+        try {
+            item = new NBTItem(stack);
+        } catch (Exception ex) {
+            return false;
+        }
+
+        if (item.hasKey("collected") || item.getBoolean("collected").equals(true)) {
+            return false;
+        }
+
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         int level = (int) skyblockPlayer.getValue("collection." + this.name.toLowerCase() + ".level");
@@ -69,7 +83,7 @@ public class Collection {
 
             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "  COLLECTION UNLOCKED " + ChatColor.YELLOW + this.name);
 
-            return;
+            return true;
         }
 
         if ((level < 1 && newExp >= levelToExp.get(0)) || newExp >= levelToExp.get(level)) {
@@ -93,6 +107,8 @@ public class Collection {
 
             builder.build(player);
         }
+
+        return true;
     }
 
     public static void initializeCollections(Skyblock skyblock) {

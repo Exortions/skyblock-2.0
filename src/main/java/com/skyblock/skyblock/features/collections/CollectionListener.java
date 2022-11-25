@@ -1,6 +1,8 @@
 package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +22,23 @@ public class CollectionListener implements Listener {
         if (event.getItem() == null || event.getItem().getItemStack().getType().equals(Material.AIR)) return;
 
         for (Collection collection : Collection.getCollections()) {
-            if (collection.getMaterial().equals(event.getItem().getItemStack().getType())) collection.collect(event.getPlayer(), event.getItem().getItemStack().getAmount());
+            if (collection.getMaterial().equals(event.getItem().getItemStack().getType())) {
+                boolean success = collection.collect(event.getPlayer(), event.getItem().getItemStack().getAmount(), event.getItem().getItemStack());
+
+                if (!success) continue;
+
+                ItemStack item = event.getItem().getItemStack();
+
+                NBTItem nbt = new NBTItem(item);
+
+                nbt.setBoolean("collected", true);
+
+                event.setCancelled(true);
+
+                event.getPlayer().getInventory().addItem(nbt.getItem());
+
+                event.getItem().remove();
+            }
         }
     }
 
