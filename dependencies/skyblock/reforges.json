@@ -1061,6 +1061,78 @@
           }
         }
       ]
+    },
+    {
+      "name": "Light",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 5,
+            "DEFENSE": 1,
+            "SPEED": 1,
+            "CRIT_CHANCE": 1,
+            "CRIT_DAMAGE": 1,
+            "ATTACK_SPEED": 1 
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 7,
+            "DEFENSE": 2,
+            "SPEED": 2,
+            "CRIT_CHANCE": 1,
+            "CRIT_DAMAGE": 2,
+            "ATTACK_SPEED": 2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 3,
+            "SPEED": 3,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 3,
+            "ATTACK_SPEED": 3
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 4,
+            "SPEED": 4,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 4,
+            "ATTACK_SPEED": 4
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 5,
+            "SPEED": 5,
+            "CRIT_CHANCE": 3,
+            "CRIT_DAMAGE": 5,
+            "ATTACK_SPEED": 5
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 25,
+            "DEFENSE": 6,
+            "SPEED": 6,
+            "CRIT_CHANCE": 3,
+            "CRIT_DAMAGE": 6,
+            "ATTACK_SPEED": 6
+          }
+        }
+      ]
     }
   ]
 }
