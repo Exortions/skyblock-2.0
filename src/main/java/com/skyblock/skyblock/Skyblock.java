@@ -5,6 +5,7 @@ import com.skyblock.skyblock.commands.economy.WithdrawCommand;
 import com.skyblock.skyblock.commands.enchantment.EnchantCommand;
 import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
+import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
 import com.skyblock.skyblock.commands.menu.CollectionCommand;
 import com.skyblock.skyblock.commands.menu.CraftCommand;
@@ -13,18 +14,18 @@ import com.skyblock.skyblock.commands.menu.MenuCommand;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
-import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.bags.BagManager;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
+import com.skyblock.skyblock.features.enchantment.enchantments.EnderSlayerEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
-import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
@@ -33,6 +34,7 @@ import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
+import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -40,7 +42,6 @@ import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
-import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import lombok.Getter;
 import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
@@ -60,8 +61,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-@SuppressWarnings("unused")
 @Getter
+@SuppressWarnings({"unused", "deprecation"})
 public final class Skyblock extends JavaPlugin {
 
     private SkyblockEnchantmentHandler enchantmentHandler;
@@ -136,6 +137,7 @@ public final class Skyblock extends JavaPlugin {
         this.npcHandler.killAll();
 
         File file = new File("plugins/Citizens/saves.yml");
+
         if (file.exists()) file.delete();
 
         this.serverData.disable();
@@ -334,8 +336,9 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler = new SkyblockEnchantmentHandler(this);
 
         this.enchantmentHandler.registerEnchantment(new TestEnchantment());
+        this.enchantmentHandler.registerEnchantment(new EnderSlayerEnchantment());
 
-        this.sendMessage("Successfully registered enchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+        this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerMobs() {

@@ -19,8 +19,8 @@ import java.util.List;
 
 public class Zombie extends SkyblockEntity {
 
-    private org.bukkit.entity.Zombie zombie;
-    private ZombieType type;
+    private final ZombieType type;
+
     public Zombie(Skyblock sb, String type) {
         super(sb, EntityType.ZOMBIE);
 
@@ -95,7 +95,7 @@ public class Zombie extends SkyblockEntity {
     @Override
     protected void tick() {
         if (tick == 0) {
-            zombie = (org.bukkit.entity.Zombie) getVanilla();
+            org.bukkit.entity.Zombie zombie = (org.bukkit.entity.Zombie) getVanilla();
 
             zombie.setVillager(false);
             zombie.setBaby(false);

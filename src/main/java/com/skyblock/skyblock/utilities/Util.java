@@ -46,25 +46,21 @@ public class Util {
         return Arrays.asList(strings);
     }
 
-    private final static TreeMap<Integer, String> romanMap = new TreeMap<>();
-
-    static {
-
-        romanMap.put(1000, "M");
-        romanMap.put(900, "CM");
-        romanMap.put(500, "D");
-        romanMap.put(400, "CD");
-        romanMap.put(100, "C");
-        romanMap.put(90, "XC");
-        romanMap.put(50, "L");
-        romanMap.put(40, "XL");
-        romanMap.put(10, "X");
-        romanMap.put(9, "IX");
-        romanMap.put(5, "V");
-        romanMap.put(4, "IV");
-        romanMap.put(1, "I");
-
-    }
+    private final static TreeMap<Integer, String> romanMap = new TreeMap<Integer, String>(){{
+        put(1000, "M");
+        put(900, "CM");
+        put(500, "D");
+        put(400, "CD");
+        put(100, "C");
+        put(90, "XC");
+        put(50, "L");
+        put(40, "XL");
+        put(10, "X");
+        put(9, "IX");
+        put(5, "V");
+        put(4, "IV");
+        put(1, "I");
+    }};
 
     public String toRoman(int number) {
         int l = romanMap.floorKey(number);
@@ -157,8 +153,8 @@ public class Util {
         return item != null && !item.getType().equals(Material.AIR);
     }
 
-    public boolean isSkyblockItem(ItemStack item) {
-        if (!notNull(item)) return false;
+    public boolean isNotSkyblockItem(ItemStack item) {
+        if (!notNull(item)) return true;
 
         return new NBTItem(item).getBoolean("skyblockItem");
     }
@@ -415,7 +411,7 @@ public class Util {
             npc.addTrait(skinTrait);
         }
 
-        npc.data().set(net.citizensnpcs.api.npc.NPC.NAMEPLATE_VISIBLE_METADATA, false);
+        npc.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
 
         if (look) {
             LookClose lookClose = npc.getOrAddTrait(LookClose.class);

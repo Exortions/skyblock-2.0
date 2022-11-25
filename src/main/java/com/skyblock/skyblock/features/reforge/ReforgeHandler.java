@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ReforgeHandler {
 
@@ -37,12 +39,12 @@ public class ReforgeHandler {
         this.reforges.clear();
 
         this.reforges.put(Reforge.NONE, new ReforgeData(Reforge.NONE, Item.NONE, new HashMap<Rarity, ReforgeStat>() {{
-            put(Rarity.COMMON, new ReforgeStat(Rarity.COMMON, new HashMap<>()));
-            put(Rarity.UNCOMMON, new ReforgeStat(Rarity.UNCOMMON, new HashMap<>()));
-            put(Rarity.RARE, new ReforgeStat(Rarity.RARE, new HashMap<>()));
-            put(Rarity.EPIC, new ReforgeStat(Rarity.EPIC, new HashMap<>()));
-            put(Rarity.LEGENDARY, new ReforgeStat(Rarity.LEGENDARY, new HashMap<>()));
-            put(Rarity.MYTHIC, new ReforgeStat(Rarity.MYTHIC, new HashMap<>()));
+            put(Rarity.COMMON, new ReforgeStat(Rarity.COMMON, new HashMap<>(), null));
+            put(Rarity.UNCOMMON, new ReforgeStat(Rarity.UNCOMMON, new HashMap<>(), null));
+            put(Rarity.RARE, new ReforgeStat(Rarity.RARE, new HashMap<>(), null));
+            put(Rarity.EPIC, new ReforgeStat(Rarity.EPIC, new HashMap<>(), null));
+            put(Rarity.LEGENDARY, new ReforgeStat(Rarity.LEGENDARY, new HashMap<>(), null));
+            put(Rarity.MYTHIC, new ReforgeStat(Rarity.MYTHIC, new HashMap<>(), null));
         }}));
 
         File file = new File(this.skyblock.getDataFolder(), "reforges.json");
@@ -63,7 +65,11 @@ public class ReforgeHandler {
                 String applicable = (String) reforge.get("applicable");
 
                 JSONArray data = (JSONArray) reforge.get("data");
-                HashMap<Rarity, ReforgeStat> stats = new HashMap<>();
+
+                Reforge reforgeEnum = Reforge.valueOf(name.toUpperCase().replace(" ", "_"));
+                Item item = Item.valueOf(applicable);
+
+                ReforgeData reforgeData = new ReforgeData(reforgeEnum, item, new HashMap<>());
 
                 for (Object obj : data) {
                     JSONObject stat = (JSONObject) obj;
@@ -82,13 +88,10 @@ public class ReforgeHandler {
 
                     Rarity rarityEnum = Rarity.valueOf(rarity);
 
-                    stats.put(rarityEnum, new ReforgeStat(rarityEnum, statsMap));
+                    reforgeData.addStat(rarityEnum, new ReforgeStat(rarityEnum, statsMap, reforgeData));
                 }
 
-                Reforge reforgeEnum = Reforge.valueOf(name.toUpperCase().replace(" ", "_"));
-                Item item = Item.valueOf(applicable);
-
-                this.registerReforge(reforgeEnum, new ReforgeData(reforgeEnum, item, stats));
+                this.registerReforge(reforgeEnum, reforgeData);
             }
         } catch (IOException | ParseException ex) {
             throw new RuntimeException(ex);

@@ -20,7 +20,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class Collection {
@@ -68,7 +71,7 @@ public class Collection {
             return;
         }
 
-        if (level == maxLevel || (level < 1 && newExp >= levelToExp.get(0)) || newExp >= levelToExp.get(level)) {
+        if ((level < 1 && newExp >= levelToExp.get(0)) || newExp >= levelToExp.get(level)) {
             this.rewards.reward(player, level);
 
             skyblockPlayer.setValue("collection." + this.name.toLowerCase() + ".level", level + 1);
@@ -99,7 +102,12 @@ public class Collection {
 
         File folder = new File(skyblock.getDataFolder() + File.separator + "collections");
 
-        if (!folder.exists()) folder.mkdirs();
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                skyblock.sendMessage("&cFailed to initialize collections: could not create folder &8collections");
+                Collection.INITIALIZED = false;
+            }
+        }
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
             try {

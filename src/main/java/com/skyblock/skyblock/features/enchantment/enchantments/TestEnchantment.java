@@ -2,28 +2,15 @@ package com.skyblock.skyblock.features.enchantment.enchantments;
 
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
 import com.skyblock.skyblock.utilities.item.ItemBase;
-import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.HashMap;
-
 public class TestEnchantment extends SwordEnchantment {
 
-    private static HashMap<Integer, String> description = new HashMap<>();
-
-    static {
-        description.put(1, "Test enchantment gives 20% damage");
-        description.put(2, "Test enchantment gives 40% damage");
-        description.put(3, "Test enchantment gives 60% damage");
-        description.put(4, "Test enchantment gives 80% damage");
-        description.put(5, "Test enchantment gives 100% damage");
-    }
-
     public TestEnchantment() {
-        super("Test", description, 5);
+        super("test", "Test Enchantment", (level) -> "Test enchantment gives " + level * 20 + "% damage", 5);
     }
 
     @EventHandler
@@ -35,8 +22,6 @@ public class TestEnchantment extends SwordEnchantment {
 
             ItemBase item;
 
-            NBTItem nbtItem = new NBTItem(player.getInventory().getItemInHand());
-
             try {
                 item = new ItemBase(player.getInventory().getItemInHand());
             } catch (IllegalArgumentException ex) {
@@ -44,8 +29,6 @@ public class TestEnchantment extends SwordEnchantment {
             }
 
             if (item.hasEnchantment(this)) {
-                System.out.println("Test enchantment is working");
-
                 event.setDamage(event.getDamage() * (1 + (item.getEnchantment(this.getName()).getLevel() * 0.2)));
             }
         }

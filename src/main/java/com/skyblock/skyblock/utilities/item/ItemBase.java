@@ -1,12 +1,12 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.enums.Item;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
-import com.skyblock.skyblock.features.reforge.ReforgeData;
 import com.skyblock.skyblock.features.reforge.ReforgeStat;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -31,15 +31,16 @@ import java.util.Objects;
 public class ItemBase {
 
     private List<String> description;
-    private Material material;
-    private String name;
-    private String rarity;
     private Rarity rarityEnum;
+    private Material material;
     private String skyblockId;
+    private String rarity;
+    private String name;
     private int amount;
+    private Item item;
 
-    private Reforge reforge;
     private boolean reforgeable;
+    private Reforge reforge;
 
     private List<ItemEnchantment> enchantments;
     private boolean enchantGlint;
@@ -115,6 +116,7 @@ public class ItemBase {
         this.health = nbt.getInteger("health");
         this.speed = nbt.getInteger("speed");
         this.skyblockId = nbt.getString("skyblockId");
+        this.item = this.getItem(rarity);
 
         String descriptionStr = nbt.getString("description");
         String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split(", ");
@@ -170,6 +172,7 @@ public class ItemBase {
         if (this.reforge == null) this.reforge = Reforge.NONE;
 
         this.rarityEnum = this.getRarity(this.rarity);
+        this.item = this.getItem(this.rarity);
 
         ReforgeStat reforgeData = this.reforge.getReforgeData(this.rarityEnum);
 
@@ -201,7 +204,7 @@ public class ItemBase {
             lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + (health + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " HP " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
         } else if (defense != 0 || rDefense > 0){
             lore.add("");
-            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rHealth > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+" + (defense + rHealth) + (reforge != Reforge.NONE && rDefense > 0 ? " " + ChatColor.BLUE + "(+" + rHealth + ")" : ""));
         } else if (speed != 0 || rSpeed > 0){
             lore.add("");
             lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+" + (speed + rSpeed) + (reforge != Reforge.NONE && rSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rSpeed + ")" : ""));
@@ -212,10 +215,14 @@ public class ItemBase {
 
         lore.add("");
 
+        /*
+        Enchantments
+         */
+
         if (!(this.enchantments.size() < 1)) {
             if (this.enchantments.size() <= 3) {
                 for (ItemEnchantment enchantment : this.enchantments) {
-                    lore.add(ChatColor.BLUE + enchantment.getBaseEnchantment().getName() + " " + Util.toRoman(enchantment.getLevel()));
+                    lore.add(ChatColor.BLUE + enchantment.getBaseEnchantment().getDisplayName() + " " + Util.toRoman(enchantment.getLevel()));
                     for (String s : Util.buildLore(enchantment.getBaseEnchantment().getDescription(enchantment.getLevel()))) {
                         lore.add(ChatColor.GRAY + s);
                     }
@@ -228,7 +235,7 @@ public class ItemBase {
                 StringBuilder currentLine = new StringBuilder();
 
                 for (ItemEnchantment enchantment : this.enchantments) {
-                    if (currentLine.length() + enchantment.getBaseEnchantment().getName().length() + 1 > maxCharsPerLine) {
+                    if (currentLine.length() + enchantment.getBaseEnchantment().getDisplayName().length() + 1 > maxCharsPerLine) {
                         enchantmentLore.add(currentLine.toString());
                         currentLine = new StringBuilder();
                     }
@@ -277,28 +284,29 @@ public class ItemBase {
 
         ChatColor nameColor = ChatColor.WHITE;
 
-        if (this.getRarity(rarity).equals(Rarity.LEGENDARY)) {
+        if (this.rarityEnum.equals(Rarity.MYTHIC)) {
+            lore.add("" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + rarity.toUpperCase());
+            nameColor = ChatColor.LIGHT_PURPLE;
+        } else if (this.rarityEnum.equals(Rarity.LEGENDARY)) {
             lore.add("" + ChatColor.GOLD + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.GOLD;
-        } else if (this.getRarity(rarity).equals(Rarity.EPIC)) {
+        } else if (this.rarityEnum.equals(Rarity.EPIC)) {
             lore.add("" + ChatColor.DARK_PURPLE + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.DARK_PURPLE;
-        } else if (this.getRarity(rarity).equals(Rarity.RARE)) {
+        } else if (this.rarityEnum.equals(Rarity.RARE)) {
             lore.add("" + ChatColor.BLUE + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.BLUE;
-        } else if (this.getRarity(rarity).equals(Rarity.UNCOMMON)) {
+        } else if (this.rarityEnum.equals(Rarity.UNCOMMON)) {
             lore.add("" + ChatColor.GREEN + ChatColor.BOLD + rarity.toUpperCase());
             nameColor = ChatColor.GREEN;
-        } else if (this.getRarity(rarity).equals(Rarity.COMMON)) {
-            lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
-        }
+        } else if (this.rarityEnum.equals(Rarity.COMMON)) lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
 
         if (!(reforge == Reforge.NONE)) meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + " " + name);
         else meta.setDisplayName(name);
 
         meta.setLore(lore);
 
-        if (enchantGlint) meta.addEnchant(Enchantment.DURABILITY, 1, true);
+        if (enchantGlint || this.enchantments.size() > 0) meta.addEnchant(Enchantment.LUCK, 1, true);
 
         meta.spigot().setUnbreakable(true);
 
@@ -314,10 +322,9 @@ public class ItemBase {
         nbt.setString("name", name);
         nbt.setString("rarity", rarity);
         nbt.setString("reforgeType", reforge.toString());
+        nbt.setString("item", item.toString());
 
-        if (description != null) {
-            nbt.setString("description", description.toString());
-        }
+        if (description != null) nbt.setString("description", description.toString());
 
         nbt.setBoolean("reforgeable", reforgeable);
         List<String> enchantmentNbt = new ArrayList<>();
@@ -350,6 +357,10 @@ public class ItemBase {
 
     public boolean hasEnchantment(SkyblockEnchantment enchantment) {
         for (ItemEnchantment itemEnchantment : this.enchantments) {
+            System.out.println(itemEnchantment);
+            System.out.println(itemEnchantment.getLevel());
+            System.out.println(itemEnchantment.getBaseEnchantment());
+
             if (itemEnchantment.getBaseEnchantment().equals(enchantment)) return true;
         }
         return false;
@@ -361,6 +372,40 @@ public class ItemBase {
         }
 
         return null;
+    }
+
+    public void setEnchantment(String name, int level) {
+        SkyblockEnchantment enchantment = Skyblock.getPlugin(Skyblock.class).getEnchantmentHandler().getEnchantment(name);
+
+        if (enchantment == null) return;
+
+        ItemEnchantment itemEnchantment = new ItemEnchantment(enchantment, level);
+
+        for (int i = 0; i < this.enchantments.size(); i++) {
+            SkyblockEnchantment found = this.enchantments.get(i).getBaseEnchantment();
+
+            if (found.getName().replace(" ", "_").equalsIgnoreCase(name)) {
+                this.enchantments.set(i, itemEnchantment);
+
+                System.out.println("Applying item enchantment:");
+                System.out.println(itemEnchantment);
+                System.out.println(itemEnchantment.getBaseEnchantment());
+                System.out.println(itemEnchantment.getLevel());
+
+                System.out.println(this.getEnchantments().toString());
+
+                return;
+            }
+        }
+
+        this.enchantments.add(itemEnchantment);
+
+        System.out.println("Applying item enchantment:");
+        System.out.println(itemEnchantment);
+        System.out.println(itemEnchantment.getBaseEnchantment());
+        System.out.println(itemEnchantment.getLevel());
+
+        System.out.println(this.getEnchantments().toString());
     }
 
     public void addEnchantment(String name, int level) {
@@ -402,20 +447,22 @@ public class ItemBase {
         }
     }
 
+    public Item getItem(String rarity) {
+        if (Item.SWORD.containsQualifiedName(rarity)) return Item.SWORD;
+        else if (Item.RANGED.containsQualifiedName(rarity)) return Item.RANGED;
+        else if (Item.ARMOR.containsQualifiedName(rarity)) return Item.ARMOR;
+        else if (Item.TOOL.containsQualifiedName(rarity)) return Item.TOOL;
+        else if (Item.ACCESSORY.containsQualifiedName(rarity)) return Item.ACCESSORY;
+        else return Item.NONE;
+    }
+
     public Rarity getRarity(String rarity) {
-        if (rarity.contains("LEGENDARY") || rarity.contains("legendary")){
-            return Rarity.LEGENDARY;
-        } else if (rarity.contains("EPIC") || rarity.contains("epic")){
-            return Rarity.EPIC;
-        } else if (rarity.contains("RARE") || rarity.contains("rare")){
-            return Rarity.RARE;
-        } else if (rarity.contains("UNCOMMON") || rarity.contains("uncommon")) {
-            return Rarity.UNCOMMON;
-        } else if (rarity.contains("COMMON") || rarity.contains("common")) {
-            return Rarity.COMMON;
-        } else {
-            return Rarity.COMMON;
-        }
+        if (rarity.toUpperCase().contains("MYTHIC")) return Rarity.MYTHIC;
+        else if (rarity.toUpperCase().contains("LEGENDARY")) return Rarity.LEGENDARY;
+        else if (rarity.toUpperCase().contains("EPIC")) return Rarity.EPIC;
+        else if (rarity.toUpperCase().contains("RARE")) return Rarity.RARE;
+        else if (rarity.toUpperCase().contains("UNCOMMON")) return Rarity.UNCOMMON;
+        else return Rarity.COMMON;
     }
 
     public void setStat(SkyblockStat stat, int value) {

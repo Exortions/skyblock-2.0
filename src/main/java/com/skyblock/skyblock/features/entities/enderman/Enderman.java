@@ -6,8 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
 public class Enderman extends SkyblockEntity {
 
     public Enderman(Skyblock sb, String type) {

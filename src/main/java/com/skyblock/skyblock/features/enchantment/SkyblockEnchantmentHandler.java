@@ -2,7 +2,6 @@ package com.skyblock.skyblock.features.enchantment;
 
 import com.skyblock.skyblock.Skyblock;
 import org.bukkit.Bukkit;
-import org.bukkit.event.HandlerList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +22,15 @@ public class SkyblockEnchantmentHandler {
         Bukkit.getPluginManager().registerEvents(enchantment, skyblock);
     }
 
-    public void unregisterEnchantment(SkyblockEnchantment enchantment) {
-        enchantments.remove(enchantment);
-
-        HandlerList.unregisterAll(enchantment);
-    }
-
     public SkyblockEnchantment getEnchantment(String name) {
         for (SkyblockEnchantment enchantment : enchantments) {
-            if (enchantment.getName().equalsIgnoreCase(name)) return enchantment;
+            if (enchantment.getName().replace(" ", "_").equalsIgnoreCase(name)) return enchantment;
         }
 
         return null;
     }
 
+    public List<SkyblockEnchantment> getEnchantments() {
+        return enchantments;
+    }
 }

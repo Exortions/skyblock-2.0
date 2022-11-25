@@ -1,7 +1,5 @@
 package com.skyblock.skyblock.features.items;
 
-import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
-import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
@@ -17,12 +15,12 @@ import java.util.List;
 public abstract class ArmorSet {
 
     protected final static ItemHandler handler = Skyblock.getPlugin(Skyblock.class).getItemHandler();
-    private HashMap<Player, BukkitRunnable> runnables;
-    private ItemStack helmet;
-    private ItemStack chest;
-    private ItemStack legs;
-    private ItemStack boots;
-    private String id;
+    private final HashMap<Player, BukkitRunnable> runnables;
+    private final ItemStack helmet;
+    private final ItemStack chest;
+    private final ItemStack legs;
+    private final ItemStack boots;
+    private final String id;
 
     public ArmorSet(ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots, String id) {
         this.helmet = helmet;

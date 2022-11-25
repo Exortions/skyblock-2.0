@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.skills;
 
-import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.Util;
