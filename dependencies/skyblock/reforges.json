@@ -953,6 +953,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Fierce",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 4
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 4,
+            "CRIT_CHANCE": 3,
+            "CRIT_DAMAGE": 7
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 6,
+            "CRIT_CHANCE": 4,
+            "CRIT_DAMAGE": 10
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 8,
+            "CRIT_CHANCE": 5,
+            "CRIT_DAMAGE": 14
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 10,
+            "CRIT_CHANCE": 6,
+            "CRIT_DAMAGE": 18
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 12,
+            "CRIT_CHANCE": 8,
+            "CRIT_DAMAGE": 24
+          }
+        }
+      ]
     }
   ]
 }
