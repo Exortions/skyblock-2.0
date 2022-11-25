@@ -1343,6 +1343,54 @@
           }
         }
       ]
+    },
+    {
+      "name": "Titanic",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 15
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 20
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 25,
+            "DEFENSE": 25
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 35,
+            "DEFENSE": 35
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 50,
+            "DEFENSE": 50
+          }
+        }
+      ]
     }
   ]
 }
