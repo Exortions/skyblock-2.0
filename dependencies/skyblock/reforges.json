@@ -1211,7 +1211,7 @@
       "applicable": "ARMOR",
       "data": [
         {
-          "rarity": "",
+          "rarity": "COMMON",
           "stats": {
             "HEALTH": 2,
             "DEFENSE": 2,
