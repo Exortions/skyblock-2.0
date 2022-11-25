@@ -387,25 +387,11 @@ public class ItemBase {
             if (found.getName().replace(" ", "_").equalsIgnoreCase(name)) {
                 this.enchantments.set(i, itemEnchantment);
 
-                System.out.println("Applying item enchantment:");
-                System.out.println(itemEnchantment);
-                System.out.println(itemEnchantment.getBaseEnchantment());
-                System.out.println(itemEnchantment.getLevel());
-
-                System.out.println(this.getEnchantments().toString());
-
                 return;
             }
         }
 
         this.enchantments.add(itemEnchantment);
-
-        System.out.println("Applying item enchantment:");
-        System.out.println(itemEnchantment);
-        System.out.println(itemEnchantment.getBaseEnchantment());
-        System.out.println(itemEnchantment.getLevel());
-
-        System.out.println(this.getEnchantments().toString());
     }
 
     public void addEnchantment(String name, int level) {
