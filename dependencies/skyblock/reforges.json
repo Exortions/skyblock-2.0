@@ -1007,6 +1007,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Heavy",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "DEFENSE": 25,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "DEFENSE": 35,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "DEFENSE": 50,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -2
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "DEFENSE": 65,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -3
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "DEFENSE": 80,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -5
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "DEFENSE": 110,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -7
+          }
+        }
+      ]
     }
   ]
 }
