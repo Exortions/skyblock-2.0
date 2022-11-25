@@ -899,6 +899,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Clean",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 5,
+            "DEFENSE": 5,
+            "CRIT_CHANCE": 2 
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 7,
+            "DEFENSE": 7,
+            "CRIT_CHANCE": 4 
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10,
+            "CRIT_CHANCE": 6 
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 15,
+            "CRIT_CHANCE": 8
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 20,
+            "CRIT_CHANCE": 10
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 25,
+            "DEFENSE": 25,
+            "CRIT_CHANCE": 12
+          }
+        }
+      ]
     }
   ]
 }
