@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import lombok.Getter;
@@ -79,7 +80,7 @@ public class Collection {
             ChatMessageBuilder builder = new ChatMessageBuilder();
 
             builder
-                    .add("&e&l&m================================")
+                    .add("&e&l" + Constants.COLLECTION_SEPERATOR)
                     .add("&6&l  COLLECTION LEVEL UP &e" + StringUtils.capitalize(this.name.toLowerCase()) + " &8" + (level == 0 ? 0 : Util.toRoman(level)) + " ➜ &e" + Util.toRoman(level + 1))
                     .add("")
                     .add("&a&l  REWARDS");
@@ -88,7 +89,7 @@ public class Collection {
 
             if (this.rewards.stringify(level + 1).size() == 0) builder.add("    &cComing soon");
 
-            builder.add("&e&l&m================================");
+            builder.add("&e&l" + Constants.COLLECTION_SEPERATOR);
 
             builder.build(player);
         }
