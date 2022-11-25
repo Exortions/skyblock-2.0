@@ -147,21 +147,23 @@ public class SkyblockPlayer {
         if (Util.isNotSkyblockItem(newItem)) newItem = Util.getEmptyItemBase();
         if (Util.isNotSkyblockItem(oldItem)) oldItem = Util.getEmptyItemBase();
 
-        if (Util.notNull(newItem) && Util.notNull(oldItem)) {
-            ItemBase newBase = new ItemBase(newItem);
-            ItemBase oldBase = new ItemBase(oldItem);
+        try {
+            if (Util.notNull(newItem) && Util.notNull(oldItem)) {
+                ItemBase newBase = new ItemBase(newItem);
+                ItemBase oldBase = new ItemBase(oldItem);
 
-            changeStats(false, newBase);
-            changeStats(true, oldBase);
-        } else if (Util.notNull(newItem)){
-            ItemBase newBase = new ItemBase(newItem);
+                changeStats(false, newBase);
+                changeStats(true, oldBase);
+            } else if (Util.notNull(newItem)) {
+                ItemBase newBase = new ItemBase(newItem);
 
-            changeStats(false, newBase);
-        } else if (Util.notNull(oldItem)) {
-            ItemBase oldBase = new ItemBase(oldItem);
+                changeStats(false, newBase);
+            } else if (Util.notNull(oldItem)) {
+                ItemBase oldBase = new ItemBase(oldItem);
 
-            changeStats(true, oldBase);
-        }
+                changeStats(true, oldBase);
+            }
+        } catch (IllegalArgumentException ignored) {}
     }
 
     public void changeStats(boolean subtract, ItemBase base) {
