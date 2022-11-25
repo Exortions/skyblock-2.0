@@ -27,10 +27,6 @@ public class BagManager {
         this.bags.put(bag.getId(), bag);
     }
 
-    public Bag getBag(String id) {
-        return this.bags.get(id);
-    }
-
     public HashMap<String, Bag> getBags() {
         return this.bags;
     }

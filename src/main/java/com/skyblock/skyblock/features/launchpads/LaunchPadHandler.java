@@ -3,7 +3,6 @@ package com.skyblock.skyblock.features.launchpads;
 import com.skyblock.skyblock.Skyblock;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,7 +25,7 @@ public class LaunchPadHandler {
     public static final String LAUNCHPAD_FILE_NAME = "launchpads.yml";
 
     private final File file;
-    private List<Player> onLaunchpad;
+    private final List<Player> onLaunchpad;
 
     public LaunchPadHandler() {
         this.file = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + LAUNCHPAD_FILE_NAME);
@@ -67,17 +66,17 @@ public class LaunchPadHandler {
 
         try {
             config.save(file);
-        } catch (IOException e) { }
+        } catch (IOException ignored) {}
     }
 
     public void launch(Player player, String padName) {
-        if (onLaunchpad.contains(player)) return;;
+        if (onLaunchpad.contains(player)) return;
 
         Location to = (Location) getField(padName, "to");
-        Location infront = (Location) getField(padName, "infront");
+        Location front = (Location) getField(padName, "infront");
         Location teleport = (Location) getField(padName, "teleport");
 
-        player.teleport(infront);
+        player.teleport(front);
 
         onLaunchpad.add(player);
 
@@ -92,17 +91,16 @@ public class LaunchPadHandler {
         }
 
         new BukkitRunnable() {
-            double x1 = 0.0;
-            double x3 = to.distance(player.getLocation()) - this.x1;
-            double x2 = this.x3 / 3.0;
-            double y1 = 0.0;
-            double y3 = Math.abs(to.getBlockY() - player.getLocation().getBlockY()) % 10;
-            double y2 = this.x2;
-            double A3 = -((-this.x2 + this.x3) / (-this.x1 + this.x2)) * (-(this.x1 * this.x1) + this.x2 * this.x2) - this.x2 * this.x2 + this.x3 * this.x3;
-            double D3 = -((-this.x2 + this.x3) / (-this.x1 + this.x2)) * (-this.y1 + this.y2) - this.y2 + this.y3;
-            double a = this.D3 / this.A3;
-            double b = (-this.y1 + this.y2 - (-(this.x1 * this.x1) + this.x2 * this.x2) * this.a) / (-this.x1 + this.x2);
-            double c = this.y1 - this.a * this.x1 * this.x1 - this.b * this.x1;
+            final double x1 = 0.0;
+            final double x3 = to.distance(player.getLocation()) - this.x1;
+            final double x2 = this.x3 / 3.0;
+            final double y1 = 0.0;
+            final double y3 = Math.abs(to.getBlockY() - player.getLocation().getBlockY()) % 10;
+            final double A3 = -((-this.x2 + this.x3) / (-this.x1 + this.x2)) * (-(this.x1 * this.x1) + this.x2 * this.x2) - this.x2 * this.x2 + this.x3 * this.x3;
+            final double D3 = -((-this.x2 + this.x3) / (-this.x1 + this.x2)) * (-this.y1 + this.x2) - this.x2 + this.y3;
+            final double a = this.D3 / this.A3;
+            final double b = (-this.y1 + this.x2 - (-(this.x1 * this.x1) + this.x2 * this.x2) * this.a) / (-this.x1 + this.x2);
+            final double c = this.y1 - this.a * this.x1 * this.x1 - this.b * this.x1;
             double xC = 0.0;
 
             public void run() {
@@ -114,18 +112,18 @@ public class LaunchPadHandler {
                     am.remove();
                     onLaunchpad.remove(player);
                 }
-                moveToward(am, 0.8, yCalculate(this.a, this.b, this.c, this.xC), to);
+                moveToward(am, yCalculate(this.a, this.b, this.c, this.xC), to);
                 this.xC += 0.84;
             }
         }.runTaskTimerAsynchronously(Skyblock.getPlugin(Skyblock.class), 1L, 1L);
     }
 
-    private void moveToward(final Entity player, double speed, double yC, Location to) {
+    private void moveToward(final Entity player, double yC, Location to) {
         final Location loc = player.getLocation();
         final double x = loc.getX() - to.getX();
         final double y = loc.getY() - to.getY() - (Math.max(yC, 0.0));
         final double z = loc.getZ() - to.getZ();
-        final Vector velocity = new Vector(x, y, z).normalize().multiply(-speed);
+        final Vector velocity = new Vector(x, y, z).normalize().multiply(-0.8);
         player.setVelocity(velocity);
     }
 
@@ -137,10 +135,12 @@ public class LaunchPadHandler {
         if (file.exists()) return;
 
         try {
-            file.createNewFile();
+            boolean success = file.createNewFile();
+
+            if (!success) return;
 
             YamlConfiguration.loadConfiguration(file).save(file);
-        } catch (Exception ex) { }
+        } catch (Exception ignored) { }
     }
 
     public Object getField(String name, String field) {

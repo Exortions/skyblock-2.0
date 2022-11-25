@@ -7,8 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class GrapplingHook extends ListeningItem {
@@ -33,7 +31,7 @@ public class GrapplingHook extends ListeningItem {
 
                         try {
                             player.setVelocity(vector);
-                        } catch (Exception ex) { }
+                        } catch (Exception ignored) { }
                     }else{
                         player.sendMessage(ChatColor.RED + "Whow! Slow down there!");
                     }

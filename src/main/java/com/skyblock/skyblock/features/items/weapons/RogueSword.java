@@ -7,7 +7,6 @@ import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class RogueSword extends SkyblockItem {
 
@@ -30,9 +29,7 @@ public class RogueSword extends SkyblockItem {
 
             skyblockPlayer.addStat(SkyblockStat.SPEED, speed);
             int finalSpeed = speed;
-            skyblockPlayer.delay(() -> {
-                skyblockPlayer.subtractStat(SkyblockStat.SPEED, finalSpeed);
-            }, 20);
+            skyblockPlayer.delay(() -> skyblockPlayer.subtractStat(SkyblockStat.SPEED, finalSpeed), 20);
 
             Util.sendAbility(skyblockPlayer, "Speed Boost", 50);
         }

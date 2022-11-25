@@ -29,7 +29,7 @@ public abstract class SkyblockItem {
 
     public void onEntityDamage(EntityDamageByEntityEvent event) { }
 
-    public void onArmorEquip(PlayerArmorEquipEvent e) { }
+    public void onArmorEquip(PlayerArmorEquipEvent event) { }
 
-    public void onArmorUnEquip(PlayerArmorUnequipEvent e) {}
+    public void onArmorUnEquip(PlayerArmorUnequipEvent event) {}
 }

@@ -10,13 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @RequiresPlayer
-@Usage(usage = "/sb enchant <enchantment> <level>")
+@Usage(usage = "/sb enchant <enchantment> [level]")
 public class EnchantCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         if (args.length < 1 || args.length > 2) {
-            player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Usage: /sb enchant <enchantment> <level>");
+            player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Usage: /sb enchant <enchantment> [level]");
             return;
         }
 
@@ -40,20 +40,14 @@ public class EnchantCommand implements Command {
 
         if (level < 1) level = 1;
 
-        if (level > plugin.getEnchantmentHandler().getEnchantment(enchantmentName).getMaxLevel()) {
+        if (level > plugin.getEnchantmentHandler().getEnchantment(enchantmentName).getMaxLevel())
             level = plugin.getEnchantmentHandler().getEnchantment(enchantmentName).getMaxLevel();
-        }
 
         ItemStack item = player.getInventory().getItemInHand();
 
         ItemBase base = new ItemBase(item);
 
-        if (base.hasEnchantment(plugin.getEnchantmentHandler().getEnchantment(enchantmentName))) {
-            player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Item already has enchantment");
-            return;
-        }
-
-        base.addEnchantment(enchantmentName, level);
+        base.setEnchantment(enchantmentName, level);
 
         player.setItemInHand(base.createStack());
     }

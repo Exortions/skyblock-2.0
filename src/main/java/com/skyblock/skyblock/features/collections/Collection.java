@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import lombok.Getter;
@@ -20,7 +21,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class Collection {
@@ -68,7 +72,7 @@ public class Collection {
             return;
         }
 
-        if (level == maxLevel || (level < 1 && newExp >= levelToExp.get(0)) || newExp >= levelToExp.get(level)) {
+        if ((level < 1 && newExp >= levelToExp.get(0)) || newExp >= levelToExp.get(level)) {
             this.rewards.reward(player, level);
 
             skyblockPlayer.setValue("collection." + this.name.toLowerCase() + ".level", level + 1);
@@ -76,7 +80,7 @@ public class Collection {
             ChatMessageBuilder builder = new ChatMessageBuilder();
 
             builder
-                    .add("&e&l&m================================")
+                    .add("&e&l" + Constants.COLLECTION_SEPERATOR)
                     .add("&6&l  COLLECTION LEVEL UP &e" + StringUtils.capitalize(this.name.toLowerCase()) + " &8" + (level == 0 ? 0 : Util.toRoman(level)) + " ➜ &e" + Util.toRoman(level + 1))
                     .add("")
                     .add("&a&l  REWARDS");
@@ -85,7 +89,7 @@ public class Collection {
 
             if (this.rewards.stringify(level + 1).size() == 0) builder.add("    &cComing soon");
 
-            builder.add("&e&l&m================================");
+            builder.add("&e&l" + Constants.COLLECTION_SEPERATOR);
 
             builder.build(player);
         }
@@ -99,7 +103,12 @@ public class Collection {
 
         File folder = new File(skyblock.getDataFolder() + File.separator + "collections");
 
-        if (!folder.exists()) folder.mkdirs();
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                skyblock.sendMessage("&cFailed to initialize collections: could not create folder &8collections");
+                Collection.INITIALIZED = false;
+            }
+        }
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
             try {

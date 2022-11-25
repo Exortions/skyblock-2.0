@@ -3,24 +3,22 @@ package com.skyblock.skyblock.listeners;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Reforge;
+import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
-import javax.swing.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReforgeListener implements Listener {
 
@@ -127,12 +125,23 @@ public class ReforgeListener implements Listener {
 
             List<Reforge> reforges = Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges(new ItemBase(event.getClickedInventory().getItem(13)).getReforge());
 
-            if (reforges.size() <= 0) {
+            ItemBase base = new ItemBase(event.getClickedInventory().getItem(13));
+
+            ReforgeHandler handler = Skyblock.getPlugin(Skyblock.class).getReforgeHandler();
+
+            List<Reforge> validReforges =
+                    reforges.stream()
+                    .filter(reforge -> handler.getReforge(reforge).getApplicable().equals(base.getItem()))
+                    .collect(Collectors.toList());
+
+            player.sendMessage(base.getItem().toString());
+
+            if (validReforges.size() <= 0) {
                 player.sendMessage(ChatColor.RED + "There are no availiable reforges that can be applied to this item!");
                 return;
             }
 
-            Reforge reforge = reforges.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges().size() - 1));
+            Reforge reforge = validReforges.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges().size() - 1));
             int cost = Util.calculateReforgeCost(event.getClickedInventory().getItem(13));
 
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);

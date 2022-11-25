@@ -6,7 +6,6 @@ import com.skyblock.skyblock.enums.Reforge;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Data
 public class ReforgeData {
@@ -14,5 +13,9 @@ public class ReforgeData {
     private final Reforge reforge;
     private final Item applicable;
     private final HashMap<Rarity, ReforgeStat> stats;
+
+    public void addStat(Rarity rarity, ReforgeStat stat) {
+        this.stats.put(rarity, stat);
+    }
 
 }

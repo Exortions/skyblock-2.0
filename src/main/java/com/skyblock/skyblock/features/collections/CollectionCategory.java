@@ -3,9 +3,6 @@ package com.skyblock.skyblock.features.collections;
 import lombok.Data;
 import org.bukkit.Material;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Data
 public class CollectionCategory {
 

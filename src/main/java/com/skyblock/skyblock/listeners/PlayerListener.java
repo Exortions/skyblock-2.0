@@ -12,9 +12,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -24,8 +26,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
+import java.util.function.BiFunction;
 
 public class PlayerListener implements Listener {
 
@@ -78,7 +82,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent e){
-        if (e.getEntity().hasMetadata("merchantw")) return;
+        if (e.getEntity().hasMetadata("merchant")) return;
 
         if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
             if (e.getEntity() instanceof Player){
@@ -105,7 +109,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof ArmorStand || e.getEntity().hasMetadata("merchant")) return;
 
@@ -116,6 +120,12 @@ public class PlayerListener implements Listener {
             double damage = 5 + player.getStat((SkyblockStat.DAMAGE)) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
             double display = damage;
             boolean crit = player.crit();
+
+            for (BiFunction<SkyblockPlayer, Entity, Integer> func : player.getPredicateDamageModifiers()) {
+                if (func == null) return;
+
+                damage += (damage * func.apply(player, e.getEntity()) / 100);
+            }
 
             if (e.getEntity().hasMetadata("skyblockEntityData")) {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
@@ -130,6 +140,7 @@ public class PlayerListener implements Listener {
                 }
 
                 display = damage * sentity.getEntityData().maximumHealth;
+
                 sentity.getEntityData().health = (long) (sentity.getEntityData().health - display);
             } else {
                 if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
@@ -144,7 +155,7 @@ public class PlayerListener implements Listener {
             if (crit) {
                 Util.setDamageIndicator(e.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
             } else {
-                Util.setDamageIndicator(e.getEntity().getLocation(), org.bukkit.ChatColor.GRAY + "" + Math.round(display), true);
+                Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(display), true);
             }
         } else if (e.getDamager().hasMetadata("skyblockEntityData")) {
             if (e.getEntity() instanceof Player) {

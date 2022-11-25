@@ -29,6 +29,7 @@ import org.bukkit.util.Vector;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 @Data
@@ -46,6 +47,8 @@ public class SkyblockPlayer {
         playerRegistry.put(uuid, new SkyblockPlayer(uuid));
     }
 
+    private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
+    private int damageModifier;
     private Player bukkitPlayer;
     private HashMap<SkyblockStat, Integer> stats;
     private HashMap<String, Boolean> cooldowns;
@@ -59,6 +62,8 @@ public class SkyblockPlayer {
     private int tick;
 
     public SkyblockPlayer(UUID uuid) {
+        predicateDamageModifiers = new ArrayList<>();
+        damageModifier = 0;
         bukkitPlayer = Bukkit.getPlayer(uuid);
         cooldowns = new HashMap<>();
         extraData = new HashMap<>();
@@ -140,24 +145,26 @@ public class SkyblockPlayer {
     }
 
     public void updateStats(ItemStack newItem, ItemStack oldItem) {
-        if (!Util.isSkyblockItem(newItem)) newItem = Util.getEmptyItemBase();
-        if (!Util.isSkyblockItem(oldItem)) oldItem = Util.getEmptyItemBase();
+        if (Util.isNotSkyblockItem(newItem)) newItem = Util.getEmptyItemBase();
+        if (Util.isNotSkyblockItem(oldItem)) oldItem = Util.getEmptyItemBase();
 
-        if (Util.notNull(newItem) && Util.notNull(oldItem)) {
-            ItemBase newBase = new ItemBase(newItem);
-            ItemBase oldBase = new ItemBase(oldItem);
+        try {
+            if (Util.notNull(newItem) && Util.notNull(oldItem)) {
+                ItemBase newBase = new ItemBase(newItem);
+                ItemBase oldBase = new ItemBase(oldItem);
 
-            changeStats(false, newBase);
-            changeStats(true, oldBase);
-        } else if (Util.notNull(newItem)){
-            ItemBase newBase = new ItemBase(newItem);
+                changeStats(false, newBase);
+                changeStats(true, oldBase);
+            } else if (Util.notNull(newItem)) {
+                ItemBase newBase = new ItemBase(newItem);
 
-            changeStats(false, newBase);
-        } else if (Util.notNull(oldItem)) {
-            ItemBase oldBase = new ItemBase(oldItem);
+                changeStats(false, newBase);
+            } else if (Util.notNull(oldItem)) {
+                ItemBase oldBase = new ItemBase(oldItem);
 
-            changeStats(true, oldBase);
-        }
+                changeStats(true, oldBase);
+            }
+        } catch (IllegalArgumentException ignored) {}
     }
 
     public void changeStats(boolean subtract, ItemBase base) {
@@ -306,9 +313,7 @@ public class SkyblockPlayer {
     public void setCooldown(String id, int secondsDelay) {
         cooldowns.put(id, false);
 
-        delay(() -> {
-            cooldowns.put(id, true);
-        }, secondsDelay);
+        delay(() -> cooldowns.put(id, true), secondsDelay);
     }
 
     public void delay(Runnable runnable, int delay) {
@@ -342,9 +347,7 @@ public class SkyblockPlayer {
             config.save(configFile);
             config = YamlConfiguration.loadConfiguration(configFile);
 
-            forEachStat((s) -> {
-                stats.put(s, (int) getValue("stats." + s.name().toLowerCase()));
-            });
+            forEachStat((s) -> stats.put(s, (int) getValue("stats." + s.name().toLowerCase())));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -357,9 +360,7 @@ public class SkyblockPlayer {
     }
 
     private void loadStats() {
-        forEachStat((s) -> {
-            setStat(s, (int) getValue("stats." + s.name().toLowerCase()));
-        });
+        forEachStat((s) -> setStat(s, (int) getValue("stats." + s.name().toLowerCase())));
     }
 
     private void initConfig() {
@@ -371,9 +372,7 @@ public class SkyblockPlayer {
             try {
                 configFile.createNewFile();
 
-                forEachStat((s) -> {
-                    config.set("stats." + s.name().toLowerCase(), 0);
-                });
+                forEachStat((s) -> config.set("stats." + s.name().toLowerCase(), 0));
 
                 config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100);
                 config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100);
@@ -426,8 +425,8 @@ public class SkyblockPlayer {
         return Skyblock.getPlugin(Skyblock.class).getLocationManager().getLocation(bukkitPlayer.getLocation());
     }
 
-    public boolean isOnPrivateIsland() {
-        return bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
+    public boolean isNotOnPrivateIsland() {
+        return !bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
     }
 
     public void addTransaction(int amount, String by) {
@@ -485,4 +484,13 @@ public class SkyblockPlayer {
     }
 
     public boolean hasActiveSlayer() { return Skyblock.getPlugin(Skyblock.class).getSlayerHandler().getSlayer(bukkitPlayer) != null; }
+
+    public void addPredicateDamageModifier(BiFunction<SkyblockPlayer, Entity, Integer> damageModifier) {
+        this.predicateDamageModifiers.add(damageModifier);
+    }
+
+    public void removePredicateDamageModifier(int index) {
+        this.predicateDamageModifiers.remove(index);
+    }
+
 }

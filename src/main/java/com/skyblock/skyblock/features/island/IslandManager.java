@@ -6,7 +6,6 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
-import com.sk89q.worldedit.world.DataException;
 import com.skyblock.skyblock.Skyblock;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -17,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class IslandManager {
 
     public static final String ISLAND_PREFIX = "island-";
@@ -30,8 +30,8 @@ public class IslandManager {
         return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
     }
 
-    public static boolean createIsland(Player player) {
-        if (Bukkit.getWorlds().contains(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()))) return false;
+    public static void createIsland(Player player) {
+        if (Bukkit.getWorlds().contains(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()))) return;
 
         WorldCreator creator = new WorldCreator(ISLAND_PREFIX + player.getUniqueId().toString()).type(WorldType.FLAT).generator(new ChunkGenerator() {
             @Override
@@ -49,8 +49,6 @@ public class IslandManager {
         WorldEditPlugin we = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
         File schematic = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "private_island.schematic");
         EditSession session = we.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(world), 1000000);
-
-        System.out.println("exists" + schematic.exists());
 
         try {
             MCEditSchematicFormat.getFormat(schematic).load(schematic).paste(session, loc, false);
@@ -85,7 +83,6 @@ public class IslandManager {
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), 5);
 
-        return true;
     }
 
 }

@@ -9,12 +9,9 @@ import com.skyblock.skyblock.features.items.weapons.EndStoneSword;
 import com.skyblock.skyblock.features.items.weapons.RogueSword;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,11 +50,7 @@ public class SkyblockItemHandler {
     }
 
     public boolean isRegistered(ItemStack item){
-        if (getRegistered(item) != null) {
-            return true;
-        }
-
-        return false;
+        return getRegistered(item) != null;
     }
 
     public SkyblockItem getRegistered(ItemStack item){
@@ -81,11 +74,7 @@ public class SkyblockItemHandler {
     }
 
     public boolean isRegistered(ItemStack[] set){
-        if (getRegistered(set) != null) {
-            return true;
-        }
-
-        return false;
+        return getRegistered(set) != null;
     }
 
     public ArmorSet getRegistered(ItemStack[] set){

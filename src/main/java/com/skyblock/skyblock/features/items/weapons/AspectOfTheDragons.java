@@ -85,5 +85,4 @@ public class AspectOfTheDragons extends SkyblockItem {
 
         ParticleEffect.FLAME.display(location);
     }
-
 }

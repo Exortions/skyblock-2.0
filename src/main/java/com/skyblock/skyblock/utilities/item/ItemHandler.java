@@ -48,7 +48,8 @@ public class ItemHandler {
 
             try {
                 JSONParser parser = new JSONParser();
-                Object obj = parser.parse(new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8)));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+                Object obj = parser.parse(bufferedReader);
 
                 JSONObject jsonObject =  (JSONObject) obj;
                 String itemId = (String) jsonObject.get("itemid");
@@ -66,6 +67,7 @@ public class ItemHandler {
                 ItemMeta meta = item.getItemMeta();
                 meta.setDisplayName(displayName);
 
+                //noinspection unchecked
                 meta.setLore(lore);
                 meta.spigot().setUnbreakable(true);
 
@@ -84,6 +86,8 @@ public class ItemHandler {
                     Skyblock.getPlugin(Skyblock.class).getRecipeHandler().getRecipes().add(
                             new SkyblockRecipe(recipe, getItem(file.getName())));
                 }
+
+                bufferedReader.close();
             } catch (MojangsonParseException | ParseException | IOException e) {
                 throw new RuntimeException(e);
             }

@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.enums;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.features.reforge.ReforgeData;
 import com.skyblock.skyblock.features.reforge.ReforgeStat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

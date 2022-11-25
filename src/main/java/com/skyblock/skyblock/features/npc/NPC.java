@@ -1,22 +1,14 @@
 package com.skyblock.skyblock.features.npc;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
-import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
-import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
-import net.citizensnpcs.trait.LookClose;
-import net.citizensnpcs.trait.SkinTrait;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.List;
 import java.util.function.Consumer;

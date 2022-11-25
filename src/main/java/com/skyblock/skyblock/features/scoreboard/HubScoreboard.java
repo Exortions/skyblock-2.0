@@ -9,20 +9,14 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Date;
 
 public class HubScoreboard extends Scoreboard {
 
     public HubScoreboard(Player player) {
         super(player);
-
-        // runTask();
     }
 
-    private int tick = 0;
+    private int animation = 0;
 
     @Override
     void display() {
@@ -58,11 +52,11 @@ public class HubScoreboard extends Scoreboard {
         addLine(2, ChatColor.WHITE + "  ");
         addLine(1, ChatColor.YELLOW + "www.hypixel.net");
 
-        tick++;
+        animation++;
     }
 
     public void animateTitle() {
-        switch (tick) {
+        switch (animation) {
             case 0:
             case 1:
             case 2:
@@ -109,7 +103,7 @@ public class HubScoreboard extends Scoreboard {
                 objective.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "SKYBLOCK");
                 break;
             default:
-                tick = 0;
+                animation = 0;
                 break;
         }
     }

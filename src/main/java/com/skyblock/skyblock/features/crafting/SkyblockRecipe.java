@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.crafting;
 
-import com.skyblock.skyblock.features.collections.Collection;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,8 +14,8 @@ import java.util.*;
 public class SkyblockRecipe {
 
     private boolean customItems = false;
-    private List<String> items;
-    private ItemStack result;
+    private final List<String> items;
+    private final ItemStack result;
 
     public SkyblockRecipe(ShapedRecipe shapedRecipe) {
         items = new ArrayList<>();
@@ -26,8 +25,7 @@ public class SkyblockRecipe {
 
         String[] spots = new String[]{"abc", "def", "ghi"};
 
-        for (int i = 0; i < spots.length; i++) {
-            String s = spots[i];
+        for (String s : spots) {
             for (int j = 0; j < s.length(); j++) {
                 StringBuilder line = new StringBuilder();
                 char c = s.charAt(j);
@@ -36,12 +34,9 @@ public class SkyblockRecipe {
                 if (item != null) {
                     line.append(item.getType().name()).append(":").append(item.getAmount()).append(":").append(item.getDurability());
 
-                    if (line.toString().contains("32767")){
+                    if (line.toString().contains("32767"))
                         line = new StringBuilder(line.toString().replaceAll("32767", "0"));
-                    }
-                } else {
-                    line.append("AIR");
-                }
+                } else line.append("AIR");
                 items.add(line.toString());
             }
         }
@@ -52,9 +47,7 @@ public class SkyblockRecipe {
         items = new ArrayList<>();
         result = recipe.getResult();
 
-        for (ItemStack item : recipe.getIngredientList()) {
-            items.add(item.getType().name() + ":" + item.getAmount() + ":" + item.getDurability());
-        }
+        for (ItemStack item : recipe.getIngredientList()) items.add(item.getType().name() + ":" + item.getAmount() + ":" + item.getDurability());
         if (recipe.getResult().getType().equals(Material.WORKBENCH)) Bukkit.getConsoleSender().sendMessage(items + "");
     }
 
@@ -77,18 +70,21 @@ public class SkyblockRecipe {
 
         for (int i = 1; i < 4; i++) {
             String c = neuRecipe.get("C" + i) + ":0";
+
             if (c.equals(":0")) c = "AIR";
+
             items.add(c);
         }
     }
 
     public List<Integer> getExcess(String s) {
-        String[] sArr = s.substring(1, s.length() - 1).split(", ");
-        String[] sArrClone = Arrays.copyOf(sArr, sArr.length + 1);
-        sArrClone[sArrClone.length - 1] = "";
-        List<String> list = Arrays.asList(sArrClone);
+        String[] array = s.substring(1, s.length() - 1).split(", ");
+        String[] subArray = Arrays.copyOf(array, array.length + 1);
 
-        List<Integer> ret = new ArrayList<>();
+        subArray[subArray.length - 1] = "";
+
+        List<String> list = Arrays.asList(subArray);
+        List<Integer> excess = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             try {
@@ -97,32 +93,30 @@ public class SkyblockRecipe {
 
                 if (amount - required < 0) return Collections.emptyList();
 
-                ret.add(amount - required);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                ret.add(0);
+                excess.add(amount - required);
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                excess.add(0);
             }
         }
 
-        return ret;
+        return excess;
     }
 
     public String toString(boolean ignoreAmount) {
         StringBuilder string = new StringBuilder("[");
+
         for (int i = 0; i < items.size(); i++) {
             String s = items.get(i);
 
             if (ignoreAmount) {
                 try {
-                    int amount = Integer.parseInt(items.get(i).split(":")[1]);
-                    s = s.replaceFirst(":" + amount, "");
-                } catch (ArrayIndexOutOfBoundsException e) { }
+                    s = s.replaceFirst(":" + Integer.parseInt(items.get(i).split(":")[1]), "");
+                } catch (ArrayIndexOutOfBoundsException ignored) { }
             }
 
             string.append(s);
 
-            if (i != items.size() - 1) {
-                string.append(", ");
-            }
+            if (i != items.size() - 1) string.append(", ");
         }
 
         string.append("]");
