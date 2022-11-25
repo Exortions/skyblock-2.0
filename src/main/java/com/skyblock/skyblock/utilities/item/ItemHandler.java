@@ -67,7 +67,6 @@ public class ItemHandler {
                 ItemMeta meta = item.getItemMeta();
                 meta.setDisplayName(displayName);
 
-
                 //noinspection unchecked
                 meta.setLore(lore);
                 meta.spigot().setUnbreakable(true);
