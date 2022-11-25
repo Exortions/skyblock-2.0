@@ -1,12 +1,14 @@
 package com.skyblock.skyblock.features.skills;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +78,9 @@ public abstract class Skill {
         player.setActionBar(actionBar);
 
         player.delay(player::resetActionBar, 3);
+
+        if (skill.getName().equals("Combat") && player.hasActiveSlayer() && ((EntityType) player.getExtraData("lastKilledType")).equals(Skyblock.getPlugin(Skyblock.class).getSlayerHandler().getSlayer(player.getBukkitPlayer()).getQuest().getMobType()))
+            Skyblock.getPlugin(Skyblock.class).getSlayerHandler().addExp(player.getBukkitPlayer(), xp);
     }
 
     public static Skill parseSkill(String s) {

@@ -46,7 +46,7 @@ public abstract class SkyblockEntity {
     private final Skyblock plugin;
     protected int tick;
     @Setter
-    private int lifeSpan;
+    protected int lifeSpan;
     @Setter
     private SkyblockPlayer lastDamager;
 
@@ -112,6 +112,7 @@ public abstract class SkyblockEntity {
                 @Override
                 public void run() {
                     if (vanilla.isDead()){
+                        onDeath();
                         cancel();
                         plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                     }else{
@@ -120,7 +121,11 @@ public abstract class SkyblockEntity {
                         ((LivingEntity) vanilla).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 5, true, false));
 
                         if (getEntityData().health <= 0) {
-                            if (getLastDamager() != null) Skill.reward(getEntityData().skill, getEntityData().xp, getLastDamager());
+                            if (getLastDamager() != null) {
+                                getLastDamager().setExtraData("lastKilledLoc", getVanilla().getLocation());
+                                getLastDamager().setExtraData("lastKilledType", getVanilla().getType());
+                                Skill.reward(getEntityData().skill, getEntityData().xp, getLastDamager());
+                            }
 
                             vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
@@ -140,6 +145,7 @@ public abstract class SkyblockEntity {
                         if (lifeSpan < 0) {
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             vanilla.remove();
+                            onDeath();
                             cancel();
                         }
 
@@ -156,6 +162,8 @@ public abstract class SkyblockEntity {
     }
 
     protected abstract void tick();
+
+    protected void onDeath() {}
 
     public void setHealth(long health) {
         getEntityData().health = health;

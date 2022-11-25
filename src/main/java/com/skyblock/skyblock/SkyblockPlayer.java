@@ -12,6 +12,7 @@ import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import com.skyblock.skyblock.features.skills.Skill;
+import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Data;
@@ -410,6 +411,10 @@ public class SkyblockPlayer {
                     config.set("bag." + bag.getId() + ".items", new HashMap<Integer, ItemStack>());
                 }
 
+                for (SlayerType type : SlayerType.values()) {
+                    config.set("slayer." + type.name().toLowerCase() + ".exp", 0);
+                }
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();
@@ -478,4 +483,6 @@ public class SkyblockPlayer {
     public int getCoins() {
         return (int) getValue("stats.purse");
     }
+
+    public boolean hasActiveSlayer() { return Skyblock.getPlugin(Skyblock.class).getSlayerHandler().getSlayer(bukkitPlayer) != null; }
 }

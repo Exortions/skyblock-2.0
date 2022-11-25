@@ -33,6 +33,7 @@ import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
+import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
@@ -73,6 +74,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
     private ReforgeHandler reforgeHandler;
+    private SlayerHandler slayerHandler;
     private RecipeHandler recipeHandler;
     private ItemHandler itemHandler;
     private BagManager bagManager;
@@ -107,6 +109,7 @@ public final class Skyblock extends JavaPlugin {
         this.registerNpcs();
         this.registerGuis();
         this.registerMobs();
+        this.registerSlayers();
         this.registerLaunchPads();
 
         this.registerBags();
@@ -141,6 +144,10 @@ public final class Skyblock extends JavaPlugin {
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerSlayers() {
+        this.slayerHandler = new SlayerHandler();
     }
 
     public void registerBags() {
