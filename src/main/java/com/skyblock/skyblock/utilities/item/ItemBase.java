@@ -85,6 +85,7 @@ public class ItemBase {
         } catch (Exception ex) {
             this.reforge = Reforge.NONE;
         }
+
         this.reforgeable = nbt.getBoolean("reforgeable");
         this.enchantments = new ArrayList<>();
         String enchantmentsStr = nbt.getString("enchantments");
