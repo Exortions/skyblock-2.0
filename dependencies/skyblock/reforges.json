@@ -1133,6 +1133,78 @@
           }
         }
       ]
+    },
+    {
+      "name": "Mythic",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 2,
+            "DEFENSE": 2,
+            "STRENGTH": 2,
+            "SPEED": 2,
+            "CRIT_CHANCE": 1,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 4,
+            "DEFENSE": 4,
+            "STRENGTH": 4,
+            "SPEED": 2,
+            "CRIT_CHANCE": 2,
+            "MANA": 25
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 6,
+            "DEFENSE": 6,
+            "STRENGTH": 6,
+            "SPEED": 2,
+            "CRIT_CHANCE": 3,
+            "MANA": 30
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 8,
+            "DEFENSE": 8,
+            "STRENGTH": 8,
+            "SPEED": 2,
+            "CRIT_CHANCE": 4,
+            "MANA": 40
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10,
+            "STRENGTH": 10,
+            "SPEED": 2,
+            "CRIT_CHANCE": 5,
+            "MANA": 50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 12,
+            "DEFENSE": 12,
+            "STRENGTH": 12,
+            "SPEED": 2,
+            "CRIT_CHANCE": 6,
+            "MANA": 60
+          }
+        }
+      ]
     }
   ]
 }
