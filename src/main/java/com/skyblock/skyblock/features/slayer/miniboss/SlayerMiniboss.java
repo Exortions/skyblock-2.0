@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 
 public abstract class SlayerMiniboss extends SkyblockEntity {
 
-    private final Player spawner;
+    protected final Player spawner;
 
     public SlayerMiniboss(EntityType type, Player spawner) {
         super(Skyblock.getPlugin(), type);
@@ -51,10 +51,12 @@ public abstract class SlayerMiniboss extends SkyblockEntity {
                 if (level == 3 && Util.random(0, 12) == 0) return new RevenantSycophant(player);
                 if (level == 4 && Util.random(0, 12) == 0) return new RevenantChampion(player);
                 if (level == 4 && Util.random(0, 20) == 0) return new DeformedRevenant(player);
+                break;
             case SVEN:
                 if (level == 3 && Util.random(0, 12) == 0) return new PackEnforcer(player);
                 if (level == 4 && Util.random(0, 12) == 0) return new SvenFollower(player);
                 if (level == 4 && Util.random(0, 20) == 0) return new SvenAlpha(player);
+                break;
         }
 
         return null;

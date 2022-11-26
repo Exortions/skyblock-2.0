@@ -25,7 +25,7 @@ public abstract class SkyblockEntity {
         public ItemStack legs;
         public ItemStack boots;
 
-        public Equipment(ItemStack hand, ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots){
+        public Equipment(ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots, ItemStack hand){
             this.hand = hand;
             this.helmet = helmet;
             this.chest = chest;

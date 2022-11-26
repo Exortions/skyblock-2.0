@@ -27,4 +27,9 @@ public class TarantulaBroodfather extends SlayerBoss {
                 break;
         }
     }
+
+    @Override
+    protected void tick() {
+
+    }
 }

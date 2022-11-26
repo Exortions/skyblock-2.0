@@ -70,7 +70,7 @@ public class SlayerGUI extends Gui {
                     } else {
                         opener.sendMessage("   " + ChatColor.YELLOW + quest.getType().getAlternative() + " Slayer LVL " +
                                 level +  ChatColor.DARK_RED + " - " + ChatColor.GRAY + "Next LVL in " + ChatColor.LIGHT_PURPLE +
-                                (getXP(quest.getType()).get(level) - getXP(skyblockPlayer.getBukkitPlayer(), quest.getType())) + " XP" + ChatColor.GRAY + "!");
+                                Util.formatInt(getXP(quest.getType()).get(level) - getXP(skyblockPlayer.getBukkitPlayer(), quest.getType())) + " XP" + ChatColor.GRAY + "!");
                     }
                 }
 
@@ -246,8 +246,8 @@ public class SlayerGUI extends Gui {
         }
 
         for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i) < exp)
-                return i;
+            if (list.get(i) <= exp)
+                return i + 1;
         }
 
         return 0;
