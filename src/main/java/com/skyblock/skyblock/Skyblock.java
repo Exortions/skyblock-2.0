@@ -338,6 +338,7 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler.registerGuiCommand("crafting_table", "sb craft");
         this.guiHandler.registerGuiCommand("banker", "sb banker");
         this.guiHandler.registerGuiCommand("reforge", "sb reforge");
+        this.guiHandler.registerGuiCommand("skills", "sb skills");
 
         this.sendMessage("Successfully registered guis [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -425,7 +426,8 @@ public final class Skyblock extends JavaPlugin {
                 new DepositCommand(),
                 new BatphoneCommand(),
                 new WithdrawCommand(),
-                new ReloadCommand()
+                new ReloadCommand(),
+                new SkillsCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

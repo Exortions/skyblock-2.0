@@ -3,6 +3,8 @@ package com.skyblock.skyblock.features.skills;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 public class Combat extends Skill {
 
     public Combat() {
-        super("Combat", "Warrior", "Fight mobs and players to\nearn Combat XP!");
+        super("Combat", "Warrior", "Fight mobs and players to\nearn Combat XP!", new ItemStack(Material.STONE_SWORD), new ItemStack(Material.DIAMOND_HELMET));
     }
 
     @Override

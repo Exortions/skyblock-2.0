@@ -2,7 +2,10 @@ package com.skyblock.skyblock.features.skills;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.List;
 public class Foraging extends Skill {
 
     public Foraging() {
-        super("Foraging", "Logger", "Cut trees and forage for other\nplants to earn Foraging XP!");
+        super("Foraging", "Logger", "Cut trees and forage for other\nplants to earn Foraging XP!", new ItemBuilder("Foraging", Material.SAPLING, (short) 3).toItemStack(), new ItemStack(Material.LOG));
     }
 
     public double getStrength(int level) {

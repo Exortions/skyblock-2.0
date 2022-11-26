@@ -3,6 +3,8 @@ package com.skyblock.skyblock.features.skills;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 public class Mining extends Skill {
 
     public Mining() {
-        super("Mining", "Spelunker", "Spelunk islands for ores and\nvaluable materials to earn\nMining XP!");
+        super("Mining", "Spelunker", "Spelunk islands for ores and\nvaluable materials to earn\nMining XP!", new ItemStack(Material.STONE_PICKAXE), new ItemStack(Material.IRON_BLOCK));
     }
 
     public double getDefense(int level) {
