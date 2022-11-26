@@ -11,11 +11,14 @@ import com.skyblock.skyblock.utilities.command.annotations.Alias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -53,7 +56,17 @@ public class SkillsCommand implements Command {
 
             Util.fillEmpty(inventory);
 
-            System.out.println(skills);
+            inventory.setItem(4, new ItemBuilder(
+                    ChatColor.GREEN + "Your Skills",
+                    Material.DIAMOND_SWORD)
+                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                    .addLore(
+                            ChatColor.GRAY + "View your Skill progression and",
+                            ChatColor.GRAY + "rewards.", "",
+                            ChatColor.GOLD + "14.8 Skill Avg. " + ChatColor.DARK_GRAY + "(non-cosmetic)",
+                            "",
+                            ChatColor.YELLOW + "Click to show rankings!")
+                    .toItemStack());
 
             for (int i = 19; i < 19 + skills.size(); i++) {
                 inventory.setItem(i, createSkillPreviewItem(skyblockPlayer, skills.get(i - 19)));
