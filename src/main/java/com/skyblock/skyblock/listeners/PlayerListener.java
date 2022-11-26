@@ -141,6 +141,8 @@ public class PlayerListener implements Listener {
 
                 display = damage * sentity.getEntityData().maximumHealth;
 
+                sentity.onDamage(e, player, crit, display);
+
                 sentity.getEntityData().health = (long) (sentity.getEntityData().health - display);
             } else {
                 if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {

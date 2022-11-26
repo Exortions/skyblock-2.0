@@ -65,6 +65,6 @@ public class Spider extends SkyblockEntity {
     protected void onDeath() {
         super.onDeath();
 
-        jockey.remove();
+        if (jockey != null) jockey.remove();
     }
 }

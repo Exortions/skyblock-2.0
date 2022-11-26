@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -43,6 +44,7 @@ public abstract class SkyblockEntity {
     public static final String HAND = "HAND";
     private Entity vanilla;
     private final EntityType entityType;
+    @Setter
     private SkyblockEntityData entityData;
     private final Skyblock plugin;
     protected int tick;
@@ -146,6 +148,7 @@ public abstract class SkyblockEntity {
                         if (lifeSpan < 0) {
                             plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             vanilla.remove();
+                            onDespawn();
                             onDeath();
                             cancel();
                         }
@@ -181,4 +184,6 @@ public abstract class SkyblockEntity {
         Util.setDamageIndicator(this.vanilla.getLocation(), crit ? Util.addCritTexture(Math.round(damage)) : ChatColor.GRAY + "" + Math.round(damage), false);
     }
 
+    public void onDespawn() { }
+    public void onDamage(EntityDamageByEntityEvent event, SkyblockPlayer player, boolean crit, double damage) { }
 }

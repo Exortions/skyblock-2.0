@@ -171,7 +171,7 @@ public class Util {
     public boolean isNotSkyblockItem(ItemStack item) {
         if (!notNull(item)) return true;
 
-        return new NBTItem(item).getBoolean("skyblockItem");
+        return !new NBTItem(item).getBoolean("skyblockItem");
     }
 
     private final static String EMPTY = "PLACEHOLDER STRING";

@@ -1,7 +1,9 @@
 package com.skyblock.skyblock.features.slayer;
 
+import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -13,7 +15,8 @@ public class SlayerQuest {
     public enum QuestState {
         SUMMONING,
         FIGHTING,
-        FINISHED
+        FINISHED,
+        FAILED
     }
 
     private int exp;
@@ -74,5 +77,18 @@ public class SlayerQuest {
         }
 
         return EntityType.PLAYER;
+    }
+
+    public void fail() {
+        boss.setFailed(true);
+        boss.getEntityData().health = -1;
+
+        setState(QuestState.FAILED);
+
+        Util.delay(() -> {
+            player.sendMessage("  " + ChatColor.RED + ChatColor.BOLD + "SLAYER QUEST FAILED!");
+            player.sendMessage("   " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "→ " + ChatColor.GRAY +
+                    "You died! What a noob!");
+        }, 2);
     }
 }

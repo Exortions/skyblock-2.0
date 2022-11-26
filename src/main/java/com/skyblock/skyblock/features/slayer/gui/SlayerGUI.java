@@ -50,7 +50,7 @@ public class SlayerGUI extends Gui {
             });
 
             put(ChatColor.GREEN + "Slayer Quest Complete", () -> {
-                SlayerHandler slayerHandler = Skyblock.getPlugin(Skyblock.class).getSlayerHandler();
+                SlayerHandler slayerHandler = Skyblock.getPlugin().getSlayerHandler();
                 SlayerQuest quest = slayerHandler.getSlayer(opener).getQuest();
                 int level = getLevel(quest.getType(), getXP(opener, quest.getType()));
                 int newLevel = getLevel(quest.getType(), getXP(opener, quest.getType()) + quest.getExpReward());
@@ -81,6 +81,22 @@ public class SlayerGUI extends Gui {
                 opener.closeInventory();
                new SlayerGUI(opener).show(opener);
             });
+
+            put(ChatColor.GREEN + "Ongoing Slayer Quest", () -> {
+                SlayerHandler slayerHandler = Skyblock.getPlugin().getSlayerHandler();
+                slayerHandler.unregisterSlayer(opener);
+                opener.closeInventory();
+                opener.sendMessage(ChatColor.GREEN + "Your Slayer quest has been cancelled.");
+            });
+
+            put(ChatColor.RED + "Slayer Quest Failed", () -> {
+                SlayerHandler slayerHandler = Skyblock.getPlugin().getSlayerHandler();
+                slayerHandler.unregisterSlayer(opener);
+                opener.closeInventory();
+                new SlayerGUI(opener).show(opener);
+            });
+
+            put(ChatColor.RED + "Close", opener::closeInventory);
         }});
 
         Util.fillEmpty(this);
@@ -94,22 +110,26 @@ public class SlayerGUI extends Gui {
             SlayerQuest quest = data.getQuest();
             SlayerBoss boss = data.getBoss();
 
+            Material type = Material.ROTTEN_FLESH;
+
+            switch (quest.getType()) {
+                case SVEN:
+                    type = Material.MUTTON;
+                    break;
+                case TARANTULA:
+                    type = Material.WEB;
+                    break;
+            }
+
             if (quest.getState().equals(SlayerQuest.QuestState.FINISHED)) {
-                Material type = Material.ROTTEN_FLESH;
-
-                switch (quest.getType()) {
-                    case SVEN:
-                        type = Material.MUTTON;
-                        break;
-                    case TARANTULA:
-                        type = Material.WEB;
-                        break;
-                }
-
                 String timeToKill = Util.formatTime(quest.getTimeToKill());
                 String timeToSpawn = Util.formatTime(quest.getTimeToSpawn());
 
                 addItem(13, new ItemBuilder(ChatColor.GREEN + "Slayer Quest Complete", type).addLore(ChatColor.GRAY + "You've slain the boss! Skyblock", ChatColor.GRAY + "is now a little safer thanks to you!", " ", ChatColor.GRAY + "Boss: " + ChatColor.DARK_RED + boss.getEntityData().entityName + " " + Util.toRoman(boss.getLevel()), " ", ChatColor.DARK_GRAY + "Time to spawn: " + timeToSpawn, ChatColor.DARK_GRAY + "Time to kill: " + timeToKill, " ", ChatColor.GRAY + "Reward: " + ChatColor.DARK_PURPLE + quest.getExpReward() + " " + quest.getType().getAlternative() + " Slayer XP", " ", ChatColor.YELLOW + "Click to collect reward!").toItemStack());
+            } else if (quest.getState().equals(SlayerQuest.QuestState.SUMMONING)) {
+                addItem(13, new ItemBuilder(ChatColor.GREEN + "Ongoing Slayer Quest", type).addLore(ChatColor.GRAY + "You have an active Slayer quest.", " ", ChatColor.GRAY + "Boss: " + COLORS.get(boss.getLevel() - 1) + boss.getEntityData().entityName + " " + boss.getLevel(), ChatColor.GRAY + "Kill " + quest.getType().getAlternative() + " to spawn the boss!", " ", ChatColor.YELLOW + "Click to cancel quest!").toItemStack());
+            } else if (quest.getState().equals(SlayerQuest.QuestState.FAILED)) {
+                addItem(13, new ItemBuilder(ChatColor.RED + "Slayer Quest Failed", type).addLore(ChatColor.GRAY + "You didn't succeed in", ChatColor.GRAY + "killing the boss on your", ChatColor.GRAY + "last Slayer quest.", " ", ChatColor.DARK_GRAY + "It's no big deal! You can", ChatColor.DARK_GRAY + "always try again!", " ", ChatColor.YELLOW + "Ok, thanks for reminding me!").toItemStack());
             }
         } else {
             addItem(10, getSlayerItem(SlayerType.REVENANT, opener));
