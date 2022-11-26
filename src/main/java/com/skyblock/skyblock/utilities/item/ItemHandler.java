@@ -161,6 +161,10 @@ public class ItemHandler {
         boolean passedAbility = false;
         boolean finishedAbilityLore = false;
 
+        for (String string : lore) {
+            if (string.toLowerCase().contains("this item can be reforged")) nbt.setBoolean("reforgeable", true);
+        }
+
         for (int i = 0; i < lore.size(); i++) {
             String string = lore.get(i);
 
@@ -202,10 +206,7 @@ public class ItemHandler {
                     nbt.setInteger("abilityCost", value);
                 }
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                if (line.startsWith("this item can be reforged!")) {
-                    nbt.setBoolean("reforgeable", true);
-                    continue;
-                } else if (line.startsWith("mana cost: ")) {
+                if (line.startsWith("mana cost: ")) {
                     nbt.setInteger("abilityCost", Integer.parseInt(line.substring(11)));
                     Bukkit.getConsoleSender().sendMessage("ABILITYCOST: " + nbt.getInteger("abilityCost"));
                     continue;
