@@ -7,10 +7,7 @@ import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
-import com.skyblock.skyblock.commands.menu.CollectionCommand;
-import com.skyblock.skyblock.commands.menu.CraftCommand;
-import com.skyblock.skyblock.commands.menu.EnderChestCommand;
-import com.skyblock.skyblock.commands.menu.MenuCommand;
+import com.skyblock.skyblock.commands.menu.*;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
@@ -341,6 +338,7 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler.registerGuiCommand("crafting_table", "sb craft");
         this.guiHandler.registerGuiCommand("banker", "sb banker");
         this.guiHandler.registerGuiCommand("reforge", "sb reforge");
+        this.guiHandler.registerGuiCommand("skills", "sb skills");
 
         this.sendMessage("Successfully registered guis [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -427,7 +425,8 @@ public final class Skyblock extends JavaPlugin {
                 new BankerCommand(),
                 new DepositCommand(),
                 new WithdrawCommand(),
-                new ReloadCommand()
+                new ReloadCommand(),
+                new SkillsCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

@@ -3,6 +3,8 @@ package com.skyblock.skyblock.features.skills;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 public class Alchemy extends Skill {
 
     public Alchemy() {
-        super("Alchemy", "Brewer", "Brew potions to earn Alchemy XP!");
+        super("Alchemy", "Brewer", "Brew potions to earn Alchemy XP!", new ItemStack(Material.BREWING_STAND_ITEM), new ItemStack(Material.POTION));
     }
 
     public double getIntelligence(int level) {
