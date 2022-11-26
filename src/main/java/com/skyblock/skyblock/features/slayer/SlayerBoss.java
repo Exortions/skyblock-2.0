@@ -1,15 +1,18 @@
 package com.skyblock.skyblock.features.slayer;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,7 +81,10 @@ public abstract class SlayerBoss extends SkyblockEntity {
 
     @Override
     protected void onDeath() {
-        Skyblock.getPlugin(Skyblock.class).getSlayerHandler().endQuest(summoner, false);
+        summoner.playSound(summoner.getLocation(), Sound.LEVEL_UP, 1, 2);
+        summoner.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "NICE! SLAYER BOSS SLAIN!");
+        summoner.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "→ " + ChatColor.GRAY + "Talk to Maddox to claim your " + getSlayerType().getAlternative() + " Slayer XP!");
+        getPlugin().getSlayerHandler().getSlayer(summoner).getQuest().setState(SlayerQuest.QuestState.FINISHED);
     }
 
     @Override

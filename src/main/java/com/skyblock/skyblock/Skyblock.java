@@ -7,10 +7,7 @@ import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
-import com.skyblock.skyblock.commands.menu.CollectionCommand;
-import com.skyblock.skyblock.commands.menu.CraftCommand;
-import com.skyblock.skyblock.commands.menu.EnderChestCommand;
-import com.skyblock.skyblock.commands.menu.MenuCommand;
+import com.skyblock.skyblock.commands.menu.*;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
@@ -416,6 +413,7 @@ public final class Skyblock extends JavaPlugin {
                 new ItemCommand(),
                 new BankerCommand(),
                 new DepositCommand(),
+                new BatphoneCommand(),
                 new WithdrawCommand(),
                 new ReloadCommand()
         );

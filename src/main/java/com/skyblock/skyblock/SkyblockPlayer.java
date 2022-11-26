@@ -493,4 +493,12 @@ public class SkyblockPlayer {
         this.predicateDamageModifiers.remove(index);
     }
 
+    public boolean checkCoins(int coins) {
+        boolean b = getCoins() >= coins;
+
+        if (!b) getBukkitPlayer().sendMessage(ChatColor.RED + "Not enough coins!");
+
+        return b;
+    }
+
 }

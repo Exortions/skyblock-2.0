@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.items;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.armor.SuperiorDragonArmor;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
+import com.skyblock.skyblock.features.items.misc.MaddoxBatphone;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheDragons;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheEnd;
 import com.skyblock.skyblock.features.items.weapons.EndStoneSword;
@@ -26,6 +27,7 @@ public class SkyblockItemHandler {
 
         // Misc
         registerItem(new GrapplingHook(plugin));
+        registerItem(new MaddoxBatphone());
 
         // Weapons
         registerItem(new AspectOfTheDragons(plugin));

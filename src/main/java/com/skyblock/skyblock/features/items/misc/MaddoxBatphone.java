@@ -41,7 +41,7 @@ public class MaddoxBatphone extends SkyblockItem {
         click.setColor(net.md_5.bungee.api.ChatColor.DARK_GREEN);
         click.setBold(true);
         click.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, cb.create()));
-        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/slayer inventory"));
+        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sb batphone"));
 
         message.addExtra(click);
 
