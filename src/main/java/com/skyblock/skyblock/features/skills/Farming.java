@@ -3,6 +3,8 @@ package com.skyblock.skyblock.features.skills;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 public class Farming extends Skill {
 
     public Farming() {
-        super("Farming", "Farmhand", "Harvest crops and shear sheep to\nearn Farming XP!");
+        super("Farming", "Farmhand", "Harvest crops and shear sheep to\nearn Farming XP!", new ItemStack(Material.GOLD_HOE), new ItemStack(Material.HAY_BLOCK));
     }
 
     public double getHealth(int level)

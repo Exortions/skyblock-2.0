@@ -6,16 +6,22 @@ import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.SlayerScoreboard;
 import com.skyblock.skyblock.features.slayer.gui.SlayerGUI;
 import com.skyblock.skyblock.features.slayer.miniboss.SlayerMiniboss;
+import com.skyblock.skyblock.features.slayer.miniboss.SlayerMiniboss;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.sound.SoundSequence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SlayerHandler {
 
@@ -76,16 +82,30 @@ public class SlayerHandler {
 
         quest.addExp((int) exp);
 
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+        AtomicReference<Location> spawnLoc = new AtomicReference<>(player.getLocation());
+
+        if (skyblockPlayer.getExtraData("lastKilledLoc") != null)
+            spawnLoc.set((Location) skyblockPlayer.getExtraData("lastKilledLoc"));
+
         if (quest.getExp() >= quest.getNeededExp() && quest.getState().equals(SlayerQuest.QuestState.SUMMONING)) {
-            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
-            Location spawnLoc = player.getLocation();
-
-            if (skyblockPlayer.getExtraData("lastKilledLoc") != null)
-                spawnLoc = (Location) skyblockPlayer.getExtraData("lastKilledLoc");
-
             quest.setState(SlayerQuest.QuestState.FIGHTING);
 
-            Location finalSpawnLoc = spawnLoc;
+            SoundSequence.BOSS_SPAWN.play(player.getLocation());
+            BukkitRunnable particles = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < 50; i++) {
+                        player.playEffect(spawnLoc.get(), Effect.SPELL, Effect.SPELL.getData());
+                        player.playEffect(spawnLoc.get(), Effect.FLYING_GLYPH, Effect.FLYING_GLYPH.getData());
+                        player.playEffect(spawnLoc.get(), Effect.WITCH_MAGIC, Effect.WITCH_MAGIC.getData());
+                    }
+                }
+            };
+
+            particles.runTaskTimer(Skyblock.getPlugin(), 0, 5);
+
             Util.delay(() -> {
                 particles.cancel();
                 player.playEffect(spawnLoc.get(), Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE.getData());

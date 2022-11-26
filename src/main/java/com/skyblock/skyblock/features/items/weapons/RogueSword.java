@@ -8,6 +8,8 @@ import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class RogueSword extends SkyblockItem {
 
     public RogueSword(Skyblock plugin) {
@@ -21,15 +23,14 @@ public class RogueSword extends SkyblockItem {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         if (skyblockPlayer.checkMana(50)) {
-            int speed = 20;
+            AtomicInteger speed = new AtomicInteger(20);
             if (skyblockPlayer.getStat(SkyblockStat.SPEED) > 400) return;
             if (skyblockPlayer.getStat(SkyblockStat.SPEED) + 20 > 400) {
-                speed = speed - ((skyblockPlayer.getStat(SkyblockStat.SPEED) + 20) - 400);
+                speed.set(speed.get() - ((skyblockPlayer.getStat(SkyblockStat.SPEED) + 20) - 400));
             }
 
-            skyblockPlayer.addStat(SkyblockStat.SPEED, speed);
-            int finalSpeed = speed;
-            skyblockPlayer.delay(() -> skyblockPlayer.subtractStat(SkyblockStat.SPEED, finalSpeed), 20);
+            skyblockPlayer.addStat(SkyblockStat.SPEED, speed.get());
+            skyblockPlayer.delay(() -> skyblockPlayer.subtractStat(SkyblockStat.SPEED, speed.get()), 20);
 
             Util.sendAbility(skyblockPlayer, "Speed Boost", 50);
         }

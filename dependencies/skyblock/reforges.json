@@ -899,6 +899,552 @@
           }
         }
       ]
+    },
+    {
+      "name": "Clean",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 5,
+            "DEFENSE": 5,
+            "CRIT_CHANCE": 2 
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 7,
+            "DEFENSE": 7,
+            "CRIT_CHANCE": 4 
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10,
+            "CRIT_CHANCE": 6 
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 15,
+            "CRIT_CHANCE": 8
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 20,
+            "CRIT_CHANCE": 10
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 25,
+            "DEFENSE": 25,
+            "CRIT_CHANCE": 12
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fierce",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 4
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 4,
+            "CRIT_CHANCE": 3,
+            "CRIT_DAMAGE": 7
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 6,
+            "CRIT_CHANCE": 4,
+            "CRIT_DAMAGE": 10
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 8,
+            "CRIT_CHANCE": 5,
+            "CRIT_DAMAGE": 14
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 10,
+            "CRIT_CHANCE": 6,
+            "CRIT_DAMAGE": 18
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 12,
+            "CRIT_CHANCE": 8,
+            "CRIT_DAMAGE": 24
+          }
+        }
+      ]
+    },
+    {
+      "name": "Heavy",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "DEFENSE": 25,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "DEFENSE": 35,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "DEFENSE": 50,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -2
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "DEFENSE": 65,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -3
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "DEFENSE": 80,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -5
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "DEFENSE": 110,
+            "SPEED": -1,
+            "CRIT_DAMAGE": -7
+          }
+        }
+      ]
+    },
+    {
+      "name": "Light",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 5,
+            "DEFENSE": 1,
+            "SPEED": 1,
+            "CRIT_CHANCE": 1,
+            "CRIT_DAMAGE": 1,
+            "ATTACK_SPEED": 1 
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 7,
+            "DEFENSE": 2,
+            "SPEED": 2,
+            "CRIT_CHANCE": 1,
+            "CRIT_DAMAGE": 2,
+            "ATTACK_SPEED": 2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 3,
+            "SPEED": 3,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 3,
+            "ATTACK_SPEED": 3
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 4,
+            "SPEED": 4,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 4,
+            "ATTACK_SPEED": 4
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 5,
+            "SPEED": 5,
+            "CRIT_CHANCE": 3,
+            "CRIT_DAMAGE": 5,
+            "ATTACK_SPEED": 5
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 25,
+            "DEFENSE": 6,
+            "SPEED": 6,
+            "CRIT_CHANCE": 3,
+            "CRIT_DAMAGE": 6,
+            "ATTACK_SPEED": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mythic",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 2,
+            "DEFENSE": 2,
+            "STRENGTH": 2,
+            "SPEED": 2,
+            "CRIT_CHANCE": 1,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 4,
+            "DEFENSE": 4,
+            "STRENGTH": 4,
+            "SPEED": 2,
+            "CRIT_CHANCE": 2,
+            "MANA": 25
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 6,
+            "DEFENSE": 6,
+            "STRENGTH": 6,
+            "SPEED": 2,
+            "CRIT_CHANCE": 3,
+            "MANA": 30
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 8,
+            "DEFENSE": 8,
+            "STRENGTH": 8,
+            "SPEED": 2,
+            "CRIT_CHANCE": 4,
+            "MANA": 40
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10,
+            "STRENGTH": 10,
+            "SPEED": 2,
+            "CRIT_CHANCE": 5,
+            "MANA": 50
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 12,
+            "DEFENSE": 12,
+            "STRENGTH": 12,
+            "SPEED": 2,
+            "CRIT_CHANCE": 6,
+            "MANA": 60
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pure",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 2,
+            "DEFENSE": 2,
+            "STRENGTH": 2,
+            "SPEED": 1,
+            "CRIT_CHANCE": 2,
+            "CRIT_DAMAGE": 2,
+            "ATTACK_SPEED": 1,
+            "MANA": 2
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 3,
+            "DEFENSE": 3,
+            "STRENGTH": 3,
+            "SPEED": 1,
+            "CRIT_CHANCE": 4,
+            "CRIT_DAMAGE": 3,
+            "ATTACK_SPEED": 1,
+            "MANA": 3
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 4,
+            "DEFENSE": 4,
+            "STRENGTH": 4,
+            "SPEED": 1,
+            "CRIT_CHANCE": 6,
+            "CRIT_DAMAGE": 4,
+            "ATTACK_SPEED": 2,
+            "MANA": 4
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 6,
+            "DEFENSE": 6,
+            "STRENGTH": 6,
+            "SPEED": 1,
+            "CRIT_CHANCE": 8,
+            "CRIT_DAMAGE": 6,
+            "ATTACK_SPEED": 3,
+            "MANA": 6
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 8,
+            "DEFENSE": 8,
+            "STRENGTH": 8,
+            "SPEED": 1,
+            "CRIT_CHANCE": 10,
+            "CRIT_DAMAGE": 8,
+            "ATTACK_SPEED": 4,
+            "MANA": 8
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10,
+            "STRENGTH": 10,
+            "SPEED": 1,
+            "CRIT_CHANCE": 12,
+            "CRIT_DAMAGE": 8,
+            "ATTACK_SPEED": 5,
+            "MANA": 10
+          }
+        }
+      ]
+    },
+    {
+      "name": "Smart",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 4,
+            "DEFENSE": 4,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 6,
+            "DEFENSE": 6,
+            "MANA": 40
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 9,
+            "DEFENSE": 9,
+            "MANA": 60
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 12,
+            "DEFENSE": 12,
+            "MANA": 80
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 15,
+            "MANA": 100
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 20,
+            "MANA": 120
+          }
+        }
+      ]
+    },
+    {
+      "name": "Titanic",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 10,
+            "DEFENSE": 10
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 15,
+            "DEFENSE": 15
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 20,
+            "DEFENSE": 20
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 25,
+            "DEFENSE": 25
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 35,
+            "DEFENSE": 35
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 50,
+            "DEFENSE": 50
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wise",
+      "applicable": "ARMOR",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 6,
+            "SPEED": 1,
+            "MANA": 25
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 8,
+            "SPEED": 1,
+            "MANA": 50
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 10,
+            "SPEED": 1,
+            "MANA": 75
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 12,
+            "SPEED": 2,
+            "MANA": 100
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 15,
+            "SPEED": 2,
+            "MANA": 125
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 20,
+            "SPEED": 3,
+            "MANA": 150
+          }
+        }
+      ]
     }
   ]
 }

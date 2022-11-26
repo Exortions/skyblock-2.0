@@ -7,16 +7,33 @@ import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import lombok.Getter;
+import lombok.var;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-public class SlayerGUI extends CraftInventoryCustom implements Listener {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class SlayerGUI extends Gui {
+
+    public static final List<Integer> COINS = Arrays.asList(100, 2000, 10000, 50000);
 
     public SlayerGUI(Player opener) {
         super("Slayer", 36, new HashMap<String, Runnable>() {{
@@ -37,7 +54,7 @@ public class SlayerGUI extends CraftInventoryCustom implements Listener {
                 SlayerQuest quest = slayerHandler.getSlayer(opener).getQuest();
                 int level = getLevel(quest.getType(), getXP(opener, quest.getType()));
                 int newLevel = getLevel(quest.getType(), getXP(opener, quest.getType()) + quest.getExpReward());
-                
+
                 SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(opener);
                 skyblockPlayer.setValue("slayer." + quest.getType().name().toLowerCase() + ".exp", getXP(opener, quest.getType()) + quest.getExpReward());
 
@@ -53,14 +70,14 @@ public class SlayerGUI extends CraftInventoryCustom implements Listener {
                     } else {
                         opener.sendMessage("   " + ChatColor.YELLOW + quest.getType().getAlternative() + " Slayer LVL " +
                                 level +  ChatColor.DARK_RED + " - " + ChatColor.GRAY + "Next LVL in " + ChatColor.LIGHT_PURPLE +
-                                Util.formatInt(getXP(quest.getType()).get(level) - getXP(skyblockPlayer.getBukkitPlayer(), quest.getType())) + " XP" + ChatColor.GRAY + "!");
+                                (getXP(quest.getType()).get(level) - getXP(skyblockPlayer.getBukkitPlayer(), quest.getType())) + " XP" + ChatColor.GRAY + "!");
                     }
                 }
-                
+
                 opener.playSound(opener.getLocation(), Sound.LEVEL_UP, 1, 2);
-                
+
                 slayerHandler.unregisterSlayer(opener);
-               
+
                 opener.closeInventory();
                new SlayerGUI(opener).show(opener);
             });
@@ -68,7 +85,7 @@ public class SlayerGUI extends CraftInventoryCustom implements Listener {
 
         Util.fillEmpty(this);
 
-        setItem(31, Util.buildCloseButton());
+        addItem(31, Util.buildCloseButton());
 
         Skyblock skyblock = Skyblock.getPlugin(Skyblock.class);
 
@@ -89,43 +106,107 @@ public class SlayerGUI extends CraftInventoryCustom implements Listener {
                         break;
                 }
 
-                setItem(13, new ItemBuilder(ChatColor.GREEN + "Slayer Quest Complete", type).addLore(ChatColor.GRAY + "You've slain the boss! Skyblock", ChatColor.GRAY + "is now a little safer thanks to you!", " ", ChatColor.GRAY + "Boss: " + ChatColor.DARK_RED + boss.getName(), " ", ChatColor.DARK_GRAY + "Time to spawn: 00m00s", ChatColor.DARK_GRAY + "Time to kill: 00m00s", " ", ChatColor.GRAY + "Reward: " + ChatColor.DARK_PURPLE + quest.getExpReward(), " ", ChatColor.YELLOW + "Click to collect reward!").toItemStack());
+                String timeToKill = Util.formatTime(quest.getTimeToKill());
+                String timeToSpawn = Util.formatTime(quest.getTimeToSpawn());
+
+                addItem(13, new ItemBuilder(ChatColor.GREEN + "Slayer Quest Complete", type).addLore(ChatColor.GRAY + "You've slain the boss! Skyblock", ChatColor.GRAY + "is now a little safer thanks to you!", " ", ChatColor.GRAY + "Boss: " + ChatColor.DARK_RED + boss.getEntityData().entityName + " " + Util.toRoman(boss.getLevel()), " ", ChatColor.DARK_GRAY + "Time to spawn: " + timeToSpawn, ChatColor.DARK_GRAY + "Time to kill: " + timeToKill, " ", ChatColor.GRAY + "Reward: " + ChatColor.DARK_PURPLE + quest.getExpReward() + " " + quest.getType().getAlternative() + " Slayer XP", " ", ChatColor.YELLOW + "Click to collect reward!").toItemStack());
             }
         } else {
-            setItem(10, getSlayerItem(SlayerType.REVENANT, opener));
-            setItem(11, getSlayerItem(SlayerType.TARANTULA, opener));
-            setItem(12, getSlayerItem(SlayerType.SVEN, opener));
+            addItem(10, getSlayerItem(SlayerType.REVENANT, opener));
+            addItem(11, getSlayerItem(SlayerType.TARANTULA, opener));
+            addItem(12, getSlayerItem(SlayerType.SVEN, opener));
 
             for (int i = 13; i < 17; i++) {
-                setItem(i, new ItemBuilder(ChatColor.RED + "Not released yet!", Material.COAL_BLOCK).addLore(ChatColor.GRAY + "This boss is still in", ChatColor.GRAY + "development!").toItemStack());
+                addItem(i, new ItemBuilder(ChatColor.RED + "Not released yet!", Material.COAL_BLOCK).addLore(ChatColor.GRAY + "This boss is still in", ChatColor.GRAY + "development!").toItemStack());
             }
         }
     }
 
-    private ItemStack getSlayerItem(SlayerType type, Player player) {
+    public static ItemStack getSlayerItem(SlayerType type, Player player) {
         Material material = Material.AIR;
-        String alternate = "";
-        String desc = "";
-        String name = "";
+        String alternate = type.getAlternative();
+        String name = type.getName();
+        List<String> desc = new ArrayList<>();
+
+        ChatColor c = ChatColor.GRAY;
+
+                switch (type) {
+            case REVENANT:
+                material = Material.ROTTEN_FLESH;
+                desc.add(c + "Abhorrent Zombie stuck");
+                desc.add(c + "between life and death for");
+                desc.add(c + "an eternity");
+                break;
+            case TARANTULA:
+                material = Material.WEB;
+                desc.add(c + "Monstrous Spider who poisons");
+                desc.add(c + "and devours its victims");
+                break;
+            case SVEN:
+                material = Material.MUTTON;
+                desc.add(c + "Rabid Wolf genetically");
+                desc.add(c + "modified by a famous mad");
+                desc.add(c + "scientist. Eats bones and");
+                desc.add(c + "flesh");
+                break;
+        }
+
+        var item = new ItemBuilder(ChatColor.RED + "☠ " +
+                ChatColor.YELLOW + name, material);
+        int level = getLevel(type, getXP(player, type));
+
+        if (level != 0) {
+            return item.addLore(desc).
+                    addLore(" ", ChatColor.GRAY + alternate +
+                    " Slayer: " + ChatColor.YELLOW + "LVL " + level, " ",
+                    ChatColor.YELLOW + "Click to view boss!").toItemStack();
+        } else {
+            return item.addLore(desc).
+                    addLore(" ", ChatColor.YELLOW + "Click to view boss!").toItemStack();
+        }
+    }
+
+    public static final List<ChatColor> COLORS = Arrays.asList(ChatColor.GREEN, ChatColor.YELLOW, ChatColor.RED, ChatColor.DARK_RED);
+    private static final List<String> DESCRIPTIONS = Arrays.asList("Beginner", "Strong", "Challenging", "Deadly");
+
+    public static ItemStack getStartItem(SlayerType type, int level, int hp, int dps, int xp, int cost, int abilityAmount) {
+        Material material = Material.AIR;
+        ChatColor color = COLORS.get(level - 1);
+        String name = type.getName();
+        List<String> ability1 = new ArrayList<>();
+        List<String> ability2 = new ArrayList<>();
+        List<String> ability3 = new ArrayList<>();
 
         switch (type) {
             case REVENANT:
                 material = Material.ROTTEN_FLESH;
-                alternate = "Zombie";
-                desc = "Abhorrent Zombie stuck\nbetween life and death for\nan eternity";
-                name = "Revenant Horror";
+                ability1.add(ChatColor.RED + "Life Drain");
+                ability1.add(ChatColor.GRAY + "Drains health every few seconds.");
+                ability2.add(ChatColor.GREEN + "Pestilence");
+                ability2.add(ChatColor.GRAY + "Deals AOE damage every second,");
+                ability2.add(ChatColor.GRAY + "shredding armor by 25%.");
+                ability3.add(ChatColor.RED + "Enrage");
+                ability3.add(ChatColor.GRAY + "Gets real mad once in a while.");
                 break;
             case TARANTULA:
                 material = Material.WEB;
-                alternate = "Spider";
-                desc = "Monstrous Spider who poisons\nand devours its victims";
-                name = "Tarantula Broodfather";
+                ability1.add(ChatColor.YELLOW + "Combat Jump");
+                ability1.add(ChatColor.GRAY + "The spider will often attempt to");
+                ability1.add(ChatColor.GRAY + "jump behind you.");
+                ability2.add(ChatColor.RED + "Noxious");
+                ability2.add(ChatColor.GRAY + "Deals AOE damage every second,");
+                ability2.add(ChatColor.GRAY + "reducing your healing by 50%.");
                 break;
             case SVEN:
                 material = Material.MUTTON;
-                alternate = "Wolf";
-                desc = "Rabid Wolf genetically\nmodified by a famous mad\nscientist. Eats bones and\nflesh";
-                name = "Sven Packmaster";
+                ability1.add(ChatColor.GREEN + "Agile");
+                ability1.add(ChatColor.GRAY + "The wolf is small and fast, making");
+                ability1.add(ChatColor.GRAY + "it hard to hit.");
+                ability2.add(ChatColor.WHITE + "True Damage");
+                ability2.add(ChatColor.GRAY + "Ignores your defense. Very painful.");
+                ability3.add(ChatColor.AQUA + "Call the pups!");
+                ability3.add(ChatColor.GRAY + "At 50% health, calls its deadly pack");
+                ability3.add(ChatColor.GRAY + "of pups.");
                 break;
         }
 
@@ -165,8 +246,8 @@ public class SlayerGUI extends CraftInventoryCustom implements Listener {
         }
 
         for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i) <= exp)
-                return i + 1;
+            if (list.get(i) < exp)
+                return i;
         }
 
         return 0;

@@ -25,6 +25,8 @@ public class SlayerQuest {
     private int expReward;
     private QuestState state;
     private String bossName;
+    private long timeToKill;
+    private long timeToSpawn;
 
     private static final HashMap<String, Integer> XP_NEEDED = new HashMap<String, Integer>() {{
         put("REVENANT_1", 150);
@@ -49,6 +51,7 @@ public class SlayerQuest {
         this.boss = boss;
         this.state = QuestState.SUMMONING;
         this.player = player;
+        this.timeToSpawn = System.currentTimeMillis();
 
         this.bossName = this.boss.getEntityData().entityName + " " + this.boss.getLevel();
         this.expReward = this.boss.getRewardXp();

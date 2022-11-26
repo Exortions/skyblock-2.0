@@ -7,10 +7,7 @@ import com.skyblock.skyblock.commands.item.ItemBrowserCommand;
 import com.skyblock.skyblock.commands.item.ItemCommand;
 import com.skyblock.skyblock.commands.item.ItemDataCommand;
 import com.skyblock.skyblock.commands.item.ReforgeCommand;
-import com.skyblock.skyblock.commands.menu.CollectionCommand;
-import com.skyblock.skyblock.commands.menu.CraftCommand;
-import com.skyblock.skyblock.commands.menu.EnderChestCommand;
-import com.skyblock.skyblock.commands.menu.MenuCommand;
+import com.skyblock.skyblock.commands.menu.*;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
@@ -19,6 +16,7 @@ import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.bags.BagManager;
+import com.skyblock.skyblock.features.blocks.RegenerativeBlockHandler;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
@@ -57,15 +55,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 @Getter
 @SuppressWarnings({"unused", "deprecation"})
 public final class Skyblock extends JavaPlugin {
 
+    private RegenerativeBlockHandler regenerativeBlockHandler;
     private SkyblockEnchantmentHandler enchantmentHandler;
     private SkyblockLocationManager locationManager;
     private SkyblockItemHandler skyblockItemHandler;
@@ -115,6 +111,8 @@ public final class Skyblock extends JavaPlugin {
 
         this.registerBags();
 
+        this.registerBlockHandler();
+
         this.registerListeners();
         this.registerCommands();
 
@@ -146,6 +144,15 @@ public final class Skyblock extends JavaPlugin {
         this.serverData.disable();
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerBlockHandler() {
+        this.sendMessage("Registering blocks...");
+        long start = System.currentTimeMillis();
+
+        this.regenerativeBlockHandler = new RegenerativeBlockHandler();
+
+        this.sendMessage("Successfully registered block handler [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerSlayers() {
@@ -331,6 +338,7 @@ public final class Skyblock extends JavaPlugin {
         this.guiHandler.registerGuiCommand("crafting_table", "sb craft");
         this.guiHandler.registerGuiCommand("banker", "sb banker");
         this.guiHandler.registerGuiCommand("reforge", "sb reforge");
+        this.guiHandler.registerGuiCommand("skills", "sb skills");
 
         this.sendMessage("Successfully registered guis [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -416,8 +424,10 @@ public final class Skyblock extends JavaPlugin {
                 new ItemCommand(),
                 new BankerCommand(),
                 new DepositCommand(),
+                new BatphoneCommand(),
                 new WithdrawCommand(),
-                new ReloadCommand()
+                new ReloadCommand(),
+                new SkillsCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
@@ -466,4 +476,6 @@ public final class Skyblock extends JavaPlugin {
     public String getPrefix() {
         return ChatColor.translateAlternateColorCodes('&', "&7[&3S&bB&7] &f");
     }
+
+    public static Skyblock getPlugin() { return Skyblock.getPlugin(Skyblock.class); }
 }

@@ -90,6 +90,8 @@ public class Gui implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
-        HandlerList.unregisterAll(this);
+        if (e.getInventory().getName().equals(name)) {
+            HandlerList.unregisterAll(this);
+        }
     }
 }

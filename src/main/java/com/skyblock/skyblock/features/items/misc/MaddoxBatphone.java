@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.items.misc;
 
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.sound.SoundSequence;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,6 +33,8 @@ public class MaddoxBatphone extends SkyblockItem {
         Util.delay(() -> player.sendMessage(ChatColor.YELLOW + "✆ Ring... Ring..."), 18);
         Util.delay(() -> player.sendMessage(ChatColor.YELLOW + "✆ Ring... Ring... Ring..."), 35);
 
+        SoundSequence.BATPHONE.play(player.getLocation());
+
         TextComponent message = new TextComponent("⓪ How does the lobster answer? Shello! ");
         message.setColor(net.md_5.bungee.api.ChatColor.GREEN);
 
@@ -41,7 +44,7 @@ public class MaddoxBatphone extends SkyblockItem {
         click.setColor(net.md_5.bungee.api.ChatColor.DARK_GREEN);
         click.setBold(true);
         click.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, cb.create()));
-        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/slayer inventory"));
+        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sb batphone"));
 
         message.addExtra(click);
 

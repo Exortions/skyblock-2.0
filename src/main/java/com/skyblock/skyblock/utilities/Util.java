@@ -17,6 +17,7 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -31,6 +32,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -38,6 +40,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @UtilityClass
 public class Util {
@@ -63,6 +66,8 @@ public class Util {
     }};
 
     public String toRoman(int number) {
+        if (number <= 0) return "";
+
         int l = romanMap.floorKey(number);
         if (number == l) {
             return romanMap.get(number);
@@ -72,6 +77,16 @@ public class Util {
 
     public String[] buildLore(String lore) {
         return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
+    }
+
+    public String[] buildLore(String lore, char defaultColor) {
+        String[] built = buildLore(lore);
+
+        for (int i = 0; i < built.length; i++) {
+            built[i] = "" + '&' + defaultColor + built[i];
+        }
+
+        return ChatColor.translateAlternateColorCodes('&', String.join("\n", built)).split("\n");
     }
 
     public List<String> buildLoreList(String lore) {
@@ -478,5 +493,27 @@ public class Util {
                 run.run();
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), ticks);
+    }
+
+    public String getProgressBar(double percent, double max, double perBar) {
+        double barsFilled = (percent / perBar);
+        double barsEmpty = max - barsFilled;
+
+        if (barsFilled > max) barsFilled = max;
+
+        return ChatColor.DARK_GREEN + StringUtils.repeat("-", (int) barsFilled) + ChatColor.WHITE + StringUtils.repeat("-", (int) barsEmpty);
+    }
+
+
+    public int random(int min, int max) {
+        return new Random().nextInt((max - min) + 1) + min;
+    }
+
+    public double random(double min, double max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    public String formatTime(long millis) {
+        return String.format("%02dm%02ds", TimeUnit.MILLISECONDS.toMinutes(millis), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 }

@@ -69,11 +69,6 @@ public class ReforgeCommand implements Command {
             }
         }
 
-        if (args.length == 0) {
-            player.sendMessage(plugin.getPrefix() + "You must specify a reforge.");
-            return;
-        }
-
         Reforge reforge = Reforge.getReforge(args[0]);
 
         if (reforge == null) {

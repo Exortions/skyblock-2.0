@@ -107,6 +107,15 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addLore(List<String> lore) {
+        List<String> ls;
+        if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();
+        ls.addAll(lore);
+        meta.setLore(ls);
+        item.setItemMeta(meta);
+        return this;
+    }
+
     public ItemBuilder addLore(String lore) {
         List<String> ls;
         if (meta.getLore() != null) ls = meta.getLore(); else ls = new ArrayList<>();

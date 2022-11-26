@@ -9,6 +9,7 @@ import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,8 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.sql.Ref;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ReforgeListener implements Listener {
@@ -68,26 +72,26 @@ public class ReforgeListener implements Listener {
 
                 ItemStack reforgeItem;
 
-                        if (isReforgeable || newItem.getType().equals(Material.AIR)) {
-                            ItemBuilder builder = new ItemBuilder(ChatColor.YELLOW + "Reforge Item", Material.ANVIL)
-                                    .addLore(Util.buildLore("&7Place an item above to reforge\n&7it! Reforging items adds a\n&7random modifier to the item that\n&7grants stat boosts."))
-                                    .addNBT("reforge", true);
+                if (isReforgeable || newItem.getType().equals(Material.AIR)) {
+                    ItemBuilder builder = new ItemBuilder(ChatColor.YELLOW + "Reforge Item", Material.ANVIL)
+                            .addLore(Util.buildLore("&7Place an item above to reforge\n&7it! Reforging items adds a\n&7random modifier to the item that\n&7grants stat boosts."))
+                            .addNBT("reforge", true);
 
-                            if (!newItem.getType().equals(Material.AIR)) {
-                                int cost = Util.calculateReforgeCost(newItem);
+                    if (!newItem.getType().equals(Material.AIR)) {
+                        int cost = Util.calculateReforgeCost(newItem);
 
-                                builder.addLore(
-                                        Util.buildLore("\n&7Cost\n&6" + Util.formatInt(cost) + " Coin" + (cost == 1 ? "" : "s") + "\n\n&eClick to reforge!")
-                                );
-                            }
+                        builder.addLore(
+                                Util.buildLore("\n&7Cost\n&6" + Util.formatInt(cost) + " Coin" + (cost == 1 ? "" : "s") + "\n\n&eClick to reforge!")
+                        );
+                    }
 
-                            reforgeItem = builder.toItemStack();
-                        } else {
-                            reforgeItem = new ItemBuilder(ChatColor.RED + "Error!", Material.BARRIER)
-                                    .addLore(Util.buildLore("&7You cannot reforge this item!"))
-                                    .addNBT("reforge", true)
-                                    .toItemStack();
-                        }
+                    reforgeItem = builder.toItemStack();
+                } else {
+                    reforgeItem = new ItemBuilder(ChatColor.RED + "Error!", Material.BARRIER)
+                            .addLore(Util.buildLore("&7You cannot reforge this item!"))
+                            .addNBT("reforge", true)
+                            .toItemStack();
+                }
 
                 event.getClickedInventory().setItem(22, reforgeItem);
                 event.getClickedInventory().setItem(13, newItem);
@@ -141,7 +145,23 @@ public class ReforgeListener implements Listener {
                 return;
             }
 
-            Reforge reforge = validReforges.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(Skyblock.getPlugin(Skyblock.class).getReforgeHandler().getRegisteredReforges().size() - 1));
+            Color leatherColor = null;
+
+            if (item.getItemMeta() instanceof LeatherArmorMeta) {
+                leatherColor = ((LeatherArmorMeta) item.getItemMeta()).getColor();
+            }
+
+            Reforge reforge = null;
+            try {
+                Random random = Skyblock.getPlugin(Skyblock.class).getRandom();
+
+                int size = validReforges.size();
+                int index = random.nextInt(size);
+
+                reforge = validReforges.get(index);
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                player.sendMessage(ChatColor.RED + "Failed to get reforge: " + ex.getMessage());
+            }
             int cost = Util.calculateReforgeCost(event.getClickedInventory().getItem(13));
 
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
@@ -158,6 +178,14 @@ public class ReforgeListener implements Listener {
             String oldName = event.getClickedInventory().getItem(13).getItemMeta().getDisplayName();
 
             ItemStack newItem = ItemBase.reforge(event.getClickedInventory().getItem(13), reforge);
+
+            if (leatherColor != null) {
+                LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+
+                meta.setColor(leatherColor);
+
+                newItem.setItemMeta(meta);
+            }
 
             event.getClickedInventory().setItem(13, newItem);
 

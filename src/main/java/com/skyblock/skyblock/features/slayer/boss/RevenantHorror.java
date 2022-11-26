@@ -1,28 +1,38 @@
 package com.skyblock.skyblock.features.slayer.boss;
 
+import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.slayer.SlayerBoss;
+import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.Getter;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import net.minecraft.server.v1_8_R3.EntityZombie;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 public class RevenantHorror extends SlayerBoss {
 
     private Player spawner;
+    private double speed;
+    private boolean enraged;
+    private static final List<Double> SPEEDS = Arrays.asList(0.35, 0.4, 0.45, 0.55);
 
     public RevenantHorror(Player spawner, Integer level) {
         super(EntityType.ZOMBIE, SlayerType.REVENANT, spawner, level, 0.2);
 
         this.spawner = spawner;
+        this.enraged = false;
 
         Equipment equipment = new Equipment();
 
@@ -37,20 +47,21 @@ public class RevenantHorror extends SlayerBoss {
 
         switch (level) {
             case 1:
-                loadStats(500, 15, true, false, true, equipment, "Revenant Horror", 10, 50);
+                loadStats(500, 15, true, false, false, equipment, "Revenant Horror", 10, 50);
                 break;
             case 2:
-                loadStats(20000, 25, true, false, true, equipment, "Revenant Horror", 70, 100);
+                loadStats(20000, 25, true, false, false, equipment, "Revenant Horror", 70, 100);
                 break;
             case 3:
-                loadStats(400000, 90, true, false, true, equipment, "Revenant Horror", 310, 200);
+                loadStats(400000, 90, true, false, false, equipment, "Revenant Horror", 310, 200);
                 break;
             case 4:
-                loadStats(1500000, 300, true, false, true, equipment, "Revenant Horror", 610, 500);
+                loadStats(1500000, 300, true, false, false, equipment, "Revenant Horror", 610, 500);
                 break;
         }
-    }
 
+        speed = SPEEDS.get(level - 1);
+    }
     @Override
     protected void tick() {
         super.tick();
@@ -75,7 +86,7 @@ public class RevenantHorror extends SlayerBoss {
             for (Entity entity : getVanilla().getNearbyEntities(8.5, 5, 8.5)) {
                 if (entity instanceof Player) {
                     SkyblockPlayer p = SkyblockPlayer.getPlayer((Player) entity);
-                    p.damage(getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), false);
+                    p.damage(getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
                 }
             }
         }

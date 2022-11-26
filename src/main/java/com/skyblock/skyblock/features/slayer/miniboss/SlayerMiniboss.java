@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 
 public abstract class SlayerMiniboss extends SkyblockEntity {
 
-    protected final Player spawner;
+    private final Player spawner;
 
     public SlayerMiniboss(EntityType type, Player spawner) {
         super(Skyblock.getPlugin(), type);

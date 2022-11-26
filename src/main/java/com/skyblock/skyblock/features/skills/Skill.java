@@ -7,10 +7,14 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fish;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -27,16 +31,14 @@ public abstract class Skill {
             15000, 17500, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 60000, 70000, 80000, 90000, 100000, 125000, 150000,
             175000, 200000, 250000, 300000, 350000, 400000, 450000, 500000, 600000, 700000, 800000, 1000000);
 
-    public static final List<String> SKILLS = Arrays.asList("Combat", "Mining", "Foraging", "Fishing", "Farming", "Alchemy", "Enchanting");
+    public static final List<String> SKILLS = Arrays.asList("Farming", "Mining", "Combat", "Foraging", "Fishing", "Enchanting", "Alchemy");
 
-    public static int getLevel(double xp)
-    {
+    public static int getLevel(double xp) {
         if (xp == 0.0)
             return 0;
         if (xp >= 55172425.0)
             return 50;
-        for (int i = XP.size() - 1; i >= 0; i--)
-        {
+        for (int i = XP.size() - 1; i >= 0; i--) {
             if (XP.get(i) < xp)
                 return i;
         }
@@ -52,7 +54,6 @@ public abstract class Skill {
         }
         return 0.0;
     }
-
 
     public static double getXPUntilLevelUp(double xp) {
         double goal = getNextXPGoal(xp);
@@ -97,21 +98,27 @@ public abstract class Skill {
                 return new Foraging();
             case "Mining":
                 return new Mining();
+            case "Fishing":
+                return new Fishing();
         }
         return null;
     }
 
-    private String name;
-    private String alternate;
-    private String description;
+    private final String name;
+    private final String alternate;
+    private final String description;
+    private final ItemStack guiIcon;
+    private final ItemStack guiMilestoneIcon;
 
-    public Skill(String name, String alternate, String description) {
+    public Skill(String name, String alternate, String description, ItemStack guiIcon, ItemStack guiMilestoneIcon) {
         this.name = name;
         this.alternate = alternate;
         this.description = description;
+        this.guiIcon = guiIcon;
+        this.guiMilestoneIcon = guiMilestoneIcon;
     }
 
-    abstract List<String> getRewards(int level, int lastLevel);
+    public abstract List<String> getRewards(int level, int lastLevel);
 
     public void update(SkyblockPlayer player, int prev) {
         int prevLevel = getLevel(prev);
