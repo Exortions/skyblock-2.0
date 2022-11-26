@@ -25,13 +25,13 @@ public abstract class SkyblockEntity {
         public ItemStack legs;
         public ItemStack boots;
 
-//        public Equipment(ItemStack hand, ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots){
-//            this.hand = hand;
-//            this.helmet = helmet;
-//            this.chest = chest;
-//            this.legs = legs;
-//            this.boots = boots;
-//        } - unused
+        public Equipment(ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots, ItemStack hand){
+            this.hand = hand;
+            this.helmet = helmet;
+            this.chest = chest;
+            this.legs = legs;
+            this.boots = boots;
+        }
 
         public Equipment() { }
     }

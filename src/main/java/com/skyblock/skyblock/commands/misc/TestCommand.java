@@ -21,7 +21,6 @@ public class TestCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        plugin.getSlayerHandler().startQuest(player, SlayerType.REVENANT, 4);
-        Skill.reward(new Combat(), 4799, SkyblockPlayer.getPlayer(player));
+        Skill.reward(new Combat(), Integer.parseInt(args[0]), SkyblockPlayer.getPlayer(player));
     }
 }

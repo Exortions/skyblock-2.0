@@ -58,5 +58,42 @@ public class RevenantHorror extends SlayerBoss {
         Zombie zombie = (Zombie) getVanilla();
         zombie.setBaby(false);
         zombie.setVillager(false);
+
+        zombie.setTarget(spawner);
+
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(spawner);
+
+        EntityZombie nms = ((CraftZombie) zombie).getHandle();
+
+        nms.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(getMovementSpeed());
+
+        if (tick % 50 == 0) {
+            skyblockPlayer.damage(getEntityData().damage / 2f, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
+        }
+
+        if (tick % 20 == 0 && getLevel() >= 2) {
+            for (Entity entity : getVanilla().getNearbyEntities(8.5, 5, 8.5)) {
+                if (entity instanceof Player) {
+                    SkyblockPlayer p = SkyblockPlayer.getPlayer((Player) entity);
+                    p.damage(getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), false);
+                }
+            }
+        }
+
+        if (tick % (20 * 40) == 0 && getLevel() >= 3 && tick != 0) {
+            enraged = true;
+            spawner.playSound(spawner.getLocation(), Sound.ZOMBIE_WOODBREAK, 1f, 1f);
+            spawner.setVelocity(new Vector(Util.random(-1.0, 1.0), Util.random(0.0, 0.5), Util.random(-1.0, 1.0)));
+            zombie.getEquipment().setChestplate(new ItemBuilder(Material.LEATHER_CHESTPLATE).addEnchantmentGlint().dyeColor(Color.RED).toItemStack());
+            Util.delay(() -> {
+                enraged = false;
+                zombie.getEquipment().setChestplate(getEntityData().chestplate);
+                nms.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(getMovementSpeed());
+            }, 20 * 12);
+        }
+    }
+
+    private double getMovementSpeed() {
+        return SPEEDS.get(getLevel() - 1) * (enraged ? 1.05 : 1.0);
     }
 }

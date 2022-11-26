@@ -19,7 +19,52 @@ import org.bukkit.inventory.ItemStack;
 public class SlayerGUI extends CraftInventoryCustom implements Listener {
 
     public SlayerGUI(Player opener) {
-        super(null, 36, "Slayer");
+        super("Slayer", 36, new HashMap<String, Runnable>() {{
+            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Revenant Horror", () -> {
+                new RevenantGUI(opener).show(opener);
+            });
+
+            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Tarantula Broodfather", () -> {
+                new TarantulaGUI(opener).show(opener);
+            });
+
+            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Sven Packmaster", () -> {
+                new SvenGUI(opener).show(opener);
+            });
+
+            put(ChatColor.GREEN + "Slayer Quest Complete", () -> {
+                SlayerHandler slayerHandler = Skyblock.getPlugin(Skyblock.class).getSlayerHandler();
+                SlayerQuest quest = slayerHandler.getSlayer(opener).getQuest();
+                int level = getLevel(quest.getType(), getXP(opener, quest.getType()));
+                int newLevel = getLevel(quest.getType(), getXP(opener, quest.getType()) + quest.getExpReward());
+                
+                SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(opener);
+                skyblockPlayer.setValue("slayer." + quest.getType().name().toLowerCase() + ".exp", getXP(opener, quest.getType()) + quest.getExpReward());
+
+                opener.sendMessage("  " + ChatColor.GREEN + ChatColor.BOLD + "SLAYER QUEST COMPLETED!");
+
+                if (newLevel > level) {
+                    opener.sendMessage("  " + ChatColor.GREEN + ChatColor.BOLD + "LVL UP! " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "➜" + ChatColor.YELLOW + " " + quest.getType().getAlternative() + " Slayer LVL " + newLevel);
+                    opener.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + " REWARD AVAILABLE");
+                    opener.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "  CLICK TO COLLECT");
+                } else {
+                    if (level == 9) {
+                        opener.sendMessage(ChatColor.YELLOW + "  " + quest.getType().getAlternative() + " Slayer LVL " + level + "    " + ChatColor.GREEN + "" + ChatColor.BOLD + "LVL MAXED OUT!");
+                    } else {
+                        opener.sendMessage("   " + ChatColor.YELLOW + quest.getType().getAlternative() + " Slayer LVL " +
+                                level +  ChatColor.DARK_RED + " - " + ChatColor.GRAY + "Next LVL in " + ChatColor.LIGHT_PURPLE +
+                                Util.formatInt(getXP(quest.getType()).get(level) - getXP(skyblockPlayer.getBukkitPlayer(), quest.getType())) + " XP" + ChatColor.GRAY + "!");
+                    }
+                }
+                
+                opener.playSound(opener.getLocation(), Sound.LEVEL_UP, 1, 2);
+                
+                slayerHandler.unregisterSlayer(opener);
+               
+                opener.closeInventory();
+               new SlayerGUI(opener).show(opener);
+            });
+        }});
 
         Util.fillEmpty(this);
 
@@ -84,6 +129,64 @@ public class SlayerGUI extends CraftInventoryCustom implements Listener {
                 break;
         }
 
-        return new ItemBuilder(ChatColor.RED + "☠ " + ChatColor.YELLOW + name, material).addLore(ChatColor.GRAY + desc, " ", ChatColor.GRAY + alternate + " Slayer: " + ChatColor.YELLOW + "N/A", " ", ChatColor.YELLOW + "Click to view boss!").toItemStack();
+        ability1.add(" ");
+        ability2.add(" ");
+        ability3.add(" ");
+
+        switch (abilityAmount) {
+            case 1:
+                ability2.clear();
+                ability3.clear();
+                break;
+            case 2:
+                ability3.clear();
+                break;
+        }
+
+        return new ItemBuilder(color + name + " " + Util.toRoman(level), material).addLore(ChatColor.DARK_GRAY + DESCRIPTIONS.get(level - 1), " ", ChatColor.GRAY + "Health: " + ChatColor.RED + Util.formatInt(hp) + "❤", ChatColor.GRAY + "Damage: " + ChatColor.RED + Util.formatInt(dps) + ChatColor.GRAY + " per second", " ").addLore(ability1).addLore(ability2).addLore(ability3).addLore(ChatColor.GRAY + "Reward: " + ChatColor.LIGHT_PURPLE + xp + " " + type.getAlternative() + " Slayer XP", ChatColor.DARK_GRAY + "  + Boss Drops", " ", ChatColor.GRAY + "Cost to start: " + ChatColor.GOLD + Util.formatInt(cost) + " coins", " ", ChatColor.YELLOW + "Click to slay!").toItemStack();
+    }
+
+    private static final List<Integer> ZOMBIE_XP = Arrays.asList(5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000);
+    private static final List<Integer> SPIDER_XP = Arrays.asList(5, 25, 200, 1000, 5000, 20000, 100000, 400000, 1000000);
+    private static final List<Integer> WOLF_XP = Arrays.asList(10, 30, 250, 1500, 5000, 20000, 100000, 400000, 1000000);
+    public static int getLevel(SlayerType type, int exp) {
+        List<Integer> list = new ArrayList<>();
+
+        switch (type) {
+            case REVENANT:
+                list = ZOMBIE_XP;
+                break;
+            case TARANTULA:
+                list = SPIDER_XP;
+                break;
+            case SVEN:
+                list = WOLF_XP;
+                break;
+        }
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (list.get(i) <= exp)
+                return i + 1;
+        }
+
+        return 0;
+    }
+
+    public static int getXP(Player player, SlayerType type) {
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+        return (int) skyblockPlayer.getValue("slayer." + type.name().toLowerCase() + ".exp");
+    }
+
+    public static List<Integer> getXP(SlayerType type) {
+        switch (type) {
+            case REVENANT:
+                return ZOMBIE_XP;
+            case SVEN:
+                return WOLF_XP;
+            case TARANTULA:
+                return SPIDER_XP;
+        }
+
+        return new ArrayList<>();
     }
 }

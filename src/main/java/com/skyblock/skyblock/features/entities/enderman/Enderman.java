@@ -8,8 +8,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Enderman extends SkyblockEntity {
 
-    public Enderman(Skyblock sb, String type) {
-        super(sb, EntityType.ENDERMAN);
+    public Enderman(String type) {
+        super(Skyblock.getPlugin(), EntityType.ENDERMAN);
 
         Equipment equipment = new Equipment();
 
