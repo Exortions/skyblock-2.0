@@ -17,6 +17,7 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Data;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -48,29 +49,30 @@ public class SkyblockPlayer {
     }
 
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
-    private int damageModifier;
-    private Player bukkitPlayer;
     private HashMap<SkyblockStat, Integer> stats;
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
     private FileConfiguration config;
+    private Player bukkitPlayer;
+    private int damageModifier;
     private ArmorSet armorSet;
-    private File configFile;
+    private Block brokenBlock;
     private Scoreboard board;
-    private ItemStack hand;
     private String actionBar;
+    private File configFile;
+    private ItemStack hand;
     private int tick;
 
     public SkyblockPlayer(UUID uuid) {
-        predicateDamageModifiers = new ArrayList<>();
-        damageModifier = 0;
-        bukkitPlayer = Bukkit.getPlayer(uuid);
-        cooldowns = new HashMap<>();
-        extraData = new HashMap<>();
-        stats = new HashMap<>();
-        tick = 0;
-        hand = Util.getEmptyItemBase();
-        armorSet = null;
+        this.predicateDamageModifiers = new ArrayList<>();
+        this.bukkitPlayer = Bukkit.getPlayer(uuid);
+        this.hand = Util.getEmptyItemBase();
+        this.cooldowns = new HashMap<>();
+        this.extraData = new HashMap<>();
+        this.stats = new HashMap<>();
+        this.damageModifier = 0;
+        this.armorSet = null;
+        this.tick = 0;
 
         this.extraData.put("fullSetBonus", false);
         this.extraData.put("fullSetBonusType", null);

@@ -7,10 +7,12 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -101,9 +103,9 @@ public abstract class Skill {
         return null;
     }
 
-    private String name;
-    private String alternate;
-    private String description;
+    private final String name;
+    private final String alternate;
+    private final String description;
 
     public Skill(String name, String alternate, String description) {
         this.name = name;

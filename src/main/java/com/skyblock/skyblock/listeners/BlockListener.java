@@ -9,11 +9,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class BlockListener implements Listener {
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        event.setCancelled(SkyblockPlayer.getPlayer(event.getPlayer()).isNotOnPrivateIsland());
-    }
-
-    @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         event.setCancelled(SkyblockPlayer.getPlayer(event.getPlayer()).isNotOnPrivateIsland());
     }
