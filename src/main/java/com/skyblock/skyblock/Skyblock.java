@@ -474,4 +474,6 @@ public final class Skyblock extends JavaPlugin {
     public String getPrefix() {
         return ChatColor.translateAlternateColorCodes('&', "&7[&3S&bB&7] &f");
     }
+
+    public static Skyblock getPlugin() { return Skyblock.getPlugin(Skyblock.class); }
 }

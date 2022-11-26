@@ -38,6 +38,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @UtilityClass
 public class Util {
@@ -478,5 +479,17 @@ public class Util {
                 run.run();
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), ticks);
+    }
+
+    public int random(int min, int max) {
+        return new Random().nextInt((max - min) + 1) + min;
+    }
+
+    public double random(double min, double max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    public String formatTime(long millis) {
+        return String.format("%02dm%02ds", TimeUnit.MILLISECONDS.toMinutes(millis), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 }

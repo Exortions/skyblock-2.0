@@ -23,20 +23,22 @@ public abstract class SlayerBoss extends SkyblockEntity {
     private final SlayerType slayerType;
     private final int level;
     private final int rewardXp;
-    private final Player summoner;
+    private final Player spawner;
     private ArmorStand display;
+    private long startTime;
+
     @Setter
     private boolean failed;
 
     private static final List<Integer> XP_REWARDS = Arrays.asList(5, 25, 100, 500);
 
-    public SlayerBoss(EntityType type, SlayerType slayerType, Player summoner, int level, double displayHeight) {
-        super(Skyblock.getPlugin(Skyblock.class), type);
+    public SlayerBoss(EntityType type, SlayerType slayerType, Player spawner, int level, double displayHeight) {
+        super(Skyblock.getPlugin(), type);
 
         this.level = level;
         this.slayerType = slayerType;
         this.displayHeight = displayHeight;
-        this.summoner = summoner;
+        this.spawner = spawner;
 
         this.lifeSpan = 180 * 20;
         this.failed = false;
@@ -53,6 +55,11 @@ public abstract class SlayerBoss extends SkyblockEntity {
         display.setGravity(false);
         display.setCustomNameVisible(true);
 
+        startTime = System.currentTimeMillis();
+
+        SlayerQuest quest = Skyblock.getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
+        quest.setTimeToSpawn(System.currentTimeMillis() - quest.getTimeToSpawn());
+        
         return super.spawn(location);
     }
 
@@ -76,15 +83,19 @@ public abstract class SlayerBoss extends SkyblockEntity {
         int ticks = getLifeSpan();
         long minute = ticks / 1200;
         long second = ticks / 20 - minute*60;
-        return "" + Math. round(minute) + ":" + (String.valueOf(second).length() == 1 ? "0" + Math.round(second) : Math.round(second));
+        return "" + Math.round(minute) + ":" + (String.valueOf(second).length() == 1 ? "0" + Math.round(second) : Math.round(second));
     }
 
     @Override
     protected void onDeath() {
-        summoner.playSound(summoner.getLocation(), Sound.LEVEL_UP, 1, 2);
-        summoner.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "NICE! SLAYER BOSS SLAIN!");
-        summoner.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "→ " + ChatColor.GRAY + "Talk to Maddox to claim your " + getSlayerType().getAlternative() + " Slayer XP!");
-        getPlugin().getSlayerHandler().getSlayer(summoner).getQuest().setState(SlayerQuest.QuestState.FINISHED);
+        SlayerQuest quest = getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
+        quest.setTimeToKill(System.currentTimeMillis() - startTime);
+        
+        spawner.playSound(spawner.getLocation(), Sound.LEVEL_UP, 1, 2);
+        spawner.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "NICE! SLAYER BOSS SLAIN!");
+        spawner.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "→ " + ChatColor.GRAY + "Talk to Maddox to claim your " + getSlayerType().getAlternative() + " Slayer XP!");
+
+        quest.setState(SlayerQuest.QuestState.FINISHED);
     }
 
     @Override

@@ -205,9 +205,11 @@ public class SkyblockPlayer {
         subtractStat(SkyblockStat.MANA, mana);
     }
 
-    // hearts = max * (health / max)
     public void damage(double damage, EntityDamageEvent.DamageCause cause, Entity attacker) {
-        double d = (damage - (damage * ((getStat(SkyblockStat.DEFENSE) / (getStat(SkyblockStat.DEFENSE) + 100F)))));
+        damage(damage, cause, attacker, false);
+    }
+    public void damage(double damage, EntityDamageEvent.DamageCause cause, Entity attacker, boolean trueDamage) {
+        double d = trueDamage ? damage : (damage - (damage * ((getStat(SkyblockStat.DEFENSE) / (getStat(SkyblockStat.DEFENSE) + 100F)))));
 
         if ((getStat(SkyblockStat.HEALTH) - d) <= 0) {
             kill(cause, attacker);

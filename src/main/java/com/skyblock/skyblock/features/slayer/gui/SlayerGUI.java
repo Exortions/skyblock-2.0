@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SlayerGUI extends Gui {
 
@@ -69,7 +70,7 @@ public class SlayerGUI extends Gui {
                     } else {
                         opener.sendMessage("   " + ChatColor.YELLOW + quest.getType().getAlternative() + " Slayer LVL " +
                                 level +  ChatColor.DARK_RED + " - " + ChatColor.GRAY + "Next LVL in " + ChatColor.LIGHT_PURPLE +
-                                (getXP(quest.getType()).get(level) - getXP(quest.getType()).get(level - 1)) + " XP" + ChatColor.GRAY + "!");
+                                (getXP(quest.getType()).get(level) - getXP(skyblockPlayer.getBukkitPlayer(), quest.getType())) + " XP" + ChatColor.GRAY + "!");
                     }
                 }
                 
@@ -105,7 +106,10 @@ public class SlayerGUI extends Gui {
                         break;
                 }
 
-                addItem(13, new ItemBuilder(ChatColor.GREEN + "Slayer Quest Complete", type).addLore(ChatColor.GRAY + "You've slain the boss! Skyblock", ChatColor.GRAY + "is now a little safer thanks to you!", " ", ChatColor.GRAY + "Boss: " + ChatColor.DARK_RED + boss.getName(), " ", ChatColor.DARK_GRAY + "Time to spawn: 00m00s", ChatColor.DARK_GRAY + "Time to kill: 00m00s", " ", ChatColor.GRAY + "Reward: " + ChatColor.DARK_PURPLE + quest.getExpReward() + " " + quest.getType().getAlternative() + " Slayer XP", " ", ChatColor.YELLOW + "Click to collect reward!").toItemStack());
+                String timeToKill = Util.formatTime(quest.getTimeToKill());
+                String timeToSpawn = Util.formatTime(quest.getTimeToSpawn());
+
+                addItem(13, new ItemBuilder(ChatColor.GREEN + "Slayer Quest Complete", type).addLore(ChatColor.GRAY + "You've slain the boss! Skyblock", ChatColor.GRAY + "is now a little safer thanks to you!", " ", ChatColor.GRAY + "Boss: " + ChatColor.DARK_RED + boss.getEntityData().entityName + " " + Util.toRoman(boss.getLevel()), " ", ChatColor.DARK_GRAY + "Time to spawn: " + timeToSpawn, ChatColor.DARK_GRAY + "Time to kill: " + timeToKill, " ", ChatColor.GRAY + "Reward: " + ChatColor.DARK_PURPLE + quest.getExpReward() + " " + quest.getType().getAlternative() + " Slayer XP", " ", ChatColor.YELLOW + "Click to collect reward!").toItemStack());
             }
         } else {
             addItem(10, getSlayerItem(SlayerType.REVENANT, opener));
@@ -149,10 +153,17 @@ public class SlayerGUI extends Gui {
 
         var item = new ItemBuilder(ChatColor.RED + "☠ " +
                 ChatColor.YELLOW + name, material);
-        return item.addLore(desc).
-                addLore(" ", ChatColor.GRAY + alternate +
-                " Slayer: " + ChatColor.YELLOW + "N/A", " ",
-                ChatColor.YELLOW + "Click to view boss!").toItemStack();
+        int level = getLevel(type, getXP(player, type));
+
+        if (level != 0) {
+            return item.addLore(desc).
+                    addLore(" ", ChatColor.GRAY + alternate +
+                    " Slayer: " + ChatColor.YELLOW + "LVL " + level, " ",
+                    ChatColor.YELLOW + "Click to view boss!").toItemStack();
+        } else {
+            return item.addLore(desc).
+                    addLore(" ", ChatColor.YELLOW + "Click to view boss!").toItemStack();
+        }
     }
 
     public static final List<ChatColor> COLORS = Arrays.asList(ChatColor.GREEN, ChatColor.YELLOW, ChatColor.RED, ChatColor.DARK_RED);

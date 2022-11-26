@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class RegenerativeBlockHandler implements Listener {
 
@@ -113,16 +114,14 @@ public class RegenerativeBlockHandler implements Listener {
 
                 block.setType(Material.BEDROCK);
 
-                Material setAfter = Material.COBBLESTONE;
+                AtomicReference<Material> setAfter = new AtomicReference<>(Material.COBBLESTONE);
+                if (player.getBrokenBlock() != null && player.getBrokenBlock().getType().equals(Material.COBBLESTONE)) setAfter.set(Material.STONE);
+                else if (player.getBrokenBlock() == null) setAfter.set(Material.BEDROCK);
 
-                if (player.getBrokenBlock() != null && player.getBrokenBlock().getType().equals(Material.COBBLESTONE)) setAfter = Material.STONE;
-                else if (player.getBrokenBlock() == null) setAfter = Material.BEDROCK;
-
-                Material finalSetAfter = setAfter;
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        block.setType(finalSetAfter);
+                        block.setType(setAfter.get());
                     }
                 }.runTaskLater(skyblock, 140);
                 break;
