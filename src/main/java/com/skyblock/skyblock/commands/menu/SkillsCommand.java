@@ -100,7 +100,7 @@ public class SkillsCommand implements Command {
                     Util.buildLore(
                             "&7" + skill.getDescription() + "\n\n" +
                                     "Progress to Level " + Util.toRoman(nextLevel) + ": &e" + progress + "%\n" +
-                                    "" + Util.getProgressBar(xp, 20, 5) + " &e" + xp + "&6/&e" + Util.abbreviate((int) xpRequired) + "\n\n" +
+                                    "" + Util.getProgressBar(progress, 20, 5) + " &e" + xp + "&6/&e" + Util.abbreviate((int) xpRequired) + "\n\n" +
                                     "Level " + Util.toRoman(nextLevel) + " Rewards:\n" +
                                     rewardsString + "\n" +
                                     "&eClick to view!",

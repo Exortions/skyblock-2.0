@@ -494,8 +494,8 @@ public class Util {
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), ticks);
     }
 
-    public String getProgressBar(double current, double max, double perBar) {
-        double barsFilled = (current / perBar);
+    public String getProgressBar(double percent, double max, double perBar) {
+        double barsFilled = (percent / perBar);
         double barsEmpty = max - barsFilled;
 
         if (barsFilled > max) barsFilled = max;
