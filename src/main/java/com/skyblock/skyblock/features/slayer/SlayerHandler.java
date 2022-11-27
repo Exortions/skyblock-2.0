@@ -4,6 +4,8 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.SlayerScoreboard;
+import com.skyblock.skyblock.features.slayer.gui.SlayerGUI;
+import com.skyblock.skyblock.features.slayer.miniboss.SlayerMiniboss;
 import com.skyblock.skyblock.features.slayer.miniboss.SlayerMiniboss;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.sound.SoundSequence;
@@ -53,6 +55,7 @@ public class SlayerHandler {
                 break;
         }
 
+        SkyblockPlayer.getPlayer(player).addCoins(-1 * SlayerGUI.COINS.get(level - 1));
         player.sendMessage(ChatColor.DARK_PURPLE + " ☠ " + ChatColor.GRAY + "Slay " + ChatColor.RED + Util.formatInt(data.quest.getNeededExp()) + " Combat XP " + ChatColor.GRAY + "worth of " + entityName + ".");
     }
 
@@ -108,7 +111,7 @@ public class SlayerHandler {
                 player.playEffect(spawnLoc.get(), Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE.getData());
                 quest.getBoss().spawn(spawnLoc.get());
             }, 28);
-        } else {
+        } else if (quest.getState().equals(SlayerQuest.QuestState.SUMMONING)) {
             SlayerMiniboss miniboss = SlayerMiniboss.getMiniBoss(player, quest.getBoss().getLevel(), exp, quest.getType());
             if (miniboss != null) miniboss.spawn(spawnLoc.get());
         }

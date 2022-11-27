@@ -1,0 +1,14 @@
+package com.skyblock.skyblock.features.entities.spider;
+
+public enum SpiderType {
+
+    SPLITTER_SPIDER_INTERMEDIATE,
+    SPLITTER_SPIDER_MEDIUM,
+    DASHER_SPIDER_EASY,
+    DASHER_SPIDER_INTERMEDIATE,
+    WEAVER_SPIDER,
+    SPIDER_JOCKEY,
+    VORACIOUS_SPIDER,
+    TARANTULA_BROOD_MOTHER
+
+}

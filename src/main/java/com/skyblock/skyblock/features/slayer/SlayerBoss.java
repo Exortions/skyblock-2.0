@@ -88,6 +88,11 @@ public abstract class SlayerBoss extends SkyblockEntity {
 
     @Override
     protected void onDeath() {
+        if (failed) {
+            display.remove();
+            return;
+        }
+
         SlayerQuest quest = getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
         quest.setTimeToKill(System.currentTimeMillis() - startTime);
         
@@ -96,6 +101,14 @@ public abstract class SlayerBoss extends SkyblockEntity {
         spawner.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "→ " + ChatColor.GRAY + "Talk to Maddox to claim your " + getSlayerType().getAlternative() + " Slayer XP!");
 
         quest.setState(SlayerQuest.QuestState.FINISHED);
+    }
+
+    @Override
+    public void onDespawn() {
+        super.onDespawn();
+
+        SlayerQuest quest = getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
+        quest.fail();
     }
 
     @Override

@@ -31,11 +31,17 @@ public class RevenantGUI extends Gui {
                     opener.closeInventory();
                 });
             }
+
+            put(ChatColor.RED + "Close", opener::closeInventory);
+            put(ChatColor.GREEN + "Go Back", () -> {
+                new SlayerGUI(opener).show(opener);
+            });
         }});
 
         Util.fillEmpty(this);
 
-        addItem(49, Util.buildBackButton(""));
+        addItem(48, Util.buildBackButton("To Slayer"));
+        addItem(49, Util.buildCloseButton());
 
         addItem(11, SlayerGUI.getStartItem(SlayerType.REVENANT, 1, 500, 15, 5, 100, 1));
         addItem(12, SlayerGUI.getStartItem(SlayerType.REVENANT, 2, 20000, 25, 25, 2000, 2));

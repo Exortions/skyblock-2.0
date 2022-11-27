@@ -21,8 +21,8 @@ public class Zombie extends SkyblockEntity {
 
     private final ZombieType type;
 
-    public Zombie(Skyblock sb, String type) {
-        super(sb, EntityType.ZOMBIE);
+    public Zombie(String type) {
+        super(Skyblock.getPlugin(), EntityType.ZOMBIE);
 
         this.type = ZombieType.valueOf(type);
 

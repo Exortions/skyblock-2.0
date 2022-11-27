@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.slayer.SlayerBoss;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
+import com.skyblock.skyblock.features.slayer.gui.SlayerGUI;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -56,7 +57,7 @@ public class SlayerScoreboard extends Scoreboard {
         SlayerBoss boss = data.getBoss();
         SlayerQuest quest = data.getQuest();
 
-        addLine(4, ChatColor.DARK_RED + boss.getEntityData().entityName + " " + Util.toRoman(boss.getLevel()));
+        addLine(4, SlayerGUI.COLORS.get(boss.getLevel() - 1) + boss.getEntityData().entityName + " " + Util.toRoman(boss.getLevel()));
 
         switch (quest.getState()) {
             case SUMMONING:
@@ -67,6 +68,9 @@ public class SlayerScoreboard extends Scoreboard {
                 break;
             case FINISHED:
                 addLine(3, ChatColor.GREEN + "Boss slain!");
+                break;
+            case FAILED:
+                addLine(3, ChatColor.RED + "Quest failed!");
         }
         addLine(2, ChatColor.WHITE + "  ");
         addLine(1, ChatColor.YELLOW + "www.hypixel.net");

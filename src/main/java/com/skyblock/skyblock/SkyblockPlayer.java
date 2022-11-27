@@ -12,6 +12,8 @@ import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import com.skyblock.skyblock.features.skills.Skill;
+import com.skyblock.skyblock.features.slayer.SlayerHandler;
+import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -266,15 +268,20 @@ public class SkyblockPlayer {
 
         bukkitPlayer.sendMessage(ChatColor.RED + " ☠ " + ChatColor.GRAY + message);
 
+        if (hasActiveSlayer()) {
+            SlayerQuest quest = getActiveSlayer().getQuest();
+            quest.fail();
+        }
+
         if (isOnIsland()) return;
 
         int sub = (int) getValue("stats.purse") / 2;
         bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatInt(sub) + " coins!");
-        bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         bukkitPlayer.setVelocity(new Vector(0, 0, 0));
         bukkitPlayer.setFallDistance(0.0f);
-        bukkitPlayer.teleport(new Location(bukkitPlayer.getWorld(), -2 , 70,  -84,  -180, 0));
+        bukkitPlayer.performCommand("sb warp hub");
+        bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         setValue("stats.purse", sub);
     }
@@ -487,7 +494,11 @@ public class SkyblockPlayer {
         return (int) getValue("stats.purse");
     }
 
-    public boolean hasActiveSlayer() { return Skyblock.getPlugin(Skyblock.class).getSlayerHandler().getSlayer(bukkitPlayer) != null; }
+    public boolean hasActiveSlayer() { return Skyblock.getPlugin().getSlayerHandler().getSlayer(bukkitPlayer) != null; }
+
+    public SlayerHandler.SlayerData getActiveSlayer() {
+        return Skyblock.getPlugin().getSlayerHandler().getSlayer(bukkitPlayer);
+    }
 
     public void addPredicateDamageModifier(BiFunction<SkyblockPlayer, Entity, Integer> damageModifier) {
         this.predicateDamageModifiers.add(damageModifier);
