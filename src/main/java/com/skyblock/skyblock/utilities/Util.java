@@ -110,7 +110,11 @@ public class Util {
     }
 
     public ItemStack buildBackButton(String lore) {
-        return new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(Util.buildLore(lore)).toItemStack();
+        NBTItem item = new NBTItem(new ItemBuilder(ChatColor.GREEN + "Go Back", Material.ARROW).addLore(Util.buildLore(lore)).toItemStack());
+
+        item.setBoolean("back", true);
+
+        return item.getItem();
     }
 
     public void fillEmpty(Inventory inventory) {

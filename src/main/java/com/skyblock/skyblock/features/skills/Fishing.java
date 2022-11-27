@@ -37,11 +37,10 @@ public class Fishing extends Skill {
         return Arrays.asList(
                 ChatColor.WHITE + " Increases the chance to find",
                 ChatColor.WHITE + " treasure when fishing by",
-                ChatColor.DARK_GRAY + " " + (percent - 0.2) + "➜" + ChatColor.GREEN + "" + percent + ChatColor.WHITE + ".",
+                ChatColor.DARK_GRAY + " " + (percent - 0.2) + "➜" + ChatColor.GREEN + "" + percent + ChatColor.WHITE + "%.",
                 ChatColor.DARK_GRAY + "+" + ChatColor.GREEN + health + ChatColor.RED + " ❤ Health",
                 ChatColor.DARK_GRAY + "+" + ChatColor.GOLD + coins + ChatColor.GRAY + " Coins"
         );
     }
-
 
 }
