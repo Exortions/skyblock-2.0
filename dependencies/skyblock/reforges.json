@@ -1557,6 +1557,71 @@
           }
         }
       ]
+    },
+    {
+      "name": "Ominous",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 2,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "MANA": 2
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 3,
+            "DEFENSE": 2,
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": 1,
+            "MANA": 3
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 4,
+            "DEFENSE": 3,
+            "STRENGTH": 3,
+            "CRIT_DAMAGE": 1,
+            "MANA": 4
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 5,
+            "DEFENSE": 5,
+            "STRENGTH": 4,
+            "CRIT_DAMAGE": 1,
+            "MANA": 5
+          }
+        }
+      ]
     }
   ]
 }
