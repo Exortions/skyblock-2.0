@@ -1725,6 +1725,78 @@
           }
         }
       ]
+    },
+    {
+      "name": "Simple",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 1,
+            "DEFENSE": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1
+          }
+        }
+      ]
     }
   ]
 }
