@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
+@SuppressWarnings("deprecation")
 public class RegenerativeBlockHandler implements Listener {
 
     public static final HashMap<Material, Integer> resetTimes = new HashMap<Material, Integer>() {{
