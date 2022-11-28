@@ -23,7 +23,7 @@ public class Fishing extends Skill {
     public List<String> getRewards(int level, int lastLevel) {
         double percent = 0.2 * level;
         int health = 2;
-        int coins = 0;
+        int coins;
 
         if (level < 3) coins = 25 * level;
         else {
