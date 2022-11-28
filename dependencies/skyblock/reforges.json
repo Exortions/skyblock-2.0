@@ -1445,6 +1445,66 @@
           }
         }
       ]
+    },
+    {
+      "name": "Bizarre",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 1,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": -1,
+            "MANA": 6
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 1,
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": -2,
+            "MANA": 8
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 1,
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": -2,
+            "MANA": 10
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 1,
+            "STRENGTH": 3,
+            "CRIT_DAMAGE": -3,
+            "MANA": 14
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 1,
+            "STRENGTH": 5,
+            "CRIT_DAMAGE": -5,
+            "MANA": 20
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 2,
+            "STRENGTH": 7,
+            "CRIT_DAMAGE": -7,
+            "MANA": 30
+          }
+        }
+      ]
     }
   ]
 }
