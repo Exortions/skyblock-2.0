@@ -2,7 +2,6 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
