@@ -1861,6 +1861,54 @@
           }
         }
       ]
+    },
+    {
+      "name": "Vivid",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 1,
+            "SPEED": 1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 2,
+            "SPEED": 2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 3,
+            "SPEED": 3
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 4,
+            "SPEED": 4
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 5,
+            "SPEED": 5
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 6,
+            "SPEED": 6
+          }
+        }
+      ]
     }
   ]
 }
