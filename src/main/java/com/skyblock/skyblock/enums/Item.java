@@ -11,8 +11,7 @@ public enum Item {
     SWORD("SWORD"),
     RANGED("BOW"),
     ARMOR("HELMET", "CHESTPLATE", "LEGGINGS", "BOOTS"),
-    TOOL("PICKAXE"),
-    ACCESSORY("ACCESSORY");
+    ACCESSORY("ACCESSORY", "TALISMAN", "RING", "ARTIFACT");
 
     private final List<String> qualifiedNames;
 
