@@ -1797,6 +1797,70 @@
           }
         }
       ]
+    },
+    {
+      "name": "Strange",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": 1,
+            "SPEED": 1,
+            "MANA": 1,
+            "ATTACK_SPEED": -1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "DEFENSE": 3,
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 2,
+            "MANA": -1,
+            "ATTACK_SPEED": 2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "DEFENSE": 2,
+            "STRENGTH": -1,
+            "SPEED": 1,
+            "MANA": 2
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "DEFENSE": -1,
+            "STRENGTH": 3,
+            "CRIT_DAMAGE": 1,
+            "ATTACK_SPEED": 4
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "DEFENSE": 1,
+            "SPEED": 3,
+            "CRIT_DAMAGE": 7,
+            "MANA": 8
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 4,
+            "CRIT_DAMAGE": 9,
+            "ATTACK_SPEED": 5,
+            "DEFENSE": 1,
+            "SPEED": 3,
+            "MANA": 11
+          }
+        }
+      ]
     }
   ]
 }
