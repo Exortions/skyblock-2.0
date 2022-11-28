@@ -1622,6 +1622,61 @@
           }
         }
       ]
+    },
+    {
+      "name": "Pretty",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 1,
+            "MANA": 3
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 1,
+            "MANA": 4
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 2,
+            "MANA": 6,
+            "ATTACK_SPEED": 1
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 2,
+            "SPEED": 1,
+            "MANA": 9,
+            "ATTACK_SPEED": 1
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 3,
+            "SPEED": 1,
+            "MANA": 13,
+            "ATTACK_SPEED": 1
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 4,
+            "SPEED": 2,
+            "MANA": 18,
+            "ATTACK_SPEED": 1
+          }
+        }
+      ]
     }
   ]
 }
