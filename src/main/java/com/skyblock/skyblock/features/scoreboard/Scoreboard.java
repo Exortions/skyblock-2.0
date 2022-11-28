@@ -28,13 +28,6 @@ public abstract class Scoreboard {
         updateScoreboard();
     }
 
-    public void runTask() {
-        Skyblock.getPlugin(Skyblock.class).getServer().getScheduler().scheduleSyncRepeatingTask(Skyblock.getPlugin(Skyblock.class), () -> {
-            display();
-            updateScoreboard();
-        }, 0, 5);
-    }
-
     abstract void display();
 
     public void updateScoreboard(){
