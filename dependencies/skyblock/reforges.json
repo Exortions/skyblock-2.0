@@ -1963,6 +1963,54 @@
           }
         }
       ]
+    },
+    {
+      "name": "Demonic",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 1,
+            "MANA": 5
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "MANA": 7
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 2,
+            "MANA": 9
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 3,
+            "MANA": 12
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 5,
+            "MANA": 17
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 7,
+            "MANA": 24
+          }
+        }
+      ]
     }
   ]
 }
