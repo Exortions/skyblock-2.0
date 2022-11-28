@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.entities;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.enderman.Enderman;
 import com.skyblock.skyblock.features.entities.spider.Spider;
 import com.skyblock.skyblock.features.entities.wolf.Wolf;

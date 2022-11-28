@@ -9,7 +9,7 @@ import org.bukkit.entity.EntityType;
 
 public class Wolf extends SkyblockEntity {
 
-    private WolfType type;
+    private final WolfType type;
 
     public Wolf(String type) {
         super(Skyblock.getPlugin(), EntityType.WOLF);
@@ -43,10 +43,6 @@ public class Wolf extends SkyblockEntity {
 
         nms.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4);
 
-        if (wolf.getTarget() != null) {
-            wolf.setAngry(true);
-        } else {
-            wolf.setAngry(false);
-        }
+        wolf.setAngry(wolf.getTarget() != null);
     }
 }

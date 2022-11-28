@@ -10,7 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Spider extends SkyblockEntity {
 
-    private SpiderType type;
+    private final SpiderType type;
     private Skeleton jockey;
 
     public Spider(String type) {
