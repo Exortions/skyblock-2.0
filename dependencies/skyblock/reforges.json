@@ -1505,6 +1505,58 @@
           }
         }
       ]
+    },
+    {
+      "name": "Itchy",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 3
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 4
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 5,
+            "ATTACK_SPEED": 1
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": 7,
+            "ATTACK_SPEED": 1
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_DAMAGE": 10,
+            "ATTACK_SPEED": 1
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 4,
+            "CRIT_DAMAGE": 15,
+            "ATTACK_SPEED": 1
+          }
+        }
+      ]
     }
   ]
 }
