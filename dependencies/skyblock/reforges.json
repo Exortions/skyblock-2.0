@@ -1677,6 +1677,54 @@
           }
         }
       ]
+    },
+    {
+      "name": "Shiny",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "HEALTH": 4,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "HEALTH": 5,
+            "MANA": 2
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "HEALTH": 7,
+            "MANA": 2
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "HEALTH": 10,
+            "MANA": 3
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "HEALTH": 15,
+            "MANA": 5
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "HEALTH": 20,
+            "MANA": 5
+          }
+        }
+      ]
     }
   ]
 }
