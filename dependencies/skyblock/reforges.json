@@ -1909,6 +1909,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "Godly",
+      "applicable": "ACCESSORY",
+      "data": [
+        {
+          "rarity": "COMMON",
+          "stats": {
+            "STRENGTH": 1,
+            "CRIT_DAMAGE": 2,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "UNCOMMON",
+          "stats": {
+            "STRENGTH": 2,
+            "CRIT_DAMAGE": 2,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "RARE",
+          "stats": {
+            "STRENGTH": 3,
+            "CRIT_DAMAGE": 3,
+            "MANA": 1
+          }
+        },
+        {
+          "rarity": "EPIC",
+          "stats": {
+            "STRENGTH": 5,
+            "CRIT_DAMAGE": 4,
+            "MANA": 2
+          }
+        },
+        {
+          "rarity": "LEGENDARY",
+          "stats": {
+            "STRENGTH": 7,
+            "CRIT_DAMAGE": 6,
+            "MANA": 4
+          }
+        },
+        {
+          "rarity": "MYTHIC",
+          "stats": {
+            "STRENGTH": 10,
+            "CRIT_DAMAGE": 8,
+            "MANA": 6
+          }
+        }
+      ]
     }
   ]
 }
