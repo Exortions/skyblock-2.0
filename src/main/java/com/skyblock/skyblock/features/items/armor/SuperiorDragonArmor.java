@@ -41,4 +41,7 @@ public class SuperiorDragonArmor extends ArmorSet {
 
         skyblockPlayer.setExtraData("superior_dragon_bonus", new HashMap<>());
     }
+
+    @Override
+    public void tick(Player player) {}
 }

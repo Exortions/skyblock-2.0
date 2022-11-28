@@ -49,7 +49,7 @@ public abstract class ArmorSet {
         runnables.get(player).cancel();
     }
 
-    public void tick(Player player) {}
+    public abstract void tick(Player player);
 
     public List<ItemStack> toList() {
         return Arrays.asList(helmet, chest, legs, boots);

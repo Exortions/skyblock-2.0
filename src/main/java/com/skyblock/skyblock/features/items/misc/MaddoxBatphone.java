@@ -7,11 +7,9 @@ import net.md_5.bungee.api.chat.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class MaddoxBatphone extends SkyblockItem {
 
@@ -48,8 +46,6 @@ public class MaddoxBatphone extends SkyblockItem {
 
         message.addExtra(click);
 
-        Util.delay(() -> {
-            player.spigot().sendMessage(message);
-        }, 52);
+        Util.delay(() -> player.spigot().sendMessage(message), 52);
     }
 }
