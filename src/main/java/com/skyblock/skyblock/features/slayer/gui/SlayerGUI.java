@@ -9,27 +9,16 @@ import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
-import lombok.Getter;
-import lombok.var;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SlayerGUI extends Gui {
 
@@ -37,17 +26,11 @@ public class SlayerGUI extends Gui {
 
     public SlayerGUI(Player opener) {
         super("Slayer", 36, new HashMap<String, Runnable>() {{
-            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Revenant Horror", () -> {
-                new RevenantGUI(opener).show(opener);
-            });
+            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Revenant Horror", () -> new RevenantGUI(opener).show(opener));
 
-            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Tarantula Broodfather", () -> {
-                new TarantulaGUI(opener).show(opener);
-            });
+            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Tarantula Broodfather", () -> new TarantulaGUI(opener).show(opener));
 
-            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Sven Packmaster", () -> {
-                new SvenGUI(opener).show(opener);
-            });
+            put(ChatColor.RED + "☠ " + ChatColor.YELLOW + "Sven Packmaster", () -> new SvenGUI(opener).show(opener));
 
             put(ChatColor.GREEN + "Slayer Quest Complete", () -> {
                 SlayerHandler slayerHandler = Skyblock.getPlugin().getSlayerHandler();
@@ -171,7 +154,7 @@ public class SlayerGUI extends Gui {
                 break;
         }
 
-        var item = new ItemBuilder(ChatColor.RED + "☠ " +
+        ItemBuilder item = new ItemBuilder(ChatColor.RED + "☠ " +
                 ChatColor.YELLOW + name, material);
         int level = getLevel(type, getXP(player, type));
 

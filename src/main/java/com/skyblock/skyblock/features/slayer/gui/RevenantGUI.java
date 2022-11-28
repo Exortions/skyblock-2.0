@@ -10,7 +10,6 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -33,9 +32,7 @@ public class RevenantGUI extends Gui {
             }
 
             put(ChatColor.RED + "Close", opener::closeInventory);
-            put(ChatColor.GREEN + "Go Back", () -> {
-                new SlayerGUI(opener).show(opener);
-            });
+            put(ChatColor.GREEN + "Go Back", () -> new SlayerGUI(opener).show(opener));
         }});
 
         Util.fillEmpty(this);

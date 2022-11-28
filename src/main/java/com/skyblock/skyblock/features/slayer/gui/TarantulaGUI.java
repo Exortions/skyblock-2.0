@@ -31,9 +31,7 @@ public class TarantulaGUI extends Gui {
             }
 
             put(ChatColor.RED + "Close", opener::closeInventory);
-            put(ChatColor.GREEN + "Go Back", () -> {
-                new SlayerGUI(opener).show(opener);
-            });
+            put(ChatColor.GREEN + "Go Back", () -> new SlayerGUI(opener).show(opener));
         }});
 
         Util.fillEmpty(this);
