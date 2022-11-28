@@ -16,7 +16,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,24 +49,24 @@ public class LaunchPadHandler {
         return "NONE";
     }
 
-    public void savePad(String start, String end, Location from, Location to, Location teleport) {
-        Location infront = from.multiply(5);
-        infront.setY(from.getY() + 4);
-
-        String id = "launchpads." + start + "_to_" + end + ".";
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-
-        config.set(id + "start", start);
-        config.set(id + "end", end);
-        config.set(id + "from", from);
-        config.set(id + "to", to);
-        config.set(id + "infront", infront);
-        config.set(id + "teleport", teleport);
-
-        try {
-            config.save(file);
-        } catch (IOException ignored) {}
-    }
+//    public void savePad(String start, String end, Location from, Location to, Location teleport) {
+//        Location infront = from.multiply(5);
+//        infront.setY(from.getY() + 4);
+//
+//        String id = "launchpads." + start + "_to_" + end + ".";
+//        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+//
+//        config.set(id + "start", start);
+//        config.set(id + "end", end);
+//        config.set(id + "from", from);
+//        config.set(id + "to", to);
+//        config.set(id + "infront", infront);
+//        config.set(id + "teleport", teleport);
+//
+//        try {
+//            config.save(file);
+//        } catch (IOException ignored) {}
+//    }
 
     public void launch(Player player, String padName) {
         if (onLaunchpad.contains(player)) return;
