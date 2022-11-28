@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,6 @@ public class SkyblockLocationManager {
     }
 
     public SkyblockLocation getLocation(Location location) {
-        FileConfiguration config = YamlConfiguration.loadConfiguration(this.file);
-
         SkyblockLocation temp = null;
 
         List<SkyblockLocation> found = new ArrayList<>();
@@ -56,11 +55,13 @@ public class SkyblockLocationManager {
         if (file.exists()) return;
 
         try {
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                throw new IOException("could not create " + file.getAbsolutePath() + ", File#createNewFile returns false");
+            }
 
             YamlConfiguration.loadConfiguration(file).save(file);
         } catch (Exception ex) {
-            this.skyblock.sendMessage("&cFailed to initialize &7locations.yml&c: " + ex.getMessage());
+            this.skyblock.sendMessage("&cFailed to initialize &8locations.yml&c: " + ex.getMessage());
         }
     }
 
