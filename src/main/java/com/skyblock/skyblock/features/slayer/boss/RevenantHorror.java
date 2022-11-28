@@ -1,18 +1,22 @@
 package com.skyblock.skyblock.features.slayer.boss;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.slayer.SlayerBoss;
-import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.EntityZombie;
 import net.minecraft.server.v1_8_R3.GenericAttributes;
-import org.bukkit.*;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -23,10 +27,12 @@ import java.util.List;
 @Getter
 public class RevenantHorror extends SlayerBoss {
 
-    private Player spawner;
-    private double speed;
-    private boolean enraged;
     private static final List<Double> SPEEDS = Arrays.asList(0.35, 0.4, 0.45, 0.55);
+
+    private final Player spawner;
+    private final double speed;
+
+    private boolean enraged;
 
     public RevenantHorror(Player spawner, Integer level) {
         super(EntityType.ZOMBIE, SlayerType.REVENANT, spawner, level, 0.2);

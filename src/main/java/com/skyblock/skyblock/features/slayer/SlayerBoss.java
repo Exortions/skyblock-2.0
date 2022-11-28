@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.features.slayer;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
@@ -9,28 +8,30 @@ import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Getter
 public abstract class SlayerBoss extends SkyblockEntity {
 
-    private final double displayHeight;
+    private static final List<Integer> XP_REWARDS = Arrays.asList(5, 25, 100, 500);
+
     private final SlayerType slayerType;
-    private final int level;
-    private final int rewardXp;
+    private final double displayHeight;
     private final Player spawner;
+    private final int rewardXp;
     private ArmorStand display;
+    private final int level;
     private long startTime;
 
     @Setter
     private boolean failed;
-
-    private static final List<Integer> XP_REWARDS = Arrays.asList(5, 25, 100, 500);
 
     public SlayerBoss(EntityType type, SlayerType slayerType, Player spawner, int level, double displayHeight) {
         super(Skyblock.getPlugin(), type);

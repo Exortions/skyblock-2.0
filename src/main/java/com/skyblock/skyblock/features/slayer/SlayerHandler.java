@@ -6,13 +6,10 @@ import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.SlayerScoreboard;
 import com.skyblock.skyblock.features.slayer.gui.SlayerGUI;
 import com.skyblock.skyblock.features.slayer.miniboss.SlayerMiniboss;
-import com.skyblock.skyblock.features.slayer.miniboss.SlayerMiniboss;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.sound.SoundSequence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -27,10 +24,10 @@ public class SlayerHandler {
 
     @Getter
     @AllArgsConstructor
-    public class SlayerData {
+    public static class SlayerData {
 
-        private SlayerBoss boss;
-        private SlayerQuest quest;
+        private final SlayerQuest quest;
+        private final SlayerBoss boss;
 
     }
 
@@ -119,8 +116,11 @@ public class SlayerHandler {
 
     public SlayerData registerNewSlayer(Player player, SlayerType type, int level) {
         SlayerBoss boss = type.getNewInstance(player, level);
+
+        if (boss == null) return null;
+
         SlayerQuest quest = new SlayerQuest(player, boss);
-        SlayerData data = new SlayerData(boss, quest);
+        SlayerData data = new SlayerData(quest, boss);
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
         skyblockPlayer.setExtraData("slayerData", data);

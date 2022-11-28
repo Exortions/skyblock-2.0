@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.slayer;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.slayer.boss.RevenantHorror;
 import com.skyblock.skyblock.features.slayer.boss.SvenPackmaster;
 import com.skyblock.skyblock.features.slayer.boss.TarantulaBroodfather;
@@ -9,6 +8,7 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
+
 @AllArgsConstructor
 @Getter
 public enum SlayerType {

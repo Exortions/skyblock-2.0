@@ -18,10 +18,12 @@ import java.util.List;
 
 public class SvenPackmaster extends SlayerBoss {
 
-    private int trueDPS;
-    private boolean hasCalledPups;
     private static final List<Integer> TRUE_DPS = Arrays.asList(0, 10, 50, 200);
-    private Player spawner;
+
+    private final Player spawner;
+    private final int trueDPS;
+
+    private boolean hasCalledPups;
 
     public SvenPackmaster(Player spawner, Integer level) {
         super(EntityType.WOLF, SlayerType.SVEN, spawner, level, -1);
@@ -67,9 +69,7 @@ public class SvenPackmaster extends SlayerBoss {
             hasCalledPups = true;
 
             for (int i = 0; i < 5; i++) {
-                Util.delay(() -> {
-                    new SvenPup(this).spawn(getVanilla().getLocation());
-                }, i * 20);
+                Util.delay(() -> new SvenPup(this).spawn(getVanilla().getLocation()), i * 20);
             }
         }
     }

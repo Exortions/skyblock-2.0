@@ -2,7 +2,6 @@ package com.skyblock.skyblock.features.slayer;
 
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
-import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -19,17 +18,17 @@ public class SlayerQuest {
         FAILED
     }
 
-    private int exp;
-    private int neededExp;
-    private SlayerBoss boss;
     private SlayerType type;
+    private SlayerBoss boss;
     private Player player;
+    private int neededExp;
+    private int exp;
 
-    private int expReward;
     private QuestState state;
+    private long timeToSpawn;
     private String bossName;
     private long timeToKill;
-    private long timeToSpawn;
+    private int expReward;
 
     private static final HashMap<String, Integer> XP_NEEDED = new HashMap<String, Integer>() {{
         put("REVENANT_1", 150);

@@ -8,12 +8,10 @@ import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.EntitySpider;
-import net.minecraft.server.v1_8_R3.EntityWolf;
 import net.minecraft.server.v1_8_R3.GenericAttributes;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSpider;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftWolf;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -22,7 +20,8 @@ import org.bukkit.util.Vector;
 @Getter
 public class TarantulaBroodfather extends SlayerBoss {
 
-    private TopSpider top;
+    private final TopSpider top;
+
     public TarantulaBroodfather(Player spawner, Integer level) {
         super(EntityType.SPIDER, SlayerType.TARANTULA, spawner, level, -0.75);
 
@@ -94,6 +93,7 @@ public class TarantulaBroodfather extends SlayerBoss {
     public static class TopSpider extends SkyblockEntity {
 
         private final TarantulaBroodfather parent;
+
         public TopSpider(TarantulaBroodfather parent) {
             super(Skyblock.getPlugin(), EntityType.CAVE_SPIDER);
 
