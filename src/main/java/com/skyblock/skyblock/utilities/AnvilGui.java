@@ -23,7 +23,7 @@ import java.util.HashMap;
 @Data
 public class AnvilGui {
 
-    private class AnvilContainer extends ContainerAnvil {
+    private static class AnvilContainer extends ContainerAnvil {
         public AnvilContainer(EntityHuman entity) {
             super(entity.inventory, entity.world, new BlockPosition(0, 0, 0), entity);
         }
@@ -66,10 +66,6 @@ public class AnvilGui {
 
             this.destroy = true;
             this.close = true;
-        }
-
-        public AnvilSlot getSlot() {
-            return slot;
         }
 
         public String getName() {
@@ -140,7 +136,6 @@ public class AnvilGui {
             public void onInventoryClose(InventoryCloseEvent event) {
                 if (!(event.getPlayer() instanceof Player)) return;
 
-                Player player = (Player) event.getPlayer();
                 Inventory inventory = event.getInventory();
 
                 if (inventory.equals(AnvilGui.this.inventory)) {
