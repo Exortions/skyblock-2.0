@@ -177,6 +177,8 @@ public class CollectionCommand implements Command {
                 Util.buildLore("\n&7Progress: &e" + percentage + "&6%\n" + bar + " &e" + Util.formatInt(currentExp) + "&6/&e" + Util.abbreviate(requiredExp) + "\n\n&7Rewards:\n" + rewardsString + "\n\n&eClick to view rewards!")
         );
 
+        builder.setAmount(i + 1);
+
         return builder.toItemStack();
     }
 
