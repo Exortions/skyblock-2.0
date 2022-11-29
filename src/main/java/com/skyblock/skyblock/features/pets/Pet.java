@@ -117,13 +117,18 @@ public abstract class Pet {
         String id = nbtItem.getString("id");
         Rarity rarity = Rarity.valueOf(nbtItem.getString("rarity"));
 
-        Bukkit.getConsoleSender().sendMessage(xp + " " + id + " " + rarity);
+        try {
+            Pet pet = PetType.valueOf(id.toUpperCase()).newInstance();
 
-        Pet pet = PetType.valueOf(id.toUpperCase()).newInstance();
-        pet.setRarity(rarity);
-        pet.setXp(xp);
+            if (pet == null) return null;
 
-        return pet;
+            pet.setRarity(rarity);
+            pet.setXp(xp);
+
+            return pet;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private String name;
