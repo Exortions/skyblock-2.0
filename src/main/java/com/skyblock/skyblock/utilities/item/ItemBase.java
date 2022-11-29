@@ -448,8 +448,6 @@ public class ItemBase {
         if (Item.SWORD.containsQualifiedName(rarity)) return Item.SWORD;
         else if (Item.RANGED.containsQualifiedName(rarity)) return Item.RANGED;
         else if (Item.ARMOR.containsQualifiedName(rarity)) return Item.ARMOR;
-        else if (Item.TOOL.containsQualifiedName(rarity)) return Item.TOOL;
-        else if (Item.ACCESSORY.containsQualifiedName(rarity)) return Item.ACCESSORY;
         else return Item.NONE;
     }
 

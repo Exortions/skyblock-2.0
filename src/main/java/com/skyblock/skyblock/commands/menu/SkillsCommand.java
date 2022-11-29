@@ -173,7 +173,7 @@ public class SkillsCommand implements Command, Listener {
                 continue;
             }
 
-            int slot = 0;
+            int slot;
 
             Material material;
             ChatColor color;
@@ -220,6 +220,7 @@ public class SkillsCommand implements Command, Listener {
 
             inventory.setItem(slot, new ItemBuilder(" ", material, data)
                     .setDisplayName(color + skill.getName() + " Level " + Util.toRoman(i))
+                    .setAmount(i)
                     .setLore(
                             Util.buildLore(
                                     "Rewards:\n" + rewardsString
