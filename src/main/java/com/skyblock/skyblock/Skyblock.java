@@ -28,6 +28,7 @@ import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
+import com.skyblock.skyblock.features.pets.PetListener;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
@@ -385,6 +386,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new EnderChestListener());
         registerListener(new BankerListener());
         registerListener(new ReforgeListener());
+        registerListener(new PetListener());
 
         this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
