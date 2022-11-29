@@ -140,6 +140,17 @@ public class Util {
         for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
+    public void fillBorder(Gui gui) {
+        fillBorder(gui, Material.STAINED_GLASS_PANE, 15);
+    }
+
+    public void fillBorder(Gui gui, Material material, int data) {
+        for (int i = 0; i < 9; i++) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 45; i < 54; i++) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 9; i < 45; i += 9) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+    }
+
     public void fillSides(Inventory inventory) {
         fillSides(inventory, Material.STAINED_GLASS_PANE, 15);
     }

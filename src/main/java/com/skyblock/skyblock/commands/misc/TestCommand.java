@@ -2,6 +2,9 @@ package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.features.pets.combat.Jerry;
+import com.skyblock.skyblock.features.pets.combat.Tiger;
 import com.skyblock.skyblock.features.skills.Combat;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
@@ -22,5 +25,14 @@ public class TestCommand implements Command {
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         Skill.reward(new Combat(), Integer.parseInt(args[0]), SkyblockPlayer.getPlayer(player));
+
+        Jerry jerry = new Jerry();
+        jerry.setRarity(Rarity.LEGENDARY);
+
+        Tiger tiger = new Tiger();
+        tiger.setRarity(Rarity.LEGENDARY);
+
+        player.getInventory().addItem(jerry.toItemStack());
+        player.getInventory().addItem(tiger.toItemStack());
     }
 }

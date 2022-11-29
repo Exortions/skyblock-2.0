@@ -9,6 +9,7 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.merchants.Merchant;
+import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import com.skyblock.skyblock.features.skills.Skill;
@@ -22,6 +23,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -55,6 +57,7 @@ public class SkyblockPlayer {
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
     private FileConfiguration config;
+    private ArmorStand petDisplay;
     private Player bukkitPlayer;
     private int damageModifier;
     private ArmorSet armorSet;
@@ -63,6 +66,7 @@ public class SkyblockPlayer {
     private String actionBar;
     private File configFile;
     private ItemStack hand;
+    private Pet pet;
     private int tick;
 
     public SkyblockPlayer(UUID uuid) {
@@ -72,8 +76,10 @@ public class SkyblockPlayer {
         this.cooldowns = new HashMap<>();
         this.extraData = new HashMap<>();
         this.stats = new HashMap<>();
+        this.petDisplay = null;
         this.damageModifier = 0;
         this.armorSet = null;
+        this.pet = null;
         this.tick = 0;
 
         this.extraData.put("fullSetBonus", false);
@@ -123,6 +129,40 @@ public class SkyblockPlayer {
             }
 
             hand = itemStack;
+        }
+
+        if (pet != null) {
+            if (petDisplay == null) {
+                Location loc = bukkitPlayer.getLocation();
+                Vector dir = loc.getDirection();
+                dir.normalize();
+                dir.multiply(-2);
+                loc.add(dir);
+
+                petDisplay = bukkitPlayer.getWorld().spawn(loc,  ArmorStand.class);
+
+                petDisplay.setHelmet(Util.IDtoSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), pet.getSkull()));
+                petDisplay.setVisible(false);
+                petDisplay.setGravity(false);
+                petDisplay.setSmall(true);
+
+                int level = Pet.getLevel(pet.getXp(), pet.getRarity());
+
+                petDisplay.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + level + ChatColor.DARK_GRAY + "] " +
+                        pet.getRarity().getColor() + bukkitPlayer.getName() + "'s " + pet.getName());
+
+                petDisplay.setCustomNameVisible(true);
+            }
+
+            Location loc = bukkitPlayer.getLocation();
+            Vector dir = loc.getDirection();
+            dir.normalize();
+            dir.multiply(-2);
+            dir.setZ(dir.getZ() + 1);
+            loc.add(dir);
+
+            petDisplay.setRemoveWhenFarAway(false);
+            petDisplay.teleport(new Location(loc.getWorld(), loc.getX(), loc.getY() + 0.75, loc.getZ(), petDisplay.getLocation().getYaw(), petDisplay.getLocation().getPitch()));
         }
 
         Object young = getExtraData("young_dragon_bonus");
@@ -425,6 +465,10 @@ public class SkyblockPlayer {
                     config.set("slayer." + type.name().toLowerCase() + ".exp", 0);
                 }
 
+                config.set("pets.pets", new ArrayList<ItemStack>());
+                config.set("pets.hidePets", false);
+                config.set("pets.equip", null);
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();
@@ -516,4 +560,30 @@ public class SkyblockPlayer {
         return b;
     }
 
+    public ArrayList<ItemStack> getPets() {
+        return (ArrayList<ItemStack>) getValue("pets.pets");
+    }
+
+    public void addPet(ItemStack pet) {
+        ArrayList<ItemStack> pets = getPets();
+        pets.add(pet);
+
+        setValue("pets.pets", pets);
+    }
+
+    public void removePet(ItemStack pet) {
+        ArrayList<ItemStack> pets = getPets();
+        pets.remove(pet);
+
+        setValue("pets.pets", pets);
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+
+        if (this.petDisplay == null) return;
+
+        this.petDisplay.remove();
+        this.petDisplay = null;
+    }
 }

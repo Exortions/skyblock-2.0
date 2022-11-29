@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.pets.gui.PetsGUI;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -82,7 +83,7 @@ public class SkyblockMenuListener implements Listener {
                 skyblock.getGuiHandler().show("active_effects", player);
                 break;
             case "Pets":
-                skyblock.getGuiHandler().show("pets", player);
+                new PetsGUI(player).show(player);
                 break;
             case "Crafting Table":
                 skyblock.getGuiHandler().show("crafting_table", player);

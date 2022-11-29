@@ -195,7 +195,7 @@ public class MenuCommand implements Command {
                         ChatColor.GRAY + "gaining xp in their favorite",
                         ChatColor.GRAY + "skill!",
                         "",
-                        ChatColor.GRAY + "Selected pet: " + ChatColor.DARK_PURPLE + "Lion",
+                        ChatColor.GRAY + "Selected pet: " + (skyblockPlayer.getPet() == null ? ChatColor.RED + "None" : skyblockPlayer.getPet().getColoredName()),
                         "",
                         ChatColor.YELLOW + "Click to view!"
                 )
