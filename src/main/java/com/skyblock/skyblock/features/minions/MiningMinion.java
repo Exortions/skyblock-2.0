@@ -14,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -62,6 +63,13 @@ public class MiningMinion extends MinionBase {
         if (this.minion != null) this.minion.remove();
 
         this.level = level;
+
+        this.text = location.getWorld().spawn(location.clone().add(0, 0.5, 0), ArmorStand.class);
+        this.text.setCustomName("");
+        this.text.setCustomNameVisible(false);
+        this.text.setGravity(false);
+        this.text.setVisible(false);
+        this.text.setSmall(true);
 
         this.minion = location.getWorld().spawn(location, ArmorStand.class);
         this.minion.setCustomName("");
@@ -119,23 +127,21 @@ public class MiningMinion extends MinionBase {
 
     @Override
     protected void tick(SkyblockPlayer player, Location location) {
-        List<Block> blocksInRadius = new ArrayList<>();
+        List<Block> blocks = new ArrayList<>();
 
-        for (double x = location.getX() - radius; x <= location.getX() + radius; x++) {
-            for (double z = location.getZ() - radius; z <= location.getZ() + radius; z++) {
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
                 Block block = location.clone().add(x, -1, z).getBlock();
 
-                blocksInRadius.add(block);
+                blocks.add(block);
             }
         }
 
         if (lastActionBroke) {
-            // this time, place a block
+            List<Block> air = blocks.stream().filter(block -> block.getType().equals(Material.AIR)).collect(Collectors.toList());
 
-            List<Block> airBlocks = blocksInRadius.stream().filter(block -> block.getType() == Material.AIR).collect(Collectors.toList());
-
-            if (airBlocks.size() > 0) {
-                Block block = airBlocks.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(airBlocks.size()));
+            if (air.size() != 0) {
+                Block block = air.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(air.size()));
 
                 block.setType(this.type.getMaterial());
 
@@ -145,34 +151,36 @@ public class MiningMinion extends MinionBase {
             }
         }
 
-        // break a block
-        player.getBukkitPlayer().sendMessage("Blocks: " + blocksInRadius);
-        List<Block> blocks = blocksInRadius.stream().filter(block -> block.getType() == this.type.getMaterial()).collect(Collectors.toList());
+        List<Block> ores = blocks.stream().filter(block -> block.getType().equals(this.type.getMaterial())).collect(Collectors.toList());
 
-        if (blocks.size() > 0) {
-            Block block = blocks.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(blocks.size()));
+        if (ores.size() == 0) {
+            this.text.setCustomName(ChatColor.RED + "I need space around me to mine!");
+            this.text.setCustomNameVisible(true);
+
+            return;
+        }
+
+        Block block = ores.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(ores.size()));
+
+        // over 1 second, play the PacketPlayOutBlockBreakAnimation packet until it is destroyed
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
 
             new BukkitRunnable() {
-                int animation = 1;
-
                 @Override
                 public void run() {
-                    ((CraftPlayer) player.getBukkitPlayer()).getHandle().playerConnection.sendPacket(new PacketPlayOutBlockBreakAnimation(minion.getEntityId(), new BlockPosition(block.getX(), block.getY(), block.getZ()), animation));
+                    PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), finalI);
 
-                    animation++;
+                    for (Player p : location.getWorld().getPlayers())
+                        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
 
-                    if (animation >= 9) {
-                        cancel();
+                    if (finalI == 9) {
+                        block.setType(Material.AIR);
 
-                        ItemStack[] drops = type.getCalculateDrops().apply(level);
-
-                        // for now
-                        player.getBukkitPlayer().getInventory().addItem(drops);
+                        lastActionBroke = true;
                     }
                 }
-            }.runTaskTimer(Skyblock.getPlugin(Skyblock.class), 0, 2);
-
-            this.lastActionBroke = true;
+            }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
         }
     }
 }

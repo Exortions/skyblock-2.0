@@ -30,6 +30,7 @@ public abstract class MinionBase {
     protected final Function<Integer, Integer> getMaximumStorage;
 
     protected ArmorStand minion;
+    protected ArmorStand text;
 
     protected double timeBetweenActions;
     protected int resourcesGenerated;
