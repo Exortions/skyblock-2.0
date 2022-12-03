@@ -8,10 +8,13 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
+import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -23,8 +26,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MiningMinion extends MinionBase {
-
-    private boolean lastActionBroke;
 
     private BukkitRunnable task;
     private int i;
@@ -44,7 +45,6 @@ public class MiningMinion extends MinionBase {
                 minion.getGetMaximumStorage()
         );
 
-        this.lastActionBroke = false;
         this.task = null;
         this.i = 0;
 
@@ -70,6 +70,7 @@ public class MiningMinion extends MinionBase {
         this.text.setGravity(false);
         this.text.setVisible(false);
         this.text.setSmall(true);
+        this.text.setMarker(true);
 
         this.minion = location.getWorld().spawn(location, ArmorStand.class);
         this.minion.setCustomName("");
@@ -79,6 +80,7 @@ public class MiningMinion extends MinionBase {
         this.minion.setSmall(true);
         this.minion.setArms(true);
         this.minion.setBasePlate(false);
+        this.minion.setCanPickupItems(false);
 
         ItemStack head = Util.IDtoSkull(new ItemBuilder("", Material.SKULL_ITEM, 1, (short) 3).toItemStack(), this.head.apply(this.level));
         this.minion.setHelmet(head);
@@ -112,7 +114,7 @@ public class MiningMinion extends MinionBase {
             }
         };
 
-        this.task.runTaskTimerAsynchronously(Skyblock.getPlugin(Skyblock.class), 0, 1);
+        this.task.runTaskTimer(Skyblock.getPlugin(Skyblock.class), 0, 1);
     }
 
     @Override
@@ -137,50 +139,44 @@ public class MiningMinion extends MinionBase {
             }
         }
 
-        if (lastActionBroke) {
-            List<Block> air = blocks.stream().filter(block -> block.getType().equals(Material.AIR)).collect(Collectors.toList());
-
-            if (air.size() != 0) {
-                Block block = air.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(air.size()));
-
-                block.setType(this.type.getMaterial());
-
-                this.lastActionBroke = false;
-
-                return;
-            }
-        }
-
+        List<Block> air = blocks.stream().filter(block -> block.getType().equals(Material.AIR)).collect(Collectors.toList());
         List<Block> ores = blocks.stream().filter(block -> block.getType().equals(this.type.getMaterial())).collect(Collectors.toList());
 
-        if (ores.size() == 0) {
-            this.text.setCustomName(ChatColor.RED + "I need space around me to mine!");
-            this.text.setCustomNameVisible(true);
+        if (air.size() != 0) {
+            Block block = air.get(Skyblock.getPlugin().getRandom().nextInt(air.size()));
 
-            return;
-        }
+            Material toSet = this.type.getMaterial();
 
-        Block block = ores.get(Skyblock.getPlugin(Skyblock.class).getRandom().nextInt(ores.size()));
+            block.setType(toSet);
 
-        // over 1 second, play the PacketPlayOutBlockBreakAnimation packet until it is destroyed
-        for (int i = 0; i < 10; i++) {
-            int finalI = i;
+            for (Player target : location.getWorld().getPlayers()) {
+                PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), 0);
+                PacketPlayOutBlockChange packet1 = new PacketPlayOutBlockChange(((CraftWorld) location.getWorld()).getHandle(), new BlockPosition(block.getX(), block.getY(), block.getZ()));
+                ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet);
+                ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet1);
+            }
+        } else {
+            Block block = ores.get(Skyblock.getPlugin().getRandom().nextInt(ores.size()));
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), finalI);
+            for (int i = 0; i < 10; i++) {
+                int finalI = i;
 
-                    for (Player p : location.getWorld().getPlayers())
-                        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), finalI);
+                        PacketPlayOutBlockChange packet2 = new PacketPlayOutBlockChange(((CraftWorld) location.getWorld()).getHandle(), new BlockPosition(block.getX(), block.getY(), block.getZ()));
 
-                    if (finalI == 9) {
-                        block.setType(Material.AIR);
+                        for (Player target : location.getWorld().getPlayers()) ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet);
 
-                        lastActionBroke = true;
+                        if (finalI == 9) {
+                            block.setType(Material.AIR);
+
+                            for (Player target : location.getWorld().getPlayers()) ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet2);
+                        }
                     }
-                }
-            }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
+                }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
+            }
         }
     }
 }
