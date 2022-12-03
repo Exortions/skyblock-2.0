@@ -3,6 +3,7 @@ package com.skyblock.skyblock.commands.misc;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.features.pets.combat.BlueWhale;
 import com.skyblock.skyblock.features.pets.combat.Jerry;
 import com.skyblock.skyblock.features.pets.combat.Tiger;
 import com.skyblock.skyblock.features.skills.Combat;
@@ -32,7 +33,11 @@ public class TestCommand implements Command {
         Tiger tiger = new Tiger();
         tiger.setRarity(Rarity.LEGENDARY);
 
+        BlueWhale whale = new BlueWhale();
+        whale.setRarity(Rarity.RARE);
+
         player.getInventory().addItem(jerry.toItemStack());
         player.getInventory().addItem(tiger.toItemStack());
+        player.getInventory().addItem(whale.toItemStack());
     }
 }

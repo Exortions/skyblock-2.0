@@ -18,6 +18,7 @@ import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
+import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -28,6 +29,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -96,6 +99,11 @@ public class SkyblockPlayer {
             loadStats();
             resetActionBar();
             board = new HubScoreboard(getBukkitPlayer());
+
+            if (getValue("pets.equip") != null) {
+                pet = Pet.getPet((ItemStack) getValue("pets.equip"));
+                pet.setActive(true);
+            }
         }
 
         if (tick % EVERY_SECOND == 0) {
@@ -152,6 +160,9 @@ public class SkyblockPlayer {
                         pet.getRarity().getColor() + bukkitPlayer.getName() + "'s " + pet.getName());
 
                 petDisplay.setCustomNameVisible(true);
+
+                NBTEntity nbtEntity = new NBTEntity(petDisplay);
+                nbtEntity.setBoolean("isPet", true);
             }
 
             Location loc = bukkitPlayer.getLocation();
@@ -163,6 +174,12 @@ public class SkyblockPlayer {
 
             petDisplay.setRemoveWhenFarAway(false);
             petDisplay.teleport(new Location(loc.getWorld(), loc.getX(), loc.getY() + 0.75, loc.getZ(), petDisplay.getLocation().getYaw(), petDisplay.getLocation().getPitch()));
+
+            if ((boolean) getValue("pets.hidePets")) {
+                petDisplay.teleport(new Location(loc.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
+            } else {
+                petDisplay.teleport(new Location(loc.getWorld(), loc.getX(), loc.getY() + 0.75, loc.getZ(), petDisplay.getLocation().getYaw(), petDisplay.getLocation().getPitch()));
+            }
         }
 
         Object young = getExtraData("young_dragon_bonus");

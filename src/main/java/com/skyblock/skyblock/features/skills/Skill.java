@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.skills;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import org.bukkit.ChatColor;
@@ -51,13 +52,6 @@ public abstract class Skill {
         return 0.0;
     }
 
-    public static double getXPUntilLevelUp(double xp) {
-        double goal = getNextXPGoal(xp);
-        if (goal == 0.0)
-            return Double.POSITIVE_INFINITY;
-        return goal - xp;
-    }
-
     public static double getXP(Skill skill, SkyblockPlayer player) {
         return (double) player.getValue("skill." + skill.name.toLowerCase() + ".exp");
     }
@@ -68,16 +62,46 @@ public abstract class Skill {
         skill.update(player, (int) (curr));
         player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.ORB_PICKUP, 1f, 2f);
 
+        Pet pet = player.getPet();
+
+        if (pet != null) {
+            double petXp = (pet.getSkill().equals(skill)) ? xp : xp / 4;
+
+            if (!pet.getSkill().equals(skill)) {
+                if (skill.equals(new Enchanting()) || skill.equals(new Alchemy())) {
+                    petXp = xp / 12;
+                }
+
+                if (skill.equals(new Mining()) || skill.equals(new Foraging())) {
+                    petXp = petXp * 1.5;
+                }
+            }
+
+            player.removePet(pet.toItemStack());
+            player.setValue("pets.equip", null);
+
+            int prevLevel = Pet.getLevel(pet.getXp(), pet.getRarity());
+            pet.setXp(pet.getXp() + petXp);
+            int level = Pet.getLevel(pet.getXp(), pet.getRarity());
+            if (level > prevLevel) {
+                player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.LEVEL_UP, 1, 2);
+                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "Your " + pet.getColoredName() + ChatColor.GREEN + " levelled up to level " + ChatColor.BLUE + level + ChatColor.GREEN + "!");
+            }
+
+            player.addPet(pet.toItemStack());
+            player.setValue("pets.equip", pet.toItemStack());
+        }
+
         double percentage = getXP(skill, player) / getNextXPGoal(getXP(skill, player));
         String actionBar = ChatColor.RED + "" + player.getStat(SkyblockStat.HEALTH) + "/" + player.getStat(SkyblockStat.MAX_HEALTH) + "❤   " +
-                ChatColor.DARK_AQUA + "+" + xp + " " + skill.name + " (" + Math.round(percentage) + "%)"
+                ChatColor.DARK_AQUA + "+" + xp + " " + skill.name + " (" + Math.round(percentage) + "%) "
                 +  ChatColor.AQUA + "" + player.getStat(SkyblockStat.MANA) + "/" + player.getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
         player.setActionBar(actionBar);
 
         player.delay(player::resetActionBar, 3);
 
         if (skill.getName().equals("Combat") && player.hasActiveSlayer() && player.getExtraData("lastKilledType").equals(Skyblock.getPlugin(Skyblock.class).getSlayerHandler().getSlayer(player.getBukkitPlayer()).getQuest().getMobType()))
-            Skyblock.getPlugin(Skyblock.class).getSlayerHandler().addExp(player.getBukkitPlayer(), xp);
+            Skyblock.getPlugin().getSlayerHandler().addExp(player.getBukkitPlayer(), xp);
     }
 
     public static Skill parseSkill(String s) {
@@ -146,5 +170,14 @@ public abstract class Skill {
 
     public double getXP(SkyblockPlayer player) {
         return (double) player.getValue("skill." + name.toLowerCase() + ".exp");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Skill)) return false;
+
+        Skill skill = (Skill) obj;
+
+        return skill.getName().equals(this.getName());
     }
 }

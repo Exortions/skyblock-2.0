@@ -23,6 +23,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -189,5 +190,14 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onTeleport(EntityTeleportEvent e) {
         if (e.getEntityType().equals(EntityType.ENDERMAN)) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+
+        if (player.getPetDisplay() != null) player.getPetDisplay().remove();
+
+        SkyblockPlayer.playerRegistry.remove(player.getBukkitPlayer().getUniqueId());
     }
 }

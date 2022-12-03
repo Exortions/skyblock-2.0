@@ -39,16 +39,19 @@ import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
+import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
 import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -140,6 +143,10 @@ public final class Skyblock extends JavaPlugin {
         if (file.exists()) file.delete();
 
         this.serverData.disable();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Bukkit.getPluginManager().callEvent(new PlayerQuitEvent(player, ""));
+        }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -278,6 +285,12 @@ public final class Skyblock extends JavaPlugin {
 
     public void initializeAlreadyOnlinePlayers() {
         this.sendMessage("Reloading already online players...");
+
+        for (ArmorStand stand : Bukkit.getWorld("world").getEntitiesByClass(ArmorStand.class)) {
+            NBTEntity entity = new NBTEntity(stand);
+
+            if (entity.getBoolean("isPet")) stand.remove();
+        }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             Bukkit.getPluginManager().callEvent(new PlayerJoinEvent(player, ""));
