@@ -20,6 +20,7 @@ import net.citizensnpcs.trait.SkinTrait;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -28,6 +29,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -531,6 +533,14 @@ public class Util {
 
     public String formatTime(long millis) {
         return String.format("%02dm%02ds", TimeUnit.MILLISECONDS.toMinutes(millis), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+    }
+
+    public ItemStack colorLeatherArmor(ItemStack stack, Color color) {
+        LeatherArmorMeta meta = (LeatherArmorMeta) stack.getItemMeta();
+        meta.setColor(color);
+        stack.setItemMeta(meta);
+
+        return stack;
     }
 
 }
