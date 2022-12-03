@@ -469,6 +469,10 @@ public class SkyblockPlayer {
                 config.set("pets.hidePets", false);
                 config.set("pets.equip", null);
 
+                config.set("island.last_login", System.currentTimeMillis());
+                config.set("island.minion.slots", 1);
+                config.set("island.minions", new ArrayList<>());
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();

@@ -2,7 +2,10 @@ package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.features.minions.MiningMinion;
+import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.pets.combat.Jerry;
 import com.skyblock.skyblock.features.pets.combat.Tiger;
 import com.skyblock.skyblock.features.skills.Combat;
@@ -34,5 +37,8 @@ public class TestCommand implements Command {
 
         player.getInventory().addItem(jerry.toItemStack());
         player.getInventory().addItem(tiger.toItemStack());
+
+        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
+        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
     }
 }
