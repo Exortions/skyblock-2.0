@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.pets;
 
+import com.skyblock.skyblock.features.pets.combat.BlueWhale;
 import com.skyblock.skyblock.features.pets.combat.Jerry;
 import com.skyblock.skyblock.features.pets.combat.Tiger;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,8 @@ import java.lang.reflect.InvocationTargetException;
 public enum PetType {
 
     JERRY(Jerry.class),
-    TIGER(Tiger.class);
+    TIGER(Tiger.class),
+    BLUE_WHALE(BlueWhale.class);
 
     final Class<? extends Pet> clazz;
 

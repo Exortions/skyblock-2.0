@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,5 +30,12 @@ public class PetListener implements Listener {
 
             skyblockPlayer.getBukkitPlayer().sendMessage(ChatColor.GREEN + "Successfully addded " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " to your pet menu!");
         }
+    }
+    
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        NBTItem item = new NBTItem(e.getItemInHand());
+
+        e.setCancelled(item.getBoolean("isPet"));
     }
 }

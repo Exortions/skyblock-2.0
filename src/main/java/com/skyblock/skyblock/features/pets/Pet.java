@@ -1,7 +1,9 @@
 package com.skyblock.skyblock.features.pets;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -11,12 +13,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public abstract class Pet {
@@ -116,13 +120,15 @@ public abstract class Pet {
         double xp = nbtItem.getDouble("xp");
         String id = nbtItem.getString("id");
         Rarity rarity = Rarity.valueOf(nbtItem.getString("rarity"));
+        UUID uuid = UUID.fromString(nbtItem.getString("uuid"));
 
         try {
-            Pet pet = PetType.valueOf(id.toUpperCase()).newInstance();
+            Pet pet = PetType.valueOf(id.toUpperCase().replaceAll(" ", "_")).newInstance();
 
             if (pet == null) return null;
 
             pet.setRarity(rarity);
+            pet.setUuid(uuid);
             pet.setXp(xp);
 
             return pet;
@@ -134,15 +140,19 @@ public abstract class Pet {
     private String name;
     private Rarity rarity;
     private double xp;
+    private int level;
     private boolean inGui;
     private boolean active;
+    private UUID uuid;
 
     public Pet(String name) {
         this.name = name;
         this.xp = 0.0;
+        this.level = 1;
         this.rarity = Rarity.COMMON;
         this.inGui = false;
         this.active = false;
+        this.uuid = UUID.randomUUID();
     }
 
     public ItemStack toItemStack() {
@@ -154,7 +164,9 @@ public abstract class Pet {
         nbtItem.setBoolean("inGui", inGui);
         nbtItem.setString("id", name);
         nbtItem.setDouble("xp", xp);
+        nbtItem.setInteger("level", level);
         nbtItem.setBoolean("isPet", true);
+        nbtItem.setString("uuid", uuid.toString());
 
         item = Util.IDtoSkull(nbtItem.getItem(), getSkull());
 
@@ -168,18 +180,18 @@ public abstract class Pet {
 
         lore.add(ChatColor.DARK_GRAY + getSkill().getName() + " Pet");
         lore.add(" ");
-        addIntLore("Magic Find", (getPerMagicFind() * 100.0) + getBaseMagicFind(), lore, level);
-        addPercentLore("Crit Damage", getPerCritDamage() + getBaseCritDamage(), lore, level);
-        addPercentLore("Crit Chance", getPerCritChance() + getBaseCritChance(), lore, level);
+        addIntLore("Magic Find", (getPerMagicFind() * 100.0) + getBaseMagicFind() / level, lore, level);
+        addPercentLore("Crit Damage", getPerCritDamage() + getBaseCritDamage() / level, lore, level);
+        addPercentLore("Crit Chance", getPerCritChance() + getBaseCritChance() / level, lore, level);
 
         double health = getPerHealth();
         if (health > 0.0) lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+" + Math.round(health * level) + " HP");
 
-        addIntLore("Ferocity", getPerFerocity() + getBaseFerocity(), lore, level);
-        addIntLore("Strength", getPerStrength() + getBaseStrength(), lore, level);
-        addIntLore("Defense", getPerDefense() + getBaseDefense(), lore, level);
-        addPercentLore("Speed", getPerSpeed() + getBaseSpeed(), lore, level);
-        addIntLore("Intelligence", getPerIntelligence() + getBaseIntelligence(), lore, level);
+        addIntLore("Ferocity", getPerFerocity() + getBaseFerocity() / level, lore, level);
+        addIntLore("Strength", getPerStrength() + getBaseStrength() / level, lore, level);
+        addIntLore("Defense", getPerDefense() + getBaseDefense() / level, lore, level);
+        addPercentLore("Speed", getPerSpeed() + getBaseSpeed() / level, lore, level);
+        addIntLore("Intelligence", getPerIntelligence() + getBaseIntelligence() / level, lore, level);
 
         for (PetAbility ability : getAbilities(level)) {
             if (rarity.getLevel() < ability.getRequiredRarity().getLevel()) continue;
@@ -282,5 +294,53 @@ public abstract class Pet {
 
     public String getColoredName() {
         return getRarity().getColor() + getName();
+    }
+
+    public void equip(SkyblockPlayer player) {
+        level = getLevel(xp, rarity);
+
+        player.addStat(SkyblockStat.HEALTH, (int) (level * (getPerHealth() + getBaseHealth() / level)));
+        player.addStat(SkyblockStat.MAX_HEALTH, (int) (level * (getPerHealth() + getBaseHealth() / level)));
+        player.addStat(SkyblockStat.DEFENSE, (int) (level * (getPerDefense() + getBaseDefense() / level)));
+        player.addStat(SkyblockStat.STRENGTH, (int) (level * (getPerStrength() + getBaseStrength() / level)));
+        player.addStat(SkyblockStat.MANA, (int) (level * (getPerIntelligence() + getBaseIntelligence() / level)));
+        player.addStat(SkyblockStat.MAX_MANA, (int) (level * (getPerIntelligence() + getBaseIntelligence() / level)));
+        player.addStat(SkyblockStat.SPEED, (int) (level * (getPerSpeed() + getBaseSpeed() / level)));
+        player.addStat(SkyblockStat.CRIT_DAMAGE, (int) (level * (getPerCritDamage() + getBaseCritDamage() / level)));
+        player.addStat(SkyblockStat.CRIT_CHANCE, (int) (level * (getPerCritChance() + getBaseCritChance() / level)));
+        player.addStat(SkyblockStat.MAGIC_FIND, (int) (level * (getPerMagicFind() + getBaseMagicFind() / level)));
+        player.addStat(SkyblockStat.FEROCITY, (int) (level * (getPerFerocity() + getBaseFerocity() / level)));
+
+        for (PetAbility ability : getAbilities(getLevel())) {
+            if (rarity.getLevel() >= ability.getRequiredRarity().getLevel())
+                ability.onEquip(player);
+        }
+    }
+
+    public void unequip(SkyblockPlayer player) {
+        level = getLevel(xp, rarity);
+
+        player.subtractStat(SkyblockStat.HEALTH, (int) (level * (getPerHealth() + getBaseHealth() / level)));
+        player.subtractStat(SkyblockStat.MAX_HEALTH, (int) (level * (getPerHealth() + getBaseHealth() / level)));
+        player.subtractStat(SkyblockStat.DEFENSE, (int) (level * (getPerDefense() + getBaseDefense() / level)));
+        player.subtractStat(SkyblockStat.STRENGTH, (int) (level * (getPerStrength() + getBaseStrength() / level)));
+        player.subtractStat(SkyblockStat.MANA, (int) (level * (getPerIntelligence() + getBaseIntelligence() / level)));
+        player.subtractStat(SkyblockStat.MAX_MANA, (int) (level * (getPerIntelligence() + getBaseIntelligence() / level)));
+        player.subtractStat(SkyblockStat.SPEED, (int) (level * (getPerSpeed() + getBaseSpeed() / level)));
+        player.subtractStat(SkyblockStat.CRIT_DAMAGE, (int) (level * (getPerCritDamage() + getBaseCritDamage() / level)));
+        player.subtractStat(SkyblockStat.CRIT_CHANCE, (int) (level * (getPerCritChance() + getBaseCritChance() / level)));
+        player.subtractStat(SkyblockStat.MAGIC_FIND, (int) (level * (getPerMagicFind() + getBaseMagicFind() / level)));
+        player.subtractStat(SkyblockStat.FEROCITY, (int) (level * (getPerFerocity() + getBaseFerocity() / level)));
+
+        for (PetAbility ability : getAbilities(getLevel())) {
+            if (rarity.getLevel() >= ability.getRequiredRarity().getLevel())
+                ability.onUnequip(player);
+        }
+    }
+
+    public void onDamage(EntityDamageByEntityEvent e) {
+        for (PetAbility ability : getAbilities(getLevel())) {
+            ability.onDamage(e);
+        }
     }
 }

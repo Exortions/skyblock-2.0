@@ -22,44 +22,89 @@ public class PetsGUI extends Gui {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(opener);
             for (ItemStack item : skyblockPlayer.getPets()) {
                 put(item.getItemMeta().getDisplayName(), () -> {
-                    ItemStack prev = (ItemStack) skyblockPlayer.getValue("pets.equip");
-                    if (prev != null) {
-                        if (prev.equals(item)) {
-                            opener.sendMessage(ChatColor.GREEN + "You despawned your " + prev.getItemMeta().getDisplayName() + ChatColor.GREEN + "!");
-                            opener.closeInventory();
+                    boolean petToItem = (boolean) skyblockPlayer.getExtraData("pets.petToItem");
+
+                    if (petToItem) {
+                        opener.playSound(opener.getLocation(), Sound.ORB_PICKUP, 10, 1);
+                        opener.sendMessage(ChatColor.GREEN + "You removed " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " from your pets list!");
+                        skyblockPlayer.removePet(item);
+
+                        NBTItem nbtItem = new NBTItem(item);
+                        nbtItem.setBoolean("inGui", false);
+
+                        if (nbtItem.getBoolean("active")) {
+                            skyblockPlayer.getPet().unequip(skyblockPlayer);
+                            skyblockPlayer.setPet(null);
+
+                            nbtItem.setBoolean("active", false);
+                        }
+
+                        opener.getInventory().addItem(nbtItem.getItem());
+
+                        skyblockPlayer.setExtraData("pets.petToItem", false);
+
+                        opener.closeInventory();
+                        new PetsGUI(opener).show(opener);
+                    } else {
+                        ItemStack prev = (ItemStack) skyblockPlayer.getValue("pets.equip");
+                        if (prev != null) {
+                            if (prev.equals(item)) {
+                                opener.sendMessage(ChatColor.GREEN + "You despawned your " + prev.getItemMeta().getDisplayName() + ChatColor.GREEN + "!");
+                                opener.closeInventory();
+                            }
+
+                            NBTItem nbtItem = new NBTItem(prev);
+                            nbtItem.setBoolean("active", false);
+                            skyblockPlayer.removePet(prev);
+                            skyblockPlayer.addPet(nbtItem.getItem());
+                            skyblockPlayer.getPet().unequip(skyblockPlayer);
+                            skyblockPlayer.setPet(null);
+                            skyblockPlayer.setValue("pets.equip", null);
                             return;
                         }
 
-                        NBTItem nbtItem = new NBTItem(prev);
-                        nbtItem.setBoolean("active", false);
-                        skyblockPlayer.removePet(prev);
+                        NBTItem nbtItem = new NBTItem(item);
+                        nbtItem.setBoolean("active", true);
+
+                        skyblockPlayer.removePet(item);
                         skyblockPlayer.addPet(nbtItem.getItem());
-                        skyblockPlayer.setPet(null);
+
+                        skyblockPlayer.setValue("pets.equip", nbtItem.getItem());
+                        skyblockPlayer.setPet(Pet.getPet(nbtItem.getItem()));
+                        skyblockPlayer.getPet().equip(skyblockPlayer);
+                        skyblockPlayer.getPet().setActive(true);
+
+                        opener.sendMessage(ChatColor.GREEN + "You summoned your " + item.getItemMeta().getDisplayName() + ChatColor.GREEN +"!");
+                        opener.playSound(opener.getLocation(), Sound.CHICKEN_EGG_POP, 10, 1);
+                        opener.closeInventory();
                     }
-
-                    NBTItem nbtItem = new NBTItem(item);
-                    nbtItem.setBoolean("active", true);
-
-                    skyblockPlayer.removePet(item);
-                    skyblockPlayer.addPet(nbtItem.getItem());
-
-                    skyblockPlayer.setValue("pets.equip", nbtItem.getItem());
-                    skyblockPlayer.setPet(Pet.getPet(nbtItem.getItem()));
-
-                    opener.sendMessage(ChatColor.GREEN + "You summoned your " + item.getItemMeta().getDisplayName() + ChatColor.GREEN +"!");
-                    opener.playSound(opener.getLocation(), Sound.CHICKEN_EGG_POP, 10, 1);
-                    opener.closeInventory();
                 });
             }
+
+            put(ChatColor.GREEN + "Convert Pet to Item", () -> {
+                boolean petToItem = (boolean) skyblockPlayer.getExtraData("pets.petToItem");
+
+                skyblockPlayer.setExtraData("pets.petToItem", !petToItem);
+                opener.closeInventory();
+                new PetsGUI(opener).show(opener);
+            });
+
+            Runnable runnable = () -> {
+                boolean hidePets = (boolean) skyblockPlayer.getValue("pets.hidePets");
+                skyblockPlayer.setValue("pets.hidePets", !hidePets);
+                opener.closeInventory();
+                new PetsGUI(opener).show(opener);
+            };
+
+            put(ChatColor.RED + "Hide Pets", runnable);
+            put(ChatColor.GREEN + "Hide Pets", runnable);
         }});
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(opener);
 
-        skyblockPlayer.setExtraData("pets.petToItem", false);
+        if (skyblockPlayer.getExtraData("pets.petToItem") == null) skyblockPlayer.setExtraData("pets.petToItem", false);
 
         Util.fillBorder(this);
-
-        ItemStack equip = (ItemStack) skyblockPlayer.getValue("pets.equip");
 
         String selected = (skyblockPlayer.getPet() != null ? skyblockPlayer.getPet().getColoredName() : ChatColor.RED + "None");
 
@@ -71,7 +116,7 @@ public class PetsGUI extends Gui {
         boolean petToItem = (boolean) skyblockPlayer.getExtraData("pets.petToItem");
         boolean hidePets = (boolean) skyblockPlayer.getValue("pets.hidePets");
 
-        addItem(50, new ItemBuilder(ChatColor.GREEN + "Convert Pet to Item", Material.INK_SACK, 1, (short) 8).addLore("&7Enable this setting and click", "&7any pet to convert it to an", "&7item.", " ", (petToItem ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled")).toItemStack());
+        addItem(50, new ItemBuilder(ChatColor.GREEN + "Convert Pet to Item", Material.INK_SACK, 1, (petToItem ? (short) 10 : (short) 8)).addLore("&7Enable this setting and click", "&7any pet to convert it to an", "&7item.", " ", (petToItem ? ChatColor.GREEN + "Enabled" : ChatColor.RED + "Disabled")).toItemStack());
         addItem(51, new ItemBuilder((hidePets ? ChatColor.RED + "Hide Pets" : ChatColor.GREEN + "Hide Pets"), Material.STONE_BUTTON).addLore("&7Hide all pets which are little", "&7heads from being visible in the", "&7world.", " ", "&7Pet effects remain active.", " ", "&7Currently: " + (hidePets ? ChatColor.RED + "Pets hidden!" : ChatColor.GREEN + "Pets shown!"), " ", ChatColor.YELLOW + "Click to toggle!").toItemStack());
 
         int j = 0;
@@ -82,8 +127,15 @@ public class PetsGUI extends Gui {
 
             ItemStack item = skyblockPlayer.getPets().get(j);
             Pet pet = Pet.getPet(item);
-            pet.setInGui(true);
+            Pet active = skyblockPlayer.getPet();
+
+            if (pet == null) continue;
+
             pet.setActive(false);
+
+            if (active != null) pet.setActive(pet.getUuid().equals(active.getUuid()));
+
+            pet.setInGui(true);
 
             addItem(i, pet.toItemStack());
             j++;

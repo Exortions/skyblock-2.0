@@ -1,7 +1,9 @@
 package com.skyblock.skyblock.features.pets.combat;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.pets.PetAbility;
 import com.skyblock.skyblock.features.skills.Combat;
@@ -46,7 +48,17 @@ public class Tiger extends Pet {
                      protected List<String> getDescription() {
                          return Collections.singletonList("Gain " + ChatColor.RED + Math.round(level * ferocityMult.get()) + "% Ferocity");
                      }
-                 },
+
+                    @Override
+                    public void onEquip(SkyblockPlayer player) {
+                        player.addStat(SkyblockStat.FEROCITY, (int) Math.round(level * ferocityMult.get()));
+                    }
+
+                    @Override
+                    public void onUnequip(SkyblockPlayer player) {
+                        player.subtractStat(SkyblockStat.FEROCITY, (int) Math.round(level * ferocityMult.get()));
+                    }
+                },
                 new PetAbility() {
                     @Override
                     protected String getName() {
