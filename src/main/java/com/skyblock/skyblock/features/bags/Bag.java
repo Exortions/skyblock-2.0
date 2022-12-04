@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
@@ -42,9 +43,14 @@ public class Bag implements Listener {
     private final BiConsumer<SkyblockPlayer, Inventory> onOpen;
     private final ToIntFunction<SkyblockPlayer> getSlots;
     private final Predicate<ItemStack> validate;
+    private final BiConsumer<SkyblockPlayer, ItemStack> onPutItem;
+    private final BiConsumer<SkyblockPlayer, ItemStack> onRemoveItem;
 
-    public Bag(String id, String name, String headValue, String lore, int skyblockMenuSlot, Predicate<ItemStack> validate, BiConsumer<SkyblockPlayer, Inventory> onOpen) {
+
+    public Bag(String id, String name, String headValue, String lore, int skyblockMenuSlot, Predicate<ItemStack> validate, BiConsumer<SkyblockPlayer, Inventory> onOpen, BiConsumer<SkyblockPlayer, ItemStack> onPutItem, BiConsumer<SkyblockPlayer, ItemStack> onRemoveItem) {
         this.skyblockMenuSlot = skyblockMenuSlot;
+        this.onRemoveItem = onRemoveItem;
+        this.onPutItem = onPutItem;
         this.headValue = headValue;
         this.validate = validate;
         this.onOpen = onOpen;
@@ -62,8 +68,7 @@ public class Bag implements Listener {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        int inventorySize = this.getSlots.applyAsInt(SkyblockPlayer.getPlayer(player)) + 9 - (this.getSlots.applyAsInt(skyblockPlayer) % 9);
-        inventorySize += 9;
+        int inventorySize = this.getSlots.applyAsInt(SkyblockPlayer.getPlayer(player)) + 9;
 
         Inventory inventory = Bukkit.createInventory(null, inventorySize, this.name);
 
@@ -156,7 +161,9 @@ public class Bag implements Listener {
                     continue;
                 }
 
+                onRemoveItem.accept(skyblockPlayer, items.get(slot));
                 skyblockPlayer.setValue("bag." + this.id + ".items." + slot, items.get(slot));
+                onPutItem.accept(skyblockPlayer, items.get(slot));
             }
         }
 
