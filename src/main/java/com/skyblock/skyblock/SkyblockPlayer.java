@@ -492,6 +492,9 @@ public class SkyblockPlayer {
                 config.set("island.minion.slots", 1);
                 config.set("island.minions", new ArrayList<>());
 
+                config.set("fairySouls.found", new ArrayList<Location>());
+                config.set("fairySouls.claimed", 0);
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();

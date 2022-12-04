@@ -61,6 +61,7 @@ public class SkyblockItemHandler {
 
         if (item.getItemMeta().hasDisplayName()) {
             NBTItem nbtItem = new NBTItem(item);
+
             return items.get(nbtItem.getString("skyblockId"));
         }
 

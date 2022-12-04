@@ -31,7 +31,7 @@ public class PetListener implements Listener {
             skyblockPlayer.getBukkitPlayer().sendMessage(ChatColor.GREEN + "Successfully addded " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " to your pet menu!");
         }
     }
-    
+
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         NBTItem item = new NBTItem(e.getItemInHand());
