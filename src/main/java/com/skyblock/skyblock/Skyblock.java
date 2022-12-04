@@ -21,6 +21,10 @@ import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.EnderSlayerEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
+import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
+import com.skyblock.skyblock.features.fairysouls.TiaGUI;
+import com.skyblock.skyblock.features.items.Accessory;
+import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
@@ -40,6 +44,7 @@ import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTEntity;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
@@ -68,6 +73,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
     private LaunchPadHandler launchPadHandler;
+    private FairySoulHandler fairySoulHandler;
     private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
@@ -100,6 +106,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeRecipes();
         this.initializeGameRules();
         this.initializeNEUItems();
+        this.initializeFairySouls();
 
         this.registerMerchants();
 
@@ -127,6 +134,8 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Disabling Skyblock...");
         long start = System.currentTimeMillis();
 
+        fairySoulHandler.killAllSouls();
+
         for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
             merchant.getNpc().destroy();
             merchant.getStand().remove();
@@ -149,6 +158,10 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void initializeFairySouls() {
+        this.fairySoulHandler = new FairySoulHandler();
     }
 
     public void registerBlockHandler() {
@@ -188,7 +201,25 @@ public final class Skyblock extends JavaPlugin {
 
                             return base.getRarity().toUpperCase().contains("ACCESSORY");
                         }),
-                        (player, inventory) -> player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have opened your Accessory Bag!")
+                        (player, inventory) -> player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have opened your Accessory Bag!"),
+                        (player, itemStack) -> {
+                            if (!skyblockItemHandler.isRegistered(itemStack)) return;
+                            SkyblockItem item = skyblockItemHandler.getRegistered(itemStack);
+
+                            if (item instanceof Accessory) {
+                                Accessory accessory = (Accessory) item;
+                                accessory.onEquip(player);
+                            }
+                        },
+                        (player, itemStack) -> {
+                            if (!skyblockItemHandler.isRegistered(itemStack)) return;
+                            SkyblockItem item = skyblockItemHandler.getRegistered(itemStack);
+
+                            if (item instanceof Accessory) {
+                                Accessory accessory = (Accessory) item;
+                                accessory.onUnEquip(player);
+                            }
+                        }
                 )
         );
 
@@ -249,6 +280,17 @@ public final class Skyblock extends JavaPlugin {
                         ""
                 )
         );
+
+        this.npcHandler.registerNPC("tia_the_fairy",
+                new NPC(ChatColor.LIGHT_PURPLE + "Tia the Fairy",
+                        true,
+                        true,
+                        false,
+                        null,
+                        new Location(Bukkit.getWorld("world"), 129.5, 66, 137.5),
+                        (player) -> new TiaGUI(player).show(player),
+                        "ewogICJ0aW1lc3RhbXAiIDogMTYxMzg0ODAyNjE2NywKICAicHJvZmlsZUlkIiA6ICJjMDI0Y2M0YTQwMzc0YWFjYTk2ZTE2Y2MwODM1ZDE4MCIsCiAgInByb2ZpbGVOYW1lIiA6ICJHZW9yZ2VOb0ZvdW5kIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdlNTk3YjE3NTk1OTAyN2U2NDM5MzZjYTJiOGQ3YmZiMjFiMWRjNjgzYTRhNTdmYjBjMDk5YTdkNGE5Njk1MTAiCiAgICB9CiAgfQp9",
+                        "TgEp0zMP+3e+782xvYsMcTYtkBfTq6XZpW1Z0mVb0BaDWjjVmQQer64ykJ8lthJj0Z+BjQhotwc8gIMuzxfBlaAPi7TDnODAm73wWRNs4n/qXj4a+++gkk4NeS1KswLzZDgQ0Nkp1kyM3lOja87zgcUCkpFXrzJbcsUX2N+rABmQIT8swmDRFmwoGvK4r0Cjf8nmLDj3+1fX4Kk+0o1ynLDDhI8c1nq4cqPRaRoTqNy0xYUeX22UaSo5tzlxAKrnabQi/I+P1Z33AqjvO6AdclXAfPIBsD7himNluqvKJjyWwpN0tb48703JMCixhs2Wq1j0cmEjVAqZKSLc+3jNkCp46V6NRIvcJ8xi/dijBR5SPgU8Kb7YUaVT6FUFJsAAVpNOBlJmnI+0L9Esqp9SMhMy8SNO/vo8Gk1zF2BENzuKBD6w5zQlWNIQt4E7MRG1fnh0VZMiS8s+dz9NuCC5oGMFIBNz67J2z6VQR+BhXGCSwDgw9gsKDxYSxpzASa6iFUv1gQpi8x+eQMn4VM16d0mwVDNnd6h1HdCmxextKzkf9mkwBaycz9AOcun8GWOqvhZDv2nyzmUAzFBU0mO1Ys6nYSHQEwXBXqURho5L0Fvu3Wb15YqwATsO//Mg+6L+f/kb5l2B1/Z1I/wzxzOeDYtME2TsTMAaK00ob/6e0Hg="));
 
         this.npcHandler.spawnAll();
 

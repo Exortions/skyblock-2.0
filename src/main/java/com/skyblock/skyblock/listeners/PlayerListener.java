@@ -8,9 +8,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.utilities.Util;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -21,9 +19,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -55,6 +52,11 @@ public class PlayerListener implements Listener {
         for (ItemStack item : player.getInventory().getArmorContents()) {
             skyblockPlayer.updateStats(null, item);
         }
+
+        Util.delay(() -> {
+            if (!Skyblock.getPlugin().getFairySoulHandler().initialized) Skyblock.getPlugin().getFairySoulHandler().init();
+        }, 1);
+
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -185,6 +187,8 @@ public class PlayerListener implements Listener {
                 padHandler.launch(player, pad);
             }
         }
+
+        Skyblock.getPlugin().getFairySoulHandler().loadChunk(to.getChunk());
     }
 
     @EventHandler
@@ -199,5 +203,24 @@ public class PlayerListener implements Listener {
         if (player.getPetDisplay() != null) player.getPetDisplay().remove();
 
         SkyblockPlayer.playerRegistry.remove(player.getBukkitPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onArmorStand(PlayerArmorStandManipulateEvent e) {
+        if (e.getRightClicked().hasMetadata("isFairySoul")) {
+            e.setCancelled(true);
+
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+            ArrayList<Location> found = (ArrayList<Location>) player.getValue("fairySouls.found");
+
+            if (!found.contains(e.getRightClicked().getLocation())) {
+                e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "SOUL! " + ChatColor.RESET + "" + ChatColor.WHITE + "You found a " + ChatColor.LIGHT_PURPLE + "Fairy Soul" + ChatColor.WHITE + "!");
+                found.add(e.getRightClicked().getLocation());
+                player.setValue("fairySouls.found", found);
+            } else {
+                e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "You have already found that Fairy Soul!");
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.AMBIENCE_CAVE, 10, 2);
+            }
+        }
     }
 }

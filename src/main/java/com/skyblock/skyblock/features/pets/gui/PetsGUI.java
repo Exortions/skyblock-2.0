@@ -32,7 +32,7 @@ public class PetsGUI extends Gui {
                         NBTItem nbtItem = new NBTItem(item);
                         nbtItem.setBoolean("inGui", false);
 
-                        if (nbtItem.getBoolean("active")) {
+                        if (nbtItem.getBoolean("active") && skyblockPlayer.getPet() != null) {
                             skyblockPlayer.getPet().unequip(skyblockPlayer);
                             skyblockPlayer.setPet(null);
 
@@ -57,7 +57,7 @@ public class PetsGUI extends Gui {
                             nbtItem.setBoolean("active", false);
                             skyblockPlayer.removePet(prev);
                             skyblockPlayer.addPet(nbtItem.getItem());
-                            skyblockPlayer.getPet().unequip(skyblockPlayer);
+                            if (skyblockPlayer.getPet() != null) skyblockPlayer.getPet().unequip(skyblockPlayer);
                             skyblockPlayer.setPet(null);
                             skyblockPlayer.setValue("pets.equip", null);
                             return;
