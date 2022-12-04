@@ -7,6 +7,7 @@ import lombok.Data;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public abstract class MinionBase {
     protected int resourcesGenerated;
     protected int maxStorage;
 
+    protected Inventory gui;
+
     protected List<ItemStack> inventory;
 
     public MinionBase(UUID uuid, MinionType<?> type, String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
@@ -69,7 +72,7 @@ public abstract class MinionBase {
     public abstract void spawn(SkyblockPlayer player, Location location, int level);
     public abstract void pickup(SkyblockPlayer player, Location location);
 
-    public abstract void showInventory(SkyblockPlayer player);
+    protected abstract void showInventory(SkyblockPlayer player);
 
     protected abstract void tick(SkyblockPlayer player, Location location);
 

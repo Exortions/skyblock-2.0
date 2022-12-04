@@ -9,6 +9,9 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,6 +20,8 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -71,7 +76,7 @@ public class MiningMinion extends MinionBase {
 
         this.level = level;
 
-        this.text = location.getWorld().spawn(location.clone().add(0, 0.5, 0), ArmorStand.class);
+        this.text = location.getWorld().spawn(location.clone().add(0, 1, 0), ArmorStand.class);
         this.text.setCustomName("");
         this.text.setCustomNameVisible(false);
         this.text.setGravity(false);
@@ -98,6 +103,9 @@ public class MiningMinion extends MinionBase {
         this.minion.setChestplate(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_CHESTPLATE, 1).toItemStack(), this.leatherArmorColor));
         this.minion.setLeggings(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_LEGGINGS, 1).toItemStack(), this.leatherArmorColor));
         this.minion.setBoots(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_BOOTS, 1).toItemStack(), this.leatherArmorColor));
+
+        this.minion.setMetadata("minion", new FixedMetadataValue(Skyblock.getPlugin(), true));
+        this.minion.setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), this.uuid.toString()));
 
         this.i = 0;
 
@@ -130,10 +138,6 @@ public class MiningMinion extends MinionBase {
     }
 
     @Override
-    public void showInventory(SkyblockPlayer player) {
-    }
-
-    @Override
     protected void tick(SkyblockPlayer player, Location location) {
         List<Block> blocks = new ArrayList<>();
 
@@ -149,6 +153,8 @@ public class MiningMinion extends MinionBase {
         List<Block> ores = blocks.stream().filter(block -> block.getType().equals(this.type.getMaterial())).collect(Collectors.toList());
 
         if (air.size() != 0) {
+            this.text.setCustomNameVisible(false);
+
             Block block = air.get(Skyblock.getPlugin().getRandom().nextInt(air.size()));
 
             Material toSet = this.type.getMaterial();
@@ -162,7 +168,17 @@ public class MiningMinion extends MinionBase {
                 ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet1);
             }
         } else {
-            Block block = ores.get(Skyblock.getPlugin().getRandom().nextInt(ores.size()));
+            Block block;
+            try {
+                block = ores.get(Skyblock.getPlugin().getRandom().nextInt(ores.size()));
+            } catch (IllegalArgumentException ex) {
+                this.text.setCustomName(ChatColor.RED + "I need more space!");
+                this.text.setCustomNameVisible(true);
+
+                return;
+            }
+
+            this.text.setCustomNameVisible(false);
 
             for (int i = 0; i < 10; i++) {
                 int finalI = i;
@@ -184,5 +200,14 @@ public class MiningMinion extends MinionBase {
                 }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
             }
         }
+    }
+
+    @Override
+    protected void showInventory(SkyblockPlayer player) {
+        this.gui = Bukkit.createInventory(null, 54, StringUtils.capitalize(this.type.name().toLowerCase()) + " Minion " + Util.toRoman(this.level));
+
+        Util.fillEmpty(this.gui);
+
+        player.getBukkitPlayer().openInventory(this.gui);
     }
 }

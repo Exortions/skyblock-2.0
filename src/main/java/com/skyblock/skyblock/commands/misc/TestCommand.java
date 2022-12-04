@@ -27,19 +27,20 @@ import java.util.Map;
 @Description(description = "Command for testing features")
 public class TestCommand implements Command {
 
-    int index = 0;
+//    int index = 0;
+
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
 
-        FairySoulHandler soul = plugin.getFairySoulHandler();
-
-        int i = 0;
-        for (Location l : soul.getLocations()) {
-            if (i == index) player.teleport(l);
-            i++;
-        }
-
-        index++;
+//        FairySoulHandler soul = plugin.getFairySoulHandler();
+//
+//        int i = 0;
+//        for (Location l : soul.getLocations()) {
+//            if (i == index) player.teleport(l);
+//            i++;
+//        }
+//
+//        index++;
 
 //        Skill.reward(new Combat(), Integer.parseInt(args[0]), SkyblockPlayer.getPlayer(player));
 //
@@ -56,7 +57,7 @@ public class TestCommand implements Command {
 //        player.getInventory().addItem(tiger.toItemStack());
 //        player.getInventory().addItem(whale.toItemStack());
 //
-//        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
-//        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
+        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
+        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
     }
 }

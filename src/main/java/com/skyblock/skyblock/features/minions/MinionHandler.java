@@ -141,4 +141,14 @@ public class MinionHandler {
         }
     }
 
+    public MinionBase getMinion(UUID uuid) {
+        for (UUID uuid1 : this.minions.keySet()) {
+            for (MinionSerializable minion : this.minions.get(uuid1)) {
+                if (minion.getUuid().equals(uuid)) return minion.getBase();
+            }
+        }
+
+        return null;
+    }
+
 }

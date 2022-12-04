@@ -31,6 +31,7 @@ import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.features.minions.MinionHandler;
+import com.skyblock.skyblock.features.minions.MinionListener;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
@@ -45,7 +46,6 @@ import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTEntity;
-import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
@@ -63,7 +63,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 @Getter
 @SuppressWarnings({"unused", "deprecation"})
@@ -464,6 +467,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new BankerListener());
         registerListener(new ReforgeListener());
         registerListener(new PetListener());
+        registerListener(new MinionListener());
 
         this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
