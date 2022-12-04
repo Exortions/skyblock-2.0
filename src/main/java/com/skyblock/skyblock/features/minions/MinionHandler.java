@@ -77,7 +77,7 @@ public class MinionHandler {
                 throw new IllegalArgumentException("Could not find level in serialized data");
             }
 
-            if (type instanceof MiningMinionType) base = new MiningMinion((MiningMinionType) type);
+            if (type instanceof MiningMinionType) base = new MiningMinion((MiningMinionType) type, uuid);
             else base = null;
 
             return new MinionSerializable(base, type, location, owner, uuid, level);
@@ -102,17 +102,19 @@ public class MinionHandler {
     public void reloadPlayer(SkyblockPlayer player) {
         this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
 
-        outer:
         for (MinionSerializable minion : (List<MinionSerializable>) player.getValue("island.minions")) {
+            boolean found = false;
+
             for (ArmorStand stand : minion.getLocation().getWorld().getEntitiesByClass(ArmorStand.class)) {
                 if (stand.hasMetadata("minion")) {
                     if (stand.getMetadata("minion_id").get(0).asString().equals(minion.getUuid().toString())) {
-                        continue outer;
+                        found = true;
+                        break;
                     }
                 }
             }
 
-            minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
+            if (!found) minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
         }
     }
 
