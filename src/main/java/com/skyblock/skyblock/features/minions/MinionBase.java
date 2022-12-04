@@ -1,13 +1,12 @@
 package com.skyblock.skyblock.features.minions;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.MinionType;
 import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -16,6 +15,8 @@ import java.util.function.Function;
 
 @Data
 public abstract class MinionBase {
+
+    protected final MinionType<?> type;
 
     protected final String name;
     protected int level;
@@ -30,6 +31,7 @@ public abstract class MinionBase {
     protected final Function<Integer, Integer> getMaximumStorage;
 
     protected ArmorStand minion;
+    protected ArmorStand text;
 
     protected double timeBetweenActions;
     protected int resourcesGenerated;
@@ -37,7 +39,8 @@ public abstract class MinionBase {
 
     protected List<ItemStack> inventory;
 
-    public MinionBase(String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
+    public MinionBase(MinionType<?> type, String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
+        this.type = type;
         this.name = name;
         this.recipe = recipe;
         this.hand = hand;
