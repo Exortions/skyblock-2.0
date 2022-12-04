@@ -36,6 +36,7 @@ public class MiningMinion extends MinionBase {
 
     public MiningMinion(MiningMinionType minion) {
         super(
+                minion,
                 minion.getName(),
                 minion.getRecipe(),
                 minion.getHand(),

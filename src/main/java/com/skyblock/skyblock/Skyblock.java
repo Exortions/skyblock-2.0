@@ -26,6 +26,7 @@ import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
+import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
@@ -72,6 +73,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
     private ReforgeHandler reforgeHandler;
+    private MinionHandler minionHandler;
     private SlayerHandler slayerHandler;
     private RecipeHandler recipeHandler;
     private ItemHandler itemHandler;
@@ -96,6 +98,8 @@ public final class Skyblock extends JavaPlugin {
         this.registerEnchantments();
 
         this.registerLocations();
+
+        this.registerMinions();
 
         this.initializeRecipes();
         this.initializeGameRules();
@@ -136,6 +140,8 @@ public final class Skyblock extends JavaPlugin {
             merchant.getNpc().getOwningRegistry().deregisterAll();
         }
 
+        this.minionHandler.deleteAll();
+
         this.npcHandler.killAll();
 
         File file = new File("plugins/Citizens/saves.yml");
@@ -149,6 +155,15 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerMinions() {
+        this.sendMessage("Registering minions...");
+        long start = System.currentTimeMillis();
+
+        this.minionHandler = new MinionHandler();
+
+        this.sendMessage("Successfully registered minions in " + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + ".");
     }
 
     public void registerBlockHandler() {

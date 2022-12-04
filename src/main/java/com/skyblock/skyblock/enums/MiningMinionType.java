@@ -11,8 +11,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 @Getter
-@AllArgsConstructor
-public enum MiningMinionType {
+public enum MiningMinionType implements MinionType<MiningMinionType> {
 
     COBBLESTONE(
             "Cobblestone",
@@ -45,5 +44,22 @@ public enum MiningMinionType {
     private final Function<Integer, Integer> getMaximumStorage;
     private final Material material;
     private final Function<Integer, ItemStack[]> calculateDrops;
+
+    MiningMinionType(String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorColor, Function<Integer, Integer> timeBetweenActions, Function<Integer, Integer> getMaximumStorage, Material material, Function<Integer, ItemStack[]> calculateDrops) {
+        this.name = name;
+        this.recipe = recipe;
+        this.hand = hand;
+        this.head = head;
+        this.leatherArmorColor = leatherArmorColor;
+        this.timeBetweenActions = timeBetweenActions;
+        this.getMaximumStorage = getMaximumStorage;
+        this.material = material;
+        this.calculateDrops = calculateDrops;
+    }
+
+    @Override
+    public MiningMinionType getRaw() {
+        return this;
+    }
 
 }
