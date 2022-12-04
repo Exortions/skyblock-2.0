@@ -33,9 +33,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.time.Duration;

@@ -9,10 +9,8 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -23,6 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MiningMinion extends MinionBase {
@@ -34,8 +33,9 @@ public class MiningMinion extends MinionBase {
 
     private MiningMinionType type;
 
-    public MiningMinion(MiningMinionType minion) {
+    public MiningMinion(MiningMinionType minion, UUID uuid) {
         super(
+                uuid,
                 minion,
                 minion.getName(),
                 minion.getRecipe(),
@@ -52,6 +52,10 @@ public class MiningMinion extends MinionBase {
         this.type = minion;
     }
 
+    public MiningMinion(MiningMinionType minion) {
+        this(minion, UUID.randomUUID());
+    }
+
     @Override
     public void load(SkyblockPlayer player, int index) {
 
@@ -60,6 +64,8 @@ public class MiningMinion extends MinionBase {
     @Override
     public void spawn(SkyblockPlayer player, Location location, int level) {
         if (!location.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) return;
+
+        Skyblock.getPlugin().getMinionHandler().initializeMinion(player, this, location);
 
         if (this.minion != null) this.minion.remove();
 
@@ -125,7 +131,6 @@ public class MiningMinion extends MinionBase {
 
     @Override
     public void showInventory(SkyblockPlayer player) {
-
     }
 
     @Override
@@ -151,7 +156,7 @@ public class MiningMinion extends MinionBase {
             block.setType(toSet);
 
             for (Player target : location.getWorld().getPlayers()) {
-                PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), 0);
+                PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(block.getX(), block.getY(), block.getZ()), 50);
                 PacketPlayOutBlockChange packet1 = new PacketPlayOutBlockChange(((CraftWorld) location.getWorld()).getHandle(), new BlockPosition(block.getX(), block.getY(), block.getZ()));
                 ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet);
                 ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet1);

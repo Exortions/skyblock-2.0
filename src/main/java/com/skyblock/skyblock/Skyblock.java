@@ -47,6 +47,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -62,6 +63,10 @@ import java.util.*;
 @Getter
 @SuppressWarnings({"unused", "deprecation"})
 public final class Skyblock extends JavaPlugin {
+
+    static {
+        ConfigurationSerialization.registerClass(MinionHandler.MinionSerializable.class, "Minion");
+    }
 
     private RegenerativeBlockHandler regenerativeBlockHandler;
     private SkyblockEnchantmentHandler enchantmentHandler;
@@ -131,6 +136,8 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Disabling Skyblock...");
         long start = System.currentTimeMillis();
 
+        this.minionHandler.deleteAll();
+
         for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
             merchant.getNpc().destroy();
             merchant.getStand().remove();
@@ -139,8 +146,6 @@ public final class Skyblock extends JavaPlugin {
             merchant.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
             merchant.getNpc().getOwningRegistry().deregisterAll();
         }
-
-        this.minionHandler.deleteAll();
 
         this.npcHandler.killAll();
 

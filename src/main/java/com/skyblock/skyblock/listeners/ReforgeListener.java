@@ -19,7 +19,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.sql.Ref;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;

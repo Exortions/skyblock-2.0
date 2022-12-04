@@ -11,10 +11,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Data
 public abstract class MinionBase {
+
+    protected final UUID uuid;
 
     protected final MinionType<?> type;
 
@@ -39,7 +42,8 @@ public abstract class MinionBase {
 
     protected List<ItemStack> inventory;
 
-    public MinionBase(MinionType<?> type, String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
+    public MinionBase(UUID uuid, MinionType<?> type, String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
+        this.uuid = uuid;
         this.type = type;
         this.name = name;
         this.recipe = recipe;

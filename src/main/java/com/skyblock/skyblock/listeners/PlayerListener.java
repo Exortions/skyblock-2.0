@@ -27,9 +27,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.BiFunction;
 
 public class PlayerListener implements Listener {
@@ -50,19 +48,19 @@ public class PlayerListener implements Listener {
             skyblockPlayer.setHand(player.getItemInHand());
         }
 
+        Skyblock.getPlugin().getMinionHandler().reloadPlayers();
+
         skyblockPlayer.tick();
 
         for (ItemStack item : player.getInventory().getArmorContents()) {
             skyblockPlayer.updateStats(null, item);
         }
+
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (player.isOnline()){
-                    skyblockPlayer.tick();
-                }else{
-                    cancel();
-                }
+                if (player.isOnline()) skyblockPlayer.tick();
+                else cancel();
             }
         }.runTaskTimer(plugin, 5L, 1);
     }

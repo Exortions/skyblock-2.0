@@ -6,8 +6,6 @@ import com.skyblock.skyblock.features.pets.PetAbility;
 import com.skyblock.skyblock.features.skills.Combat;
 import com.skyblock.skyblock.features.skills.Skill;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Entity;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Arrays;
 import java.util.List;

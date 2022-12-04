@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.enums;
 
 import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Material;

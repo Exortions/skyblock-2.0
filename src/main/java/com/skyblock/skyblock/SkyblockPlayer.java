@@ -29,8 +29,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -49,6 +47,10 @@ public class SkyblockPlayer {
 
     public static SkyblockPlayer getPlayer(Player player) {
         return playerRegistry.get(player.getUniqueId());
+    }
+
+    public static SkyblockPlayer getPlayer(UUID uuid) {
+        return playerRegistry.get(uuid);
     }
 
     public static void registerPlayer(UUID uuid) {

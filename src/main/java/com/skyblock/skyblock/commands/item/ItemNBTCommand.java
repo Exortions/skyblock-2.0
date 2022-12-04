@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.commands.item;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
@@ -9,9 +8,6 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.entity.Player;
-
-import java.lang.reflect.Array;
-import java.util.*;
 
 @RequiresPlayer
 @Usage(usage = "/sb itemnbt <type> <key> <value>")
