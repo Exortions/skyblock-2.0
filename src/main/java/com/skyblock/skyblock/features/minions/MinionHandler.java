@@ -8,6 +8,7 @@ import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.entity.ArmorStand;
 
 import java.util.*;
 
@@ -101,7 +102,16 @@ public class MinionHandler {
     public void reloadPlayer(SkyblockPlayer player) {
         this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
 
+        outer:
         for (MinionSerializable minion : (List<MinionSerializable>) player.getValue("island.minions")) {
+            for (ArmorStand stand : minion.getLocation().getWorld().getEntitiesByClass(ArmorStand.class)) {
+                if (stand.hasMetadata("minion")) {
+                    if (stand.getMetadata("minion_id").get(0).asString().equals(minion.getUuid().toString())) {
+                        continue outer;
+                    }
+                }
+            }
+
             minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
         }
     }
