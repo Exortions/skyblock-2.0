@@ -107,7 +107,14 @@ public class FairySoulHandler {
     }
 
     public void killAllSouls() {
-        souls.forEach(Entity::remove);
+        souls.forEach((as) -> {
+            Location loc = as.getLocation();
+            if (!loc.getChunk().isLoaded()) loc.getChunk().load(false);
+
+            while (!loc.getChunk().isLoaded()) { loc.getChunk().load(false); }
+
+            Util.delay(as::remove, 1);
+        });
     }
 
     public String getId(Chunk chunk) {

@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.pets;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -36,6 +37,6 @@ public class PetListener implements Listener {
     public void onPlace(BlockPlaceEvent e) {
         NBTItem item = new NBTItem(e.getItemInHand());
 
-        e.setCancelled(item.getBoolean("isPet"));
+        if (e.getBlock().getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) e.setCancelled(item.getBoolean("isPet"));
     }
 }
