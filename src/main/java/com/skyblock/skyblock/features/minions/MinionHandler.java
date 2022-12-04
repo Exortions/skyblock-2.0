@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.minions;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.enums.MinionType;
@@ -93,11 +94,15 @@ public class MinionHandler {
 
     public void reloadPlayers() {
         for (SkyblockPlayer player : SkyblockPlayer.playerRegistry.values()) {
-            this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
+            this.reloadPlayer(player);
+        }
+    }
 
-            for (MinionSerializable minion : (List<MinionSerializable>) player.getValue("island.minions")) {
-                minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
-            }
+    public void reloadPlayer(SkyblockPlayer player) {
+        this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
+
+        for (MinionSerializable minion : (List<MinionSerializable>) player.getValue("island.minions")) {
+            minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
         }
     }
 

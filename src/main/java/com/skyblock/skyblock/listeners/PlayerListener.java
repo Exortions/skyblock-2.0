@@ -53,6 +53,8 @@ public class PlayerListener implements Listener {
             skyblockPlayer.updateStats(null, item);
         }
 
+        Skyblock.getPlugin().getMinionHandler().reloadPlayers();
+
         Util.delay(() -> {
             if (!Skyblock.getPlugin().getFairySoulHandler().initialized) Skyblock.getPlugin().getFairySoulHandler().init();
         }, 1);
