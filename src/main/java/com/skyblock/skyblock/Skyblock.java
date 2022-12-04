@@ -306,7 +306,8 @@ public final class Skyblock extends JavaPlugin {
                 )
         );
 
-        this.npcHandler.registerNPC("tia_the_fairy",
+        this.npcHandler.registerNPC(
+                "tia_the_fairy",
                 new NPC(ChatColor.LIGHT_PURPLE + "Tia the Fairy",
                         true,
                         true,

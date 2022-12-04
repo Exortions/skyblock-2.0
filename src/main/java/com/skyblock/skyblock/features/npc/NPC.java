@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.npc;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -36,6 +37,8 @@ public class NPC implements Listener {
     private ArmorStand click;
 
     public void spawn() {
+        this.location.getWorld().loadChunk(this.location.getChunk());
+
         List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose, this.villager, this.profession);
 
         this.npc = (net.citizensnpcs.api.npc.NPC) npcData.get(0);
