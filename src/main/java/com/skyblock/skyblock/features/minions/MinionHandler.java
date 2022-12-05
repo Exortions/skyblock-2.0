@@ -115,6 +115,7 @@ public class MinionHandler {
             }
 
             if (!found) minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
+            else initializeMinion(player, minion.getBase(), minion.getLocation());
         }
     }
 
@@ -168,4 +169,7 @@ public class MinionHandler {
         return null;
     }
 
+    public HashMap<UUID, List<MinionSerializable>> getMinions() {
+        return minions;
+    }
 }

@@ -107,6 +107,9 @@ public class MiningMinion extends MinionBase {
         this.minion.setMetadata("minion", new FixedMetadataValue(Skyblock.getPlugin(), true));
         this.minion.setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), this.uuid.toString()));
 
+        this.text.setMetadata("minion", new FixedMetadataValue(Skyblock.getPlugin(), true));
+        this.text.setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), this.uuid.toString()));
+
         this.i = 0;
 
         this.task = new BukkitRunnable() {
@@ -210,4 +213,5 @@ public class MiningMinion extends MinionBase {
 
         player.getBukkitPlayer().openInventory(this.gui);
     }
+
 }

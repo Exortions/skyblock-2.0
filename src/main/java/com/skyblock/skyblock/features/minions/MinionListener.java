@@ -6,7 +6,6 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import java.util.UUID;
 
@@ -25,6 +24,8 @@ public class MinionListener implements Listener {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
 
         if (player == null || !player.getBukkitPlayer().getWorld().getName().equals(IslandManager.ISLAND_PREFIX + player.getBukkitPlayer().getUniqueId().toString())) return;
+
+        player.getBukkitPlayer().sendMessage(Skyblock.getPlugin().getMinionHandler().getMinions().toString());
 
         MinionBase minion = Skyblock.getPlugin().getMinionHandler().getMinion(minionId);
 
