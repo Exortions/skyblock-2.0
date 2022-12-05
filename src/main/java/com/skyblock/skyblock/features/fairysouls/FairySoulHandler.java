@@ -73,8 +73,8 @@ public class FairySoulHandler {
     public void loadChunk(Chunk chunk) {
         if (stands.containsKey(getId(chunk))) {
             for (Location location : stands.get(getId(chunk))) {
-                int xMult = location.getX() <= 0 ? -1 : 1;
-                int zMult = location.getZ() <= 0 ? -1 : 1;
+                int xMult = location.getX() <= 0 ? 1 : 1;
+                int zMult = location.getZ() <= 0 ? 1 : 1;
                 Location spawn = new Location(location.getWorld(), location.getX() + (0.5 * xMult), location.getY() - 1.5, location.getZ() + (0.5 * zMult));
                 addStand(spawn);
             }
