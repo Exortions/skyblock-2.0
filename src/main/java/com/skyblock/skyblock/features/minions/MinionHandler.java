@@ -89,14 +89,6 @@ public class MinionHandler {
 
     public MinionHandler() {
         this.minions = new HashMap<>();
-
-        this.reloadPlayers();
-    }
-
-    public void reloadPlayers() {
-        for (SkyblockPlayer player : SkyblockPlayer.playerRegistry.values()) {
-            this.reloadPlayer(player);
-        }
     }
 
     public void reloadPlayer(SkyblockPlayer player) {
@@ -116,8 +108,18 @@ public class MinionHandler {
                 }
             }
 
-            if (!found) minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
-            else initializeMinion(player, minion.getBase(), minion.getLocation());
+            if (found) {
+                for (ArmorStand stand : minion.getLocation().getWorld().getEntitiesByClass(ArmorStand.class)) {
+                    if (stand.hasMetadata("minion")) {
+                        if (stand.getMetadata("minion_id").get(0).asString().equals(minion.getUuid().toString())) {
+                            stand.remove();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
         }
     }
 
@@ -129,35 +131,33 @@ public class MinionHandler {
         this.minions.get(player.getBukkitPlayer().getUniqueId()).add(new MinionSerializable(minion, minion.getType(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel()));
     }
 
-    public void deleteAll() {
-        for (UUID uuid : this.minions.keySet()) {
-            for (MinionSerializable minion : this.minions.get(uuid)) {
-                minion.getBase().getMinion().remove();
-                minion.getBase().getText().remove();
+    public void deleteAll(UUID uuid) {
+        for (MinionSerializable minion : this.minions.get(uuid)) {
+            minion.getBase().getMinion().remove();
+            minion.getBase().getText().remove();
 
-                SkyblockPlayer player = SkyblockPlayer.getPlayer(uuid);
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(uuid);
 
-                List<MinionSerializable> minions = (List<MinionSerializable>) player.getValue("island.minions");
+            List<MinionSerializable> minions = (List<MinionSerializable>) player.getValue("island.minions");
 
-                if (minions == null) minions = new ArrayList<>();
+            if (minions == null) minions = new ArrayList<>();
 
-                boolean found = false;
-                int i = 0;
+            boolean found = false;
+            int i = 0;
 
-                for (MinionSerializable minionSerializable : minions) {
-                    if (minionSerializable.getUuid().equals(minion.getUuid())) {
-                        found = true;
-                        break;
-                    }
-
-                    i++;
+            for (MinionSerializable minionSerializable : minions) {
+                if (minionSerializable.getUuid().equals(minion.getUuid())) {
+                    found = true;
+                    break;
                 }
 
-                if (!found) minions.add(minion);
-                else minions.set(i, minion);
-
-                player.setValue("island.minions", minions);
+                i++;
             }
+
+            if (!found) minions.add(minion);
+            else minions.set(i, minion);
+
+            player.setValue("island.minions", minions);
         }
     }
 

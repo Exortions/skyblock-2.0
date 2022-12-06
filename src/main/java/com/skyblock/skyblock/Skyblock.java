@@ -138,10 +138,6 @@ public final class Skyblock extends JavaPlugin {
 
         this.initializeAlreadyOnlinePlayers();
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            this.minionHandler.reloadPlayer(SkyblockPlayer.getPlayer(player));
-        }
-
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");
     }
@@ -149,8 +145,6 @@ public final class Skyblock extends JavaPlugin {
     public void onDisable() {
         this.sendMessage("Disabling Skyblock...");
         long start = System.currentTimeMillis();
-
-        this.minionHandler.deleteAll();
 
         this.fairySoulHandler.killAllSouls();
 
@@ -162,8 +156,6 @@ public final class Skyblock extends JavaPlugin {
             merchant.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
             merchant.getNpc().getOwningRegistry().deregisterAll();
         }
-
-        this.minionHandler.deleteAll();
 
         this.npcHandler.killAll();
 
