@@ -105,6 +105,8 @@ public class MinionHandler {
         for (MinionSerializable minion : (List<MinionSerializable>) player.getValue("island.minions")) {
             boolean found = false;
 
+            minion.getLocation().getChunk().load();
+
             for (ArmorStand stand : minion.getLocation().getWorld().getEntitiesByClass(ArmorStand.class)) {
                 if (stand.hasMetadata("minion")) {
                     if (stand.getMetadata("minion_id").get(0).asString().equals(minion.getUuid().toString())) {

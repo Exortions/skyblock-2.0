@@ -3,11 +3,15 @@ package com.skyblock.skyblock.features.minions;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.island.IslandManager;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MinionListener implements Listener {
 
@@ -32,6 +36,15 @@ public class MinionListener implements Listener {
         if (minion == null) return;
 
         minion.showInventory(player);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getClickedInventory() == null || event.getWhoClicked() == null || event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
+
+        if (!event.getClickedInventory().getName().contains("Minion")) return;
+
+        event.setCancelled(true);
     }
 
 }
