@@ -27,8 +27,6 @@ public class MinionListener implements Listener {
 
         if (player == null || !player.getBukkitPlayer().getWorld().getName().equals(IslandManager.ISLAND_PREFIX + player.getBukkitPlayer().getUniqueId().toString())) return;
 
-        player.getBukkitPlayer().sendMessage(Skyblock.getPlugin().getMinionHandler().getMinions().toString());
-
         MinionBase minion = Skyblock.getPlugin().getMinionHandler().getMinion(minionId);
 
         if (minion == null) return;
