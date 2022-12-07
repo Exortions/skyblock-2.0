@@ -19,6 +19,7 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -60,11 +61,6 @@ public class MiningMinion extends MinionBase {
 
     public MiningMinion(MiningMinionType minion) {
         this(minion, UUID.randomUUID());
-    }
-
-    @Override
-    public void load(SkyblockPlayer player, int index) {
-
     }
 
     @Override
@@ -142,7 +138,7 @@ public class MiningMinion extends MinionBase {
 
     @Override
     public void pickup(SkyblockPlayer player, Location location) {
-
+        // TODO: Add pickup code + minion itemstack parser in ItemHandler
     }
 
     @Override
@@ -203,11 +199,83 @@ public class MiningMinion extends MinionBase {
                             block.setType(Material.AIR);
 
                             for (Player target : location.getWorld().getPlayers()) ((CraftPlayer) target).getHandle().playerConnection.sendPacket(packet2);
+
+                            collect(player);
                         }
                     }
                 }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
             }
         }
+    }
+
+    @Override
+    public void collect(SkyblockPlayer player, int slot) {
+        List<Integer> possibleSlots = new ArrayList<>();
+
+        int slt = 21;
+        for (int i = 0; i < 15; i++) {
+            if (Math.floor(this.maxStorage / 64F) > i) possibleSlots.add(slt);
+
+            if (slt == 25) {
+                slt = 30;
+            } else if (slt == 34) {
+                slt = 39;
+            } else {
+                slt++;
+            }
+        }
+
+        if (!possibleSlots.contains(slot)) return;
+
+        int inventoryIndex = possibleSlots.indexOf(slot);
+
+        ItemStack toCollect = this.inventory.get(inventoryIndex);
+
+        if (toCollect == null || toCollect.getType().equals(Material.AIR)) return;
+
+        if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
+            player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
+            return;
+        }
+
+        player.getBukkitPlayer().getInventory().addItem(toCollect);
+
+        this.inventory.set(inventoryIndex, new ItemStack(Material.AIR));
+
+        player.getBukkitPlayer().updateInventory();
+        this.showInventory(player);
+    }
+
+    @Override
+    public void collect(SkyblockPlayer player) {
+        ItemStack[] drops = this.type.getCalculateDrops().apply(this.level);
+
+        List<ItemStack> newInventory = new ArrayList<>(this.inventory);
+
+        for (ItemStack drop : drops) {
+            if (drop == null || drop.getType().equals(Material.AIR)) continue;
+
+            newInventory.add(drop);
+        }
+
+        if (newInventory.size() > (this.maxStorage / 64)) {
+            this.text.setCustomName(ChatColor.RED + "My storage is fulL! :(");
+            this.text.setCustomNameVisible(true);
+            return;
+        }
+
+        this.inventory = newInventory;
+
+        for (ItemStack drop : drops) {
+            this.resourcesGenerated += drop.getAmount();
+        }
+
+        this.text.setCustomNameVisible(false);
+    }
+
+    @Override
+    public void upgrade(SkyblockPlayer player, int level) {
+        // TODO: Implement upgrade system
     }
 
     @Override
@@ -245,6 +313,9 @@ public class MiningMinion extends MinionBase {
             }
         }
 
+        for (ItemStack item : this.inventory) {
+            this.gui.addItem(item);
+        }
 
         player.getBukkitPlayer().openInventory(this.gui);
     }

@@ -4,6 +4,9 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.island.IslandManager;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -41,6 +44,21 @@ public class MinionListener implements Listener {
         if (!event.getClickedInventory().getName().contains("Minion")) return;
 
         event.setCancelled(true);
+
+        MinionBase minion = null;
+
+        SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
+
+        for (MinionHandler.MinionSerializable serializable : Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
+            if (serializable.getBase().getGui().equals(event.getClickedInventory())) {
+                minion = serializable.getBase();
+                break;
+            }
+        }
+
+        if (minion == null) return;
+
+        minion.collect(player, event.getSlot());
     }
 
 }
