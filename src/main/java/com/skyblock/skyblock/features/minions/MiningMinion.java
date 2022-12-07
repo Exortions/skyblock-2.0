@@ -228,6 +228,24 @@ public class MiningMinion extends MinionBase {
         this.gui.setItem(46, MinionHandler.MINION_INVENTORY_UPGRADE_SLOT);
         this.gui.setItem(48, MinionHandler.MINION_INVENTORY_COLLECT_ALL);
 
+        int slot = 21;
+        for (int i = 0; i < 15; i++) {
+            if (Math.floor(this.maxStorage / 64F) > i) {
+                this.gui.setItem(slot, new ItemStack(Material.AIR));
+            } else {
+                this.gui.setItem(slot, new ItemBuilder(ChatColor.YELLOW + "Storage unlocked at tier " + Util.toRoman(this.type.getLevelRequirementForStorageSlot().apply(i)), Material.STAINED_GLASS_PANE).toItemStack());
+            }
+
+            if (slot == 25) {
+                slot = 30;
+            } else if (slot == 34) {
+                slot = 39;
+            } else {
+                slot++;
+            }
+        }
+
+
         player.getBukkitPlayer().openInventory(this.gui);
     }
 
