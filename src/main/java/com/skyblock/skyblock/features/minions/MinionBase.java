@@ -58,7 +58,7 @@ public abstract class MinionBase {
 
         this.minion = null;
 
-        this.level = 0;
+        this.level = 1;
 
         this.timeBetweenActions = 0;
         this.resourcesGenerated = 0;

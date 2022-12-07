@@ -1,18 +1,72 @@
 package com.skyblock.skyblock.features.minions;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.enums.MinionType;
+import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.Data;
+import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class MinionHandler {
+
+    public static ItemStack MINION_INVENTORY_PICKUP_MINION = new ItemBuilder(ChatColor.GREEN + "Pickup Minion", Material.BEDROCK).addLore(ChatColor.YELLOW + "Click to pickup!").toItemStack();
+    public static ItemStack MINION_INVENTORY_COLLECT_ALL = new ItemBuilder(ChatColor.GREEN + "Collect All", Material.CHEST).addLore(ChatColor.YELLOW + "Click to collect all items!").toItemStack();
+    public static ItemStack MINION_INVENTORY_IDEAL_LAYOUT = new ItemBuilder(ChatColor.GREEN + "Ideal Layout", Material.REDSTONE_TORCH_ON).addLore(Util.buildLore("&7View the most effecient spot for\n&7this minion to be placed in.")).toItemStack();
+    public static ItemStack MINION_INVENTORY_UPGRADE_SKIN_SLOT = new ItemBuilder(ChatColor.GREEN + "Minion Skin Slot", Material.STAINED_GLASS_PANE, (short) 5).addLore(Util.buildLore("You can insert a Minion Skin\nhere to change the appearance\nof your minion.", '7')).toItemStack();
+    public static ItemStack MINION_INVENTORY_UPGRADE_FUEL_SLOT = new ItemBuilder(ChatColor.GREEN + "Fuel", Material.STAINED_GLASS_PANE, (short) 4).addLore(Util.buildLore("Increase the speed of your\nminion by adding minion fuel\nitems here.\n\n&cNote: &7You can't take\nfuel back out after you\nplace it here!", '7')).toItemStack();
+    public static ItemStack MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT = new ItemBuilder(ChatColor.GREEN + "Automated Shipping", Material.STAINED_GLASS_PANE, (short) 11).addLore(Util.buildLore("Add a &bBudget Hopper&7,\n&bEnchanted Hopper&7 or a\n&bPerfect Hopper&7 here to make\nyour minion automatically sell\ngenerated items after its\ninventory is full.", '7')).toItemStack();
+    public static ItemStack MINION_INVENTORY_UPGRADE_SLOT = new ItemBuilder(ChatColor.GREEN + "Upgrade Slot", Material.STAINED_GLASS_PANE, (short) 4).addLore(Util.buildLore("You can improve your minion by\nadding a minion upgrade item\nhere.", '7')).toItemStack();
+
+    public static HashMap<Class<? extends MinionType<?>>, String> MINION_TYPE_TO_ADJECTIVE = new HashMap<Class<? extends MinionType<?>>, String>() {{
+        put(MiningMinionType.class, "mining");
+    }};
+
+    public static Function<MinionBase, ItemStack> createMinionPreview = (minion) -> {
+        ItemStack stack = new ItemBuilder(
+                ChatColor.BLUE +
+                        WordUtils.capitalize(minion.getType().name().toLowerCase().replace("_", " ")) +
+                        " Minion " +
+                        Util.toRoman(minion.getLevel()),
+                Material.SKULL_ITEM
+        ).toItemStack();
+
+        stack = Util.IDtoSkull(stack, minion.getHead().apply(minion.getLevel()));
+
+        ItemMeta meta = stack.getItemMeta();
+
+        meta.setLore(
+                Arrays.asList(
+                    Util.buildLore(
+                            "Place this minion and it will\nstart generating and " +
+                                    MINION_TYPE_TO_ADJECTIVE.get(minion.getType().getClass()) +
+                                    "\n" +
+                                    minion.getType().name().toLowerCase().replace("_", " ") + "!" +
+                                    " Requires an open\narea to place " + minion.getType().name().toLowerCase().replace("_", " ") + ".\n" +
+                                    "Minions also work when you are\noffline!" +
+                                    "\n\nTime Between Action: &a" + minion.getTimeBetweenActions() + "s\n" +
+                                    "Max Storage: &e" + minion.getMaxStorage() + "\n" +
+                                    "Resources Generated: &b" + minion.getResourcesGenerated(),
+                            '7'
+                    )
+                )
+        );
+
+        stack.setItemMeta(meta);
+
+        return stack;
+    };
 
     @Data
     @SerializableAs(value = "Minion")

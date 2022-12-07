@@ -21,7 +21,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -34,9 +33,7 @@ public class MiningMinion extends MinionBase {
     private BukkitRunnable task;
     private int i;
 
-    private int radius;
-
-    private MiningMinionType type;
+    private final MiningMinionType type;
 
     public MiningMinion(MiningMinionType minion, UUID uuid) {
         super(
@@ -55,6 +52,10 @@ public class MiningMinion extends MinionBase {
         this.i = 0;
 
         this.type = minion;
+
+        this.resourcesGenerated = 0;
+        this.timeBetweenActions = minion.getTimeBetweenActions().apply(this.level);
+        this.maxStorage = minion.getGetMaximumStorage().apply(this.level);
     }
 
     public MiningMinion(MiningMinionType minion) {
@@ -75,6 +76,10 @@ public class MiningMinion extends MinionBase {
         if (this.minion != null) this.minion.remove();
 
         this.level = level;
+
+        this.resourcesGenerated = 0;
+        this.timeBetweenActions = this.type.getTimeBetweenActions().apply(this.level);
+        this.maxStorage = this.type.getGetMaximumStorage().apply(this.level);
 
         this.text = location.getWorld().spawn(location.clone().add(0, 1, 0), ArmorStand.class);
         this.text.setCustomName("");
@@ -210,6 +215,18 @@ public class MiningMinion extends MinionBase {
         this.gui = Bukkit.createInventory(null, 54, StringUtils.capitalize(this.type.name().toLowerCase()) + " Minion " + Util.toRoman(this.level));
 
         Util.fillEmpty(this.gui);
+
+        this.gui.setItem(4, MinionHandler.createMinionPreview.apply(this));
+
+        this.gui.setItem(3, MinionHandler.MINION_INVENTORY_IDEAL_LAYOUT);
+        this.gui.setItem(53, MinionHandler.MINION_INVENTORY_PICKUP_MINION);
+
+        this.gui.setItem(10, MinionHandler.MINION_INVENTORY_UPGRADE_SKIN_SLOT);
+        this.gui.setItem(19, MinionHandler.MINION_INVENTORY_UPGRADE_FUEL_SLOT);
+        this.gui.setItem(28, MinionHandler.MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT);
+        this.gui.setItem(37, MinionHandler.MINION_INVENTORY_UPGRADE_SLOT);
+        this.gui.setItem(46, MinionHandler.MINION_INVENTORY_UPGRADE_SLOT);
+        this.gui.setItem(48, MinionHandler.MINION_INVENTORY_COLLECT_ALL);
 
         player.getBukkitPlayer().openInventory(this.gui);
     }
