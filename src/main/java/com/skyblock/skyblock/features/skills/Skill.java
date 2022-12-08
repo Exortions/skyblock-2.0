@@ -16,6 +16,20 @@ import java.util.List;
 @Getter
 public abstract class Skill {
 
+    private final String name;
+    private final String alternate;
+    private final String description;
+    private final ItemStack guiIcon;
+    private final ItemStack guiMilestoneIcon;
+
+    public Skill(String name, String alternate, String description, ItemStack guiIcon, ItemStack guiMilestoneIcon) {
+        this.name = name;
+        this.alternate = alternate;
+        this.description = description;
+        this.guiIcon = guiIcon;
+        this.guiMilestoneIcon = guiMilestoneIcon;
+    }
+
     public static final List<Integer> XP = Arrays.asList(0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425,
             67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 1722425, 2322425, 3022425, 3822425, 4722425,
             5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425,
@@ -121,20 +135,6 @@ public abstract class Skill {
                 return new Fishing();
         }
         return null;
-    }
-
-    private final String name;
-    private final String alternate;
-    private final String description;
-    private final ItemStack guiIcon;
-    private final ItemStack guiMilestoneIcon;
-
-    public Skill(String name, String alternate, String description, ItemStack guiIcon, ItemStack guiMilestoneIcon) {
-        this.name = name;
-        this.alternate = alternate;
-        this.description = description;
-        this.guiIcon = guiIcon;
-        this.guiMilestoneIcon = guiMilestoneIcon;
     }
 
     public abstract List<String> getRewards(int level, int lastLevel);
