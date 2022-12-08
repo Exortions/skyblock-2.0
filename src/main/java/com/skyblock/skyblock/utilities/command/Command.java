@@ -37,7 +37,12 @@ public interface Command {
         return this.getClass().getSimpleName().split("Command")[0];
     }
 
-    default void execute(CommandSender sender, String[] args, Skyblock plugin) {}
-    default void execute(Player player, String[] args, Skyblock plugin) {}
+    default void execute(CommandSender sender, String[] args, Skyblock plugin) {
+        throw new UnsupportedOperationException("This command does not support being executed by the console");
+    }
+
+    default void execute(Player player, String[] args, Skyblock plugin) {
+        throw new UnsupportedOperationException("This command does not support being executed by a player");
+    }
 
 }
