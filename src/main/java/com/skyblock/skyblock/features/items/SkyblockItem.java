@@ -21,15 +21,27 @@ public abstract class SkyblockItem {
         this.internalName = internalName;
     }
 
-    public void onRightClick(PlayerInteractEvent event) { }
+    public void onRightClick(PlayerInteractEvent event) {
+        throw new UnsupportedOperationException("This item does not support right clicking");
+    }
 
-    public void onLeftClick(PlayerInteractEvent event) { }
+    public void onLeftClick(PlayerInteractEvent event) {
+        throw new UnsupportedOperationException("This item does not support left clicking");
+    }
 
-    public void onBowShoot(EntityShootBowEvent event) { }
+    public void onBowShoot(EntityShootBowEvent event) {
+        throw new UnsupportedOperationException("This item does not support shooting a bow");
+    }
 
-    public void onEntityDamage(EntityDamageByEntityEvent event) { }
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        throw new UnsupportedOperationException("This item does not support dealing damage");
+    }
 
-    public void onArmorEquip(PlayerArmorEquipEvent event) { }
+    public void onArmorEquip(PlayerArmorEquipEvent event) {
+        throw new UnsupportedOperationException("This item does not support equipping armor");
+    }
 
-    public void onArmorUnEquip(PlayerArmorUnequipEvent event) {}
+    public void onArmorUnEquip(PlayerArmorUnequipEvent event) {
+        throw new UnsupportedOperationException("This item does not support unequipping armor");
+    }
 }
