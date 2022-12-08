@@ -15,9 +15,20 @@ public abstract class PetAbility {
         return Rarity.COMMON;
     }
 
-    public void onHurt(EntityDamageByEntityEvent e, Entity damager) { }
-    public void onDamage(EntityDamageByEntityEvent e) { }
-    public void onEquip(SkyblockPlayer player) {}
-    public void onUnequip(SkyblockPlayer player) {}
+    public void onHurt(EntityDamageByEntityEvent e, Entity damager) {
+        throw new UnsupportedOperationException("This pet ability does not support being hurt");
+    }
+
+    public void onDamage(EntityDamageByEntityEvent e) {
+        throw new UnsupportedOperationException("This pet ability does not support dealing damage");
+    }
+
+    public void onEquip(SkyblockPlayer player) {
+        throw new UnsupportedOperationException("This pet ability does not support being equipped");
+    }
+
+    public void onUnequip(SkyblockPlayer player) {
+        throw new UnsupportedOperationException("This pet ability does not support being unequipped");
+    }
 
 }
