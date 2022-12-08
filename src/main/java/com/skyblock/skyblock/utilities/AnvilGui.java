@@ -23,6 +23,65 @@ import java.util.HashMap;
 @Data
 public class AnvilGui {
 
+    private final HashMap<AnvilSlot, ItemStack> items = new HashMap<>();
+    private AnvilClickEventHandler handler;
+    private Inventory inventory;
+    private Listener listener;
+    private Player player;
+    private String title;
+
+    public AnvilGui(Player player, final AnvilClickEventHandler handler) {
+        this.handler = handler;
+        this.player = player;
+        this.title = null;
+
+        this.listener = new Listener() {
+            @EventHandler
+            public void onInventoryClick(InventoryClickEvent event) {
+                if (!(event.getWhoClicked() instanceof Player)) return;
+
+                Player clicker = (Player) event.getWhoClicked();
+
+                if (!event.getInventory().equals(inventory)) return;
+
+                event.setCancelled(true);
+
+                ItemStack item = event.getCurrentItem();
+                int slot = event.getRawSlot();
+                String name = "";
+
+                if (item != null && item.hasItemMeta()) name = item.getItemMeta().getDisplayName();
+
+                AnvilClickEvent clickEvent = new AnvilClickEvent(AnvilSlot.bySlot(slot), name);
+
+                handler.onAnvilClick(clickEvent);
+
+                if (clickEvent.willClose()) clicker.closeInventory();
+
+                if (clickEvent.willDestroy()) AnvilGui.this.destory();
+            }
+
+            @EventHandler
+            public void onInventoryClose(InventoryCloseEvent event) {
+                if (!(event.getPlayer() instanceof Player)) return;
+
+                Inventory inventory = event.getInventory();
+
+                if (inventory.equals(AnvilGui.this.inventory)) {
+                    inventory.clear();
+                    AnvilGui.this.destory();
+                }
+            }
+
+            @EventHandler
+            public void onPlayerQuit(PlayerQuitEvent event) {
+                if (event.getPlayer().equals(player)) AnvilGui.this.destory();
+            }
+        };
+
+        Bukkit.getPluginManager().registerEvents(listener, Skyblock.getPlugin(Skyblock.class));
+    }
+
     private static class AnvilContainer extends ContainerAnvil {
         public AnvilContainer(EntityHuman entity) {
             super(entity.inventory, entity.world, new BlockPosition(0, 0, 0), entity);
@@ -92,65 +151,6 @@ public class AnvilGui {
 
     public interface AnvilClickEventHandler {
         void onAnvilClick(AnvilClickEvent event);
-    }
-
-    private final HashMap<AnvilSlot, ItemStack> items = new HashMap<>();
-    private AnvilClickEventHandler handler;
-    private Inventory inventory;
-    private Listener listener;
-    private Player player;
-    private String title;
-
-    public AnvilGui(Player player, final AnvilClickEventHandler handler) {
-        this.handler = handler;
-        this.player = player;
-        this.title = null;
-
-        this.listener = new Listener() {
-            @EventHandler
-            public void onInventoryClick(InventoryClickEvent event) {
-                if (!(event.getWhoClicked() instanceof Player)) return;
-
-                Player clicker = (Player) event.getWhoClicked();
-
-                if (!event.getInventory().equals(inventory)) return;
-
-                event.setCancelled(true);
-
-                ItemStack item = event.getCurrentItem();
-                int slot = event.getRawSlot();
-                String name = "";
-
-                if (item != null && item.hasItemMeta()) name = item.getItemMeta().getDisplayName();
-
-                AnvilClickEvent clickEvent = new AnvilClickEvent(AnvilSlot.bySlot(slot), name);
-
-                handler.onAnvilClick(clickEvent);
-
-                if (clickEvent.willClose()) clicker.closeInventory();
-
-                if (clickEvent.willDestroy()) AnvilGui.this.destory();
-            }
-
-            @EventHandler
-            public void onInventoryClose(InventoryCloseEvent event) {
-                if (!(event.getPlayer() instanceof Player)) return;
-
-                Inventory inventory = event.getInventory();
-
-                if (inventory.equals(AnvilGui.this.inventory)) {
-                    inventory.clear();
-                    AnvilGui.this.destory();
-                }
-            }
-
-            @EventHandler
-            public void onPlayerQuit(PlayerQuitEvent event) {
-                if (event.getPlayer().equals(player)) AnvilGui.this.destory();
-            }
-        };
-
-        Bukkit.getPluginManager().registerEvents(listener, Skyblock.getPlugin(Skyblock.class));
     }
 
     public AnvilGui setSlot(AnvilSlot slot, ItemStack item) {
