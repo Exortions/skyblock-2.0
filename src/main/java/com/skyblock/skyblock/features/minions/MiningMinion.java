@@ -19,7 +19,6 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,10 +30,8 @@ import java.util.stream.Collectors;
 
 public class MiningMinion extends MinionBase {
 
-    private BukkitRunnable task;
-    private int i;
-
     private final MiningMinionType type;
+    private final Skyblock plugin;
 
     public MiningMinion(MiningMinionType minion, UUID uuid) {
         super(
@@ -49,8 +46,7 @@ public class MiningMinion extends MinionBase {
                 minion.getGetMaximumStorage()
         );
 
-        this.task = null;
-        this.i = 0;
+        this.plugin = Skyblock.getPlugin();
 
         this.type = minion;
 
@@ -67,7 +63,7 @@ public class MiningMinion extends MinionBase {
     public void spawn(SkyblockPlayer player, Location location, int level) {
         if (!location.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) return;
 
-        Skyblock.getPlugin().getMinionHandler().initializeMinion(player, this, location);
+        this.plugin.getMinionHandler().initializeMinion(player, this, location);
 
         if (this.minion != null) this.minion.remove();
 
@@ -105,15 +101,15 @@ public class MiningMinion extends MinionBase {
         this.minion.setLeggings(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_LEGGINGS, 1).toItemStack(), this.leatherArmorColor));
         this.minion.setBoots(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_BOOTS, 1).toItemStack(), this.leatherArmorColor));
 
-        this.minion.setMetadata("minion", new FixedMetadataValue(Skyblock.getPlugin(), true));
-        this.minion.setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), this.uuid.toString()));
+        this.minion.setMetadata("minion", new FixedMetadataValue(this.plugin, true));
+        this.minion.setMetadata("minion_id", new FixedMetadataValue(this.plugin, this.uuid.toString()));
 
-        this.text.setMetadata("minion", new FixedMetadataValue(Skyblock.getPlugin(), true));
-        this.text.setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), this.uuid.toString()));
+        this.text.setMetadata("minion", new FixedMetadataValue(this.plugin, true));
+        this.text.setMetadata("minion_id", new FixedMetadataValue(this.plugin, this.uuid.toString()));
 
-        this.i = 0;
+        new BukkitRunnable() {
+            int i = 0;
 
-        this.task = new BukkitRunnable() {
             @Override
             public void run() {
                 if (minion == null || minion.isDead()) {
@@ -131,9 +127,7 @@ public class MiningMinion extends MinionBase {
                     i++;
                 }
             }
-        };
-
-        this.task.runTaskTimer(Skyblock.getPlugin(Skyblock.class), 0, 1);
+        }.runTaskTimer(Skyblock.getPlugin(Skyblock.class), 0, 1);
     }
 
     @Override
@@ -159,7 +153,7 @@ public class MiningMinion extends MinionBase {
         if (air.size() != 0) {
             this.text.setCustomNameVisible(false);
 
-            Block block = air.get(Skyblock.getPlugin().getRandom().nextInt(air.size()));
+            Block block = air.get(this.plugin.getRandom().nextInt(air.size()));
 
             Material toSet = this.type.getMaterial();
 
@@ -174,7 +168,7 @@ public class MiningMinion extends MinionBase {
         } else {
             Block block;
             try {
-                block = ores.get(Skyblock.getPlugin().getRandom().nextInt(ores.size()));
+                block = ores.get(this.plugin.getRandom().nextInt(ores.size()));
             } catch (IllegalArgumentException ex) {
                 this.text.setCustomName(ChatColor.RED + "I need more space!");
                 this.text.setCustomNameVisible(true);

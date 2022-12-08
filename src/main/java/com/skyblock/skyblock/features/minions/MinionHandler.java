@@ -7,8 +7,9 @@ import com.skyblock.skyblock.enums.MinionType;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import net.minecraft.server.v1_8_R3.WorldManager;
+import lombok.Getter;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -30,10 +31,6 @@ public class MinionHandler {
     public static ItemStack MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT = new ItemBuilder(ChatColor.GREEN + "Automated Shipping", Material.STAINED_GLASS_PANE, (short) 11).addLore(Util.buildLore("Add a &bBudget Hopper&7,\n&bEnchanted Hopper&7 or a\n&bPerfect Hopper&7 here to make\nyour minion automatically sell\ngenerated items after its\ninventory is full.", '7')).toItemStack();
     public static ItemStack MINION_INVENTORY_UPGRADE_SLOT = new ItemBuilder(ChatColor.GREEN + "Upgrade Slot", Material.STAINED_GLASS_PANE, (short) 4).addLore(Util.buildLore("You can improve your minion by\nadding a minion upgrade item\nhere.", '7')).toItemStack();
 
-    public static HashMap<Class<? extends MinionType<?>>, String> MINION_TYPE_TO_ADJECTIVE = new HashMap<Class<? extends MinionType<?>>, String>() {{
-        put(MiningMinionType.class, "mining");
-    }};
-
     public static Function<MinionBase, ItemStack> createMinionPreview = (minion) -> {
         ItemStack stack = new ItemBuilder(
                 ChatColor.BLUE +
@@ -51,7 +48,7 @@ public class MinionHandler {
                 Arrays.asList(
                     Util.buildLore(
                             "Place this minion and it will\nstart generating and " +
-                                    MINION_TYPE_TO_ADJECTIVE.get(minion.getType().getClass()) +
+                                    MinionTypeAdjective.valueOf(minion.getType().getDeclaringClass().getSimpleName().toUpperCase().replace("MINIONTYPE", "")) +
                                     "\n" +
                                     minion.getType().name().toLowerCase().replace("_", " ") + "!" +
                                     " Requires an open\narea to place " + minion.getType().name().toLowerCase().replace("_", " ") + ".\n" +
@@ -68,6 +65,14 @@ public class MinionHandler {
 
         return stack;
     };
+
+    @Getter
+    @AllArgsConstructor
+    public enum MinionTypeAdjective {
+        MINING("mining");
+
+        private final String value;
+    }
 
     @Data
     @SerializableAs(value = "Minion")
