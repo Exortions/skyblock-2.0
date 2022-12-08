@@ -259,7 +259,7 @@ public class MiningMinion extends MinionBase {
         }
 
         if (newInventory.size() > (this.maxStorage / 64)) {
-            this.text.setCustomName(ChatColor.RED + "My storage is fulL! :(");
+            this.text.setCustomName(ChatColor.RED + "My storage is full! :(");
             this.text.setCustomNameVisible(true);
             return;
         }
