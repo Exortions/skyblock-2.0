@@ -1,15 +1,16 @@
 package com.skyblock.skyblock.features.minions;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.enums.MinionType;
+import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.Data;
+import net.minecraft.server.v1_8_R3.WorldManager;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.ArmorStand;
@@ -145,13 +146,33 @@ public class MinionHandler {
         this.minions = new HashMap<>();
     }
 
-    public void reloadPlayer(SkyblockPlayer player) {
+    public void reloadPlayer(SkyblockPlayer player, boolean failed) {
         this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
 
         for (MinionSerializable minion : (List<MinionSerializable>) player.getValue("island.minions")) {
             boolean found = false;
 
-            minion.getLocation().getChunk().load();
+            String worldName = IslandManager.ISLAND_PREFIX + player.getBukkitPlayer().getUniqueId().toString();
+
+            if (!failed) Skyblock.getPlugin().sendMessage("Attempting to load player island &8" + worldName + "&f...");
+            else Skyblock.getPlugin().sendMessage("&cFailed to load player island &8" + worldName + "&c. Retrying...");
+
+            World world = Bukkit.createWorld(new WorldCreator(worldName));
+
+            if (world == null) throw new NullPointerException("Minion World is null (" + worldName + ")");
+
+            try {
+                Chunk chunk = minion.getLocation().getChunk();
+
+                if (!chunk.isLoaded()) chunk.load();
+            } catch (NullPointerException ex) {
+                if (!failed) {
+                    reloadPlayer(player, true);
+                } else {
+                    Skyblock.getPlugin().sendMessage("&cFailed to load player island &8" + worldName + "&c.");
+                }
+                return;
+            }
 
             for (ArmorStand stand : minion.getLocation().getWorld().getEntitiesByClass(ArmorStand.class)) {
                 if (stand.hasMetadata("minion")) {

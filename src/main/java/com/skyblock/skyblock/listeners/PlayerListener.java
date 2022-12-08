@@ -44,7 +44,7 @@ public class PlayerListener implements Listener {
 
             if (player == null) return;
 
-            this.plugin.getMinionHandler().reloadPlayer(player);
+            this.plugin.getMinionHandler().reloadPlayer(player, false);
 
             return;
         }
@@ -69,7 +69,7 @@ public class PlayerListener implements Listener {
 
         skyblockPlayer.tick();
 
-        this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer);
+        this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
 
         for (ItemStack item : player.getInventory().getArmorContents()) {
             skyblockPlayer.updateStats(null, item);
