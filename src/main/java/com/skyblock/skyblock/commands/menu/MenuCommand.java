@@ -32,7 +32,55 @@ public class MenuCommand implements Command {
 
         Inventory inventory = Bukkit.createInventory(null, 54, SkyblockMenuListener.MENU_NAME);
 
-        ItemStack yourSkyblockProfile = new ItemBuilder(
+        ItemStack yourSkyblockProfile = this.createSkyblockProfileItem(skyblockPlayer);
+        ItemStack yourSkills = this.createSkillsItem();
+
+        int unlockedCollections = 0;
+        int totalCollections = 0;
+
+        for (Collection collection : Collection.getCollections()) {
+            totalCollections++;
+
+            if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".unlocked").equals(true)) unlockedCollections++;
+        }
+
+        ItemStack collection = this.getCollectionItem(unlockedCollections, totalCollections);
+        ItemStack recipeBook = this.createRecipeBookItem();
+        ItemStack trades = this.createTradesItem();
+        ItemStack questLog = this.createQuestLogItem();
+        ItemStack calendarAndEvents = this.createCalendarItem();
+        ItemStack enderChest = this.createEnderChestItem();
+        ItemStack pets = this.createPetsItem(skyblockPlayer);
+        ItemStack craftingTable = this.createCraftingTableItem();
+        ItemStack activeEffects = this.createActiveEffectsItem();
+
+        Util.fillEmpty(inventory);
+
+        inventory.setItem(13, yourSkyblockProfile);
+
+        inventory.setItem(19, yourSkills);
+        inventory.setItem(20, collection);
+        inventory.setItem(21, recipeBook);
+        inventory.setItem(22, trades);
+        inventory.setItem(23, questLog);
+        inventory.setItem(24, calendarAndEvents);
+        inventory.setItem(25, enderChest);
+
+        inventory.setItem(30, pets);
+        inventory.setItem(31, craftingTable);
+        inventory.setItem(32, activeEffects);
+
+        for (Bag bag : plugin.getBagManager().getBags().values()) {
+            if ((boolean) skyblockPlayer.getValue("bag." + bag.getId() + ".unlocked")) {
+                inventory.setItem(bag.getSkyblockMenuSlot(), bag.toItemStack());
+            }
+        }
+
+        player.openInventory(inventory);
+    }
+
+    public ItemStack createSkyblockProfileItem(SkyblockPlayer skyblockPlayer) {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Your SkyBlock Profile",
                 Material.SKULL_ITEM,
                 1, (short) 3)
@@ -59,8 +107,10 @@ public class MenuCommand implements Command {
                         "",
                         ChatColor.YELLOW + "Click to view!"
                 ).toItemStack();
+    }
 
-        ItemStack yourSkills = new ItemBuilder(
+    public ItemStack createSkillsItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Your Skills",
                 Material.DIAMOND_SWORD)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -71,16 +121,9 @@ public class MenuCommand implements Command {
                         "",
                         ChatColor.YELLOW + "Click to view!")
                 .toItemStack();
+    }
 
-        int totalCollections = 0;
-        int unlockedCollections = 0;
-
-        for (Collection collection : Collection.getCollections()) {
-            totalCollections++;
-
-            if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".unlocked").equals(true)) unlockedCollections++;
-        }
-
+    public ItemStack getCollectionItem(int unlockedCollections, int totalCollections) {
         double percent = Math.round((double) unlockedCollections / (double) totalCollections * 1000) / 10.0;
 
         int barLength = 20;
@@ -90,7 +133,7 @@ public class MenuCommand implements Command {
 
         String bar = ChatColor.DARK_GREEN + StringUtils.repeat("-", barFilled) + ChatColor.WHITE + StringUtils.repeat("-", barEmpty);
 
-        ItemStack collection = new ItemBuilder(
+        return new ItemBuilder(
                 ChatColor.GREEN + "Collection",
                 Material.ITEM_FRAME)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -107,8 +150,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack recipeBook = new ItemBuilder(
+    public ItemStack createRecipeBookItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Recipe Book",
                 Material.BOOK)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -124,8 +169,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack trades = new ItemBuilder(
+    public ItemStack createTradesItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Trades",
                 Material.EMERALD)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -141,8 +188,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack questLog = new ItemBuilder(
+    public ItemStack createQuestLogItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Quest Log",
                 Material.BOOK_AND_QUILL)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -153,8 +202,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack calendarAndEvents = new ItemBuilder(
+    public ItemStack createCalendarItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Calendar and Events",
                 Material.WATCH)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -169,8 +220,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack enderChest = new ItemBuilder(
+    public ItemStack createEnderChestItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Ender Chest",
                 Material.ENDER_CHEST)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -182,8 +235,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack pets = new ItemBuilder(
+    public ItemStack createPetsItem(SkyblockPlayer skyblockPlayer) {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Pets",
                 Material.BONE)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -200,8 +255,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack craftingTable = new ItemBuilder(
+    public ItemStack createCraftingTableItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Crafting Table",
                 Material.WORKBENCH)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -211,8 +268,10 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to open!"
                 )
                 .toItemStack();
+    }
 
-        ItemStack activeEffects = new ItemBuilder(
+    public ItemStack createActiveEffectsItem() {
+        return new ItemBuilder(
                 ChatColor.GREEN + "Active Effects",
                 Material.POTION)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
@@ -228,29 +287,6 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
-
-        Util.fillEmpty(inventory);
-
-        inventory.setItem(13, yourSkyblockProfile);
-
-        inventory.setItem(19, yourSkills);
-        inventory.setItem(20, collection);
-        inventory.setItem(21, recipeBook);
-        inventory.setItem(22, trades);
-        inventory.setItem(23, questLog);
-        inventory.setItem(24, calendarAndEvents);
-        inventory.setItem(25, enderChest);
-
-        inventory.setItem(30, pets);
-        inventory.setItem(31, craftingTable);
-        inventory.setItem(32, activeEffects);
-
-        for (Bag bag : plugin.getBagManager().getBags().values()) {
-            if ((boolean) skyblockPlayer.getValue("bag." + bag.getId() + ".unlocked")) {
-                inventory.setItem(bag.getSkyblockMenuSlot(), bag.toItemStack());
-            }
-        }
-
-        player.openInventory(inventory);
     }
+
 }
