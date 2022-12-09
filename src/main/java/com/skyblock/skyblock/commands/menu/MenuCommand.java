@@ -345,7 +345,7 @@ public class MenuCommand implements Command {
         meta.setDisplayName(ChatColor.AQUA + name);
         meta.setLore(
                 Arrays.asList(Util.buildLore(
-                        "&8" + command + "\n\n" + description + "\n\n&eClick to warp!",
+                        "&8/" + command + "\n\n" + description + "\n\n&eClick to warp!",
                         '7'))
         );
 
