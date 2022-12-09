@@ -94,6 +94,9 @@ public class SkyblockMenuListener implements Listener {
             case "Crafting Table":
                 skyblock.getGuiHandler().show("crafting_table", player);
                 break;
+            case "Close":
+                player.closeInventory();
+                break;
             default:
                 break;
         }
