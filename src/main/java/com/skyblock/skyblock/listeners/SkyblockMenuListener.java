@@ -47,6 +47,12 @@ public class SkyblockMenuListener implements Listener {
             return;
         }
 
+        if (item.hasKey("skyblock.warp.destination.command")) {
+            player.performCommand(item.getString("skyblock.warp.destination.command"));
+
+            return;
+        }
+
         String name = ChatColor.stripColor(clicked.getItemMeta().getDisplayName());
 
         if (name.equals(" ")) return;

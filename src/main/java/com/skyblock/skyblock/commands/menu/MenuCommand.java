@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.commands.menu;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
@@ -12,6 +14,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import de.tr7zw.nbtapi.NBTItem;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,6 +23,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.UUID;
 
 @RequiresPlayer
 @Usage(usage = "/sb menu")
@@ -69,6 +78,9 @@ public class MenuCommand implements Command {
         inventory.setItem(30, pets);
         inventory.setItem(31, craftingTable);
         inventory.setItem(32, activeEffects);
+
+        inventory.setItem(47, this.createWarpItem(skyblockPlayer));
+        inventory.setItem(49, Util.buildCloseButton());
 
         for (Bag bag : plugin.getBagManager().getBags().values()) {
             if ((boolean) skyblockPlayer.getValue("bag." + bag.getId() + ".unlocked")) {
@@ -287,6 +299,62 @@ public class MenuCommand implements Command {
                         ChatColor.YELLOW + "Click to view!"
                 )
                 .toItemStack();
+    }
+
+    public ItemStack createWarpItem(SkyblockPlayer player) {
+        String name;
+        String command;
+        String description;
+
+        String head;
+        String signature;
+
+        if (player.isNotOnPrivateIsland()) {
+            name = "Private Island";
+            command = "warp home";
+            description = "Your very own chunk of SkyBlock.\nNice housing for your minions.";
+
+            head = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzljODg4MWU0MjkxNWE5ZDI5YmI2MWExNmZiMjZkMDU5OTEzMjA0ZDI2NWRmNWI0MzliM2Q3OTJhY2Q1NiJ9fX0=";
+            signature = null;
+        } else {
+            name = "SkyBlock Hub";
+            command = "warp hub";
+            description = "Where everything happens and\nanything is possible.";
+
+            head = "eyJ0aW1lc3RhbXAiOjE1ODcyNDE1OTEyNzYsInByb2ZpbGVJZCI6IjRkNzA0ODZmNTA5MjRkMzM4NmJiZmM5YzEyYmFiNGFlIiwicHJvZmlsZU5hbWUiOiJzaXJGYWJpb3pzY2hlIiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS82ODY3MThkODVlMjViMDA2ZjJjOGYxNjBmNjE5YjIzYzhmZDZhZTc1ZGRmMWMwNjMwOGVjMGY1MzlkOTMxNzAzIn19fQ==";
+            signature = "qSJBND+tmy4O/+m/N21yHl6kWbuUIsjgugLgELLhpoqc55cd6DAGl4seGV9qE7tFCrNU1MgiSIeGE/mgqdzcGLyVsXsywJxiJzaSLra63I2EdsITvA9gMZVvcMlkPOmYOCF37d0hfOUW5eIxL9sq52B4yPws4k5Mfcd4PPD3NbAoA8exH9bRqH+hx7+pbhjCdkxIxwFEHfsp7t/DGzhbUJFW3ulEUHJHddXGE1JuqYxGsk9UhmQu7sA4bLOQuHisZj0CYXlsDXIopVVSEN7nnajEvCE4e2yoW1kHUfOsADQGkD0kBBw5A+VHz15dKFaLjmyGz0GrKTPNlXcrGPiHbCVU+WxXGAljfIXLtUiKPJksAmQTlIt6bGnrZ/oDWbp7WXizo4qogD5TTHz2ZBQ+wPf1h7BTjv1tVWjVhjEpbj2AXveUHL6CVYEv0Eb4GCXRpJO83z5sGGhyVDRnRZYLIUBapJvpDCpGYkQAiW+go04s4R5/RKpHJ9kxnhILXpxY/3NBz8rPy7NNvVBAQJOiXVX9IJbZkoxQwSjDO+VdD0cEb/Ov5vHtTkzhQuVTOUwP0DgdluPB6jq6Ui3nMSi1PbBESGCwiU6xMXk0E96saxF5NAET+n06yU7Si2Jju5mQX8cphG8jIm4pLxYaYulOqyHLOYAEjZdSd3f26FAWtVc=";
+        }
+
+        ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta meta = (SkullMeta) stack.getItemMeta();
+
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+
+        if (signature != null) profile.getProperties().put("textures", new Property("textures", head, signature));
+        else profile.getProperties().put("textures", new Property("textures", head));
+
+        Field profileField;
+        try {
+            profileField = meta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(meta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        meta.setDisplayName(ChatColor.AQUA + name);
+        meta.setLore(
+                Arrays.asList(Util.buildLore(
+                        "&8" + command + "\n\n" + description + "\n\n&eClick to warp!",
+                        '7'))
+        );
+
+        stack.setItemMeta(meta);
+
+        NBTItem nbt = new NBTItem(stack);
+        nbt.setString("skyblock.warp.destination.command", command);
+
+        return nbt.getItem();
     }
 
 }

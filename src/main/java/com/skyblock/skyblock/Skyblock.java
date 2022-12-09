@@ -52,6 +52,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -539,6 +542,16 @@ public final class Skyblock extends JavaPlugin {
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
+
+        getCommand("warp").setExecutor((sender, command, label, args) -> {
+            if (!(sender instanceof Player)) return true;
+
+            if (args.length < 1) return true;
+
+            ((Player) sender).performCommand("sb warp " + args[0]);
+
+            return false;
+        });
 
         this.sendMessage("Successfully registered commands [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
