@@ -45,22 +45,6 @@ import java.util.function.Consumer;
 @Data
 public class SkyblockPlayer {
 
-    private static int EVERY_SECOND = 20;
-    private static int EVERY_THREE_SECONDS = 60;
-    public static HashMap<UUID, SkyblockPlayer> playerRegistry = new HashMap<>();
-
-    public static SkyblockPlayer getPlayer(Player player) {
-        return playerRegistry.get(player.getUniqueId());
-    }
-
-    public static SkyblockPlayer getPlayer(UUID uuid) {
-        return playerRegistry.get(uuid);
-    }
-
-    public static void registerPlayer(UUID uuid) {
-        playerRegistry.put(uuid, new SkyblockPlayer(uuid));
-    }
-
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
     private AuctionCreationGUI.AuctionProgress progress;
     private HashMap<SkyblockStat, Integer> stats;
@@ -79,6 +63,22 @@ public class SkyblockPlayer {
     private ItemStack hand;
     private Pet pet;
     private int tick;
+
+    private static int EVERY_SECOND = 20;
+    private static int EVERY_THREE_SECONDS = 60;
+    public static HashMap<UUID, SkyblockPlayer> playerRegistry = new HashMap<>();
+
+    public static SkyblockPlayer getPlayer(Player player) {
+        return playerRegistry.get(player.getUniqueId());
+    }
+
+    public static SkyblockPlayer getPlayer(UUID uuid) {
+        return playerRegistry.get(uuid);
+    }
+
+    public static void registerPlayer(UUID uuid) {
+        playerRegistry.put(uuid, new SkyblockPlayer(uuid));
+    }
 
     public SkyblockPlayer(UUID uuid) {
         this.predicateDamageModifiers = new ArrayList<>();
@@ -111,7 +111,8 @@ public class SkyblockPlayer {
 
             if (getValue("pets.equip") != null) {
                 pet = Pet.getPet((ItemStack) getValue("pets.equip"));
-                pet.setActive(true);
+
+                if (pet != null) pet.setActive(true);
             }
 
             if (getValue("auction.auctionSettings") == null) {

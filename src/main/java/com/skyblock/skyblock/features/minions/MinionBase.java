@@ -58,7 +58,7 @@ public abstract class MinionBase {
 
         this.minion = null;
 
-        this.level = 0;
+        this.level = 1;
 
         this.timeBetweenActions = 0;
         this.resourcesGenerated = 0;
@@ -67,10 +67,12 @@ public abstract class MinionBase {
         this.inventory = new ArrayList<>();
     }
 
-    public abstract void load(SkyblockPlayer player, int index);
-
     public abstract void spawn(SkyblockPlayer player, Location location, int level);
     public abstract void pickup(SkyblockPlayer player, Location location);
+
+    public abstract void upgrade(SkyblockPlayer player, int level);
+    public abstract void collect(SkyblockPlayer player, int slot);
+    public abstract void collect(SkyblockPlayer player);
 
     protected abstract void showInventory(SkyblockPlayer player);
 

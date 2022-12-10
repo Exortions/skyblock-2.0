@@ -133,7 +133,7 @@ public class SlayerGUI extends Gui {
 
         ChatColor c = ChatColor.GRAY;
 
-                switch (type) {
+        switch (type) {
             case REVENANT:
                 material = Material.ROTTEN_FLESH;
                 desc.add(c + "Abhorrent Zombie stuck");
@@ -151,6 +151,8 @@ public class SlayerGUI extends Gui {
                 desc.add(c + "modified by a famous mad");
                 desc.add(c + "scientist. Eats bones and");
                 desc.add(c + "flesh");
+                break;
+            default:
                 break;
         }
 

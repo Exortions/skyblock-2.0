@@ -125,7 +125,6 @@ public class CollectionCommand implements Command {
     private ItemStack generateCollectionLevel(SkyblockPlayer skyblockPlayer, Collection collection, int i) {
         int currentLevel = 0;
         int currentExp = 0;
-        int nextLevel = currentLevel + 1;
         int requiredExp = 0;
 
         if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level") != null) {

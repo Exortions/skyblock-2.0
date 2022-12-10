@@ -6,6 +6,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
+import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.*;
@@ -37,6 +38,25 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent event) {
+        if (!event.getFrom().getName().startsWith(IslandManager.ISLAND_PREFIX)) {
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
+
+            if (player == null) return;
+
+            this.plugin.getMinionHandler().reloadPlayer(player, false);
+
+            return;
+        }
+
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
+
+        if (player == null) return;
+
+        this.plugin.getMinionHandler().deleteAll(player.getBukkitPlayer().getUniqueId());
+    }
+
+    @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         SkyblockPlayer.registerPlayer(player.getUniqueId());
@@ -49,11 +69,11 @@ public class PlayerListener implements Listener {
 
         skyblockPlayer.tick();
 
+        this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
+
         for (ItemStack item : player.getInventory().getArmorContents()) {
             skyblockPlayer.updateStats(null, item);
         }
-
-        Skyblock.getPlugin().getMinionHandler().reloadPlayers();
 
         Util.delay(() -> {
             if (!Skyblock.getPlugin().getFairySoulHandler().initialized) Skyblock.getPlugin().getFairySoulHandler().init();

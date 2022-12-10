@@ -57,6 +57,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -150,10 +153,6 @@ public final class Skyblock extends JavaPlugin {
 
         this.initializeAlreadyOnlinePlayers();
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            this.minionHandler.reloadPlayer(SkyblockPlayer.getPlayer(player));
-        }
-
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");
     }
@@ -162,8 +161,6 @@ public final class Skyblock extends JavaPlugin {
     public void onDisable() {
         this.sendMessage("Disabling Skyblock...");
         long start = System.currentTimeMillis();
-
-        this.minionHandler.deleteAll();
 
         this.fairySoulHandler.killAllSouls();
 
@@ -175,8 +172,6 @@ public final class Skyblock extends JavaPlugin {
             merchant.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
             merchant.getNpc().getOwningRegistry().deregisterAll();
         }
-
-        this.minionHandler.deleteAll();
 
         this.npcHandler.killAll();
 
@@ -239,7 +234,8 @@ public final class Skyblock extends JavaPlugin {
                 new Bag(
                         "accessory_bag",
                         "Accessory Bag",
-                        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTYxYTkxOGMwYzQ5YmE4ZDA1M2U1MjJjYjkxYWJjNzQ2ODkzNjdiNGQ4YWEwNmJmYzFiYTkxNTQ3MzA5ODVmZiJ9fX0=",
+                        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTYxYTkxOGMwYzQ5YmE4" +
+                                "ZDA1M2U1MjJjYjkxYWJjNzQ2ODkzNjdiNGQ4YWEwNmJmYzFiYTkxNTQ3MzA5ODVmZiJ9fX0=",
                         "&7A special bag which can hold\n&7Talismans, Rings, Artifacts and\n&7Orbs within it. All will still\n&7work while in this bag!",
                         53,
                         (stack -> {
@@ -279,7 +275,15 @@ public final class Skyblock extends JavaPlugin {
                 )
         );
 
-        this.sendMessage("Successfully registered " + ChatColor.GREEN + this.bagManager.getBags().size() + ChatColor.WHITE + " bags [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+        this.sendMessage(
+                "Successfully registered " + ChatColor.GREEN +
+                        this.bagManager.getBags().size() + ChatColor.WHITE
+                        + " bags [" +
+                        Util.getTimeDifferenceAndColor(
+                                start,
+                                System.currentTimeMillis()
+                        )
+                        + ChatColor.WHITE + "]");
     }
 
     public void registerReforges() {
@@ -346,8 +350,28 @@ public final class Skyblock extends JavaPlugin {
                         null,
                         new Location(Bukkit.getWorld("world"), 129.5, 66, 137.5),
                         (player) -> new TiaGUI(player).show(player),
-                        "ewogICJ0aW1lc3RhbXAiIDogMTYxMzg0ODAyNjE2NywKICAicHJvZmlsZUlkIiA6ICJjMDI0Y2M0YTQwMzc0YWFjYTk2ZTE2Y2MwODM1ZDE4MCIsCiAgInByb2ZpbGVOYW1lIiA6ICJHZW9yZ2VOb0ZvdW5kIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdlNTk3YjE3NTk1OTAyN2U2NDM5MzZjYTJiOGQ3YmZiMjFiMWRjNjgzYTRhNTdmYjBjMDk5YTdkNGE5Njk1MTAiCiAgICB9CiAgfQp9",
-                        "TgEp0zMP+3e+782xvYsMcTYtkBfTq6XZpW1Z0mVb0BaDWjjVmQQer64ykJ8lthJj0Z+BjQhotwc8gIMuzxfBlaAPi7TDnODAm73wWRNs4n/qXj4a+++gkk4NeS1KswLzZDgQ0Nkp1kyM3lOja87zgcUCkpFXrzJbcsUX2N+rABmQIT8swmDRFmwoGvK4r0Cjf8nmLDj3+1fX4Kk+0o1ynLDDhI8c1nq4cqPRaRoTqNy0xYUeX22UaSo5tzlxAKrnabQi/I+P1Z33AqjvO6AdclXAfPIBsD7himNluqvKJjyWwpN0tb48703JMCixhs2Wq1j0cmEjVAqZKSLc+3jNkCp46V6NRIvcJ8xi/dijBR5SPgU8Kb7YUaVT6FUFJsAAVpNOBlJmnI+0L9Esqp9SMhMy8SNO/vo8Gk1zF2BENzuKBD6w5zQlWNIQt4E7MRG1fnh0VZMiS8s+dz9NuCC5oGMFIBNz67J2z6VQR+BhXGCSwDgw9gsKDxYSxpzASa6iFUv1gQpi8x+eQMn4VM16d0mwVDNnd6h1HdCmxextKzkf9mkwBaycz9AOcun8GWOqvhZDv2nyzmUAzFBU0mO1Ys6nYSHQEwXBXqURho5L0Fvu3Wb15YqwATsO//Mg+6L+f/kb5l2B1/Z1I/wzxzOeDYtME2TsTMAaK00ob/6e0Hg="));
+                        "ewogICJ0aW1lc3RhbXAiIDogMTYxMzg0ODAyNjE2NywKICAicHJv" +
+                                "ZmlsZUlkIiA6ICJjMDI0Y2M0YTQwMzc0YWFjYTk2ZTE2Y2MwODM1" +
+                                "ZDE4MCIsCiAgInByb2ZpbGVOYW1lIiA6ICJHZW9yZ2VOb0ZvdW5k" +
+                                "IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4" +
+                                "dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6" +
+                                "ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJl" +
+                                "LzdlNTk3YjE3NTk1OTAyN2U2NDM5MzZjYTJiOGQ3YmZiMjFiMWRj" +
+                                "NjgzYTRhNTdmYjBjMDk5YTdkNGE5Njk1MTAiCiAgICB9CiAgfQp9",
+                        "TgEp0zMP+3e+782xvYsMcTYtkBfTq6XZpW1Z0mVb0BaDWjjVm" +
+                                "QQer64ykJ8lthJj0Z+BjQhotwc8gIMuzxfBlaAPi7TDnODAm73wW" +
+                                "RNs4n/qXj4a+++gkk4NeS1KswLzZDgQ0Nkp1kyM3lOja87zgcUCk" +
+                                "pFXrzJbcsUX2N+rABmQIT8swmDRFmwoGvK4r0Cjf8nmLDj3+1fX4" +
+                                "Kk+0o1ynLDDhI8c1nq4cqPRaRoTqNy0xYUeX22UaSo5tzlxAKrna" +
+                                "bQi/I+P1Z33AqjvO6AdclXAfPIBsD7himNluqvKJjyWwpN0tb487" +
+                                "03JMCixhs2Wq1j0cmEjVAqZKSLc+3jNkCp46V6NRIvcJ8xi/dijB" +
+                                "R5SPgU8Kb7YUaVT6FUFJsAAVpNOBlJmnI+0L9Esqp9SMhMy8SNO/" +
+                                "vo8Gk1zF2BENzuKBD6w5zQlWNIQt4E7MRG1fnh0VZMiS8s+dz9Nu" +
+                                "CC5oGMFIBNz67J2z6VQR+BhXGCSwDgw9gsKDxYSxpzASa6iFUv1g" +
+                                "Qpi8x+eQMn4VM16d0mwVDNnd6h1HdCmxextKzkf9mkwBaycz9AOc" +
+                                "un8GWOqvhZDv2nyzmUAzFBU0mO1Ys6nYSHQEwXBXqURho5L0Fvu3" +
+                                "Wb15YqwATsO//Mg+6L+f/kb5l2B1/Z1I/wzxzOeDYtME2TsTMAaK" +
+                                "00ob/6e0Hg="));
 
         this.npcHandler.spawnAll();
 
@@ -545,6 +569,16 @@ public final class Skyblock extends JavaPlugin {
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
+
+//        getCommand("warp").setExecutor((sender, command, label, args) -> {
+//            if (!(sender instanceof Player)) return true;
+//
+//            if (args.length < 1) return true;
+//
+//            ((Player) sender).performCommand("sb warp " + args[0]);
+//
+//            return false;
+//        });
 
         this.sendMessage("Successfully registered commands [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

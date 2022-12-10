@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,12 @@ public class CommandHandler implements CommandExecutor {
         this.plugin = plugin;
 
         this.commandMessages = new HashMap<>();
-        this.commands = Arrays.asList(commands);
+        this.commands = new ArrayList<>();
+
+        for (Command command : commands) {
+            if (command instanceof TrueAlias<?>) ((TrueAlias<?>) command).register();
+            this.commands.add(command);
+        }
 
         this.commandMessages.put("only-players", () -> this.sender.sendMessage(this.plugin.getPrefix() + "Only players can execute this command."));
         this.commandMessages.put("base-command", () -> {

@@ -17,3 +17,7 @@ commands:
     aliases:
       - skyblock
       - sky
+  warp:
+    description: Warp to a location
+    aliases:
+      - sb warp

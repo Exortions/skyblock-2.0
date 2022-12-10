@@ -140,10 +140,5 @@
             <scope>system</scope>
             <systemPath>${basedir}/dependencies/plugins/Citizens-2.0.30-b2765.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17.0.1</version>
-        </dependency>
     </dependencies>
 </project>

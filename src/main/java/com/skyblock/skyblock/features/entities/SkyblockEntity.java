@@ -6,6 +6,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import lombok.Setter;
+import net.citizensnpcs.api.trait.trait.Equipment;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -18,6 +19,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 @Getter
 public abstract class SkyblockEntity {
+
+    public static final String HELMET = "HELMET";
+    public static final String CHEST = "CHEST";
+    public static final String LEGS = "LEGS";
+    public static final String BOOTS = "BOOTS";
+    public static final String HAND = "HAND";
+    private Entity vanilla;
+    private final EntityType entityType;
+    @Setter
+    private SkyblockEntityData entityData;
+    private final Skyblock plugin;
+    protected int tick;
+    @Setter
+    protected int lifeSpan;
+    @Setter
+    private SkyblockPlayer lastDamager;
 
     public static class Equipment {
         public ItemStack hand;
@@ -36,22 +53,6 @@ public abstract class SkyblockEntity {
 
         public Equipment() { }
     }
-
-    public static final String HELMET = "HELMET";
-    public static final String CHEST = "CHEST";
-    public static final String LEGS = "LEGS";
-    public static final String BOOTS = "BOOTS";
-    public static final String HAND = "HAND";
-    private Entity vanilla;
-    private final EntityType entityType;
-    @Setter
-    private SkyblockEntityData entityData;
-    private final Skyblock plugin;
-    protected int tick;
-    @Setter
-    protected int lifeSpan;
-    @Setter
-    private SkyblockPlayer lastDamager;
 
     public SkyblockEntity(Skyblock sb, EntityType type) {
         entityType = type;

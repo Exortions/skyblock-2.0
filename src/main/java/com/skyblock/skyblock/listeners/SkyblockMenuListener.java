@@ -47,6 +47,12 @@ public class SkyblockMenuListener implements Listener {
             return;
         }
 
+        if (item.hasKey("skyblock.warp.destination.command")) {
+            player.performCommand(item.getString("skyblock.warp.destination.command"));
+
+            return;
+        }
+
         String name = ChatColor.stripColor(clicked.getItemMeta().getDisplayName());
 
         if (name.equals(" ")) return;
@@ -87,6 +93,9 @@ public class SkyblockMenuListener implements Listener {
                 break;
             case "Crafting Table":
                 skyblock.getGuiHandler().show("crafting_table", player);
+                break;
+            case "Close":
+                player.closeInventory();
                 break;
             default:
                 break;

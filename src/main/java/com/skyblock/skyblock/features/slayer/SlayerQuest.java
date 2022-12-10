@@ -73,9 +73,9 @@ public class SlayerQuest {
                 return EntityType.SPIDER;
             case SVEN:
                 return EntityType.WOLF;
+            default:
+                return EntityType.PLAYER;
         }
-
-        return EntityType.PLAYER;
     }
 
     public void fail() {
