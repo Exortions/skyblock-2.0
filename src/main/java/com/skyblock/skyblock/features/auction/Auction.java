@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
 public class Auction {
 
     private ItemStack item;
@@ -31,13 +30,32 @@ public class Auction {
     private boolean isBIN;
     private boolean sold;
     private UUID uuid;
+    private List<OfflinePlayer> participants;
     private List<AuctionBid> bidHistory;
+
+    public Auction(ItemStack item, OfflinePlayer seller, OfflinePlayer topBidder, long price, long timeLeft, boolean isBIN, boolean sold, UUID uuid, List<AuctionBid> bidHistory) {
+        this.item = item;
+        this.seller = seller;
+        this.topBidder = topBidder;
+        this.price = price;
+        this.timeLeft = timeLeft;
+        this.isBIN = isBIN;
+        this.sold = sold;
+        this.uuid = uuid;
+        this.bidHistory = bidHistory;
+        this.participants = new ArrayList<>();
+
+        for (AuctionBid bid : bidHistory) {
+            participants.add(bid.getBidder());
+        }
+    }
+
 
     public void tickPassed() {
         if (timeLeft > 0) this.timeLeft--;
     }
 
-    public boolean isExpired() { return timeLeft == 0; }
+    public boolean isExpired() { return timeLeft == 0 || sold; }
 
     public AuctionBid getTopBid() {
         int max = 0;
@@ -110,14 +128,14 @@ public class Auction {
     }
 
     public void claim(Player player) {
-        if (getBid(player) == null) return;
-
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
         if (player.equals(seller)) {
             if (bidHistory.size() == 0) {
                 player.getInventory().addItem(item);
+                player.sendMessage(ChatColor.YELLOW + "You collected " + getItem().getItemMeta().getDisplayName() + ChatColor.YELLOW + " back from an auction that nobody bought.");
             } else {
                 skyblockPlayer.addCoins(getTopBid().getAmount());
+                player.sendMessage(ChatColor.YELLOW + "You collected " + ChatColor.GOLD + Util.formatInt(getTopBid().getAmount()) + " coins " + ChatColor.YELLOW + " from selling " + getItem().getItemMeta().getDisplayName() + ChatColor.YELLOW + " to " + getTopBidder().getName() + ChatColor.YELLOW + " in an auction!");
             }
 
             removeBidderOrOwner(player);
@@ -133,19 +151,21 @@ public class Auction {
 
         if (top.getBidder().equals(player)) {
             player.getInventory().addItem(item);
+            player.sendMessage(ChatColor.YELLOW + "You claimed " + getItem().getItemMeta().getDisplayName() + ChatColor.YELLOW + " from " + ChatColor.GREEN + getSeller().getName() + ChatColor.YELLOW + "'s auction!");
         } else {
             skyblockPlayer.addCoins(bid.getAmount());
+            player.sendMessage(ChatColor.YELLOW + "You collected " + ChatColor.GOLD + Util.formatInt(getBid(player).getAmount()) + " coins " + ChatColor.YELLOW + "back from an auction which you didn't hold the top bid!");
         }
 
         removeBidderOrOwner(player);
     }
 
     private void removeBidderOrOwner(Player player) {
-        if (getBidHistory().size() == 0 && player.equals(getSeller())) {
+        if (participants.size() == 0 && player.equals(getSeller())) {
             Skyblock.getPlugin().getAuctionHouse().deleteAuction(this);
         }
 
-        getBidHistory().remove(getBid(player));
+        participants.remove(player);
     }
 
     public void bid(Player player, long amount) {
@@ -155,7 +175,7 @@ public class Auction {
         skyblockPlayer.subtractCoins((int) (amount - (prev != null ? prev.getAmount() : 0)));
         getBidHistory().add(new AuctionBid(player, this, (int) amount, System.currentTimeMillis()));
 
-        if (prev != null) getBidHistory().remove(prev);
+        participants.add(player);
 
         price = amount;
 
@@ -190,9 +210,9 @@ public class Auction {
             if (bid.getBidder().equals(player)) continue;
             OfflinePlayer otherBidder = bid.getBidder();
             if (otherBidder == null) continue;
+            if (!otherBidder.isOnline()) continue;
             long diff = amount - bid.getAmount();
 
-            message.setExtra(null);
             message = new TextComponent(net.md_5.bungee.api.ChatColor.GOLD + "[Auction] " + net.md_5.bungee.api.ChatColor.GREEN + player.getName() + net.md_5.bungee.api.ChatColor.YELLOW + " outbid you by " + net.md_5.bungee.api.ChatColor.GOLD + diff + " coin" + (diff != 1 ? "s" : "") + net.md_5.bungee.api.ChatColor.YELLOW + " for " + item.getItemMeta().getDisplayName() + " ");
             message.addExtra(click);
 
@@ -208,7 +228,7 @@ public class Auction {
         if (seller.isOnline() && seller != null) ((Player) seller).spigot().sendMessage(message);
     }
 
-    private static String formatTime(long millis) {
+    public static String formatTime(long millis) {
         if (millis == 0)
             return "Ended!";
         if (millis >= 8.64E7)

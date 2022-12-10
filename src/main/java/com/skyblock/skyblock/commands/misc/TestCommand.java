@@ -1,6 +1,8 @@
 package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.auction.Auction;
+import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.features.auction.gui.AuctionBrowserGUI;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
@@ -46,9 +48,13 @@ public class TestCommand implements Command {
 //        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
 //        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
 
-        if (args.length == 1) {
-            new AuctionBrowserGUI(player).show(player);
-            return;
+        for (Auction auction : AuctionHouse.AUCTION_CACHE.values()) {
+            player.sendMessage(auction.toString());
         }
+
+//        if (args.length == 1) {
+//            new AuctionBrowserGUI(player).show(player);
+//            return;
+//        }
     }
 }

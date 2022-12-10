@@ -22,7 +22,7 @@ public class AuctionInspectGUI extends Gui {
 
         Util.fillEmpty(this);
 
-        addItem(49, Util.buildBackButton());
+        addItem(49, Util.buildBackButton("&7To Auction House"));
         addItem(13, auction.getDisplayItem(true, opener.equals(auction.getSeller())));
 
         boolean own = opener.equals(auction.getSeller());

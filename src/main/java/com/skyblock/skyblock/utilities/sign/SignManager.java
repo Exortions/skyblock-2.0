@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -47,7 +48,7 @@ public class SignManager {
 
             ChannelDuplexHandler handler = new ChannelDuplexHandler() {
                 @Override
-                public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) {
+                public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
                     if (packet instanceof PacketPlayInUpdateSign) {
                         PacketPlayInUpdateSign signPacket = (PacketPlayInUpdateSign) packet;
 
@@ -70,12 +71,14 @@ public class SignManager {
                             guis.remove(player.getUniqueId());
                         }
                     }
+
+                    super.channelRead(channelHandlerContext, packet);
                 }
             };
 
             final ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
 
-            pipeline.addAfter("packet_handler", player.getName(), handler);
+            pipeline.addBefore("packet_handler", player.getName(), handler);
         }
 
         @EventHandler

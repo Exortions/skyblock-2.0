@@ -3,6 +3,7 @@ package com.skyblock.skyblock.commands.economy;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
+import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
 import com.skyblock.skyblock.features.auction.gui.AuctionInspectGUI;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
@@ -20,6 +21,11 @@ public class AuctionCommand implements Command {
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         AuctionHouse ah = plugin.getAuctionHouse();
+
+        if (args.length == 0) {
+            new AuctionHouseGUI(player).show(player);
+            return;
+        }
 
         if (args.length == 1) {
             UUID uuid = UUID.fromString(args[0]);

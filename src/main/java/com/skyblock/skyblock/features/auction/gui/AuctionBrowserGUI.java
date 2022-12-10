@@ -12,6 +12,7 @@ import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import com.skyblock.skyblock.utilities.sign.SignGui;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -54,7 +55,6 @@ public class AuctionBrowserGUI extends Gui {
 
             put(ChatColor.GREEN + "Search", () -> {
                 SignGui sign = new SignGui(Skyblock.getPlugin().getSignManager(), e -> {
-                    player.sendMessage("bruh");
                     String[] lines = e.getLines();
                     StringBuilder input = new StringBuilder("");
 

@@ -34,7 +34,7 @@ public class AuctionHouse {
 
         for (Auction ah : getAuctions()) {
             ah.getBidHistory().forEach((bid) -> {
-                if (bid.getBidder().equals(player)) auctions.add(ah);
+                if (bid.getBidder().equals(player) && !auctions.contains(ah)) auctions.add(ah);
             });
         }
 
@@ -67,32 +67,6 @@ public class AuctionHouse {
     public List<Auction> getAuctions(AuctionCategory category, AuctionSettings.AuctionSort sort, AuctionSettings.BinFilter binFilter, Rarity teir, int page, String search, boolean timeSensitive) {
         List<Auction> auctions = new ArrayList<>();
 
-        if (AUCTION_CACHE.isEmpty()) {
-            for (File file : folder.listFiles()) {
-                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-
-                OfflinePlayer top = config.getString("topBidder").equals("") ? null : Bukkit.getOfflinePlayer(config.getString("topBidder"));
-
-                List<AuctionBid> history = new ArrayList<>();
-
-                for (String s1 : config.getConfigurationSection("bidHistory").getKeys(false)) {
-                    Map<String, Object> map = new HashMap<>();
-
-                    for (String s2 : config.getConfigurationSection("bidHistory." + s1).getKeys(false)) {
-                        map.put(s2, config.get("bidHistory." + s1 + "." + s2));
-                    }
-
-                    history.add(AuctionBid.deserialize(map));
-                }
-
-                Auction auction = new Auction(config.getItemStack("item"), Bukkit.getOfflinePlayer(config.getString("seller")), top,
-                        config.getLong("price"), config.getLong("timeLeft"), config.getBoolean("isBIN"),
-                        config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history);
-
-                AUCTION_CACHE.put(auction.getUuid(), auction);
-            }
-        }
-
         int start = (page - 1) * 24;
         int end = page * 24;
 
@@ -106,6 +80,7 @@ public class AuctionHouse {
 
             Auction auction = new ArrayList<>(AUCTION_CACHE.values()).get(i);
 
+            if (auctions.contains(auction)) continue;
             if (!category.getCanPut().test(auction.getItem())) continue;
             if (teir != null) {
                 if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
@@ -145,7 +120,7 @@ public class AuctionHouse {
         return auctions;
     }
 
-    public void createAuction(ItemStack item, Player seller, long price, long time, boolean isBIN) {
+    public Auction createAuction(ItemStack item, Player seller, long price, long time, boolean isBIN) {
         File file = new File(folder.getPath() + File.separator + UUID.randomUUID() + ".yml");
 
         try {
@@ -164,7 +139,11 @@ public class AuctionHouse {
             config.save(file);
 
             AUCTION_CACHE.put(UUID.fromString(file.getName().replace(".yml", "")), new Auction(item, seller, null, price, time, isBIN, false, UUID.fromString(file.getName().replace(".yml", "")), new ArrayList<>()));
+
+            return AUCTION_CACHE.get(UUID.fromString(file.getName().replace(".yml", "")));
         } catch (IOException ignored) { }
+
+        return null;
     }
 
     public void deleteAuction(Auction auction) {
@@ -203,6 +182,32 @@ public class AuctionHouse {
                 }
             }
         }.runTaskTimerAsynchronously(Skyblock.getPlugin(), 5L, 1);
+
+        if (AUCTION_CACHE.isEmpty()) {
+            for (File file : folder.listFiles()) {
+                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+                OfflinePlayer top = config.getString("topBidder").equals("") ? null : Bukkit.getOfflinePlayer(config.getString("topBidder"));
+
+                List<AuctionBid> history = new ArrayList<>();
+
+                for (String s1 : config.getConfigurationSection("bidHistory").getKeys(false)) {
+                    Map<String, Object> map = new HashMap<>();
+
+                    for (String s2 : config.getConfigurationSection("bidHistory." + s1).getKeys(false)) {
+                        map.put(s2, config.get("bidHistory." + s1 + "." + s2));
+                    }
+
+                    history.add(AuctionBid.deserialize(map));
+                }
+
+                Auction auction = new Auction(config.getItemStack("item"), Bukkit.getOfflinePlayer(config.getString("seller")), top,
+                        config.getLong("price"), config.getLong("timeLeft"), config.getBoolean("isBIN"),
+                        config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history);
+
+                AUCTION_CACHE.put(auction.getUuid(), auction);
+            }
+        }
 
         if (folder.exists()) return;
 

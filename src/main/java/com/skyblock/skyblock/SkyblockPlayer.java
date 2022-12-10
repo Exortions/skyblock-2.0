@@ -4,6 +4,7 @@ import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
+import com.skyblock.skyblock.features.auction.gui.AuctionCreationGUI;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
@@ -61,6 +62,7 @@ public class SkyblockPlayer {
     }
 
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
+    private AuctionCreationGUI.AuctionProgress progress;
     private HashMap<SkyblockStat, Integer> stats;
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
@@ -87,6 +89,7 @@ public class SkyblockPlayer {
         this.stats = new HashMap<>();
         this.petDisplay = null;
         this.damageModifier = 0;
+        this.progress = null;
         this.armorSet = null;
         this.pet = null;
         this.tick = 0;
@@ -112,7 +115,7 @@ public class SkyblockPlayer {
             }
 
             if (getValue("auction.auctionSettings") == null) {
-                auctionSettings = new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL);
+                auctionSettings = new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false);
             } else {
                 Map<String, Object> map = new HashMap<>();
 
@@ -515,7 +518,8 @@ public class SkyblockPlayer {
                 config.set("fairySouls.found", new ArrayList<Location>());
                 config.set("fairySouls.claimed", 0);
 
-                config.set("auction.auctionSettings", new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL).serialize());
+                config.set("auction.auctionSettings", new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false).serialize());
+                config.set("auction.auctioningItem", null);
 
                 config.save(configFile);
             } catch (IOException e){

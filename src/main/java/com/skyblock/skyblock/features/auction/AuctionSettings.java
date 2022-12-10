@@ -28,12 +28,14 @@ public class AuctionSettings implements ConfigurationSerializable {
     private AuctionSort sort;
     private Rarity teir;
     private BinFilter binFilter;
+    private Boolean bin;
 
-    public AuctionSettings(AuctionCategory category, AuctionSort sort, Rarity teir, BinFilter binFilter) {
+    public AuctionSettings(AuctionCategory category, AuctionSort sort, Rarity teir, BinFilter binFilter, Boolean bin) {
         this.category = category;
         this.sort = sort;
         this.teir = teir;
         this.binFilter = binFilter;
+        this.bin = bin;
     }
 
     @Override
@@ -44,6 +46,7 @@ public class AuctionSettings implements ConfigurationSerializable {
         map.put("sort", sort.name());
         map.put("teir", (teir == null ? "null" : teir.name()));
         map.put("binFilter", binFilter.name());
+        map.put("bin", bin.toString());
 
         return map;
     }
@@ -97,6 +100,12 @@ public class AuctionSettings implements ConfigurationSerializable {
         update();
     }
 
+    public void switchBin() {
+        this.bin = !this.bin;
+
+        update();
+    }
+
     public void setCategory(AuctionCategory category) {
         this.category = category;
 
@@ -111,6 +120,6 @@ public class AuctionSettings implements ConfigurationSerializable {
     public static AuctionSettings deserialize(Map<String, Object> value) {
         return new AuctionSettings(AuctionCategory.valueOf((String) value.get("category")),
                 AuctionSort.valueOf((String) value.get("sort")), (!value.get("teir").equals("null") ? Rarity.valueOf((String) value.get("teir")) : null),
-                BinFilter.valueOf((String) value.get("binFilter")));
+                BinFilter.valueOf((String) value.get("binFilter")), Boolean.parseBoolean((String) value.get("bin")));
     }
 }
