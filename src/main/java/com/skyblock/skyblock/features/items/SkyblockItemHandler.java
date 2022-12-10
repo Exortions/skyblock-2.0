@@ -86,8 +86,7 @@ public class SkyblockItemHandler {
         ItemStack legs = set[1];
         ItemStack boots = set[0];
 
-        for (Map.Entry<String, ArmorSet> entry : sets.entrySet()) {
-            ArmorSet armorSet = entry.getValue();
+        for (ArmorSet armorSet : sets.values()) {
             if (getID(helmet).equals(getID(armorSet.getHelmet())) &&
                 getID(chest).equals(getID(armorSet.getChest())) &&
                 getID(legs).equals(getID(armorSet.getLegs())) &&

@@ -22,21 +22,24 @@ import java.util.Objects;
 public class Gui implements Listener {
 
     public final HashMap<String, Runnable> clickEvents;
+    public final HashMap<ItemStack, Runnable> specificClickEvents;
     public final HashMap<Integer, ItemStack> items;
     public final String name;
     public final int slots;
 
     public Gui(String name, int slots, HashMap<String, Runnable> clickEvents) {
+        this(name, slots, clickEvents, new HashMap<>());
+    }
+
+    public Gui(String name, int slots, HashMap<String, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
         this.name = name;
         this.slots = slots;
 
         this.clickEvents = clickEvents;
+        this.specificClickEvents = specificClickEvents;
 
         this.items = new HashMap<>();
-
-        Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin(Skyblock.class));
     }
-
     public void show(Player player) {
         Inventory inventory = player.getServer().createInventory(null, slots, name);
 
@@ -61,6 +64,7 @@ public class Gui implements Listener {
         }
 
         player.openInventory(inventory);
+        Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin(Skyblock.class));
     }
 
     public void hide(Player player) {
@@ -83,6 +87,13 @@ public class Gui implements Listener {
             event.setCancelled(true);
 
             if (event.getCurrentItem() == null) return;
+            if (!event.getCurrentItem().hasItemMeta()) return;
+            if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
+
+            if (specificClickEvents.containsKey(event.getCurrentItem())) {
+                specificClickEvents.get(event.getCurrentItem()).run();
+                return;
+            }
 
             if (clickEvents.containsKey(event.getCurrentItem().getItemMeta().getDisplayName())) clickEvents.get(event.getCurrentItem().getItemMeta().getDisplayName()).run();
         }

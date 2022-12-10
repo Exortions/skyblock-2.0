@@ -31,6 +31,8 @@ public class SignManager {
         this.pluginManager = Bukkit.getPluginManager();
         this.guis = new HashMap<>();
         this.skyblock = skyblock;
+
+        initialize();
     }
 
     public void initialize() {
@@ -73,7 +75,7 @@ public class SignManager {
 
             final ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
 
-            pipeline.addBefore("packet_handler", player.getName(), handler);
+            pipeline.addAfter("packet_handler", player.getName(), handler);
         }
 
         @EventHandler

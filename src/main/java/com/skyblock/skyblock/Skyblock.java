@@ -1,5 +1,6 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.economy.AuctionCommand;
 import com.skyblock.skyblock.commands.economy.DepositCommand;
 import com.skyblock.skyblock.commands.economy.WithdrawCommand;
 import com.skyblock.skyblock.commands.enchantment.EnchantCommand;
@@ -11,6 +12,9 @@ import com.skyblock.skyblock.commands.misc.*;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
+import com.skyblock.skyblock.features.auction.AuctionBid;
+import com.skyblock.skyblock.features.auction.AuctionHouse;
+import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.bags.BagManager;
 import com.skyblock.skyblock.features.blocks.RegenerativeBlockHandler;
@@ -45,6 +49,7 @@ import com.skyblock.skyblock.utilities.data.ServerData;
 import com.skyblock.skyblock.utilities.gui.GuiHandler;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
+import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
 import net.citizensnpcs.api.event.DespawnReason;
@@ -74,6 +79,8 @@ public final class Skyblock extends JavaPlugin {
 
     static {
         ConfigurationSerialization.registerClass(MinionHandler.MinionSerializable.class, "Minion");
+        ConfigurationSerialization.registerClass(AuctionSettings.class, "AuctionSettings");
+        ConfigurationSerialization.registerClass(AuctionBid.class, "AuctionBid");
     }
 
     private RegenerativeBlockHandler regenerativeBlockHandler;
@@ -90,11 +97,14 @@ public final class Skyblock extends JavaPlugin {
     private MinionHandler minionHandler;
     private SlayerHandler slayerHandler;
     private RecipeHandler recipeHandler;
+    private SignManager signManager;
     private ItemHandler itemHandler;
     private BagManager bagManager;
     private NPCHandler npcHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
+
+    private AuctionHouse auctionHouse;
 
     private Random random;
     private Date date;
@@ -119,6 +129,8 @@ public final class Skyblock extends JavaPlugin {
         this.initializeGameRules();
         this.initializeNEUItems();
         this.initializeFairySouls();
+        this.initializeAuctionHouse();
+        this.initializeSignGui();
 
         this.registerMerchants();
 
@@ -145,6 +157,7 @@ public final class Skyblock extends JavaPlugin {
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");
     }
+
     @Override
     public void onDisable() {
         this.sendMessage("Disabling Skyblock...");
@@ -167,6 +180,8 @@ public final class Skyblock extends JavaPlugin {
 
         this.npcHandler.killAll();
 
+        this.auctionHouse.saveToDisk();
+
         File file = new File("plugins/Citizens/saves.yml");
 
         if (file.exists()) file.delete();
@@ -178,6 +193,14 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void initializeSignGui() {
+        this.signManager = new SignManager(this);
+    }
+
+    public void initializeAuctionHouse() {
+        this.auctionHouse = new AuctionHouse();
     }
 
     public void registerMinions() {
@@ -232,6 +255,8 @@ public final class Skyblock extends JavaPlugin {
                         }),
                         (player, inventory) -> player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have opened your Accessory Bag!"),
                         (player, itemStack) -> {
+                            Accessory.onEquip(itemStack, player);
+
                             if (!skyblockItemHandler.isRegistered(itemStack)) return;
                             SkyblockItem item = skyblockItemHandler.getRegistered(itemStack);
 
@@ -241,6 +266,8 @@ public final class Skyblock extends JavaPlugin {
                             }
                         },
                         (player, itemStack) -> {
+                            Accessory.onUnEquip(itemStack, player);
+
                             if (!skyblockItemHandler.isRegistered(itemStack)) return;
                             SkyblockItem item = skyblockItemHandler.getRegistered(itemStack);
 
@@ -513,6 +540,7 @@ public final class Skyblock extends JavaPlugin {
                 new WithdrawCommand(),
                 new ReloadCommand(),
                 new ItemNBTCommand(),
+                new AuctionCommand(),
                 new SkillsCommand()
         );
 

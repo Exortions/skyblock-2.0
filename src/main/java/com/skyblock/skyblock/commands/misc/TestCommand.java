@@ -1,26 +1,12 @@
 package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.MiningMinionType;
-import com.skyblock.skyblock.enums.Rarity;
-import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
-import com.skyblock.skyblock.features.pets.combat.BlueWhale;
-import com.skyblock.skyblock.features.minions.MiningMinion;
-import com.skyblock.skyblock.features.minions.MinionBase;
-import com.skyblock.skyblock.features.pets.combat.Jerry;
-import com.skyblock.skyblock.features.pets.combat.Tiger;
-import com.skyblock.skyblock.features.skills.Combat;
-import com.skyblock.skyblock.features.skills.Skill;
+import com.skyblock.skyblock.features.auction.gui.AuctionBrowserGUI;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 @RequiresPlayer
 @Usage(usage = "/sb test")
@@ -57,7 +43,12 @@ public class TestCommand implements Command {
 //        player.getInventory().addItem(tiger.toItemStack());
 //        player.getInventory().addItem(whale.toItemStack());
 //
-        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
-        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
+//        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
+//        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
+
+        if (args.length == 1) {
+            new AuctionBrowserGUI(player).show(player);
+            return;
+        }
     }
 }
