@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
+import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -79,6 +80,11 @@ public class ItemListener implements Listener {
         }
 
         ItemStack[] armor = e.getPlayer().getInventory().getArmorContents();
+
+        for (ItemStack itemStack : armor) {
+            if (!Util.notNull(itemStack)) return;
+        }
+
         if (handler.isRegistered(armor)) {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(e.getPlayer());
             HashMap<String, Object> extraData = skyblockPlayer.getExtraData();

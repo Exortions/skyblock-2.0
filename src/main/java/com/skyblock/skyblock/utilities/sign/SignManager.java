@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -31,6 +32,8 @@ public class SignManager {
         this.pluginManager = Bukkit.getPluginManager();
         this.guis = new HashMap<>();
         this.skyblock = skyblock;
+
+        initialize();
     }
 
     public void initialize() {
@@ -45,7 +48,7 @@ public class SignManager {
 
             ChannelDuplexHandler handler = new ChannelDuplexHandler() {
                 @Override
-                public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) {
+                public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
                     if (packet instanceof PacketPlayInUpdateSign) {
                         PacketPlayInUpdateSign signPacket = (PacketPlayInUpdateSign) packet;
 
@@ -68,6 +71,8 @@ public class SignManager {
                             guis.remove(player.getUniqueId());
                         }
                     }
+
+                    super.channelRead(channelHandlerContext, packet);
                 }
             };
 

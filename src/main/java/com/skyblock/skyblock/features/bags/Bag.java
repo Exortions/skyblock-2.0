@@ -155,15 +155,19 @@ public class Bag implements Listener {
 
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(((Player) event.getWhoClicked()).getPlayer());
 
+            if (Util.notNull(event.getCursor())) {
+                onPutItem.accept(skyblockPlayer, event.getCursor());
+            } else {
+                onRemoveItem.accept(skyblockPlayer, event.getCurrentItem());
+            }
+
             for (int slot : items.keySet()) {
                 if (items.get(slot) == null) {
                     skyblockPlayer.setValue("bag." + this.id + ".items." + slot, new ItemStack(Material.AIR));
                     continue;
                 }
 
-                onRemoveItem.accept(skyblockPlayer, items.get(slot));
                 skyblockPlayer.setValue("bag." + this.id + ".items." + slot, items.get(slot));
-                onPutItem.accept(skyblockPlayer, items.get(slot));
             }
         }
 

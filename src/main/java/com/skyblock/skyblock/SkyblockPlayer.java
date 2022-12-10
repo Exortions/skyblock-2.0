@@ -2,6 +2,9 @@ package com.skyblock.skyblock;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.auction.AuctionCategory;
+import com.skyblock.skyblock.features.auction.AuctionSettings;
+import com.skyblock.skyblock.features.auction.gui.AuctionCreationGUI;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
@@ -22,6 +25,7 @@ import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
@@ -42,9 +46,11 @@ import java.util.function.Consumer;
 public class SkyblockPlayer {
 
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
+    private AuctionCreationGUI.AuctionProgress progress;
     private HashMap<SkyblockStat, Integer> stats;
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
+    private AuctionSettings auctionSettings;
     private FileConfiguration config;
     private ArmorStand petDisplay;
     private Player bukkitPlayer;
@@ -83,6 +89,7 @@ public class SkyblockPlayer {
         this.stats = new HashMap<>();
         this.petDisplay = null;
         this.damageModifier = 0;
+        this.progress = null;
         this.armorSet = null;
         this.pet = null;
         this.tick = 0;
@@ -107,6 +114,22 @@ public class SkyblockPlayer {
 
                 if (pet != null) pet.setActive(true);
             }
+
+            if (getValue("auction.auctionSettings") == null) {
+                auctionSettings = new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false);
+            } else {
+                Map<String, Object> map = new HashMap<>();
+
+                for (String s : config.getConfigurationSection("auction.auctionSettings").getKeys(false)) {
+                    map.put(s, config.getString("auction.auctionSettings." + s));
+                }
+
+                Bukkit.getConsoleSender().sendMessage(map + "");
+
+                auctionSettings = AuctionSettings.deserialize(map);
+            }
+
+            auctionSettings.setPlayer(this);
         }
 
         if (tick % EVERY_SECOND == 0) {
@@ -496,6 +519,9 @@ public class SkyblockPlayer {
                 config.set("fairySouls.found", new ArrayList<Location>());
                 config.set("fairySouls.claimed", 0);
 
+                config.set("auction.auctionSettings", new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false).serialize());
+                config.set("auction.auctioningItem", null);
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();
@@ -585,6 +611,10 @@ public class SkyblockPlayer {
         if (!b) getBukkitPlayer().sendMessage(ChatColor.RED + "Not enough coins!");
 
         return b;
+    }
+
+    public void subtractCoins(int coins) {
+        addCoins(-1 * coins);
     }
 
     public ArrayList<ItemStack> getPets() {

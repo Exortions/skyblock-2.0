@@ -2,7 +2,12 @@ package com.skyblock.skyblock.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -21,4 +26,16 @@ public enum Rarity {
     ChatColor color;
     int level;
 
+    public static String[] stringValues() {
+        String[] strings = new String[values().length];
+        Rarity[] values = values();
+
+        Collections.reverse(Arrays.asList(values));
+
+        for (int i = 0; i < strings.length; i++){
+            strings[i] = values[i].getColor() + WordUtils.capitalize(values[i].name().toLowerCase().replace("_", " "));
+        }
+
+        return strings;
+    }
 }

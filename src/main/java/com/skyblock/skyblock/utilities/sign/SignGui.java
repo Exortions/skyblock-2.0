@@ -44,6 +44,7 @@ public class SignGui {
 
         IChatBaseComponent[] components = CraftSign.sanitizeLines(lines);
         TileEntitySign sign = new TileEntitySign();
+        sign.isEditable = true;
         sign.a(blockPosition);
         System.arraycopy(components, 0, sign.lines, 0, sign.lines.length);
         sendPacket(sign.getUpdatePacket());
