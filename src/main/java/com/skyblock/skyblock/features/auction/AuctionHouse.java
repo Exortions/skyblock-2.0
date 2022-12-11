@@ -26,6 +26,8 @@ public class AuctionHouse {
     public AuctionHouse() {
         folder = new File(PATH);
 
+        if (!folder.exists()) folder.mkdirs();
+
         init();
     }
 
