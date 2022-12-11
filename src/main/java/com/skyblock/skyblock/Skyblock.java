@@ -57,11 +57,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
@@ -71,10 +69,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 @Getter
 @SuppressWarnings({"unused", "deprecation"})
@@ -100,6 +95,7 @@ public final class Skyblock extends JavaPlugin {
     private MinionHandler minionHandler;
     private SlayerHandler slayerHandler;
     private RecipeHandler recipeHandler;
+    private List<Entity> removeables;
     private SignManager signManager;
     private ItemHandler itemHandler;
     private BagManager bagManager;
@@ -116,6 +112,8 @@ public final class Skyblock extends JavaPlugin {
     public void onEnable() {
         this.sendMessage("Found Bukkit server v" + Bukkit.getVersion());
         long start = System.currentTimeMillis();
+
+        this.removeables = new ArrayList<>();
 
         this.initializeServerData();
         this.registerTimeHandlers();
@@ -164,16 +162,9 @@ public final class Skyblock extends JavaPlugin {
 
         this.fairySoulHandler.killAllSouls();
 
-        for (Merchant merchant : this.merchantHandler.getMerchants().values()) {
-            merchant.getNpc().destroy();
-            merchant.getStand().remove();
-            merchant.getClick().remove();
+        this.removeables.forEach(Entity::remove);
 
-            merchant.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
-            merchant.getNpc().getOwningRegistry().deregisterAll();
-        }
-
-        this.npcHandler.killAll();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc remove all");
 
         this.auctionHouse.saveToDisk();
 
@@ -650,4 +641,8 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public static Skyblock getPlugin() { return Skyblock.getPlugin(Skyblock.class); }
+
+    public void addRemoveable(Entity entity) {
+        this.removeables.add(entity);
+    }
 }

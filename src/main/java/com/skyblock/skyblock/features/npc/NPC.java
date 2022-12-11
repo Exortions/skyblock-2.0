@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.npc;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -44,6 +45,9 @@ public class NPC implements Listener {
         this.npc = (net.citizensnpcs.api.npc.NPC) npcData.get(0);
         this.stand = (ArmorStand) npcData.get(1);
         this.click = (ArmorStand) npcData.get(2);
+
+        Skyblock.getPlugin().addRemoveable(this.stand);
+        Skyblock.getPlugin().addRemoveable(this.click);
     }
 
     @EventHandler

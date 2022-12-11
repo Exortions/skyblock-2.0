@@ -20,17 +20,6 @@ public class NPCHandler {
         }
     }
 
-    public void killAll() {
-        for (NPC npc : npcs.values()) {
-            npc.getNpc().destroy();
-            npc.getStand().remove();
-            npc.getClick().remove();
-
-            npc.getNpc().getOwningRegistry().despawnNPCs(DespawnReason.PLUGIN);
-            npc.getNpc().getOwningRegistry().deregisterAll();
-        }
-    }
-
     public void registerNPC(String id, NPC npc) {
         Bukkit.getPluginManager().registerEvents(npc, Skyblock.getPlugin(Skyblock.class));
 

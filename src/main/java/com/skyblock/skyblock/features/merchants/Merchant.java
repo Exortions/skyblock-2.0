@@ -59,6 +59,9 @@ public class Merchant implements Listener {
         this.npc = (NPC) npcData.get(0);
         this.stand = (ArmorStand) npcData.get(1);
         this.click = (ArmorStand) npcData.get(2);
+
+        Skyblock.getPlugin().addRemoveable(this.stand);
+        Skyblock.getPlugin().addRemoveable(this.click);
     }
 
     private int interactionIteration = 0;
