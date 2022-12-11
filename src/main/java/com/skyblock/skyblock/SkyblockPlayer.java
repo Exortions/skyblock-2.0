@@ -431,8 +431,6 @@ public class SkyblockPlayer {
     }
 
     public void addStat(SkyblockStat stat, double val) {
-        System.out.println("stats: " + stats);
-
         setStat(stat, getStat(stat) + val);
     }
 
