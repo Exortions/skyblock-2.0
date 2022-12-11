@@ -359,6 +359,10 @@ public class Util {
         return String.format("%.1f%c", num / Math.pow(1000, exp), "kMGTPE".charAt(exp - 1)).replaceAll("\\.0", "");
     }
 
+    public String formatDouble(double num) {
+        return new DecimalFormat("#,###.##").format(num);
+    }
+
     public String formatInt(int num) {
         DecimalFormat format = new DecimalFormat("#,###");
         format.setGroupingUsed(true);

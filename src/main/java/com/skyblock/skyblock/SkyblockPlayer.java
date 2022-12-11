@@ -47,7 +47,7 @@ public class SkyblockPlayer {
 
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
     private AuctionCreationGUI.AuctionProgress progress;
-    private HashMap<SkyblockStat, Integer> stats;
+    private HashMap<SkyblockStat, Double> stats;
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
     private AuctionSettings auctionSettings;
@@ -271,8 +271,8 @@ public class SkyblockPlayer {
     }
 
     private void updateHealth(int i) {
-        int hp = getStat(SkyblockStat.HEALTH);
-        int mhp = getStat(SkyblockStat.MAX_HEALTH);
+        double hp = getStat(SkyblockStat.HEALTH);
+        double mhp = getStat(SkyblockStat.MAX_HEALTH);
 
         if (bukkitPlayer.getHealth() <= bukkitPlayer.getMaxHealth()){
             bukkitPlayer.setHealth(Math.min(bukkitPlayer.getMaxHealth(), bukkitPlayer.getHealth() + i/(mhp/bukkitPlayer.getMaxHealth())));
@@ -373,9 +373,9 @@ public class SkyblockPlayer {
         return bukkitPlayer.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX);
     }
 
-    public int getStat(SkyblockStat stat) { return stats.get(stat); }
+    public double getStat(SkyblockStat stat) { return stats.get(stat); }
 
-    public void setStat(SkyblockStat stat, int val) {
+    public void setStat(SkyblockStat stat, double val) {
         stats.put(stat, val);
 
         setValue("stats." + stat.name().toLowerCase(), val);
@@ -423,11 +423,11 @@ public class SkyblockPlayer {
         return new Random().nextInt(100) <= getStat(SkyblockStat.CRIT_CHANCE);
     }
 
-    public void addStat(SkyblockStat stat, int val) {
+    public void addStat(SkyblockStat stat, double val) {
         setStat(stat, getStat(stat) + val);
     }
 
-    public void subtractStat(SkyblockStat stat, int val) {
+    public void subtractStat(SkyblockStat stat, double val) {
         setStat(stat, getStat(stat) - val);
     }
 
@@ -441,7 +441,7 @@ public class SkyblockPlayer {
             config.save(configFile);
             config = YamlConfiguration.loadConfiguration(configFile);
 
-            forEachStat((s) -> stats.put(s, (int) getValue("stats." + s.name().toLowerCase())));
+            forEachStat((s) -> stats.put(s, (double) getValue("stats." + s.name().toLowerCase())));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -468,15 +468,15 @@ public class SkyblockPlayer {
 
                 forEachStat((s) -> config.set("stats." + s.name().toLowerCase(), 0));
 
-                config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.MAX_MANA.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.MANA.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.SPEED.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.CRIT_CHANCE.name().toLowerCase(), 30);
-                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name().toLowerCase(), 50);
+                config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.MAX_MANA.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.MANA.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.SPEED.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.CRIT_CHANCE.name().toLowerCase(), 30.0);
+                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name().toLowerCase(), 50.0);
 
-                config.set("stats.purse", 0);
+                config.set("stats.purse", 0.0);
 
                 for (Collection collection : Collection.getCollections()) {
                     config.set("collection." + collection.getName().toLowerCase() + ".level", 0);
@@ -484,7 +484,7 @@ public class SkyblockPlayer {
                     config.set("collection." + collection.getName().toLowerCase() + ".unlocked", false);
                 }
 
-                config.set("bank.balance", 0);
+                config.set("bank.balance", 0.0);
                 config.set("bank.interest", 2);
                 config.set("bank.recent_transactions", new ArrayList<>());
 
