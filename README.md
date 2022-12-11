@@ -5,7 +5,8 @@ Please note that this project is a work in progress - there are still many bugs,
 This is a Hypixel Skyblock recreation of Skyblock before the Dungeons update. After we complete this, we will start adding features after Dungeons.
 
 # Features
-Here are a list of some of the features that we currently have added:
+Here are a list of some features that we currently have added:
+- Auction House
 - Slayer
 - Fairy Souls
 - Private Islands
@@ -27,7 +28,6 @@ Here are a list of some of the features that we currently have added:
 
 # Coming Soon
 Here is a list of features that will be added soon:
-- Auction House
+- Bazaar
 - Custom Mob Spawning
 - Dragon Fights
-- Bazaar
