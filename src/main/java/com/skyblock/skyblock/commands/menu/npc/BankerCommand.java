@@ -36,8 +36,8 @@ public class BankerCommand implements Command {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        int balance = (int) skyblockPlayer.getValue("bank.balance");
-        int purse = (int) skyblockPlayer.getValue("stats.purse");
+        double balance = (double) skyblockPlayer.getValue("bank.balance");
+        double purse = (double) skyblockPlayer.getValue("stats.purse");
         int interestRate = (int) skyblockPlayer.getValue("bank.interest");
         int nextInterestHours = 31; // TODO: Calculate this
 
@@ -54,12 +54,12 @@ public class BankerCommand implements Command {
             Util.fillEmpty(inventory);
 
             inventory.setItem(11, new ItemBuilder(ChatColor.GREEN + "Deposit Coins", Material.CHEST).setLore(Util.buildLore(
-                    "&7Current balance: &6" + Util.formatInt(balance) + "\n\n&7Store coins in the bank to keep\n&7them safe while you go on\n&7adventures!\n\n" +
+                    "&7Current balance: &6" + Util.formatDouble(balance) + "\n\n&7Store coins in the bank to keep\n&7them safe while you go on\n&7adventures!\n\n" +
                             "&7You will earn &b" + interestRate + "% &7interest every\n&7season for your first &610 million\n&7banked coins.\n\n&7Until interest: &b" + nextInterestHours + "h\n\n&eClick to make a deposit!"
             )).toItemStack());
 
             inventory.setItem(13, new ItemBuilder(ChatColor.GREEN + "Withdraw Coins", Material.DROPPER).setLore(Util.buildLore(
-                    "&7Current balance: &6" + Util.formatInt(balance) + "\n\n&7Take your coins out of the bank\n&7in order to spend them.\n\n&eClick to withdraw coins!"
+                    "&7Current balance: &6" + Util.formatDouble(balance) + "\n\n&7Take your coins out of the bank\n&7in order to spend them.\n\n&eClick to withdraw coins!"
             )).toItemStack());
 
             if (recentTransactions.size() == 0) {
@@ -70,7 +70,7 @@ public class BankerCommand implements Command {
                 List<String> transactions = new ArrayList<>();
 
                 for (String transaction : recentTransactions) {
-                    int amount = Integer.parseInt(transaction.split(";")[0]);
+                    double amount = Double.parseDouble(transaction.split(";")[0]);
                     long time = Long.parseLong(transaction.split(";")[1]);
                     String by = transaction.split(";")[2];
 
@@ -79,7 +79,7 @@ public class BankerCommand implements Command {
                     String timeString = Util.calculateTimeAgoWithPeriodAndDuration(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), ZoneId.systemDefault());
                     String plusOrMinus = amount > 0 ? "&a+" : "&c-";
 
-                    transactions.add(plusOrMinus + " &6" + Util.formatInt(Util.assertPositive(amount)) + "&7, &e" + timeString + " &7by " + by);
+                    transactions.add(plusOrMinus + " &6" + Util.formatInt(Util.assertPositive((int) amount)) + "&7, &e" + timeString + " &7by " + by);
                 }
 
                 inventory.setItem(15, new ItemBuilder(ChatColor.GREEN + "Recent Transactions", Material.PAPER).setLore(
@@ -102,21 +102,21 @@ public class BankerCommand implements Command {
                     ChatColor.GREEN + "Your whole purse",
                     Material.CHEST, 64
             ).addLore(Util.buildLore(
-                    "&8Bank deposit\n\n&7Current balance: &6" + Util.formatInt(balance) + "\n&7Amount to deposit: &6" + Util.formatInt(purse) + "\n\n&eClick to deposit coins!"
+                    "&8Bank deposit\n\n&7Current balance: &6" + Util.formatDouble(balance) + "\n&7Amount to deposit: &6" + Util.formatDouble(purse) + "\n\n&eClick to deposit coins!"
             )).toItemStack());
 
             inventory.setItem(13, new ItemBuilder(
                     ChatColor.GREEN + "Half your purse",
                     Material.CHEST, 32
             ).addLore(Util.buildLore(
-                    "&8Bank deposit\n\n&7Current balance: &6" + Util.formatInt(balance) + "\n&7Amount to deposit: &6" + Util.formatInt(purse / 2) + "\n\n&eClick to deposit coins!"
+                    "&8Bank deposit\n\n&7Current balance: &6" + Util.formatDouble(balance) + "\n&7Amount to deposit: &6" + Util.formatDouble(purse / 2) + "\n\n&eClick to deposit coins!"
             )).toItemStack());
 
             inventory.setItem(15, new ItemBuilder(
                     ChatColor.GREEN + "Specific amount",
                     Material.SIGN
             ).addLore(Util.buildLore(
-                    "&7Current balance: &6" + Util.formatInt(balance) + "\n\n&eClick to deposit coins!"
+                    "&7Current balance: &6" + Util.formatDouble(balance) + "\n\n&eClick to deposit coins!"
             )).toItemStack());
 
             inventory.setItem(31, Util.buildBackButton("&7To Personal Bank Account"));
@@ -129,28 +129,28 @@ public class BankerCommand implements Command {
                     ChatColor.GREEN + "Everything in the account",
                     Material.DROPPER, 64
             ).addLore(Util.buildLore(
-                    "&8Bank withdrawal\n\n&7Current balance: &6" + Util.formatInt(balance) + "\n&7Amount to withdraw: &6" + Util.formatInt(balance) + "\n\n&eClick to withdraw coins!"
+                    "&8Bank withdrawal\n\n&7Current balance: &6" + Util.formatDouble(balance) + "\n&7Amount to withdraw: &6" + Util.formatDouble(balance) + "\n\n&eClick to withdraw coins!"
             )).toItemStack());
 
             inventory.setItem(12, new ItemBuilder(
                     ChatColor.GREEN + "Half the account",
                     Material.DROPPER, 32
             ).addLore(Util.buildLore(
-                    "&8Bank withdrawal\n\n&7Current balance: &6" + Util.formatInt(balance) + "\n&7Amount to withdraw: &6" + Util.formatInt(balance / 2) + "\n\n&eClick to withdraw coins!"
+                    "&8Bank withdrawal\n\n&7Current balance: &6" + Util.formatDouble(balance) + "\n&7Amount to withdraw: &6" + Util.formatDouble(balance / 2) + "\n\n&eClick to withdraw coins!"
             )).toItemStack());
 
             inventory.setItem(14, new ItemBuilder(
                     ChatColor.GREEN + "Withdraw 20%",
                     Material.DROPPER
             ).addLore(Util.buildLore(
-                    "&8Bank withdrawal\n\n&7Current balance: &6" + Util.formatInt(balance) + "\n&7Amount to withdraw: &6" + Util.formatInt((balance * 20) / 100) + "\n\n&eClick to withdraw coins!"
+                    "&8Bank withdrawal\n\n&7Current balance: &6" + Util.formatDouble(balance) + "\n&7Amount to withdraw: &6" + Util.formatDouble((balance * 20) / 100) + "\n\n&eClick to withdraw coins!"
             )).toItemStack());
 
             inventory.setItem(16, new ItemBuilder(
                     ChatColor.GREEN + "Specific amount",
                     Material.SIGN
             ).addLore(Util.buildLore(
-                    "&7Current balance: &6" + Util.formatInt(balance) + "\n\n&eClick to withdraw coins!"
+                    "&7Current balance: &6" + Util.formatDouble(balance) + "\n\n&eClick to withdraw coins!"
             )).toItemStack());
 
             inventory.setItem(31, Util.buildBackButton("&7To Personal Bank Account"));

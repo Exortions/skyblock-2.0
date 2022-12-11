@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.items.weapons;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
@@ -23,7 +24,7 @@ public class RogueSword extends SkyblockItem {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         if (skyblockPlayer.checkMana(50)) {
-            AtomicInteger speed = new AtomicInteger(20);
+            AtomicDouble speed = new AtomicDouble(20);
             if (skyblockPlayer.getStat(SkyblockStat.SPEED) > 400) return;
             if (skyblockPlayer.getStat(SkyblockStat.SPEED) + 20 > 400) {
                 speed.set(speed.get() - ((skyblockPlayer.getStat(SkyblockStat.SPEED) + 20) - 400));

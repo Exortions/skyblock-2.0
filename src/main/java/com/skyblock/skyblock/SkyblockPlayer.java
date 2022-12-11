@@ -19,6 +19,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
+import com.skyblock.skyblock.utilities.TriConsumer;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
@@ -32,6 +33,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -47,7 +49,7 @@ public class SkyblockPlayer {
 
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
     private AuctionCreationGUI.AuctionProgress progress;
-    private HashMap<SkyblockStat, Integer> stats;
+    private HashMap<SkyblockStat, Double> stats;
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
     private AuctionSettings auctionSettings;
@@ -76,8 +78,13 @@ public class SkyblockPlayer {
         return playerRegistry.get(uuid);
     }
 
-    public static void registerPlayer(UUID uuid) {
+    public static void registerPlayer(UUID uuid, PlayerJoinEvent event, Consumer<SkyblockPlayer> after) {
         playerRegistry.put(uuid, new SkyblockPlayer(uuid));
+
+        SkyblockPlayer player = playerRegistry.get(uuid);
+        Skyblock skyblock = Skyblock.getPlugin();
+
+        after.accept(player);
     }
 
     public SkyblockPlayer(UUID uuid) {
@@ -271,8 +278,8 @@ public class SkyblockPlayer {
     }
 
     private void updateHealth(int i) {
-        int hp = getStat(SkyblockStat.HEALTH);
-        int mhp = getStat(SkyblockStat.MAX_HEALTH);
+        double hp = getStat(SkyblockStat.HEALTH);
+        double mhp = getStat(SkyblockStat.MAX_HEALTH);
 
         if (bukkitPlayer.getHealth() <= bukkitPlayer.getMaxHealth()){
             bukkitPlayer.setHealth(Math.min(bukkitPlayer.getMaxHealth(), bukkitPlayer.getHealth() + i/(mhp/bukkitPlayer.getMaxHealth())));
@@ -373,9 +380,9 @@ public class SkyblockPlayer {
         return bukkitPlayer.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX);
     }
 
-    public int getStat(SkyblockStat stat) { return stats.get(stat); }
+    public double getStat(SkyblockStat stat) { return stats.get(stat); }
 
-    public void setStat(SkyblockStat stat, int val) {
+    public void setStat(SkyblockStat stat, double val) {
         stats.put(stat, val);
 
         setValue("stats." + stat.name().toLowerCase(), val);
@@ -423,16 +430,20 @@ public class SkyblockPlayer {
         return new Random().nextInt(100) <= getStat(SkyblockStat.CRIT_CHANCE);
     }
 
-    public void addStat(SkyblockStat stat, int val) {
+    public void addStat(SkyblockStat stat, double val) {
         setStat(stat, getStat(stat) + val);
     }
 
-    public void subtractStat(SkyblockStat stat, int val) {
+    public void subtractStat(SkyblockStat stat, double val) {
         setStat(stat, getStat(stat) - val);
     }
 
     public Object getValue(String path) {
         return config.get(path);
+    }
+
+    public double getDouble(String path) {
+        return Double.parseDouble(getValue(path).toString());
     }
 
     public void setValue(String path, Object item) {
@@ -441,7 +452,7 @@ public class SkyblockPlayer {
             config.save(configFile);
             config = YamlConfiguration.loadConfiguration(configFile);
 
-            forEachStat((s) -> stats.put(s, (int) getValue("stats." + s.name().toLowerCase())));
+            forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -454,7 +465,7 @@ public class SkyblockPlayer {
     }
 
     private void loadStats() {
-        forEachStat((s) -> setStat(s, (int) getValue("stats." + s.name().toLowerCase())));
+        forEachStat((s) -> setStat(s, getDouble("stats." + s.name().toLowerCase())));
     }
 
     private void initConfig() {
@@ -468,15 +479,15 @@ public class SkyblockPlayer {
 
                 forEachStat((s) -> config.set("stats." + s.name().toLowerCase(), 0));
 
-                config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.MAX_MANA.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.MANA.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.SPEED.name().toLowerCase(), 100);
-                config.set("stats." + SkyblockStat.CRIT_CHANCE.name().toLowerCase(), 30);
-                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name().toLowerCase(), 50);
+                config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.MAX_MANA.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.MANA.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.SPEED.name().toLowerCase(), 100.0);
+                config.set("stats." + SkyblockStat.CRIT_CHANCE.name().toLowerCase(), 30.0);
+                config.set("stats." + SkyblockStat.CRIT_DAMAGE.name().toLowerCase(), 50.0);
 
-                config.set("stats.purse", 0);
+                config.set("stats.purse", 0.0);
 
                 for (Collection collection : Collection.getCollections()) {
                     config.set("collection." + collection.getName().toLowerCase() + ".level", 0);
@@ -484,7 +495,7 @@ public class SkyblockPlayer {
                     config.set("collection." + collection.getName().toLowerCase() + ".unlocked", false);
                 }
 
-                config.set("bank.balance", 0);
+                config.set("bank.balance", 0.0);
                 config.set("bank.interest", 2);
                 config.set("bank.recent_transactions", new ArrayList<>());
 
@@ -537,7 +548,7 @@ public class SkyblockPlayer {
         return !bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
     }
 
-    public void addTransaction(int amount, String by) {
+    public void addTransaction(double amount, String by) {
         List<String> transactions = (List<String>) getValue("bank.recent_transactions");
 
         if (transactions.size() >= 10) transactions.remove(0);
@@ -547,9 +558,9 @@ public class SkyblockPlayer {
         setValue("bank.recent_transactions", transactions);
     }
 
-    public boolean deposit(int amount, boolean self) {
-        int balance = (int) getValue("bank.balance");
-        int purse = (int) getValue("stats.purse");
+    public boolean deposit(double amount, boolean self) {
+        double balance = getDouble("bank.balance");
+        double purse = getDouble("stats.purse");
 
         if (purse < amount) return false;
 
@@ -561,9 +572,9 @@ public class SkyblockPlayer {
         return true;
     }
 
-    public boolean withdraw(int amount) {
-        int balance = (int) getValue("bank.balance");
-        int purse = (int) getValue("stats.purse");
+    public boolean withdraw(double amount) {
+        double balance = getDouble("bank.balance");
+        double purse = getDouble("stats.purse");
 
         if (balance < amount) return false;
 

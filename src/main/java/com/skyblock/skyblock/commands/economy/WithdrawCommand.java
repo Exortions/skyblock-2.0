@@ -24,10 +24,10 @@ public class WithdrawCommand implements Command {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        int amount;
+        double amount;
 
         if (args[0].equalsIgnoreCase("all") || args[0].equalsIgnoreCase("half") || args[0].equalsIgnoreCase("20%")) {
-            amount = (int) skyblockPlayer.getValue("bank.balance");
+            amount = skyblockPlayer.getDouble("bank.balance");
 
             if (args[0].equalsIgnoreCase("half")) {
                 amount /= 2;
@@ -59,7 +59,7 @@ public class WithdrawCommand implements Command {
             player.sendMessage(ChatColor.RED + "You don't have enough money in your bank account!");
         } else {
             player.sendMessage(ChatColor.GREEN + "You have withdrawn " + ChatColor.GOLD + Util.abbreviate(amount) + " coins" + ChatColor.GREEN + "! " +
-                    "You now have " + ChatColor.GOLD + Util.abbreviate((int) skyblockPlayer.getValue("bank.balance")) + " coins" + ChatColor.GREEN + " in your account!");
+                    "You now have " + ChatColor.GOLD + Util.abbreviate(skyblockPlayer.getDouble("bank.balance")) + " coins" + ChatColor.GREEN + " in your account!");
         }
     }
 }

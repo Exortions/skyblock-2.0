@@ -27,11 +27,11 @@ public class DepositCommand implements Command {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        int depositAmount;
+        double depositAmount;
         boolean success;
 
         if (amount.equalsIgnoreCase("all") || amount.equalsIgnoreCase("half")) {
-            int purse = (int) skyblockPlayer.getValue("stats.purse");
+            double purse = skyblockPlayer.getDouble("stats.purse");
 
             if (amount.equalsIgnoreCase("all")) depositAmount = purse;
             else depositAmount = purse / 2;
@@ -41,7 +41,7 @@ public class DepositCommand implements Command {
                 return;
             }
 
-            success =skyblockPlayer.deposit(depositAmount, true);
+            success = skyblockPlayer.deposit(depositAmount, true);
         } else {
             depositAmount = Integer.parseInt(amount);
 
@@ -56,7 +56,7 @@ public class DepositCommand implements Command {
         if (!success) {
             player.sendMessage(ChatColor.RED + "You don't have enough coins to deposit!");
         } else {
-            player.sendMessage(ChatColor.GREEN + "You have successfully deposited " + ChatColor.GOLD + Util.abbreviate(depositAmount) + " coins" + ChatColor.GREEN + "! You now have " + ChatColor.GOLD + Util.abbreviate((int) skyblockPlayer.getValue("bank.balance")) + ChatColor.GREEN + " coins in your account!");
+            player.sendMessage(ChatColor.GREEN + "You have successfully deposited " + ChatColor.GOLD + Util.abbreviate(depositAmount) + " coins" + ChatColor.GREEN + "! You now have " + ChatColor.GOLD + Util.abbreviate(skyblockPlayer.getDouble("bank.balance")) + ChatColor.GREEN + " coins in your account!");
         }
     }
 }

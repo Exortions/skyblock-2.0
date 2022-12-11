@@ -59,36 +59,34 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        SkyblockPlayer.registerPlayer(player.getUniqueId());
-
-        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
-
-        if (player.getItemInHand() != null) {
-            skyblockPlayer.setHand(player.getItemInHand());
-        }
-
-        skyblockPlayer.tick();
-
-        this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
-
-        for (ItemStack item : player.getInventory().getArmorContents()) {
-            skyblockPlayer.updateStats(null, item);
-        }
-
-        Util.delay(() -> {
-            if (!Skyblock.getPlugin().getFairySoulHandler().initialized) Skyblock.getPlugin().getFairySoulHandler().init();
-        }, 1);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (player.isOnline()){
-                    skyblockPlayer.tick();
-                }else{
-                    cancel();
-                }
+        SkyblockPlayer.registerPlayer(player.getUniqueId(), e, (skyblockPlayer) -> {
+            if (player.getItemInHand() != null) {
+                skyblockPlayer.setHand(player.getItemInHand());
             }
-        }.runTaskTimer(plugin, 5L, 1);
+
+            skyblockPlayer.tick();
+
+            this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
+
+            for (ItemStack item : player.getInventory().getArmorContents()) {
+                skyblockPlayer.updateStats(null, item);
+            }
+
+            Util.delay(() -> {
+                if (!Skyblock.getPlugin().getFairySoulHandler().initialized) Skyblock.getPlugin().getFairySoulHandler().init();
+            }, 1);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (player.isOnline()){
+                        skyblockPlayer.tick();
+                    }else{
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(plugin, 5L, 1);
+        });
     }
 
     @EventHandler

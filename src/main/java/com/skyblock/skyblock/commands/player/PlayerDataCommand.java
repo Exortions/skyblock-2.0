@@ -33,7 +33,16 @@ public class PlayerDataCommand implements Command {
         if (target.isOnline()) {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(target);
 
+            double doubleValue;
+
+            try {
+                doubleValue = Double.parseDouble(args[2]);
+            } catch (NumberFormatException | NullPointerException ex) {
+                doubleValue = -1;
+            }
+
             if (args[2].equals("true") || args[2].equals("false")) skyblockPlayer.setValue(args[1], Boolean.parseBoolean(args[2]));
+            else if (doubleValue != -1) skyblockPlayer.setValue(args[1], doubleValue);
             else skyblockPlayer.setValue(args[1], Integer.valueOf(args[2]));
         }
     }
