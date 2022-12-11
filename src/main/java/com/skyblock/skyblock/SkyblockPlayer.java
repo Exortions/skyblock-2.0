@@ -574,9 +574,9 @@ public class SkyblockPlayer {
         return true;
     }
 
-    public boolean withdraw(int amount) {
-        int balance = (int) getValue("bank.balance");
-        int purse = (int) getValue("stats.purse");
+    public boolean withdraw(double amount) {
+        double balance = getDouble("bank.balance");
+        double purse = getDouble("stats.purse");
 
         if (balance < amount) return false;
 

@@ -24,10 +24,10 @@ public class WithdrawCommand implements Command {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        int amount;
+        double amount;
 
         if (args[0].equalsIgnoreCase("all") || args[0].equalsIgnoreCase("half") || args[0].equalsIgnoreCase("20%")) {
-            amount = (int) skyblockPlayer.getValue("bank.balance");
+            amount = skyblockPlayer.getDouble("bank.balance");
 
             if (args[0].equalsIgnoreCase("half")) {
                 amount /= 2;

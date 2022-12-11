@@ -27,11 +27,11 @@ public class DepositCommand implements Command {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        int depositAmount;
+        double depositAmount;
         boolean success;
 
         if (amount.equalsIgnoreCase("all") || amount.equalsIgnoreCase("half")) {
-            int purse = (int) skyblockPlayer.getValue("stats.purse");
+            double purse = skyblockPlayer.getDouble("stats.purse");
 
             if (amount.equalsIgnoreCase("all")) depositAmount = purse;
             else depositAmount = purse / 2;
@@ -41,7 +41,7 @@ public class DepositCommand implements Command {
                 return;
             }
 
-            success =skyblockPlayer.deposit(depositAmount, true);
+            success = skyblockPlayer.deposit(depositAmount, true);
         } else {
             depositAmount = Integer.parseInt(amount);
 
