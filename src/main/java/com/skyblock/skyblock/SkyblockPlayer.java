@@ -19,6 +19,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
+import com.skyblock.skyblock.utilities.TriConsumer;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
@@ -32,6 +33,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -76,8 +78,13 @@ public class SkyblockPlayer {
         return playerRegistry.get(uuid);
     }
 
-    public static void registerPlayer(UUID uuid) {
+    public static void registerPlayer(UUID uuid, PlayerJoinEvent event, Consumer<SkyblockPlayer> after) {
         playerRegistry.put(uuid, new SkyblockPlayer(uuid));
+
+        SkyblockPlayer player = playerRegistry.get(uuid);
+        Skyblock skyblock = Skyblock.getPlugin();
+
+        after.accept(player);
     }
 
     public SkyblockPlayer(UUID uuid) {
@@ -424,6 +431,8 @@ public class SkyblockPlayer {
     }
 
     public void addStat(SkyblockStat stat, double val) {
+        System.out.println("stats: " + stats);
+
         setStat(stat, getStat(stat) + val);
     }
 
@@ -435,13 +444,17 @@ public class SkyblockPlayer {
         return config.get(path);
     }
 
+    public double getDouble(String path) {
+        return Double.parseDouble(getValue(path).toString());
+    }
+
     public void setValue(String path, Object item) {
         try {
             config.set(path, item);
             config.save(configFile);
             config = YamlConfiguration.loadConfiguration(configFile);
 
-            forEachStat((s) -> stats.put(s, (double) getValue("stats." + s.name().toLowerCase())));
+            forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -454,7 +467,7 @@ public class SkyblockPlayer {
     }
 
     private void loadStats() {
-        forEachStat((s) -> setStat(s, (int) getValue("stats." + s.name().toLowerCase())));
+        forEachStat((s) -> setStat(s, getDouble("stats." + s.name().toLowerCase())));
     }
 
     private void initConfig() {
@@ -537,7 +550,7 @@ public class SkyblockPlayer {
         return !bukkitPlayer.getWorld().getName().equals(IslandManager.getIsland(bukkitPlayer).getName());
     }
 
-    public void addTransaction(int amount, String by) {
+    public void addTransaction(double amount, String by) {
         List<String> transactions = (List<String>) getValue("bank.recent_transactions");
 
         if (transactions.size() >= 10) transactions.remove(0);
@@ -547,9 +560,9 @@ public class SkyblockPlayer {
         setValue("bank.recent_transactions", transactions);
     }
 
-    public boolean deposit(int amount, boolean self) {
-        int balance = (int) getValue("bank.balance");
-        int purse = (int) getValue("stats.purse");
+    public boolean deposit(double amount, boolean self) {
+        double balance = getDouble("bank.balance");
+        double purse = getDouble("stats.purse");
 
         if (purse < amount) return false;
 
