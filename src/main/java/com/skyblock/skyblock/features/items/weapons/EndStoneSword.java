@@ -29,10 +29,10 @@ public class EndStoneSword extends SkyblockItem {
         final int MAX_DAMAGE_RESISTANCE = 100;
         final int MAX_DAMAGE = 100;
 
-        int mana = skyblockPlayer.getStat(SkyblockStat.MANA);
+        double mana = skyblockPlayer.getStat(SkyblockStat.MANA);
 
-        int damageResistanceAdded = 0;
-        int addedDamage = 0;
+        double damageResistanceAdded = 0;
+        double addedDamage = 0;
 
         // 5 mana = 1 damage resistance
         // 5 mana = 1 damage
@@ -49,7 +49,7 @@ public class EndStoneSword extends SkyblockItem {
 
         skyblockPlayer.setStat(SkyblockStat.MANA, 0);
 
-        int addedDefense = (100 * damageResistanceAdded) / (1 - damageResistanceAdded);
+        double addedDefense = (100 * damageResistanceAdded) / (1 - damageResistanceAdded);
 
         skyblockPlayer.setStat(SkyblockStat.DEFENSE, skyblockPlayer.getStat(SkyblockStat.DEFENSE) + addedDefense);
 
