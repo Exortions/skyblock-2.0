@@ -156,7 +156,7 @@ public class Merchant implements Listener {
 
             if (player == null) return;
 
-            if ((int) player.getValue("stats.purse") < nbt.getInteger("merchantCost")) {
+            if (player.getDouble("stats.purse") < nbt.getInteger("merchantCost")) {
                 player.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have enough coins to purchase this item!");
                 return;
             }
@@ -164,7 +164,7 @@ public class Merchant implements Listener {
             DecimalFormat formatter = new DecimalFormat("#,###");
             formatter.setGroupingUsed(true);
 
-            player.setValue("stats.purse", (int) player.getValue("stats.purse") - nbt.getInteger("merchantCost"));
+            player.setValue("stats.purse", player.getDouble("stats.purse") - nbt.getInteger("merchantCost"));
 
             player.getBukkitPlayer().performCommand(nbt.getString("merchantReward"));
 
