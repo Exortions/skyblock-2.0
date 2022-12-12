@@ -30,43 +30,47 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent e){
-        if (e.getDamager() instanceof Player) {
-            Player player = (Player) e.getDamager();
-
-            ItemStack item = player.getItemInHand();
-
-            if (handler.isRegistered(item)) {
-                handler.getRegistered(item).onEntityDamage(e);
-            }
-        } else if (e.getDamager() instanceof Arrow) {
-            Arrow arrow = (Arrow) e.getDamager();
-            if (arrow.getShooter() instanceof Player) {
-                Player player = (Player) arrow.getShooter();
+        try {
+            if (e.getDamager() instanceof Player) {
+                Player player = (Player) e.getDamager();
 
                 ItemStack item = player.getItemInHand();
 
                 if (handler.isRegistered(item)) {
                     handler.getRegistered(item).onEntityDamage(e);
                 }
+            } else if (e.getDamager() instanceof Arrow) {
+                Arrow arrow = (Arrow) e.getDamager();
+                if (arrow.getShooter() instanceof Player) {
+                    Player player = (Player) arrow.getShooter();
+
+                    ItemStack item = player.getItemInHand();
+
+                    if (handler.isRegistered(item)) {
+                        handler.getRegistered(item).onEntityDamage(e);
+                    }
+                }
             }
-        }
+        } catch (UnsupportedOperationException ignored) { }
     }
 
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
         ItemStack item = e.getItem();
 
-        if (item != null) {
-            if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                if (handler.isRegistered(item)) {
-                    handler.getRegistered(item).onRightClick(e);
-                }
-            } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                if (handler.isRegistered(item)) {
-                    handler.getRegistered(item).onLeftClick(e);
+        try {
+            if (item != null) {
+                if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                    if (handler.isRegistered(item)) {
+                        handler.getRegistered(item).onRightClick(e);
+                    }
+                } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                    if (handler.isRegistered(item)) {
+                        handler.getRegistered(item).onLeftClick(e);
+                    }
                 }
             }
-        }
+        } catch (UnsupportedOperationException ignored) { }
     }
 
     @EventHandler
@@ -75,7 +79,9 @@ public class ItemListener implements Listener {
 
         if (item != null) {
             if (handler.isRegistered(item)) {
-                handler.getRegistered(item).onArmorEquip(e);
+                try {
+                    handler.getRegistered(item).onArmorEquip(e);
+                } catch (UnsupportedOperationException ignored) { }
             }
         }
 
@@ -105,7 +111,9 @@ public class ItemListener implements Listener {
 
         if (item != null) {
             if (handler.isRegistered(item)) {
-                handler.getRegistered(item).onArmorUnEquip(e);
+                try {
+                    handler.getRegistered(item).onArmorUnEquip(e);
+                } catch (UnsupportedOperationException ignored) { }
             }
         }
 
@@ -130,7 +138,9 @@ public class ItemListener implements Listener {
             Player player = (Player) e.getEntity();
             ItemStack item = player.getItemInHand();
             if (handler.isRegistered(item)) {
-                handler.getRegistered(item).onBowShoot(e);
+                try {
+                    handler.getRegistered(item).onBowShoot(e);
+                } catch (UnsupportedOperationException ignored) { }
             }
         }
     }

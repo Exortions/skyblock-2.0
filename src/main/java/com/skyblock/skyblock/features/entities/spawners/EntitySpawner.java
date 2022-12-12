@@ -4,14 +4,19 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.entities.SkyblockEntityType;
 import com.skyblock.skyblock.utilities.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EntitySpawner {
 
@@ -47,6 +52,15 @@ public class EntitySpawner {
 
                 for (Location loc : locations) {
                     if (!loc.getChunk().isLoaded()) continue;
+                    if (Bukkit.getOnlinePlayers().size() == 0) continue;
+                    Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc, 30, 30, 30);
+
+                    AtomicBoolean players = new AtomicBoolean(false);
+                    entities.forEach((e) -> {
+                        if (e instanceof Player) players.set(true);
+                    });
+
+                    if (!players.get()) continue;
 
                     for (int i = 0; i < amount; i++) {
                         Location rand = random(loc);
@@ -56,6 +70,7 @@ public class EntitySpawner {
                         if (entity == null) continue;
 
                         entity.spawn(rand);
+                        entity.setLifeSpan((int) delay);
                         spawned.add(entity);
                     }
                 }
@@ -73,12 +88,12 @@ public class EntitySpawner {
         int randZ = Util.random(-1 * range, range);
 
         Location rand = loc.clone();
-        rand.add(randX, 0, randZ);
+        rand.add(0, 0, 0);
 
         Block block = rand.getBlock();
 
         if (block.getType() != Material.AIR && block.getLocation().clone().add(0, 1, 0).getBlock().getType() == Material.AIR &&
-                block.getLocation().clone().add(0, 2, 0).getBlock().getType() == Material.AIR) {
+                block.getLocation().clone().add(0, 2, 0).getBlock().getType() == Material.AIR && block.getType().isSolid()) {
             return rand;
         }
 

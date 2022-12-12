@@ -162,6 +162,7 @@ public abstract class SkyblockEntity {
         }
 
         vanilla.setMetadata("skyblockEntityData", new FixedMetadataValue(plugin, getEntityData().toString()));
+        Skyblock.getPlugin().addRemoveable(vanilla);
 
         return vanilla;
     }

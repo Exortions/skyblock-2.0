@@ -12,6 +12,6 @@ public class CreateSpawnerCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        plugin.getEntitySpawnerHandler().addSpawner(args[0], args[1], player.getLocation(), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), 3);
+        plugin.getEntitySpawnerHandler().addSpawner(args[0], args[1], player.getLocation(), 1, Integer.parseInt(args[2]), Integer.parseInt(args[3]), 1);
     }
 }

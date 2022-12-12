@@ -113,7 +113,7 @@ public class FairySoulHandler {
 
             while (!loc.getChunk().isLoaded()) { loc.getChunk().load(false); }
 
-            Util.delay(as::remove, 1);
+            as.remove();
         });
     }
 
