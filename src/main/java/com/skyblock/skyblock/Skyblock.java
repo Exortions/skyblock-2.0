@@ -108,9 +108,6 @@ public final class Skyblock extends JavaPlugin {
     private ServerData serverData;
     private GuiHandler guiHandler;
     private Bazaar bazaar;
-
-    private AuctionHouse auctionHouse;
-
     private Random random;
     private Date date;
 
