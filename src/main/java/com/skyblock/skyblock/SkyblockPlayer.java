@@ -379,8 +379,8 @@ public class SkyblockPlayer {
     public boolean isOnIsland() {
         return bukkitPlayer.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX);
     }
-
-    public double getStat(SkyblockStat stat) { return stats.get(stat); }
+    public int getStat(SkyblockStat stat) { return (int) Math.round(stats.get(stat)); }
+    public double getPreciseStat(SkyblockStat stat) { return stats.get(stat); }
 
     public void setStat(SkyblockStat stat, double val) {
         stats.put(stat, val);

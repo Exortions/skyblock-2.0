@@ -40,12 +40,12 @@ public class Tiger extends Pet {
         return Arrays.asList(
                 new PetAbility() {
                      @Override
-                     protected String getName() {
+                     public String getName() {
                          return "Merciless Swipe";
                      }
 
                      @Override
-                     protected List<String> getDescription() {
+                     public List<String> getDescription() {
                          return Collections.singletonList("Gain " + ChatColor.RED + Math.round(level * ferocityMult.get()) + "% Ferocity");
                      }
 
@@ -61,34 +61,34 @@ public class Tiger extends Pet {
                 },
                 new PetAbility() {
                     @Override
-                    protected String getName() {
+                    public String getName() {
                         return "Hemorrhage";
                     }
 
                     @Override
-                    protected List<String> getDescription() {
+                    public List<String> getDescription() {
                         return Arrays.asList("Melee attacks reduce healing", "by " + ChatColor.GOLD + (level * hemorrhageMult.get())
                                 + "%" + ChatColor.GRAY + " for " + ChatColor.GREEN + 10 + "s");
                     }
 
                     @Override
-                    protected Rarity getRequiredRarity() {
+                    public Rarity getRequiredRarity() {
                         return Rarity.RARE;
                     }
                 },
                 new PetAbility() {
                     @Override
-                    protected String getName() {
+                    public String getName() {
                         return "Apex Predator";
                     }
 
                     @Override
-                    protected List<String> getDescription() {
+                    public List<String> getDescription() {
                         return Arrays.asList("Deal " + ChatColor.RED + "+" + level + "% " + ChatColor.GRAY + "damage against", "targets with no other mobs", "within 15 blocks");
                     }
 
                     @Override
-                    protected Rarity getRequiredRarity() {
+                    public Rarity getRequiredRarity() {
                         return Rarity.LEGENDARY;
                     }
                 });

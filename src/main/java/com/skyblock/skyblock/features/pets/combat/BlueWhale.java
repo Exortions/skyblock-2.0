@@ -32,29 +32,29 @@ public class BlueWhale extends Pet {
         return Arrays.asList(
                 new PetAbility() {
                      @Override
-                     protected String getName() {
+                     public String getName() {
                          return "Ingest";
                      }
 
                      @Override
-                     protected List<String> getDescription() {
+                     public List<String> getDescription() {
                          return Arrays.asList("All potions heal " + ChatColor.RED + "+" + (ingestMult.get() * level) + "❤");
                      }
                  },
                 new PetAbility() {
                     @Override
-                    protected String getName() {
+                    public String getName() {
                         return "Bulk";
                     }
 
                     @Override
-                    protected List<String> getDescription() {
+                    public List<String> getDescription() {
                         return Arrays.asList("Gain " + ChatColor.GREEN + (0.03 * level) + "❈ Defense " + ChatColor.GRAY + "per",
                                 ChatColor.RED + "" + bulkHp.get() + " Max ❤ Health");
                     }
 
                     @Override
-                    protected Rarity getRequiredRarity() {
+                    public Rarity getRequiredRarity() {
                         return Rarity.RARE;
                     }
 
@@ -72,17 +72,17 @@ public class BlueWhale extends Pet {
                 },
                 new PetAbility() {
                     @Override
-                    protected String getName() {
+                    public String getName() {
                         return "Archimedes";
                     }
 
                     @Override
-                    protected List<String> getDescription() {
+                    public List<String> getDescription() {
                         return Arrays.asList("Gain " + ChatColor.RED + "+" + (0.2 * level) + "% Max ❤ Health");
                     }
 
                     @Override
-                    protected Rarity getRequiredRarity() {
+                    public Rarity getRequiredRarity() {
                         return Rarity.LEGENDARY;
                     }
                 });

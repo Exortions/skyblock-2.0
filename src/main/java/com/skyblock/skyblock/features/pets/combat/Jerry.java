@@ -25,42 +25,42 @@ public class Jerry extends Pet {
     public List<PetAbility> getAbilities(int level) {
         return Arrays.asList(new PetAbility() {
             @Override
-            protected String getName() {
+            public String getName() {
                 return "Jerry";
             }
 
             @Override
-            protected List<String> getDescription() {
+            public List<String> getDescription() {
                 return Arrays.asList("Gain " + ChatColor.GREEN + "50%" + ChatColor.GRAY + " chance to deal",
                         "your regular damage");
             }
         },
         new PetAbility() {
             @Override
-            protected String getName() {
+            public String getName() {
                 return "Jerry";
             }
 
             @Override
-            protected List<String> getDescription() {
+            public List<String> getDescription() {
                 return Arrays.asList("Gain " + ChatColor.GREEN + "100%" + ChatColor.GRAY + " chance to",
                         "receive a normal amount of drops", "from mobs");
             }
         },
         new PetAbility() {
             @Override
-            protected String getName() {
+            public String getName() {
                 return "Jerry";
             }
 
             @Override
-            protected List<String> getDescription() {
+            public List<String> getDescription() {
                 return Arrays.asList("Actually adds " + ChatColor.RED + level / 10 + " damage" + ChatColor.GRAY + " to",
                         "the Aspect of the Jerry");
             }
 
             @Override
-            protected Rarity getRequiredRarity() {
+            public Rarity getRequiredRarity() {
                 return Rarity.LEGENDARY;
             }
         });

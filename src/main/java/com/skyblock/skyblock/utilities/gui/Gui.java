@@ -104,11 +104,9 @@ public class Gui implements Listener {
             if (!event.getCurrentItem().hasItemMeta()) return;
             if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
 
-            Bukkit.getConsoleSender().sendMessage(event.getCurrentItem().getItemMeta().getLore().get(0));
-
             List<String> lore = event.getCurrentItem().getItemMeta().getLore();
 
-            if (lore != null) {
+            if (lore != null && lore.size() > 0) {
                 if (backButtons.containsKey(ChatColor.stripColor(lore.get(0)))) {
                     Class<? extends Gui> clazz = backButtons.get(ChatColor.stripColor(lore.get(0)));
 

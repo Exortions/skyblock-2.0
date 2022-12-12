@@ -310,7 +310,9 @@ public abstract class Pet {
 
         for (PetAbility ability : getAbilities(getLevel())) {
             if (rarity.getLevel() >= ability.getRequiredRarity().getLevel())
-                ability.onEquip(player);
+                try {
+                    ability.onEquip(player);
+                } catch (UnsupportedOperationException ignored) {}
         }
     }
 
@@ -331,13 +333,17 @@ public abstract class Pet {
 
         for (PetAbility ability : getAbilities(getLevel())) {
             if (rarity.getLevel() >= ability.getRequiredRarity().getLevel())
-                ability.onUnequip(player);
+                try {
+                    ability.onUnequip(player);
+                } catch (UnsupportedOperationException ignored) { }
         }
     }
 
     public void onDamage(EntityDamageByEntityEvent e) {
         for (PetAbility ability : getAbilities(getLevel())) {
-            ability.onDamage(e);
+            try {
+                ability.onDamage(e);
+            } catch (UnsupportedOperationException ignored) { }
         }
     }
 }

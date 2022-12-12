@@ -39,8 +39,7 @@ public class AuctionDurationGUI extends Gui {
                 long l = 0;
                 try {
                     l = Long.parseLong(event.getLines()[0]);
-                }
-                catch (NumberFormatException ex) {
+                } catch (NumberFormatException ex) {
                     player.sendMessage(ChatColor.RED + "Could not read this number!");
                 }
                 skyblockPlayer.getProgress().setDuration(l * 3600000);

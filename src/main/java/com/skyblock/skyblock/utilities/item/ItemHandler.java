@@ -1,9 +1,15 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
+import com.skyblock.skyblock.features.pets.Pet;
+import com.skyblock.skyblock.features.pets.PetType;
+import com.skyblock.skyblock.features.pets.combat.BlueWhale;
+import com.skyblock.skyblock.features.pets.combat.Jerry;
+import com.skyblock.skyblock.features.pets.combat.Tiger;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
@@ -132,6 +138,17 @@ public class ItemHandler {
                 0,
                 false
         ).createStack());
+
+        for (Rarity r : Rarity.values()) {
+            for (PetType type : PetType.values()) {
+                Pet pet = type.newInstance();
+                if (pet == null) continue;
+                pet.setRarity(r);
+                items.put(type.name(), pet.toItemStack());
+            }
+
+            if (r.equals(Rarity.LEGENDARY)) break;
+        }
 
         skyblock.sendMessage("Sucessfully Registered custom items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

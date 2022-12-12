@@ -219,7 +219,7 @@ public class Util {
             formatter.setGroupingUsed(true);
 
             String noColor = ChatColor.stripColor(displayname);
-            String formatted = formatter.format(Integer.parseInt(noColor));
+            String formatted = formatter.format(Long.parseLong(noColor));
 
             as.setCustomName(displayname.replaceAll(noColor, formatted));
         } else {
@@ -360,7 +360,7 @@ public class Util {
     }
 
     public String formatDouble(double num) {
-        return new DecimalFormat("#,###.##").format(num);
+        return new DecimalFormat("#,###").format(num);
     }
 
     public String formatInt(int num) {

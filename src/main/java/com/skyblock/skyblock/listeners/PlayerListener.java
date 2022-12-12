@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
+
+import static org.bukkit.Material.*;
 
 public class PlayerListener implements Listener {
 
@@ -153,6 +156,7 @@ public class PlayerListener implements Listener {
 
             if (e.getEntity().hasMetadata("skyblockEntityData")) {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
+                if (sentity == null) return;
 
                 sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
                 sentity.setLastDamager(player);
@@ -200,13 +204,18 @@ public class PlayerListener implements Listener {
     public void onMove(PlayerMoveEvent e) {
         Location to = e.getTo();
         Player player = e.getPlayer();
-        if (new Location(to.getWorld(), to.getX(), to.getY() - 1, to.getZ())
-                .getBlock().getType().equals(Material.SLIME_BLOCK)) {
+        Location bottom = new Location(to.getWorld(), to.getX(), to.getY() - 1, to.getZ());
+
+        if (bottom.getBlock().getType().equals(Material.SLIME_BLOCK)) {
             LaunchPadHandler padHandler = plugin.getLaunchPadHandler();
             String pad = padHandler.closeTo(player);
             if (!pad.equals("NONE")) {
                 padHandler.launch(player, pad);
             }
+        } else if (bottom.getBlock().getType().equals(ENDER_PORTAL)) {
+            player.performCommand("sb warp home");
+        } else if (to.getBlock().getType().equals(PORTAL)) {
+            player.performCommand("sb warp hub");
         }
 
         Skyblock.getPlugin().getFairySoulHandler().loadChunk(to.getChunk());
@@ -243,6 +252,13 @@ public class PlayerListener implements Listener {
                 e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "You have already found that Fairy Soul!");
                 e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.SILVERFISH_KILL, 10, 2);
             }
+        }
+    }
+
+    @EventHandler
+    public void onUpdate(BlockPhysicsEvent e){
+        if (e.getChangedType().equals(AIR)){
+            e.setCancelled(true);
         }
     }
 }
