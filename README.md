@@ -25,9 +25,9 @@ Here are a list of some features that we currently have added:
 - Quest NPCs
 - Pets
 - Economy
+- Custom Mob Spawning
 
 # Coming Soon
 Here is a list of features that will be added soon:
 - Bazaar
-- Custom Mob Spawning
 - Dragon Fights
