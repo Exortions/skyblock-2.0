@@ -1,14 +1,18 @@
 package com.skyblock.skyblock.features.bazaar.impl.escrow;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.bazaar.Bazaar;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.bukkit.OfflinePlayer;
 
 import java.util.function.Consumer;
 
-@AllArgsConstructor
+@Data
 public class SkyblockEscrowTransaction implements EscrowTransaction {
+
+    private final Bazaar bazaar;
 
     private final OfflinePlayer seller;
     private final SkyblockPlayer buyer;
@@ -20,26 +24,6 @@ public class SkyblockEscrowTransaction implements EscrowTransaction {
     private boolean filled;
 
     @Override
-    public OfflinePlayer getSeller() {
-        return this.seller;
-    }
-
-    @Override
-    public SkyblockPlayer getBuyer() {
-        return this.buyer;
-    }
-
-    @Override
-    public double getAmount() {
-        return this.amount;
-    }
-
-    @Override
-    public Consumer<EscrowTransaction> onFill() {
-        return this.onFill;
-    }
-
-    @Override
     public void fill() {
         if (this.cancelled) return;
 
@@ -49,17 +33,8 @@ public class SkyblockEscrowTransaction implements EscrowTransaction {
     }
 
     @Override
-    public boolean isFilled() {
-        return this.filled;
-    }
-
-    @Override
     public void cancel() {
         this.cancelled = true;
     }
 
-    @Override
-    public boolean isCancelled() {
-        return this.cancelled;
-    }
 }

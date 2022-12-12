@@ -3,21 +3,19 @@ package com.skyblock.skyblock.features.bazaar;
 public interface BazaarItemData {
 
     interface BazaarItemVolume {
-        int getAmount();
-        int getVolume();
-
-        int instantVolume();
+        double getAmount();
+        double getVolume();
     }
 
-    int getProductAmount();
+    double getProductAmount();
 
-    int getBuyPrice();
-    int getSellPrice();
+    double getBuyPrice();
+    double getSellPrice();
 
     BazaarItemVolume getBuyVolume();
-    BazaarItemVolume getLast7dInstantBuyVolume();
+    int getLast7dInstantBuyVolume();
 
     BazaarItemVolume getSellVolume();
-    BazaarItemVolume getLast7dInstantSellVolume();
+    int getLast7dInstantSellVolume();
 
 }
