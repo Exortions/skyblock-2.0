@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.pets.combat;
+package com.skyblock.skyblock.features.pets.fishing;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import com.skyblock.skyblock.SkyblockPlayer;
@@ -62,12 +62,21 @@ public class BlueWhale extends Pet {
                     public void onEquip(SkyblockPlayer player) {
                         double def = (float) (player.getStat(SkyblockStat.MAX_HEALTH) / bulkHp.get()) * (0.03 * level);
                         player.addStat(SkyblockStat.DEFENSE, (int) def);
+                        player.setExtraData("blue_whale_bulk", def);
                     }
 
                     @Override
                     public void onUnequip(SkyblockPlayer player) {
-                        double def = player.getStat(SkyblockStat.MAX_HEALTH) % bulkHp.get() * (0.03 * level);
+                        double def = (double) player.getExtraData("blue_whale_bulk");
                         player.subtractStat(SkyblockStat.DEFENSE, (int) def);
+                    }
+
+                    @Override
+                    public void onStatChange(SkyblockPlayer player, SkyblockStat stat, double amount) {
+                        if (!stat.equals(SkyblockStat.MAX_HEALTH)) return;
+                        double def = (double) player.getExtraData("blue_whale_bulk");
+                        player.subtractStat(SkyblockStat.DEFENSE, (int) def);
+                        onEquip(player);
                     }
                 },
                 new PetAbility() {
@@ -84,6 +93,16 @@ public class BlueWhale extends Pet {
                     @Override
                     public Rarity getRequiredRarity() {
                         return Rarity.LEGENDARY;
+                    }
+
+                    @Override
+                    public void onEquip(SkyblockPlayer player) {
+                        player.addStatMultiplier(SkyblockStat.MAX_HEALTH, (0.2 * level));
+                    }
+
+                    @Override
+                    public void onUnequip(SkyblockPlayer player) {
+                        player.subtractStatMultiplier(SkyblockStat.MAX_HEALTH, (0.2 * level));
                     }
                 });
     }

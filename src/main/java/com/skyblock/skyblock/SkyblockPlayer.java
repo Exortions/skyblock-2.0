@@ -387,6 +387,8 @@ public class SkyblockPlayer {
     public void setStat(SkyblockStat stat, double val) {
         stats.put(stat, val);
 
+        if (pet != null) pet.onStatChange(this, stat, val);
+
         setValue("stats." + stat.name().toLowerCase(), val);
 
         resetActionBar();

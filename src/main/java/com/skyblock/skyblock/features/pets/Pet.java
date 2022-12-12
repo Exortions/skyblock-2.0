@@ -339,6 +339,14 @@ public abstract class Pet {
         }
     }
 
+    public void onStatChange(SkyblockPlayer skyblockPlayer, SkyblockStat stat, double amount) {
+        for (PetAbility ability : getAbilities(getLevel())) {
+            try {
+                ability.onStatChange(skyblockPlayer, stat, amount);
+            } catch (UnsupportedOperationException ignored) { }
+        }
+    }
+
     public void onDamage(EntityDamageByEntityEvent e) {
         for (PetAbility ability : getAbilities(getLevel())) {
             try {

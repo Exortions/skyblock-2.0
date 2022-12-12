@@ -1,6 +1,6 @@
 package com.skyblock.skyblock.features.pets;
 
-import com.skyblock.skyblock.features.pets.combat.BlueWhale;
+import com.skyblock.skyblock.features.pets.fishing.BlueWhale;
 import com.skyblock.skyblock.features.pets.combat.Jerry;
 import com.skyblock.skyblock.features.pets.combat.Tiger;
 import lombok.AllArgsConstructor;

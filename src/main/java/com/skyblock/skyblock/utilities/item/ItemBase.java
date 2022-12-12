@@ -12,9 +12,11 @@ import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -46,6 +48,7 @@ public class ItemBase {
     private boolean enchantGlint;
 
     private List<String> abilityDescription;
+    private NBTTagCompound compound;
     private String abilityCooldown;
     private String abilityName;
     private String abilityType;
@@ -63,6 +66,7 @@ public class ItemBase {
     private int speed;
 
     private ItemStack stack;
+    private ItemStack orig;
 
     public ItemBase(ItemStack item) {
         NBTItem nbt = new NBTItem(item);
@@ -126,6 +130,7 @@ public class ItemBase {
         this.description = Arrays.asList(descriptionArrClone);
 
         this.stack = item;
+        this.orig = item;
     }
 
     public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
@@ -161,10 +166,13 @@ public class ItemBase {
         this.skyblockId = skyblockId;
 
         this.createStack();
+
+        this.orig = stack;
     }
 
     public ItemStack createStack() {
-        this.stack = new ItemStack(this.material, this.amount);
+        if (orig == null) this.orig = new ItemStack(material, amount);
+        this.stack = orig.clone();
 
         ItemMeta meta = this.stack.getItemMeta();
 

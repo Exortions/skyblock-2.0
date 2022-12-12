@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.pets;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -16,6 +17,10 @@ public interface PetAbility {
     }
 
     default void onHurt(EntityDamageByEntityEvent e, Entity damager) {
+        throw new UnsupportedOperationException("This pet ability does not support being hurt");
+    }
+
+    default void onStatChange(SkyblockPlayer skyblockPlayer, SkyblockStat stat, double amount) {
         throw new UnsupportedOperationException("This pet ability does not support being hurt");
     }
 
