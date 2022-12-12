@@ -19,10 +19,7 @@ import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
@@ -453,6 +450,9 @@ public class Util {
 
             npc.addTrait(lookClose);
         }
+
+        Chunk chunk = npc.getEntity().getLocation().getChunk();
+        chunk.load();
 
         return new ArrayList<>(Arrays.asList(npc, stand, click));
     }
