@@ -38,7 +38,7 @@ public class SkyblockBazaar implements Bazaar {
         // todo: add categories and raw items
 
         // temp:
-        this.rawItems.add(new SkyblockBazaarSubItem(Skyblock.getPlugin().getItemHandler().getItem("enchanted_pumpkin.json"), Rarity.UNCOMMON, 12));
+        this.rawItems.add(new SkyblockBazaarSubItem(Skyblock.getPlugin().getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12));
 
         this.categories.add(new SkyblockBazaarCategory("Farming", Material.GOLD_HOE, ChatColor.YELLOW, (short) 4, new ArrayList<BazaarItem>() {{
             add(new SkyblockBazaarItem("Pumpkin", new ArrayList<BazaarSubItem>() {{
@@ -59,7 +59,7 @@ public class SkyblockBazaar implements Bazaar {
 
             this.rawItems.forEach(item -> {
                 try {
-                    String name = ChatColor.stripColor(item.getIcon().getItemMeta().getDisplayName()).toLowerCase().replace(" ", "_");
+                    String name = ChatColor.stripColor(item.getIcon().getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_");
                     this.set("items." + name + ".buyPrice", 0.0);
                     this.set("items." + name + ".sellPrice", 0.0);
                     this.set("items." + name + ".buyVolume.amount", 0);
@@ -68,6 +68,23 @@ public class SkyblockBazaar implements Bazaar {
                     this.set("items." + name + ".sellVolume.amount", 0);
                     this.set("items." + name + ".sellVolume.orders", 0);
                     this.set("items." + name + ".last7dInstantSellVolume", 0);
+                } catch (BazaarIOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+
+            this.categories.forEach(category -> {
+                try {
+                    this.set("categories." + category.getName() + ".icon", category.getIcon());
+                    this.set("categories." + category.getName() + ".items", new ArrayList<>());
+
+                    for (BazaarItem item : category.getItems()) {
+                        this.set("categories." + category.getName() + ".items." + item.getName(), new ArrayList<>());
+
+                        for (BazaarSubItem subItem : item.getSubItems()) {
+                            this.set("categories." + category.getName() + ".items." + item.getName() + "." + ChatColor.stripColor(subItem.getIcon().getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_"), subItem.getSlot());
+                        }
+                    }
                 } catch (BazaarIOException ex) {
                     ex.printStackTrace();
                 }
