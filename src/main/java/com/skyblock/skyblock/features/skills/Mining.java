@@ -16,7 +16,7 @@ public class Mining extends Skill {
     }
 
     public double getDefense(int level) {
-        return level < 15.0 ? level : level + (level - 14.0);
+        return level > 14 ? 2 : 1;
     }
 
     @Override

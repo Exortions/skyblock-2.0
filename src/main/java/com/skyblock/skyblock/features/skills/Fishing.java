@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.features.skills;
 
+import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +19,16 @@ public class Fishing extends Skill {
                 new ItemStack(Material.FISHING_ROD),
                 new ItemStack(Material.PRISMARINE)
         );
+    }
+
+    public double getHealth(int level) {
+        int health = 2;
+
+        if (level > 14) health += 1;
+        if (level > 19) health += 1;
+        if (level > 25) health += 1;
+
+        return health;
     }
 
     @Override
@@ -41,6 +53,14 @@ public class Fishing extends Skill {
                 ChatColor.DARK_GRAY + "+" + ChatColor.GREEN + health + ChatColor.RED + " ❤ Health",
                 ChatColor.DARK_GRAY + "+" + ChatColor.GOLD + coins + ChatColor.GRAY + " Coins"
         );
+    }
+
+    @Override
+    public void update(SkyblockPlayer player, int prev) {
+        super.update(player, prev);
+
+        player.addStat(SkyblockStat.MAX_HEALTH, (int) getHealth(getLevel(getXP(player))));
+        player.addStat(SkyblockStat.HEALTH, (int) getHealth(getLevel(getXP(player))));
     }
 
 }

@@ -95,6 +95,9 @@ public class ItemListener implements Listener {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(e.getPlayer());
             HashMap<String, Object> extraData = skyblockPlayer.getExtraData();
 
+            if (extraData.get("fullSetBonusType") != null && extraData.get("fullSetBonusType").equals(handler.getRegistered(armor).getId()))
+                return;
+
             extraData.put("fullSetBonus", true);
             extraData.put("fullSetBonusType", handler.getRegistered(armor).getId());
 

@@ -8,6 +8,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
+import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
@@ -144,7 +145,7 @@ public class PlayerListener implements Listener {
             Player p = (Player) e.getDamager();
 
             SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
-            double damage = 5 + player.getStat((SkyblockStat.DAMAGE)) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
+            double damage = 5 + player.getStat(SkyblockStat.DAMAGE) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
             double display = damage;
             boolean crit = player.crit();
 
@@ -154,6 +155,10 @@ public class PlayerListener implements Listener {
                 damage += (damage * func.apply(player, e.getEntity()) / 100);
             }
 
+            double combat = 4 * Skill.getLevel((double) player.getValue("skill.combat.exp"));
+
+            damage += damage * (combat / 100F);
+
             if (e.getEntity().hasMetadata("skyblockEntityData")) {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
                 if (sentity == null) return;
@@ -162,7 +167,7 @@ public class PlayerListener implements Listener {
                 sentity.setLastDamager(player);
 
                 if (crit) {
-                    damage = (damage * ((100 + player.getStat(SkyblockStat.CRIT_DAMAGE))) / 100) / sentity.getEntityData().maximumHealth;
+                    damage = (damage * (1 + player.getStat(SkyblockStat.CRIT_DAMAGE) / 100F)) / sentity.getEntityData().maximumHealth;
                 } else {
                     damage = damage / sentity.getEntityData().maximumHealth;
                 }
@@ -175,7 +180,7 @@ public class PlayerListener implements Listener {
             } else {
                 if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
                     if (crit) {
-                        damage = damage * ((100 + player.getStat(SkyblockStat.CRIT_DAMAGE))) / 100;
+                        damage = damage * (1 + player.getStat(SkyblockStat.CRIT_DAMAGE) / 100F);
                     }
                 }
             }
@@ -231,6 +236,9 @@ public class PlayerListener implements Listener {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
 
         if (player.getPetDisplay() != null) player.getPetDisplay().remove();
+        if (player.getArmorSet() != null) {
+            player.getArmorSet().stopFullSetBonus(player.getBukkitPlayer());
+        }
 
         SkyblockPlayer.playerRegistry.remove(player.getBukkitPlayer().getUniqueId());
     }

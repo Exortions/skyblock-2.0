@@ -15,15 +15,13 @@ public class Farming extends Skill {
         super("Farming", "Farmhand", "Harvest crops and shear sheep to\nearn Farming XP!", new ItemStack(Material.GOLD_HOE), new ItemStack(Material.HAY_BLOCK));
     }
 
-    public double getHealth(int level)
-    {
-        int health = level * 2;
-        if (level >= 15)
-            health += (level - 14);
-        if (level >= 20)
-            health += (level - 19);
-        if (level >= 26)
-            health += (level - 25);
+    public double getHealth(int level) {
+        int health = 2;
+
+        if (level > 14) health += 1;
+        if (level > 19) health += 1;
+        if (level > 25) health += 1;
+
         return health;
     }
     @Override

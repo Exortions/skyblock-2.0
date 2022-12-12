@@ -20,26 +20,18 @@ public class SuperiorDragonArmor extends ArmorSet {
     public void fullSetBonus(Player player) {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        HashMap<SkyblockStat, Integer> extraData = new HashMap<>();
-
         skyblockPlayer.forEachStat((s) -> {
-            int perc = (int) Math.floor(skyblockPlayer.getStat(s) * 0.1);
-            extraData.put(s, perc);
-            skyblockPlayer.addStat(s, perc);
+            skyblockPlayer.addStatMultiplier(s, 0.1);
         });
-
-        skyblockPlayer.setExtraData("superior_dragon_bonus", extraData);
     }
 
     @Override
     public void stopFullSetBonus(Player player) {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        @SuppressWarnings("unchecked") HashMap<SkyblockStat, Integer> extraData = (HashMap<SkyblockStat, Integer>) skyblockPlayer.getExtraData("superior_dragon_bonus");
-
-        skyblockPlayer.forEachStat((s) -> skyblockPlayer.subtractStat(s, extraData.get(s)));
-
-        skyblockPlayer.setExtraData("superior_dragon_bonus", new HashMap<>());
+        skyblockPlayer.forEachStat((s) -> {
+            skyblockPlayer.subtractStatMultiplier(s, 0.1);
+        });
     }
 
     @Override

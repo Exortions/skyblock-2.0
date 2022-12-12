@@ -145,9 +145,9 @@ public class SkyblockPlayer {
             ActionBarAPI.sendActionBar(getBukkitPlayer(), actionBar);
 
             if (getStat(SkyblockStat.MANA) < getStat(SkyblockStat.MAX_MANA) - ((getStat(SkyblockStat.MAX_MANA) + 100)/50)) {
-                setStat(SkyblockStat.MANA, getStat(SkyblockStat.MANA) + ((getStat(SkyblockStat.MAX_MANA) + 100)/50));
+                setStat(SkyblockStat.MANA, getStat(SkyblockStat.MANA) + ((getStat(SkyblockStat.MAX_MANA) + 100F)/50));
             }else{
-                setStat(SkyblockStat.MANA, getStat(SkyblockStat.MAX_MANA));
+                setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MAX_MANA));
             }
         }
 
@@ -155,7 +155,7 @@ public class SkyblockPlayer {
             if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH) / 100)) {
                 updateHealth((int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100));
             }else{
-                setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
+                setStat(SkyblockStat.HEALTH, getStatNoMult(SkyblockStat.MAX_HEALTH));
                 getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
             }
         }
@@ -196,6 +196,8 @@ public class SkyblockPlayer {
 
                 NBTEntity nbtEntity = new NBTEntity(petDisplay);
                 nbtEntity.setBoolean("isPet", true);
+
+                Skyblock.getPlugin().addRemoveable(petDisplay);
             }
 
             Location loc = bukkitPlayer.getLocation();
@@ -227,7 +229,7 @@ public class SkyblockPlayer {
 
         bukkitPlayer.setWalkSpeed(Math.min((float) (getStat(SkyblockStat.SPEED) / 500.0), 1.0f));
         bukkitPlayer.setMaxHealth(Math.round(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0))));
-        bukkitPlayer.setHealth(Math.max(1, bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH))));
+        bukkitPlayer.setHealth(Math.min(Math.max(1, bukkitPlayer.getMaxHealth() * ((double) getStat(SkyblockStat.HEALTH) / (double) getStat(SkyblockStat.MAX_HEALTH))), bukkitPlayer.getMaxHealth()));
 
         tick++;
     }
@@ -379,8 +381,8 @@ public class SkyblockPlayer {
     public boolean isOnIsland() {
         return bukkitPlayer.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX);
     }
-    public int getStat(SkyblockStat stat) { return (int) Math.round(stats.get(stat)); }
-    public double getPreciseStat(SkyblockStat stat) { return stats.get(stat); }
+    public int getStat(SkyblockStat stat) { return (int) Math.round(getPreciseStat(stat)); }
+    public double getPreciseStat(SkyblockStat stat) { return stats.get(stat) * getDouble("stats.multipliers." + stat.name().toLowerCase()); }
 
     public void setStat(SkyblockStat stat, double val) {
         stats.put(stat, val);
@@ -388,6 +390,22 @@ public class SkyblockPlayer {
         setValue("stats." + stat.name().toLowerCase(), val);
 
         resetActionBar();
+    }
+
+    public void addStatMultiplier(SkyblockStat stat, double mult) {
+        setStatMultiplier(stat, getStatMultiplier(stat) + mult);
+    }
+
+    public void subtractStatMultiplier(SkyblockStat stat, double mult) {
+        setStatMultiplier(stat, getStatMultiplier(stat) + (-1 * mult));
+    }
+
+    public void setStatMultiplier(SkyblockStat stat, double mult) {
+        setValue("stats.multipliers." + stat.name().toLowerCase(), mult);
+    }
+
+    public double getStatMultiplier(SkyblockStat stat) {
+        return getDouble("stats.multipliers." + stat.name().toLowerCase());
     }
 
     public Object getExtraData(String id) {
@@ -430,12 +448,16 @@ public class SkyblockPlayer {
         return new Random().nextInt(100) <= getStat(SkyblockStat.CRIT_CHANCE);
     }
 
+    public double getStatNoMult(SkyblockStat stat) {
+        return stats.get(stat);
+    }
+
     public void addStat(SkyblockStat stat, double val) {
-        setStat(stat, getStat(stat) + val);
+        setStat(stat, getStatNoMult(stat) + val);
     }
 
     public void subtractStat(SkyblockStat stat, double val) {
-        setStat(stat, getStat(stat) - val);
+        setStat(stat, getStatNoMult(stat) - val);
     }
 
     public Object getValue(String path) {
@@ -465,7 +487,9 @@ public class SkyblockPlayer {
     }
 
     private void loadStats() {
-        forEachStat((s) -> setStat(s, getDouble("stats." + s.name().toLowerCase())));
+        forEachStat((s) -> {
+            setStat(s, getDouble("stats." + s.name().toLowerCase()));
+        });
     }
 
     private void initConfig() {
@@ -477,7 +501,10 @@ public class SkyblockPlayer {
             try {
                 configFile.createNewFile();
 
-                forEachStat((s) -> config.set("stats." + s.name().toLowerCase(), 0));
+                forEachStat((s) -> {
+                    config.set("stats." + s.name().toLowerCase(), 0);
+                    config.set("stats.multipliers." + s.name().toLowerCase(), 1.0);
+                });
 
                 config.set("stats." + SkyblockStat.MAX_HEALTH.name().toLowerCase(), 100.0);
                 config.set("stats." + SkyblockStat.HEALTH.name().toLowerCase(), 100.0);
