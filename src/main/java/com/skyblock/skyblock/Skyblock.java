@@ -69,6 +69,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -160,11 +161,12 @@ public final class Skyblock extends JavaPlugin {
 
         getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
             for (net.citizensnpcs.api.npc.NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
-                long createdAt = npc.getEntity().getMetadata("createdAt").get(0).asLong();
-
-                if (createdAt + 1000 < System.currentTimeMillis()) {
-                    npc.despawn();
-                    npc.destroy();
+                List<MetadataValue> values = npc.getEntity().getMetadata("createdAt");
+                if (values.size() > 0) {
+                    if (values.get(0).asLong() + 1000 < System.currentTimeMillis()) {
+                        npc.despawn();
+                        npc.destroy();
+                    }
                 }
             }
         }, 1000);
