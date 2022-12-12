@@ -199,7 +199,7 @@ public class AuctionBrowserGUI extends Gui {
             }
         });
 
-        int maxPage = ((int) Math.ceil(ah.getAuctions(category, sort, bin, teir, -1, search, true).size() / 24F));
+        int maxPage = ((int) Math.ceil(ah.getAuctions(category, sort, bin, teir, -1, search, true).size() / 24F)) + 1;
 
         addItem(0, AuctionCategory.WEAPON.getDisplay());
         addItem(9, AuctionCategory.ARMOR.getDisplay());

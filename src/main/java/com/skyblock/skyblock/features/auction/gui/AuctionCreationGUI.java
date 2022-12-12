@@ -48,7 +48,18 @@ public class AuctionCreationGUI extends Gui {
             ItemMeta meta = stack.getItemMeta();
             List<String> lore = new ArrayList<>();
 
-            ItemBase base = new ItemBase(auctioning);
+            ItemBase base;
+
+            try {
+                base = new ItemBase(auctioning);
+            } catch (IllegalArgumentException ex) {
+                player.sendMessage(ChatColor.RED + "You cannot auction this item!");
+
+                skyblockPlayer.setValue("auction.auctioningItem", null);
+
+                player.closeInventory();
+                return;
+            }
 
             meta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + ChatColor.UNDERLINE + "AUCTION FOR ITEM:");
 

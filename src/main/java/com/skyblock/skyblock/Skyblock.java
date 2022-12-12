@@ -17,6 +17,8 @@ import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.bags.BagManager;
+import com.skyblock.skyblock.features.bazaar.Bazaar;
+import com.skyblock.skyblock.features.bazaar.impl.SkyblockBazaar;
 import com.skyblock.skyblock.features.blocks.RegenerativeBlockHandler;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.collections.CollectionListener;
@@ -105,6 +107,10 @@ public final class Skyblock extends JavaPlugin {
     private NPCHandler npcHandler;
     private ServerData serverData;
     private GuiHandler guiHandler;
+    private Bazaar bazaar;
+
+    private AuctionHouse auctionHouse;
+
     private Random random;
     private Date date;
 
@@ -132,6 +138,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeFairySouls();
         this.initializeAuctionHouse();
         this.initializeSignGui();
+        this.initializeBazaar();
 
         this.registerMerchants();
 
@@ -181,12 +188,30 @@ public final class Skyblock extends JavaPlugin {
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
+    public void initializeBazaar() {
+        this.sendMessage("Initializing bazaar...");
+        long start = System.currentTimeMillis();
+
+        try {
+            this.bazaar = new SkyblockBazaar();
+        } catch (Bazaar.BazaarIOException | Bazaar.BazaarItemNotFoundException ex) {
+            this.sendMessage("&cFailed to initialize bazaar: &8" + ex.getMessage());
+        }
+
+        this.sendMessage("Successfully initialized bazaar [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
     public void initializeSignGui() {
         this.signManager = new SignManager(this);
     }
 
     public void initializeAuctionHouse() {
+        this.sendMessage("Initializing auction house...");
+        long start = System.currentTimeMillis();
+
         this.auctionHouse = new AuctionHouse();
+
+        this.sendMessage("Successfully initialized auction house [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerMinions() {
@@ -195,7 +220,7 @@ public final class Skyblock extends JavaPlugin {
 
         this.minionHandler = new MinionHandler();
 
-        this.sendMessage("Successfully registered minions in " + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + ".");
+        this.sendMessage("Successfully registered minions [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeFairySouls() {

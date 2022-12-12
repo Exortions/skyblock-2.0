@@ -53,7 +53,7 @@ public class AuctionHouseGUI extends Gui {
         });
 
         if (owned > 0) {
-            your.addLore("&7You own " + ChatColor.YELLOW + owned + " auctions &7in", "&7progress or which recently", "&7ended", " ", "&7Players can find your auctions", "&7using the Auctions Browser", "&7or using " + ChatColor.GREEN + "/ah " + player.getName());
+            your.addLore("&7You own " + ChatColor.YELLOW + owned + " auction" + (owned != 1 ? "s" : "") + " &7in", "&7progress or which recently", "&7ended", " ", "&7Players can find your auctions", "&7using the Auctions Browser", "&7or using " + ChatColor.GREEN + "/ah " + player.getName());
         } else {
             your.addLore("&7Set your own items on auction", "&7for other players to purchase", " ", ChatColor.YELLOW + "Click to become rich!");
         }
