@@ -54,6 +54,7 @@ import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
+import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -116,6 +117,8 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Found Bukkit server v" + Bukkit.getVersion());
         long start = System.currentTimeMillis();
 
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc remove all");
+
         this.removeables = new ArrayList<>();
 
         this.initializeServerData();
@@ -154,6 +157,17 @@ public final class Skyblock extends JavaPlugin {
         this.registerCommands();
 
         this.initializeAlreadyOnlinePlayers();
+
+        getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+            for (net.citizensnpcs.api.npc.NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
+                long createdAt = npc.getEntity().getMetadata("createdAt").get(0).asLong();
+
+                if (createdAt + 1000 < System.currentTimeMillis()) {
+                    npc.despawn();
+                    npc.destroy();
+                }
+            }
+        }, 1000);
 
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");

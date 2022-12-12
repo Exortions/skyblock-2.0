@@ -401,8 +401,7 @@ public class Util {
 
         npc.getEntity().setCustomNameVisible(false);
 
-        npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
-        npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
+        npc.getEntity().setMetadata("createdAt", new FixedMetadataValue(Skyblock.getPlugin(), System.currentTimeMillis()));
 
         if (villager) ((Villager) npc.getEntity()).setProfession(profession);
 
@@ -441,7 +440,7 @@ public class Util {
 
         if (skin) {
             SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
-            skinTrait.setSkinPersistent("banker", skinSignature, skinValue);
+            skinTrait.setSkinPersistent("npc", skinSignature, skinValue);
 
             npc.addTrait(skinTrait);
         }
