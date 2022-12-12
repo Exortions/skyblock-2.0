@@ -625,16 +625,6 @@ public final class Skyblock extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
 
-//        getCommand("warp").setExecutor((sender, command, label, args) -> {
-//            if (!(sender instanceof Player)) return true;
-//
-//            if (args.length < 1) return true;
-//
-//            ((Player) sender).performCommand("sb warp " + args[0]);
-//
-//            return false;
-//        });
-
         this.sendMessage("Successfully registered commands [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
