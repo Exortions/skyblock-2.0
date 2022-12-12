@@ -13,4 +13,12 @@ public interface EscrowTransaction {
 
     Consumer<EscrowTransaction> onFill();
 
+    void fill();
+
+    boolean isFilled();
+
+    void cancel();
+
+    boolean isCancelled();
+
 }

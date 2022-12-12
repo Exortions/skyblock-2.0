@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.features.bazaar;
 
+import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
+
 import java.util.List;
 
 public interface Bazaar {
@@ -15,6 +17,8 @@ public interface Bazaar {
         }
 
     }
+
+    Escrow getEscrow();
 
     List<BazaarCategory> getCategories();
 
