@@ -365,8 +365,8 @@ public class SkyblockPlayer {
 
         if (isOnIsland()) return;
 
-        int sub = (int) getValue("stats.purse") / 2;
-        bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatInt(sub) + " coins!");
+        double sub = getDouble("stats.purse") / 2;
+        bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatDouble(sub) + " coins!");
 
         bukkitPlayer.setVelocity(new Vector(0, 0, 0));
         bukkitPlayer.setFallDistance(0.0f);
@@ -594,12 +594,12 @@ public class SkyblockPlayer {
         return (String) this.getExtraData().get("fullSetBonusType");
     }
 
-    public void addCoins(int coins) {
+    public void addCoins(double coins) {
         setValue("stats.purse", getCoins() + coins);
     }
 
-    public int getCoins() {
-        return (int) getValue("stats.purse");
+    public double getCoins() {
+        return getDouble("stats.purse");
     }
 
     public boolean hasActiveSlayer() { return Skyblock.getPlugin().getSlayerHandler().getSlayer(bukkitPlayer) != null; }
@@ -616,7 +616,7 @@ public class SkyblockPlayer {
         this.predicateDamageModifiers.remove(index);
     }
 
-    public boolean checkCoins(int coins) {
+    public boolean checkCoins(double coins) {
         boolean b = getCoins() >= coins;
 
         if (!b) getBukkitPlayer().sendMessage(ChatColor.RED + "Not enough coins!");
@@ -624,7 +624,7 @@ public class SkyblockPlayer {
         return b;
     }
 
-    public void subtractCoins(int coins) {
+    public void subtractCoins(double coins) {
         addCoins(-1 * coins);
     }
 
