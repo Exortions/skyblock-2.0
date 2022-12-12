@@ -49,7 +49,7 @@ public class HubScoreboard extends Scoreboard {
             addLine(5, ChatColor.GREEN + " ⏣ " + loc);
         }
         addLine(4, ChatColor.WHITE + " ");
-        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble((double) skyblockPlayer.getValue("stats.purse")));
+        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));
         addLine(2, ChatColor.WHITE + "  ");
         addLine(1, ChatColor.YELLOW + "www.hypixel.net");
 

@@ -49,7 +49,7 @@ public class SlayerScoreboard extends Scoreboard {
             addLine(9, ChatColor.GREEN + " ⏣ " + loc);
         }
         addLine(8, ChatColor.WHITE + " ");
-        addLine(7, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  formatter.format((int) skyblockPlayer.getValue("stats.purse")));
+        addLine(7, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));
         addLine(6, ChatColor.WHITE + "   ");
         addLine(5, ChatColor.WHITE + "Slayer Quest");
 

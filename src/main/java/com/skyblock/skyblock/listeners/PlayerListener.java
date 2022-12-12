@@ -121,6 +121,7 @@ public class PlayerListener implements Listener {
                 if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
                     if (e.getEntity().hasMetadata("skyblockEntityData")) {
                         SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
+                        if (sentity == null) return;
                         int damage = (int) (e.getFinalDamage() / sentity.getEntityData().maximumHealth);
 
                         sentity.getEntityData().health = sentity.getEntityData().health - damage;

@@ -27,6 +27,7 @@ import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.EnderSlayerEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
+import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
 import com.skyblock.skyblock.features.fairysouls.TiaGUI;
 import com.skyblock.skyblock.features.items.Accessory;
@@ -86,6 +87,7 @@ public final class Skyblock extends JavaPlugin {
 
     private RegenerativeBlockHandler regenerativeBlockHandler;
     private SkyblockEnchantmentHandler enchantmentHandler;
+    private EntitySpawnerHandler entitySpawnerHandler;
     private SkyblockLocationManager locationManager;
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
@@ -99,6 +101,7 @@ public final class Skyblock extends JavaPlugin {
     private SlayerHandler slayerHandler;
     private RecipeHandler recipeHandler;
     private List<Entity> removeables;
+    private AuctionHouse auctionHouse;
     private SignManager signManager;
     private ItemHandler itemHandler;
     private BagManager bagManager;
@@ -106,9 +109,6 @@ public final class Skyblock extends JavaPlugin {
     private ServerData serverData;
     private GuiHandler guiHandler;
     private Bazaar bazaar;
-
-    private AuctionHouse auctionHouse;
-
     private Random random;
     private Date date;
 
@@ -546,6 +546,7 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.entityHandler = new SkyblockEntityHandler();
+        this.entitySpawnerHandler = new EntitySpawnerHandler();
 
         this.sendMessage("Successfully registered mobs [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -616,6 +617,7 @@ public final class Skyblock extends JavaPlugin {
                 new ReloadCommand(),
                 new ItemNBTCommand(),
                 new AuctionCommand(),
+                new CreateSpawnerCommand(),
                 new SkillsCommand()
         );
 
