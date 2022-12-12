@@ -5,6 +5,7 @@ import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.features.bazaar.*;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SkyblockBazaar implements Bazaar {
@@ -38,7 +40,9 @@ public class SkyblockBazaar implements Bazaar {
         // todo: add categories and raw items
 
         // temp:
-        this.rawItems.add(new SkyblockBazaarSubItem(Skyblock.getPlugin().getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12));
+        this.rawItems.add(new SkyblockBazaarSubItem(Skyblock.getPlugin().getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12, new ArrayList<BazaarOffer>() {{
+            add(new SkyblockBazaarOffer(UUID.randomUUID(), 1349, 824.3));
+        }}, new ArrayList<>()));
 
         this.categories.add(new SkyblockBazaarCategory("Farming", Material.GOLD_HOE, ChatColor.YELLOW, (short) 4, new ArrayList<BazaarItem>() {{
             add(new SkyblockBazaarItem("Pumpkin", new ArrayList<BazaarSubItem>() {{
@@ -62,6 +66,8 @@ public class SkyblockBazaar implements Bazaar {
                     String name = ChatColor.stripColor(item.getIcon().getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_");
                     this.set("items." + name + ".buyPrice", 0.0);
                     this.set("items." + name + ".sellPrice", 0.0);
+                    this.set("items." + name + ".orders", item.getOrders());
+                    this.set("items." + name + ".offers", item.getOffers());
                     this.set("items." + name + ".buyVolume.amount", 0);
                     this.set("items." + name + ".buyVolume.offers", 0);
                     this.set("items." + name + ".last7dInstantBuyVolume", 0);
@@ -126,7 +132,9 @@ public class SkyblockBazaar implements Bazaar {
                                 this.get("items." + key + ".sellVolume.amount", Integer.class),
                                 this.get("items." + key + ".sellVolume.orders", Integer.class)
                         ),
-                        this.get("items." + key + ".last7dInstantSellVolume", Integer.class)
+                        this.get("items." + key + ".last7dInstantSellVolume", Integer.class),
+                        this.get("items." + key + ".orders", List.class),
+                        this.get("items." + key + ".offers", List.class)
                 ));
             }
         });

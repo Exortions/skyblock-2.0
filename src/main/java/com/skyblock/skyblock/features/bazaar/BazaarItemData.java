@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.features.bazaar;
 
+import java.util.List;
+
 public interface BazaarItemData {
 
     interface BazaarItemVolume {
@@ -17,5 +19,8 @@ public interface BazaarItemData {
 
     BazaarItemVolume getSellVolume();
     int getLast7dInstantSellVolume();
+
+    List<BazaarOffer> getOrders();
+    List<BazaarOffer> getOffers();
 
 }

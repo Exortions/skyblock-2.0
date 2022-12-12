@@ -1,7 +1,10 @@
 package com.skyblock.skyblock.features.bazaar.impl;
 
 import com.skyblock.skyblock.features.bazaar.BazaarItemData;
+import com.skyblock.skyblock.features.bazaar.BazaarOffer;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class SkyblockBazaarItemData implements BazaarItemData {
@@ -19,5 +22,7 @@ public class SkyblockBazaarItemData implements BazaarItemData {
     private final int last7dInstantBuyVolume;
     private final BazaarItemVolume sellVolume;
     private final int last7dInstantSellVolume;
+    private final List<BazaarOffer> orders;
+    private final List<BazaarOffer> offers;
 
 }
