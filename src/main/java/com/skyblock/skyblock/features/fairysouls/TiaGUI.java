@@ -73,8 +73,11 @@ public class TiaGUI extends Gui {
                             break;
                         }
                     }
-                } catch (IOException | ParseException e) {
-                    throw new RuntimeException(e);
+                } catch (IOException | ParseException ex) {
+                    ex.printStackTrace();
+
+                    opener.sendMessage(ChatColor.RED + "An error occurred while trying to exchange fairy souls.");
+                    opener.closeInventory();
                 }
             });
         }});
