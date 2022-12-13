@@ -172,7 +172,7 @@ public class AuctionBrowserGUI extends Gui {
         }
 
         sortList.forEach((s) -> {
-            if (s.split(" ")[0].toUpperCase().equals(sort.name())) {
+            if (s.split(" ")[0].equalsIgnoreCase(sort.name())) {
                 sortList.set(sortList.indexOf(s), ChatColor.AQUA + s);
             } else {
                 sortList.set(sortList.indexOf(s), ChatColor.GRAY + s);
@@ -191,7 +191,7 @@ public class AuctionBrowserGUI extends Gui {
 
         binFilter.forEach((s) -> {
             if (!s.startsWith("Show")) {
-                if (s.split(" ")[0].toUpperCase().equals(bin.name())) {
+                if (s.split(" ")[0].equalsIgnoreCase(bin.name())) {
                     binFilter.set(binFilter.indexOf(s), ChatColor.DARK_AQUA + s);
                 } else {
                     binFilter.set(binFilter.indexOf(s), ChatColor.GRAY + s);
