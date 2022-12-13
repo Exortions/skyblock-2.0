@@ -178,10 +178,8 @@ public class PlayerListener implements Listener {
 
                 sentity.getEntityData().health = (long) (sentity.getEntityData().health - display);
             } else {
-                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
-                    if (crit) {
-                        damage = damage * (1 + player.getStat(SkyblockStat.CRIT_DAMAGE) / 100F);
-                    }
+                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND) && crit) {
+                    damage = damage * (1 + player.getStat(SkyblockStat.CRIT_DAMAGE) / 100F);
                 }
             }
 
