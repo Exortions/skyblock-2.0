@@ -9,10 +9,8 @@ public class GuiHandler {
 
     private final HashMap<String, String> guiCommands;
     private final HashMap<String, Gui> guis;
-    private final Skyblock skyblock;
 
     public GuiHandler(Skyblock skyblock) {
-        this.skyblock = skyblock;
         this.guis = new HashMap<>();
         this.guiCommands = new HashMap<>();
     }
