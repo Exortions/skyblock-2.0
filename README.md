@@ -12,30 +12,30 @@ adding features after Dungeons.
 
 Here are a list of some features that we currently have added:
 
-  - Auction House
-  - Slayer
-  - Fairy Souls
-  - Private Islands
-  - Mining System
-  - Crafting System
-  - All items before dungeons
-  - Bags (Accessory bag, etc.)
-  - Enchantments
-  - Reforges
-  - Merchants
-  - Locations
-  - Collections
-  - Custom Mobs
-  - Launch Pads
-  - Minions
-  - Quest NPCs
-  - Pets
-  - Economy
-  - Custom Mob Spawning
+    - Auction House
+    - Slayer
+    - Fairy Souls
+    - Private Islands
+    - Mining System
+    - Crafting System
+    - All items before dungeons
+    - Bags (Accessory bag, etc.)
+    - Enchantments
+    - Reforges
+    - Merchants
+    - Locations
+    - Collections
+    - Custom Mobs
+    - Launch Pads
+    - Minions
+    - Quest NPCs
+    - Pets
+    - Economy
+    - Custom Mob Spawning
 
 # Coming Soon
 
 Here is a list of features that will be added soon:
 
-  - Bazaar
-  - Dragon Fights
+    - Bazaar
+    - Dragon Fights
