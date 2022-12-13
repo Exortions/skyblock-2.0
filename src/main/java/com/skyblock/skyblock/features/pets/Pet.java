@@ -22,6 +22,14 @@ import java.util.UUID;
 @Data
 public abstract class Pet {
 
+    private String name;
+    private Rarity rarity;
+    private double xp;
+    private int level;
+    private boolean inGui;
+    private boolean active;
+    private UUID uuid;
+
     protected static final List<Integer> COMMON_XP = Arrays.asList(0, 100, 210, 330, 460, 605, 765, 940, 1130, 1340, 1570, 1820, 2095, 2395, 2725, 3085, 3485, 3925, 4415,
             4955, 5555, 6215, 6945, 7745, 8625, 9585, 10635, 11785, 13045, 14425, 15935, 17585, 19385, 21345, 23475, 25785, 28285, 30985, 33905, 37065, 40485, 44185, 48185,
             52535, 57285, 62485, 68185, 74485, 81485, 89285, 97985, 107685, 118485, 130485, 143785, 158485, 174685, 192485, 211985, 233285, 256485, 281685, 309085, 338885,
@@ -94,8 +102,7 @@ public abstract class Pet {
     }
 
     private static double getXP(int level, Rarity rarity) {
-        level--;
-        if (level < 0 || level > 99)
+        if ((level - 1) < 0 || (level - 1) > 99)
             return -1.0;
         return getXPGoal(rarity).get(level);
     }
@@ -133,14 +140,6 @@ public abstract class Pet {
             return null;
         }
     }
-
-    private String name;
-    private Rarity rarity;
-    private double xp;
-    private int level;
-    private boolean inGui;
-    private boolean active;
-    private UUID uuid;
 
     public Pet(String name) {
         this.name = name;
