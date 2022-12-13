@@ -221,11 +221,11 @@ public class Auction {
     }
 
     public void sendToOwner(String message) {
-        if (seller.isOnline() && seller != null) ((Player) seller).sendMessage(message);
+        if (seller != null && seller.isOnline()) ((Player) seller).sendMessage(message);
     }
 
     public void sendToOwner(TextComponent message) {
-        if (seller.isOnline() && seller != null) ((Player) seller).spigot().sendMessage(message);
+        if (seller != null && seller.isOnline()) ((Player) seller).spigot().sendMessage(message);
     }
 
     public static String formatTime(long millis) {
