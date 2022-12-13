@@ -39,11 +39,7 @@ public class LaunchPadHandler {
 
         for (String pad : pads) {
             Location from = (Location) getField(pad, "from");
-            if (player.getWorld().equals(from.getWorld())) {
-                if (player.getLocation().distance(from) < 2) {
-                    return pad;
-                }
-            }
+            if (player.getWorld().equals(from.getWorld()) && player.getLocation().distance(from) < 2) return pad;
         }
 
         return "NONE";
