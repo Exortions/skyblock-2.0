@@ -42,6 +42,16 @@ public class Collection {
     public static boolean INITIALIZED = false;
     private static final List<Collection> collections = new ArrayList<>();
 
+    public static class CollectionInitializationException extends Exception {
+        public CollectionInitializationException(String message) {
+            super(message);
+        }
+
+        public CollectionInitializationException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
     public Collection(String name, Material material, short data, String category, int maxLevel, CollectionRewards rewards, int... levelToExp) {
         this.maxLevel = maxLevel;
         this.material = material;
@@ -111,7 +121,7 @@ public class Collection {
         return true;
     }
 
-    public static void initializeCollections(Skyblock skyblock) {
+    public static void initializeCollections(Skyblock skyblock) throws CollectionInitializationException {
         skyblock.sendMessage("Registering collections...");
         long start = System.currentTimeMillis();
 
@@ -203,7 +213,7 @@ public class Collection {
                     Collection.collections.add(generated);
                 }
             } catch (ParseException | IOException ex) {
-                throw new RuntimeException("Failed to initialize collection file " + file.getName() + ": " + ex.getMessage());
+                throw new CollectionInitializationException("Failed to initialize collection file " + file.getName(), ex);
             }
         }
 
