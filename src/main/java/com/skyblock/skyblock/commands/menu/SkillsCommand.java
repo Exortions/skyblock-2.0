@@ -1,9 +1,7 @@
 package com.skyblock.skyblock.commands.menu;
 
-import com.sk89q.util.StringUtil;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.features.skills.Farming;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
@@ -29,14 +27,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-/*
-Menus:
-
-main
-rankings
-<skill>
- */
 
 @RequiresPlayer
 @Alias(aliases = "skill")
@@ -83,7 +73,7 @@ public class SkillsCommand implements Command, Listener {
 
             player.openInventory(inventory);
         } else if (args[0].equals("rankings")) {
-            // rankings
+            // TODO: rankings
         } else if (Skill.SKILLS.contains(StringUtils.capitalize(args[0]))) {
             Skill skill = Skill.parseSkill(args[0]);
 
