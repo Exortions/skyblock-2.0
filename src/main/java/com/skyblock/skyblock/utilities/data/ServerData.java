@@ -56,7 +56,7 @@ public class ServerData {
 
             this.serverData.save(serverDataFile);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            ex.printStackTrace();
         }
     }
 
