@@ -64,7 +64,9 @@ public class FairySoulHandler {
                 locations.add(spawn);
             }
         } catch (IOException | ParseException | NumberFormatException ex) {
-            throw new RuntimeException(ex);
+            ex.printStackTrace();
+
+            return;
         }
 
         initialized = true;
