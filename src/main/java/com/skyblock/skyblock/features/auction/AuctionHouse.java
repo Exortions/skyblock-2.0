@@ -84,9 +84,7 @@ public class AuctionHouse {
 
             if (auctions.contains(auction)) continue;
             if (!category.getCanPut().test(auction.getItem())) continue;
-            if (teir != null) {
-                if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
-            }
+            if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
             if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
             if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
             if (!ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) continue;
