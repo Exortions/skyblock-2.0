@@ -4,11 +4,6 @@ import java.util.List;
 
 public interface BazaarItemData {
 
-    interface BazaarItemVolume {
-        double getAmount();
-        double getVolume();
-    }
-
     double getProductAmount();
 
     double getBuyPrice();
@@ -22,5 +17,10 @@ public interface BazaarItemData {
 
     List<BazaarOffer> getOrders();
     List<BazaarOffer> getOffers();
+
+    interface BazaarItemVolume {
+        double getAmount();
+        double getVolume();
+    }
 
 }
