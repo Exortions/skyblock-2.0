@@ -94,7 +94,12 @@ public class ReforgeHandler {
                 this.registerReforge(reforgeEnum, reforgeData);
             }
         } catch (IOException | ParseException ex) {
-            throw new RuntimeException(ex);
+            ex.printStackTrace();
+
+            this.skyblock.sendMessage("&cCould not load dependency file &8reforges.json&c! Make sure you copy all files from &8dependencies/skyblock&c into the Skyblock plugin folder.");
+            Bukkit.getPluginManager().disablePlugin(this.skyblock);
+
+            return;
         }
     }
 
