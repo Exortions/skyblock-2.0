@@ -162,11 +162,9 @@ public final class Skyblock extends JavaPlugin {
         getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
             for (net.citizensnpcs.api.npc.NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
                 List<MetadataValue> values = npc.getEntity().getMetadata("createdAt");
-                if (values.size() > 0) {
-                    if (values.get(0).asLong() + 1000 < System.currentTimeMillis()) {
-                        npc.despawn();
-                        npc.destroy();
-                    }
+                if (values.size() > 0 && values.get(0).asLong() + 1000 < System.currentTimeMillis()) {
+                    npc.despawn();
+                    npc.destroy();
                 }
             }
         }, 1000);
@@ -555,7 +553,14 @@ public final class Skyblock extends JavaPlugin {
 
     public void registerCollections() {
         long start = System.currentTimeMillis();
-        if (!Collection.INITIALIZED) Collection.initializeCollections(this);
+        if (!Collection.INITIALIZED) {
+            try {
+                Collection.initializeCollections(this);
+            } catch (Collection.CollectionInitializationException ex) {
+                this.sendMessage("&cFailed to initialize collections: " + ex.getMessage());
+                this.getServer().getPluginManager().disablePlugin(this);
+            }
+        }
     }
 
     private int registeredListeners = 0;
