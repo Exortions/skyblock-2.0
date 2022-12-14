@@ -5,11 +5,13 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -146,7 +148,6 @@ public class PlayerListener implements Listener {
 
             SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
             double damage = 5 + player.getStat(SkyblockStat.DAMAGE) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
-            double display = damage;
             boolean crit = player.crit();
 
             for (BiFunction<SkyblockPlayer, Entity, Integer> func : player.getPredicateDamageModifiers()) {
@@ -158,6 +159,16 @@ public class PlayerListener implements Listener {
             double combat = 4 * Skill.getLevel((double) player.getValue("skill.combat.exp"));
 
             damage += damage * (combat / 100F);
+
+            try {
+                ItemBase base = new ItemBase(p.getItemInHand());
+
+                for (ItemEnchantment ench : base.getEnchantments()) {
+                    damage = ench.getBaseEnchantment().getModifiedDamage(player, e, damage);
+                }
+            } catch (Exception ignored) {}
+
+            double display = damage;
 
             if (e.getEntity().hasMetadata("skyblockEntityData")) {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());

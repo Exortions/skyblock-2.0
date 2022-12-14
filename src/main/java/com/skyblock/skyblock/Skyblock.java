@@ -20,12 +20,14 @@ import com.skyblock.skyblock.features.bags.BagManager;
 import com.skyblock.skyblock.features.bazaar.Bazaar;
 import com.skyblock.skyblock.features.bazaar.impl.SkyblockBazaar;
 import com.skyblock.skyblock.features.blocks.RegenerativeBlockHandler;
+import com.skyblock.skyblock.features.blocks.SpongeBlock;
+import com.skyblock.skyblock.features.blocks.SpongeReplacer;
+import com.skyblock.skyblock.features.blocks.SpongeReplacerHandler;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
-import com.skyblock.skyblock.features.enchantment.enchantments.EnderSlayerEnchantment;
-import com.skyblock.skyblock.features.enchantment.enchantments.TestEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.*;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
@@ -56,10 +58,7 @@ import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -87,6 +86,7 @@ public final class Skyblock extends JavaPlugin {
 
     private RegenerativeBlockHandler regenerativeBlockHandler;
     private SkyblockEnchantmentHandler enchantmentHandler;
+    private SpongeReplacerHandler spongeReplacerHandler;
     private EntitySpawnerHandler entitySpawnerHandler;
     private SkyblockLocationManager locationManager;
     private SkyblockItemHandler skyblockItemHandler;
@@ -142,6 +142,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeAuctionHouse();
         this.initializeSignGui();
         this.initializeBazaar();
+        this.initializeSpongeReplacers();
 
         this.registerMerchants();
 
@@ -173,6 +174,8 @@ public final class Skyblock extends JavaPlugin {
         this.fairySoulHandler.killAllSouls();
 
         this.removeables.forEach(Entity::remove);
+
+        this.spongeReplacerHandler.endGeneration();
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc remove all");
 
@@ -506,6 +509,14 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Sucessfully initialized server data [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
+    public void initializeSpongeReplacers() {
+        this.spongeReplacerHandler = new SpongeReplacerHandler();
+
+        this.spongeReplacerHandler.registerReplacer(new SpongeReplacer("Gold Mine", new SpongeBlock(Material.STONE, 10), new SpongeBlock(Material.IRON_ORE, 3), new SpongeBlock(Material.GOLD_ORE, 2)));
+
+        this.spongeReplacerHandler.startGeneration();
+    }
+
     public void registerGuis() {
         this.sendMessage("Registering guis...");
         long start = System.currentTimeMillis();
@@ -532,6 +543,9 @@ public final class Skyblock extends JavaPlugin {
 
         this.enchantmentHandler.registerEnchantment(new TestEnchantment());
         this.enchantmentHandler.registerEnchantment(new EnderSlayerEnchantment());
+        this.enchantmentHandler.registerEnchantment(new GrowthEnchantment());
+        this.enchantmentHandler.registerEnchantment(new ProtectionEnchantment());
+        this.enchantmentHandler.registerEnchantment(new SharpnessEnchantment());
 
         this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
