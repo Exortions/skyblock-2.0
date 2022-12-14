@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.bazaar.impl;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.bazaar.*;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
+import com.skyblock.skyblock.features.bazaar.impl.escrow.SkyblockEscrow;
 import com.skyblock.skyblock.utilities.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -25,7 +26,7 @@ public class SkyblockBazaar implements Bazaar {
     private final File file;
 
     public SkyblockBazaar() throws BazaarIOException, BazaarItemNotFoundException {
-        this.escrow = null;
+        this.escrow = new SkyblockEscrow(this);
 
         this.itemsFile = new File(Skyblock.getPlugin().getDataFolder(), Bazaar.ITEMS_PATH);
         this.file = new File(Skyblock.getPlugin().getDataFolder(), Bazaar.FILE_NAME);

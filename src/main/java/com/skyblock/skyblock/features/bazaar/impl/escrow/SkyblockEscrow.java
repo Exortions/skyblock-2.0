@@ -1,13 +1,13 @@
 package com.skyblock.skyblock.features.bazaar.impl.escrow;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.bazaar.Bazaar;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -24,35 +24,35 @@ public class SkyblockEscrow implements Escrow {
 
     private final Bazaar bazaar;
 
-    private final List<EscrowTransaction> transactions;
+    private final HashMap<UUID, EscrowTransaction> transactions;
 
     private double escrowBalance;
 
-    public SkyblockEscrow() {
-        this.bazaar = Skyblock.getPlugin().getBazaar();
+    public SkyblockEscrow(Bazaar bazaar) {
+        this.bazaar = bazaar;
 
-        this.transactions = new ArrayList<>();
+        this.transactions = new HashMap<>();
         this.escrowBalance = 0;
     }
 
     @Override
-    public List<EscrowTransaction> getTransactions() {
+    public HashMap<UUID, EscrowTransaction> getTransactions() {
         return this.transactions;
     }
 
     @Override
     public List<EscrowTransaction> getBuyOrders() {
-        return this.transactions.stream().filter(EscrowTransaction::isBuyOrder).collect(Collectors.toList());
+        return this.transactions.values().stream().filter(EscrowTransaction::isBuyOrder).collect(Collectors.toList());
     }
 
     @Override
     public List<EscrowTransaction> getSellOrders() {
-        return this.transactions.stream().filter(EscrowTransaction::isSellOrder).collect(Collectors.toList());
+        return this.transactions.values().stream().filter(EscrowTransaction::isSellOrder).collect(Collectors.toList());
     }
 
     @Override
     public void fillSellOrder(EscrowTransaction transaction, int amountSold) {
-        if (transaction.isCancelled() || !this.transactions.contains(transaction)) return;
+        if (transaction.isCancelled() || !this.transactions.containsKey(transaction.getUuid())) return;
 
         List<EscrowTransaction> buyOrders = this.getBuyOrders().stream().sorted((o1, o2) -> {
             double o1Price = o1.getPrice();
@@ -64,7 +64,7 @@ public class SkyblockEscrow implements Escrow {
         for (EscrowTransaction buyOrder : buyOrders) {
             if (amountSold <= 0) break;
 
-            if (buyOrder.isCancelled() || !this.transactions.contains(buyOrder)) continue;
+            if (buyOrder.isCancelled() || !this.transactions.containsKey(buyOrder.getUuid())) continue;
 
             if (buyOrder.getAmount() > amountSold) {
                 buyOrder.fill(amountSold);
@@ -73,12 +73,14 @@ public class SkyblockEscrow implements Escrow {
                 buyOrder.fill(buyOrder.getAmount());
                 amountSold -= buyOrder.getAmount();
             }
+
+            this.transactions.put(buyOrder.getUuid(), buyOrder);
         }
     }
 
     @Override
     public void fillBuyOrder(EscrowTransaction transaction, int amountBought) {
-        if (transaction.isCancelled() || !this.transactions.contains(transaction)) return;
+        if (transaction.isCancelled() || !this.transactions.containsKey(transaction.getUuid())) return;
 
         List<EscrowTransaction> sellOrders = this.getSellOrders().stream().sorted((o1, o2) -> {
             double o1Price = o1.getPrice();
@@ -90,7 +92,7 @@ public class SkyblockEscrow implements Escrow {
         for (EscrowTransaction sellOrder : sellOrders) {
             if (amountBought <= 0) break;
 
-            if (sellOrder.isCancelled() || !this.transactions.contains(sellOrder)) continue;
+            if (sellOrder.isCancelled() || !this.transactions.containsKey(sellOrder.getUuid())) continue;
 
             if (sellOrder.getAmount() > amountBought) {
                 sellOrder.fill(amountBought);
@@ -99,22 +101,29 @@ public class SkyblockEscrow implements Escrow {
                 sellOrder.fill(sellOrder.getAmount());
                 amountBought -= sellOrder.getAmount();
             }
+
+            this.transactions.put(sellOrder.getUuid(), sellOrder);
         }
     }
 
     @Override
     public EscrowTransaction createTransaction(OfflinePlayer seller, OfflinePlayer buyer, double price, int amount, TransactionType type, Consumer<EscrowTransaction> onFill) {
-        EscrowTransaction transaction = new SkyblockEscrowTransaction(this.bazaar, seller, buyer, price, amount, type, onFill, false, false);
+        EscrowTransaction transaction = new SkyblockEscrowTransaction(this.bazaar, UUID.randomUUID(), seller, buyer, price, amount, type, onFill, false, false);
 
-        this.transactions.add(transaction);
+        this.transactions.put(transaction.getUuid(), transaction);
         this.deposit(amount);
 
         return transaction;
     }
 
     @Override
-    public void removeTransaction(EscrowTransaction transaction) {
-        this.transactions.remove(transaction);
+    public EscrowTransaction getTransaction(UUID uuid) {
+        return this.transactions.get(uuid);
+    }
+
+    @Override
+    public void removeTransaction(UUID uuid) {
+        this.transactions.remove(uuid);
     }
 
     @Override

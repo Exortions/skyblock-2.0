@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.OfflinePlayer;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @Data
@@ -15,6 +16,8 @@ import java.util.function.Consumer;
 public class SkyblockEscrowTransaction implements EscrowTransaction {
 
     private final Bazaar bazaar;
+
+    private final UUID uuid;
 
     private final OfflinePlayer seller;
     private final OfflinePlayer buyer;
@@ -37,6 +40,8 @@ public class SkyblockEscrowTransaction implements EscrowTransaction {
         if (this.amount <= 0) {
             this.filled = true;
             this.onFill.accept(this);
+
+            this.cancel();
         }
     }
 
@@ -44,7 +49,7 @@ public class SkyblockEscrowTransaction implements EscrowTransaction {
     public void cancel() {
         this.cancelled = true;
 
-        this.bazaar.getEscrow().removeTransaction(this);
+        this.bazaar.getEscrow().removeTransaction(this.getUuid());
     }
 
 }
