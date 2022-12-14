@@ -128,8 +128,6 @@ public class SkyblockPlayer {
                     map.put(s, config.getString("auction.auctionSettings." + s));
                 }
 
-                Bukkit.getConsoleSender().sendMessage(map + "");
-
                 auctionSettings = AuctionSettings.deserialize(map);
             }
 

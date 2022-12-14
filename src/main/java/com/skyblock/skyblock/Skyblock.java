@@ -161,16 +161,6 @@ public final class Skyblock extends JavaPlugin {
 
         this.initializeAlreadyOnlinePlayers();
 
-        getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-            for (net.citizensnpcs.api.npc.NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
-                List<MetadataValue> values = npc.getEntity().getMetadata("createdAt");
-                if (values.size() > 0 && values.get(0).asLong() + 1000 < System.currentTimeMillis()) {
-                    npc.despawn();
-                    npc.destroy();
-                }
-            }
-        }, 1000);
-
         long end = System.currentTimeMillis();
         this.sendMessage("Successfully enabled Skyblock in " + Util.getTimeDifferenceAndColor(start, end) + ChatColor.WHITE + ".");
     }
@@ -190,7 +180,10 @@ public final class Skyblock extends JavaPlugin {
 
         File file = new File("plugins/Citizens/saves.yml");
 
-        if (file.exists()) file.delete();
+        if (file.exists()) {
+            file.delete();
+            sendMessage("Deleted Citizens File");
+        }
 
         this.serverData.disable();
 

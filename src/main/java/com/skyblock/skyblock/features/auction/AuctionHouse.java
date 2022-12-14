@@ -166,11 +166,14 @@ public class AuctionHouse {
                 config.set("sold", auction.isSold());
 
                 auction.getBidHistory().forEach((bid) -> {
+                    if (bid.getAuction() == null) bid.setAuction(auction);
                     config.set("bidHistory." + bid.getTimeStamp(), bid.serialize());
                 });
 
                 config.save(file);
-            } catch (IOException e) { }
+            } catch (IOException| NullPointerException e) {
+                Skyblock.getPlugin().sendMessage("Could not save auction: " + auction);
+            }
         }
     }
     public void init() {

@@ -34,6 +34,8 @@ public class AuctionBid implements ConfigurationSerializable {
         return map;
     }
 
+    public void setAuction(Auction auction) { this.auction = auction; }
+
     public static AuctionBid deserialize(Map<String, Object> map) {
         return new AuctionBid((map.get("bidder").equals("") ? null : Bukkit.getOfflinePlayer((String) map.get("bidder"))), AuctionHouse.AUCTION_CACHE.get(UUID.fromString((String) map.get("auction"))),
                 (int) map.get("amount"), (long) map.get("timeStamp"));
