@@ -420,7 +420,7 @@ public class Util {
         stand.setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
         stand.setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
 
-        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.9, 0), ArmorStand.class);
+        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.6 : 1.8, 0), ArmorStand.class);
         click.setCustomName(ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
         click.setGravity(false);
         click.setVisible(false);
@@ -433,7 +433,7 @@ public class Util {
         nbtEntity.setBoolean("Marker", true);
         nbtEntity.setBoolean("Invulnerable", true);
 
-        click.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.9 : 2, 0));
+        click.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.8, 0));
 
         if (skin) {
             SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);

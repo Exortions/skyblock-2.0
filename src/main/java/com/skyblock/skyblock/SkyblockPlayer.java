@@ -141,7 +141,7 @@ public class SkyblockPlayer {
 
             if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA) - ((getStatNoMult(SkyblockStat.MAX_MANA) + 100)/50)) {
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MANA) + ((getStatNoMult(SkyblockStat.MAX_MANA) + 100F)/50));
-            }else{
+            } else if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA)) {
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MAX_MANA));
             }
         }
@@ -268,7 +268,6 @@ public class SkyblockPlayer {
         addStat(SkyblockStat.ATTACK_SPEED, mult * base.getAttackSpeed());
         addStat(SkyblockStat.DAMAGE, mult * base.getDamage());
         addStat(SkyblockStat.DEFENSE, mult * base.getDefense());
-        addStat(SkyblockStat.MANA, mult * base.getIntelligence());
         addStat(SkyblockStat.MAX_MANA, mult * base.getIntelligence());
         addStat(SkyblockStat.SPEED, mult * base.getSpeed());
         addStat(SkyblockStat.STRENGTH, mult * base.getStrength());
