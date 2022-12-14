@@ -4,12 +4,10 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.features.bazaar.*;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
-import com.skyblock.skyblock.utilities.item.ItemBuilder;
-import org.bukkit.Bukkit;
+import com.skyblock.skyblock.utilities.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,29 +24,46 @@ public class SkyblockBazaar implements Bazaar {
     private final List<BazaarSubItem> rawItems;
 
     private final YamlConfiguration config;
+    private final File itemsFile;
     private final File file;
 
     public SkyblockBazaar() throws BazaarIOException, BazaarItemNotFoundException {
         this.escrow = null;
-        this.categories = new ArrayList<>();
-        this.rawItems = new ArrayList<>();
 
+        this.itemsFile = new File(Skyblock.getPlugin().getDataFolder(), Bazaar.ITEMS_PATH);
         this.file = new File(Skyblock.getPlugin().getDataFolder(), Bazaar.FILE_NAME);
+
+        try {
+            if (!this.itemsFile.exists()) {
+                Skyblock.getPlugin().sendMessage("&cCould not find " + Bazaar.ITEMS_PATH + ", unable to start Bazaar.");
+                Skyblock.getPlugin().getServer().getPluginManager().disablePlugin(Skyblock.getPlugin());
+                throw new BazaarIOException("Could not find " + Bazaar.ITEMS_PATH + ", unable to start Bazaar.");
+            }
+
+            if (!this.file.exists()) {
+                this.file.getParentFile().mkdirs();
+                this.file.createNewFile();
+            }
+        } catch (IOException ex) {
+            throw new BazaarIOException("Failed to create bazaar config files", ex);
+        }
 
         this.config = YamlConfiguration.loadConfiguration(this.file);
 
-        // todo: add categories and raw items
+        Pair<List<BazaarCategory>, List<BazaarSubItem>> indexed = new SkyblockBazaarConfigIndexer(this, this.itemsFile).index();
+//        temp: (fixed by above code line)
+//        this.rawItems.add(new SkyblockBazaarSubItem(Skyblock.getPlugin().getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12, new ArrayList<BazaarOffer>() {{
+//            add(new SkyblockBazaarOffer(UUID.randomUUID(), 1349, 824.3));
+//        }}, new ArrayList<>()));
+//
+//        this.categories.add(new SkyblockBazaarCategory("Farming", Material.GOLD_HOE, ChatColor.YELLOW, (short) 4, new ArrayList<BazaarItem>() {{
+//            add(new SkyblockBazaarItem("Pumpkin", new ArrayList<BazaarSubItem>() {{
+//                add(rawItems.get(0));
+//            }}, 36));
+//        }}));
 
-        // temp:
-        this.rawItems.add(new SkyblockBazaarSubItem(Skyblock.getPlugin().getItemHandler().getItem("ENCHANTED_PUMPKIN.json"), Rarity.UNCOMMON, 12, new ArrayList<BazaarOffer>() {{
-            add(new SkyblockBazaarOffer(UUID.randomUUID(), 1349, 824.3));
-        }}, new ArrayList<>()));
-
-        this.categories.add(new SkyblockBazaarCategory("Farming", Material.GOLD_HOE, ChatColor.YELLOW, (short) 4, new ArrayList<BazaarItem>() {{
-            add(new SkyblockBazaarItem("Pumpkin", new ArrayList<BazaarSubItem>() {{
-                add(rawItems.get(0));
-            }}));
-        }}));
+        this.categories = indexed.getFirst();
+        this.rawItems = indexed.getSecond();
 
         if (!this.file.exists()) {
             try {
@@ -111,6 +126,23 @@ public class SkyblockBazaar implements Bazaar {
     @Override
     public List<BazaarCategory> getCategories() {
         return this.categories;
+    }
+
+    @Override
+    public List<BazaarSubItem> getRawItems() {
+        return rawItems;
+    }
+
+    @Override
+    public void setCategories(List<BazaarCategory> categories) {
+        this.categories.clear();
+        this.categories.addAll(categories);
+    }
+
+    @Override
+    public void setRawItems(List<BazaarSubItem> rawItems) {
+        this.rawItems.clear();
+        this.rawItems.addAll(rawItems);
     }
 
     @Override

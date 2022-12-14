@@ -7,6 +7,7 @@ public interface BazaarItem {
     String getName();
     List<BazaarSubItem> getSubItems();
 
+    default int getInventorySize() { return 36; }
     default int getProductAmount() {
         return this.getSubItems().size();
     }

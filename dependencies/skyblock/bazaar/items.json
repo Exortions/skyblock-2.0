@@ -1,0 +1,49 @@
+{
+  "bazaar": {
+    "categories": [
+      {
+        "name": "Farming",
+        "icon": "GOLD_HOE",
+        "color": "YELLOW",
+        "items": [
+          {
+            "name": "Wheat & Seeds",
+            "inventorySize": 36,
+            "subItems": [
+              {
+                "material": "wheat",
+                "rarity": "common",
+                "slot": 11
+              },
+              {
+                "material": "skyblock:enchanted_bread",
+                "rarity": "common",
+                "slot": 12
+              },
+              {
+                "material": "hay_block",
+                "rarity": "common",
+                "slot": 13
+              },
+              {
+                "material": "skyblock:enchanted_hay_block",
+                "rarity": "uncommon",
+                "slot": 14
+              },
+              {
+                "material": "seeds",
+                "rarity": "common",
+                "slot": 15
+              },
+              {
+                "material": "skyblock:enchanted_seeds",
+                "rarity": "common",
+                "slot": 22
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

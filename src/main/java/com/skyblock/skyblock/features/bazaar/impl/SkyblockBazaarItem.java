@@ -11,5 +11,6 @@ public class SkyblockBazaarItem implements BazaarItem {
 
     private final String name;
     private final List<BazaarSubItem> subItems;
+    private final int inventorySize;
 
 }

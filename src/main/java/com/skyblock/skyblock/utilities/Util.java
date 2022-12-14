@@ -544,4 +544,57 @@ public class Util {
         return stack;
     }
 
+    public ItemStack getItem(String identifier) {
+        String id = identifier.toLowerCase().split("\\.")[0];
+
+        if (!id.contains(":")) id = "minecraft:" + id;
+
+        String namespace = id.split(":")[0];
+        String path = id.split(":")[1];
+
+        if (namespace.equals("skyblock")) return Skyblock.getPlugin().getItemHandler().getItem(path.toUpperCase() + ".json");
+        else {
+            try {
+                return new ItemStack(Material.valueOf(identifier.toUpperCase()));
+            } catch (IllegalArgumentException ex) {
+                return null;
+            }
+        }
+    }
+
+    public short getPaneColor(ChatColor color) {
+        switch (color) {
+            case BLACK:
+                return 15;
+            case DARK_BLUE:
+                return 11;
+            case DARK_GREEN:
+                return 13;
+            case DARK_AQUA:
+                return 9;
+            case DARK_RED:
+            case RED:
+                return 14;
+            case DARK_PURPLE:
+                return 10;
+            case GOLD:
+                return 1;
+            case GRAY:
+                return 8;
+            case DARK_GRAY:
+                return 7;
+            case BLUE:
+            case AQUA:
+                return 3;
+            case GREEN:
+                return 5;
+            case LIGHT_PURPLE:
+                return 2;
+            case YELLOW:
+                return 4;
+            default:
+                return 0;
+        }
+    }
+
 }

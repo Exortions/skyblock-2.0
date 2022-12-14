@@ -31,13 +31,18 @@ public interface Bazaar {
 
     }
 
-    String FILE_NAME = "bazaar.yml";
+    String ITEMS_PATH = "bazaar/items.json";
+    String FILE_NAME = "bazaar/bazaar.yml";
 
     YamlConfiguration getBazaarConfig();
 
     Escrow getEscrow();
 
     List<BazaarCategory> getCategories();
+    List<BazaarSubItem> getRawItems();
+
+    void setCategories(List<BazaarCategory> categories);
+    void setRawItems(List<BazaarSubItem> rawItems);
 
     BazaarItemData getItemData(String name) throws BazaarItemNotFoundException;
 
