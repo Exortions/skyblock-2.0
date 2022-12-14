@@ -194,6 +194,9 @@ public class Util {
     }
 
     public void sendAbility(SkyblockPlayer player, String abilityName, int mana) {
+        Object wise = player.getExtraData("wise_dragon_bonus");
+        if (wise != null) mana = (int) Math.floor(mana - mana / 3f);
+
         player.subtractMana(mana);
         player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "Used " + ChatColor.GOLD + abilityName + ChatColor.GREEN +
                 "! " + ChatColor.AQUA + "(" + mana + " Mana)");

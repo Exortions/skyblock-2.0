@@ -1,7 +1,10 @@
 package com.skyblock.skyblock.features.enchantment;
 
+import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Data;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.function.Function;
 
@@ -25,4 +28,11 @@ public abstract class SkyblockEnchantment implements Listener {
         return description.apply(level);
     }
 
+    public void onUnEnchant(ItemBase base) { }
+
+    public void onEnchant(ItemBase base) { }
+
+    public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
+        return damage;
+    }
 }

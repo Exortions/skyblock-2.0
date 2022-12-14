@@ -403,12 +403,15 @@ public class ItemBase {
 
             if (found.getName().replace(" ", "_").equalsIgnoreCase(name)) {
                 this.enchantments.set(i, itemEnchantment);
+                found.onUnEnchant(this);
+                itemEnchantment.getBaseEnchantment().onEnchant(this);
 
                 return;
             }
         }
 
         this.enchantments.add(itemEnchantment);
+        itemEnchantment.getBaseEnchantment().onEnchant(this);
     }
 
     public void addEnchantment(String name, int level) {

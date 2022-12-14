@@ -1,5 +1,8 @@
 package com.skyblock.skyblock.features.enchantment;
 
+import com.skyblock.skyblock.SkyblockPlayer;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
 public class ItemEnchantment {
 
     private final SkyblockEnchantment baseEnchantment;
@@ -17,5 +20,4 @@ public class ItemEnchantment {
     public int getLevel() {
         return level;
     }
-
 }

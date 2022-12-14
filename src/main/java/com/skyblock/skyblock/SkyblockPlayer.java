@@ -384,7 +384,10 @@ public class SkyblockPlayer {
     public void setStat(SkyblockStat stat, double val, boolean event) {
         stats.put(stat, val);
 
-        if (pet != null && event) pet.onStatChange(this, stat, val);
+        if (event){
+            if (pet != null) pet.onStatChange(this, stat, val);
+            if (armorSet != null) armorSet.onStatChange(bukkitPlayer, stat);
+        }
 
         setValue("stats." + stat.name().toLowerCase(), val);
 
