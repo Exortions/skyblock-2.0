@@ -56,7 +56,6 @@ import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.event.DespawnReason;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -112,6 +111,9 @@ public final class Skyblock extends JavaPlugin {
     private Bazaar bazaar;
     private Random random;
     private Date date;
+
+    private int registeredListeners = 0;
+
 
     @Override
     public void onEnable() {
@@ -562,8 +564,6 @@ public final class Skyblock extends JavaPlugin {
             }
         }
     }
-
-    private int registeredListeners = 0;
 
     public void registerListeners() {
         this.sendMessage("Registering listeners...");
