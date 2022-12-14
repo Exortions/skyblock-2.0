@@ -22,6 +22,11 @@ import java.util.List;
 
 public class SlayerGUI extends Gui {
 
+    public static final List<ChatColor> COLORS = Arrays.asList(ChatColor.GREEN, ChatColor.YELLOW, ChatColor.RED, ChatColor.DARK_RED);
+    private static final List<Integer> ZOMBIE_XP = Arrays.asList(5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000);
+    private static final List<Integer> SPIDER_XP = Arrays.asList(5, 25, 200, 1000, 5000, 20000, 100000, 400000, 1000000);
+    private static final List<Integer> WOLF_XP = Arrays.asList(10, 30, 250, 1500, 5000, 20000, 100000, 400000, 1000000);
+    private static final List<String> DESCRIPTIONS = Arrays.asList("Beginner", "Strong", "Challenging", "Deadly");
     public static final List<Integer> COINS = Arrays.asList(100, 2000, 10000, 50000);
 
     public SlayerGUI(Player opener) {
@@ -93,15 +98,22 @@ public class SlayerGUI extends Gui {
             SlayerQuest quest = data.getQuest();
             SlayerBoss boss = data.getBoss();
 
-            Material type = Material.ROTTEN_FLESH;
+            Material type;
 
             switch (quest.getType()) {
+                case REVENANT:
+                    type = Material.ROTTEN_FLESH;
+                    break;
                 case SVEN:
                     type = Material.MUTTON;
                     break;
                 case TARANTULA:
                     type = Material.WEB;
                     break;
+                default:
+                    type = null;
+                    skyblock.sendMessage("&cCould not find material for slayer quest type &8" + quest.getType().getName() + " &8[" + opener.getDisplayName() + "]&c!");
+                    return;
             }
 
             if (quest.getState().equals(SlayerQuest.QuestState.FINISHED)) {
@@ -171,9 +183,6 @@ public class SlayerGUI extends Gui {
         }
     }
 
-    public static final List<ChatColor> COLORS = Arrays.asList(ChatColor.GREEN, ChatColor.YELLOW, ChatColor.RED, ChatColor.DARK_RED);
-    private static final List<String> DESCRIPTIONS = Arrays.asList("Beginner", "Strong", "Challenging", "Deadly");
-
     public static ItemStack getStartItem(SlayerType type, int level, int hp, int dps, int xp, int cost, int abilityAmount) {
         Material material = Material.AIR;
         ChatColor color = COLORS.get(level - 1);
@@ -213,6 +222,8 @@ public class SlayerGUI extends Gui {
                 ability3.add(ChatColor.GRAY + "At 50% health, calls its deadly pack");
                 ability3.add(ChatColor.GRAY + "of pups.");
                 break;
+            default:
+                break;
         }
 
         ability1.add(" ");
@@ -227,14 +238,13 @@ public class SlayerGUI extends Gui {
             case 2:
                 ability3.clear();
                 break;
+            default:
+                break;
         }
 
         return new ItemBuilder(color + name + " " + Util.toRoman(level), material).addLore(ChatColor.DARK_GRAY + DESCRIPTIONS.get(level - 1), " ", ChatColor.GRAY + "Health: " + ChatColor.RED + Util.formatInt(hp) + "❤", ChatColor.GRAY + "Damage: " + ChatColor.RED + Util.formatInt(dps) + ChatColor.GRAY + " per second", " ").addLore(ability1).addLore(ability2).addLore(ability3).addLore(ChatColor.GRAY + "Reward: " + ChatColor.LIGHT_PURPLE + xp + " " + type.getAlternative() + " Slayer XP", ChatColor.DARK_GRAY + "  + Boss Drops", " ", ChatColor.GRAY + "Cost to start: " + ChatColor.GOLD + Util.formatInt(cost) + " coins", " ", ChatColor.YELLOW + "Click to slay!").toItemStack();
     }
 
-    private static final List<Integer> ZOMBIE_XP = Arrays.asList(5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000);
-    private static final List<Integer> SPIDER_XP = Arrays.asList(5, 25, 200, 1000, 5000, 20000, 100000, 400000, 1000000);
-    private static final List<Integer> WOLF_XP = Arrays.asList(10, 30, 250, 1500, 5000, 20000, 100000, 400000, 1000000);
     public static int getLevel(SlayerType type, int exp) {
         List<Integer> list = new ArrayList<>();
 
