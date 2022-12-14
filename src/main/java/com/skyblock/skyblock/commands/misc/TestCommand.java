@@ -4,10 +4,13 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.features.auction.gui.AuctionBrowserGUI;
+import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
+import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
@@ -48,13 +51,30 @@ public class TestCommand implements Command {
 //        MinionBase cobblestoneMinion = new MiningMinion(MiningMinionType.COBBLESTONE);
 //        cobblestoneMinion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 1);
 
-        for (Auction auction : AuctionHouse.AUCTION_CACHE.values()) {
-            player.sendMessage(auction.toString());
-        }
+//        for (Auction auction : AuctionHouse.AUCTION_CACHE.values()) {
+//            player.sendMessage(auction.toString());
+//        }
 
 //        if (args.length == 1) {
 //            new AuctionBrowserGUI(player).show(player);
 //            return;
 //        }
+
+        Escrow escrow = Skyblock.getPlugin().getBazaar().getEscrow();
+
+        EscrowTransaction transaction = escrow.createTransaction(player, player, 100, 300, Escrow.TransactionType.SELL, (trans) -> {
+            if (Bukkit.getPlayer(trans.getSeller().getUniqueId()) != null) {
+                Bukkit.getPlayer(trans.getSeller().getUniqueId()).sendMessage("order filled!");
+            }
+
+            if (Bukkit.getPlayer(trans.getBuyer().getUniqueId()) != null) {
+                Bukkit.getPlayer(trans.getBuyer().getUniqueId()).sendMessage("order filled!");
+            }
+        });
+
+        escrow.fillBuyOrder(transaction, 300);
+
+        player.sendMessage(escrow.getBuyOrders().toString());
+        player.sendMessage(escrow.getSellOrders().toString());
     }
 }

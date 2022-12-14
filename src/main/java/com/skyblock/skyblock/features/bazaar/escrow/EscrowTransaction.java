@@ -1,14 +1,16 @@
 package com.skyblock.skyblock.features.bazaar.escrow;
 
-import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.bazaar.Bazaar;
 import org.bukkit.OfflinePlayer;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public interface EscrowTransaction {
 
     Bazaar getBazaar();
+
+    UUID getUuid();
 
     OfflinePlayer getSeller();
     OfflinePlayer getBuyer();
