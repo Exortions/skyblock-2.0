@@ -1,19 +1,16 @@
 package com.skyblock.skyblock.features.bazaar.impl;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.features.bazaar.*;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.utilities.Pair;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SkyblockBazaar implements Bazaar {
@@ -78,8 +75,13 @@ public class SkyblockBazaar implements Bazaar {
                 try {
                     String displayName = item.getIcon().getItemMeta().getDisplayName();
 
-                    if (displayName == null) displayName = item.getIcon().getType().name();
-                    String name = ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_");
+                    boolean hasSkyblockNamespace = true;
+
+                    if (displayName == null) {
+                        displayName = item.getIcon().getType().name();
+                        hasSkyblockNamespace = false;
+                    }
+                    String name = (hasSkyblockNamespace ? "skyblock;": "minecraft;") + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_");
                     this.set("items." + name + ".buyPrice", 0.0);
                     this.set("items." + name + ".sellPrice", 0.0);
                     this.set("items." + name + ".orders", item.getOrders());
@@ -106,11 +108,16 @@ public class SkyblockBazaar implements Bazaar {
                         for (BazaarSubItem subItem : item.getSubItems()) {
                             String displayName = subItem.getIcon().getItemMeta().getDisplayName();
 
-                            if (displayName == null) displayName = subItem.getIcon().getType().name();
+                            boolean hasSkyblockNamespace = true;
+
+                            if (displayName == null) {
+                                displayName = subItem.getIcon().getType().name();
+                                hasSkyblockNamespace = false;
+                            }
 
                             this.set("categories." + category.getName() + ".items." + item.getName() + ".size", item.getInventorySize());
 
-                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_"), subItem.getSlot());
+                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + (hasSkyblockNamespace ? "skyblock;" : "minecraft;") + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_"), subItem.getSlot());
                         }
                     }
                 } catch (BazaarIOException ex) {

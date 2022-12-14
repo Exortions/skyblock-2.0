@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.bazaar.impl.escrow;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.bazaar.Bazaar;
+import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,13 +11,17 @@ import org.bukkit.OfflinePlayer;
 import java.util.function.Consumer;
 
 @Data
+@AllArgsConstructor
 public class SkyblockEscrowTransaction implements EscrowTransaction {
 
     private final Bazaar bazaar;
 
     private final OfflinePlayer seller;
-    private final SkyblockPlayer buyer;
-    private final double amount;
+    private final OfflinePlayer buyer;
+    private final double price;
+    private int amount;
+
+    private final Escrow.TransactionType type;
 
     private final Consumer<EscrowTransaction> onFill;
 
@@ -24,17 +29,22 @@ public class SkyblockEscrowTransaction implements EscrowTransaction {
     private boolean filled;
 
     @Override
-    public void fill() {
+    public void fill(int amount) {
         if (this.cancelled) return;
 
-        this.onFill.accept(this);
+        this.amount -= amount;
 
-        this.filled = true;
+        if (this.amount <= 0) {
+            this.filled = true;
+            this.onFill.accept(this);
+        }
     }
 
     @Override
     public void cancel() {
         this.cancelled = true;
+
+        this.bazaar.getEscrow().removeTransaction(this);
     }
 
 }

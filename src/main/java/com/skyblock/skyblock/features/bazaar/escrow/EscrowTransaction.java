@@ -11,17 +11,27 @@ public interface EscrowTransaction {
     Bazaar getBazaar();
 
     OfflinePlayer getSeller();
-    SkyblockPlayer getBuyer();
-    double getAmount();
+    OfflinePlayer getBuyer();
+    int getAmount();
+    double getPrice();
+    Escrow.TransactionType getType();
 
     Consumer<EscrowTransaction> getOnFill();
 
-    void fill();
+    void fill(int amount);
 
     boolean isFilled();
 
     void cancel();
 
     boolean isCancelled();
+
+    default boolean isBuyOrder() {
+        return this.getType() == Escrow.TransactionType.BUY;
+    }
+
+    default boolean isSellOrder() {
+        return this.getType() == Escrow.TransactionType.SELL;
+    }
 
 }
