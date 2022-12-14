@@ -19,14 +19,12 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
-import com.skyblock.skyblock.utilities.TriConsumer;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
@@ -82,7 +80,6 @@ public class SkyblockPlayer {
         playerRegistry.put(uuid, new SkyblockPlayer(uuid));
 
         SkyblockPlayer player = playerRegistry.get(uuid);
-        Skyblock skyblock = Skyblock.getPlugin();
 
         after.accept(player);
     }
