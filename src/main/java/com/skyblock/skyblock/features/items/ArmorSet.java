@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -48,6 +49,8 @@ public abstract class ArmorSet {
     public void stopFullSetBonus(Player player) {
         runnables.get(player).cancel();
     }
+
+    public void onStatChange(Player player, SkyblockStat stat) { }
 
     public abstract void tick(Player player);
 

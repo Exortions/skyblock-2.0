@@ -2,6 +2,8 @@ package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.armor.SuperiorDragonArmor;
+import com.skyblock.skyblock.features.items.armor.WiseDragonArmor;
+import com.skyblock.skyblock.features.items.armor.YoungDragonArmor;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
 import com.skyblock.skyblock.features.items.misc.MaddoxBatphone;
 import com.skyblock.skyblock.features.items.weapons.AspectOfTheDragons;
@@ -37,6 +39,8 @@ public class SkyblockItemHandler {
 
         // Armor Sets
         registerItem(new SuperiorDragonArmor());
+        registerItem(new WiseDragonArmor());
+        registerItem(new YoungDragonArmor());
     }
 
     public ArrayList<ItemStack> getItems() {
