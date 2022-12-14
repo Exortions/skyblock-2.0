@@ -61,7 +61,7 @@ public class BlueWhale extends Pet {
                     @Override
                     public void onEquip(SkyblockPlayer player) {
                         double def = (float) (player.getStat(SkyblockStat.MAX_HEALTH) / bulkHp.get()) * (0.03 * level);
-                        player.addStat(SkyblockStat.DEFENSE, (int) def);
+                        player.setStat(SkyblockStat.DEFENSE, player.getStat (SkyblockStat.DEFENSE) + (int) def, false);
                         player.setExtraData("blue_whale_bulk", def);
                     }
 

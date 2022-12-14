@@ -141,16 +141,16 @@ public class SkyblockPlayer {
 
             ActionBarAPI.sendActionBar(getBukkitPlayer(), actionBar);
 
-            if (getStat(SkyblockStat.MANA) < getStat(SkyblockStat.MAX_MANA) - ((getStat(SkyblockStat.MAX_MANA) + 100)/50)) {
-                setStat(SkyblockStat.MANA, getStat(SkyblockStat.MANA) + ((getStat(SkyblockStat.MAX_MANA) + 100F)/50));
+            if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA) - ((getStatNoMult(SkyblockStat.MAX_MANA) + 100)/50)) {
+                setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MANA) + ((getStatNoMult(SkyblockStat.MAX_MANA) + 100F)/50));
             }else{
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MAX_MANA));
             }
         }
 
         if (tick % EVERY_THREE_SECONDS == 0) {
-            if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH) / 100)) {
-                updateHealth((int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100));
+            if (getStatNoMult(SkyblockStat.HEALTH) < getStatNoMult(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStatNoMult(SkyblockStat.MAX_HEALTH) / 100)) {
+                updateHealth((int) (1.5 + getStatNoMult(SkyblockStat.MAX_HEALTH)/100));
             }else{
                 setStat(SkyblockStat.HEALTH, getStatNoMult(SkyblockStat.MAX_HEALTH));
                 getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
@@ -382,15 +382,17 @@ public class SkyblockPlayer {
     public double getPreciseStat(SkyblockStat stat) { return stats.get(stat) * getDouble("stats.multipliers." + stat.name().toLowerCase()); }
 
     public void setStat(SkyblockStat stat, double val) {
+        setStat(stat, val, true);
+    }
+    public void setStat(SkyblockStat stat, double val, boolean event) {
         stats.put(stat, val);
 
-        if (pet != null) pet.onStatChange(this, stat, val);
+        if (pet != null && event) pet.onStatChange(this, stat, val);
 
         setValue("stats." + stat.name().toLowerCase(), val);
 
         resetActionBar();
     }
-
     public void addStatMultiplier(SkyblockStat stat, double mult) {
         setStatMultiplier(stat, getStatMultiplier(stat) + mult);
     }
