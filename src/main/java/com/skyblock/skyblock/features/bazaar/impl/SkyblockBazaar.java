@@ -40,11 +40,9 @@ public class SkyblockBazaar implements Bazaar {
                 throw new BazaarIOException("Could not find " + Bazaar.ITEMS_PATH + ", unable to start Bazaar.");
             }
 
-            if (!this.file.exists()) {
+            if (!this.file.exists())
                 this.file.getParentFile().mkdirs();
-                this.file.createNewFile();
-            }
-        } catch (IOException ex) {
+        } catch (BazaarIOException ex) {
             throw new BazaarIOException("Failed to create bazaar config files", ex);
         }
 
@@ -78,7 +76,10 @@ public class SkyblockBazaar implements Bazaar {
 
             this.rawItems.forEach(item -> {
                 try {
-                    String name = ChatColor.stripColor(item.getIcon().getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_");
+                    String displayName = item.getIcon().getItemMeta().getDisplayName();
+
+                    if (displayName == null) displayName = item.getIcon().getType().name();
+                    String name = ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_");
                     this.set("items." + name + ".buyPrice", 0.0);
                     this.set("items." + name + ".sellPrice", 0.0);
                     this.set("items." + name + ".orders", item.getOrders());
@@ -103,7 +104,13 @@ public class SkyblockBazaar implements Bazaar {
                         this.set("categories." + category.getName() + ".items." + item.getName(), new ArrayList<>());
 
                         for (BazaarSubItem subItem : item.getSubItems()) {
-                            this.set("categories." + category.getName() + ".items." + item.getName() + "." + ChatColor.stripColor(subItem.getIcon().getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_"), subItem.getSlot());
+                            String displayName = subItem.getIcon().getItemMeta().getDisplayName();
+
+                            if (displayName == null) displayName = subItem.getIcon().getType().name();
+
+                            this.set("categories." + category.getName() + ".items." + item.getName() + ".size", item.getInventorySize());
+
+                            this.set("categories." + category.getName() + ".items." + item.getName() + ".slots." + ChatColor.stripColor(displayName).toUpperCase().replace(" ", "_"), subItem.getSlot());
                         }
                     }
                 } catch (BazaarIOException ex) {
