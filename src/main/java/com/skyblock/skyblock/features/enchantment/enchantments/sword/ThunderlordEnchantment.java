@@ -28,9 +28,7 @@ public class ThunderlordEnchantment extends SwordEnchantment {
     private static final HashMap<SkyblockPlayer, ThunderlordInfo> hits = new HashMap<>();
 
     public ThunderlordEnchantment() {
-        super("thunderlord", "Thunderlord", (level) -> {
-            return "&7Strikes a monster with lightning\n&7every 3 consecutive hits,\n&7dealing " + ChatColor.GREEN + level * 10 + "% &7of your Strength\n&7as damage";
-        }, 4);
+        super("thunderlord", "Thunderlord", (level) -> "&7Strikes a monster with lightning\n&7every 3 consecutive hits,\n&7dealing " + ChatColor.GREEN + level * 10 + "% &7of your Strength\n&7as damage", 4);
     }
 
     @Override
