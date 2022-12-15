@@ -28,6 +28,9 @@ import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.*;
+import com.skyblock.skyblock.features.enchantment.enchantments.armor.GrowthEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
@@ -57,7 +60,6 @@ import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
-import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.*;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.ArmorStand;
@@ -67,7 +69,6 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -547,6 +548,11 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler.registerEnchantment(new GrowthEnchantment());
         this.enchantmentHandler.registerEnchantment(new ProtectionEnchantment());
         this.enchantmentHandler.registerEnchantment(new SharpnessEnchantment());
+        this.enchantmentHandler.registerEnchantment(new CleaveEnchantment());
+        this.enchantmentHandler.registerEnchantment(new FirstStrikeEnchantment());
+        this.enchantmentHandler.registerEnchantment(new LethalityEnchantment());
+        this.enchantmentHandler.registerEnchantment(new ThunderlordEnchantment());
+        this.enchantmentHandler.registerEnchantment(new VenomousEnchantment());
 
         this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

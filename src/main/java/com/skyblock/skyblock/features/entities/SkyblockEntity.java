@@ -17,6 +17,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 public abstract class SkyblockEntity {
 
@@ -35,6 +38,7 @@ public abstract class SkyblockEntity {
     protected int lifeSpan;
     @Setter
     private SkyblockPlayer lastDamager;
+    private List<Player> damaged;
 
     public static class Equipment {
         public ItemStack hand;
@@ -60,6 +64,7 @@ public abstract class SkyblockEntity {
         tick = 0;
         lifeSpan = 15 * 20;
         lastDamager = null;
+        damaged = new ArrayList<>();
     }
 
     protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,

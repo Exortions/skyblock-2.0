@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.enchantment.enchantments;
+package com.skyblock.skyblock.features.enchantment.enchantments.sword;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
@@ -20,7 +20,7 @@ public class EnderSlayerEnchantment extends SwordEnchantment {
 
     public EnderSlayerEnchantment() {
         super("ender_slayer", "Ender Slayer", (level) -> {
-            String description = "Increases damage dealt to Ender Dragons and Enderman by {damage}%.";
+            String description = "Increases damage dealt to\nEnder Dragons and\nEnderman by {damage}%.";
 
             int damage;
 

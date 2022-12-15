@@ -193,7 +193,21 @@ public class PlayerListener implements Listener {
                 }
             }
 
+            if (player.getExtraData("cleave_enchantment") != null) {
+                float perc = (float) player.getExtraData("cleave_enchantment");
+                damage = damage * perc;
+                display = display * perc;
+            }
+
             e.setDamage(damage);
+
+            try {
+                ItemBase base = new ItemBase(p.getItemInHand());
+
+                for (ItemEnchantment ench : base.getEnchantments()) {
+                    ench.getBaseEnchantment().onDamage(player, e, damage);
+                }
+            } catch (Exception ignored) {}
 
             if (crit) {
                 Util.setDamageIndicator(e.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);

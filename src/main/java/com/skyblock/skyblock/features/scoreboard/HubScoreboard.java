@@ -43,10 +43,10 @@ public class HubScoreboard extends Scoreboard {
         addLine(7, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
         addLine(6, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getIcon());
         if (!loc.contains("Private Island")) {
-            if (currentLocation != null) addLine(5, currentLocation.getColor() + " ⏣ " + loc);
-            else addLine(5, ChatColor.WHITE + " ⏣ " + loc);
+            if (currentLocation != null) addLine(5, ChatColor.GRAY + " ⏣ " + currentLocation.getColor() + loc);
+            else addLine(5,  ChatColor.GRAY + " ⏣ " + ChatColor.WHITE+ loc);
         } else {
-            addLine(5, ChatColor.GREEN + " ⏣ " + loc);
+            addLine(5, ChatColor.GRAY + " ⏣ " + ChatColor.GREEN + loc);
         }
         addLine(4, ChatColor.WHITE + " ");
         addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));

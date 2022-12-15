@@ -35,4 +35,6 @@ public abstract class SkyblockEnchantment implements Listener {
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
         return damage;
     }
+
+    public void onDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) { }
 }

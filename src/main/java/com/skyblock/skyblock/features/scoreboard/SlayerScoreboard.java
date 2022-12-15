@@ -43,10 +43,10 @@ public class SlayerScoreboard extends Scoreboard {
         addLine(11, ChatColor.WHITE + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getDate());
         addLine(10, ChatColor.GRAY + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getTime() + " " + Skyblock.getPlugin(Skyblock.class).getTimeManager().getIcon());
         if (!loc.contains("Private Island")) {
-            if (currentLocation != null) addLine(9, currentLocation.getColor() + " ⏣ " + loc);
-            else addLine(9, ChatColor.WHITE + " ⏣ " + loc);
+            if (currentLocation != null) addLine(9, ChatColor.GRAY + " ⏣ " + currentLocation.getColor() + loc);
+            else addLine(9, ChatColor.GRAY + " ⏣ " + ChatColor.WHITE + loc);
         } else {
-            addLine(9, ChatColor.GREEN + " ⏣ " + loc);
+            addLine(9, ChatColor.GRAY + " ⏣ " + ChatColor.GREEN + loc);
         }
         addLine(8, ChatColor.WHITE + " ");
         addLine(7, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));

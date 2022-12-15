@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.enchantment.enchantments;
+package com.skyblock.skyblock.features.enchantment.enchantments.sword;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;

@@ -318,3 +318,163 @@ Fisherman's Hut:
   name: Fisherman's Hut
   color: AQUA
   weight: 2
+Coal Mine:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 8.0
+    y: 88.0
+    z: -145.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -68.0
+    y: 30.0
+    z: -232.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Coal Mine
+  color: AQUA
+  weight: 1
+Gold Mine:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 61.0
+    y: 23.0
+    z: -267.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -110.0
+    y: 138.0
+    z: -394.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Gold Mine
+  color: GOLD
+  weight: 0
+Spiders Den:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -148.0
+    y: 223.0
+    z: -179.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -404.0
+    y: 18.0
+    z: -323.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Spiders Den
+  color: AQUA
+  weight: 0
+The End:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -775.0
+    y: 255.0
+    z: -162.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -450.0
+    y: 0.0
+    z: -390.0
+    pitch: 0.0
+    yaw: 0.0
+  name: The End
+  color: LIGHT_PURPLE
+  weight: 0
+Dragon's Nest:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -604.0
+    y: 99.0
+    z: -332.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -749.0
+    y: -6.0
+    z: -220.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Dragon's Nest
+  color: DARK_PURPLE
+  weight: 1
+Forest:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -87.0
+    y: 68.0
+    z: -64.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -228.0
+    y: 91.0
+    z: 9.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Forest
+  color: AQUA
+  weight: 1
+The Park:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -482.0
+    y: 168.0
+    z: -152.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -271.0
+    y: 32.0
+    z: 55.0
+    pitch: 0.0
+    yaw: 0.0
+  name: The Park
+  color: AQUA
+  weight: 0
+Blazing Fortress:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: -203.0
+    y: -5.0
+    z: -377.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: -412.0
+    y: 255.0
+    z: -744.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Blazing Fortress
+  color: RED
+  weight: 0

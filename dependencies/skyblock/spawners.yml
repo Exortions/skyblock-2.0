@@ -7,6 +7,8 @@ ids:
 - SIX_K
 - NINE_K
 - ZEALOT
+- RUINS
+- OLD_WOLF
 GRAVEYARD:
   locations:
   - ==: org.bukkit.Location
@@ -879,6 +881,218 @@ ZEALOT:
     yaw: 354.9491
   type: ENDERMAN
   subType: ZEALOT
+  delay: 200
+  limit: 25
+  amount: 1
+  range: 1
+RUINS:
+  locations:
+  - ==: org.bukkit.Location
+    world: world
+    x: -187.84804360460356
+    y: 87.0
+    z: 83.06474951134427
+    pitch: 34.35188
+    yaw: 129.54639
+  - ==: org.bukkit.Location
+    world: world
+    x: -196.88957915775165
+    y: 89.0
+    z: 82.52130405228725
+    pitch: 37.877464
+    yaw: 184.37396
+  - ==: org.bukkit.Location
+    world: world
+    x: -188.82047646645782
+    y: 87.0
+    z: 95.25615744556603
+    pitch: 24.453087
+    yaw: 72.88318
+  - ==: org.bukkit.Location
+    world: world
+    x: -202.72569890935375
+    y: 89.0
+    z: 100.66766557516372
+    pitch: 23.91068
+    yaw: 48.249146
+  - ==: org.bukkit.Location
+    world: world
+    x: -211.40119231110475
+    y: 91.0
+    z: 109.04808141264758
+    pitch: 23.91068
+    yaw: 48.249146
+  - ==: org.bukkit.Location
+    world: world
+    x: -218.00337832153548
+    y: 92.0
+    z: 118.4239797331935
+    pitch: 23.91068
+    yaw: 48.249146
+  - ==: org.bukkit.Location
+    world: world
+    x: -210.84598487521248
+    y: 91.0
+    z: 79.99312393068222
+    pitch: 40.54419
+    yaw: 144.43475
+  - ==: org.bukkit.Location
+    world: world
+    x: -215.98622102448394
+    y: 91.0
+    z: 72.09582804068613
+    pitch: 35.12021
+    yaw: 163.68994
+  - ==: org.bukkit.Location
+    world: world
+    x: -215.99625534768018
+    y: 91.0
+    z: 59.27681229808296
+    pitch: 35.12021
+    yaw: 163.68994
+  - ==: org.bukkit.Location
+    world: world
+    x: -224.61870412434848
+    y: 92.0
+    z: 64.50143444196718
+    pitch: 28.11422
+    yaw: 83.91205
+  - ==: org.bukkit.Location
+    world: world
+    x: -223.31803975982092
+    y: 92.0
+    z: 86.92048056858046
+    pitch: 30.374239
+    yaw: 29.011719
+  - ==: org.bukkit.Location
+    world: world
+    x: -229.5541677495873
+    y: 93.0
+    z: 98.1613556774655
+    pitch: 30.374239
+    yaw: 29.011719
+  - ==: org.bukkit.Location
+    world: world
+    x: -238.9030475233164
+    y: 93.0
+    z: 98.606766781571
+    pitch: 32.724644
+    yaw: 88.1781
+  - ==: org.bukkit.Location
+    world: world
+    x: -252.39768426005992
+    y: 92.0
+    z: 106.76276808216936
+    pitch: 32.724644
+    yaw: 88.1781
+  - ==: org.bukkit.Location
+    world: world
+    x: -259.88099108374433
+    y: 91.0
+    z: 97.21599397391122
+    pitch: 36.657032
+    yaw: 99.29736
+  - ==: org.bukkit.Location
+    world: world
+    x: -232.11955084800442
+    y: 100.0
+    z: 51.62550226089992
+    pitch: 38.193756
+    yaw: 346.99316
+  - ==: org.bukkit.Location
+    world: world
+    x: -240.8618165740459
+    y: 105.0
+    z: 60.61243668979766
+    pitch: 32.31778
+    yaw: 10.451782
+  - ==: org.bukkit.Location
+    world: world
+    x: -244.72540365967117
+    y: 101.0
+    z: 62.09672078097303
+    pitch: 64.31928
+    yaw: 56.64624
+  - ==: org.bukkit.Location
+    world: world
+    x: -254.97733059349767
+    y: 93.0
+    z: 55.9013390652348
+    pitch: 56.092876
+    yaw: 51.2677
+  - ==: org.bukkit.Location
+    world: world
+    x: -255.39266418188976
+    y: 94.0
+    z: 70.65059558629162
+    pitch: 34.984547
+    yaw: 355.71716
+  - ==: org.bukkit.Location
+    world: world
+    x: -241.94227558175166
+    y: 94.0
+    z: 72.17032235915937
+    pitch: 29.470165
+    yaw: 261.2213
+  - ==: org.bukkit.Location
+    world: world
+    x: -231.26562056287833
+    y: 96.0
+    z: 83.54084621616967
+    pitch: 35.52694
+    yaw: 290.82654
+  - ==: org.bukkit.Location
+    world: world
+    x: -238.92570074241803
+    y: 105.0
+    z: 80.56510224437758
+    pitch: 19.61658
+    yaw: 53.816162
+  - ==: org.bukkit.Location
+    world: world
+    x: -249.32106822841433
+    y: 105.0
+    z: 70.31245115918271
+    pitch: 42.623283
+    yaw: 93.502075
+  - ==: org.bukkit.Location
+    world: world
+    x: -253.79217225508583
+    y: 105.0
+    z: 78.04420644681616
+    pitch: 46.19407
+    yaw: 329.33765
+  type: WOLF
+  subType: RUINS
+  delay: 200
+  limit: 25
+  amount: 1
+  range: 1
+OLD_WOLF:
+  locations:
+  - ==: org.bukkit.Location
+    world: world
+    x: -272.22502264276363
+    y: 90.0
+    z: 98.05586654550717
+    pitch: 37.74183
+    yaw: 99.11658
+  - ==: org.bukkit.Location
+    world: world
+    x: -252.4295484077459
+    y: 94.0
+    z: 79.05180507000688
+    pitch: 34.984547
+    yaw: 355.71716
+  - ==: org.bukkit.Location
+    world: world
+    x: -256.69999998807907
+    y: 105.0
+    z: 76.03860394010044
+    pitch: 47.143265
+    yaw: 78.76709
+  type: WOLF
+  subType: OLD_WOLF
   delay: 200
   limit: 25
   amount: 1

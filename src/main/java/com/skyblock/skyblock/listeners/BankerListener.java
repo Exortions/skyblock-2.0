@@ -1,11 +1,17 @@
 package com.skyblock.skyblock.listeners;
 
+import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.sign.SignClickCompleteHandler;
+import com.skyblock.skyblock.utilities.sign.SignCompleteEvent;
+import com.skyblock.skyblock.utilities.sign.SignGui;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +49,22 @@ public class BankerListener implements Listener {
                 else if (stack.getAmount() == 32) player.performCommand("sb deposit half");
 
                 player.performCommand("sb banker deposit");
+                player.performCommand("sb banker");
+            } else if (stack.getType().equals(Material.SIGN)) {
+                SignGui sign = new SignGui(Skyblock.getPlugin().getSignManager(), e -> {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                int amount = Integer.parseInt(e.getLines()[0]);
+                                player.performCommand("sb deposit " + amount);
+                                player.performCommand("sb banker");
+                            } catch (NumberFormatException ignored) { }
+                        }
+                    }.runTask(Skyblock.getPlugin());
+                });
+
+                sign.open(player);
             }
         } else if (event.getClickedInventory().getTitle().equals("Bank Withdrawal")) {
             if (stack.getType().equals(Material.DROPPER)) {
@@ -51,8 +73,23 @@ public class BankerListener implements Listener {
                 else if (stack.getAmount() == 1) player.performCommand("sb withdraw 20%");
 
                 player.performCommand("sb banker withdraw");
+                player.performCommand("sb banker");
+            } else if (stack.getType().equals(Material.SIGN)) {
+                SignGui sign = new SignGui(Skyblock.getPlugin().getSignManager(), e -> {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                int amount = Integer.parseInt(e.getLines()[0]);
+                                player.performCommand("sb withdraw " + amount);
+                                player.performCommand("sb banker");
+                            } catch (NumberFormatException ignored) { }
+                        }
+                    }.runTask(Skyblock.getPlugin());
+                });
+
+                sign.open(player);
             }
         }
     }
-
 }
