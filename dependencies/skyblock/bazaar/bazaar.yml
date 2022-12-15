@@ -1,0 +1,92 @@
+items:
+  minecraft;WHEAT:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  skyblock;ENCHANTED_BREAD:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;HAY_BLOCK:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  skyblock;ENCHANTED_HAY_BALE:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  minecraft;SEEDS:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+  skyblock;ENCHANTED_SEEDS:
+    buyPrice: 0.0
+    sellPrice: 0.0
+    orders: []
+    offers: []
+    buyVolume:
+      amount: 0
+      offers: 0
+    last7dInstantBuyVolume: 0
+    sellVolume:
+      amount: 0
+      orders: 0
+    last7dInstantSellVolume: 0
+categories:
+  Farming:
+    icon: !!org.bukkit.Material 'GOLD_HOE'
+    items:
+      Wheat & Seeds:
+        size: 36
+        slots:
+          minecraft;WHEAT: 11
+          skyblock;ENCHANTED_BREAD: 12
+          minecraft;HAY_BLOCK: 13
+          skyblock;ENCHANTED_HAY_BALE: 14
+          minecraft;SEEDS: 15
+          skyblock;ENCHANTED_SEEDS: 22

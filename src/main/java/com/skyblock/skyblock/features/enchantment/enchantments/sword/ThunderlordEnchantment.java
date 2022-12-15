@@ -23,9 +23,14 @@ public class ThunderlordEnchantment extends SwordEnchantment {
     private static class ThunderlordInfo {
         private int hits;
         private UUID entity;
+
+        @Override
+        public String toString() {
+            return "Hits: " + hits + " UUID: " + entity;
+        }
     }
 
-    private static final HashMap<SkyblockPlayer, ThunderlordInfo> hits = new HashMap<>();
+    private static final HashMap<Player, ThunderlordInfo> hits = new HashMap<>();
 
     public ThunderlordEnchantment() {
         super("thunderlord", "Thunderlord", (level) -> "&7Strikes a monster with lightning\n&7every 3 consecutive hits,\n&7dealing " + ChatColor.GREEN + level * 10 + "% &7of your Strength\n&7as damage", 4);
@@ -46,13 +51,13 @@ public class ThunderlordEnchantment extends SwordEnchantment {
 
     @Override
     public void onDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (hits.containsKey(player)) {
-            if (hits.get(player).getEntity() != e.getEntity().getUniqueId()) {
-                hits.put(player, new ThunderlordInfo(1, e.getEntity().getUniqueId()));
+        if (hits.containsKey(player.getBukkitPlayer())) {
+            if (!hits.get(player.getBukkitPlayer()).getEntity().equals(e.getEntity().getUniqueId())) {
+                hits.put(player.getBukkitPlayer(), new ThunderlordInfo(1, e.getEntity().getUniqueId()));
             } else {
-                hits.put(player, new ThunderlordInfo(hits.get(player).getHits() + 1, e.getEntity().getUniqueId()));
+                hits.put(player.getBukkitPlayer(), new ThunderlordInfo(hits.get(player.getBukkitPlayer()).getHits() + 1, e.getEntity().getUniqueId()));
 
-                if (hits.get(player).getHits() % 3 == 0) {
+                if (hits.get(player.getBukkitPlayer()).getHits() % 3 == 0) {
                     e.getEntity().getWorld().strikeLightningEffect(e.getEntity().getLocation());
                     player.setExtraData("thunderlord_enchantment", true);
                     Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(player.getBukkitPlayer(), e.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
@@ -60,7 +65,7 @@ public class ThunderlordEnchantment extends SwordEnchantment {
                 }
             }
         } else {
-            hits.put(player, new ThunderlordInfo(1, e.getEntity().getUniqueId()));
+            hits.put(player.getBukkitPlayer(), new ThunderlordInfo(1, e.getEntity().getUniqueId()));
         }
     }
 }
