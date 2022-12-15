@@ -30,7 +30,16 @@ public class SpongeReplacer {
     }
 
     public void generate() {
-        SkyblockLocation location = Skyblock.getPlugin().getLocationManager().getLocation(region);
+        SkyblockLocation location;
+
+        try {
+            location = Skyblock.getPlugin().getLocationManager().getLocation(region);
+        } catch (NullPointerException ex) {
+            Skyblock.getPlugin().sendMessage("&cCould not find region &8" + region + "&c, please make sure that your &8locations.yml &cis up to date");
+            Bukkit.getPluginManager().disablePlugin(Skyblock.getPlugin());
+            return;
+        }
+
         List<Block> blocks = blocksFromTwoPoints(location.getPosition1(), location.getPosition2());
 
         for (Block block : blocks) {

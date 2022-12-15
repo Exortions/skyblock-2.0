@@ -100,7 +100,7 @@ public class SkyblockBazaar implements Bazaar {
 
             this.categories.forEach(category -> {
                 try {
-                    this.set("categories." + category.getName() + ".icon", category.getIcon());
+                    this.set("categories." + category.getName() + ".icon", category.getIcon().name());
                     this.set("categories." + category.getName() + ".items", new ArrayList<>());
 
                     for (BazaarItem item : category.getItems()) {

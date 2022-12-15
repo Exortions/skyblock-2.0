@@ -132,6 +132,10 @@ public class MerchantHandler {
     public void registerMerchant(String id, Merchant merchant) {
         this.merchants.put(id, merchant);
 
+        if (!Skyblock.getPlugin().isEnabled()) {
+            Skyblock.getPlugin().sendMessage("&cFailed to register merchant &8" + id + "&c: plugin is not enabled");
+            return;
+        }
         Bukkit.getPluginManager().registerEvents(merchant, Skyblock.getPlugin(Skyblock.class));
     }
 
