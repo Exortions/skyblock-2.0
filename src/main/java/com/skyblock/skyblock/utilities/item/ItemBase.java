@@ -240,6 +240,10 @@ public class ItemBase {
                         lore.add(ChatColor.GRAY + s);
                     }
                 }
+            } else if (this.enchantments.size() <= 7) {
+                for (ItemEnchantment enchantment : this.enchantments) {
+                    lore.add(ChatColor.BLUE + enchantment.getBaseEnchantment().getDisplayName() + " " + Util.toRoman(enchantment.getLevel()));
+                }
             } else {
                 List<String> enchantmentLore = new ArrayList<>();
 
@@ -253,7 +257,7 @@ public class ItemBase {
                         currentLine = new StringBuilder();
                     }
 
-                    currentLine.append(ChatColor.BLUE).append(enchantment.getBaseEnchantment().getName()).append(" ").append(Util.toRoman(enchantment.getLevel())).append(ChatColor.BLUE).append(", ");
+                    currentLine.append(ChatColor.BLUE).append(enchantment.getBaseEnchantment().getDisplayName()).append(" ").append(Util.toRoman(enchantment.getLevel())).append(ChatColor.BLUE).append(", ");
                 }
 
                 if (currentLine.length() > 0) {

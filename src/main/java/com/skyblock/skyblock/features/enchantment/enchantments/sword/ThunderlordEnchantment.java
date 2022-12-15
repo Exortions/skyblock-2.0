@@ -20,7 +20,7 @@ public class ThunderlordEnchantment extends SwordEnchantment {
 
     @Getter
     @AllArgsConstructor
-    private static class ThunderlordInfo {
+    public static class ThunderlordInfo {
         private int hits;
         private UUID entity;
 
@@ -30,7 +30,7 @@ public class ThunderlordEnchantment extends SwordEnchantment {
         }
     }
 
-    private static final HashMap<Player, ThunderlordInfo> hits = new HashMap<>();
+    public static final HashMap<Player, ThunderlordInfo> hits = new HashMap<>();
 
     public ThunderlordEnchantment() {
         super("thunderlord", "Thunderlord", (level) -> "&7Strikes a monster with lightning\n&7every 3 consecutive hits,\n&7dealing " + ChatColor.GREEN + level * 10 + "% &7of your Strength\n&7as damage", 4);

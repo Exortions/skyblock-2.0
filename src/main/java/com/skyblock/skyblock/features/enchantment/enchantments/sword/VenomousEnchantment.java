@@ -40,6 +40,11 @@ public class VenomousEnchantment extends SwordEnchantment {
 
         for (int i = 0; i < 4; i++) {
             Util.delay(() -> {
+                if (ThunderlordEnchantment.hits.containsKey(player.getBukkitPlayer())) {
+                    ThunderlordEnchantment.ThunderlordInfo info = ThunderlordEnchantment.hits.get(player.getBukkitPlayer());
+                    ThunderlordEnchantment.hits.put(player.getBukkitPlayer(), new ThunderlordEnchantment.ThunderlordInfo(info.getHits() - 1, info.getEntity()));
+                }
+
                 player.setExtraData("venomous_enchantment", true);
                 player.setStat(SkyblockStat.CRIT_CHANCE, 0, false);
                 Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(player.getBukkitPlayer(), e.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
