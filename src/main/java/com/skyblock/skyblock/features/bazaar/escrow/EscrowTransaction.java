@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.bazaar.escrow;
 
 import com.skyblock.skyblock.features.bazaar.Bazaar;
+import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
 import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
@@ -17,6 +18,7 @@ public interface EscrowTransaction {
     int getAmount();
     double getPrice();
     Escrow.TransactionType getType();
+    BazaarSubItem getSubItem();
 
     Consumer<EscrowTransaction> getOnFill();
 

@@ -43,6 +43,30 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Mining",
+        "icon": "DIAMOND_PICKAXE",
+        "color": "AQUA",
+        "items": []
+      },
+      {
+        "name": "Combat",
+        "icon": "IRON_SWORD",
+        "color": "RED",
+        "items": []
+      },
+      {
+        "name": "Woods & Fishes",
+        "icon": "FISHING_ROD",
+        "color": "GOLD",
+        "items": []
+      },
+      {
+        "name": "Oddities",
+        "icon": "ENCHANTMENT_TABLE",
+        "color": "LIGHT_PURPLE",
+        "items": []
       }
     ]
   }

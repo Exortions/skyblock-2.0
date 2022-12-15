@@ -6,6 +6,7 @@ import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.features.auction.gui.AuctionBrowserGUI;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
+import com.skyblock.skyblock.features.bazaar.impl.SkyblockBazaarSubItem;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
@@ -62,7 +63,7 @@ public class TestCommand implements Command {
 
         Escrow escrow = Skyblock.getPlugin().getBazaar().getEscrow();
 
-        EscrowTransaction transaction = escrow.createTransaction(player, player, 100, 300, Escrow.TransactionType.SELL, (trans) -> {
+        EscrowTransaction transaction = escrow.createTransaction(player, player, 100, 300, escrow.getBazaar().getRawItems().get(0), Escrow.TransactionType.SELL, (trans) -> {
             if (Bukkit.getPlayer(trans.getSeller().getUniqueId()) != null) {
                 Bukkit.getPlayer(trans.getSeller().getUniqueId()).sendMessage("order filled!");
             }

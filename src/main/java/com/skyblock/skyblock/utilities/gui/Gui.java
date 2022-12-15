@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class Gui implements Listener {
     public final HashMap<String, Runnable> clickEvents;
     public final HashMap<ItemStack, Runnable> specificClickEvents;
     public final HashMap<Integer, ItemStack> items;
+    public final List<ItemStack> addableItems;
     public String name;
     public final int slots;
 
@@ -47,6 +49,7 @@ public class Gui implements Listener {
         this.specificClickEvents = specificClickEvents;
 
         this.items = new HashMap<>();
+        this.addableItems = new ArrayList<>();
         this.opened = new HashMap<>();
     }
     public void show(Player player) {
@@ -72,6 +75,8 @@ public class Gui implements Listener {
             }
         }
 
+        for (ItemStack stack : this.addableItems) inventory.addItem(stack);
+
         player.openInventory(inventory);
 
         Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin());
@@ -85,6 +90,14 @@ public class Gui implements Listener {
 
     public void addItem(int slot, ItemStack stack) {
         this.items.put(slot, stack);
+    }
+
+    public void addItem(ItemStack stack) {
+        this.addableItems.add(stack);
+    }
+
+    public ItemStack getItem(int slot) {
+        return this.items.get(slot);
     }
 
     public void fillEmpty(ItemStack stack) {

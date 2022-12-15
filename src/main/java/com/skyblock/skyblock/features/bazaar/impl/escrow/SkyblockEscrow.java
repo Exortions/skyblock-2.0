@@ -1,10 +1,13 @@
 package com.skyblock.skyblock.features.bazaar.impl.escrow;
 
 import com.skyblock.skyblock.features.bazaar.Bazaar;
+import com.skyblock.skyblock.features.bazaar.BazaarItem;
+import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import org.bukkit.OfflinePlayer;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +39,11 @@ public class SkyblockEscrow implements Escrow {
     }
 
     @Override
+    public Bazaar getBazaar() {
+        return bazaar;
+    }
+
+    @Override
     public HashMap<UUID, EscrowTransaction> getTransactions() {
         return this.transactions;
     }
@@ -51,15 +59,38 @@ public class SkyblockEscrow implements Escrow {
     }
 
     @Override
+    public List<EscrowTransaction> getRankedBuyOrders() {
+        return this.getBuyOrders().stream().sorted((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EscrowTransaction> getRankedSellOrders() {
+        return this.getSellOrders().stream().sorted(Comparator.comparingDouble(EscrowTransaction::getPrice)).collect(Collectors.toList());
+    }
+
+    @Override
+    public double getBuyPrice(BazaarItem item) {
+        try {
+            return this.getRankedBuyOrders().get(0).getPrice();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    @Override
+    public double getSellPrice(BazaarItem item) {
+        try {
+            return this.getRankedSellOrders().get(0).getPrice();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    @Override
     public void fillSellOrder(EscrowTransaction transaction, int amountSold) {
         if (transaction.isCancelled() || !this.transactions.containsKey(transaction.getUuid())) return;
 
-        List<EscrowTransaction> buyOrders = this.getBuyOrders().stream().sorted((o1, o2) -> {
-            double o1Price = o1.getPrice();
-            double o2Price = o2.getPrice();
-
-            return Double.compare(o2Price, o1Price);
-        }).collect(Collectors.toList());
+        List<EscrowTransaction> buyOrders = this.getRankedBuyOrders();
 
         for (EscrowTransaction buyOrder : buyOrders) {
             if (amountSold <= 0) break;
@@ -82,12 +113,7 @@ public class SkyblockEscrow implements Escrow {
     public void fillBuyOrder(EscrowTransaction transaction, int amountBought) {
         if (transaction.isCancelled() || !this.transactions.containsKey(transaction.getUuid())) return;
 
-        List<EscrowTransaction> sellOrders = this.getSellOrders().stream().sorted((o1, o2) -> {
-            double o1Price = o1.getPrice();
-            double o2Price = o2.getPrice();
-
-            return Double.compare(o1Price, o2Price);
-        }).collect(Collectors.toList());
+        List<EscrowTransaction> sellOrders = this.getRankedSellOrders();
 
         for (EscrowTransaction sellOrder : sellOrders) {
             if (amountBought <= 0) break;
@@ -107,8 +133,8 @@ public class SkyblockEscrow implements Escrow {
     }
 
     @Override
-    public EscrowTransaction createTransaction(OfflinePlayer seller, OfflinePlayer buyer, double price, int amount, TransactionType type, Consumer<EscrowTransaction> onFill) {
-        EscrowTransaction transaction = new SkyblockEscrowTransaction(this.bazaar, UUID.randomUUID(), seller, buyer, price, amount, type, onFill, false, false);
+    public EscrowTransaction createTransaction(OfflinePlayer seller, OfflinePlayer buyer, double price, int amount, BazaarSubItem item, TransactionType type, Consumer<EscrowTransaction> onFill) {
+        EscrowTransaction transaction = new SkyblockEscrowTransaction(this.bazaar, UUID.randomUUID(), seller, buyer, price, amount, item,type, onFill, false, false);
 
         this.transactions.put(transaction.getUuid(), transaction);
         this.deposit(amount);

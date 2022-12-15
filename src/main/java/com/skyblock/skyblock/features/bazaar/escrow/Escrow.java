@@ -1,6 +1,10 @@
 package com.skyblock.skyblock.features.bazaar.escrow;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.bazaar.Bazaar;
+import com.skyblock.skyblock.features.bazaar.BazaarItem;
+import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
+import com.skyblock.skyblock.utilities.Pair;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
@@ -23,12 +27,21 @@ public interface Escrow {
         SELL
     }
 
+    Bazaar getBazaar();
+
     HashMap<UUID, EscrowTransaction> getTransactions();
 
     List<EscrowTransaction> getBuyOrders();
     List<EscrowTransaction> getSellOrders();
 
-    EscrowTransaction createTransaction(OfflinePlayer seller, OfflinePlayer buyer, double price, int amount, TransactionType type, Consumer<EscrowTransaction> onFill);
+    List<EscrowTransaction> getRankedBuyOrders();
+    List<EscrowTransaction> getRankedSellOrders();
+
+    double getBuyPrice(BazaarItem item);
+    double getSellPrice(BazaarItem item);
+
+    EscrowTransaction createTransaction(OfflinePlayer seller, OfflinePlayer buyer, double price, int amount, BazaarSubItem item, TransactionType type, Consumer<EscrowTransaction> onFill);
+
     EscrowTransaction getTransaction(UUID uuid);
 
     void removeTransaction(UUID uuid);

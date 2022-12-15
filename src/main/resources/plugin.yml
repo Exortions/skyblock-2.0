@@ -21,3 +21,13 @@ commands:
     description: Warp to a location
     aliases:
       - sb warp
+  auction:
+    description: Open the auction house
+    aliases:
+      - sb auction
+      - ah
+  bazaar:
+    description: Open the bazaar
+    aliases:
+      - sb bazaar
+      - bz

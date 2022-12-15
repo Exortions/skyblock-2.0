@@ -1,6 +1,7 @@
 package com.skyblock.skyblock;
 
 import com.skyblock.skyblock.commands.economy.AuctionCommand;
+import com.skyblock.skyblock.commands.economy.BazaarCommand;
 import com.skyblock.skyblock.commands.economy.DepositCommand;
 import com.skyblock.skyblock.commands.economy.WithdrawCommand;
 import com.skyblock.skyblock.commands.enchantment.EnchantCommand;
@@ -640,7 +641,8 @@ public final class Skyblock extends JavaPlugin {
                 new ItemNBTCommand(),
                 new AuctionCommand(),
                 new CreateSpawnerCommand(),
-                new SkillsCommand()
+                new SkillsCommand(),
+                new BazaarCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

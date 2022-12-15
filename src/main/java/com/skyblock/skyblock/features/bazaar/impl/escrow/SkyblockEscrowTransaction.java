@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.bazaar.impl.escrow;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.bazaar.Bazaar;
+import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,8 @@ public class SkyblockEscrowTransaction implements EscrowTransaction {
     private final OfflinePlayer buyer;
     private final double price;
     private int amount;
+
+    private final BazaarSubItem subItem;
 
     private final Escrow.TransactionType type;
 

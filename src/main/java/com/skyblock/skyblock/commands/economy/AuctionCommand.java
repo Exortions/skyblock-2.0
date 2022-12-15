@@ -6,6 +6,7 @@ import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
 import com.skyblock.skyblock.features.auction.gui.AuctionInspectGUI;
 import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.utilities.command.TrueAlias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @RequiresPlayer
 @Usage(usage = "/sb auction <price> <time> <bin>")
 @Description(description = "Shows auction house")
-public class AuctionCommand implements Command {
+public class AuctionCommand implements Command, TrueAlias<AuctionCommand> {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {

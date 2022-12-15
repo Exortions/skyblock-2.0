@@ -17,6 +17,7 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
+import net.minecraft.server.v1_8_R3.IInventory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.*;
@@ -161,6 +162,17 @@ public class Util {
         inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
         inventory.setItem(45, new ItemBuilder(" ", material, (short) data).toItemStack());
         inventory.setItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
+    }
+
+    public void fillSidesLeftOneIndented(Gui gui, Material material, int data) {
+        for (int i = 10; i < 45; i += 9) if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9) if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 0; i < 9; i += 1) if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+
+        if (gui.getItem(1) == null) gui.addItem(1, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (gui.getItem(8) == null) gui.addItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (gui.getItem(46) == null) gui.addItem(46, new ItemBuilder(" ", material, (short) data).toItemStack());
+        if (gui.getItem(53) == null) gui.addItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillBottom(Inventory inventory, Material material, int data) {
