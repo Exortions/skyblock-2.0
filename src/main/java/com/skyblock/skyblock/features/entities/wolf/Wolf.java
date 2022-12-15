@@ -12,7 +12,7 @@ public class Wolf extends SkyblockEntity {
     private final WolfType type;
 
     public Wolf(String type) {
-        super(Skyblock.getPlugin(), EntityType.WOLF);
+        super(EntityType.WOLF);
 
         this.type = WolfType.valueOf(type);
 

@@ -34,7 +34,7 @@ public abstract class SlayerBoss extends SkyblockEntity {
     private boolean failed;
 
     public SlayerBoss(EntityType type, SlayerType slayerType, Player spawner, int level, double displayHeight) {
-        super(Skyblock.getPlugin(), type);
+        super(type);
 
         this.level = level;
         this.slayerType = slayerType;

@@ -2,8 +2,12 @@ package com.skyblock.skyblock.features.blocks;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -11,13 +15,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("deprecation")
 public class RegenerativeBlockHandler implements Listener {
 
+    @Getter
+    @AllArgsConstructor
+    private class BlockData {
+        private Material material;
+        private byte data;
+    }
+
+    private static final HashMap<Location, BlockData> blocks = new HashMap<>();
     public static final HashMap<Material, Integer> resetTimes = new HashMap<Material, Integer>() {{
        put(Material.LOG, 20);
        put(Material.LOG_2, 20);
@@ -39,6 +53,35 @@ public class RegenerativeBlockHandler implements Listener {
        put(Material.GLOWSTONE, 7);
        put(Material.OBSIDIAN, 7);
        put(Material.ENDER_STONE, 7);
+       put(Material.STONE, 7);
+        put(Material.COBBLESTONE, 7);
+    }};
+
+    private static final String[] mines = new String[]{"Coal Mine", "Gold Mine", "Deep Caverns"};
+    private static final String[] forests = new String[]{"Forest", "The Park"};
+    private static final HashMap<Material, String[]> locations = new HashMap<Material, String[]>() {{
+        put(Material.LOG, forests);
+        put(Material.LOG_2, forests);
+        put(Material.LEAVES, forests);
+        put(Material.LEAVES_2, forests);
+        put(Material.YELLOW_FLOWER, forests);
+        put(Material.RED_ROSE, forests);
+        put(Material.DOUBLE_PLANT, forests);
+        put(Material.STONE, mines);
+        put(Material.COBBLESTONE, mines);
+        put(Material.IRON_ORE, mines);
+        put(Material.COAL_ORE, mines);
+        put(Material.GOLD_ORE, mines);
+        put(Material.LAPIS_ORE, mines);
+        put(Material.REDSTONE_ORE, mines);
+        put(Material.EMERALD_ORE, mines);
+        put(Material.DIAMOND_ORE, mines);
+        put(Material.DIAMOND_BLOCK, mines);
+        put(Material.NETHERRACK, new String[]{"Blazing Fortress"});
+        put(Material.QUARTZ_ORE, new String[]{"Blazing Fortress"});
+        put(Material.GLOWSTONE, new String[]{"Blazing Fortress"});
+        put(Material.OBSIDIAN, new String[]{"The End"});
+        put(Material.ENDER_STONE, new String[]{"The End"});
     }};
 
     public double getXpFromOre(Material material) {
@@ -92,6 +135,13 @@ public class RegenerativeBlockHandler implements Listener {
 
         if (!block.getType().equals(Material.COBBLESTONE)) player.setBrokenBlock(block);
 
+        if (!blocks.containsKey(block.getLocation())) blocks.put(block.getLocation(), new BlockData(block.getType(), block.getData()));
+
+        SkyblockLocation location = Skyblock.getPlugin().getLocationManager().getLocation(block.getLocation());
+        if (location == null) return;
+        if (locations.get(block.getType()) == null) return;
+        if (!Arrays.asList(locations.get(block.getType())).contains(location.getName())) return;
+
         switch (block.getType()) {
             case STONE:
                 if (block.getData() != 0) break;
@@ -104,9 +154,10 @@ public class RegenerativeBlockHandler implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        block.setType(Material.STONE);
+                        block.setType(blocks.get(block.getLocation()).getMaterial());
+                        block.setData(blocks.get(block.getLocation()).getData());
                     }
-                }.runTaskLater(skyblock, 140);
+                }.runTaskLater(skyblock, resetTimes.get(blocks.get(block.getLocation()).getMaterial()) * 20);
                 break;
             case COBBLESTONE:
                 Skill.reward(Objects.requireNonNull(Skill.parseSkill("Mining")), 1.0, player);
@@ -115,16 +166,13 @@ public class RegenerativeBlockHandler implements Listener {
 
                 block.setType(Material.BEDROCK);
 
-                AtomicReference<Material> setAfter = new AtomicReference<>(Material.COBBLESTONE);
-                if (player.getBrokenBlock() != null && player.getBrokenBlock().getType().equals(Material.COBBLESTONE)) setAfter.set(Material.STONE);
-                else if (player.getBrokenBlock() == null) setAfter.set(Material.BEDROCK);
-
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        block.setType(setAfter.get());
+                        block.setType(blocks.get(block.getLocation()).getMaterial());
+                        block.setData(blocks.get(block.getLocation()).getData());
                     }
-                }.runTaskLater(skyblock, 140);
+                }.runTaskLater(skyblock, resetTimes.get(blocks.get(block.getLocation()).getMaterial()) * 20);
                 break;
             case LOG:
             case LOG_2:
@@ -148,30 +196,37 @@ public class RegenerativeBlockHandler implements Listener {
             case EMERALD_ORE:
             case DIAMOND_ORE:
             case DIAMOND_BLOCK:
+                this.breakOre(event, block, player, this.getXpFromOre(block.getType()));
+                break;
             case NETHERRACK:
             case QUARTZ_ORE:
             case GLOWSTONE:
             case OBSIDIAN:
             case ENDER_STONE:
-                this.breakOre(event, block, player, this.getXpFromOre(block.getType()));
+                this.breakOre(event, block, player, this.getXpFromOre(block.getType()), Material.BEDROCK);
                 break;
         }
     }
 
     public void breakOre(BlockBreakEvent event, Block block, SkyblockPlayer player, double xp) {
+        breakOre(event, block, player, xp, Material.STONE);
+    }
+
+    public void breakOre(BlockBreakEvent event, Block block, SkyblockPlayer player, double xp, Material next) {
         Skill.reward(Objects.requireNonNull(Skill.parseSkill("Mining")), xp, player);
-        event.setCancelled(false);
+        event.setCancelled(true);
 
         Material type = block.getType();
 
         block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-        block.setType(Material.BEDROCK);
+        block.setType(next);
         new BukkitRunnable() {
             @Override
             public void run() {
-                block.setType(type);
+                block.setType(blocks.get(block.getLocation()).getMaterial());
+                block.setData(blocks.get(block.getLocation()).getData());
             }
-        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), resetTimes.get(type));
+        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), resetTimes.get(type) * 20);
     }
 
     public void breakNaturalBlock(BlockBreakEvent event, Block block, SkyblockPlayer player, String skill, double xp) {

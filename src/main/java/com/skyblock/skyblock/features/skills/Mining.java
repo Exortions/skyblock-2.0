@@ -29,9 +29,7 @@ public class Mining extends Skill {
     }
 
     @Override
-    public void update(SkyblockPlayer player, int prev) {
-        super.update(player, prev);
-
+    public void levelUp(SkyblockPlayer player, int prev) {
         player.addStat(SkyblockStat.DEFENSE, (int) getDefense(getLevel(getXP(player))));
     }
 }

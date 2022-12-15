@@ -13,14 +13,12 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.*;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
@@ -113,7 +111,8 @@ public class PlayerListener implements Listener {
     public void onDamage(EntityDamageEvent e){
         if (e.getEntity().hasMetadata("merchant")) return;
 
-        if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+        if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) &&
+            !e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
             if (e.getEntity() instanceof Player){
                 if (!e.isCancelled()) {
                     SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) e.getEntity());
@@ -211,6 +210,11 @@ public class PlayerListener implements Listener {
 
                 player.damage(sentity.getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, sentity.getVanilla());
             }
+        } else if (e.getDamager() instanceof Arrow) {
+            Arrow arrow = (Arrow) e.getDamager();
+            Entity entity = (Entity) arrow.getShooter();
+
+            Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(entity, e.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, e.getDamage()));
         }
     }
 
@@ -277,5 +281,10 @@ public class PlayerListener implements Listener {
         if (e.getChangedType().equals(AIR)){
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onCombust(EntityCombustEvent e) {
+        e.setCancelled(true);
     }
 }

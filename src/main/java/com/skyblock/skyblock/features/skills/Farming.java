@@ -36,9 +36,7 @@ public class Farming extends Skill {
                         ChatColor.GREEN + healthPlus + " " + ChatColor.RED + "❤ Health");
     }
     @Override
-    public void update(SkyblockPlayer player, int prev) {
-        super.update(player, prev);
-
+    public void levelUp(SkyblockPlayer player, int prev) {
         player.addStat(SkyblockStat.MAX_HEALTH, (int) getHealth(getLevel(getXP(player))));
         player.addStat(SkyblockStat.HEALTH, (int) getHealth(getLevel(getXP(player))));
     }

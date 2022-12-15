@@ -15,6 +15,7 @@ import java.util.List;
 public class SkyblockLocationManager {
 
     public static final String LOCATION_FILE_NAME = "locations.yml";
+    private static final List<SkyblockLocation> LOCATIONS_CACHE = new ArrayList<>();
 
     private final Skyblock skyblock;
     private final File file;
@@ -32,11 +33,19 @@ public class SkyblockLocationManager {
 
         List<SkyblockLocation> found = new ArrayList<>();
 
-        for (String name : this.getLocations()) {
-            temp = new SkyblockLocation((Location) getField(name, "pos1"), (Location) getField(name, "pos2"), ChatColor.valueOf(((String) getField(name, "color")).toUpperCase()), (String) getField(name, "name"), (int) getField(name, "weight"));
+        if (LOCATIONS_CACHE.isEmpty()) {
+            for (String name : this.getLocations()) {
+                temp = new SkyblockLocation((Location) getField(name, "pos1"), (Location) getField(name, "pos2"), ChatColor.valueOf(((String) getField(name, "color")).toUpperCase()), (String) getField(name, "name"), (int) getField(name, "weight"));
 
-            if (Util.inCuboid(location, temp.getPosition1(), temp.getPosition2())) found.add(temp);
-            else temp = null;
+                LOCATIONS_CACHE.add(temp);
+
+                if (Util.inCuboid(location, temp.getPosition1(), temp.getPosition2())) found.add(temp);
+                else temp = null;
+            }
+        } else {
+            for (SkyblockLocation skyblockLocation : LOCATIONS_CACHE) {
+                if (Util.inCuboid(location, skyblockLocation.getPosition1(), skyblockLocation.getPosition2())) found.add(skyblockLocation);
+            }
         }
 
         if (found.size() < 1) return null;
@@ -92,6 +101,8 @@ public class SkyblockLocationManager {
         } catch (Exception ex) {
             this.skyblock.sendMessage("&cFailed to save &7locations.yml&c: " + ex.getMessage());
         }
+
+        LOCATIONS_CACHE.add(new SkyblockLocation(position1, position2, color, name, weight));
     }
 
     public Object getField(String name, String field) {

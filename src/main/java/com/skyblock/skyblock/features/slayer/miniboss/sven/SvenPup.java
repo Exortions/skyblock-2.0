@@ -14,7 +14,7 @@ public class SvenPup extends SkyblockEntity {
     private SvenPackmaster owner;
 
     public SvenPup(SvenPackmaster owner) {
-        super(Skyblock.getPlugin(), EntityType.WOLF);
+        super(EntityType.WOLF);
 
         this.owner = owner;
 

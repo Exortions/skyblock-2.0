@@ -95,7 +95,7 @@ public class TarantulaBroodfather extends SlayerBoss {
         private final TarantulaBroodfather parent;
 
         public TopSpider(TarantulaBroodfather parent) {
-            super(Skyblock.getPlugin(), EntityType.CAVE_SPIDER);
+            super(EntityType.CAVE_SPIDER);
 
             this.parent = parent;
             setEntityData(parent.getEntityData());

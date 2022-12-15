@@ -25,7 +25,7 @@ public abstract class SlayerMiniboss extends SkyblockEntity {
     protected final Player spawner;
 
     public SlayerMiniboss(EntityType type, Player spawner) {
-        super(Skyblock.getPlugin(), type);
+        super(type);
 
         this.spawner = spawner;
     }

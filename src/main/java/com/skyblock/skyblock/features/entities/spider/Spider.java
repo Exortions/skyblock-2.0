@@ -14,7 +14,7 @@ public class Spider extends SkyblockEntity {
     private Skeleton jockey;
 
     public Spider(String type) {
-        super(Skyblock.getPlugin(), EntityType.SPIDER);
+        super(EntityType.SPIDER);
 
         this.type = SpiderType.valueOf(type);
 

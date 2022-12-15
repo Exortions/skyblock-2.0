@@ -31,9 +31,7 @@ public class Foraging extends Skill {
     }
 
     @Override
-    public void update(SkyblockPlayer player, int prev) {
-        super.update(player, prev);
-
+    public void levelUp(SkyblockPlayer player, int prev) {
         player.addStat(SkyblockStat.STRENGTH, (int) getStrength(getLevel(getXP(player))));
     }
 }

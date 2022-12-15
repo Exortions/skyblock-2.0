@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.entities.enderman;
+package com.skyblock.skyblock.features.entities.end.enderman;
 
 public enum EndermanType {
 

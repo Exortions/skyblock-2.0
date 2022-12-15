@@ -374,10 +374,6 @@ public class ItemBase {
 
     public boolean hasEnchantment(SkyblockEnchantment enchantment) {
         for (ItemEnchantment itemEnchantment : this.enchantments) {
-            System.out.println(itemEnchantment);
-            System.out.println(itemEnchantment.getLevel());
-            System.out.println(itemEnchantment.getBaseEnchantment());
-
             if (itemEnchantment.getBaseEnchantment().equals(enchantment)) return true;
         }
         return false;

@@ -26,9 +26,7 @@ public class Alchemy extends Skill {
     }
 
     @Override
-    public void update(SkyblockPlayer player, int prev) {
-        super.update(player, prev);
-
+    public void levelUp(SkyblockPlayer player, int prev) {
         player.addStat(SkyblockStat.MAX_MANA, (int) getIntelligence(getLevel(getXP(player))));
         player.addStat(SkyblockStat.MANA, (int) getIntelligence(getLevel(getXP(player))));
     }

@@ -138,6 +138,7 @@ public abstract class Skill {
     }
 
     public abstract List<String> getRewards(int level, int lastLevel);
+    public abstract void levelUp(SkyblockPlayer player, int level);
 
     public void update(SkyblockPlayer player, int prev) {
         int prevLevel = getLevel(prev);
@@ -164,6 +165,8 @@ public abstract class Skill {
             builder.append("\n").append(ChatColor.DARK_AQUA).append(ChatColor.BOLD).append("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             player.addCoins(COINS.get(level));
             player.getBukkitPlayer().sendMessage(builder.toString());
+
+            levelUp(player, level);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.entities.enderman;
+package com.skyblock.skyblock.features.entities.end.enderman;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 public class Enderman extends SkyblockEntity {
 
     public Enderman(String type) {
-        super(Skyblock.getPlugin(), EntityType.ENDERMAN);
+        super(EntityType.ENDERMAN);
 
         Equipment equipment = new Equipment();
 

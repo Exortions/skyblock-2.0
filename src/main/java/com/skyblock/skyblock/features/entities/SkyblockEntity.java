@@ -54,9 +54,9 @@ public abstract class SkyblockEntity {
         public Equipment() { }
     }
 
-    public SkyblockEntity(Skyblock sb, EntityType type) {
+    public SkyblockEntity(EntityType type) {
         entityType = type;
-        plugin = sb;
+        plugin = Skyblock.getPlugin();
         tick = 0;
         lifeSpan = 15 * 20;
         lastDamager = null;

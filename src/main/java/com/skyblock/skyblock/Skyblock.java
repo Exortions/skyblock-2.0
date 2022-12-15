@@ -513,6 +513,7 @@ public final class Skyblock extends JavaPlugin {
         this.spongeReplacerHandler = new SpongeReplacerHandler();
 
         this.spongeReplacerHandler.registerReplacer(new SpongeReplacer("Gold Mine", new SpongeBlock(Material.STONE, 10), new SpongeBlock(Material.IRON_ORE, 3), new SpongeBlock(Material.GOLD_ORE, 2)));
+        this.spongeReplacerHandler.registerReplacer(new SpongeReplacer("The End", new SpongeBlock(Material.OBSIDIAN, 1)));
 
         this.spongeReplacerHandler.startGeneration();
     }

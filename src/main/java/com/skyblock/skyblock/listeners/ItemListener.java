@@ -64,8 +64,10 @@ public class ItemListener implements Listener {
                     if (handler.isRegistered(item)) {
                         handler.getRegistered(item).onRightClick(e);
                     }
-                } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) && handler.isRegistered(item)) {
-                    handler.getRegistered(item).onLeftClick(e);
+                } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+                    if (handler.isRegistered(item)) {
+                        handler.getRegistered(item).onLeftClick(e);
+                    }
                 }
             }
         } catch (UnsupportedOperationException ignored) { }
