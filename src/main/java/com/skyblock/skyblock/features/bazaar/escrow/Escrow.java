@@ -37,8 +37,8 @@ public interface Escrow {
     List<EscrowTransaction> getRankedBuyOrders();
     List<EscrowTransaction> getRankedSellOrders();
 
-    double getBuyPrice(BazaarItem item);
-    double getSellPrice(BazaarItem item);
+    double getBuyPrice(BazaarSubItem item);
+    double getSellPrice(BazaarSubItem item);
 
     EscrowTransaction createTransaction(OfflinePlayer seller, OfflinePlayer buyer, double price, int amount, BazaarSubItem item, TransactionType type, Consumer<EscrowTransaction> onFill);
 

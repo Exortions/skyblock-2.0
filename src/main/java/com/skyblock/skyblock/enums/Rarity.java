@@ -38,4 +38,10 @@ public enum Rarity {
 
         return strings;
     }
+
+    @Override
+    public String toString() {
+        return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
+    }
+
 }

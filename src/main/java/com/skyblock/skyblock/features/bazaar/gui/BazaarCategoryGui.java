@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class BazaarCategoryGui extends Gui {
 
@@ -27,6 +28,12 @@ public class BazaarCategoryGui extends Gui {
 
                 put(cat.getColor() + cat.getName(), () -> {
                     new BazaarCategoryGui(player, cat, advanced).show(player);
+                });
+            }
+
+            for (BazaarItem item : category.getItems()) {
+                put(category.getColor() + item.getName(), () -> {
+                    new BazaarItemGui(player, category, item).show(player);
                 });
             }
 
@@ -95,11 +102,15 @@ public class BazaarCategoryGui extends Gui {
         for (BazaarItem item : category.getItems()) {
             addItem(new ItemBuilder(category.getColor() + item.getName(), item.getSubItems().get(0).getIcon().getType()).addLore(Arrays.asList(Util.buildLore(
                     "&8" + item.getProductAmount() + " product" + (item.getProductAmount() == 1 ? "" : "s") + "\n\n" +
-                            "&7Buy Price: &6" + Skyblock.getPlugin().getBazaar().getEscrow().getBuyPrice(item) + " coins\n" +
-                            "&7Sell Price: &6" + Skyblock.getPlugin().getBazaar().getEscrow().getSellPrice(item) + " coins\n\n" +
+                            "&7Buy Price: &6" + Skyblock.getPlugin().getBazaar().getEscrow().getBuyPrice(item.getSubItems().get(0)) + " coins\n" +
+                            "&7Sell Price: &6" + Skyblock.getPlugin().getBazaar().getEscrow().getSellPrice(item.getSubItems().get(0)) + " coins\n\n" +
                             "&eClick to view product!"
             ))).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE).toItemStack());
         }
+    }
+
+    public BazaarCategoryGui(Player player) {
+        this(player, Objects.requireNonNull(Skyblock.getPlugin().getBazaar().getCategories().stream().filter(category -> category.getName().equals("Farming")).findFirst().orElse(null)), false);
     }
 
 }

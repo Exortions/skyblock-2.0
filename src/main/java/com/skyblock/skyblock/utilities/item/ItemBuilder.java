@@ -25,6 +25,11 @@ public class ItemBuilder {
         meta = item.getItemMeta();
     }
 
+    public ItemBuilder(ItemStack stack) {
+        item = stack;
+        meta = item.getItemMeta();
+    }
+
     public ItemBuilder(String name) {
         item = new ItemStack(Material.DIRT);
         meta = item.getItemMeta();

@@ -2,6 +2,7 @@ package com.skyblock.skyblock.utilities.gui;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
+import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

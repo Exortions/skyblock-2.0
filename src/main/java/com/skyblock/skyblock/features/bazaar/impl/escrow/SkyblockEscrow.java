@@ -69,18 +69,18 @@ public class SkyblockEscrow implements Escrow {
     }
 
     @Override
-    public double getBuyPrice(BazaarItem item) {
+    public double getBuyPrice(BazaarSubItem item) {
         try {
-            return this.getRankedBuyOrders().get(0).getPrice();
+            return this.getRankedBuyOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst().get().getPrice();
         } catch (Exception ex) {
             return 0.0;
         }
     }
 
     @Override
-    public double getSellPrice(BazaarItem item) {
+    public double getSellPrice(BazaarSubItem item) {
         try {
-            return this.getRankedSellOrders().get(0).getPrice();
+            return this.getRankedSellOrders().stream().filter(transaction -> transaction.getSubItem().equals(item)).findFirst().get().getPrice();
         } catch (Exception ex) {
             return 0.0;
         }
