@@ -417,6 +417,8 @@ public class Util {
 
         if (villager) ((Villager) npc.getEntity()).setProfession(profession);
 
+        npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
+
         ArmorStand stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0), ArmorStand.class);
         stand.setGravity(false);
         stand.setVisible(false);

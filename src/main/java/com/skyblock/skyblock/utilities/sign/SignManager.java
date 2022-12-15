@@ -78,7 +78,9 @@ public class SignManager {
 
             final ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
 
-            pipeline.addBefore("packet_handler", player.getName(), handler);
+            try {
+                pipeline.addBefore("packet_handler", player.getName(), handler);
+            } catch (Exception ignored) {} // player already has a handler
         }
 
         @EventHandler
