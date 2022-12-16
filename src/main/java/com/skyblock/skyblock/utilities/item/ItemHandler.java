@@ -106,7 +106,7 @@ public class ItemHandler {
 
         List<ItemEnchantment> enchantments = new ArrayList<>();
 
-        enchantments.add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("Test"), 3));
+        enchantments.add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("sharpness"), 3));
 
         items.put("fancy_sword", new ItemBase(
                 Material.GOLD_SWORD,
