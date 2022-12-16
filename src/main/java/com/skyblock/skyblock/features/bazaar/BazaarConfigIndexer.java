@@ -32,7 +32,13 @@ public interface BazaarConfigIndexer {
                 bazaarItems.add(item.toBazaarEquivalent());
             }
 
-            return new SkyblockBazaarCategory(this.name, this.icon, this.color, Util.getPaneColor(this.color), bazaarItems);
+            SkyblockBazaarCategory category = new SkyblockBazaarCategory(this.name, this.icon, this.color, Util.getPaneColor(this.color), bazaarItems);
+
+            for (BazaarItem item : bazaarItems) {
+                ((SkyblockBazaarItem) item).setCategory(category);
+            }
+
+            return category;
         }
     }
 
@@ -49,7 +55,13 @@ public interface BazaarConfigIndexer {
                 bazaarSubItems.add(subItem.toBazaarEquivalent());
             }
 
-            return new SkyblockBazaarItem(this.name, bazaarSubItems, this.inventorySize);
+            BazaarItem item = new SkyblockBazaarItem(this.name, bazaarSubItems, this.inventorySize);
+
+            for (BazaarSubItem subItem : bazaarSubItems) {
+                ((SkyblockBazaarSubItem) subItem).setParent(item);
+            }
+
+            return item;
         }
     }
 
@@ -66,7 +78,7 @@ public interface BazaarConfigIndexer {
                 throw new Bazaar.BazaarItemNotFoundException("Could not find skyblock or minecraft material: " + this.material);
             }
 
-            return new SkyblockBazaarSubItem(icon, this.rarity, this.slot, new ArrayList<>(), new ArrayList<>());
+            return new SkyblockBazaarSubItem(icon, this.rarity, this.slot, this.material ,new ArrayList<>(), new ArrayList<>());
         }
     }
 

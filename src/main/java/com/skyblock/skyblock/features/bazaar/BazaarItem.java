@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface BazaarItem {
 
+    BazaarCategory getCategory();
     String getName();
     List<BazaarSubItem> getSubItems();
 

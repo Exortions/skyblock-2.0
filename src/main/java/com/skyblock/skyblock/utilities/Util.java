@@ -572,7 +572,7 @@ public class Util {
         if (namespace.equals("skyblock")) return Skyblock.getPlugin().getItemHandler().getItem(path.toUpperCase() + ".json");
         else {
             try {
-                return new ItemStack(Material.valueOf(identifier.toUpperCase()));
+                return new ItemBuilder(new ItemStack(Material.valueOf(identifier.toUpperCase()))).setLore(Collections.singletonList(ChatColor.WHITE + "" + ChatColor.BOLD + "COMMON")).toItemStack();
             } catch (IllegalArgumentException ex) {
                 return null;
             }

@@ -66,7 +66,7 @@ public class DependencyUpdater {
             return;
         }
 
-        String[] recentlyUpdatedFiles = cache.getStringList("updated").toArray(new String[0]);
+        String[] recentlyUpdatedFiles = Arrays.stream(cache.getStringList("updated").toArray(new String[0])).map(s -> s.replace("/", File.separator)).toArray(String[]::new);
 
         this.skyblock.sendMessage("Found &8" + recentlyUpdatedFiles.length + " &fupdated dependencies, pulling non-updated files...");
 
