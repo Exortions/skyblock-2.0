@@ -1,4 +1,5 @@
 {
+  "//": "this file is not actually parsed and is used to store the heads that we will need later.",
   "heads": [
     {
       "name": "sack_of_sacks",
