@@ -88,8 +88,6 @@ public class FairySoulHandler {
     public void addStand(Location l) {
         ArmorStand stand = Bukkit.getWorld("world").spawn(l, ArmorStand.class);
 
-        Bukkit.getConsoleSender().sendMessage("Stand: " + l);
-
         NBTEntity nbt = new NBTEntity(stand);
         nbt.setBoolean("Invisible", true);
         nbt.setBoolean("Gravity", false);
