@@ -104,17 +104,18 @@ public class ItemHandler {
 
         long start = System.currentTimeMillis();
 
-        List<ItemEnchantment> enchantments = new ArrayList<>();
-
-        enchantments.add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("sharpness"), 3));
-
         items.put("fancy_sword", new ItemBase(
                 Material.GOLD_SWORD,
                 ChatColor.WHITE + "Fancy Sword",
                 Reforge.NONE,
                 1,
                 new ArrayList<>(),
-                enchantments,
+                new ArrayList<ItemEnchantment>() {{
+                    add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("first_strike"), 1));
+//                    add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("scavenger"), 1))
+                    add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("sharpness"), 2));
+//                    add(new ItemEnchantment(skyblock.getEnchantmentHandler().getEnchantment("vampirism"), 1));
+                }},
                 true,
                 false,
                 "",
