@@ -188,7 +188,7 @@ public abstract class SkyblockEntity {
         this.subtractHealth(damage);
         this.setLastDamager(damager);
 
-        Util.setDamageIndicator(this.vanilla.getLocation(), crit ? Util.addCritTexture(Math.round(damage)) : ChatColor.GRAY + "" + Math.round(damage), false);
+        Util.setDamageIndicator(this.vanilla.getLocation(), crit ? Util.addCritTexture(Math.round(damage)) : ChatColor.GRAY + "" + Util.formatLong(damage), false);
     }
 
     public void onDespawn() { }

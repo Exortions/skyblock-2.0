@@ -220,7 +220,7 @@ public class Util {
 
         player.subtractMana(mana);
         player.getBukkitPlayer().sendMessage(
-                ChatColor.GRAY + "Your " + abilityName + " hit " + ChatColor.RED + entities + ChatColor.GRAY + " enemies for " + ChatColor.RED + Util.formatLong(damage) + ChatColor.GRAY + " damage."
+                ChatColor.GRAY + "Your " + abilityName + " hit " + ChatColor.RED + (Math.max(entities, 0)) + ChatColor.GRAY + " " + (entities == 1 ? "enemy" : "enemies") + " for " + ChatColor.RED + Util.formatLong(damage) + ChatColor.GRAY + " damage."
         );
     }
 

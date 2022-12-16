@@ -9,11 +9,14 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.util.stream.Collectors;
 
 public class GolemSword extends SkyblockItem {
 
@@ -83,7 +86,7 @@ public class GolemSword extends SkyblockItem {
                 sentity.damage(damage, player, false);
             }
 
-            Util.sendMagicAbility(player, "Iron Punch", cost, player.getBukkitPlayer().getNearbyEntities(x, y, z).size(), (long) player.getBukkitPlayer().getNearbyEntities(x, y, z).size() * Math.round(damage));
+            Util.sendMagicAbility(player, "Iron Punch", cost, (int) player.getBukkitPlayer().getNearbyEntities(x, y, z).stream().filter(e -> e.getType() != EntityType.ARMOR_STAND).count(), player.getBukkitPlayer().getNearbyEntities(x, y, z).stream().filter(e -> e.getType() != EntityType.ARMOR_STAND).count() * damage);
         }
     }
 }
