@@ -165,7 +165,7 @@ public class ReforgeListener implements Listener {
 
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-            int purse = (int) skyblockPlayer.getValue("stats.purse");
+            double purse = skyblockPlayer.getCoins();
 
             if (purse < cost) {
                 player.sendMessage(ChatColor.RED + "You do not have enough coins to reforge this item!");
