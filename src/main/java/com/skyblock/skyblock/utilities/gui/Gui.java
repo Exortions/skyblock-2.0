@@ -29,6 +29,7 @@ public class Gui implements Listener {
     private static final HashMap<Gui, Boolean> registeredListeners = new HashMap<>();
     private static final HashMap<String, Class<? extends Gui>> backButtons = new HashMap<String, Class<? extends Gui>>() {{
         put("To Auction House", AuctionHouseGUI.class);
+        put("To Bazaar", BazaarCategoryGui.class);
     }};
     public final HashMap<Player, Boolean> opened;
     public final HashMap<String, Runnable> clickEvents;

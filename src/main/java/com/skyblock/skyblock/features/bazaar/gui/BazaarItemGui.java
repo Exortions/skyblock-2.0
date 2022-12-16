@@ -31,7 +31,7 @@ public class BazaarItemGui extends Gui {
                             "&7Buy Price: &6" + Skyblock.getPlugin().getBazaar().getEscrow().getBuyPrice(subItem) +
                             "\n&7Sell Price: &6" + Skyblock.getPlugin().getBazaar().getEscrow().getSellPrice(subItem) + "\n\n&eClick to view details!"))).toItemStack());
         }
-
+        ;
         this.addItem(31, Util.buildBackButton("&7To Bazaar"));
     }
 
