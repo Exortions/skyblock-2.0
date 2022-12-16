@@ -222,7 +222,6 @@ public class ItemHandler {
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 if (line.startsWith("mana cost: ")) {
                     nbt.setInteger("abilityCost", Integer.parseInt(line.substring(11)));
-                    Bukkit.getConsoleSender().sendMessage("ABILITYCOST: " + nbt.getInteger("abilityCost"));
                     continue;
                 } else if (line.startsWith("item ability: ")) {
                     nbt.setBoolean("hasAbility", true);

@@ -40,7 +40,6 @@ public class SkyblockRecipe {
                 items.add(line.toString());
             }
         }
-        if (shapedRecipe.getResult().getType().equals(Material.WORKBENCH)) Bukkit.getConsoleSender().sendMessage(shapedRecipe.getIngredientMap() + "");
     }
 
     public SkyblockRecipe(ShapelessRecipe recipe) {
@@ -48,7 +47,6 @@ public class SkyblockRecipe {
         result = recipe.getResult();
 
         for (ItemStack item : recipe.getIngredientList()) items.add(item.getType().name() + ":" + item.getAmount() + ":" + item.getDurability());
-        if (recipe.getResult().getType().equals(Material.WORKBENCH)) Bukkit.getConsoleSender().sendMessage(items + "");
     }
 
     public SkyblockRecipe(JSONObject neuRecipe, ItemStack result) {

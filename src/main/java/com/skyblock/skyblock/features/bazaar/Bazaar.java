@@ -34,6 +34,8 @@ public interface Bazaar {
     String ITEMS_PATH = "bazaar/items.json";
     String FILE_NAME = "bazaar/bazaar.yml";
 
+    double BAZAAR_TAX = 1.1;
+
     YamlConfiguration getBazaarConfig();
 
     Escrow getEscrow();
