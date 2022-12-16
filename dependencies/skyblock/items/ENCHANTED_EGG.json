@@ -1,0 +1,37 @@
+{
+  "itemid": "minecraft:egg",
+  "displayname": "§9Enchanted Egg",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§7This item can be used as a\",1:\"§7minion upgrade for chicken\",2:\"§7minions. Guarantees that each\",3:\"§7chicken will drop an egg after\",4:\"§7they spawn.\",5:\"§7\",6:\"§7Can also be used to craft\",7:\"§7low-rarity pets.\",8:\"\",9:\"§9§lRARE\"],Name:\"§9Enchanted Egg\"},ExtraAttributes:{id:\"ENCHANTED_EGG\"}}",
+  "damage": 0,
+  "lore": [
+    "§7This item can be used as a",
+    "§7minion upgrade for chicken",
+    "§7minions. Guarantees that each",
+    "§7chicken will drop an egg after",
+    "§7they spawn.",
+    "§7",
+    "§7Can also be used to craft",
+    "§7low-rarity pets.",
+    "",
+    "§9§lRARE"
+  ],
+  "recipe": {
+    "A1": "EGG:16",
+    "A2": "EGG:16",
+    "A3": "EGG:16",
+    "B1": "EGG:16",
+    "B2": "EGG:16",
+    "B3": "EGG:16",
+    "C1": "EGG:16",
+    "C2": "EGG:16",
+    "C3": "EGG:16"
+  },
+  "internalname": "ENCHANTED_EGG",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Enchanted_Egg"
+  ],
+  "crafttext": "Requires: Raw Chicken V"
+}

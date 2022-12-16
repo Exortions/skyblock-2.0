@@ -1,0 +1,34 @@
+{
+  "itemid": "minecraft:iron_shovel",
+  "displayname": "§fFlint Shovel",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Grants a §a100% §7chance of\",1:\"§7receiving flint from gravel.\",2:\"§7This item can be also used as a\",3:\"§7minion upgrade to allow gravel\",4:\"§7minions to always receive flint.\",5:\"\",6:\"§f§lCOMMON SHOVEL\"],Name:\"§fFlint Shovel\"},ExtraAttributes:{id:\"FLINT_SHOVEL\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Grants a §a100% §7chance of",
+    "§7receiving flint from gravel.",
+    "§7This item can be also used as a",
+    "§7minion upgrade to allow gravel",
+    "§7minions to always receive flint.",
+    "",
+    "§f§lCOMMON SHOVEL"
+  ],
+  "recipe": {
+    "A1": "",
+    "A2": "FLINT:10",
+    "A3": "",
+    "B1": "",
+    "B2": "STICK:1",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "internalname": "FLINT_SHOVEL",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Flint_Shovel"
+  ],
+  "crafttext": "Requires: Gravel II"
+}

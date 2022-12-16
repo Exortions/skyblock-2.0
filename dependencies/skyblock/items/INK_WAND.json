@@ -1,0 +1,39 @@
+{
+  "itemid": "minecraft:stick",
+  "displayname": "§5Ink Wand",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§7Damage: §c+130\",1:\"§7Strength: §c+90\",2:\"\",3:\"§6Item Ability: Ink Bomb §e§lRIGHT CLICK\",4:\"§7Shoot an ink bomb in front of\",5:\"§7you dealing §a50,000 §7damage\",6:\"§7and giving blindness!\",7:\"§8Mana Cost: §360\",8:\"§8Cooldown: §a30s\",9:\"\",10:\"§7§8This item can be reforged!\",11:\"§5§lEPIC SWORD\"],Name:\"§5Ink Wand\"},ExtraAttributes:{id:\"INK_WAND\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+130",
+    "§7Strength: §c+90",
+    "",
+    "§6Item Ability: Ink Bomb §e§lRIGHT CLICK",
+    "§7Shoot an ink bomb in front of",
+    "§7you dealing §a50,000 §7damage",
+    "§7and giving blindness!",
+    "§8Mana Cost: §360",
+    "§8Cooldown: §a30s",
+    "",
+    "§7§8This item can be reforged!",
+    "§5§lEPIC SWORD"
+  ],
+  "recipe": {
+    "A1": "",
+    "A2": "ENCHANTED_INK_SACK:32",
+    "A3": "",
+    "B1": "",
+    "B2": "ENCHANTED_INK_SACK:32",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "internalname": "INK_WAND",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Ink_Wand"
+  ],
+  "crafttext": "Requires: Ink Sack IX"
+}

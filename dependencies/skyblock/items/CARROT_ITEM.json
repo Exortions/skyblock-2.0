@@ -1,0 +1,12 @@
+{
+  "itemid": "minecraft:carrot",
+  "displayname": "§fCarrot",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fCarrot\"},ExtraAttributes:{id:\"CARROT_ITEM\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "CARROT_ITEM",
+  "clickcommand": "",
+  "modver": "1.0.0"
+}

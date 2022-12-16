@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:fish",
+  "displayname": "§fRaw Fish",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fRaw Fish\"},ExtraAttributes:{id:\"RAW_FISH\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "RAW_FISH",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Raw_Fish"
+  ]
+}

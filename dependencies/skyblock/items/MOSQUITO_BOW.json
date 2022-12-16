@@ -1,0 +1,39 @@
+{
+  "internalname": "MOSQUITO_BOW",
+  "itemid": "minecraft:bow",
+  "displayname": "§6Rapid Mosquito Bow",
+  "clickcommand": "",
+  "damage": 0,
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Damage: §c+251\",1:\"§7Strength: §c+111 §8(Rapid +10)\",2:\"§7Crit Damage: §c+59% §8(Rapid +50%)\",3:\"\",4:\"§6Item Ability: Nasty Bite\",5:\"§8Fully charged shots while sneaking\",6:\"§7Costs §b11% §7of max mana.\",7:\"§7Deal §c+19% §7damage.\",8:\"§7Heal for §a2x §7the mana cost.\",9:\"\",10:\"§c☠ §5Requires Spider LVL 7\",11:\"§6§lLEGENDARY BOW\"],Name:\"§6Rapid Mosquito Bow\"},ExtraAttributes:{modifier:\"rapid\",originTag:\"CRAFTING_GRID_COLLECT\",id:\"MOSQUITO_BOW\",uuid:\"05798082-8250-4469-9801-2615f3a133ff\",timestamp:\"3/31/20 8:46 AM\"}}",
+  "modver": "1.0.0",
+  "lore": [
+    "§7Damage: §c+251",
+    "§7Strength: §c+111 §8(Rapid +10)",
+    "§7Crit Damage: §c+59% §8(Rapid +50%)",
+    "",
+    "§6Item Ability: Nasty Bite",
+    "§8Fully charged shots while sneaking",
+    "§7Costs §b11% §7of max mana.",
+    "§7Deal §c+19% §7damage.",
+    "§7Heal for §a2x §7the mana cost.",
+    "",
+    "§c☠ §5Requires Spider LVL 7",
+    "§6§lLEGENDARY BOW"
+  ],
+  "recipe": {
+    "A1": "",
+    "A2": "ENCHANTED_IRON:64",
+    "A3": "TARANTULA_SILK:64",
+    "B1": "DIGESTED_MOSQUITO:1",
+    "B2": "",
+    "B3": "TARANTULA_SILK:64",
+    "C1": "",
+    "C2": "ENCHANTED_IRON:64",
+    "C3": "TARANTULA_SILK:64"
+  },
+  "clickcommand": "viewrecipe",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Mosquito_Bow"
+  ]
+}

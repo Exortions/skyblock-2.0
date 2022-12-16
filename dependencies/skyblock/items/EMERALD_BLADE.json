@@ -1,0 +1,38 @@
+{
+  "itemid": "minecraft:emerald",
+  "displayname": "§5Emerald Blade",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§7Damage: §c+130\",1:\"\",2:\"§7A powerful blade made from pure\",3:\"§7§2Emeralds§7. This blade becomes\",4:\"§7stronger as you carry more\",5:\"§7§6coins§7 in your purse.\",6:\"\",7:\"§7Current Damage Bonus: §ax\",8:\"\",9:\"§7§8This item can be reforged!\",10:\"§5§lEPIC SWORD\"],Name:\"§5Emerald Blade\"},ExtraAttributes:{id:\"EMERALD_BLADE\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+130",
+    "",
+    "§7A powerful blade made from pure",
+    "§7§2Emeralds§7. This blade becomes",
+    "§7stronger as you carry more",
+    "§7§6coins§7 in your purse.",
+    "",
+    "§7Current Damage Bonus: §ax",
+    "",
+    "§7§8This item can be reforged!",
+    "§5§lEPIC SWORD"
+  ],
+  "recipe": {
+    "A1": "",
+    "A2": "ENCHANTED_EMERALD_BLOCK:1",
+    "A3": "",
+    "B1": "",
+    "B2": "ENCHANTED_EMERALD_BLOCK:1",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "internalname": "EMERALD_BLADE",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Emerald_Blade"
+  ],
+  "crafttext": "Requires: Emerald VIII"
+}

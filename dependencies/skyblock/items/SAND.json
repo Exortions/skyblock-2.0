@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:sand",
+  "displayname": "§fSand",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fSand\"},ExtraAttributes:{id:\"SAND\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "SAND",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Sand"
+  ]
+}

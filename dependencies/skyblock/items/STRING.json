@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:string",
+  "displayname": "§fString",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fString\"},ExtraAttributes:{id:\"STRING\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "STRING",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/String"
+  ]
+}

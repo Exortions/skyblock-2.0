@@ -1,0 +1,12 @@
+{
+  "itemid": "minecraft:iron_ore",
+  "displayname": "§fIron Ore",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fIron Ore\"},ExtraAttributes:{id:\"IRON_ORE\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "IRON_ORE",
+  "clickcommand": "",
+  "modver": "1.0.0"
+}
