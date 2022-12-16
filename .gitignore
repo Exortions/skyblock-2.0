@@ -112,3 +112,5 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+dependencies/skyblock/.cache.yml

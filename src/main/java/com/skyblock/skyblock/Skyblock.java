@@ -52,6 +52,7 @@ import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import com.skyblock.skyblock.listeners.*;
+import com.skyblock.skyblock.updater.DependencyUpdater;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
@@ -121,6 +122,8 @@ public final class Skyblock extends JavaPlugin {
     public void onEnable() {
         this.sendMessage("Found Bukkit server v" + Bukkit.getVersion());
         long start = System.currentTimeMillis();
+
+        new DependencyUpdater(this).update();
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc remove all");
 
