@@ -18,7 +18,7 @@ public interface Command {
     default org.bukkit.permissions.Permission permission() {
         Permission annotation = this.getClass().getAnnotation(Permission.class);
 
-        return new org.bukkit.permissions.Permission(annotation == null ? "skyblock.*" : annotation.permission());
+        return new org.bukkit.permissions.Permission(annotation == null ? "skyblock.command." + this.name().toLowerCase() : annotation.permission());
     }
 
     default String description() {
