@@ -547,7 +547,6 @@ public final class Skyblock extends JavaPlugin {
 
         this.enchantmentHandler = new SkyblockEnchantmentHandler(this);
 
-        this.enchantmentHandler.registerEnchantment(new TestEnchantment());
         this.enchantmentHandler.registerEnchantment(new EnderSlayerEnchantment());
         this.enchantmentHandler.registerEnchantment(new GrowthEnchantment());
         this.enchantmentHandler.registerEnchantment(new ProtectionEnchantment());
