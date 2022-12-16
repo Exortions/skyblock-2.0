@@ -557,6 +557,7 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler.registerEnchantment(new ThunderlordEnchantment());
         this.enchantmentHandler.registerEnchantment(new VenomousEnchantment());
         this.enchantmentHandler.registerEnchantment(new GiantKillerEnchantment());
+        this.enchantmentHandler.registerEnchantment(new FireAspectEnchantment());
 
         this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
