@@ -34,8 +34,6 @@ public class DependencyUpdater {
 
     public DependencyUpdater(Skyblock skyblock) {
         this.skyblock = skyblock;
-
-        this.update();
     }
 
     public void update() {
