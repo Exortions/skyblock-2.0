@@ -24,7 +24,7 @@ public class TestEnchantment extends SwordEnchantment {
 
             try {
                 item = new ItemBase(player.getInventory().getItemInHand());
-            } catch (IllegalArgumentException ex) {
+            } catch (Exception ex) {
                 return;
             }
 

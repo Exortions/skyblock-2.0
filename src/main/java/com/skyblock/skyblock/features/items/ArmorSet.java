@@ -1,10 +1,12 @@
 package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -53,6 +55,9 @@ public abstract class ArmorSet {
     public void onStatChange(Player player, SkyblockStat stat) { }
 
     public abstract void tick(Player player);
+    public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
+        return damage;
+    }
 
     public List<ItemStack> toList() {
         return Arrays.asList(helmet, chest, legs, boots);

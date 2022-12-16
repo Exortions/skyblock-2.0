@@ -6,10 +6,7 @@ import com.skyblock.skyblock.features.items.armor.WiseDragonArmor;
 import com.skyblock.skyblock.features.items.armor.YoungDragonArmor;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
 import com.skyblock.skyblock.features.items.misc.MaddoxBatphone;
-import com.skyblock.skyblock.features.items.weapons.AspectOfTheDragons;
-import com.skyblock.skyblock.features.items.weapons.AspectOfTheEnd;
-import com.skyblock.skyblock.features.items.weapons.EndStoneSword;
-import com.skyblock.skyblock.features.items.weapons.RogueSword;
+import com.skyblock.skyblock.features.items.weapons.*;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
@@ -36,6 +33,12 @@ public class SkyblockItemHandler {
         registerItem(new AspectOfTheEnd(plugin));
         registerItem(new EndStoneSword(plugin));
         registerItem(new RogueSword(plugin));
+        registerItem(new AspectOfTheJerry());
+        registerItem(new EmberRod());
+        registerItem(new EndSword());
+
+        //Bows
+        registerItem(new RunaansBow());
 
         // Armor Sets
         registerItem(new SuperiorDragonArmor());

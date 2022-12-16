@@ -167,6 +167,16 @@ public class PlayerListener implements Listener {
                 }
             } catch (Exception ignored) {}
 
+            if (Util.notNull(p.getItemInHand())) {
+                if (plugin.getSkyblockItemHandler().isRegistered(p.getItemInHand())) {
+                    damage = plugin.getSkyblockItemHandler().getRegistered(p.getItemInHand()).getModifiedDamage(player, e, damage);
+                }
+            }
+
+            if (player.getArmorSet() != null) {
+                damage = player.getArmorSet().getModifiedDamage(player, e, damage);
+            }
+
             double display = damage;
 
             if (e.getEntity().hasMetadata("skyblockEntityData")) {

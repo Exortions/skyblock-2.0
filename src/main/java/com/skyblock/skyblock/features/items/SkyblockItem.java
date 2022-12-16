@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.items;
 import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import lombok.Getter;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -43,5 +44,9 @@ public abstract class SkyblockItem {
 
     public void onArmorUnEquip(PlayerArmorUnequipEvent event) {
         throw new UnsupportedOperationException("This item does not support unequipping armor");
+    }
+
+    public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
+        return damage;
     }
 }
