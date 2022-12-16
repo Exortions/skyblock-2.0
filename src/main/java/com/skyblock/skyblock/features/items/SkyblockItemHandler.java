@@ -36,8 +36,9 @@ public class SkyblockItemHandler {
         registerItem(new AspectOfTheJerry());
         registerItem(new EmberRod());
         registerItem(new EndSword());
+        registerItem(new GolemSword(plugin));
 
-        //Bows
+        // Bows
         registerItem(new RunaansBow());
 
         // Armor Sets

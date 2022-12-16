@@ -214,6 +214,16 @@ public class Util {
                 "! " + ChatColor.AQUA + "(" + mana + " Mana)");
     }
 
+    public void sendMagicAbility(SkyblockPlayer player, String abilityName, int mana, int entities, long damage) {
+        Object wise = player.getExtraData("wise_dragon_bonus");
+        if (wise != null) mana = (int) Math.floor(mana - mana / 3f);
+
+        player.subtractMana(mana);
+        player.getBukkitPlayer().sendMessage(
+                ChatColor.GRAY + "Your " + abilityName + " hit " + ChatColor.RED + entities + ChatColor.GRAY + " enemies for " + ChatColor.RED + Util.formatLong(damage) + ChatColor.GRAY + " damage."
+        );
+    }
+
     public void setDamageIndicator(final Location loc, final String displayname, boolean format) {
         double randomX = Math.random();
         double randomY = Math.random();
@@ -372,6 +382,10 @@ public class Util {
     }
 
     public String formatDouble(double num) {
+        return new DecimalFormat("#,###").format(num);
+    }
+
+    public String formatLong(long num) {
         return new DecimalFormat("#,###").format(num);
     }
 
