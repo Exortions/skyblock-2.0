@@ -52,7 +52,7 @@ public class SpongeReplacer {
 
     public void end() {
         for (Location loc : locations) {
-            Bukkit.getWorld("world").getBlockAt(loc).setType(Material.SPONGE);
+            Skyblock.getSkyblockWorld().getBlockAt(loc).setType(Material.SPONGE);
         }
     }
 

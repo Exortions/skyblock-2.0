@@ -55,7 +55,7 @@ public class FairySoulHandler {
                 int y = Integer.parseInt(split[1]);
                 int z = Integer.parseInt(split[2]);
 
-                Location spawn = new Location(Bukkit.getWorld("world"), x, y, z);
+                Location spawn = new Location(Skyblock.getSkyblockWorld(), x, y, z);
 
                 Chunk chunk = spawn.getChunk();
                 if (!stands.containsKey(getId(chunk))) stands.put(getId(chunk), new ArrayList<>());
@@ -86,7 +86,7 @@ public class FairySoulHandler {
     }
 
     public void addStand(Location l) {
-        ArmorStand stand = Bukkit.getWorld("world").spawn(l, ArmorStand.class);
+        ArmorStand stand = Skyblock.getSkyblockWorld().spawn(l, ArmorStand.class);
 
         NBTEntity nbt = new NBTEntity(stand);
         nbt.setBoolean("Invisible", true);
