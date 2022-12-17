@@ -49,7 +49,14 @@ public class SlayerScoreboard extends Scoreboard {
             addLine(9, ChatColor.GRAY + " ⏣ " + ChatColor.GREEN + loc);
         }
         addLine(8, ChatColor.WHITE + " ");
-        addLine(7, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));
+
+        StringBuilder purse = new StringBuilder(ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));
+
+        if (skyblockPlayer.hasExtraData("lastpicked_coins")) {
+            purse.append(ChatColor.YELLOW + " (+" + Util.formatInt((int) skyblockPlayer.getExtraData("lastpicked_coins")) + ")");
+        }
+
+        addLine(3, purse.toString());
         addLine(6, ChatColor.WHITE + "   ");
         addLine(5, ChatColor.WHITE + "Slayer Quest");
 

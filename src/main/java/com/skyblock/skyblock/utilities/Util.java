@@ -637,25 +637,43 @@ public class Util {
         return nmsStack.getItem().a(nmsStack);
     }
     public ItemStack toSkyblockItem(ItemStack item) {
-        ItemBase empty = new ItemBase(item, item.getType(), ChatColor.WHITE + getItemName(item), null, item.getAmount(), Collections.emptyList(), new ArrayList<>(), false, false, "", Collections.emptyList(), "", 0, "", "COMMON", getItemName(item), 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+        return new ItemBase(item, item.getType(), ChatColor.WHITE + getItemName(item), null, item.getAmount(), Collections.emptyList(), new ArrayList<>(), false, false, "", Collections.emptyList(), "", 0, "", "COMMON", getItemName(item), 0, 0, 0, 0, 0, 0, 0, 0, 0, false).getStack();
+    }
 
-        net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
+    public List<ItemStack> createCoins(int amount) {
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
 
-        if (nms.hasTag()) {
-            NBTTagCompound compound = nms.getTag();
-            NBTTagList list = compound.getList("AttributeModifiers", 1);
+        ItemStack iron = IDtoSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzhhNDY1MGVlM2I3NDU5NDExMjQyNjAwNDI0NmRmNTMxZTJjNjhiNmNhNDdjYWI4ZmUyMzIzYjk3OTBhMWE1ZSJ9fX0=");
+        ItemStack gold = IDtoSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGZhMDg3ZWI3NmU3Njg3YTgxZTRlZjgxYTdlNjc3MjY0OTk5MGY2MTY3Y2ViMGY3NTBhNGM1ZGViNmM0ZmJhZCJ9fX0=");
+        ItemStack diamond = IDtoSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RlZTYyMWViODJiMGRhYjQxNjYzMzBkMWRhMDI3YmEyYWMxMzI0NmE0YzFlN2Q1MTc0ZjYwNWZkZGYxMGExMCJ9fX0=");
 
-            for (int i = 0; i < list.size(); i++) {
-                NBTTagCompound tag = list.get(i);
-                if (tag.getString("AttributeName").equals("generic.attackDamage")) {
-                    empty.setDamage(tag.getInt("Amount"));
-                    empty.setReforgeable(true);
-                }
+        ItemMeta meta = diamond.getItemMeta();
+        meta.setDisplayName("coins_" + 50);
+        diamond.setItemMeta(meta);
+
+        meta = gold.getItemMeta();
+        meta.setDisplayName("coins_" + 10);
+        gold.setItemMeta(meta);
+
+        List<ItemStack> coins = new ArrayList<>();
+
+        while (amount > 0) {
+            if (amount > 50) {
+                coins.add(diamond.clone());
+                amount -= 50;
+            } else if (amount > 10) {
+                coins.add(gold.clone());
+                amount -= 10;
+            } else {
+                meta = iron.getItemMeta();
+                meta.setDisplayName("coins_" + amount);
+                iron.setItemMeta(meta);
+
+                coins.add(iron.clone());
+                break;
             }
         }
 
-        Bukkit.getConsoleSender().sendMessage(empty + "");
-
-        return empty.getStack();
+        return coins;
     }
 }

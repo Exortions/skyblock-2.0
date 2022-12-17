@@ -696,4 +696,8 @@ public class SkyblockPlayer {
             getBukkitPlayer().getWorld().dropItemNaturally(location, item);
         }
     }
+
+    public boolean hasExtraData(String value) {
+        return getExtraData(value) != null;
+    }
 }

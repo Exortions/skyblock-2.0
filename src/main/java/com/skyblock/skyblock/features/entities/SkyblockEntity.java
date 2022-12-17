@@ -215,8 +215,14 @@ public abstract class SkyblockEntity {
                 if (type != EntityDropRarity.GUARANTEED) rare = true;
             }
 
-            ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
-            orb.setExperience(getEntityData().orbs);
+            if (getEntityData().orbs > 0) {
+                ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
+                orb.setExperience(getEntityData().orbs);
+            }
+
+            if (getEntityData().coins > 0) {
+                getLastDamager().dropItems(Util.createCoins(getEntityData().coins), getVanilla().getLocation());
+            }
         }
     }
 

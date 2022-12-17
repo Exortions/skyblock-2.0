@@ -328,10 +328,35 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPickup(PlayerPickupItemEvent e) {
+        ItemStack item = e.getItem().getItemStack();
+
+        if (item.getItemMeta().hasDisplayName()) {
+            String name = item.getItemMeta().getDisplayName();
+            if (name.startsWith("coins_")) {
+                try {
+                    SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+                    int amount = Integer.parseInt(name.split("_")[1]);
+
+                    player.addCoins(amount);
+                    player.getBukkitPlayer().playSound(e.getItem().getLocation(), Sound.ORB_PICKUP, 10, 2);
+                    player.setExtraData("lastpicked_coins", amount);
+
+                    e.setCancelled(true);
+                    e.getItem().remove();
+
+                    Util.delay(() -> {
+                        player.setExtraData("lastpicked_coins", null);
+                    }, 80);
+
+                    return;
+                } catch (NumberFormatException ignored) { }
+            }
+        }
+
         try {
-            ItemBase base = new ItemBase(e.getItem().getItemStack());
+            ItemBase base = new ItemBase(item);
         } catch (Exception ex) {
-            e.getItem().setItemStack(Util.toSkyblockItem(e.getItem().getItemStack()));
+            e.getItem().setItemStack(Util.toSkyblockItem(item));
         }
     }
 

@@ -49,7 +49,14 @@ public class HubScoreboard extends Scoreboard {
             addLine(5, ChatColor.GRAY + " ⏣ " + ChatColor.GREEN + loc);
         }
         addLine(4, ChatColor.WHITE + " ");
-        addLine(3, ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));
+
+        StringBuilder purse = new StringBuilder(ChatColor.WHITE + "Purse: " + ChatColor.GOLD +  Util.formatDouble(skyblockPlayer.getDouble("stats.purse")));
+
+        if (skyblockPlayer.hasExtraData("lastpicked_coins")) {
+            purse.append(ChatColor.YELLOW + " (+" + Util.formatInt((int) skyblockPlayer.getExtraData("lastpicked_coins")) + ")");
+        }
+
+        addLine(3, purse.toString());
         addLine(2, ChatColor.WHITE + "  ");
         addLine(1, ChatColor.YELLOW + "www.hypixel.net");
 
