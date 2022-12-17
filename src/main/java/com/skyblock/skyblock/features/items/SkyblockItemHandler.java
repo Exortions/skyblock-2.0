@@ -37,6 +37,8 @@ public class SkyblockItemHandler {
         registerItem(new EmberRod());
         registerItem(new EndSword());
         registerItem(new GolemSword(plugin));
+        registerItem(new UndeadSword(plugin));
+        registerItem(new SpiderSword());
 
         // Bows
         registerItem(new RunaansBow());
