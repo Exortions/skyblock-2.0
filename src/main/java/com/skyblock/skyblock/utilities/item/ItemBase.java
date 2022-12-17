@@ -134,6 +134,10 @@ public class ItemBase {
     }
 
     public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
+        this(new ItemStack(material, amount), material, name, reforgeType, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+    }
+
+    public ItemBase(ItemStack orig, Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
         this.description = description;
         this.material = material;
         this.name = name;
@@ -166,8 +170,6 @@ public class ItemBase {
         this.skyblockId = skyblockId;
 
         this.createStack();
-
-        this.orig = stack;
     }
 
     public ItemStack createStack() {
@@ -300,6 +302,8 @@ public class ItemBase {
         /*
           Rarity
          */
+
+        if (lore.size() == 1) lore.clear();
 
         ChatColor nameColor = ChatColor.WHITE;
 

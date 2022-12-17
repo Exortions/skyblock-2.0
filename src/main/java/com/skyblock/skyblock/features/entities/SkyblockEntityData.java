@@ -33,6 +33,9 @@ public class SkyblockEntityData {
     public Skill skill;
     public int xp;
 
+    public int orbs;
+    public int coins;
+
     @Override
     public String toString() {
         JsonObject object = new JsonObject();
@@ -50,6 +53,9 @@ public class SkyblockEntityData {
 
         object.addProperty("skill", skill.getName());
         object.addProperty("skillXP", xp);
+
+        object.addProperty("orbs", orbs);
+        object.addProperty("coins", coins);
 
         return object.toString();
     }
@@ -78,6 +84,9 @@ public class SkyblockEntityData {
 
         data.skill = Skill.parseSkill(jsonObject.get("skill").getAsString());
         data.xp = jsonObject.get("skillXP").getAsInt();
+
+        data.orbs = jsonObject.get("orbs").getAsInt();
+        data.coins = jsonObject.get("coins").getAsInt();
 
         return data;
     }

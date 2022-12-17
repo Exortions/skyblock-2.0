@@ -2,8 +2,11 @@ package com.skyblock.skyblock.features.entities;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.item.ItemBase;
+import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
 import lombok.Setter;
 import net.citizensnpcs.api.trait.trait.Equipment;
@@ -23,11 +26,7 @@ import java.util.List;
 @Getter
 public abstract class SkyblockEntity {
 
-    public static final String HELMET = "HELMET";
-    public static final String CHEST = "CHEST";
-    public static final String LEGS = "LEGS";
-    public static final String BOOTS = "BOOTS";
-    public static final String HAND = "HAND";
+    protected static final ItemHandler handler = Skyblock.getPlugin().getItemHandler();
     private Entity vanilla;
     private final EntityType entityType;
     @Setter
@@ -68,12 +67,22 @@ public abstract class SkyblockEntity {
     }
 
     protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
-                             boolean isHostile, Equipment equipment, String name, int level, int xp) {
-        loadStats(health, damage, isUndead, isArthropod, isHostile, equipment, name, level, xp, "Combat");
+                             boolean isHostile, Equipment equipment, String name, int level, int xp, String skill) {
+        loadStats(health, damage, isUndead, isArthropod, isHostile, equipment, name, level, xp, skill, 0, 0);
     }
 
     protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
-                           boolean isHostile, Equipment equipment, String name, int level, int xp, String skill) {
+                             boolean isHostile, Equipment equipment, String name, int level, int xp) {
+        loadStats(health, damage, isUndead, isArthropod, isHostile, equipment, name, level, xp, "Combat", 0, 0);
+    }
+
+    protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
+                             boolean isHostile, Equipment equipment, String name, int level, int xp, int orbs, int coins) {
+        loadStats(health, damage, isUndead, isArthropod, isHostile, equipment, name, level, xp, "Combat", orbs, coins);
+    }
+
+    protected void loadStats(int health, int damage, boolean isUndead, boolean isArthropod,
+                           boolean isHostile, Equipment equipment, String name, int level, int xp, String skill, int orbs, int coins) {
         entityData = new SkyblockEntityData();
 
         entityData.maximumHealth = health;
@@ -89,6 +98,9 @@ public abstract class SkyblockEntity {
 
         entityData.skill = Skill.parseSkill(skill);
         entityData.xp = xp;
+
+        entityData.orbs = orbs;
+        entityData.coins = coins;
 
         entityData.helmet = equipment.helmet;
         entityData.chestplate = equipment.chest;
@@ -172,9 +184,41 @@ public abstract class SkyblockEntity {
         return vanilla;
     }
 
-    protected abstract void tick();
+    public List<EntityDrop> getDrops() {
+        return new ArrayList<>();
+    }
 
-    protected void onDeath() {}
+    protected void tick() { }
+
+    protected void onDeath() {
+        if (getLastDamager() != null) {
+            boolean rare = false;
+            for (EntityDrop drop : getDrops()) {
+                EntityDropRarity type = drop.getRarity();
+                double r = Util.random(0.0, 1.0);
+                double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND) / 100.0;
+                double c = drop.getChance() + magicFind;
+                if (r > c) continue;
+                if (rare && type != EntityDropRarity.GUARANTEED) continue;
+                ItemStack stack = drop.getItem();
+                ItemBase base = new ItemBase(stack);
+
+                if (type != EntityDropRarity.GUARANTEED && type != EntityDropRarity.COMMON && getLastDamager() != null) {
+                    getLastDamager().getBukkitPlayer().sendMessage(type.getColor() + "" + ChatColor.BOLD +
+                            (type == EntityDropRarity.CRAZY_RARE ? "CRAZY " : "") + "RARE DROP!  " +
+                            ChatColor.GRAY + "(" + base.getName() + ChatColor.GRAY + ")" + (magicFind != 0.0 ? ChatColor.AQUA +
+                            " (+" + (int) (magicFind * 10000) + "% Magic Find!)" : ""));
+                }
+
+                getLastDamager().dropItem(stack, getVanilla().getLocation());
+
+                if (type != EntityDropRarity.GUARANTEED) rare = true;
+            }
+
+            ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
+            orb.setExperience(getEntityData().orbs);
+        }
+    }
 
     public void setHealth(long health) {
         getEntityData().health = health;

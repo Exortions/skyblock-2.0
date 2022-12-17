@@ -22,6 +22,8 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
@@ -310,5 +312,31 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onCombust(EntityCombustEvent e) {
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        if (e.getClickedInventory() == null) return;
+        if (!e.getClickedInventory().equals(e.getWhoClicked().getInventory())) return;
+
+        try {
+            ItemBase base = new ItemBase(e.getCurrentItem());
+        } catch (Exception ex) {
+            e.getWhoClicked().setItemOnCursor(Util.toSkyblockItem(e.getCurrentItem()));
+        }
+    }
+
+    @EventHandler
+    public void onPickup(PlayerPickupItemEvent e) {
+        try {
+            ItemBase base = new ItemBase(e.getItem().getItemStack());
+        } catch (Exception ex) {
+            e.getItem().setItemStack(Util.toSkyblockItem(e.getItem().getItemStack()));
+        }
+    }
+
+    @EventHandler
+    public void onCreative(InventoryCreativeEvent e) {
+        e.setCursor(Util.toSkyblockItem(e.getCursor()));
     }
 }

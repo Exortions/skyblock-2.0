@@ -6,6 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -18,9 +19,12 @@ import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import net.minecraft.server.v1_8_R3.IInventory;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
@@ -628,4 +632,30 @@ public class Util {
         }
     }
 
+    public String getItemName(ItemStack bukkitItemStack) {
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(bukkitItemStack);
+        return nmsStack.getItem().a(nmsStack);
+    }
+    public ItemStack toSkyblockItem(ItemStack item) {
+        ItemBase empty = new ItemBase(item, item.getType(), ChatColor.WHITE + getItemName(item), null, item.getAmount(), Collections.emptyList(), new ArrayList<>(), false, false, "", Collections.emptyList(), "", 0, "", "COMMON", getItemName(item), 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+
+        net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
+
+        if (nms.hasTag()) {
+            NBTTagCompound compound = nms.getTag();
+            NBTTagList list = compound.getList("AttributeModifiers", 1);
+
+            for (int i = 0; i < list.size(); i++) {
+                NBTTagCompound tag = list.get(i);
+                if (tag.getString("AttributeName").equals("generic.attackDamage")) {
+                    empty.setDamage(tag.getInt("Amount"));
+                    empty.setReforgeable(true);
+                }
+            }
+        }
+
+        Bukkit.getConsoleSender().sendMessage(empty + "");
+
+        return empty.getStack();
+    }
 }

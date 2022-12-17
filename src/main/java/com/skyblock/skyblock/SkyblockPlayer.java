@@ -682,4 +682,18 @@ public class SkyblockPlayer {
         this.petDisplay.remove();
         this.petDisplay = null;
     }
+
+    public void dropItem(ItemStack item, Location location) {
+        dropItems(Arrays.asList(item), location);
+    }
+
+    public void dropItems(List<ItemStack> items) {
+        dropItems(items, getBukkitPlayer().getLocation());
+    }
+
+    public void dropItems(List<ItemStack> items, Location location) {
+        for (ItemStack item : items) {
+            getBukkitPlayer().getWorld().dropItemNaturally(location, item);
+        }
+    }
 }

@@ -18,9 +18,4 @@ public class Endermite extends SkyblockEntity {
         int xp = level == 37 ? 25 : 28;
         loadStats(health, damage, false, false, true, new Equipment(), "Endermite", level, xp);
     }
-
-    @Override
-    protected void tick() {
-
-    }
 }
