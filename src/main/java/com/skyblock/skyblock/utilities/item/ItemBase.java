@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Item;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
@@ -23,10 +24,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 @Getter
 @Setter
@@ -67,6 +67,8 @@ public class ItemBase {
 
     private ItemStack stack;
     private ItemStack orig;
+
+    private Function<ItemBase, ItemBase> dynamicGeneration = null;
 
     public ItemBase(ItemStack item) {
         NBTItem nbt = new NBTItem(item);
@@ -131,10 +133,31 @@ public class ItemBase {
 
         this.stack = item;
         this.orig = item;
+
+        this.dynamicGeneration = ItemHandler.SKYBLOCK_ID_TO_ITEM.get(this.skyblockId);
     }
 
     public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
         this(new ItemStack(material, amount), material, name, reforgeType, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+    }
+
+    public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable, HashMap<String, Object> nbt, Function<ItemBase, ItemBase> after) {
+        this(new ItemStack(material, amount), material, name, reforgeType, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+
+        NBTItem nbtItem = new NBTItem(this.stack);
+
+        for (String key : nbt.keySet()) {
+            Object value = nbt.get(key);
+            if (value instanceof String) nbtItem.setString(key, (String) value);
+            else if (value instanceof Integer) nbtItem.setInteger(key, (Integer) value);
+            else if (value instanceof Boolean) nbtItem.setBoolean(key, (Boolean) value);
+        }
+
+        this.stack = nbtItem.getItem();
+
+        this.dynamicGeneration = after;
+
+        this.regenerate();
     }
 
     public ItemBase(ItemStack orig, Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
@@ -514,6 +537,35 @@ public class ItemBase {
         base.setReforge(reforge);
 
         return base.createStack();
+    }
+
+    public void addNbt(String path, Object value) {
+        NBTItem item = new NBTItem(this.stack);
+
+        if (value instanceof Integer) item.setInteger(path, (Integer) value);
+        else if (value instanceof String) item.setString(path, (String) value);
+        else if (value instanceof Double) item.setDouble(path, (Double) value);
+        else if (value instanceof Float) item.setFloat(path, (Float) value);
+        else if (value instanceof Long) item.setLong(path, (Long) value);
+        else if (value instanceof Boolean) item.setBoolean(path, (Boolean) value);
+        else if (value instanceof Byte) item.setByte(path, (Byte) value);
+        else if (value instanceof Short) item.setShort(path, (Short) value);
+
+        this.stack = item.getItem();
+    }
+
+    public ItemBase regenerate() {
+        if (this.dynamicGeneration != null) {
+            ItemBase item = dynamicGeneration.apply(this);
+
+            if (item != null) {
+                item.createStack();
+
+                return item;
+            }
+        }
+
+        return null;
     }
 
 }

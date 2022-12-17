@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
 import net.citizensnpcs.api.trait.trait.Equipment;
@@ -214,6 +215,27 @@ public abstract class SkyblockEntity {
 
                 if (type != EntityDropRarity.GUARANTEED) rare = true;
             }
+
+            SkyblockPlayer lastDamager = getLastDamager();
+            ItemStack inHand = lastDamager.getBukkitPlayer().getItemInHand();
+            try {
+                ItemBase item = new ItemBase(inHand);
+
+                if (item.getSkyblockId().equals("raider_axe")) {
+                    NBTItem nbtItem = new NBTItem(item.getStack());
+                    int kills = nbtItem.getInteger("raider_axe_kills");
+                    item.addNbt("raider_axe_kills", kills + 1);
+
+                    ItemBase regenerated = item.regenerate();
+                    ItemStack stack = regenerated.getStack();
+                    NBTItem nbt = new NBTItem(stack);
+                    nbt.setInteger("raider_axe_kills", kills + 1);
+
+                    regenerated.setStack(nbt.getItem());
+
+                    lastDamager.getBukkitPlayer().setItemInHand(regenerated.getStack());
+                }
+            } catch (Exception ignored) {}
 
             if (getEntityData().orbs > 0) {
                 ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);

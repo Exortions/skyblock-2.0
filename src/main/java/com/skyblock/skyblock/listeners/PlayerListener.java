@@ -314,17 +314,17 @@ public class PlayerListener implements Listener {
         e.setCancelled(true);
     }
 
-    @EventHandler
-    public void onClick(InventoryClickEvent e) {
-        if (e.getClickedInventory() == null) return;
-        if (!e.getClickedInventory().equals(e.getWhoClicked().getInventory())) return;
-
-        try {
-            ItemBase base = new ItemBase(e.getCurrentItem());
-        } catch (Exception ex) {
-            e.getWhoClicked().setItemOnCursor(Util.toSkyblockItem(e.getCurrentItem()));
-        }
-    }
+//    @EventHandler
+//    public void onClick(InventoryClickEvent e) {
+//        if (e.getClickedInventory() == null) return;
+//        if (!e.getClickedInventory().equals(e.getWhoClicked().getInventory())) return;
+//
+//        try {
+//            ItemBase base = new ItemBase(e.getCurrentItem());
+//        } catch (Exception ex) {
+//            e.getWhoClicked().setItemOnCursor(Util.toSkyblockItem(e.getCurrentItem()));
+//        }
+//    }
 
     @EventHandler
     public void onPickup(PlayerPickupItemEvent e) {
@@ -360,8 +360,8 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onCreative(InventoryCreativeEvent e) {
-        e.setCursor(Util.toSkyblockItem(e.getCursor()));
-    }
+//    @EventHandler
+//    public void onCreative(InventoryCreativeEvent e) {
+//        e.setCursor(Util.toSkyblockItem(e.getCursor()));
+//    }
 }
