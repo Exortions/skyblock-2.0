@@ -113,6 +113,8 @@ public class SkyblockPlayer {
         this.extraData.put("isEndStoneSwordActive", false);
         this.extraData.put("endStoneSwordDamage", 0);
 
+        this.extraData.put("last_location", null);
+
         initConfig();
     }
 
@@ -601,6 +603,8 @@ public class SkyblockPlayer {
 
                 config.set("quests.completedQuests", new ArrayList<>());
                 config.set("quests.completedObjectives", new ArrayList<>());
+
+                config.set("locations.found", new ArrayList<>());
 
                 config.save(configFile);
             } catch (IOException e){

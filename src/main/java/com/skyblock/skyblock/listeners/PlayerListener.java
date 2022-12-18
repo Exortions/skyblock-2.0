@@ -10,10 +10,15 @@ import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
+import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
+import net.minecraft.server.v1_8_R3.ChatComponentText;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -252,6 +257,33 @@ public class PlayerListener implements Listener {
         Location to = e.getTo();
         Player player = e.getPlayer();
         Location bottom = new Location(to.getWorld(), to.getX(), to.getY() - 1, to.getZ());
+
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+        SkyblockLocation location = skyblockPlayer.getCurrentLocation();
+
+        if (location != null) {
+            if (skyblockPlayer.getExtraData("last_location") != location.getName()) {
+                ArrayList<String> found = (ArrayList<String>) skyblockPlayer.getValue("locations.found");
+
+                if (!found.contains(location.getName())) {
+                    found.add(location.getName());
+                    skyblockPlayer.setValue("locations.found", found);
+                    skyblockPlayer.setExtraData("last_location", location.getName());
+
+                    player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+
+                    IChatBaseComponent title = new ChatComponentText(location.getColor() + location.getName());
+                    IChatBaseComponent subtitle = new ChatComponentText(ChatColor.GOLD + "" + ChatColor.BOLD + "NEW AREA DISCOVERED!");
+                    PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, title);
+                    PacketPlayOutTitle packet2 = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, subtitle);
+
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet2);
+
+                    player.sendMessage(ChatColor.GOLD + " " + ChatColor.BOLD + "NEW AREA DISCOVERED!" + "\n" + ChatColor.GRAY + "  ⏣ " + location.getColor() + location.getName());
+                }
+            }
+        }
 
         if (bottom.getBlock().getType().equals(Material.SLIME_BLOCK)) {
             LaunchPadHandler padHandler = plugin.getLaunchPadHandler();
