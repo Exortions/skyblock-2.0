@@ -680,6 +680,8 @@ public final class Skyblock extends JavaPlugin {
             world.setGameRuleValue("doTileDrops", "false");
             world.setGameRuleValue("naturalRegeneration", "false");
             world.setGameRuleValue("showDeathMessages", "false");
+            world.setGameRuleValue("randomTickSpeed", "0");
+            world.setGameRuleValue("announceAdvancements", "false");
         }
 
         this.sendMessage("Successfully initialized game rules [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
