@@ -13,6 +13,7 @@ import lombok.Setter;
 import net.citizensnpcs.api.trait.trait.Equipment;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -194,29 +195,9 @@ public abstract class SkyblockEntity {
     protected void onDeath() {
         if (getLastDamager() != null) {
             boolean rare = false;
-            for (EntityDrop drop : getDrops()) {
-                EntityDropRarity type = drop.getRarity();
-                double r = Util.random(0.0, 1.0);
-                double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND) / 100.0;
-                double c = drop.getChance() + magicFind;
-                if (r > c) continue;
-                if (rare && type != EntityDropRarity.GUARANTEED) continue;
-                ItemStack stack = drop.getItem();
-                ItemBase base = new ItemBase(stack);
-
-                if (type != EntityDropRarity.GUARANTEED && type != EntityDropRarity.COMMON && getLastDamager() != null) {
-                    getLastDamager().getBukkitPlayer().sendMessage(type.getColor() + "" + ChatColor.BOLD +
-                            (type == EntityDropRarity.CRAZY_RARE ? "CRAZY " : "") + "RARE DROP!  " +
-                            ChatColor.GRAY + "(" + base.getName() + ChatColor.GRAY + ")" + (magicFind != 0.0 ? ChatColor.AQUA +
-                            " (+" + (int) (magicFind * 10000) + "% Magic Find!)" : ""));
-                }
-
-                getLastDamager().dropItem(stack, getVanilla().getLocation());
-
-                if (type != EntityDropRarity.GUARANTEED) rare = true;
-            }
 
             SkyblockPlayer lastDamager = getLastDamager();
+            boolean hasTelekinesis = false;
             ItemStack inHand = lastDamager.getBukkitPlayer().getItemInHand();
             try {
                 ItemBase item = new ItemBase(inHand);
@@ -235,15 +216,71 @@ public abstract class SkyblockEntity {
 
                     lastDamager.getBukkitPlayer().setItemInHand(regenerated.getStack());
                 }
+
+                hasTelekinesis = item.hasEnchantment(Skyblock.getPlugin().getEnchantmentHandler().getEnchantment("telekinesis"));
             } catch (Exception ignored) {}
 
+            for (EntityDrop drop : getDrops()) {
+                EntityDropRarity type = drop.getRarity();
+                double r = Util.random(0.0, 1.0);
+                double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND) / 100.0;
+                double c = drop.getChance() + magicFind;
+                if (r > c) continue;
+                if (rare && type != EntityDropRarity.GUARANTEED) continue;
+                ItemStack stack = drop.getItem();
+                ItemBase base = new ItemBase(stack);
+
+                if (type != EntityDropRarity.GUARANTEED && type != EntityDropRarity.COMMON && getLastDamager() != null) {
+                    getLastDamager().getBukkitPlayer().sendMessage(type.getColor() + "" + ChatColor.BOLD +
+                            (type == EntityDropRarity.CRAZY_RARE ? "CRAZY " : "") + "RARE DROP!  " +
+                            ChatColor.GRAY + "(" + base.getName() + ChatColor.GRAY + ")" + (magicFind != 0.0 ? ChatColor.AQUA +
+                            " (+" + (int) (magicFind * 10000) + "% Magic Find!)" : ""));
+                }
+
+                if (!hasTelekinesis) getLastDamager().dropItem(stack, getVanilla().getLocation());
+                else {
+                    int amount = stack.getAmount();
+                    if (lastDamager.getBukkitPlayer().getInventory().firstEmpty() == -1) {
+                        lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
+                    } else {
+                        if (lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()) != null && lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount() + amount > 64) {
+                            int left = 64 - lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount();
+                            stack.setAmount(amount - left);
+                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+                            stack.setAmount(left);
+                            lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
+                        } else {
+                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+                        }
+                    }
+                }
+
+                if (type != EntityDropRarity.GUARANTEED) rare = true;
+            }
+
             if (getEntityData().orbs > 0) {
-                ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
-                orb.setExperience(getEntityData().orbs);
+                int orbs = getEntityData().orbs;
+
+                if (!hasTelekinesis) {
+                    ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
+                    orb.setExperience(orbs);
+                } else {
+                    lastDamager.getBukkitPlayer().giveExp(orbs);
+                }
             }
 
             if (getEntityData().coins > 0) {
-                getLastDamager().dropItems(Util.createCoins(getEntityData().coins), getVanilla().getLocation());
+                int amount = getEntityData().coins;
+
+                if (!hasTelekinesis) {
+                    getLastDamager().dropItems(Util.createCoins(amount), getVanilla().getLocation());
+                } else {
+                    lastDamager.addCoins(amount);
+                    lastDamager.getBukkitPlayer().playSound(lastDamager.getBukkitPlayer().getLocation(), Sound.ORB_PICKUP, 10, 2);
+                    lastDamager.setExtraData("lastpicked_coins", amount);
+
+                    Util.delay(() -> lastDamager.setExtraData("lastpicked_coins", null), 80);
+                }
             }
         }
     }

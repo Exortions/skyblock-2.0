@@ -31,6 +31,7 @@ import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.*;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.GrowthEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.misc.TelekinesisEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
@@ -560,6 +561,7 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler.registerEnchantment(new VenomousEnchantment());
         this.enchantmentHandler.registerEnchantment(new GiantKillerEnchantment());
         this.enchantmentHandler.registerEnchantment(new FireAspectEnchantment());
+        this.enchantmentHandler.registerEnchantment(new TelekinesisEnchantment());
 
         this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
