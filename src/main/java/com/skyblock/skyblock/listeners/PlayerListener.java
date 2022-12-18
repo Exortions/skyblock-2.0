@@ -67,6 +67,8 @@ public class PlayerListener implements Listener {
 
         if (player == null) return;
 
+        player.getBukkitPlayer().getWorld().setGameRuleValue("randomTickSpeed", "0");
+
         this.plugin.getMinionHandler().deleteAll(player.getBukkitPlayer().getUniqueId());
     }
 
