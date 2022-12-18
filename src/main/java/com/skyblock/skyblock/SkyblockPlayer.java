@@ -12,6 +12,8 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.merchants.Merchant;
+import com.skyblock.skyblock.features.objectives.Objective;
+import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
@@ -19,10 +21,12 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
+import com.skyblock.skyblock.utilities.BossBar;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -53,6 +57,7 @@ public class SkyblockPlayer {
     private AuctionSettings auctionSettings;
     private FileConfiguration config;
     private ArmorStand petDisplay;
+    private BossBar bossBar;
     private Player bukkitPlayer;
     private int damageModifier;
     private ArmorSet armorSet;
@@ -95,6 +100,7 @@ public class SkyblockPlayer {
         this.damageModifier = 0;
         this.progress = null;
         this.armorSet = null;
+        this.bossBar = null;
         this.pet = null;
         this.tick = 0;
 
@@ -132,6 +138,8 @@ public class SkyblockPlayer {
             }
 
             auctionSettings.setPlayer(this);
+
+            this.bossBar = new BossBar(bukkitPlayer);
         }
 
         if (tick % EVERY_SECOND == 0) {
@@ -143,6 +151,19 @@ public class SkyblockPlayer {
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MANA) + ((getStatNoMult(SkyblockStat.MAX_MANA) + 100F)/50));
             } else if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA)) {
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MAX_MANA));
+            }
+
+            if (getQuestLine() != null) {
+                Objective objective = getQuestLine().getObjective(this);
+
+                if (objective != null) {
+                    bossBar.setMessage(ChatColor.WHITE + "Objective: " + ChatColor.YELLOW + objective.getDisplay());
+                    bossBar.update();
+                } else {
+                    bossBar.reset();
+                }
+            } else {
+                bossBar.reset();
             }
         }
 
@@ -561,6 +582,9 @@ public class SkyblockPlayer {
                 config.set("auction.auctionSettings", new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false).serialize());
                 config.set("auction.auctioningItem", null);
 
+                config.set("quests.completedQuests", new ArrayList<>());
+                config.set("quests.completedObjectives", new ArrayList<>());
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();
@@ -570,6 +594,18 @@ public class SkyblockPlayer {
 
     public SkyblockLocation getCurrentLocation() {
         return Skyblock.getPlugin(Skyblock.class).getLocationManager().getLocation(bukkitPlayer.getLocation());
+    }
+
+    public String getCurrentLocationName() {
+        SkyblockLocation currentLocation = getCurrentLocation();
+
+        String loc = currentLocation == null ? "None" : currentLocation.getName();
+
+        if (currentLocation == null) loc = "None";
+
+        if (bukkitPlayer.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) loc = "Private Island";
+
+        return loc;
     }
 
     public boolean isNotOnPrivateIsland() {
@@ -699,5 +735,9 @@ public class SkyblockPlayer {
 
     public boolean hasExtraData(String value) {
         return getExtraData(value) != null;
+    }
+
+    public QuestLine getQuestLine() {
+        return Skyblock.getPlugin().getQuestLineHandler().getFromPlayer(this);
     }
 }

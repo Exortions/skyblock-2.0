@@ -47,6 +47,8 @@ import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.minions.MinionListener;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
+import com.skyblock.skyblock.features.objectives.QuestLine;
+import com.skyblock.skyblock.features.objectives.QuestLineHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
@@ -95,6 +97,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
     private LaunchPadHandler launchPadHandler;
+    private QuestLineHandler questLineHandler;
     private FairySoulHandler fairySoulHandler;
     private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
@@ -148,6 +151,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeSignGui();
         this.initializeBazaar();
         this.initializeSpongeReplacers();
+        this.initializeQuests();
 
         this.registerMerchants();
 
@@ -200,6 +204,10 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    private void initializeQuests() {
+        this.questLineHandler = new QuestLineHandler();
     }
 
     public void initializeBazaar() {

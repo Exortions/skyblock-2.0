@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.crafting;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.event.SkyblockCraftEvent;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
@@ -12,9 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -26,6 +29,7 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
     private final List<Integer> slots = Arrays.asList(10, 11, 12, 19, 20, 21, 28, 29, 30);
     private final BukkitRunnable task;
+    private SkyblockRecipe recipe;
     private List<Integer> excess;
 
     public CraftingGUI(Player opener) {
@@ -96,6 +100,9 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
             if (recipe.toShapeless().equals(shapeless)) {
                 setItem(23, recipe.getResult());
                 updateStatus(true);
+
+                this.recipe = recipe;
+                return;
             }
 
             if (recipe.toString(true).equals(ignoreAmount.toString())) {
@@ -105,6 +112,8 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
                 setItem(23, recipe.getResult());
                 updateStatus(true);
+
+                this.recipe = recipe;
             }
         });
 
@@ -113,7 +122,7 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
     private void updateStatus(boolean status) {
         for (int i = 45; i < 54; i++) {
-            ItemStack item = new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) (status ? 7 : 14)).toItemStack();
+            ItemStack item = new ItemBuilder(" ", Material.STAINED_GLASS_PANE, 1, (short) (status ? 5 : 14)).toItemStack();
             setItem(i, item);
         }
     }
@@ -121,11 +130,14 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         if (!event.getClickedInventory().equals(this)) return;
+        if (!Util.notNull(event.getCurrentItem())) return;
 
-        if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
-            ((Player) event.getWhoClicked()).performCommand("sb menu");
+        if (event.getCurrentItem().getItemMeta().hasDisplayName()) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
+                ((Player) event.getWhoClicked()).performCommand("sb menu");
 
-            return;
+                return;
+            }
         }
 
         if (slots.contains(event.getSlot())) return;
@@ -134,6 +146,8 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
         event.getWhoClicked().getInventory().addItem(event.getCurrentItem());
         setItem(23, recipeRequired);
+
+        Bukkit.getPluginManager().callEvent(new SkyblockCraftEvent(recipe, (Player) event.getWhoClicked()));
 
         for (int i = 0; i < slots.size(); i++) {
             if (excess != null && excess.get(i) == 0 && getItem(slots.get(i)) == null) setItem(slots.get(i), null);

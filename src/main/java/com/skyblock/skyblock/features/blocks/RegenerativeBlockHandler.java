@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -126,8 +127,14 @@ public class RegenerativeBlockHandler implements Listener {
 
         if (!player.isNotOnPrivateIsland()) {
             event.setCancelled(false);
+
+            for (ItemStack item : event.getBlock().getDrops(player.getBukkitPlayer().getItemInHand())) {
+                player.getBukkitPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation(), item);
+            }
+
             return;
         }
+        player.getBukkitPlayer().sendMessage("not on private");
 
         event.setCancelled(true);
 

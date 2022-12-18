@@ -2,6 +2,7 @@ package com.skyblock.skyblock.listeners;
 
 import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
+import com.sk89q.worldedit.event.platform.BlockInteractEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
@@ -17,6 +18,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -316,14 +318,14 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        if (e.getClickedInventory() == null) return;
-        if (!e.getClickedInventory().equals(e.getWhoClicked().getInventory())) return;
-
-        try {
-            ItemBase base = new ItemBase(e.getCurrentItem());
-        } catch (Exception ex) {
-            e.getWhoClicked().setItemOnCursor(Util.toSkyblockItem(e.getCurrentItem()));
-        }
+//        if (e.getClickedInventory() == null) return;
+//        if (!e.getClickedInventory().equals(e.getWhoClicked().getInventory())) return;
+//
+//        try {
+//            ItemBase base = new ItemBase(e.getCurrentItem());
+//        } catch (Exception ex) {
+//            e.getWhoClicked().setItemOnCursor(Util.toSkyblockItem(e.getCurrentItem()));
+//        }
     }
 
     @EventHandler
@@ -363,5 +365,15 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onCreative(InventoryCreativeEvent e) {
         e.setCursor(Util.toSkyblockItem(e.getCursor()));
+    }
+
+    @EventHandler
+    public void onOpen(PlayerInteractEvent e) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (e.getClickedBlock().getType().equals(WORKBENCH)) {
+                e.setCancelled(true);
+                e.getPlayer().performCommand("sb craft");
+            }
+        }
     }
 }

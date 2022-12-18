@@ -23,7 +23,25 @@ public class SkyblockRecipe {
 
         Map<Character, ItemStack> map = shapedRecipe.getIngredientMap();
 
-        String[] spots = new String[]{"abc", "def", "ghi"};
+        List<String> spots = new ArrayList<>(Arrays.asList(shapedRecipe.getShape()));
+
+        for (String spot : spots) {
+            StringBuilder spotBuilder = new StringBuilder(spot);
+            while (spotBuilder.length() < 3) {
+                spotBuilder.append("z");
+            }
+
+            spots.set(spots.indexOf(spot), spotBuilder.toString());
+        }
+
+        while (spots.size() < 3) {
+            spots.add("zzz");
+        }
+
+        if (result.getType().equals(Material.WORKBENCH)) {
+            Bukkit.getConsoleSender().sendMessage(spots + "");
+            Bukkit.getConsoleSender().sendMessage(shapedRecipe.getIngredientMap() + "");
+        }
 
         for (String s : spots) {
             for (int j = 0; j < s.length(); j++) {
