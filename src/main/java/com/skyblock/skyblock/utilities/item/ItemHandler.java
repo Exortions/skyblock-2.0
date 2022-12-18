@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.commands.item.ItemNBTCommand;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
@@ -32,12 +33,57 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.function.Function;
 
 @Getter
 public class ItemHandler {
     private final HashMap<String, ItemStack> items = new HashMap<>();
     private final HashMap<ItemStack, String> reversed = new HashMap<>();
     private final Skyblock skyblock;
+
+    public static final List<String> ITEM_EXCLUSIONS = new ArrayList<String>() {{
+        add("fancy_sword.json");
+        add("raider_axe.json");
+    }};
+
+    public static final HashMap<String, Function<ItemBase, ItemBase>> SKYBLOCK_ID_TO_ITEM = new HashMap<String, Function<ItemBase, ItemBase>>() {{
+        put("raider_axe", (base -> {
+            NBTItem nbtItem = new NBTItem(base.createStack().clone());
+
+            List<String> description = Arrays.asList(Util.buildLore(
+                    "&7Earn &6+20 coins &7from monster kills (level &e10+ &7only)\n\n&c+1 Damage &7per &c500 &7kills\n&8Max +35\n&7Kills: &c" + Util.formatInt(nbtItem.getInteger("raider_axe_kills")) +
+                            "\n\n&c+1❁ Strength &7per &e500 &7wood\n&8Sums wood collections, max +100\n&7Wood collections: &e" + Util.formatInt(nbtItem.getInteger("raider_axe_collection")) + "\n" + " ")
+            );
+
+            NBTItem nbt = new NBTItem(base.getStack());
+
+            int currentKills = nbt.getInteger("raider_axe_kills");
+            int appliedKills = 0;
+
+            int damage = 0;
+
+            for (int i = 0; i < currentKills / 500; i++) {
+                if (appliedKills >= 35) break;
+
+                damage++;
+                appliedKills++;
+            }
+
+            base.setDamage(base.getDamage() + damage);
+
+            base.setDescription(description);
+            base.createStack();
+
+            nbt = new NBTItem(base.getStack());
+
+            nbt.setInteger("raider_axe_kills", nbtItem.getInteger("raider_axe_kills"));
+            nbt.setInteger("raider_axe_collection", nbtItem.getInteger("raider_axe_collection"));
+
+            base.setStack(nbt.getItem());
+
+            return base;
+        }));
+    }};
 
     public ItemHandler(Skyblock plugin) {
         this.skyblock = plugin;
@@ -47,7 +93,7 @@ public class ItemHandler {
         File folder = new File(skyblock.getDataFolder() + File.separator + "items");
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
-            if (file.getName().equals("FANCY_SWORD.json")) continue;
+            if (ITEM_EXCLUSIONS.contains(file.getName().toLowerCase())) continue;
 
             try {
                 JSONParser parser = new JSONParser();
@@ -135,6 +181,30 @@ public class ItemHandler {
                 0,
                 0,
                 false
+        ).createStack());
+
+        items.put("raider_axe", new ItemBase(
+                Material.IRON_AXE,
+                ChatColor.BLUE + "Raider Axe",
+                Reforge.NONE,
+                1,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                false,
+                false,
+                null,
+                new ArrayList<>(),
+                null,
+                0,
+                null,
+                "RARE SWORD",
+                "raider_axe",
+                80, 50, 0, 0, 0, 0, 0, 0, 0, true,
+                new HashMap<String, Object>() {{
+                    put("raider_axe_kills", 0);
+                    put("raider_axe_collection", 0);
+                }},
+                SKYBLOCK_ID_TO_ITEM.get("raider_axe")
         ).createStack());
 
         for (Rarity r : Rarity.values()) {

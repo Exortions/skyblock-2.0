@@ -30,7 +30,7 @@ public class WarpCommand implements Command, TrueAlias<WarpCommand> {
 
         HashMap<String, Location> warps = new HashMap<>();
 
-        warps.put("hub", new Location(Bukkit.getWorld("world"), -2 , 70,  -84,  -180, 0));
+        warps.put("hub", new Location(Skyblock.getSkyblockWorld(), -2 , 70,  -84,  -180, 0));
         warps.put("home", new Location(IslandManager.getIsland(player), 0, 100, 0));
 
         if (warps.containsKey(warpName)) {

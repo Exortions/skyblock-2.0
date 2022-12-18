@@ -149,13 +149,16 @@ public class RegenerativeBlockHandler implements Listener {
         if (locations.get(block.getType()) == null) return;
         if (!Arrays.asList(locations.get(block.getType())).contains(location.getName())) return;
 
+        boolean hasTelekinesis = player.hasTelekinesis();
+
         switch (block.getType()) {
             case STONE:
                 if (block.getData() != 0) break;
 
                 Skill.reward(Objects.requireNonNull(Skill.parseSkill("Mining")), 1.0, player);
 
-                block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+                if (!hasTelekinesis) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+                else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
                 block.setType(Material.COBBLESTONE);
 
                 new BukkitRunnable() {
@@ -169,7 +172,8 @@ public class RegenerativeBlockHandler implements Listener {
             case COBBLESTONE:
                 Skill.reward(Objects.requireNonNull(Skill.parseSkill("Mining")), 1.0, player);
 
-                block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+                if (!hasTelekinesis) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+                else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
 
                 block.setType(Material.BEDROCK);
 
@@ -225,7 +229,9 @@ public class RegenerativeBlockHandler implements Listener {
 
         Material type = block.getType();
 
-        block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+        if (!player.hasTelekinesis()) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+        else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
+
         block.setType(next);
         new BukkitRunnable() {
             @Override
@@ -240,7 +246,9 @@ public class RegenerativeBlockHandler implements Listener {
         Skill.reward(Objects.requireNonNull(Skill.parseSkill(skill)), xp, player);
         event.setCancelled(false);
         this.regenerateBlock(block.getType(), block.getData(), block.getType(), player.getBrokenBlock().getData(), block, resetTimes.get(block.getType()));
-        block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+
+        if (!player.hasTelekinesis()) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+        else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
     }
 
     public void regenerateBlock(Material id, byte data, Material newId, byte newData, Block block, int seconds) {

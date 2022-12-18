@@ -39,6 +39,7 @@ public class LaunchPadHandler {
 
         for (String pad : pads) {
             Location from = (Location) getField(pad, "from");
+            from.setWorld(Skyblock.getSkyblockWorld());
             if (player.getWorld().equals(from.getWorld()) && player.getLocation().distance(from) < 2) return pad;
         }
 
@@ -70,6 +71,10 @@ public class LaunchPadHandler {
         Location to = (Location) getField(padName, "to");
         Location front = (Location) getField(padName, "infront");
         Location teleport = (Location) getField(padName, "teleport");
+
+        to.setWorld(Skyblock.getSkyblockWorld());
+        front.setWorld(Skyblock.getSkyblockWorld());
+        teleport.setWorld(Skyblock.getSkyblockWorld());
 
         player.teleport(front);
 
@@ -114,6 +119,7 @@ public class LaunchPadHandler {
     }
 
     private void moveToward(final Entity player, double yC, Location to) {
+        to.setWorld(Skyblock.getSkyblockWorld());
         final Location loc = player.getLocation();
         final double x = loc.getX() - to.getX();
         final double y = loc.getY() - to.getY() - (Math.max(yC, 0.0));

@@ -740,4 +740,15 @@ public class SkyblockPlayer {
     public QuestLine getQuestLine() {
         return Skyblock.getPlugin().getQuestLineHandler().getFromPlayer(this);
     }
+
+    public boolean hasTelekinesis() {
+        try {
+            ItemBase base = new ItemBase(getBukkitPlayer().getItemInHand());
+
+            return base.hasEnchantment(Skyblock.getPlugin().getEnchantmentHandler().getEnchantment("telekinesis"));
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
 }

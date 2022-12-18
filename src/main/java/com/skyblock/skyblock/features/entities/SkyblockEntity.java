@@ -7,11 +7,13 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
 import net.citizensnpcs.api.trait.trait.Equipment;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -193,6 +195,29 @@ public abstract class SkyblockEntity {
     protected void onDeath() {
         if (getLastDamager() != null) {
             boolean rare = false;
+
+            SkyblockPlayer lastDamager = getLastDamager();
+            boolean hasTelekinesis = lastDamager.hasTelekinesis();
+            ItemStack inHand = lastDamager.getBukkitPlayer().getItemInHand();
+            try {
+                ItemBase item = new ItemBase(inHand);
+
+                if (item.getSkyblockId().equals("raider_axe")) {
+                    NBTItem nbtItem = new NBTItem(item.getStack());
+                    int kills = nbtItem.getInteger("raider_axe_kills");
+                    item.addNbt("raider_axe_kills", kills + 1);
+
+                    ItemBase regenerated = item.regenerate();
+                    ItemStack stack = regenerated.getStack();
+                    NBTItem nbt = new NBTItem(stack);
+                    nbt.setInteger("raider_axe_kills", kills + 1);
+
+                    regenerated.setStack(nbt.getItem());
+
+                    lastDamager.getBukkitPlayer().setItemInHand(regenerated.getStack());
+                }
+            } catch (Exception ignored) {}
+
             for (EntityDrop drop : getDrops()) {
                 EntityDropRarity type = drop.getRarity();
                 double r = Util.random(0.0, 1.0);
@@ -210,18 +235,52 @@ public abstract class SkyblockEntity {
                             " (+" + (int) (magicFind * 10000) + "% Magic Find!)" : ""));
                 }
 
-                getLastDamager().dropItem(stack, getVanilla().getLocation());
+                if (!hasTelekinesis) getLastDamager().dropItem(stack, getVanilla().getLocation());
+                else {
+                    int amount = stack.getAmount();
+                    if (lastDamager.getBukkitPlayer().getInventory().firstEmpty() == -1) {
+                        lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
+                    } else {
+//                        if (lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()) != null && lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount() + amount > 64) {
+//                            int left = 64 - lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount();
+//                            stack.setAmount(amount - left);
+//                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+//                            stack.setAmount(left);
+//                            lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
+//                        } else {
+//                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+//                        }
+
+                        lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+                    }
+                }
 
                 if (type != EntityDropRarity.GUARANTEED) rare = true;
             }
 
             if (getEntityData().orbs > 0) {
-                ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
-                orb.setExperience(getEntityData().orbs);
+                int orbs = getEntityData().orbs;
+
+                if (!hasTelekinesis) {
+                    ExperienceOrb orb = getVanilla().getWorld().spawn(getVanilla().getLocation(), ExperienceOrb.class);
+                    orb.setExperience(orbs);
+                } else {
+                    lastDamager.getBukkitPlayer().giveExp(orbs);
+                }
             }
 
             if (getEntityData().coins > 0) {
-                getLastDamager().dropItems(Util.createCoins(getEntityData().coins), getVanilla().getLocation());
+                int amount = getEntityData().coins;
+
+                if (!hasTelekinesis) {
+                    getLastDamager().dropItems(Util.createCoins(amount), getVanilla().getLocation());
+                } else {
+                    lastDamager.addCoins(amount);
+                    lastDamager.getBukkitPlayer().playSound(lastDamager.getBukkitPlayer().getLocation(), Sound.ORB_PICKUP, 10, 2);
+                    lastDamager.setExtraData("lastpicked_coins", amount);
+
+                    Util.delay(() -> lastDamager.setExtraData("lastpicked_coins", null), 80);
+                }
             }
         }
     }
@@ -243,4 +302,11 @@ public abstract class SkyblockEntity {
 
     public void onDespawn() { }
     public void onDamage(EntityDamageByEntityEvent event, SkyblockPlayer player, boolean crit, double damage) { }
+
+    public boolean isUndead() {
+        return getVanilla().getType().equals(EntityType.ZOMBIE) ||
+                getVanilla().getType().equals(EntityType.SKELETON) ||
+                getVanilla().getType().equals(EntityType.PIG_ZOMBIE);
+    }
+    
 }

@@ -99,7 +99,7 @@ public class MerchantHandler {
 
                 JSONObject locationObject = (JSONObject) merchant.get("location");
                 Location location = new Location(
-                        Bukkit.getWorld((String) locationObject.get("world")),
+                        Skyblock.getSkyblockWorld(),
                         (double) locationObject.get("x"),
                         (double) locationObject.get("y"),
                         (double) locationObject.get("z")

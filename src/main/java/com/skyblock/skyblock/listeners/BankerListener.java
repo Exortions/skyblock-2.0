@@ -51,18 +51,16 @@ public class BankerListener implements Listener {
                 player.performCommand("sb banker deposit");
                 player.performCommand("sb banker");
             } else if (stack.getType().equals(Material.SIGN)) {
-                SignGui sign = new SignGui(Skyblock.getPlugin().getSignManager(), e -> {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                int amount = Integer.parseInt(e.getLines()[0]);
-                                player.performCommand("sb deposit " + amount);
-                                player.performCommand("sb banker");
-                            } catch (NumberFormatException ignored) { }
-                        }
-                    }.runTask(Skyblock.getPlugin());
-                });
+                SignGui sign = new SignGui(Skyblock.getPlugin().getSignManager(), e -> new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            int amount = Integer.parseInt(e.getLines()[0]);
+                            player.performCommand("sb deposit " + amount);
+                            player.performCommand("sb banker");
+                        } catch (NumberFormatException ignored) { }
+                    }
+                }.runTask(Skyblock.getPlugin()));
 
                 sign.open(player);
             }

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import static org.bukkit.Material.*;
 
@@ -290,7 +291,7 @@ public class PlayerListener implements Listener {
             e.setCancelled(true);
 
             SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
-            ArrayList<Location> found = (ArrayList<Location>) player.getValue("fairySouls.found");
+            List<Location> found = ((ArrayList<Location>) player.getValue("fairySouls.found")).stream().peek(location -> location.setWorld(Skyblock.getSkyblockWorld())).collect(Collectors.toList());
 
             if (!found.contains(e.getRightClicked().getLocation())) {
                 e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "SOUL! " + ChatColor.RESET + "" + ChatColor.WHITE + "You found a " + ChatColor.LIGHT_PURPLE + "Fairy Soul" + ChatColor.WHITE + "!");
@@ -316,8 +317,8 @@ public class PlayerListener implements Listener {
         e.setCancelled(true);
     }
 
-    @EventHandler
-    public void onClick(InventoryClickEvent e) {
+//    @EventHandler
+//    public void onClick(InventoryClickEvent e) {
 //        if (e.getClickedInventory() == null) return;
 //        if (!e.getClickedInventory().equals(e.getWhoClicked().getInventory())) return;
 //
@@ -326,7 +327,7 @@ public class PlayerListener implements Listener {
 //        } catch (Exception ex) {
 //            e.getWhoClicked().setItemOnCursor(Util.toSkyblockItem(e.getCurrentItem()));
 //        }
-    }
+//    }
 
     @EventHandler
     public void onPickup(PlayerPickupItemEvent e) {
@@ -362,10 +363,10 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onCreative(InventoryCreativeEvent e) {
-        e.setCursor(Util.toSkyblockItem(e.getCursor()));
-    }
+//    @EventHandler
+//    public void onCreative(InventoryCreativeEvent e) {
+//        e.setCursor(Util.toSkyblockItem(e.getCursor()));
+//    }
 
     @EventHandler
     public void onOpen(PlayerInteractEvent e) {
