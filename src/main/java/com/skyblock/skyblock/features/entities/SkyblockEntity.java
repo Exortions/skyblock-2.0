@@ -197,7 +197,7 @@ public abstract class SkyblockEntity {
             boolean rare = false;
 
             SkyblockPlayer lastDamager = getLastDamager();
-            boolean hasTelekinesis = false;
+            boolean hasTelekinesis = lastDamager.hasTelekinesis();
             ItemStack inHand = lastDamager.getBukkitPlayer().getItemInHand();
             try {
                 ItemBase item = new ItemBase(inHand);
@@ -216,8 +216,6 @@ public abstract class SkyblockEntity {
 
                     lastDamager.getBukkitPlayer().setItemInHand(regenerated.getStack());
                 }
-
-                hasTelekinesis = item.hasEnchantment(Skyblock.getPlugin().getEnchantmentHandler().getEnchantment("telekinesis"));
             } catch (Exception ignored) {}
 
             for (EntityDrop drop : getDrops()) {
@@ -243,15 +241,17 @@ public abstract class SkyblockEntity {
                     if (lastDamager.getBukkitPlayer().getInventory().firstEmpty() == -1) {
                         lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
                     } else {
-                        if (lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()) != null && lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount() + amount > 64) {
-                            int left = 64 - lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount();
-                            stack.setAmount(amount - left);
-                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
-                            stack.setAmount(left);
-                            lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
-                        } else {
-                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
-                        }
+//                        if (lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()) != null && lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount() + amount > 64) {
+//                            int left = 64 - lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount();
+//                            stack.setAmount(amount - left);
+//                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+//                            stack.setAmount(left);
+//                            lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
+//                        } else {
+//                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
+//                        }
+
+                        lastDamager.getBukkitPlayer().getInventory().addItem(stack);
                     }
                 }
 

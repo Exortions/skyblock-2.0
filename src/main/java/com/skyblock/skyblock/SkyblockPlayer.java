@@ -700,4 +700,15 @@ public class SkyblockPlayer {
     public boolean hasExtraData(String value) {
         return getExtraData(value) != null;
     }
+
+    public boolean hasTelekinesis() {
+        try {
+            ItemBase base = new ItemBase(getBukkitPlayer().getItemInHand());
+
+            return base.hasEnchantment(Skyblock.getPlugin().getEnchantmentHandler().getEnchantment("telekinesis"));
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
 }
