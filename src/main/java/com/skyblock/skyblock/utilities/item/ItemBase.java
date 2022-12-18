@@ -8,6 +8,7 @@ import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.sword.CriticalEnchantment;
 import com.skyblock.skyblock.features.reforge.ReforgeStat;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -219,6 +220,11 @@ public class ItemBase {
         int rDefense = reforgeData.get(SkyblockStat.DEFENSE);
         int rHealth = reforgeData.get(SkyblockStat.HEALTH);
 
+        if (this.getEnchantment("critical") != null) {
+            if (this.hasEnchantment(this.getEnchantment("critical").getBaseEnchantment()))
+                rCritDamage += CriticalEnchantment.getCritDamageIncrease.apply(this.getEnchantment("critical").getLevel());
+        }
+
         /*
           Stats
          */
@@ -228,7 +234,7 @@ public class ItemBase {
         if (critChance != 0 || rCritChance > 0)
             lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + rCritChance) + "%" + (reforge != Reforge.NONE && rCritChance > 0 ? " " + ChatColor.BLUE + "(+" + rCritChance + "%)" : ""));
         if (critDamage != 0 || rCritDamage > 0)
-            lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + rCritDamage) + "%" + (reforge != Reforge.NONE && rCritDamage > 0 ? " " + ChatColor.BLUE + "(+" + rCritDamage + "%)" : ""));
+            lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.RED + "+" + (critDamage + rCritDamage) + "%" + (rCritDamage > 0 ? " " + ChatColor.BLUE + "(+" + rCritDamage + "%)" : ""));
         if (attackSpeed != 0 || rAttackSpeed > 0)
             lore.add(ChatColor.GRAY + "Attack Speed: " + ChatColor.RED + "+" + (attackSpeed + rAttackSpeed + "%" + (reforge != Reforge.NONE && rAttackSpeed > 0 ? " " + ChatColor.BLUE + "(+" + rAttackSpeed + "%)" : "")));
         if ((speed != 0 || rSpeed != 0) && (intelligence != 0 || rMana != 0) && (defense != 0 || rDefense != 0) && (health != 0 || rHealth > 0)) {
