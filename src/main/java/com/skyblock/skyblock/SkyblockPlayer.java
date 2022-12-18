@@ -241,7 +241,13 @@ public class SkyblockPlayer {
 
         if (getStat(SkyblockStat.SPEED) > speedCap) setStat(SkyblockStat.SPEED, speedCap);
 
-        if (bukkitPlayer.getLocation().getY() <= -11) kill(EntityDamageEvent.DamageCause.VOID, null);
+        if (bukkitPlayer.getLocation().getY() <= -11) {
+            kill(EntityDamageEvent.DamageCause.VOID, null);
+
+            if (isOnIsland()) {
+                bukkitPlayer.performCommand("warp home");
+            }
+        }
 
         bukkitPlayer.setWalkSpeed(Math.min((float) (getStat(SkyblockStat.SPEED) / 500.0), 1.0f));
         bukkitPlayer.setMaxHealth(Math.round(Math.min(40.0, 20.0 + ((getStat(SkyblockStat.MAX_HEALTH) - 100.0) / 25.0))));
@@ -387,7 +393,7 @@ public class SkyblockPlayer {
 
         bukkitPlayer.setVelocity(new Vector(0, 0, 0));
         bukkitPlayer.setFallDistance(0.0f);
-        bukkitPlayer.performCommand("sb warp hub");
+        bukkitPlayer.performCommand("warp hub");
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         setValue("stats.purse", sub);
