@@ -134,7 +134,6 @@ public class RegenerativeBlockHandler implements Listener {
 
             return;
         }
-        player.getBukkitPlayer().sendMessage("not on private");
 
         event.setCancelled(true);
 
