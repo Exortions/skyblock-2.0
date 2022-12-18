@@ -265,4 +265,11 @@ public abstract class SkyblockEntity {
 
     public void onDespawn() { }
     public void onDamage(EntityDamageByEntityEvent event, SkyblockPlayer player, boolean crit, double damage) { }
+
+    public boolean isUndead() {
+        return getVanilla().getType().equals(EntityType.ZOMBIE) ||
+                getVanilla().getType().equals(EntityType.SKELETON) ||
+                getVanilla().getType().equals(EntityType.PIG_ZOMBIE);
+    }
+    
 }
