@@ -49,6 +49,8 @@ import java.util.function.Consumer;
 @Data
 public class SkyblockPlayer {
 
+    private HashMap<String, Object> dataCache;
+
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
     private AuctionCreationGUI.AuctionProgress progress;
     private HashMap<SkyblockStat, Double> stats;
@@ -90,6 +92,7 @@ public class SkyblockPlayer {
     }
 
     public SkyblockPlayer(UUID uuid) {
+        this.dataCache = new HashMap<>();
         this.predicateDamageModifiers = new ArrayList<>();
         this.bukkitPlayer = Bukkit.getPlayer(uuid);
         this.hand = Util.getEmptyItemBase();
@@ -483,7 +486,9 @@ public class SkyblockPlayer {
     }
 
     public Object getValue(String path) {
-        return config.get(path);
+        if (!dataCache.containsKey(path)) dataCache.put(path, config.get(path));
+
+        return dataCache.get(path);
     }
 
     public double getDouble(String path) {
@@ -491,14 +496,19 @@ public class SkyblockPlayer {
     }
 
     public void setValue(String path, Object item) {
-        try {
-            config.set(path, item);
-            config.save(configFile);
-            config = YamlConfiguration.loadConfiguration(configFile);
+        dataCache.put(path, item);
+        forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
+    }
 
-            forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
-        }catch (IOException e){
-            e.printStackTrace();
+    public void saveToDisk() {
+        for (Map.Entry<String, Object> entry : dataCache.entrySet()) {
+            try {
+                config.set(entry.getKey(), entry.getValue());
+                config.save(configFile);
+                config = YamlConfiguration.loadConfiguration(configFile);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 

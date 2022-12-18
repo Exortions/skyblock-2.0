@@ -282,6 +282,8 @@ public class PlayerListener implements Listener {
             player.getArmorSet().stopFullSetBonus(player.getBukkitPlayer());
         }
 
+        player.saveToDisk();
+
         SkyblockPlayer.playerRegistry.remove(player.getBukkitPlayer().getUniqueId());
     }
 
