@@ -38,6 +38,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -254,6 +255,11 @@ public class PlayerListener implements Listener {
         }
     }
 
+    private static final HashMap<String, String[]> discoveryMessages = new HashMap<String, String[]>() {{
+        put("Auction House", new String[]{ "Auction off your special items", "Bid on other player's items" });
+        put("Village", new String[]{ "Purchase items at the Market", "Visit the Auction House", "Manage your Coins in the Bank", "Enchant items at the Library" });
+    }};
+
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Location to = e.getTo();
@@ -274,15 +280,27 @@ public class PlayerListener implements Listener {
 
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 
-                    IChatBaseComponent title = new ChatComponentText(location.getColor() + location.getName());
-                    IChatBaseComponent subtitle = new ChatComponentText(ChatColor.GOLD + "" + ChatColor.BOLD + "NEW AREA DISCOVERED!");
+                    IChatBaseComponent title = new ChatComponentText(location.getColor() + "" + ChatColor.BOLD + location.getName());
+                    IChatBaseComponent subtitle = new ChatComponentText(ChatColor.GREEN + "New Zone Discovered");
                     PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, title);
                     PacketPlayOutTitle packet2 = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, subtitle);
 
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet2);
 
-                    player.sendMessage(ChatColor.GOLD + " " + ChatColor.BOLD + "NEW AREA DISCOVERED!" + "\n" + ChatColor.GRAY + "  ⏣ " + location.getColor() + location.getName());
+                    player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "  NEW ZONE " + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "- " + location.getColor() + "" + ChatColor.BOLD + location.getName());
+                    player.sendMessage("  ");
+
+                    if (discoveryMessages.containsKey(location.getName())) {
+                        for (String message : discoveryMessages.get(location.getName())) {
+                            player.sendMessage(ChatColor.DARK_GRAY + "  > " + ChatColor.YELLOW + message);
+                        }
+
+                        player.sendMessage("   ");
+                    }
+
+                    player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                 }
             }
         }
