@@ -25,7 +25,6 @@ public class DependencyUpdater {
         add("launchpads.yml");
         add("locations.yml");
         add("merchants.json");
-        add("private_island.schematic");
         add("reforges.json");
         add("spawners.yml");
     }};
