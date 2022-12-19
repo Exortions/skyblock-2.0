@@ -475,6 +475,9 @@ public class Util {
 
         click.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.8, 0));
 
+        Skyblock.getPlugin().addRemoveable(stand);
+        Skyblock.getPlugin().addRemoveable(click);
+
         if (skin) {
             SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);
             skinTrait.setSkinPersistent("npc", skinSignature, skinValue);

@@ -777,6 +777,7 @@ public class SkyblockPlayer {
         if (getArmorSet() != null) {
             getArmorSet().stopFullSetBonus(getBukkitPlayer());
         }
+        bossBar.reset();
 
         saveToDisk();
 
