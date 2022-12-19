@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 @RequiresPlayer
 @Alias(aliases = { "ib" })
@@ -38,9 +39,12 @@ public class ItemBrowserCommand implements Command {
                 player.sendMessage(ChatColor.GREEN + "Searching for " + ChatColor.GOLD + query.toString().trim() + ChatColor.GREEN + "...");
 
                 for (Map.Entry<String, ItemStack> entry : plugin.getItemHandler().getItems().entrySet()) {
-                    if (entry.getValue().getItemMeta().getDisplayName().toLowerCase().contains(query.toString().toLowerCase())) {
-                        items.add(entry.getValue());
-                    }
+                    Pattern pattern = Pattern.compile(".*" + query.toString().trim() + ".*", Pattern.CASE_INSENSITIVE);
+                    if (pattern.matcher(entry.getKey()).matches()) items.add(entry.getValue());
+
+//                    if (entry.getValue().getItemMeta().getDisplayName().toLowerCase().contains(query.toString().toLowerCase())) {
+//                        items.add(entry.getValue());
+//                    }
                 }
 
                 command = "sb itembrowser " + (page + 2) + query;
