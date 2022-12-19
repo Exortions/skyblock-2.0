@@ -3,6 +3,7 @@ package com.skyblock.skyblock.utilities.gui;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
 import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
+import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -119,6 +120,12 @@ public class Gui implements Listener {
             if (event.getCurrentItem() == null) return;
             if (!event.getCurrentItem().hasItemMeta()) return;
             if (!event.getCurrentItem().getItemMeta().hasDisplayName()) return;
+
+            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(
+                    Util.buildCloseButton().getItemMeta().getDisplayName())) {
+                event.getWhoClicked().closeInventory();
+                return;
+            }
 
             List<String> lore = event.getCurrentItem().getItemMeta().getLore();
 

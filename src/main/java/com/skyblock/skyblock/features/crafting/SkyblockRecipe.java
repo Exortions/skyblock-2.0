@@ -38,11 +38,6 @@ public class SkyblockRecipe {
             spots.add("zzz");
         }
 
-        if (result.getType().equals(Material.WORKBENCH)) {
-            Bukkit.getConsoleSender().sendMessage(spots + "");
-            Bukkit.getConsoleSender().sendMessage(shapedRecipe.getIngredientMap() + "");
-        }
-
         for (String s : spots) {
             for (int j = 0; j < s.length(); j++) {
                 StringBuilder line = new StringBuilder();

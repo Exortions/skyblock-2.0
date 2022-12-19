@@ -63,11 +63,13 @@ public class QuestLine {
             player.sendMessage(ChatColor.GREEN + "   ✓ " + ChatColor.WHITE + objective.getDisplay());
         }
 
-        player.sendMessage(" ");
-        player.sendMessage(ChatColor.GREEN + "  " + ChatColor.BOLD + "REWARD");
+        if (getRewards().size() > 0) {
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "  " + ChatColor.BOLD + "REWARD");
 
-        for (String reward : getRewards()) {
-            player.sendMessage("   " + ChatColor.translateAlternateColorCodes('&', reward));
+            for (String reward : getRewards()) {
+                player.sendMessage("   " + ChatColor.translateAlternateColorCodes('&', reward));
+            }
         }
 
         player.sendMessage("  ");

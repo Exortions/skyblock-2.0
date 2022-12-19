@@ -6,9 +6,17 @@ import com.skyblock.skyblock.features.objectives.QuestLine;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 
+import java.util.Collections;
+import java.util.List;
+
 public class AuctioneerQuest extends QuestLine {
     public AuctioneerQuest() {
         super("auctioneer", "Auctioneer", new AuctioneerObjective());
+    }
+
+    @Override
+    protected boolean hasCompletionMessage() {
+        return true;
     }
 
     private static class AuctioneerObjective extends Objective {

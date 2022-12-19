@@ -6,7 +6,9 @@ import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
+import com.skyblock.skyblock.features.objectives.gui.GiftGui;
 import com.skyblock.skyblock.utilities.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -15,6 +17,7 @@ import org.bukkit.entity.Villager;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class IntroduceYourselfQuest extends QuestLine {
 
@@ -47,7 +50,9 @@ public class IntroduceYourselfQuest extends QuestLine {
         npcHandler.registerNPC("jamie", new NPC("Jamie", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -17.5, 70, -67.5),
                 (p) -> {
-                    sendDelayedMessages(p, "Jamie",
+                    sendDelayedMessages(p, "Jamie", (player) -> {
+                                new GiftGui(player, Skyblock.getPlugin().getItemHandler().getItem("ROGUE_SWORD.json")).show(player);
+                            },
                             "You might have noticed that you have a Mana bar!",
                             "Some items have mysterious properties called Abilities",
                             "Abilities use your Mana as a resource. Here take this Rogue Sword. I don't need it!");
@@ -146,21 +151,30 @@ public class IntroduceYourselfQuest extends QuestLine {
     }
 
     private void sendDelayedMessages(Player player, String npc, String... messages) {
+        sendDelayedMessages(player, npc, (p) -> {}, messages);
+    }
+
+    private void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
         List<String> talked = (List<String>) SkyblockPlayer.getPlayer(player).getValue("quests.introduceYourself.talkedTo");
 
         if (talked.contains(npc)) return;
 
-        int i = 0;
-        for (String message : messages) {
+        for (int i = 0; i < messages.length; i++) {
+            String message = messages[i];
             sendDelayedMessage(player, npc, message, i);
-            i++;
-        }
 
-        talked.add(npc);
-        SkyblockPlayer.getPlayer(player).setValue("quests.introduceYourself.talkedTo", talked);
+            if (i == messages.length - 1) {
+                Util.delay(() -> {
+                    action.accept(player);
 
-        if (talked.size() == 12) {
-            complete(player);
+                    talked.add(npc);
+                    SkyblockPlayer.getPlayer(player).setValue("quests.introduceYourself.talkedTo", talked);
+
+                    if (talked.size() == 12) {
+                        complete(player);
+                    }
+                }, (i + 1) * 20);
+            }
         }
     }
 
