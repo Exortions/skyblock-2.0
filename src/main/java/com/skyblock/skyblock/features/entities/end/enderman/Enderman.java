@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.entities.end.enderman;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.EntityDrop;
 import com.skyblock.skyblock.features.entities.EntityDropRarity;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
@@ -11,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Enderman extends SkyblockEntity {
@@ -46,6 +44,8 @@ public class Enderman extends SkyblockEntity {
                 equipment.hand = new ItemStack(Material.ENDER_CHEST);
 
                 loadStats(13000, 1250, false, false, true, equipment, "Zealot", 55, 45, 10, 15);
+                break;
+            default:
                 break;
         }
     }
