@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.entities.zombie;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -33,7 +32,7 @@ public class Zombie extends SkyblockEntity {
                 loadStats(100, 20, true, false, true, equipment, "Zombie", 1, 6);
                 break;
             case SEA_WALKER:
-                equipment.hand = Util.IDtoSkull(new ItemStack(Material.SKULL, SkullType.PLAYER.ordinal()), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJlN2ZhMmY5YjhkNmQxZTczNGVkYTVlM2NlMDI2Njg4MTM0MjkyZmNhZmMzMjViMWVhZDQzZDg5Y2MxZTEifX19");
+                equipment.hand = Util.idToSkull(new ItemStack(Material.SKULL, SkullType.PLAYER.ordinal()), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJlN2ZhMmY5YjhkNmQxZTczNGVkYTVlM2NlMDI2Njg4MTM0MjkyZmNhZmMzMjViMWVhZDQzZDg5Y2MxZTEifX19");
                 equipment.chest = new ItemBuilder("", Material.LEATHER_CHESTPLATE).dyeColor(Color.BLUE).toItemStack();
                 equipment.legs = new ItemBuilder("", Material.LEATHER_LEGGINGS).dyeColor(Color.BLUE).toItemStack();
                 equipment.boots = new ItemBuilder("", Material.LEATHER_BOOTS).dyeColor(Color.BLUE).toItemStack();

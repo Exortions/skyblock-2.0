@@ -6,7 +6,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -18,9 +17,6 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
-import net.minecraft.server.v1_8_R3.IInventory;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.*;
@@ -52,6 +48,8 @@ public class Util {
         return Arrays.asList(strings);
     }
 
+    private final static String EMPTY = "PLACEHOLDER STRING";
+
     private final static TreeMap<Integer, String> romanMap = new TreeMap<Integer, String>(){{
         put(1000, "M");
         put(900, "CM");
@@ -66,6 +64,15 @@ public class Util {
         put(5, "V");
         put(4, "IV");
         put(1, "I");
+    }};
+
+    private static final NavigableMap<Long, String> suffixes = new TreeMap<Long, String>() {{
+        put(1_000L, "k");
+        put(1_000_000L, "M");
+        put(1_000_000_000L, "G");
+        put(1_000_000_000_000L, "T");
+        put(1_000_000_000_000_000L, "P");
+        put(1_000_000_000_000_000_000L, "E");
     }};
 
     public String toRoman(int number) {
@@ -203,8 +210,6 @@ public class Util {
         return !new NBTItem(item).getBoolean("skyblockItem");
     }
 
-    private final static String EMPTY = "PLACEHOLDER STRING";
-
     public ItemStack getEmptyItemBase() {
         return new ItemBase(Material.DIRT, EMPTY, Reforge.NONE, 1, listOf(EMPTY, EMPTY), Collections.emptyList(), false, false, EMPTY, listOf(EMPTY, EMPTY), EMPTY, 0, "0s", EMPTY, EMPTY, 0, 0, 0, 0, 0, 0, 0, 0, 0, true).getStack();
     }
@@ -299,7 +304,7 @@ public class Util {
         return new_string;
     }
 
-    public ItemStack IDtoSkull(ItemStack head, String id) {
+    public ItemStack idToSkull(ItemStack head, String id) {
         JsonParser parser = new JsonParser();
         JsonObject o = parser.parse(new String(org.apache.commons.codec.binary.Base64.decodeBase64(id))).getAsJsonObject();
         String skinUrl = o.get("textures").getAsJsonObject().get("SKIN").getAsJsonObject().get("url").getAsString();
@@ -516,16 +521,6 @@ public class Util {
         return base.getReforgeCost();
     }
 
-    private static final NavigableMap<Long, String> suffixes = new TreeMap<> ();
-    static {
-        suffixes.put(1_000L, "k");
-        suffixes.put(1_000_000L, "M");
-        suffixes.put(1_000_000_000L, "G");
-        suffixes.put(1_000_000_000_000L, "T");
-        suffixes.put(1_000_000_000_000_000L, "P");
-        suffixes.put(1_000_000_000_000_000_000L, "E");
-    }
-
     public static String format(long value) {
         if (value == Long.MIN_VALUE) return format(Long.MIN_VALUE + 1);
         if (value < 0) return "-" + format(-value);
@@ -643,9 +638,9 @@ public class Util {
     public List<ItemStack> createCoins(int amount) {
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
 
-        ItemStack iron = IDtoSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzhhNDY1MGVlM2I3NDU5NDExMjQyNjAwNDI0NmRmNTMxZTJjNjhiNmNhNDdjYWI4ZmUyMzIzYjk3OTBhMWE1ZSJ9fX0=");
-        ItemStack gold = IDtoSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGZhMDg3ZWI3NmU3Njg3YTgxZTRlZjgxYTdlNjc3MjY0OTk5MGY2MTY3Y2ViMGY3NTBhNGM1ZGViNmM0ZmJhZCJ9fX0=");
-        ItemStack diamond = IDtoSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RlZTYyMWViODJiMGRhYjQxNjYzMzBkMWRhMDI3YmEyYWMxMzI0NmE0YzFlN2Q1MTc0ZjYwNWZkZGYxMGExMCJ9fX0=");
+        ItemStack iron = idToSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzhhNDY1MGVlM2I3NDU5NDExMjQyNjAwNDI0NmRmNTMxZTJjNjhiNmNhNDdjYWI4ZmUyMzIzYjk3OTBhMWE1ZSJ9fX0=");
+        ItemStack gold = idToSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGZhMDg3ZWI3NmU3Njg3YTgxZTRlZjgxYTdlNjc3MjY0OTk5MGY2MTY3Y2ViMGY3NTBhNGM1ZGViNmM0ZmJhZCJ9fX0=");
+        ItemStack diamond = idToSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RlZTYyMWViODJiMGRhYjQxNjYzMzBkMWRhMDI3YmEyYWMxMzI0NmE0YzFlN2Q1MTc0ZjYwNWZkZGYxMGExMCJ9fX0=");
 
         ItemMeta meta = diamond.getItemMeta();
         meta.setDisplayName("coins_" + 50);

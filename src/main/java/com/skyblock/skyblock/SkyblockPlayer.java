@@ -26,7 +26,6 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -203,7 +202,7 @@ public class SkyblockPlayer {
 
                 petDisplay = bukkitPlayer.getWorld().spawn(loc,  ArmorStand.class);
 
-                petDisplay.setHelmet(Util.IDtoSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), pet.getSkull()));
+                petDisplay.setHelmet(Util.idToSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), pet.getSkull()));
                 petDisplay.setVisible(false);
                 petDisplay.setGravity(false);
                 petDisplay.setSmall(true);
