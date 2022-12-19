@@ -105,9 +105,10 @@ public abstract class Skill {
             player.setValue("pets.equip", pet.toItemStack());
         }
 
-        double percentage = getXP(skill, player) / getNextXPGoal(getXP(skill, player));
+        int level = getLevel(getXP(skill, player));
+
         String actionBar = ChatColor.RED + "" + player.getStat(SkyblockStat.HEALTH) + "/" + player.getStat(SkyblockStat.MAX_HEALTH) + "❤   " +
-                ChatColor.DARK_AQUA + "+" + xp + " " + skill.name + " (" + Math.round(percentage) + "%) "
+                ChatColor.DARK_AQUA + "+" + xp + " " + skill.name + " (" + (getXP(skill, player) - XP.get(level)) + "/" +  getNextXPGoal(getXP(skill, player)) + ") "
                 +  ChatColor.AQUA + "" + player.getStat(SkyblockStat.MANA) + "/" + player.getStat(SkyblockStat.MAX_MANA) + "✎ Mana";
         player.setActionBar(actionBar);
 

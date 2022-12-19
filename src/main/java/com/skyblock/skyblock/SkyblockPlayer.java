@@ -161,7 +161,7 @@ public class SkyblockPlayer {
                 Objective objective = getQuestLine().getObjective(this);
 
                 if (objective != null) {
-                    bossBar.setMessage(ChatColor.WHITE + "Objective: " + ChatColor.YELLOW + objective.getDisplay());
+                    bossBar.setMessage(ChatColor.WHITE + "Objective: " + ChatColor.YELLOW + objective.getDisplay() + " " + objective.getSuffix(this));
                     bossBar.update();
                 } else {
                     bossBar.reset();
@@ -602,6 +602,7 @@ public class SkyblockPlayer {
 
                 config.set("quests.completedQuests", new ArrayList<>());
                 config.set("quests.completedObjectives", new ArrayList<>());
+                config.set("quests.introduceYourself.talkedTo", new ArrayList<>());
 
                 config.set("locations.found", new ArrayList<>());
 
