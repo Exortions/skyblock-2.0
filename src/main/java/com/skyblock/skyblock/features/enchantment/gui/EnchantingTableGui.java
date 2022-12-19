@@ -125,6 +125,8 @@ public class EnchantingTableGui extends Gui {
     public void onAddItem(InventoryClickEvent event) {
         if (!event.getClickedInventory().equals(this.player.getBukkitPlayer().getInventory()) || this.recentlyClicked) return;
 
+        if (!this.player.getBukkitPlayer().getOpenInventory().getTopInventory().getName().equalsIgnoreCase(this.getName())) return;
+
         event.setCancelled(true);
 
         this.recentlyClicked = true;
