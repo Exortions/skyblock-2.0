@@ -40,7 +40,7 @@ public class MinionHandler {
                 Material.SKULL_ITEM
         ).toItemStack();
 
-        stack = Util.IDtoSkull(stack, minion.getHead().apply(minion.getLevel()));
+        stack = Util.idToSkull(stack, minion.getHead().apply(minion.getLevel()));
 
         ItemMeta meta = stack.getItemMeta();
 

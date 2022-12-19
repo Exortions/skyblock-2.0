@@ -3,11 +3,9 @@ package com.skyblock.skyblock.features.fairysouls;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTEntity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.json.simple.JSONArray;
@@ -100,7 +98,7 @@ public class FairySoulHandler {
         stand.setCustomNameVisible(false);
         stand.setMarker(false);
 
-        stand.setHelmet(Util.IDtoSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2OTIzYWQyNDczMTAwMDdmNmFlNWQzMjZkODQ3YWQ1Mzg2NGNmMTZjMzU2NWExODFkYzhlNmIyMGJlMjM4NyJ9fX0="));
+        stand.setHelmet(Util.idToSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2OTIzYWQyNDczMTAwMDdmNmFlNWQzMjZkODQ3YWQ1Mzg2NGNmMTZjMzU2NWExODFkYzhlNmIyMGJlMjM4NyJ9fX0="));
         stand.setMetadata("isFairySoul", new FixedMetadataValue(Skyblock.getPlugin(), false));
 
         souls.add(stand);

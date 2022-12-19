@@ -8,7 +8,6 @@ import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.HashMap;
 import java.util.function.Function;
 
 public class BaneOfArthropodsEnchantment extends SwordEnchantment {

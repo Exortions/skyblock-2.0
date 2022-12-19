@@ -37,7 +37,7 @@ public enum AuctionCategory {
 
                 return (stack instanceof ItemArmor) || (stack instanceof ItemSkull);
             }),
-    ACCESSORY(Util.IDtoSkull(new ItemBuilder(ChatColor.DARK_GREEN + "Accessories", Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Talismans", "&7 - Rings", "&7 - Orbs", "&7 - Artifacts", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTI5YWYyYTQzOTA5MmU0NTMzMGM1NzdhYzg3NDIxYmM3NmVmYzBiNTg5MzZkMTEwZDJjOThmYzhjOTgwNGNjMiJ9fX0="),
+    ACCESSORY(Util.idToSkull(new ItemBuilder(ChatColor.DARK_GREEN + "Accessories", Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Talismans", "&7 - Rings", "&7 - Orbs", "&7 - Artifacts", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTI5YWYyYTQzOTA5MmU0NTMzMGM1NzdhYzg3NDIxYmM3NmVmYzBiNTg5MzZkMTEwZDJjOThmYzhjOTgwNGNjMiJ9fX0="),
             (itemStack) -> {
                 try {
                     ItemBase base = new ItemBase(itemStack);

@@ -18,19 +18,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("deprecation")
 public class RegenerativeBlockHandler implements Listener {
-
-    @Getter
-    @AllArgsConstructor
-    private class BlockData {
-        private Material material;
-        private byte data;
-    }
 
     private static final HashMap<Location, BlockData> blocks = new HashMap<>();
     public static final HashMap<Material, Integer> resetTimes = new HashMap<Material, Integer>() {{
@@ -84,6 +75,13 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.OBSIDIAN, new String[]{"The End"});
         put(Material.ENDER_STONE, new String[]{"The End"});
     }};
+
+    @Getter
+    @AllArgsConstructor
+    private static class BlockData {
+        private Material material;
+        private byte data;
+    }
 
     public double getXpFromOre(Material material) {
         switch (material) {
@@ -214,6 +212,8 @@ public class RegenerativeBlockHandler implements Listener {
             case OBSIDIAN:
             case ENDER_STONE:
                 this.breakOre(event, block, player, this.getXpFromOre(block.getType()), Material.BEDROCK);
+                break;
+            default:
                 break;
         }
     }

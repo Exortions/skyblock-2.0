@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -89,7 +88,7 @@ public class TiaGUI extends Gui {
 
         ItemStack claim = new ItemBuilder(ChatColor.GREEN + "Exchange Fairy Souls", Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()).addLore("&7Find " + ChatColor.LIGHT_PURPLE + "Fairy Souls &7around the", "&7world and bring them back to me", "&7and I will reward you with", "&7permanent stat boosts!", " ", "&7Fairy Souls: " +  ChatColor.LIGHT_PURPLE + souls + "&7/" + ChatColor.LIGHT_PURPLE + "5", " ", (souls >= 5 ? ChatColor.YELLOW + "Click to exchange" : ChatColor.RED + "You don't have enough Fairy Souls!")).toItemStack();
 
-        addItem(22, Util.IDtoSkull(claim, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2OTIzYWQyNDczMTAwMDdmNmFlNWQzMjZkODQ3YWQ1Mzg2NGNmMTZjMzU2NWExODFkYzhlNmIyMGJlMjM4NyJ9fX0="));
+        addItem(22, Util.idToSkull(claim, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2OTIzYWQyNDczMTAwMDdmNmFlNWQzMjZkODQ3YWQ1Mzg2NGNmMTZjMzU2NWExODFkYzhlNmIyMGJlMjM4NyJ9fX0="));
         addItem(49, Util.buildCloseButton());
     }
 }

@@ -164,7 +164,7 @@ public abstract class Pet {
         nbtItem.setBoolean("isPet", true);
         nbtItem.setString("uuid", uuid.toString());
 
-        item = Util.IDtoSkull(nbtItem.getItem(), getSkull());
+        item = Util.idToSkull(nbtItem.getItem(), getSkull());
 
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();

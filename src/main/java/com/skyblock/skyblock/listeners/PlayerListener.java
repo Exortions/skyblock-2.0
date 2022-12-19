@@ -2,7 +2,6 @@ package com.skyblock.skyblock.listeners;
 
 import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
-import com.sk89q.worldedit.event.platform.BlockInteractEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
@@ -29,10 +28,7 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -180,10 +176,8 @@ public class PlayerListener implements Listener {
                 }
             } catch (Exception ignored) {}
 
-            if (Util.notNull(p.getItemInHand())) {
-                if (plugin.getSkyblockItemHandler().isRegistered(p.getItemInHand())) {
-                    damage = plugin.getSkyblockItemHandler().getRegistered(p.getItemInHand()).getModifiedDamage(player, e, damage);
-                }
+            if (Util.notNull(p.getItemInHand()) && plugin.getSkyblockItemHandler().isRegistered(p.getItemInHand())) {
+                damage = plugin.getSkyblockItemHandler().getRegistered(p.getItemInHand()).getModifiedDamage(player, e, damage);
             }
 
             if (player.getArmorSet() != null) {
@@ -268,6 +262,9 @@ public class PlayerListener implements Listener {
         put("Graveyard", new String[]{ "Fight Zombies", "Travel to the Spiders Den", "Talk to Pat", "Investigate the Catacombs" });
         put("Ruins", new String[]{ "Explore the ancient ruins", "Watch out for the guard dogs!" });
         put("Wizard Tower", new String[]{ "Talk to the Wizard", "Use the Wizard Portal" });
+        put("Blacksmith's House", new String[]{ "Upgrade equipment using reforges", "Combine items with the anvil" });
+        put("Colosseum Arena", new String[]{ "Participate in special events" });
+        put("Wilderness", new String[]{ "Fish", "Visit the Fisherman's Hut", "Visit the Fairy at the Fairy Pond", "Discover hidden secrets" });
     }};
 
     @EventHandler
@@ -279,43 +276,41 @@ public class PlayerListener implements Listener {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
         SkyblockLocation location = skyblockPlayer.getCurrentLocation();
 
-        if (location != null) {
-            if (skyblockPlayer.getExtraData("last_location") != location.getName()) {
-                ArrayList<String> found = (ArrayList<String>) skyblockPlayer.getValue("locations.found");
+        if (location != null && skyblockPlayer.getExtraData("last_location") != location.getName()) {
+            ArrayList<String> found = (ArrayList<String>) skyblockPlayer.getValue("locations.found");
 
-                if (!found.contains(location.getName())) {
-                    found.add(location.getName());
-                    skyblockPlayer.setValue("locations.found", found);
-                    skyblockPlayer.setExtraData("last_location", location.getName());
+            if (!found.contains(location.getName())) {
+                found.add(location.getName());
+                skyblockPlayer.setValue("locations.found", found);
+                skyblockPlayer.setExtraData("last_location", location.getName());
 
-                    player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
+                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
 
-                    IChatBaseComponent title = new ChatComponentText(location.getColor() + "" + ChatColor.BOLD + location.getName());
-                    IChatBaseComponent subtitle = new ChatComponentText(ChatColor.GREEN + "New Zone Discovered");
-                    PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, title);
-                    PacketPlayOutTitle packet2 = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, subtitle);
+                IChatBaseComponent title = new ChatComponentText(location.getColor() + "" + ChatColor.BOLD + location.getName());
+                IChatBaseComponent subtitle = new ChatComponentText(ChatColor.GREEN + "New Zone Discovered");
+                PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, title);
+                PacketPlayOutTitle packet2 = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, subtitle);
 
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet2);
+                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet2);
 
-                    player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                    player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "  NEW ZONE " + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "- " + location.getColor() + "" + ChatColor.BOLD + location.getName());
-                    player.sendMessage("  ");
+                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "  NEW ZONE " + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "- " + location.getColor() + "" + ChatColor.BOLD + location.getName());
+                player.sendMessage("  ");
 
-                    if (discoveryMessages.containsKey(location.getName())) {
-                        for (String message : discoveryMessages.get(location.getName())) {
-                            player.sendMessage(ChatColor.DARK_GRAY + "  > " + ChatColor.YELLOW + message);
-                        }
-
-                        player.sendMessage("   ");
+                if (discoveryMessages.containsKey(location.getName())) {
+                    for (String message : discoveryMessages.get(location.getName())) {
+                        player.sendMessage(ChatColor.DARK_GRAY + "  > " + ChatColor.YELLOW + message);
                     }
 
-                    player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    player.sendMessage("   ");
                 }
+
+                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             }
         }
 
-        if (bottom.getBlock().getType().equals(Material.SLIME_BLOCK)) {
+        if (bottom.getBlock().getType().equals(SLIME_BLOCK)) {
             LaunchPadHandler padHandler = plugin.getLaunchPadHandler();
             String pad = padHandler.closeTo(player);
             if (!pad.equals("NONE")) {
@@ -414,7 +409,7 @@ public class PlayerListener implements Listener {
         }
 
         try {
-            ItemBase base = new ItemBase(item);
+            new ItemBase(item);
         } catch (Exception ex) {
             e.getItem().setItemStack(Util.toSkyblockItem(item));
         }
@@ -431,6 +426,9 @@ public class PlayerListener implements Listener {
             if (e.getClickedBlock().getType().equals(WORKBENCH)) {
                 e.setCancelled(true);
                 e.getPlayer().performCommand("sb craft");
+            } else if (e.getClickedBlock().getType().equals(ENCHANTMENT_TABLE)) {
+                e.setCancelled(true);
+                e.getPlayer().performCommand("sb enchant");
             }
         }
     }

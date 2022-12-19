@@ -91,7 +91,7 @@ public class MiningMinion extends MinionBase {
         this.minion.setBasePlate(false);
         this.minion.setCanPickupItems(false);
 
-        ItemStack head = Util.IDtoSkull(new ItemBuilder("", Material.SKULL_ITEM, 1, (short) 3).toItemStack(), this.head.apply(this.level));
+        ItemStack head = Util.idToSkull(new ItemBuilder("", Material.SKULL_ITEM, 1, (short) 3).toItemStack(), this.head.apply(this.level));
         this.minion.setHelmet(head);
 
         ItemStack hand = this.hand.apply(this.level);

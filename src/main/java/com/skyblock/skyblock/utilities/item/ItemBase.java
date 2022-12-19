@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Item;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
@@ -18,7 +17,6 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -26,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Getter
@@ -220,10 +217,8 @@ public class ItemBase {
         int rDefense = reforgeData.get(SkyblockStat.DEFENSE);
         int rHealth = reforgeData.get(SkyblockStat.HEALTH);
 
-        if (this.getEnchantment("critical") != null) {
-            if (this.hasEnchantment(this.getEnchantment("critical").getBaseEnchantment()))
-                rCritDamage += CriticalEnchantment.getCritDamageIncrease.apply(this.getEnchantment("critical").getLevel());
-        }
+        if (this.getEnchantment("critical") != null && this.hasEnchantment(this.getEnchantment("critical").getBaseEnchantment()))
+            rCritDamage += CriticalEnchantment.getCritDamageIncrease.apply(this.getEnchantment("critical").getLevel());
 
         /*
           Stats
@@ -263,7 +258,7 @@ public class ItemBase {
         Enchantments
          */
 
-        if (!(this.enchantments.size() < 1)) {
+        if (this.enchantments.size() > 1) {
             if (this.enchantments.size() <= 3) {
                 for (ItemEnchantment enchantment : this.enchantments) {
                     lore.add(ChatColor.BLUE + enchantment.getBaseEnchantment().getDisplayName() + " " + Util.toRoman(enchantment.getLevel()));
@@ -354,7 +349,7 @@ public class ItemBase {
         } else if (this.rarityEnum.equals(Rarity.COMMON))
             lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
 
-        if (!(reforge == Reforge.NONE))
+        if (reforge != Reforge.NONE)
             meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + " " + name);
         else meta.setDisplayName(name);
 

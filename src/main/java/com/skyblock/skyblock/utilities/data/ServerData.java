@@ -68,6 +68,12 @@ public class ServerData {
         for (String key : fields.keySet()) {
             this.serverData.set(key, fields.get(key));
         }
+
+        try {
+            this.serverData.save(this.serverDataFile);
+        } catch (IOException ex) {
+            Skyblock.getPlugin().sendMessage("&cCould not save server data: &8" + ex.getMessage());
+        }
     }
 
     public void loadDataContentsIntoRam() {

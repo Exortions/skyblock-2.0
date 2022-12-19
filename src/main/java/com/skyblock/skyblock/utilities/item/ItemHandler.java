@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.utilities.item;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.commands.item.ItemNBTCommand;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
@@ -15,7 +14,6 @@ import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -137,8 +135,9 @@ public class ItemHandler {
                 }
 
                 bufferedReader.close();
-            } catch (MojangsonParseException | ParseException | IOException e) {
-                throw new RuntimeException(e);
+            } catch (MojangsonParseException | ParseException | IOException ex) {
+                ex.printStackTrace();
+                return;
             }
         }
 

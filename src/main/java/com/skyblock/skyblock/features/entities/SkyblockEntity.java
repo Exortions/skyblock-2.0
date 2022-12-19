@@ -10,7 +10,6 @@ import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
-import net.citizensnpcs.api.trait.trait.Equipment;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -123,10 +122,8 @@ public abstract class SkyblockEntity {
             living.getEquipment().setLeggings(getEntityData().leggings);
             living.getEquipment().setBoots(getEntityData().boots);
 
-            if (living.getType().equals(EntityType.ENDERMAN)){
-                if (getEntityData().hand != null) {
-                    ((Enderman) vanilla).setCarriedMaterial(getEntityData().hand.getData());
-                }
+            if (living.getType().equals(EntityType.ENDERMAN) && getEntityData().hand != null) {
+                ((Enderman) vanilla).setCarriedMaterial(getEntityData().hand.getData());
             }
 
             plugin.getEntityHandler().registerEntity(this);
@@ -190,7 +187,7 @@ public abstract class SkyblockEntity {
         return new ArrayList<>();
     }
 
-    protected void tick() { }
+    protected void tick() {}
 
     protected void onDeath() {
         if (getLastDamager() != null) {
@@ -237,20 +234,9 @@ public abstract class SkyblockEntity {
 
                 if (!hasTelekinesis) getLastDamager().dropItem(stack, getVanilla().getLocation());
                 else {
-                    int amount = stack.getAmount();
                     if (lastDamager.getBukkitPlayer().getInventory().firstEmpty() == -1) {
                         lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
                     } else {
-//                        if (lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()) != null && lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount() + amount > 64) {
-//                            int left = 64 - lastDamager.getBukkitPlayer().getInventory().getItem(lastDamager.getBukkitPlayer().getInventory().firstEmpty()).getAmount();
-//                            stack.setAmount(amount - left);
-//                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
-//                            stack.setAmount(left);
-//                            lastDamager.getBukkitPlayer().getWorld().dropItem(lastDamager.getBukkitPlayer().getLocation(), stack);
-//                        } else {
-//                            lastDamager.getBukkitPlayer().getInventory().addItem(stack);
-//                        }
-
                         lastDamager.getBukkitPlayer().getInventory().addItem(stack);
                     }
                 }

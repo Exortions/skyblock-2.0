@@ -1,10 +1,8 @@
 package com.skyblock.skyblock.features.auction.gui;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
-import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -13,11 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
-import static com.skyblock.skyblock.features.auction.AuctionSettings.AuctionSort.*;
 
 public class AuctionBidsGUI extends Gui {
 

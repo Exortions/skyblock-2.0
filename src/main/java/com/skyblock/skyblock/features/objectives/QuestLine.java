@@ -1,11 +1,6 @@
 package com.skyblock.skyblock.features.objectives;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.features.location.SkyblockLocation;
-import com.skyblock.skyblock.features.objectives.impl.starting.BreakLogObjective;
-import com.skyblock.skyblock.features.objectives.impl.starting.PickaxeObjective;
-import com.skyblock.skyblock.features.objectives.impl.starting.WorkbenchObjective;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -15,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Getter
 public class QuestLine {

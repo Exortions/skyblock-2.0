@@ -1,12 +1,9 @@
 package com.skyblock.skyblock.features.bazaar.impl.escrow;
 
 import com.skyblock.skyblock.features.bazaar.Bazaar;
-import com.skyblock.skyblock.features.bazaar.BazaarItem;
-import com.skyblock.skyblock.features.bazaar.BazaarItemData;
 import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
-import com.skyblock.skyblock.features.bazaar.impl.SkyblockBazaarItemData;
 import org.bukkit.OfflinePlayer;
 
 import java.util.Comparator;
@@ -24,7 +21,6 @@ import java.util.stream.Collectors;
  * It manages the transactions and waits for buy/sell
  * orders to be filled.
  */
-
 public class SkyblockEscrow implements Escrow {
 
     private final Bazaar bazaar;
