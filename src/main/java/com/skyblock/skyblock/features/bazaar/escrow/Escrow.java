@@ -1,11 +1,7 @@
 package com.skyblock.skyblock.features.bazaar.escrow;
 
-import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.bazaar.Bazaar;
-import com.skyblock.skyblock.features.bazaar.BazaarItem;
-import com.skyblock.skyblock.features.bazaar.BazaarItemData;
 import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
-import com.skyblock.skyblock.utilities.Pair;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
