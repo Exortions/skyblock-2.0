@@ -28,6 +28,7 @@ public class AuctionManagingGUI extends Gui {
         }
 
         List<Auction> auctions = ah.getOwnedAuctions(player);
+        List<Auction> collected = new ArrayList<>();
 
         AuctionSettings settings = SkyblockPlayer.getPlayer(player).getAuctionSettings();
 
@@ -49,8 +50,15 @@ public class AuctionManagingGUI extends Gui {
         int endedAuctions = 0;
 
         for (Auction auction : auctions) {
+            if (auction.claimed(player)) {
+                collected.add(auction);
+                continue;
+            }
+
             if (auction.isExpired()) endedAuctions++;
         }
+
+        collected.forEach(auctions::remove);
 
         ItemBuilder ended = new ItemBuilder(ChatColor.GREEN + "Claim All", Material.CAULDRON_ITEM);
         ended.addLore(ChatColor.DARK_GRAY + "Ended Auctions", " ", ChatColor.GRAY + "You got " + ChatColor.GREEN + endedAuctions + " item" + (endedAuctions != 1 ? "s" : "") + ChatColor.GRAY + " to", ChatColor.GRAY + "collect sales/reclaim items.", " ", ChatColor.YELLOW + "Click to claim!");

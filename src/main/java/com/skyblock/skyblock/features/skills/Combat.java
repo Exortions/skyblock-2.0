@@ -25,6 +25,6 @@ public class Combat extends Skill {
 
     @Override
     public void levelUp(SkyblockPlayer player, int prev) {
-        player.addStat(SkyblockStat.CRIT_CHANCE, (getLevel(getXP(player))));
+        player.addStat(SkyblockStat.CRIT_CHANCE, 0.5);
     }
 }

@@ -48,6 +48,8 @@ public class Auction {
         for (AuctionBid bid : bidHistory) {
             participants.add(bid.getBidder());
         }
+
+        participants.add(seller);
     }
 
 
@@ -161,7 +163,7 @@ public class Auction {
     }
 
     private void removeBidderOrOwner(Player player) {
-        if (participants.size() == 0 && player.equals(getSeller())) {
+        if (participants.size() == 0) {
             Skyblock.getPlugin().getAuctionHouse().deleteAuction(this);
         }
 
@@ -218,6 +220,10 @@ public class Auction {
 
             ((Player) otherBidder).spigot().sendMessage(message);
         }
+    }
+
+    public boolean claimed(Player player) {
+        return !participants.contains(player);
     }
 
     public void sendToOwner(String message) {

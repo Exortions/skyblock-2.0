@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +33,19 @@ public class AuctionBidsGUI extends Gui {
         }
 
         List<Auction> auctions = ah.getBiddedAuctions(player);
+        List<Auction> collected = new ArrayList<>();
         int endedAuctions = 0;
 
         for (Auction auction : auctions) {
+            if (auction.claimed(player)) {
+                collected.add(auction);
+                continue;
+            }
+
             if (auction.isExpired()) endedAuctions++;
         }
+
+        collected.forEach(auctions::remove);
 
         ItemBuilder ended = new ItemBuilder(ChatColor.GREEN + "Claim All", Material.CAULDRON_ITEM);
         ended.addLore(ChatColor.DARK_GRAY + "Ended Auctions", " ", ChatColor.GRAY + "You got " + ChatColor.GREEN + endedAuctions + " item" + (endedAuctions != 1 ? "s" : "") + ChatColor.GRAY + " to", ChatColor.GRAY + "claim items/reclaim bids.", " ", ChatColor.YELLOW + "Click to claim!");

@@ -63,7 +63,7 @@ public class AuctionHouse {
         return auctions;
     }
     public List<Auction> getAuctions() {
-        return getAuctions(AuctionCategory.ALL, AuctionSettings.AuctionSort.HIGHEST, AuctionSettings.BinFilter.ALL, null, -1, "", true);
+        return getAuctions(AuctionCategory.ALL, AuctionSettings.AuctionSort.HIGHEST, AuctionSettings.BinFilter.ALL, null, -1, "", false);
     }
 
     public List<Auction> getAuctions(AuctionCategory category, AuctionSettings.AuctionSort sort, AuctionSettings.BinFilter binFilter, Rarity teir, int page, String search, boolean timeSensitive) {
