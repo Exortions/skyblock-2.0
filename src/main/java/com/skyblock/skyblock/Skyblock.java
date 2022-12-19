@@ -152,7 +152,6 @@ public final class Skyblock extends JavaPlugin {
         this.initializeSignGui();
         this.initializeBazaar();
         this.initializeSpongeReplacers();
-        this.initializeQuests();
 
         this.registerMerchants();
 
@@ -163,12 +162,16 @@ public final class Skyblock extends JavaPlugin {
         this.registerSlayers();
         this.registerLaunchPads();
 
+        this.initializeQuests();
+
         this.registerBags();
 
         this.registerBlockHandler();
 
         this.registerListeners();
         this.registerCommands();
+
+        this.npcHandler.spawnAll();
 
         this.initializeAlreadyOnlinePlayers();
 
@@ -435,8 +438,6 @@ public final class Skyblock extends JavaPlugin {
                                 "un8GWOqvhZDv2nyzmUAzFBU0mO1Ys6nYSHQEwXBXqURho5L0Fvu3" +
                                 "Wb15YqwATsO//Mg+6L+f/kb5l2B1/Z1I/wzxzOeDYtME2TsTMAaK" +
                                 "00ob/6e0Hg="));
-
-        this.npcHandler.spawnAll();
 
         this.sendMessage("Successfully registered NPCs [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.objectives;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
+import com.skyblock.skyblock.features.objectives.impl.hub.IntroduceYourselfQuest;
 import com.skyblock.skyblock.features.objectives.impl.starting.GettingStartedQuest;
 
 import java.util.*;
@@ -12,6 +13,17 @@ public class QuestLineHandler {
 
     public QuestLineHandler() {
         register("Private Island", new GettingStartedQuest());
+        register("Village", new IntroduceYourselfQuest());
+
+        for (List<QuestLine> quest : quests.values()) {
+            quest.forEach(QuestLine::onEnable);
+        }
+    }
+
+    public void disable() {
+        for (List<QuestLine> quest : quests.values()) {
+            quest.forEach(QuestLine::onDisable);
+        }
     }
 
     public void register(String location, QuestLine line) {

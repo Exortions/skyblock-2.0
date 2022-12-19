@@ -27,8 +27,12 @@ public class Objective implements Listener {
         Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin());
     }
 
+    private QuestLine getQuest() {
+        return Skyblock.getPlugin().getQuestLineHandler().getQuest(this);
+    }
+
     public Objective getNext() {
-        return Skyblock.getPlugin().getQuestLineHandler().getQuest(this).getNext(this);
+        return getQuest().getNext(this);
     }
 
     protected void complete(Player p) {
@@ -39,7 +43,14 @@ public class Objective implements Listener {
         completed.add(this.getId());
         player.setValue("quests.completedObjectives", completed);
 
-        if (next == null) return;
+        if (next == null) {
+            List<String> completedQuests = (List<String>) player.getValue("quests.completedQuests");
+            completedQuests.add(getQuest().getName());
+            player.setValue("quests.completedQuests", completedQuests);
+
+            getQuest().complete(player.getBukkitPlayer());
+            return;
+        }
 
         String message = " \n " + ChatColor.GOLD + ChatColor.BOLD + " NEW OBJECTIVE" + "\n" +
                 ChatColor.WHITE + "  " + next.getDisplay() + "\n";
@@ -47,6 +58,10 @@ public class Objective implements Listener {
         player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 0);
         player.getBukkitPlayer().sendMessage(message);
         player.getBukkitPlayer().sendMessage(" ");
+    }
+
+    public String getSuffix(SkyblockPlayer player) {
+        return "";
     }
 
     protected boolean isThisObjective(Player player) {
