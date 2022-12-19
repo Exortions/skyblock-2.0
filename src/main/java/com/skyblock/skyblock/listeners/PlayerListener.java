@@ -15,6 +15,7 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -32,6 +33,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,6 +80,27 @@ public class PlayerListener implements Listener {
             }
 
             skyblockPlayer.tick();
+
+            // show tab list (1.8.8) (use NMS)
+            IChatBaseComponent header = new ChatComponentText(ChatColor.AQUA + "You are playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET");
+            IChatBaseComponent footer = new ChatComponentText(ChatColor.GREEN + "Ranks, Boosters, & MORE! " + ChatColor.RED + "" + ChatColor.BOLD + "STORE.HYPIXEL.NET");
+
+            PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
+
+            try {
+                Field headerField = packet.getClass().getDeclaredField("a");
+                Field footerField = packet.getClass().getDeclaredField("b");
+                headerField.setAccessible(true);
+                footerField.setAccessible(true);
+                headerField.set(packet, header);
+                footerField.set(packet, footer);
+                headerField.setAccessible(!headerField.isAccessible());
+                footerField.setAccessible(!footerField.isAccessible());
+            } catch (Exception ex) {
+                Skyblock.getPlugin().sendMessage("&cFailed to register tab list for &8" + player.getName() + "&c: &8" + ex.getMessage() + "&c!");
+            }
+
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 
             this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
 
