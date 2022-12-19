@@ -262,6 +262,9 @@ public class PlayerListener implements Listener {
         put("Graveyard", new String[]{ "Fight Zombies", "Travel to the Spiders Den", "Talk to Pat", "Investigate the Catacombs" });
         put("Ruins", new String[]{ "Explore the ancient ruins", "Watch out for the guard dogs!" });
         put("Wizard Tower", new String[]{ "Talk to the Wizard", "Use the Wizard Portal" });
+        put("Blacksmith's House", new String[]{ "Upgrade equipment using reforges", "Combine items with the anvil" });
+        put("Colosseum Arena", new String[]{ "Participate in special events" });
+        put("Wilderness", new String[]{ "Fish", "Visit the Fisherman's Hut", "Visit the Fairy at the Fairy Pond", "Discover hidden secrets" });
     }};
 
     @EventHandler
