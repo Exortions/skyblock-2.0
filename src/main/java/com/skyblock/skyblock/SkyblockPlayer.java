@@ -772,4 +772,15 @@ public class SkyblockPlayer {
         }
     }
 
+    public void onQuit() {
+        if (getPetDisplay() != null) getPetDisplay().remove();
+        if (getArmorSet() != null) {
+            getArmorSet().stopFullSetBonus(getBukkitPlayer());
+        }
+
+        saveToDisk();
+
+        playerRegistry.remove(getBukkitPlayer().getUniqueId());
+    }
+
 }

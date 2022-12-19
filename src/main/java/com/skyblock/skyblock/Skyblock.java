@@ -200,8 +200,8 @@ public final class Skyblock extends JavaPlugin {
 
         this.serverData.disable();
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            Bukkit.getPluginManager().callEvent(new PlayerQuitEvent(player, ""));
+        for (SkyblockPlayer skyblockPlayer : SkyblockPlayer.playerRegistry.values()) {
+            skyblockPlayer.onQuit();
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");

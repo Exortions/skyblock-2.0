@@ -258,6 +258,9 @@ public class PlayerListener implements Listener {
     private static final HashMap<String, String[]> discoveryMessages = new HashMap<String, String[]>() {{
         put("Auction House", new String[]{ "Auction off your special items", "Bid on other player's items" });
         put("Village", new String[]{ "Purchase items at the Market", "Visit the Auction House", "Manage your Coins in the Bank", "Enchant items at the Library" });
+        put("Forest", new String[]{ "Visit the Lumberjack", "Chop down trees", "Travel to the Park" });
+        put("Farm", new String[]{ "Visit the Farmer", "Gather wheat", "Travel to the barn" });
+        put("Coal Mine", new String[]{ "Visit the Blacksmit", "Mine Coal", "Travel to the Gold Mine" });
     }};
 
     @EventHandler
@@ -278,7 +281,7 @@ public class PlayerListener implements Listener {
                     skyblockPlayer.setValue("locations.found", found);
                     skyblockPlayer.setExtraData("last_location", location.getName());
 
-                    player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+                    player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 0);
 
                     IChatBaseComponent title = new ChatComponentText(location.getColor() + "" + ChatColor.BOLD + location.getName());
                     IChatBaseComponent subtitle = new ChatComponentText(ChatColor.GREEN + "New Zone Discovered");
@@ -329,14 +332,7 @@ public class PlayerListener implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
 
-        if (player.getPetDisplay() != null) player.getPetDisplay().remove();
-        if (player.getArmorSet() != null) {
-            player.getArmorSet().stopFullSetBonus(player.getBukkitPlayer());
-        }
-
-        player.saveToDisk();
-
-        SkyblockPlayer.playerRegistry.remove(player.getBukkitPlayer().getUniqueId());
+        player.onQuit();
     }
 
     @EventHandler
