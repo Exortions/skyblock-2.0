@@ -20,7 +20,7 @@ public class CubismEnchantment extends SwordEnchantment {
     };
 
     public CubismEnchantment() {
-        super("cubism", "Cubism", level -> "&7Increases damage dealt to Creepers, Magma\n&7Cubes, and Slimes by &a" + getDamageByLevel.apply(level) + "%&7.", 5);
+        super("cubism", "Cubism", level -> "&7Increases damage dealt to\nSlimes, Creepers, and\n&7Magma Cubes by &a" + getDamageByLevel.apply(level) + "%&7.", 5);
     }
 
     @Override
