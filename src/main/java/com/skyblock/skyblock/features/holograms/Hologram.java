@@ -19,7 +19,7 @@ public class Hologram {
     private final List<ArmorStand> stands = new ArrayList<>();
 
     public Hologram(String location, String lines) {
-        this.location = new Location(Skyblock.getSkyblockWorld(), Integer.parseInt(location.split(",")[0]), Integer.parseInt(location.split(",")[1]), Integer.parseInt(location.split(",")[2]));
+        this.location = new Location(Skyblock.getSkyblockWorld(), Double.parseDouble(location.split(",")[0]), Double.parseDouble(location.split(",")[1]), Double.parseDouble(location.split(",")[2]));
         this.lines = Arrays.asList(Util.buildLore(lines));
     }
 
