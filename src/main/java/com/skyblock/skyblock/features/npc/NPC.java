@@ -5,9 +5,7 @@ import com.skyblock.skyblock.event.SkyblockNPCClickEvent;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -63,4 +61,20 @@ public class NPC implements Listener {
         Bukkit.getPluginManager().callEvent(new SkyblockNPCClickEvent(player, this));
     }
 
+    public static void sendMessages(Player player, String npc, String... messages) {
+        int i = 0;
+        for (String message : messages) {
+            Util.delay(() -> {
+                sendMessage(player, npc, message);
+            }, i * 20);
+            i++;
+        }
+    }
+    public static void sendMessage(Player player, String npc, String message) {
+        sendMessage(player, npc, message, true);
+    }
+    public static void sendMessage(Player player, String npc, String message, boolean sound) {
+        player.sendMessage(ChatColor.YELLOW + "[NPC] " + npc + ChatColor.WHITE + ": " + message);
+        if (sound) player.playSound(player.getLocation(), Sound.VILLAGER_YES, 10, 1);
+    }
 }

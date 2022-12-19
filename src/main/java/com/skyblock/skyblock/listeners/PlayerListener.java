@@ -305,7 +305,7 @@ public class PlayerListener implements Listener {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
         SkyblockLocation location = skyblockPlayer.getCurrentLocation();
 
-        if (location != null && skyblockPlayer.getExtraData("last_location") != location.getName()) {
+        if (location != null && skyblockPlayer.getExtraData("last_location") != location.getName() && !player.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) {
             ArrayList<String> found = (ArrayList<String>) skyblockPlayer.getValue("locations.found");
 
             if (!found.contains(location.getName())) {

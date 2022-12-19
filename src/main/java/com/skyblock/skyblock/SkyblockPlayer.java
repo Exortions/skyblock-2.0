@@ -12,6 +12,7 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.merchants.Merchant;
+import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.pets.Pet;
@@ -33,6 +34,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
@@ -144,6 +146,23 @@ public class SkyblockPlayer {
             auctionSettings.setPlayer(this);
 
             this.bossBar = new BossBar(bukkitPlayer);
+
+            NPC jerry = new NPC("Jerry", true, false, true, Villager.Profession.FARMER,
+                    new Location(Bukkit.getWorld(IslandManager.ISLAND_PREFIX + bukkitPlayer.getUniqueId()), 2.5, 100, 26.5),
+                    (p) -> {
+                        if (p.getUniqueId().equals(bukkitPlayer.getUniqueId())) {
+                            NPC.sendMessages(p, "Jerry",
+                                    "Your Skyblock island is part of a much larger universe",
+                                    "The Skyblock universe is full of islands to explore and resources to discover!",
+                                    "Use the Portal to warp to the first of those islands - The Skyblock Hub!");
+                        } else {
+                            NPC.sendMessage(p, "Jerry", "Jerry doesn't speak to strangers!", false);
+                            p.playSound(p.getLocation(), Sound.VILLAGER_NO, 10, 1);
+                        }
+                    }, "", "");
+
+            Skyblock.getPlugin().getNpcHandler().registerNPC("jerry_" + bukkitPlayer.getUniqueId().toString(), jerry);
+            jerry.spawn();
         }
 
         if (tick % EVERY_SECOND == 0) {
