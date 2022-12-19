@@ -1,0 +1,32 @@
+{
+  "itemid": "minecraft:diamond_sword",
+  "displayname": "§aDiamond Sword",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Damage: §c+35\",1:\"\",2:\"§7§8This item can be reforged!\",3:\"§a§lUNCOMMON SWORD\"],Name:\"§aDiamond Sword\"},ExtraAttributes:{id:\"DIAMOND_SWORD\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+35",
+    "",
+    "§7§8This item can be reforged!",
+    "§a§lUNCOMMON SWORD"
+  ],
+  "internalname": "DIAMOND_SWORD",
+  "vanilla": true,
+  "crafttext": "",
+  "clickcommand": "viewrecipe",
+  "modver": "2.1.0-REL",
+  "infoType": "WIKI_URL",
+  "recipe": {
+    "A1": "DIAMOND:1",
+    "A2": "",
+    "A3": "",
+    "B1": "DIAMOND:1",
+    "B2": "",
+    "B3": "",
+    "C1": "STICK:1",
+    "C2": "",
+    "C3": ""
+  },
+  "info": [
+    "https://wiki.hypixel.net/Diamond_Sword"
+  ]
+}

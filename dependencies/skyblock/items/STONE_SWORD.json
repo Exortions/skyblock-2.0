@@ -1,0 +1,32 @@
+{
+  "itemid": "minecraft:stone_sword",
+  "displayname": "§fStone Sword",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§7Damage: §c+25\",1:\"\",2:\"§7§8This item can be reforged!\",3:\"§f§lCOMMON SWORD\"],Name:\"§fStone Sword\"},ExtraAttributes:{id:\"STONE_SWORD\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+25",
+    "",
+    "§7§8This item can be reforged!",
+    "§f§lCOMMON SWORD"
+  ],
+  "internalname": "STONE_SWORD",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "COBBLESTONE:1",
+    "A2": "",
+    "A3": "",
+    "B1": "COBBLESTONE:1",
+    "B2": "",
+    "B3": "",
+    "C1": "STICK:1",
+    "C2": "",
+    "C3": ""
+  },
+  "crafttext": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Stone_Sword"
+  ]
+}

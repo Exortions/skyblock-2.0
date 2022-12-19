@@ -1,0 +1,17 @@
+{
+  "itemid": "minecraft:dragon_egg",
+  "displayname": "§fDragon Egg",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fDragon Egg\"},ExtraAttributes:{id:\"DRAGON_EGG\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "DRAGON_EGG",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Dragon_Egg"
+  ]
+}

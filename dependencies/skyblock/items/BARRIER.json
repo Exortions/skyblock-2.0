@@ -1,0 +1,17 @@
+{
+  "itemid": "minecraft:barrier",
+  "displayname": "§fBarrier",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fBarrier\"},ExtraAttributes:{id:\"BARRIER\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "BARRIER",
+  "modver": "2.0.0-REL",
+  "vanilla": true,
+  "clickcommand": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Barrier"
+  ]
+}

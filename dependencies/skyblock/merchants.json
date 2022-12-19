@@ -338,10 +338,10 @@
           "command": "sb item LEATHER_CHESTPLATE.json 1"
         },
         {
-          "id": "LEATHER_LEGGINS.json",
+          "id": "LEATHER_LEGGINGS.json",
           "cost": 16,
           "amount": 1,
-          "command": "sb item LEATHER_LEGGINS.json 1"
+          "command": "sb item LEATHER_LEGGINGS.json 1"
         },
         {
           "id": "LEATHER_BOOTS.json",
@@ -362,10 +362,10 @@
           "command": "sb item IRON_CHESTPLATE.json 1"
         },
         {
-          "id": "IRON_LEGGINS.json",
+          "id": "IRON_LEGGINGS.json",
           "cost": 30,
           "amount": 1,
-          "command": "sb item IRON_LEGGINS.json 1"
+          "command": "sb item IRON_LEGGINGS.json 1"
         },
         {
           "id": "IRON_BOOTS.json",
@@ -386,10 +386,10 @@
           "command": "sb item IRON_CHESTPLATE.json 1"
         },
         {
-          "id": "DIAMOND_LEGGINS.json",
+          "id": "DIAMOND_LEGGINGS.json",
           "cost": 400,
           "amount": 1,
-          "command": "sb item IRON_LEGGINS.json 1"
+          "command": "sb item IRON_LEGGINGS.json 1"
         },
         {
           "id": "DIAMOND_BOOTS.json",
@@ -458,13 +458,13 @@
           "command": "sb item SKELETON_TALISMAN.json 1"
         },
         {
-          "id": "VILLAGE_AFFINITY_TALISMAN.json",
+          "id": "VILLAGE_TALISMAN.json",
           "cost": 2500,
           "amount": 1,
           "command": "sb item VILLAGE_AFFINITY_TALISMAN.json 1"
         },
         {
-          "id": "MINE_AFFINITY_TALISMAN.json",
+          "id": "MINE_TALISMAN.json",
           "cost": 2500,
           "amount": 1,
           "command": "sb item MINE_AFFINITY_TALISMAN.json 1"
@@ -542,13 +542,7 @@
           "cost": 250,
           "amount": 1,
           "command": "sb item WITHER_BOW.json 1"
-        },
-        {
-          "id": "ARTISANAL_SHORTBOW.json",
-          "cost": 600,
-          "amount": 1,
-          "command": "sb item ARTISANAL_SHORTBOW.json 1"
-        }          	
+        }        	
       ],
       "location": {
           "world": "world",
@@ -585,10 +579,10 @@
       "skinSignature": "LmyRtvfjp3d+s97W51oEwXTTanW2mVMh2RJO25h8hhm7E52oIj8RbJxqA7liIzcCo0oNzrvp0W8HZ+Yxt0SbtlmsxAtFckWVfODYWkBv3seW2nJpZgybrzeEif2sevU8sfZGqqfS7Y81aB/Ah2dfR9/jkYUqwRb2tUSewKkGQtIxZOs/H7tn8KjyKhhaSF6qzcalSQW+TA2I+c70Tk4+QMcKfIHo5EiXoZ3P6X+KVnR6VoUHbn52DKEUafFAXKMl7gvv3e8WIEbsgrOtFblscsqvUmQgR4joB476av2qDKw9IXxcu0hzhiBJ4upBXc7+RS8xBlQOQwH1xC+mEW59RvwcjhJZ1Wuqj2dlU9ctzih4/jporEiPZhsI/zmw0u8ubFd07g5eq3YpDtctCFf6CN1OF+ifVzJq5INEIJbvlk8OB2/iMbq4im+SJwYc+NCbJJEk297xbx6nDdELYT6T0RNHM3KoYrQscDEbJQ/YTVlaadUOB4Hi/YGXIqhzrnBjEioaEuIlUt45cjX2mkRVer+DY/159UkJMjG/lqEYKlHJxNCZLzEDX7EQQjYwTGwdFMa0uJXx2VN4ExKKHqrE4Vj7WiTYvNKQ+puowPG1D3yjEkwa/wHENrmd838I2e/miPMaaZI8t0J4WfkRhOS/GzeC0w+/k2gQQUH3rW9z4e8=",
       "items": [
         {
-          "id": "EXPERIENCE_BOTTLE.json",
+          "id": "EXP_BOTTLE.json",
           "cost": 30,
           "amount": 1,
-          "command": "sb item EXPERIENCE_BOTTLE.json 1"
+          "command": "sb item EXP_BOTTLE.json 1"
         },
         {
           "id": "BOOK.json",
@@ -597,52 +591,52 @@
           "command": "sb item BOOK.json 1"
         },
         {
-          "id": "SHARPNESS_BOOK.json",
+          "id": "SHARPNESS;1.json",
           "cost": 30,
           "amount": 1,
-          "command": "sb item SHARPNESS_BOOK.json 1"
+          "command": "sb item SHARPNESS;1.json 1"
         },
         {
-          "id": "SCAVENGER_BOOK.json",
+          "id": "SCAVENGER;1.json",
           "cost": 40,
           "amount": 1,
-          "command": "sb item SCAVENGER_BOOK.json 1"
+          "command": "sb item SCAVENGER;1.json 1"
         },
         {
-          "id": "PROTECTION_BOOK.json",
+          "id": "PROTECTION;1.json",
           "cost": 20,
           "amount": 1,
-          "command": "sb item PROTECTION_BOOK.json 1"
+          "command": "sb item PROTECTION;1.json 1"
         },
         {
-          "id": "FIRE_PROTECTION_BOOK.json",
+          "id": "FIRE_PROTECTION;1.json",
           "cost": 30,
           "amount": 1,
-          "command": "sb item FIRE_PROTECTION_BOOK.json 1"
+          "command": "sb item FIRE_PROTECTION;1.json 1"
         },
         {
-          "id": "PROJECTILE_PROTECTION_BOOK.json",
+          "id": "PROJECTILE_PROTECTION;1.json",
           "cost": 25,
           "amount": 1,
-          "command": "sb item PROJECTILE_PROTECTION_BOOK.json 1"
+          "command": "sb item PROJECTILE_PROTECTION;1.json 1"
         },
         {
-          "id": "BANE_OF_ARTHROPODS.json",
+          "id": "BANE_OF_ARTHROPODS;1.json",
           "cost": 20,
           "amount": 1,
-          "command": "sb item BANE_OF_ARTHROPODS.json 1"
+          "command": "sb item BANE_OF_ARTHROPODS;1.json 1"
         },
         {
-          "id": "SMITE.json",
+          "id": "SMITE;1.json",
           "cost": 20,
           "amount": 1,
-          "command": "sb item SMITE.json 1"
+          "command": "sb item SMITE;1.json 1"
         },
         {
-          "id": "EFFICIENCY.json",
+          "id": "EFFICIENCY;1.json",
           "cost": 20,
           "amount": 1,
-          "command": "sb item EFFICIENCY.json 1"
+          "command": "sb item EFFICIENCY;1.json 1"
         }
       ],
       "location": {

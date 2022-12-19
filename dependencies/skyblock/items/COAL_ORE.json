@@ -1,0 +1,17 @@
+{
+  "itemid": "minecraft:coal_ore",
+  "displayname": "§fCoal Ore",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fCoal Ore\"},ExtraAttributes:{id:\"COAL_ORE\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "COAL_ORE",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Coal_Ore"
+  ]
+}

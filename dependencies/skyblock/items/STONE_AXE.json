@@ -1,0 +1,32 @@
+{
+  "itemid": "minecraft:stone_axe",
+  "displayname": "§fStone Axe",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§7Damage: §c+15\",1:\"\",2:\"§7§8This item can be reforged!\",3:\"§f§lCOMMON AXE\"],Name:\"§fStone Axe\"},ExtraAttributes:{id:\"STONE_AXE\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+15",
+    "",
+    "§7§8This item can be reforged!",
+    "§f§lCOMMON AXE"
+  ],
+  "internalname": "STONE_AXE",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "COBBLESTONE:1",
+    "A2": "COBBLESTONE:1",
+    "A3": "",
+    "B1": "COBBLESTONE:1",
+    "B2": "STICK:1",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "crafttext": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Stone_Axe"
+  ]
+}

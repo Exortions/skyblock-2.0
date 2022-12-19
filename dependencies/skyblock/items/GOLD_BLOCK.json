@@ -1,0 +1,28 @@
+{
+  "itemid": "minecraft:gold_block",
+  "displayname": "§fBlock of Gold",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fBlock of Gold\"},ExtraAttributes:{id:\"GOLD_BLOCK\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "GOLD_BLOCK",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "GOLD_INGOT:1",
+    "A2": "GOLD_INGOT:1",
+    "A3": "GOLD_INGOT:1",
+    "B1": "GOLD_INGOT:1",
+    "B2": "GOLD_INGOT:1",
+    "B3": "GOLD_INGOT:1",
+    "C1": "GOLD_INGOT:1",
+    "C2": "GOLD_INGOT:1",
+    "C3": "GOLD_INGOT:1"
+  },
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Block_Of_Gold"
+  ]
+}

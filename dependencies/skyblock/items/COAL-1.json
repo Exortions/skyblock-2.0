@@ -1,0 +1,18 @@
+{
+  "itemid": "minecraft:coal",
+  "displayname": "§fCharcoal",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fCharcoal\"},ExtraAttributes:{id:\"COAL-1\"}}",
+  "damage": 1,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "parent": "COAL",
+  "internalname": "COAL-1",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Charcoal"
+  ]
+}

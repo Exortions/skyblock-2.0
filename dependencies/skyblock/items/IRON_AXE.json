@@ -1,0 +1,32 @@
+{
+  "itemid": "minecraft:iron_axe",
+  "displayname": "§fIron Axe",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§7Damage: §c+25\",1:\"\",2:\"§7§8This item can be reforged!\",3:\"§f§lCOMMON AXE\"],Name:\"§fIron Axe\"},ExtraAttributes:{id:\"IRON_AXE\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Damage: §c+25",
+    "",
+    "§7§8This item can be reforged!",
+    "§f§lCOMMON AXE"
+  ],
+  "internalname": "IRON_AXE",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "IRON_INGOT:1",
+    "A2": "IRON_INGOT:1",
+    "A3": "",
+    "B1": "IRON_INGOT:1",
+    "B2": "STICK:1",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "crafttext": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Iron_Axe"
+  ]
+}
