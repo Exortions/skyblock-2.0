@@ -37,6 +37,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
 import com.skyblock.skyblock.features.fairysouls.TiaGUI;
+import com.skyblock.skyblock.features.holograms.HologramManager;
 import com.skyblock.skyblock.features.items.Accessory;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
@@ -100,6 +101,7 @@ public final class Skyblock extends JavaPlugin {
     private LaunchPadHandler launchPadHandler;
     private QuestLineHandler questLineHandler;
     private FairySoulHandler fairySoulHandler;
+    private HologramManager hologramManager;
     private MerchantHandler merchantHandler;
     private SkyblockTimeManager timeManager;
     private CommandHandler commandHandler;
@@ -168,6 +170,8 @@ public final class Skyblock extends JavaPlugin {
 
         this.registerBlockHandler();
 
+        this.registerHolograms();
+
         this.registerListeners();
         this.registerCommands();
 
@@ -194,11 +198,13 @@ public final class Skyblock extends JavaPlugin {
 
         this.auctionHouse.saveToDisk();
 
+        this.hologramManager.despawnAll();
+
         File file = new File("plugins/Citizens/saves.yml");
 
         if (file.exists()) {
             file.delete();
-            sendMessage("Deleted Citizens File");
+            sendMessage("Deleted citizens file");
         }
 
         this.serverData.disable();
@@ -208,6 +214,17 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerHolograms() {
+        this.sendMessage("Registering Holograms...");
+        long start = System.currentTimeMillis();
+
+        this.hologramManager = new HologramManager();
+
+        this.hologramManager.spawnAll();
+
+        this.sendMessage("Successfully registered holograms [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     private void initializeQuests() {

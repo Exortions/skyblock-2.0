@@ -22,6 +22,7 @@ public class DependencyUpdater {
         add("collections" + File.separator + "farming.json");
         add("collections" + File.separator + "mining.json");
         add("fairy_souls.json");
+        add("holograms.json");
         add("launchpads.yml");
         add("locations.yml");
         add("merchants.json");
