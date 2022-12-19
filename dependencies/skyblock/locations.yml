@@ -478,3 +478,63 @@ Blazing Fortress:
   name: Blazing Fortress
   color: RED
   weight: 0
+Farm:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 9.0
+    y: 98.0
+    z: -132.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 115.0
+    y: 36.0
+    z: -197.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Farm
+  color: AQUA
+  weight: 1
+The Barn:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 86.0
+    y: 255.0
+    z: -197.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 229.0
+    y: 0.0
+    z: -325.0
+    pitch: 0.0
+    yaw: 0.0
+  name: The Barn
+  color: AQUA
+  weight: 1
+Mushroom Desert:
+  pos1:
+    ==: org.bukkit.Location
+    world: world
+    x: 113.0
+    y: 200.0
+    z: -336.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: world
+    x: 263.0
+    y: 0.0
+    z: -486.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Mushroom Desert
+  color: AQUA
+  weight: 1

@@ -288,6 +288,12 @@ public class PlayerListener implements Listener {
         put("Blacksmith's House", new String[]{ "Upgrade equipment using reforges", "Combine items with the anvil" });
         put("Colosseum Arena", new String[]{ "Participate in special events" });
         put("Wilderness", new String[]{ "Fish", "Visit the Fisherman's Hut", "Visit the Fairy at the Fairy Pond", "Discover hidden secrets" });
+        put("Mushroom Desert", new String[]{ "Harvest all the things" });
+        put("The Barn", new String[]{ "Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows" });
+        put("Spiders Den", new String[]{ "Talk to Haymitch", "Watch out for Spiders!", "Try to make it to the top of the hill" });
+        put("The End", new String[]{ "Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows" });
+        put("Blazing Fortress", new String[]{ "Battle against nether mobs", "Defeat the Magma Cube Boss", "Collect nether wart, blaze rods, and magma cream" });
+
     }};
 
     @EventHandler
