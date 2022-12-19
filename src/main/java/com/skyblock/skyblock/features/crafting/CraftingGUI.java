@@ -13,11 +13,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -132,12 +130,10 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
         if (!event.getClickedInventory().equals(this)) return;
         if (!Util.notNull(event.getCurrentItem())) return;
 
-        if (event.getCurrentItem().getItemMeta().hasDisplayName()) {
-            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
-                ((Player) event.getWhoClicked()).performCommand("sb menu");
+        if (event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
+            ((Player) event.getWhoClicked()).performCommand("sb menu");
 
-                return;
-            }
+            return;
         }
 
         if (slots.contains(event.getSlot())) return;
