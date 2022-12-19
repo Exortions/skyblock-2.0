@@ -45,6 +45,11 @@ public class QuestLine {
     }
 
     public void complete(Player player) {
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+        List<String> completedQuests = (List<String>) skyblockPlayer.getValue("quests.completedQuests");
+        completedQuests.add(getName());
+        skyblockPlayer.setValue("quests.completedQuests", completedQuests);
+
         if (!hasCompletionMessage()) return;
 
         String message = " \n " + ChatColor.GOLD + ChatColor.BOLD + " QUEST COMPLETE" + "\n" +

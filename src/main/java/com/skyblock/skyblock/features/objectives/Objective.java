@@ -44,10 +44,6 @@ public class Objective implements Listener {
         player.setValue("quests.completedObjectives", completed);
 
         if (next == null) {
-            List<String> completedQuests = (List<String>) player.getValue("quests.completedQuests");
-            completedQuests.add(getQuest().getName());
-            player.setValue("quests.completedQuests", completedQuests);
-
             getQuest().complete(player.getBukkitPlayer());
             return;
         }
