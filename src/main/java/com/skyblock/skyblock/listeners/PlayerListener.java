@@ -260,7 +260,7 @@ public class PlayerListener implements Listener {
         put("Village", new String[]{ "Purchase items at the Market", "Visit the Auction House", "Manage your Coins in the Bank", "Enchant items at the Library" });
         put("Forest", new String[]{ "Visit the Lumberjack", "Chop down trees", "Travel to the Park" });
         put("Farm", new String[]{ "Visit the Farmer", "Gather wheat", "Travel to the barn" });
-        put("Coal Mine", new String[]{ "Visit the Blacksmit", "Mine Coal", "Travel to the Gold Mine" });
+        put("Coal Mine", new String[]{ "Visit the Blacksmith", "Mine Coal", "Travel to the Gold Mine" });
     }};
 
     @EventHandler
