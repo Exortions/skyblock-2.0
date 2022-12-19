@@ -146,7 +146,9 @@ public class SkyblockPlayer {
             auctionSettings.setPlayer(this);
 
             this.bossBar = new BossBar(bukkitPlayer);
+        }
 
+        if (tick == 20) {
             NPC jerry = new NPC("Jerry", true, false, true, Villager.Profession.FARMER,
                     new Location(Bukkit.getWorld(IslandManager.ISLAND_PREFIX + bukkitPlayer.getUniqueId()), 2.5, 100, 26.5),
                     (p) -> {
