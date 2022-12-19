@@ -2,7 +2,9 @@ package com.skyblock.skyblock.features.objectives;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
+import com.skyblock.skyblock.features.objectives.impl.hub.ExploreHubQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.IntroduceYourselfQuest;
+import com.skyblock.skyblock.features.objectives.impl.hub.auction.AuctioneerQuest;
 import com.skyblock.skyblock.features.objectives.impl.starting.GettingStartedQuest;
 
 import java.util.*;
@@ -14,6 +16,7 @@ public class QuestLineHandler {
     public QuestLineHandler() {
         register("Private Island", new GettingStartedQuest());
         register("Village", new IntroduceYourselfQuest());
+        register("Auction House", new AuctioneerQuest());
 
         for (List<QuestLine> quest : quests.values()) {
             quest.forEach(QuestLine::onEnable);

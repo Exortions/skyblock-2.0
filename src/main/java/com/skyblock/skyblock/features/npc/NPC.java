@@ -1,9 +1,11 @@
 package com.skyblock.skyblock.features.npc;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.event.SkyblockNPCClickEvent;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
@@ -57,6 +59,8 @@ public class NPC implements Listener {
         Player player = event.getClicker();
 
         this.action.accept(player);
+
+        Bukkit.getPluginManager().callEvent(new SkyblockNPCClickEvent(player, this));
     }
 
 }

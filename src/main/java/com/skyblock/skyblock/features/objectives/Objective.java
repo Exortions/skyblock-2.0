@@ -68,4 +68,8 @@ public class Objective implements Listener {
 
         return skyblockPlayer.getQuestLine().getObjective(skyblockPlayer).getId().equals(getId());
     }
+
+    public boolean hasSuffix(SkyblockPlayer skyblockPlayer) {
+        return !getSuffix(skyblockPlayer).equals("");
+    }
 }
