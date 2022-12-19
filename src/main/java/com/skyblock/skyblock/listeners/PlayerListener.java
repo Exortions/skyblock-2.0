@@ -260,7 +260,14 @@ public class PlayerListener implements Listener {
         put("Village", new String[]{ "Purchase items at the Market", "Visit the Auction House", "Manage your Coins in the Bank", "Enchant items at the Library" });
         put("Forest", new String[]{ "Visit the Lumberjack", "Chop down trees", "Travel to the Park" });
         put("Farm", new String[]{ "Visit the Farmer", "Gather wheat", "Travel to the barn" });
-        put("Coal Mine", new String[]{ "Visit the Blacksmit", "Mine Coal", "Travel to the Gold Mine" });
+        put("Coal Mine", new String[]{ "Visit the Blacksmith", "Mine Coal", "Travel to the Gold Mine" });
+        put("Bank", new String[]{ "Talk to the Banker", "Store your coins to keep them safe", "Earn interest on your coins" });
+        put("Library", new String[]{ "Talk to the Librarian", "Enchant your items", "Buy items (Level 1 of Many Books)" });
+        put("Flower House", new String[]{ "Talk to Marco", "Gather Rose Red Dye", "Get Spray Can" });
+        put("Mountain", new String[]{ "Climb to the top!" });
+        put("Graveyard", new String[]{ "Fight Zombies", "Travel to the Spiders Den", "Talk to Pat", "Investigate the Catacombs" });
+        put("Ruins", new String[]{ "Explore the ancient ruins", "Watch out for the guard dogs!" });
+        put("Wizard Tower", new String[]{ "Talk to the Wizard", "Use the Wizard Portal" });
     }};
 
     @EventHandler
