@@ -129,7 +129,7 @@ public class Gui implements Listener {
                     Class<? extends Gui> clazz = backButtons.get(ChatColor.stripColor(lore.get(0)));
 
                     try {
-                        clazz.getConstructor(Player.class).newInstance((Player) event.getWhoClicked()).show((Player) event.getWhoClicked());
+                        clazz.getConstructor(Player.class).newInstance(event.getWhoClicked()).show((Player) event.getWhoClicked());
                     } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                         e.printStackTrace();
                     }

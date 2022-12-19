@@ -431,6 +431,9 @@ public class PlayerListener implements Listener {
             if (e.getClickedBlock().getType().equals(WORKBENCH)) {
                 e.setCancelled(true);
                 e.getPlayer().performCommand("sb craft");
+            } else if (e.getClickedBlock().getType().equals(ENCHANTMENT_TABLE)) {
+                e.setCancelled(true);
+                e.getPlayer().performCommand("sb enchant");
             }
         }
     }

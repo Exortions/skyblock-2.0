@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.commands.enchantment;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.enchantment.gui.EnchantingTableGui;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -15,7 +16,12 @@ public class EnchantCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        if (args.length < 1 || args.length > 2) {
+        if (args.length == 0) {
+            new EnchantingTableGui(player).show(player);
+            return;
+        }
+
+        if (args.length > 2) {
             player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Usage: /sb enchant <enchantment> [level]");
             return;
         }
