@@ -2,7 +2,6 @@ package com.skyblock.skyblock.utilities.gui;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
-import com.skyblock.skyblock.features.bazaar.BazaarCategory;
 import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -27,15 +26,19 @@ import java.util.Objects;
 @Getter
 public class Gui implements Listener {
 
-    private static final HashMap<Gui, Boolean> registeredListeners = new HashMap<>();
-    private static HashMap<String, Class<? extends Gui>> backButtons;
-    public final HashMap<Player, Boolean> opened;
-    public final HashMap<String, Runnable> clickEvents;
+    private static final HashMap<String, Class<? extends Gui>> BACK_BUTTONS = new HashMap<String, Class<? extends Gui>>() {{
+        put("To Auction House", AuctionHouseGUI.class);
+        put("To Bazaar", BazaarCategoryGui.class);
+    }};
+    private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
+
     public final HashMap<ItemStack, Runnable> specificClickEvents;
+    public final HashMap<String, Runnable> clickEvents;
     public final HashMap<Integer, ItemStack> items;
+    public final HashMap<Player, Boolean> opened;
     public final List<ItemStack> addableItems;
-    public String name;
     public final int slots;
+    public String name;
 
     public Gui(String name, int slots, HashMap<String, Runnable> clickEvents) {
         this(name, slots, clickEvents, new HashMap<>());
@@ -51,11 +54,6 @@ public class Gui implements Listener {
         this.items = new HashMap<>();
         this.addableItems = new ArrayList<>();
         this.opened = new HashMap<>();
-
-        backButtons = new HashMap<String, Class<? extends Gui>>() {{
-            put("To Auction House", AuctionHouseGUI.class);
-            put("To Bazaar", BazaarCategoryGui.class);
-        }};
     }
     public void show(Player player) {
         Inventory inventory = player.getServer().createInventory(null, slots, name);
@@ -124,18 +122,16 @@ public class Gui implements Listener {
 
             List<String> lore = event.getCurrentItem().getItemMeta().getLore();
 
-            if (lore != null && lore.size() > 0) {
-                if (backButtons.containsKey(ChatColor.stripColor(lore.get(0)))) {
-                    Class<? extends Gui> clazz = backButtons.get(ChatColor.stripColor(lore.get(0)));
+            if (lore != null && lore.size() > 0 && BACK_BUTTONS.containsKey(ChatColor.stripColor(lore.get(0)))) {
+                Class<? extends Gui> clazz = BACK_BUTTONS.get(ChatColor.stripColor(lore.get(0)));
 
-                    try {
-                        clazz.getConstructor(Player.class).newInstance(event.getWhoClicked()).show((Player) event.getWhoClicked());
-                    } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-
-                    return;
+                try {
+                    clazz.getConstructor(Player.class).newInstance(event.getWhoClicked()).show((Player) event.getWhoClicked());
+                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                    e.printStackTrace();
                 }
+
+                return;
             }
 
             if (specificClickEvents.containsKey(event.getCurrentItem())) {
