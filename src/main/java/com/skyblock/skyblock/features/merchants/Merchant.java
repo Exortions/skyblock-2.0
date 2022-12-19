@@ -11,6 +11,7 @@ import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -41,7 +42,10 @@ public class Merchant implements Listener {
     private final List<MerchantItem> items;
     private final Location location;
 
-    protected Merchant(String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location, List<String> initialDialogue) {
+    private final boolean villager;
+    private final Villager.Profession profession;
+
+    protected Merchant(String name, String skinValue, String skinSignature, List<MerchantItem> items, Location location, List<String> initialDialogue, boolean villager, Villager.Profession profession) {
         this.name = name;
 
         this.skinSignature = skinSignature;
@@ -52,10 +56,13 @@ public class Merchant implements Listener {
         this.location = location;
 
         this.initialDialogue = initialDialogue;
+
+        this.villager = villager;
+        this.profession = profession;
     }
 
     public void createNpc() {
-        List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true, false, null);
+        List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true, this.villager, this.profession);
 
         this.npc = (NPC) npcData.get(0);
         this.stand = (ArmorStand) npcData.get(1);

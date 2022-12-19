@@ -4,6 +4,7 @@ import com.skyblock.skyblock.Skyblock;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class MerchantHandler {
 
@@ -121,7 +123,9 @@ public class MerchantHandler {
                         skinSignature,
                         merchantItems,
                         location,
-                        initialInteraction
+                        initialInteraction,
+                        Objects.equals(id, "librarian_merchant"),
+                        Objects.equals(id, "librarian_merchant") ? Villager.Profession.LIBRARIAN : null
                 ));
             }
         } catch (IOException | ParseException ex) {
