@@ -9,6 +9,7 @@ import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RogueSword extends SkyblockItem {
@@ -18,7 +19,7 @@ public class RogueSword extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);

@@ -22,7 +22,7 @@ public class EndStoneSword extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 

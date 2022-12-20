@@ -15,6 +15,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+
 public class EmberRod extends SkyblockItem {
 
     public EmberRod() {
@@ -22,7 +24,7 @@ public class EmberRod extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 

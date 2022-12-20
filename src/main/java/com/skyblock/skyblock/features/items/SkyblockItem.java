@@ -10,6 +10,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 @Getter
 public abstract class SkyblockItem {
 
@@ -22,7 +24,7 @@ public abstract class SkyblockItem {
         this.internalName = internalName;
     }
 
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         throw new UnsupportedOperationException("This item does not support right clicking");
     }
 

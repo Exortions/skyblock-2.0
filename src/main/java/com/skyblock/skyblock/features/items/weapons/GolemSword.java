@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class GolemSword extends SkyblockItem {
@@ -25,7 +26,7 @@ public class GolemSword extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
 
         if (player.isOnCooldown(getInternalName())) {

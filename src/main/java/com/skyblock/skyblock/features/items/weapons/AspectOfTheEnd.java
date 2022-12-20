@@ -11,6 +11,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashMap;
 import java.util.Set;
 
 public class AspectOfTheEnd extends SkyblockItem {
@@ -20,7 +21,7 @@ public class AspectOfTheEnd extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);

@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 public class AspectOfTheJerry extends SkyblockItem {
 
     public AspectOfTheJerry() {
@@ -17,7 +19,7 @@ public class AspectOfTheJerry extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 

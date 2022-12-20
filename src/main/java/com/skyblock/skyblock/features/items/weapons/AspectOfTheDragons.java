@@ -17,6 +17,7 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 public class AspectOfTheDragons extends SkyblockItem {
 
@@ -36,7 +37,7 @@ public class AspectOfTheDragons extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 

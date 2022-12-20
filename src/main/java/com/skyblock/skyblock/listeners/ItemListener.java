@@ -4,8 +4,11 @@ import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.event.SkyblockAbilityTriggerEvent;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.item.ItemBase;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,7 +65,15 @@ public class ItemListener implements Listener {
             if (item != null) {
                 if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                     if (handler.isRegistered(item)) {
-                        handler.getRegistered(item).onRightClick(e);
+                        SkyblockAbilityTriggerEvent event = new SkyblockAbilityTriggerEvent(SkyblockPlayer.getPlayer(e.getPlayer()), new ItemBase(item), new HashMap<>());
+
+                        Bukkit.getPluginManager().callEvent(event);
+
+                        if (event.isCancelled()) return;
+
+                        HashMap<String, Object> data = event.getData();
+
+                        handler.getRegistered(item).onRightClick(e, data);
                     }
                 } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
                     if (handler.isRegistered(item)) {
