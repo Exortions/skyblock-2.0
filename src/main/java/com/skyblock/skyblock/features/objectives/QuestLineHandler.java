@@ -6,9 +6,11 @@ import com.skyblock.skyblock.features.objectives.impl.hub.ExploreHubQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.IntroduceYourselfQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.auction.AuctioneerQuest;
 import com.skyblock.skyblock.features.objectives.impl.starting.GettingStartedQuest;
+import lombok.Getter;
 
 import java.util.*;
 
+@Getter
 public class QuestLineHandler {
 
     private final HashMap<String, List<QuestLine>> quests = new HashMap<>();

@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.objectives.gui.QuestLogGui;
 import com.skyblock.skyblock.features.pets.gui.PetsGUI;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -74,7 +75,7 @@ public class SkyblockMenuListener implements Listener {
                 skyblock.getGuiHandler().show("trades", player);
                 break;
             case "Quest Log":
-                skyblock.getGuiHandler().show("quest_log", player);
+                new QuestLogGui(player).show(player);
                 break;
             case "Calendar and Events":
                 skyblock.getGuiHandler().show("calendar_and_events", player);
