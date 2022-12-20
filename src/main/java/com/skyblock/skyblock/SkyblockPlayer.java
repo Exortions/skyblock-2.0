@@ -624,6 +624,8 @@ public class SkyblockPlayer {
                 config.set("quests.completedQuests", new ArrayList<>());
                 config.set("quests.completedObjectives", new ArrayList<>());
                 config.set("quests.introduceYourself.talkedTo", new ArrayList<>());
+                config.set("quests.timber.logsBroken", 0);
+                config.set("quests.timber.talkedToLumberjack", false);
 
                 config.set("locations.found", new ArrayList<>());
 

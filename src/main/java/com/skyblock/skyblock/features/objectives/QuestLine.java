@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 public class QuestLine {
 
-    private final List<Objective> line;
+    protected final List<Objective> line;
     private final String name;
     private final String display;
 

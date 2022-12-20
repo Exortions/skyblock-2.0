@@ -23,6 +23,7 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +41,7 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 @UtilityClass
 public class Util {
@@ -674,4 +676,29 @@ public class Util {
 
         return coins;
     }
+
+    public void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
+        List<String> talked = (List<String>) SkyblockPlayer.getPlayer(player).getValue("quests.introduceYourself.talkedTo");
+
+        if (talked.contains(npc)) return;
+
+        for (int i = 0; i < messages.length; i++) {
+            String message = messages[i];
+            sendDelayedMessage(player, npc, message, i);
+
+            if (i == messages.length - 1) {
+                Util.delay(() -> {
+                    action.accept(player);
+                }, (i + 1) * 20);
+            }
+        }
+    }
+
+    public void sendDelayedMessage(Player player, String npc, String message, int delay) {
+        Util.delay(() -> {
+            player.sendMessage(ChatColor.YELLOW + "[NPC] " + npc + ChatColor.WHITE + ": " + message);
+            player.playSound(player.getLocation(), Sound.VILLAGER_YES, 10, 1);
+        }, delay * 20);
+    }
+
 }

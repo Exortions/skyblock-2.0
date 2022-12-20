@@ -35,7 +35,7 @@ public class Objective implements Listener {
         return getQuest().getNext(this);
     }
 
-    protected void complete(Player p) {
+    public void complete(Player p) {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
         Objective next = getNext();
 
