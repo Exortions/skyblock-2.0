@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.items.armor.StrongDragonArmor;
 import com.skyblock.skyblock.features.items.armor.SuperiorDragonArmor;
 import com.skyblock.skyblock.features.items.armor.WiseDragonArmor;
 import com.skyblock.skyblock.features.items.armor.YoungDragonArmor;
@@ -45,6 +46,7 @@ public class SkyblockItemHandler {
         registerItem(new RunaansBow());
 
         // Armor Sets
+        registerItem(new StrongDragonArmor());
         registerItem(new SuperiorDragonArmor());
         registerItem(new WiseDragonArmor());
         registerItem(new YoungDragonArmor());
@@ -77,6 +79,10 @@ public class SkyblockItemHandler {
         }
 
         return null;
+    }
+
+    public ArmorSet getRegisteredSet(String name) {
+        return sets.get(name);
     }
 
     public SkyblockItem getRegistered(String s){

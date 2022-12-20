@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class MaddoxBatphone extends SkyblockItem {
@@ -24,7 +25,7 @@ public class MaddoxBatphone extends SkyblockItem {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         Player player = event.getPlayer();
 
         player.sendMessage(ChatColor.YELLOW + "✆ Ringing...");

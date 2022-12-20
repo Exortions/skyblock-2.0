@@ -5,7 +5,9 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Getter
-public abstract class ArmorSet {
+public abstract class ArmorSet implements Listener {
 
     protected final static ItemHandler handler = Skyblock.getPlugin(Skyblock.class).getItemHandler();
     private final HashMap<Player, BukkitRunnable> runnables;
@@ -33,6 +35,8 @@ public abstract class ArmorSet {
         this.id = id;
 
         this.runnables = new HashMap<>();
+
+        Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin());
     }
 
     public void fullSetBonus(Player player) {

@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
+
 public class GrapplingHook extends ListeningItem {
 
     public GrapplingHook(Skyblock plugin) {
@@ -16,7 +18,7 @@ public class GrapplingHook extends ListeningItem {
     }
 
     @EventHandler
-    public void onFish(PlayerFishEvent event){
+    public void onFish(PlayerFishEvent event, HashMap<String, Object> data) {
         if (event.getState().equals(PlayerFishEvent.State.CAUGHT_ENTITY)
             || event.getState().equals(PlayerFishEvent.State.FAILED_ATTEMPT)
             || event.getState().equals(PlayerFishEvent.State.IN_GROUND)){
