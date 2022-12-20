@@ -19,6 +19,7 @@ public class DependencyUpdater {
 
     public static final List<String> updateableFiles = new ArrayList<String>() {{
         add("bazaar" + File.separator + "items.json");
+        add("collections" + File.separator + "combat.json");
         add("collections" + File.separator + "farming.json");
         add("collections" + File.separator + "mining.json");
         add("fairy_souls.json");
