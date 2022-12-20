@@ -583,6 +583,7 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler.registerEnchantment(new CriticalEnchantment());
         this.enchantmentHandler.registerEnchantment(new BaneOfArthropodsEnchantment());
         this.enchantmentHandler.registerEnchantment(new CubismEnchantment());
+        this.enchantmentHandler.registerEnchantment(new DragonHunterEnchantment());
 
         this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
