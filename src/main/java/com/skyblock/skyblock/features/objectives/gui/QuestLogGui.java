@@ -36,7 +36,7 @@ public class QuestLogGui extends Gui {
         addItem(49, Util.buildCloseButton());
         addItem(45, Util.buildBackButton());
 
-        addItem(50, new ItemBuilder(ChatColor.GREEN + "Completed Quests", Material.BOOK).addLore("&7Take a peek at the past", "&7and browse quests you've", "&7already completed.", " ", "&7Completed" + ChatColor.GREEN + compQuests.size(), " ", ChatColor.YELLOW + "Click to view!").toItemStack());
+        addItem(50, new ItemBuilder(ChatColor.GREEN + "Completed Quests", Material.BOOK).addLore("&7Take a peek at the past", "&7and browse quests you've", "&7already completed.", " ", "&7Completed: " + ChatColor.GREEN + compQuests.size(), " ", ChatColor.YELLOW + "Click to view!").toItemStack());
 
         clickEvents.put(ChatColor.GREEN + "Completed Quests", () -> new CompletedQuestsGui(player).show(player));
 
