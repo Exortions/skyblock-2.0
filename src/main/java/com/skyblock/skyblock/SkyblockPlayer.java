@@ -626,6 +626,8 @@ public class SkyblockPlayer {
                 config.set("quests.introduceYourself.talkedTo", new ArrayList<>());
                 config.set("quests.timber.logsBroken", 0);
                 config.set("quests.timber.talkedToLumberjack", false);
+                config.set("quests.time_to_strike.bartender.interacted", false);
+                config.set("quests.time_to_strike.zombiesKilled", 0);
 
                 config.set("locations.found", new ArrayList<>());
 
