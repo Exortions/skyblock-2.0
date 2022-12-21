@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.entities;
 
+import com.skyblock.skyblock.features.entities.creeper.SneakyCreeper;
 import com.skyblock.skyblock.features.entities.end.Endermite;
 import com.skyblock.skyblock.features.entities.end.ObsidianDefender;
 import com.skyblock.skyblock.features.entities.end.Watcher;
@@ -7,6 +8,7 @@ import com.skyblock.skyblock.features.entities.end.enderman.Enderman;
 import com.skyblock.skyblock.features.entities.spider.Spider;
 import com.skyblock.skyblock.features.entities.wolf.Wolf;
 import com.skyblock.skyblock.features.entities.zombie.Zombie;
+import com.skyblock.skyblock.features.entities.pigman.RedstonePigman;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -18,7 +20,9 @@ public enum SkyblockEntityType {
     SPIDER(Spider.class),
     OBSIDIAN_DEFENDER(ObsidianDefender.class),
     WATCHER(Watcher.class),
-    ENDERMITE(Endermite.class);
+    ENDERMITE(Endermite.class),
+    SNEAKY_CREEPER(SneakyCreeper.class),
+    REDSTONE_PIGMAN(RedstonePigman.class);
 
     Class<? extends SkyblockEntity> baseClass;
     SkyblockEntityType(Class<? extends SkyblockEntity> clazz) {

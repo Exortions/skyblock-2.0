@@ -91,6 +91,17 @@ public class Util {
         return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
     }
 
+    public String[] enchantLore(String lore) {
+        String[] array = ChatColor.translateAlternateColorCodes('&', lore).split("\n");
+        String[] copy = new String[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            copy[i] = ChatColor.GRAY + array[i];
+        }
+
+        return copy;
+    }
+
     public String[] buildLore(String lore, char defaultColor) {
         String[] built = buildLore(lore);
 

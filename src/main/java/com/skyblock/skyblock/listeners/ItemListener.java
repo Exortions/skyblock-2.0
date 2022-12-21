@@ -73,8 +73,6 @@ public class ItemListener implements Listener {
 
                         HashMap<String, Object> data = event.getData();
 
-                        e.getPlayer().sendMessage(data.toString());
-
                         handler.getRegistered(item).onRightClick(e, data);
                     }
                 } else if (e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
