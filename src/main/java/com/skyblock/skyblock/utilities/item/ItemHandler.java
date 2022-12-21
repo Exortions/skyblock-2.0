@@ -5,11 +5,14 @@ import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
+import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
+import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.pets.PetType;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
+import net.minecraft.server.v1_8_R3.Enchantment;
 import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
@@ -215,6 +218,17 @@ public class ItemHandler {
             }
 
             if (r.equals(Rarity.LEGENDARY)) break;
+        }
+
+        SkyblockEnchantmentHandler enchantmentHandler = skyblock.getEnchantmentHandler();
+
+        for (SkyblockEnchantment enchant : enchantmentHandler.getEnchantments()) {
+            for (int i = 0; i <= enchant.getMaxLevel(); i++) {
+                items.put(enchant.getName().toUpperCase() + ";" + i + ".json",
+                        new ItemBuilder(ChatColor.WHITE + "Enchanted Book", Material.ENCHANTED_BOOK)
+                                .addLore(ChatColor.BLUE + enchant.getDisplayName() + " " + Util.toRoman(i)).addLore(Util.buildLore(enchant.getDescription(i)))
+                                .addLore(" ", "&7Use this on an item in an Anvil", "&7to apply it!", " ", ChatColor.WHITE + "" + ChatColor.BOLD + "COMMON").toItemStack());
+            }
         }
 
         skyblock.sendMessage("Sucessfully Registered custom items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
