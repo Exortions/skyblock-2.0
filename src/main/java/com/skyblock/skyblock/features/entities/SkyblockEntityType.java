@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.entities;
 
+import com.skyblock.skyblock.features.entities.creeper.SneakyCreeper;
 import com.skyblock.skyblock.features.entities.end.Endermite;
 import com.skyblock.skyblock.features.entities.end.ObsidianDefender;
 import com.skyblock.skyblock.features.entities.end.Watcher;
@@ -18,7 +19,8 @@ public enum SkyblockEntityType {
     SPIDER(Spider.class),
     OBSIDIAN_DEFENDER(ObsidianDefender.class),
     WATCHER(Watcher.class),
-    ENDERMITE(Endermite.class);
+    ENDERMITE(Endermite.class),
+    SNEAKY_CREEPER(SneakyCreeper.class);
 
     Class<? extends SkyblockEntity> baseClass;
     SkyblockEntityType(Class<? extends SkyblockEntity> clazz) {
