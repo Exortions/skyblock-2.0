@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.merchants;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
@@ -23,7 +24,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Data
 public class Merchant implements Listener {
@@ -162,25 +165,110 @@ public class Merchant implements Listener {
 
         NBTItem nbt = new NBTItem(item);
 
-        if (nbt.hasKey("merchantItem")) {
-            SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
+        SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
 
-            if (player == null) return;
+        if (player == null) return;
+
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        formatter.setGroupingUsed(true);
+
+        if (nbt.hasKey("merchantItem")) {
+            if (event.isRightClick()) {
+                Gui gui = new Gui("Shop Trading Options", 54, new HashMap<>());
+
+                Util.fillEmpty(gui);
+                gui.addItem(49, Util.buildCloseButton());
+                gui.addItem(48, Util.buildBackButton("&7To " + this.name));
+
+                gui.addItem(20, buildShopOption(nbt.getItem(), 1, player, gui));
+                gui.addItem(21, buildShopOption(nbt.getItem(), 5, player, gui));
+                gui.addItem(22, buildShopOption(nbt.getItem(), 10, player, gui));
+                gui.addItem(23, buildShopOption(nbt.getItem(), 32, player, gui));
+                gui.addItem(24, buildShopOption(nbt.getItem(), 64, player, gui));
+
+                gui.getClickEvents().put(ChatColor.GREEN + "Go Back", () -> {
+                   player.getBukkitPlayer().openInventory(event.getInventory());
+                });
+
+                gui.show(player.getBukkitPlayer());
+
+                return;
+            }
 
             if (player.getDouble("stats.purse") < nbt.getInteger("merchantCost")) {
                 player.getBukkitPlayer().sendMessage(ChatColor.RED + "You do not have enough coins to purchase this item!");
                 return;
             }
 
-            DecimalFormat formatter = new DecimalFormat("#,###");
-            formatter.setGroupingUsed(true);
-
             player.setValue("stats.purse", player.getDouble("stats.purse") - nbt.getInteger("merchantCost"));
 
             player.getBukkitPlayer().performCommand(nbt.getString("merchantReward"));
 
             player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + formatter.format(nbt.getInteger("merchantCost")) + " coins" + ChatColor.GREEN + "!");
+
+            player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+        } else if (event.getClickedInventory() != null) {
+            if (event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
+                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have sold " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + 0 + " coins" + ChatColor.GREEN + "!");
+                player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+                event.setCurrentItem(null);
+            }
         }
+    }
+
+    private ItemStack buildShopOption(ItemStack item, int amount, SkyblockPlayer player, Gui gui) {
+        ItemStack clone = item.clone();
+        ItemMeta meta = clone.getItemMeta();
+        List<String> lore = meta.getLore();
+
+        NBTItem nbt = new NBTItem(clone);
+
+        AtomicReference<String> command = new AtomicReference<>(nbt.getString("merchantReward"));
+        int cost = nbt.getInteger("merchantCost");
+        int num = 0;
+
+        try {
+            num = Integer.parseInt(command.get().split(" ")[3]);
+            command.set(command.get().replace(" " + num, ""));
+        } catch (NumberFormatException e) {
+            num = 1;
+        }
+
+        int costForOne = (int) Math.ceil((1.0 * cost / num));
+
+        meta.setDisplayName(meta.getDisplayName() + " " + ChatColor.DARK_GRAY + "x" + amount);
+
+        for (int i = 0; i < 7; i++) {
+            lore.remove(lore.size() - 1);
+        }
+
+        lore.add(" ");
+        lore.add(ChatColor.GRAY + "Cost");
+        lore.add(ChatColor.GOLD + "" + (costForOne * amount) + " coins");
+        lore.add(" ");
+        lore.add(ChatColor.YELLOW + "Click to purchase!");
+
+        meta.setLore(lore);
+        clone.setItemMeta(meta);
+
+        clone.setAmount(amount);
+
+        gui.getClickEvents().put(meta.getDisplayName(), () -> {
+            if (player.checkCoins(costForOne * amount)) {
+                DecimalFormat formatter = new DecimalFormat("#,###");
+                formatter.setGroupingUsed(true);
+
+                player.subtractCoins(costForOne * amount);
+
+                player.getBukkitPlayer().performCommand(command.get() + " " + amount);
+
+                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased " + meta.getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + formatter.format((long) costForOne * amount) + " coins" + ChatColor.GREEN + "!");
+
+                player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+            }
+        });
+
+        return clone;
     }
 
 }
