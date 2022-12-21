@@ -18,7 +18,7 @@ public class GrapplingHook extends ListeningItem {
     }
 
     @EventHandler
-    public void onFish(PlayerFishEvent event, HashMap<String, Object> data) {
+    public void onFish(PlayerFishEvent event) {
         if (event.getState().equals(PlayerFishEvent.State.CAUGHT_ENTITY)
             || event.getState().equals(PlayerFishEvent.State.FAILED_ATTEMPT)
             || event.getState().equals(PlayerFishEvent.State.IN_GROUND)){

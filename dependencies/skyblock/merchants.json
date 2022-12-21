@@ -96,34 +96,34 @@
           "command": "sb item LOG.json 5"
         },
         {
-          "id": "BIRCH_LOG.json",
+          "id": "LOG-2.json",
           "cost": 25,
           "amount": 5,
-          "command": "sb item BIRCH_LOG.json 5"
+          "command": "sb item LOG-2.json 5"
         },
         {
-          "id": "SPRUCE_LOG.json",
+          "id": "LOG-1.json",
           "cost": 25,
           "amount": 5,
-          "command": "sb item SPRUCE_LOG.json 5"
+          "command": "sb item LOG-1.json 5"
         },
         {
-          "id": "DARK_OAK_LOG.json",
+          "id": "LOG_2-1.json",
           "cost": 25,
           "amount": 5,
-          "command": "sb item DARK_OAK_LOG.json 5"
+          "command": "sb item LOG_2-1.json 5"
         },
         {
-          "id": "ARCADIA_LOG.json",
+          "id": "LOG_2.json",
           "cost": 25,
           "amount": 5,
-          "command": "sb item ARCADIA_LOG.json 5"
+          "command": "sb item LOG_2.json 5"
         },
         {
-          "id": "JUNGLE_LOG.json",
+          "id": "LOG-3.json",
           "cost": 25,
           "amount": 5,
-          "command": "sb item JUNGLE_LOG.json 5"
+          "command": "sb item LOG-3.json 5"
         },
         {
           "id": "STICK.json",
@@ -144,10 +144,10 @@
           "command": "sb item PROMISING_AXE.json 1"
         },
         {
-          "id": "PODZOL.json",
+          "id": "DIRT-2.json",
           "cost": 20,
           "amount": 1,
-          "command": "sb item PODZOL.json 1"
+          "command": "sb item DIRT-2.json 1"
         },
         {
           "id": "SWEET_AXE.json",
@@ -216,10 +216,10 @@
           "command": "sb item PUMPKIN.json 1"
         },
         {
-          "id": "COCA_BEANS.json",
+          "id": "INK_SACK-3.json",
           "cost": 5,
           "amount": 1,
-          "command": "sb item COCA_BEANS.json 1"
+          "command": "sb item INK_SACK-3.json 1"
         },
         {
           "id": "RED_MUSHROOM.json",
@@ -289,22 +289,22 @@
           "command": "sb item RAW_FISH.json 1"
         },
         {
-          "id": "RAW_SALMON.json",
+          "id": "RAW_FISH-1.json",
           "cost": 30,
           "amount": 1,
-          "command": "sb item RAW_SALMON.json 1"
+          "command": "sb item RAW_FISH-1.json 1"
         },
         {
-          "id": "CLOWNFISH.json",
+          "id": "RAW_FISH-2.json",
           "cost": 100,
           "amount": 1,
-          "command": "sb item CLOWNFISH.json 1"
+          "command": "sb item RAW_FISH-3.json 1"
         },
         {
-          "id": "PUFFERFISH.json",
+          "id": "RAW_FISH-3.json",
           "cost": 100,
           "amount": 1,
-          "command": "sb item PUFFERFISH.json 1"
+          "command": "sb item RAW_FISH-3.json 1"
         }
       ],
       "location": {
@@ -440,10 +440,10 @@
           "command": "sb item SLIME_BALL.json 1"
         },
         {
-          "id": "GUNPOWDER.json",
+          "id": "SULPHUR.json",
           "cost": 10,
           "amount": 1,
-          "command": "sb item GUNPOWDER.json 1"
+          "command": "sb item SULPHUR.json 1"
         },
         {
           "id": "ZOMBIE_TALISMAN.json",
