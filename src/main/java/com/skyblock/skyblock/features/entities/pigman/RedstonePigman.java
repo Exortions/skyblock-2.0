@@ -20,13 +20,9 @@ public class RedstonePigman extends SkyblockEntity {
     @Override
     public List<EntityDrop> getDrops() {
         List<EntityDrop> drops = new ArrayList<>(Arrays.asList(
-        	new EntityDrop(handler.getItem("REDSTONE.json"), EntityDropRarity.COMMON, 0.5, 1),
+                new EntityDrop(handler.getItem("REDSTONE.json"), EntityDropRarity.COMMON, 0.5, 1),
                 new EntityDrop(handler.getItem("GOLD_NUGGET.json"), EntityDropRarity.COMMON, 0.5, 1)
         ));
         return drops;
     }
-
-    @Override
-    protected void tick() {
-        if (((PigZombie) getVanilla()).getTarget() != null) lifeSpan = 15 * 20;
-    }}
+}

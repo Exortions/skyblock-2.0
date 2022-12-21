@@ -152,12 +152,14 @@ public abstract class SkyblockEntity {
                             living.setHealth(0);
                         }
 
-                        if (getEntityData().isHostile) {
+                        if (getEntityData().isHostile && living instanceof Monster) {
                             for (Entity entity : getVanilla().getNearbyEntities(5, 2, 5)){
-                                if (entity instanceof Player && living instanceof Monster) {
+                                if (entity instanceof Player) {
                                     ((Monster) living).setTarget((LivingEntity) entity);
                                 }
                             }
+
+                            if (((Monster) living).getTarget() != null) lifeSpan += 15 * 20;
                         }
 
                         lifeSpan--;
