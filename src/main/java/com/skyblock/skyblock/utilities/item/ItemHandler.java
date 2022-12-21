@@ -42,6 +42,7 @@ public class ItemHandler {
     public static final List<String> ITEM_EXCLUSIONS = new ArrayList<String>() {{
         add("fancy_sword.json");
         add("raider_axe.json");
+        add("midas_sword.json");
     }};
 
     public static final HashMap<String, Function<ItemBase, ItemBase>> SKYBLOCK_ID_TO_ITEM = new HashMap<String, Function<ItemBase, ItemBase>>() {{
@@ -81,6 +82,46 @@ public class ItemHandler {
 
             return base;
         }));
+
+        put("midas_sword", (base) -> {
+            NBTItem nbtItem = new NBTItem(base.createStack().clone());
+
+            boolean alreadyApplied = nbtItem.getBoolean("midas_sword_applied");
+            int pricePaid = nbtItem.getInteger("midas_sword_price_paid");
+            int bonus;
+
+            if (pricePaid < 1_000_000) bonus = (pricePaid / 50_000);
+            else if (pricePaid < 2_500_000) bonus = ((pricePaid - 1_000_000) / 100_000);
+            else if (pricePaid < 7_500_000) bonus = ((pricePaid - 2_500_000) / 200_000);
+            else if (pricePaid < 25_000_000) bonus = ((pricePaid - 7_500_000) / 500_000);
+            else if (pricePaid < 50_000_000) bonus = ((pricePaid - 25_000_000) / 1_000_000);
+            else bonus = 120;
+
+            base.setAbilityName("Greed");
+            base.setAbilityDescription(Arrays.asList(Util.buildLore(
+                    "&7The strength and damage bonus of\n&7his item is dependent on the\n&7price paid for it at the &5Dark\n&5Auction&7!\n&7The maximum bonus of this item is &c120 &7if the bid was\n&650,000,000 Coins&7 or higher!" +
+                            "\n\n&7Price paid: &6" + Util.formatInt(pricePaid) + "\n" +
+                            "&7Strength Bonus: &c" + bonus + "\n" +
+                            "&7Damage Bonus: &c" + bonus + "\n"
+            )));
+
+            base.setHasAbility(true);
+
+            if (!alreadyApplied) {
+                base.setStrength(base.getStrength() + bonus);
+                base.setDamage(base.getDamage() + bonus);
+            }
+
+            base.createStack();
+
+            nbtItem = new NBTItem(base.getStack().clone());
+
+            nbtItem.setBoolean("midas_sword_applied", true);
+
+            base.setStack(nbtItem.getItem());
+
+            return base;
+        });
     }};
 
     public ItemHandler(Skyblock plugin) {
@@ -204,6 +245,30 @@ public class ItemHandler {
                     put("raider_axe_collection", 0);
                 }},
                 SKYBLOCK_ID_TO_ITEM.get("raider_axe")
+        ).createStack());
+
+        items.put("midas_sword", new ItemBase(
+                Material.GOLD_SWORD,
+                ChatColor.GOLD + "Midas' Sword",
+                Reforge.NONE,
+                1,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                false,
+                false,
+                null,
+                new ArrayList<>(),
+                null,
+                0,
+                null,
+                "LEGENDARY SWORD",
+                "midas_sword",
+                120, 0, 0, 0, 0, 0, 0, 0, 0, false,
+                new HashMap<String, Object>() {{
+                    put("midas_sword_price_paid", 100000);
+                    put("midas_sword_applied", false);
+                }},
+                SKYBLOCK_ID_TO_ITEM.get("midas_sword")
         ).createStack());
 
         for (Rarity r : Rarity.values()) {

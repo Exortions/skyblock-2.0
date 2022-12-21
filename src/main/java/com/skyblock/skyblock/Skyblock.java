@@ -671,7 +671,8 @@ public final class Skyblock extends JavaPlugin {
                 new AuctionCommand(),
                 new CreateSpawnerCommand(),
                 new SkillsCommand(),
-                new BazaarCommand()
+                new BazaarCommand(),
+                new RegenerateCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
