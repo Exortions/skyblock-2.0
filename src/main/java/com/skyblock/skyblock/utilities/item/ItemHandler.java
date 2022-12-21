@@ -223,10 +223,10 @@ public class ItemHandler {
         SkyblockEnchantmentHandler enchantmentHandler = skyblock.getEnchantmentHandler();
 
         for (SkyblockEnchantment enchant : enchantmentHandler.getEnchantments()) {
-            for (int i = 0; i <= enchant.getMaxLevel(); i++) {
+            for (int i = 1; i <= enchant.getMaxLevel(); i++) {
                 items.put(enchant.getName().toUpperCase() + ";" + i + ".json",
                         new ItemBuilder(ChatColor.WHITE + "Enchanted Book", Material.ENCHANTED_BOOK)
-                                .addLore(ChatColor.BLUE + enchant.getDisplayName() + " " + Util.toRoman(i)).addLore(Util.buildLore(enchant.getDescription(i)))
+                                .addLore(ChatColor.BLUE + enchant.getDisplayName() + " " + Util.toRoman(i)).addLore(Util.enchantLore(enchant.getDescription(i)))
                                 .addLore(" ", "&7Use this on an item in an Anvil", "&7to apply it!", " ", ChatColor.WHITE + "" + ChatColor.BOLD + "COMMON").toItemStack());
             }
         }
