@@ -25,10 +25,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -137,6 +134,14 @@ public class PlayerListener implements Listener {
             SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
             player.updateStats(null, e.getItemStack());
         }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        if (event.getEntity() == null) return;
+
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getEntity());
+        player.kill(event.getEntity().getLastDamageCause().getCause(), event.getEntity().getKiller());
     }
 
     @EventHandler

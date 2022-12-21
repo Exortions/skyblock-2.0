@@ -252,7 +252,7 @@ public class ItemBase {
             lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
         }
 
-        lore.add("");
+        if (description.size() != 0) lore.add("");
 
         /*
         Enchantments
@@ -307,7 +307,7 @@ public class ItemBase {
           Ability
          */
         if (hasAbility) {
-            lore.add(ChatColor.GOLD + "Item Ability: " + abilityName + "" + ChatColor.YELLOW + ChatColor.BOLD + abilityType);
+            lore.add(ChatColor.GOLD + "Ability: " + abilityName + "" + ChatColor.YELLOW + ChatColor.BOLD + abilityType);
             lore.addAll(abilityDescription);
 
             if (abilityCost != 0) lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.DARK_AQUA + abilityCost);
