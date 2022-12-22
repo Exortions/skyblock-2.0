@@ -466,4 +466,11 @@ public class PlayerListener implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onTrample(PlayerInteractEvent e) {
+        if (!e.getAction().equals(Action.PHYSICAL)) return;
+        if (!e.getClickedBlock().getType().equals(SOIL)) return;
+        e.setCancelled(true);
+    }
 }
