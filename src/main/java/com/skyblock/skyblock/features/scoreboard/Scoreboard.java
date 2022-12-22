@@ -1,12 +1,12 @@
 package com.skyblock.skyblock.features.scoreboard;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.*;
 
 public abstract class Scoreboard {
 
@@ -20,6 +20,15 @@ public abstract class Scoreboard {
         Objective objective = board.registerNewObjective("SkyblockBoard", "Display ");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("Skyblock");
+
+        Objective health = board.registerNewObjective("health", "dummy");
+        health.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        health.setDisplayName(ChatColor.RED + "❤");
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            Score score = health.getScore(p);
+            if (SkyblockPlayer.getPlayer(p) != null) score.setScore(SkyblockPlayer.getPlayer(p).getStat(SkyblockStat.HEALTH));
+        }
 
         this.objective = objective;
         this.player = player;
@@ -38,6 +47,15 @@ public abstract class Scoreboard {
         objective.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "SKYBLOCK");
 
         this.objective = objective;
+
+        Objective health = board.registerNewObjective("health", "dummy");
+        health.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        health.setDisplayName(ChatColor.RED + "❤");
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            Score score = health.getScore(p);
+            if (SkyblockPlayer.getPlayer(p) != null) score.setScore(SkyblockPlayer.getPlayer(p).getStat(SkyblockStat.HEALTH));
+        }
 
         display();
         player.setScoreboard(board);
