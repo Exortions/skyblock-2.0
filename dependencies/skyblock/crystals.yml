@@ -94,3 +94,27 @@ e05cd117-3835-48fc-80fa-58653915dbba:
     z: -276.6982345131316
     pitch: 34.02273
     yaw: 204.44373
+75a804b1-4f8f-4863-ab87-5bf4f279ee9c:
+  range: 50
+  durability: 0
+  material: PUMPKIN
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 180.0681577857484
+    y: 87.84219284986911
+    z: -221.31883457284985
+    pitch: 54.44722
+    yaw: 67.47043
+1ed38024-c91a-4522-b6b7-3265a9120570:
+  range: 50
+  durability: 0
+  material: MELON_BLOCK
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 180.3694809694228
+    y: 88.11725673273766
+    z: -221.1277095187082
+    pitch: 81.584915
+    yaw: 128.51003

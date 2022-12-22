@@ -79,6 +79,8 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.CROPS, farms);
         put(Material.CARROT, farms);
         put(Material.POTATO, farms);
+        put(Material.PUMPKIN, farms);
+        put(Material.MELON_BLOCK, farms);
     }};
 
     @Getter
@@ -220,8 +222,13 @@ public class RegenerativeBlockHandler implements Listener {
                 break;
             case CROPS:
             case CARROT:
+            case MELON_BLOCK:
             case POTATO:
                 this.breakCrop(event, block, player, 4);
+                break;
+            case PUMPKIN:
+                this.breakCrop(event, block, player, 5);
+                break;
             default:
                 break;
         }
