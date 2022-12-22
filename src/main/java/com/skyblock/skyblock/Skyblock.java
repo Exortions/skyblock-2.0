@@ -690,6 +690,7 @@ public final class Skyblock extends JavaPlugin {
                 new AuctionCommand(),
                 new CreateSpawnerCommand(),
                 new SkillsCommand(),
+                new CreateCrystalCommand(),
                 new BazaarCommand(),
                 new RegenerateCommand()
         );

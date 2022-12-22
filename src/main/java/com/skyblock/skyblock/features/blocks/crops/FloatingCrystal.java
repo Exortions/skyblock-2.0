@@ -25,12 +25,13 @@ public class FloatingCrystal {
     private UUID id;
     private Material material;
     private short durability;
-    private String url;
     private Location location;
     private int range;
 
     // First 2 runnables and particle code from https://github.com/superischroma/Spectaculation/blob/main/src/main/java/me/superischroma/spectaculation/entity/insentient/FloatingCrystal.java
     public void spawn() {
+        String url = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTI2NWY5NmY1NGI3ODg4NWM0NmU3ZDJmODZiMWMxZGJmZTY0M2M2MDYwZmM3ZmNjOTgzNGMzZTNmZDU5NTEzNSJ9fX0=";
+
         ArmorStand stand = location.getWorld().spawn(location, ArmorStand.class);
 
         stand.setHelmet(Util.idToSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), url));

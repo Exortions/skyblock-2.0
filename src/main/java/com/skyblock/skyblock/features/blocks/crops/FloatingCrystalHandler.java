@@ -26,7 +26,6 @@ public class FloatingCrystalHandler {
         String id = crystal.getId().toString();
 
         config.createSection(id);
-        config.set(id + ".url",  crystal.getUrl());
         config.set(id + ".range",  crystal.getRange());
         config.set(id + ".durability",  crystal.getDurability());
         config.set(id + ".material",  crystal.getMaterial().toString());
@@ -44,13 +43,12 @@ public class FloatingCrystalHandler {
 
         for (String id : config.getKeys(false)) {
             UUID uuid = UUID.fromString(id);
-            String url = config.getString(id + ".url");
             int range = config.getInt(id + ".range");
             int durability = config.getInt(id + ".durability");
             Material material = Material.valueOf(config.getString(id + ".material"));
             Location location = (Location) config.get(id + ".location");
 
-            new FloatingCrystal(uuid, material, (short) durability, url, location, range).spawn();
+            new FloatingCrystal(uuid, material, (short) durability, location, range).spawn();
         }
     }
 

@@ -37,9 +37,5 @@ public class TestCommand implements Command {
 
         player.sendMessage(escrow.getBuyOrders().toString());
         player.sendMessage(escrow.getSellOrders().toString());
-
-        FloatingCrystal crystal = new FloatingCrystal(UUID.randomUUID(), Material.CROPS, (short) 0, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg2YmFkYjBkOTEzYjM5MWZiNDhkNzc3NmMzNzhjYTNmNGIyZGJlNzI0NTM0MDM0ZjM1MGNjZDM4ZjkwNDQ3MyJ9fX0=", player.getLocation(), 10);
-        crystal.spawn();
-        Skyblock.getPlugin().getFloatingCrystalHandler().saveCrystal(crystal);
     }
 }
