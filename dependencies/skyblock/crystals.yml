@@ -1,0 +1,65 @@
+bf7a5cd9-d67d-4622-81f3-036eceec2041:
+  url: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg2YmFkYjBkOTEzYjM5MWZiNDhkNzc3NmMzNzhjYTNmNGIyZGJlNzI0NTM0MDM0ZjM1MGNjZDM4ZjkwNDQ3MyJ9fX0=
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 63.77419409555803
+    y: 75.23170401374456
+    z: -133.47850261998272
+    pitch: 88.217545
+    yaw: -168.52486
+34d3d6bb-871c-4206-ba6c-f442c9e5ff72:
+  url: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg2YmFkYjBkOTEzYjM5MWZiNDhkNzc3NmMzNzhjYTNmNGIyZGJlNzI0NTM0MDM0ZjM1MGNjZDM4ZjkwNDQ3MyJ9fX0=
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 29.695139316900246
+    y: 75.37449090816493
+    z: -147.53471872338673
+    pitch: 80.64806
+    yaw: 103.6168
+17829ba6-5af0-4310-8899-ae6de5d36a92:
+  url: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg2YmFkYjBkOTEzYjM5MWZiNDhkNzc3NmMzNzhjYTNmNGIyZGJlNzI0NTM0MDM0ZjM1MGNjZDM4ZjkwNDQ3MyJ9fX0=
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 72.71169339372366
+    y: 76.1144132415668
+    z: -159.62403544013594
+    pitch: 46.585052
+    yaw: 251.0218
+ffd4f175-f39b-4373-af04-591900a55914:
+  url: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg2YmFkYjBkOTEzYjM5MWZiNDhkNzc3NmMzNzhjYTNmNGIyZGJlNzI0NTM0MDM0ZjM1MGNjZDM4ZjkwNDQ3MyJ9fX0=
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 60.04443942314904
+    y: 76.1144132415668
+    z: -183.12607745791482
+    pitch: 74.13614
+    yaw: 133.771
+358539ff-4a2d-4a63-b42a-44788634cd46:
+  url: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg2YmFkYjBkOTEzYjM5MWZiNDhkNzc3NmMzNzhjYTNmNGIyZGJlNzI0NTM0MDM0ZjM1MGNjZDM4ZjkwNDQ3MyJ9fX0=
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 24.811341026894752
+    y: 76.1144132415668
+    z: -179.12223780946033
+    pitch: 78.846954
+    yaw: 71.241425
