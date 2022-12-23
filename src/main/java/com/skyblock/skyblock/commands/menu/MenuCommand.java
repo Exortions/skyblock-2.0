@@ -61,7 +61,7 @@ public class MenuCommand implements Command {
         ItemStack enderChest = this.createEnderChestItem();
         ItemStack pets = this.createPetsItem(skyblockPlayer);
         ItemStack craftingTable = this.createCraftingTableItem();
-        ItemStack activeEffects = this.createActiveEffectsItem();
+        ItemStack activeEffects = this.createActiveEffectsItem(skyblockPlayer);
 
         Util.fillEmpty(inventory);
 
@@ -282,7 +282,7 @@ public class MenuCommand implements Command {
                 .toItemStack();
     }
 
-    public ItemStack createActiveEffectsItem() {
+    public ItemStack createActiveEffectsItem(SkyblockPlayer player) {
         return new ItemBuilder(
                 ChatColor.GREEN + "Active Effects",
                 Material.POTION)
@@ -294,7 +294,7 @@ public class MenuCommand implements Command {
                         ChatColor.GRAY + "Drink Potions or splash them",
                         ChatColor.GRAY + "on the ground to buff yourself!",
                         "",
-                        ChatColor.GRAY + "Currently Active: " + ChatColor.YELLOW + "0",
+                        ChatColor.GRAY + "Currently Active: " + ChatColor.YELLOW + "" + player.getActiveEffects().size(),
                         "",
                         ChatColor.YELLOW + "Click to view!"
                 )
