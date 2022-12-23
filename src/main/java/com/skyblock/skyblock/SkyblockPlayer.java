@@ -23,6 +23,7 @@ import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
 import com.skyblock.skyblock.utilities.BossBar;
+import com.skyblock.skyblock.utilities.SkyblockMath;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
@@ -807,6 +808,27 @@ public class SkyblockPlayer {
         saveToDisk();
 
         playerRegistry.remove(getBukkitPlayer().getUniqueId());
+    }
+
+    public double getSkillAverage() {
+        double total = 0;
+        int successful = 0;
+
+        for (String name : Skill.SKILLS) {
+            Skill skill = Skill.parseSkill(name);
+
+            if (skill == null) continue;
+
+            double xp = skill.getXP(this);
+            int level = Skill.getLevel(xp);
+
+            total += level;
+            successful++;
+        }
+
+        double average = total / successful;
+
+        return SkyblockMath.round(average, 1);
     }
 
 }
