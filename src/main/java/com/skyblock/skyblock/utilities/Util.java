@@ -655,7 +655,7 @@ public class Util {
         NBTItem nbt = new NBTItem(item);
         if (nbt.getBoolean("skyblockItem")) return item;
 
-        ItemStack neu = plugin.getItemHandler().getItem(item.getType().name() + "-" + item.getDurability() + ".json");
+        ItemStack neu = plugin.getItemHandler().getItem(item.getType().name() + ".json");
 
         if (item.getDurability() != 0) neu = plugin.getItemHandler().getItem(item.getType().name() + "-" + item.getDurability() + ".json");
 

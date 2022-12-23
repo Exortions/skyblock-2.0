@@ -110,6 +110,7 @@ public class SkyblockPlayer {
         this.armorSet = null;
         this.bossBar = null;
         this.pet = null;
+
         this.tick = 0;
 
         this.extraData.put("fullSetBonus", false);
@@ -135,6 +136,8 @@ public class SkyblockPlayer {
 
                 if (pet != null) pet.setActive(true);
             }
+
+            config = YamlConfiguration.loadConfiguration(configFile);
 
             if (getValue("auction.auctionSettings") == null) {
                 auctionSettings = new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false);
@@ -649,6 +652,8 @@ public class SkyblockPlayer {
                 config.set("potions.active", new HashMap<>());
 
                 config.save(configFile);
+
+                Bukkit.getConsoleSender().sendMessage("Config finished: " + config + "");
             } catch (IOException e){
                 e.printStackTrace();
             }
