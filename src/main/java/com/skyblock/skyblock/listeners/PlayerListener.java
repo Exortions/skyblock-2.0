@@ -80,7 +80,6 @@ public class PlayerListener implements Listener {
 
             skyblockPlayer.tick();
 
-            // show tab list (1.8.8) (use NMS)
             IChatBaseComponent header = new ChatComponentText(ChatColor.AQUA + "You are playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET");
             IChatBaseComponent footer = new ChatComponentText(ChatColor.GREEN + "Ranks, Boosters, & MORE! " + ChatColor.RED + "" + ChatColor.BOLD + "STORE.HYPIXEL.NET");
 

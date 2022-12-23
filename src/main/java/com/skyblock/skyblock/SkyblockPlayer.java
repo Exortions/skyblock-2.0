@@ -16,6 +16,7 @@ import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.pets.Pet;
+import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.features.scoreboard.HubScoreboard;
 import com.skyblock.skyblock.features.scoreboard.Scoreboard;
 import com.skyblock.skyblock.features.skills.Skill;
@@ -58,6 +59,7 @@ public class SkyblockPlayer {
     private HashMap<SkyblockStat, Double> stats;
     private HashMap<String, Boolean> cooldowns;
     private HashMap<String, Object> extraData;
+    private List<PotionEffect> activeEffects;
     private AuctionSettings auctionSettings;
     private FileConfiguration config;
     private ArmorStand petDisplay;
@@ -96,6 +98,7 @@ public class SkyblockPlayer {
     public SkyblockPlayer(UUID uuid) {
         this.dataCache = new HashMap<>();
         this.predicateDamageModifiers = new ArrayList<>();
+        this.activeEffects = new ArrayList<>();
         this.bukkitPlayer = Bukkit.getPlayer(uuid);
         this.hand = Util.getEmptyItemBase();
         this.cooldowns = new HashMap<>();
@@ -143,6 +146,14 @@ public class SkyblockPlayer {
                 }
 
                 auctionSettings = AuctionSettings.deserialize(map);
+            }
+
+            this.activeEffects = new ArrayList<>();
+            for (String key : config.getConfigurationSection("potions.active").getKeys(false)) {
+                int amplifier = config.getInt("potions.active." + key + ".amplifier");
+                double duration = config.getDouble("potions.active." + key + ".duration");
+
+                Skyblock.getPlugin().getPotionEffectHandler().effect(this, key, amplifier, duration, true);
             }
 
             auctionSettings.setPlayer(this);
@@ -435,6 +446,7 @@ public class SkyblockPlayer {
     public void setStat(SkyblockStat stat, double val) {
         setStat(stat, val, true);
     }
+
     public void setStat(SkyblockStat stat, double val, boolean event) {
         stats.put(stat, val);
 
@@ -447,6 +459,7 @@ public class SkyblockPlayer {
 
         resetActionBar();
     }
+
     public void addStatMultiplier(SkyblockStat stat, double mult) {
         setStatMultiplier(stat, getStatMultiplier(stat) + mult);
     }
@@ -633,6 +646,8 @@ public class SkyblockPlayer {
 
                 config.set("locations.found", new ArrayList<>());
 
+                config.set("potions.active", new HashMap<>());
+
                 config.save(configFile);
             } catch (IOException e){
                 e.printStackTrace();
@@ -806,6 +821,13 @@ public class SkyblockPlayer {
         }
         bossBar.reset();
 
+        for (PotionEffect activeEffect : this.activeEffects) {
+            if (activeEffect == null || activeEffect.getDuration() <= 0) continue;
+
+            this.setValue("potions.active." + activeEffect.getName() + ".amplifier", activeEffect.getAmplifier());
+            this.setValue("potions.active." + activeEffect.getName() + ".duration", activeEffect.getDuration());
+        }
+
         saveToDisk();
 
         playerRegistry.remove(getBukkitPlayer().getUniqueId());
@@ -830,6 +852,19 @@ public class SkyblockPlayer {
         double average = total / successful;
 
         return SkyblockMath.round(average, 1);
+    }
+
+    public void addEffect(PotionEffect effect) {
+        this.activeEffects.add(effect);
+    }
+
+    public void removeEffect(String name) {
+        for (PotionEffect effect : this.activeEffects) {
+            if (effect.getName().equalsIgnoreCase(name)) {
+                this.activeEffects.remove(effect);
+                break;
+            }
+        }
     }
 
 }

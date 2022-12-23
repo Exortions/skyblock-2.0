@@ -733,4 +733,11 @@ public class Util {
         }, delay * 20);
     }
 
+    public double createFetchableDictionary(int index, double... values) {
+        List<Double> dictionary = new ArrayList<>();
+        Arrays.stream(values).forEach(dictionary::add);
+
+        return dictionary.get(index);
+    }
+
 }
