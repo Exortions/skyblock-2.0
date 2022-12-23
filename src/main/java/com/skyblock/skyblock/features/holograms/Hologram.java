@@ -25,9 +25,10 @@ public class Hologram {
 
     public void spawn() {
         Location loc = location.clone();
-
-        for (String line : lines) {
-            loc.add(0, 0.25, 0);
+        
+        for (int i = 0; i < lines.size(); ++i) {
+            String line = lines.get(i);
+            if (i > 0) loc.add(0, -0.25, 0);
 
             ArmorStand stand = loc.getWorld().spawn(loc, ArmorStand.class);
             stand.setGravity(false);
