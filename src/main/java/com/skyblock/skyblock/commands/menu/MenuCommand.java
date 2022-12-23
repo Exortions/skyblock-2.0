@@ -42,7 +42,7 @@ public class MenuCommand implements Command {
         Inventory inventory = Bukkit.createInventory(null, 54, SkyblockMenuListener.MENU_NAME);
 
         ItemStack yourSkyblockProfile = this.createSkyblockProfileItem(skyblockPlayer);
-        ItemStack yourSkills = this.createSkillsItem();
+        ItemStack yourSkills = this.createSkillsItem(skyblockPlayer);
 
         int unlockedCollections = 0;
         int totalCollections = 0;
@@ -121,7 +121,7 @@ public class MenuCommand implements Command {
                 ).toItemStack();
     }
 
-    public ItemStack createSkillsItem() {
+    public ItemStack createSkillsItem(SkyblockPlayer player) {
         return new ItemBuilder(
                 ChatColor.GREEN + "Your Skills",
                 Material.DIAMOND_SWORD)
@@ -129,7 +129,7 @@ public class MenuCommand implements Command {
                 .addLore(
                         ChatColor.GRAY + "View your Skill progression and",
                         ChatColor.GRAY + "rewards.", "",
-                        ChatColor.GOLD + "14.8 Skill Avg. " + ChatColor.DARK_GRAY + "(non-cosmetic)",
+                        ChatColor.GOLD + "" + player.getSkillAverage() + " Skill Avg." + ChatColor.DARK_GRAY + " (non-cosmetic)",
                         "",
                         ChatColor.YELLOW + "Click to view!")
                 .toItemStack();

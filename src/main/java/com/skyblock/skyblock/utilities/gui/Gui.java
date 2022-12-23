@@ -4,6 +4,8 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
 import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
 import com.skyblock.skyblock.utilities.Util;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,9 +29,27 @@ import java.util.Objects;
 @Getter
 public class Gui implements Listener {
 
+    private static class AbstractCommandGui extends Gui {
+        private final String command;
+
+        @SuppressWarnings("unused")
+        public AbstractCommandGui(String command, Player opener) {
+            super("Command", 9, new HashMap<>());
+
+            this.command = command;
+        }
+    }
+
+    private static final class SkyblockMenuAbstractGui extends AbstractCommandGui {
+        public SkyblockMenuAbstractGui(Player opener) {
+            super("sb menu", opener);
+        }
+    }
+
     private static final HashMap<String, Class<? extends Gui>> BACK_BUTTONS = new HashMap<String, Class<? extends Gui>>() {{
         put("To Auction House", AuctionHouseGUI.class);
         put("To Bazaar", BazaarCategoryGui.class);
+        put("To SkyBlock Menu", SkyblockMenuAbstractGui.class);
     }};
     private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
 
@@ -57,6 +77,11 @@ public class Gui implements Listener {
         this.opened = new HashMap<>();
     }
     public void show(Player player) {
+        if (this instanceof AbstractCommandGui) {
+            player.performCommand(((AbstractCommandGui) this).command);
+            return;
+        }
+
         Inventory inventory = player.getServer().createInventory(null, slots, name);
 
         for (int i = 0; i < slots; i++) {

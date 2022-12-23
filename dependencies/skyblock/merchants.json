@@ -480,13 +480,13 @@
           "cost": 10000,
           "amount": 1,
           "command": "sb item SCAVENGER_TALISMAN.json 1"
-        } 	
+        }
       ],
       "location": {
-          "world": "world",
-          "x": -19.0,
-          "y": 70.0,
-          "z": -77.0
+        "world": "world",
+        "x": -19.0,
+        "y": 70.0,
+        "z": -77.0
       },
       "interaction": [
         "I've seen it all - every island from here to the edge of the world!",
@@ -542,13 +542,13 @@
           "cost": 250,
           "amount": 1,
           "command": "sb item WITHER_BOW.json 1"
-        }        	
+        }
       ],
       "location": {
-          "world": "world",
-          "x": -19.0,
-          "y": 70.0,
-          "z": -42.0
+        "world": "world",
+        "x": -19.0,
+        "y": 70.0,
+        "z": -42.0
       },
       "interaction": [
         "You'll need some strong weapons to survive out in the wild! Lucky for you, I've got some!",
@@ -562,10 +562,10 @@
       "skinSignature": "LmyRtvfjp3d+s97W51oEwXTTanW2mVMh2RJO25h8hhm7E52oIj8RbJxqA7liIzcCo0oNzrvp0W8HZ+Yxt0SbtlmsxAtFckWVfODYWkBv3seW2nJpZgybrzeEif2sevU8sfZGqqfS7Y81aB/Ah2dfR9/jkYUqwRb2tUSewKkGQtIxZOs/H7tn8KjyKhhaSF6qzcalSQW+TA2I+c70Tk4+QMcKfIHo5EiXoZ3P6X+KVnR6VoUHbn52DKEUafFAXKMl7gvv3e8WIEbsgrOtFblscsqvUmQgR4joB476av2qDKw9IXxcu0hzhiBJ4upBXc7+RS8xBlQOQwH1xC+mEW59RvwcjhJZ1Wuqj2dlU9ctzih4/jporEiPZhsI/zmw0u8ubFd07g5eq3YpDtctCFf6CN1OF+ifVzJq5INEIJbvlk8OB2/iMbq4im+SJwYc+NCbJJEk297xbx6nDdELYT6T0RNHM3KoYrQscDEbJQ/YTVlaadUOB4Hi/YGXIqhzrnBjEioaEuIlUt45cjX2mkRVer+DY/159UkJMjG/lqEYKlHJxNCZLzEDX7EQQjYwTGwdFMa0uJXx2VN4ExKKHqrE4Vj7WiTYvNKQ+puowPG1D3yjEkwa/wHENrmd838I2e/miPMaaZI8t0J4WfkRhOS/GzeC0w+/k2gQQUH3rW9z4e8=",
       "items": [],
       "location": {
-          "world": "world",
-          "x": -7.0,
-          "y": 70.0,
-          "z": -42.0
+        "world": "world",
+        "x": -7.0,
+        "y": 70.0,
+        "z": -42.0
       },
       "interaction": [
         "If you build, they will come!",
@@ -640,14 +640,16 @@
         }
       ],
       "location": {
-          "world": "world",
-          "x": 18.0,
-          "y": 71.0,
-          "z": -16.0
+        "world": "world",
+        "x": 18.0,
+        "y": 71.0,
+        "z": -16.0
       },
       "interaction": [
-        "I say something idk!",
-        "Click me again to open the Librarian Shop!"
+        "Greetings! Welcome to the Library!",
+        "The Library is your one-stop shop for all things enchanting. Enchant items, purchase Enchanted Books, and more!",
+        "You can enchant items by clicking any Enchantment Table. Enchanting costs experience levels - the more levels you spend, the better enchantments you will receive.",
+        "Use the Enchantment Table to enchant an item!"
       ]
     }
   ]
