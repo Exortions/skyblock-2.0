@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.potion.PotionType;
 
 public class PotionListener implements Listener {
 
@@ -35,6 +36,10 @@ public class PotionListener implements Listener {
         event.getPlayer().performCommand("sb effect " + type + " " + amplifier + " " + duration);
 
         event.getPlayer().setItemInHand(null);
+
+        for (PotionType t : PotionType.values()) {
+            event.getPlayer().removePotionEffect(t.getEffectType());
+        }
     }
 
 }
