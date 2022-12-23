@@ -13,6 +13,7 @@ import com.skyblock.skyblock.commands.misc.*;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
+import com.skyblock.skyblock.commands.potion.EffectCommand;
 import com.skyblock.skyblock.features.auction.AuctionBid;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
@@ -56,6 +57,8 @@ import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.objectives.QuestLineHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
+import com.skyblock.skyblock.features.potions.PotionEffectHandler;
+import com.skyblock.skyblock.features.potions.effects.StrengthEffect;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
@@ -101,6 +104,7 @@ public final class Skyblock extends JavaPlugin {
     private SpongeReplacerHandler spongeReplacerHandler;
     private EntitySpawnerHandler entitySpawnerHandler;
     private SkyblockLocationManager locationManager;
+    private PotionEffectHandler potionEffectHandler;
     private SkyblockItemHandler skyblockItemHandler;
     private SkyblockEntityHandler entityHandler;
     private LaunchPadHandler launchPadHandler;
@@ -144,11 +148,8 @@ public final class Skyblock extends JavaPlugin {
         this.registerTimeHandlers();
 
         this.registerReforges();
-
         this.registerEnchantments();
-
         this.registerLocations();
-
         this.registerMinions();
 
         this.initializeRecipes();
@@ -160,9 +161,9 @@ public final class Skyblock extends JavaPlugin {
         this.initializeBazaar();
         this.initializeSpongeReplacers();
         this.initializeFloatingCrystals();
+        this.initializePotions();
 
         this.registerMerchants();
-
         this.registerCollections();
         this.registerNpcs();
         this.registerGuis();
@@ -230,6 +231,17 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void initializePotions() {
+        this.sendMessage("Initializing potions...");
+        long start = System.currentTimeMillis();
+
+        this.potionEffectHandler = new PotionEffectHandler(
+                StrengthEffect.class
+        );
+
+        this.sendMessage("Successfully initialized potions [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeFloatingCrystals() {
@@ -696,7 +708,8 @@ public final class Skyblock extends JavaPlugin {
                 new SkillsCommand(),
                 new CreateCrystalCommand(),
                 new BazaarCommand(),
-                new RegenerateCommand()
+                new RegenerateCommand(),
+                new EffectCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
