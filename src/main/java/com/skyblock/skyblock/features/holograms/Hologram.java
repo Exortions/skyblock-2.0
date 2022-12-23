@@ -25,6 +25,7 @@ public class Hologram {
 
     public void spawn() {
         Location loc = location.clone();
+        loc.add(0.5, 2, 0.5);
         
         for (int i = 0; i < lines.size(); ++i) {
             String line = lines.get(i);
