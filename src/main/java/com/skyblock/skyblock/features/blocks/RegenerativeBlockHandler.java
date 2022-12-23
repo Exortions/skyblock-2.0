@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.minecraft.server.v1_8_R3.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -238,9 +239,7 @@ public class RegenerativeBlockHandler implements Listener {
         Skill.reward(Objects.requireNonNull(Skill.parseSkill("Farming")), xp, player);
         event.setCancelled(false);
 
-        for (ItemStack drop : block.getDrops(player.getBukkitPlayer().getItemInHand())) {
-            block.getWorld().dropItemNaturally(block.getLocation(), drop);
-        }
+        dropOverridenDrops(block, player);
     }
 
     public void breakOre(BlockBreakEvent event, Block block, SkyblockPlayer player, double xp) {
@@ -253,9 +252,6 @@ public class RegenerativeBlockHandler implements Listener {
 
         Material type = block.getType();
 
-        if (!player.hasTelekinesis()) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-        else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
-
         block.setType(next);
         new BukkitRunnable() {
             @Override
@@ -264,6 +260,18 @@ public class RegenerativeBlockHandler implements Listener {
                 block.setData(blocks.get(block.getLocation()).getData());
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), resetTimes.get(type) * 20);
+
+        dropOverridenDrops(block, player);
+    }
+
+    private void dropOverridenDrops(Block block, SkyblockPlayer player) {
+        if (hasOverridenDrops(block, player)) {
+            player.dropItems(Arrays.asList(getOverrideDrops(block, player)), block.getLocation());
+            return;
+        }
+
+        if (!player.hasTelekinesis()) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+        else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
     }
 
     public void breakNaturalBlock(BlockBreakEvent event, Block block, SkyblockPlayer player, String skill, double xp) {
@@ -275,8 +283,7 @@ public class RegenerativeBlockHandler implements Listener {
         event.setCancelled(false);
         this.regenerateBlock(block.getType(), block.getData(), block.getType(), player.getBrokenBlock().getData(), block, resetTimes.get(block.getType()));
 
-        if (!player.hasTelekinesis()) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-        else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
+        dropOverridenDrops(block, player);
     }
 
     public void regenerateBlock(Material id, byte data, Material newId, byte newData, Block block, int seconds) {
@@ -292,4 +299,11 @@ public class RegenerativeBlockHandler implements Listener {
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), 20L * seconds);
     }
 
+    private boolean hasOverridenDrops(Block block, SkyblockPlayer player) {
+        return ((HashMap<String, ItemStack[]>) player.getExtraData("dropOverrides")).containsKey(block.getType() + ":" + block.getData());
+    }
+
+    private ItemStack[] getOverrideDrops(Block block, SkyblockPlayer player) {
+        return ((HashMap<String, ItemStack[]>) player.getExtraData("dropOverrides")).get(block.getType() + ":" + block.getData());
+    }
 }

@@ -7,9 +7,7 @@ import com.skyblock.skyblock.features.items.armor.WiseDragonArmor;
 import com.skyblock.skyblock.features.items.armor.YoungDragonArmor;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
 import com.skyblock.skyblock.features.items.misc.MaddoxBatphone;
-import com.skyblock.skyblock.features.items.tools.PromisingAxe;
-import com.skyblock.skyblock.features.items.tools.PromisingPickaxe;
-import com.skyblock.skyblock.features.items.tools.PromisingShovel;
+import com.skyblock.skyblock.features.items.tools.*;
 import com.skyblock.skyblock.features.items.weapons.*;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -36,6 +34,9 @@ public class SkyblockItemHandler {
         registerItem(new PromisingAxe());
         registerItem(new PromisingPickaxe());
         registerItem(new PromisingShovel());
+        registerItem(new SweetAxe());
+        registerItem(new EfficientAxe());
+        registerItem(new RookieHoe());
 
         // Weapons
         registerItem(new AspectOfTheDragons(plugin));

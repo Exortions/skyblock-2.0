@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -29,6 +30,19 @@ public class ItemListener implements Listener {
     public ItemListener(Skyblock skyblock) {
         this.plugin = skyblock;
         this.handler = plugin.getSkyblockItemHandler();
+    }
+
+    @EventHandler
+    public void onBlock(BlockBreakEvent e) {
+        try {
+            ItemStack item = e.getPlayer().getItemInHand();
+
+            if (item == null) return;
+
+            if (handler.isRegistered(item)) {
+                handler.getRegistered(item).onBlockBreak(e);
+            }
+        } catch (UnsupportedOperationException ignored) { }
     }
 
     @EventHandler

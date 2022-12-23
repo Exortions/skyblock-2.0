@@ -382,7 +382,6 @@ public class ItemBase {
             }
 
             nbt.setString("description", description.substring(1, description.length() - 1));
-            Bukkit.getConsoleSender().sendMessage(description.substring(1, description.length() - 1));
         } else {
             nbt.setString("description", "");
         }
