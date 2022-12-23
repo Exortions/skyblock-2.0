@@ -663,6 +663,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new ReforgeListener());
         registerListener(new PetListener());
         registerListener(new MinionListener());
+        registerListener(new PotionListener());
 
         this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }

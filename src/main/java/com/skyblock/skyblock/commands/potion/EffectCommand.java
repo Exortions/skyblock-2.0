@@ -3,10 +3,12 @@ package com.skyblock.skyblock.commands.potion;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.potions.PotionEffect;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -28,6 +30,6 @@ public class EffectCommand implements Command {
 
         PotionEffect potionEffect = plugin.getPotionEffectHandler().effect(SkyblockPlayer.getPlayer(player), effect, amplifier, duration, false);
 
-        player.sendMessage(plugin.getPrefix() + "You have been given the effect " + potionEffect.getName() + " for " + duration / 20 + " seconds.");
+        player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "BUFF! " + ChatColor.RESET + ChatColor.WHITE + "You have gained " + PotionEffect.getMaxLevelsAndColors.get(effect).getThird() + potionEffect.getName() + " " + Util.toRoman(amplifier) + ChatColor.WHITE + "! Type /effects to view your active effects!");
     }
 }

@@ -866,4 +866,14 @@ public class SkyblockPlayer {
         }
     }
 
+    public boolean hasEffect(String name) {
+        for (PotionEffect effect : this.activeEffects) {
+            if (effect.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
