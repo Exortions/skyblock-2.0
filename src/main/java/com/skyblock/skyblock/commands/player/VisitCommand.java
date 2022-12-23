@@ -27,7 +27,7 @@ public class VisitCommand implements Command {
             return;
         }
 
-        OfflinePlayer target = Bukkit.getPlayer(args[0]);
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
         if (!target.hasPlayedBefore()) return;
 

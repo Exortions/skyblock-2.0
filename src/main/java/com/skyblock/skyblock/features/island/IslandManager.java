@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.UUID;
 
 @SuppressWarnings("deprecation")
 public class IslandManager {
@@ -23,6 +24,10 @@ public class IslandManager {
 
     public static World getIsland(Player player) {
         return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString());
+    }
+
+    public static World getIsland(UUID uuid) {
+        return Bukkit.getWorld(ISLAND_PREFIX + uuid.toString());
     }
 
     public static boolean deleteWorld(Player player) {
