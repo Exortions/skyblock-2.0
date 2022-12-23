@@ -31,3 +31,7 @@ commands:
     aliases:
       - sb bazaar
       - bz
+  visit:
+    description: Teleports you to a player's island
+    aliases:
+      - sb visit
