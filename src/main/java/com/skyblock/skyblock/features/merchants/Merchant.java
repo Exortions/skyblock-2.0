@@ -209,8 +209,12 @@ public class Merchant implements Listener {
             player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
         } else if (event.getClickedInventory() != null) {
             if (event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
-                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have sold " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + 0 + " coins" + ChatColor.GREEN + "!");
+                double price = Skyblock.getPlugin().getMerchantHandler().getPriceHandler().getPrice(item);
+
+                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have sold " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + (int) price + " coins" + ChatColor.GREEN + "!");
                 player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+                player.addCoins(price);
+
                 event.setCurrentItem(null);
             }
         }

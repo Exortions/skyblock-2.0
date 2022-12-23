@@ -198,6 +198,10 @@ public final class Skyblock extends JavaPlugin {
 
         int i = 0;
         for (Entity entity : removeables) {
+            while (!entity.getLocation().getChunk().isLoaded()) {
+                entity.getLocation().getChunk().load(true);
+            }
+
             entity.remove();
             i++;
         }

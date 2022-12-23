@@ -170,7 +170,12 @@ public class ItemHandler {
                 NBTItem nbtItem = new NBTItem(CraftItemStack.asBukkitCopy(nms));
                 nbtItem.setString("skyblockId", file.getName().replace(".json", "").toLowerCase());
 
-                register(file.getName(), nbtItem.getItem());
+                ItemStack clone = nbtItem.getItem().clone();
+                ItemMeta cloneMeta = clone.getItemMeta();
+                cloneMeta.spigot().setUnbreakable(true);
+                clone.setItemMeta(cloneMeta);
+
+                register(file.getName(), clone);
 
                 if (jsonObject.get("recipe") != null) {
                     JSONObject recipe = (JSONObject) jsonObject.get("recipe");

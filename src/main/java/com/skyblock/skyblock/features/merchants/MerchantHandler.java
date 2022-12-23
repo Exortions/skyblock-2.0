@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MerchantHandler {
+    private final MerchantSellPriceHandler merchantSellPriceHandler;
 
     private final HashMap<String, Merchant> merchants;
     private final Skyblock skyblock;
@@ -30,6 +31,8 @@ public class MerchantHandler {
     public MerchantHandler(Skyblock skyblock) {
         this.merchants = new HashMap<>();
         this.skyblock = skyblock;
+
+        this.merchantSellPriceHandler = new MerchantSellPriceHandler();
 
         this.registerMerchants();
     }
@@ -151,4 +154,5 @@ public class MerchantHandler {
         return this.merchants;
     }
 
+    public MerchantSellPriceHandler getPriceHandler() { return merchantSellPriceHandler; }
 }
