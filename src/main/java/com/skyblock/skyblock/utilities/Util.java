@@ -648,7 +648,28 @@ public class Util {
         return nmsStack.getItem().a(nmsStack);
     }
     public ItemStack toSkyblockItem(ItemStack item) {
-        return new ItemBase(item, item.getType(), ChatColor.WHITE + getItemName(item), null, item.getAmount(), Collections.emptyList(), new ArrayList<>(), false, false, "", Collections.emptyList(), "", 0, "", "COMMON", getItemName(item), 0, 0, 0, 0, 0, 0, 0, 0, 0, false).getStack();
+        Skyblock plugin = Skyblock.getPlugin();
+
+        ItemStack neu = plugin.getItemHandler().getItem(item.getType().name() + ".json");
+
+        if (item.getDurability() != 0) neu = plugin.getItemHandler().getItem(item.getType().name() + "-" + item.getDurability() + ".json");
+
+        if (neu != null) return neu;
+
+        ItemMeta meta = item.getItemMeta();
+
+        if (meta.hasDisplayName()) return item;
+        if (meta.hasLore()) return item;
+
+        List<String> lore = new ArrayList<>();
+
+        meta.setDisplayName(ChatColor.WHITE + getItemName(item));
+        lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD + "COMMON");
+        meta.setLore(lore);
+
+        item.setItemMeta(meta);
+
+        return item;
     }
 
     public List<ItemStack> createCoins(int amount) {

@@ -173,6 +173,15 @@ public class ItemHandler {
                 ItemStack clone = nbtItem.getItem().clone();
                 ItemMeta cloneMeta = clone.getItemMeta();
                 cloneMeta.spigot().setUnbreakable(true);
+
+                List<String> clonedLore = cloneMeta.getLore();
+
+                if (clonedLore.contains(ChatColor.YELLOW + "Click to view recipe!")) {
+                    clonedLore.remove(clonedLore.size() - 1);
+                    clonedLore.remove(clonedLore.size() - 1);
+                }
+
+                cloneMeta.setLore(clonedLore);
                 clone.setItemMeta(cloneMeta);
 
                 register(file.getName(), clone);
@@ -412,7 +421,13 @@ public class ItemHandler {
                         ability.add(lore.get(j));
                     }
 
-                    nbt.setString("abilityDescription", ability.toString());
+                    StringBuilder abilityDescription = new StringBuilder();
+
+                    for (String s : ability) {
+                        abilityDescription.append("; ").append(s);
+                    }
+
+                    nbt.setString("abilityDescription", abilityDescription.substring(1, abilityDescription.length() - 1));
                     finishedAbilityLore = true;
                     continue;
                 } else if (!line.isEmpty()) {
@@ -430,7 +445,13 @@ public class ItemHandler {
                     }
 
                     if (desc.size() > 1) {
-                        nbt.setString("description", desc.toString());
+                        StringBuilder description = new StringBuilder();
+
+                        for (String s : desc) {
+                            description.append("; ").append(s);
+                        }
+
+                        nbt.setString("description", description.substring(1, description.length() - 1));
                     }
                 }
 

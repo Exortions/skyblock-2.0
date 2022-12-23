@@ -130,13 +130,18 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
         if (!event.getClickedInventory().equals(this)) return;
         if (!Util.notNull(event.getCurrentItem())) return;
 
+        event.setCancelled(true);
+
         if (event.getCurrentItem().getItemMeta().hasDisplayName() && event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) {
             ((Player) event.getWhoClicked()).performCommand("sb menu");
 
             return;
         }
 
-        if (slots.contains(event.getSlot())) return;
+        if (slots.contains(event.getSlot())) {
+            event.setCancelled(false);
+            return;
+        }
 
         if (event.getSlot() != 23 || event.getCurrentItem().getType().equals(Material.BARRIER)) return;
 

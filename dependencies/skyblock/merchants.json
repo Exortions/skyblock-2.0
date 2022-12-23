@@ -377,25 +377,25 @@
           "id": "DIAMOND_HELMET.json",
           "cost": 350,
           "amount": 1,
-          "command": "sb item IRON_HELMET.json 1"
+          "command": "sb item DIAMOND_HELMET.json 1"
         },
         {
           "id": "DIAMOND_CHESTPLATE.json",
           "cost": 440,
           "amount": 1,
-          "command": "sb item IRON_CHESTPLATE.json 1"
+          "command": "sb item DIAMOND_CHESTPLATE.json 1"
         },
         {
           "id": "DIAMOND_LEGGINGS.json",
           "cost": 400,
           "amount": 1,
-          "command": "sb item IRON_LEGGINGS.json 1"
+          "command": "sb item DIAMOND_LEGGINGS.json 1"
         },
         {
           "id": "DIAMOND_BOOTS.json",
           "cost": 320,
           "amount": 1,
-          "command": "sb item IRON_BOOTS.json 1"
+          "command": "sb item DIAMOND_BOOTS.json 1"
         }
       ],
       "location": {
