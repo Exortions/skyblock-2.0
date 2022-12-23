@@ -4,6 +4,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.utilities.command.TrueAlias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -18,7 +19,7 @@ import java.util.Arrays;
 @RequiresPlayer
 @Usage(usage = "/sb visit <player>")
 @Description(description = "Teleports you to a player's island")
-public class VisitCommand implements Command {
+public class VisitCommand implements Command, TrueAlias<VisitCommand> {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
