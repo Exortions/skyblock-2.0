@@ -81,7 +81,7 @@ public class HubScoreboard extends Scoreboard {
         }
 
         addLine(2, ChatColor.WHITE + "  ");
-        addLine(1, ChatColor.YELLOW + "www.hypixel.net");
+        addLine(1, ChatColor.YELLOW + "original: hypixel.net");
 
         animation++;
     }
