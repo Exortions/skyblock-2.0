@@ -24,6 +24,8 @@ import com.skyblock.skyblock.features.blocks.RegenerativeBlockHandler;
 import com.skyblock.skyblock.features.blocks.SpongeBlock;
 import com.skyblock.skyblock.features.blocks.SpongeReplacer;
 import com.skyblock.skyblock.features.blocks.SpongeReplacerHandler;
+import com.skyblock.skyblock.features.blocks.crops.FloatingCrystal;
+import com.skyblock.skyblock.features.blocks.crops.FloatingCrystalHandler;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
@@ -94,6 +96,7 @@ public final class Skyblock extends JavaPlugin {
     }
 
     private RegenerativeBlockHandler regenerativeBlockHandler;
+    private FloatingCrystalHandler floatingCrystalHandler;
     private SkyblockEnchantmentHandler enchantmentHandler;
     private SpongeReplacerHandler spongeReplacerHandler;
     private EntitySpawnerHandler entitySpawnerHandler;
@@ -156,6 +159,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeSignGui();
         this.initializeBazaar();
         this.initializeSpongeReplacers();
+        this.initializeFloatingCrystals();
 
         this.registerMerchants();
 
@@ -192,7 +196,13 @@ public final class Skyblock extends JavaPlugin {
 
         this.fairySoulHandler.killAllSouls();
 
-        this.removeables.forEach(Entity::remove);
+        int i = 0;
+        for (Entity entity : removeables) {
+            entity.remove();
+            i++;
+        }
+
+        sendMessage(String.format("Removed %s Entities", i));
 
         this.spongeReplacerHandler.endGeneration();
 
@@ -216,6 +226,10 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void initializeFloatingCrystals() {
+        this.floatingCrystalHandler = new FloatingCrystalHandler();
     }
 
     public void registerHolograms() {
@@ -676,6 +690,7 @@ public final class Skyblock extends JavaPlugin {
                 new AuctionCommand(),
                 new CreateSpawnerCommand(),
                 new SkillsCommand(),
+                new CreateCrystalCommand(),
                 new BazaarCommand(),
                 new RegenerateCommand()
         );

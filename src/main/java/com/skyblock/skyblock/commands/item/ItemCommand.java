@@ -42,6 +42,9 @@ public class ItemCommand implements Command {
             return;
         }
 
-        player.getInventory().addItem(Util.stripMerchantLore(stack));
+        ItemStack clone = stack.clone();
+        clone.setAmount(amount);
+
+        player.getInventory().addItem(Util.stripMerchantLore(clone));
     }
 }

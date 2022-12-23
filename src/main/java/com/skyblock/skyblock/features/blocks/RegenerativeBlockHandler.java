@@ -51,6 +51,7 @@ public class RegenerativeBlockHandler implements Listener {
     }};
 
     private static final String[] mines = new String[]{"Coal Mine", "Gold Mine", "Deep Caverns"};
+    private static final String[] farms = new String[]{"Farm", "The Barn", "Mushroom Desert"};
     private static final String[] forests = new String[]{"Forest", "The Park"};
     private static final HashMap<Material, String[]> locations = new HashMap<Material, String[]>() {{
         put(Material.LOG, forests);
@@ -75,6 +76,11 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.GLOWSTONE, new String[]{"Blazing Fortress"});
         put(Material.OBSIDIAN, new String[]{"The End"});
         put(Material.ENDER_STONE, new String[]{"The End"});
+        put(Material.CROPS, farms);
+        put(Material.CARROT, farms);
+        put(Material.POTATO, farms);
+        put(Material.PUMPKIN, farms);
+        put(Material.MELON_BLOCK, farms);
     }};
 
     @Getter
@@ -214,8 +220,26 @@ public class RegenerativeBlockHandler implements Listener {
             case ENDER_STONE:
                 this.breakOre(event, block, player, this.getXpFromOre(block.getType()), Material.BEDROCK);
                 break;
+            case CROPS:
+            case CARROT:
+            case MELON_BLOCK:
+            case POTATO:
+                this.breakCrop(event, block, player, 4);
+                break;
+            case PUMPKIN:
+                this.breakCrop(event, block, player, 5);
+                break;
             default:
                 break;
+        }
+    }
+
+    public void breakCrop(BlockBreakEvent event, Block block, SkyblockPlayer player, double xp) {
+        Skill.reward(Objects.requireNonNull(Skill.parseSkill("Farming")), xp, player);
+        event.setCancelled(false);
+
+        for (ItemStack drop : block.getDrops(player.getBukkitPlayer().getItemInHand())) {
+            block.getWorld().dropItemNaturally(block.getLocation(), drop);
         }
     }
 

@@ -24,6 +24,7 @@ public class DependencyUpdater {
         add("collections" + File.separator + "mining.json");
         add("fairy_souls.json");
         add("holograms.json");
+        add("crystals.yml");
         add("launchpads.yml");
         add("locations.yml");
         add("merchants.json");

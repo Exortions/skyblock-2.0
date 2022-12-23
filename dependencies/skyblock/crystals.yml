@@ -1,0 +1,120 @@
+bf7a5cd9-d67d-4622-81f3-036eceec2041:
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 63.77419409555803
+    y: 75.23170401374456
+    z: -133.47850261998272
+    pitch: 88.217545
+    yaw: -168.52486
+34d3d6bb-871c-4206-ba6c-f442c9e5ff72:
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 29.695139316900246
+    y: 75.37449090816493
+    z: -147.53471872338673
+    pitch: 80.64806
+    yaw: 103.6168
+17829ba6-5af0-4310-8899-ae6de5d36a92:
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 72.71169339372366
+    y: 76.1144132415668
+    z: -159.62403544013594
+    pitch: 46.585052
+    yaw: 251.0218
+ffd4f175-f39b-4373-af04-591900a55914:
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 60.04443942314904
+    y: 76.1144132415668
+    z: -183.12607745791482
+    pitch: 74.13614
+    yaw: 133.771
+358539ff-4a2d-4a63-b42a-44788634cd46:
+  range: 10
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 24.811341026894752
+    y: 76.1144132415668
+    z: -179.12223780946033
+    pitch: 78.846954
+    yaw: 71.241425
+e05cd117-3835-48fc-80fa-58653915dbba:
+  range: 30
+  durability: 0
+  material: CROPS
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 123.53719703469204
+    y: 80.466330049398
+    z: -214.04819399800738
+    pitch: 11.716687
+    yaw: 228.72266
+6ebf7043-3d2b-4efa-ae47-5a8bc51719b1:
+  range: 50
+  durability: 0
+  material: POTATO
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 175.11272724445905
+    y: 96.76908479694458
+    z: -269.34046443994464
+    pitch: 59.50956
+    yaw: 216.6836
+360de73b-ee89-4d89-b77d-6617b91823ff:
+  range: 50
+  durability: 0
+  material: CARROT
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 134.18873079672312
+    y: 93.03651100054864
+    z: -276.6982345131316
+    pitch: 34.02273
+    yaw: 204.44373
+75a804b1-4f8f-4863-ab87-5bf4f279ee9c:
+  range: 50
+  durability: 0
+  material: PUMPKIN
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 180.0681577857484
+    y: 87.84219284986911
+    z: -221.31883457284985
+    pitch: 54.44722
+    yaw: 67.47043
+1ed38024-c91a-4522-b6b7-3265a9120570:
+  range: 50
+  durability: 0
+  material: MELON_BLOCK
+  location:
+    ==: org.bukkit.Location
+    world: world
+    x: 180.3694809694228
+    y: 88.11725673273766
+    z: -221.1277095187082
+    pitch: 81.584915
+    yaw: 128.51003
