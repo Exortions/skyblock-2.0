@@ -152,6 +152,7 @@ public final class Skyblock extends JavaPlugin {
         this.registerLocations();
         this.registerMinions();
 
+        this.initializePotions();
         this.initializeRecipes();
         this.initializeGameRules();
         this.initializeNEUItems();
@@ -161,7 +162,6 @@ public final class Skyblock extends JavaPlugin {
         this.initializeBazaar();
         this.initializeSpongeReplacers();
         this.initializeFloatingCrystals();
-        this.initializePotions();
 
         this.registerMerchants();
         this.registerCollections();

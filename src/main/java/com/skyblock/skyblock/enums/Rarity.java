@@ -44,4 +44,8 @@ public enum Rarity {
         return WordUtils.capitalize(name().toLowerCase().replace("_", " "));
     }
 
+    public String coloredString() {
+        return this.getColor() + "" + ChatColor.BOLD + this.toString().toUpperCase();
+    }
+
 }

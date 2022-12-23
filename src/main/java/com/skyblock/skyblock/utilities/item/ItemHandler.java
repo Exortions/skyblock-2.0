@@ -9,6 +9,7 @@ import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.pets.PetType;
+import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
@@ -18,10 +19,14 @@ import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -41,6 +46,10 @@ public class ItemHandler {
     private final HashMap<String, ItemStack> items = new HashMap<>();
     private final HashMap<ItemStack, String> reversed = new HashMap<>();
     private final Skyblock skyblock;
+
+    public static final List<String> POTIONS = new ArrayList<String>() {{
+        add("strength");
+    }};
 
     public static final List<String> ITEM_EXCLUSIONS = new ArrayList<String>() {{
         add("fancy_sword.json");
@@ -299,6 +308,46 @@ public class ItemHandler {
             if (r.equals(Rarity.LEGENDARY)) break;
         }
 
+        Function<Integer, Rarity> getRarityByPotionLevel = (level) -> {
+            if (level == 1 || level == 2) return Rarity.COMMON;
+            else if (level == 3 || level == 4) return Rarity.UNCOMMON;
+            else if (level == 5 || level == 6) return Rarity.RARE;
+            else return Rarity.EPIC;
+        };
+
+        for (String pot : POTIONS) {
+            for (int i = 0; i < PotionEffect.getMaxLevelsAndColors.get(pot).getFirst(); i++) {
+                int level = i + 1;
+
+                ItemStack stack = new Potion(PotionEffect.getMaxLevelsAndColors.get(pot).getSecond()).toItemStack(1);
+                PotionMeta meta = (PotionMeta) stack.getItemMeta();
+
+                Rarity rarity = getRarityByPotionLevel.apply(level);
+
+                meta.setDisplayName(rarity.getColor() + "" + WordUtils.capitalize(pot.replace("_", " ")) + " " + Util.toRoman(level) + " Potion");
+                meta.setLore(
+                        Arrays.asList(Util.buildLore(
+                                "\n" + PotionEffect.getMaxLevelsAndColors.get(pot).getThird() + "" + WordUtils.capitalize(pot.replace("_", " ")) + " " + Util.toRoman(level) + "&f (" + Util.asTime(12000) + ")\n" +
+                                        Skyblock.getPlugin().getPotionEffectHandler().createEffect(pot, null, level, 12000, true).getDescription() + "\n\n" +
+                                        rarity.coloredString(), '7'
+                        ))
+                );
+
+                meta.clearCustomEffects();
+                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ATTRIBUTES);
+
+                stack.setItemMeta(meta);
+
+                NBTItem nbtItem = new NBTItem(stack);
+                nbtItem.setBoolean("potion.is_potion", true);
+                nbtItem.setString("potion.type", pot);
+                nbtItem.setInteger("potion.amplifier", level);
+                nbtItem.setInteger("potion.duration", 12000);
+
+                items.put(pot + "_" + level, nbtItem.getItem());
+            }
+        }
+
         SkyblockEnchantmentHandler enchantmentHandler = skyblock.getEnchantmentHandler();
 
         for (SkyblockEnchantment enchant : enchantmentHandler.getEnchantments()) {
@@ -314,6 +363,10 @@ public class ItemHandler {
     }
 
     public void register(String id, ItemStack item) {
+        for (String potion : POTIONS) {
+            if (item.getItemMeta().getDisplayName().toLowerCase().contains(potion) && item.getType().equals(Material.POTION)) return;
+        }
+
         items.put(id, parseLore(item));
         reversed.put(parseLore(item), id.replace(".json", ""));
     }

@@ -740,4 +740,19 @@ public class Util {
         return dictionary.get(index);
     }
 
+    public String asTime(int ticks) {
+        String time = "";
+
+        int hours = ticks / 1000;
+        int minutes = (ticks - (hours * 1000)) / 50;
+        int seconds = (ticks - (hours * 1000) - (minutes * 50)) / 5;
+
+        if (hours > 0) time += hours + ":";
+        if (minutes > 0) time += minutes + ":";
+        if (seconds > 0) time += seconds;
+        else time += "00";
+
+        return time;
+    }
+
 }

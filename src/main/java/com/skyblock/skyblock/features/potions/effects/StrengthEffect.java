@@ -9,15 +9,16 @@ import java.util.function.Function;
 
 public class StrengthEffect extends PotionEffect {
 
-    private final Function<Integer, Double> getStrengthBonus = (level) -> Util.createFetchableDictionary(level - 1, 5, 12.5, 20, 30, 40, 50, 60, 75);
+    private static final Function<Integer, Double> getStrengthBonus = (level) -> Util.createFetchableDictionary(level - 1, 5, 12.5, 20, 30, 40, 50, 60, 75);
 
-    public StrengthEffect(SkyblockPlayer player, String name, int amplifier, double duration, boolean alreadyStarted) {
-        super(player, "Strength", amplifier, duration, alreadyStarted);
+    public StrengthEffect(SkyblockPlayer player, String ignoredName, int amplifier, double duration, boolean alreadyStarted) {
+        super(player, "Strength", amplifier, duration, alreadyStarted,
+                "Increases &c" + SkyblockStat.STRENGTH.getIcon() + " Strength &7by\n&a" + getStrengthBonus.apply(amplifier) + "&7.");
     }
 
     @Override
     public void start() {
-        this.getPlayer().addStat(SkyblockStat.STRENGTH, this.getStrengthBonus.apply(this.getAmplifier()));
+        this.getPlayer().addStat(SkyblockStat.STRENGTH, getStrengthBonus.apply(this.getAmplifier()));
     }
 
     @Override
@@ -25,6 +26,6 @@ public class StrengthEffect extends PotionEffect {
 
     @Override
     public void end() {
-        this.getPlayer().subtractStat(SkyblockStat.STRENGTH, this.getStrengthBonus.apply(this.getAmplifier()));
+        this.getPlayer().subtractStat(SkyblockStat.STRENGTH, getStrengthBonus.apply(this.getAmplifier()));
     }
 }
