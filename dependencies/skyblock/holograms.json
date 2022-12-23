@@ -1,6 +1,23 @@
 {
   "holograms": {
-    "-2.5,72,-75.5": "&bTravel to:",
-    "-2.5,71.75,-75.5": "&aYour Island"
+    "-2.5,72,-75.5": "&bTravel to:\n&aYour Island",
+    "79,72,-185": "&bTravel to:\n&aThe Farming Islands",
+    "111,70,-203": "&bTravel to:\n&aHub Island",
+    "142,92,-312": "&bTravel to:\n&aDesert Settlement",
+    "150,76,-359": "&bTravel to:\n&aThe Barn",
+    "-10,65,-232": "&bTravel to:\n&aGold Mine",
+    "-5,74,-269": "&bTravel to:\n&aHub Island",
+    "-7.5,68,-396.5": "&bTravel to:\n&aDeep Caverns",
+    "3.5,157,88.5": "&bTravel to:\n&aHub Island",
+    "-225,73,-16": "&bTravel to:\n&aThe Park",
+    "-273,82,-14": "&bTravel to:\n&aHub Island",
+    "-328.5,82,-16": "&a&lJUMP!",
+    "-354,89,-13,5": "&a&lJUMP!",
+    "-372.5,103,-20": "&a&lJUMP!",
+    "-407,110,-29.5": "&a&lJUMP!",
+    "-163,73,-162": "&bTravel to:\n&aSpider's Den",
+    "-198,83,-229": "&bTravel to:\n&aHub Island",
+    "-368,89,-268.5": "&b:Travel to:\n&aThe End",
+    "-254.5,132,-294": "&bTravel to:\n&aNether Fortress"
   }
 }
