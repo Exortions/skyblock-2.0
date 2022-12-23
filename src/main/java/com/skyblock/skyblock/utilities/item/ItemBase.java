@@ -96,7 +96,7 @@ public class ItemBase {
         String enchantmentsStr = nbt.getString("enchantments");
 
         if (enchantmentsStr.length() > 0) {
-            String[] enchantmentsList = enchantmentsStr.substring(1, enchantmentsStr.length() - 1).split("; ");
+            String[] enchantmentsList = enchantmentsStr.substring(1, enchantmentsStr.length() - 1).split(", ");
             try {
                 for (String enchantment : enchantmentsList)
                     this.enchantments.add(new ItemEnchantment(Skyblock.getPlugin(Skyblock.class).getEnchantmentHandler().getEnchantment(enchantment.split(";")[1]), Integer.parseInt(enchantment.split(";")[0])));
@@ -259,7 +259,7 @@ public class ItemBase {
         Enchantments
          */
 
-        if (this.enchantments.size() > 1) {
+        if (this.enchantments.size() >= 1) {
             if (this.enchantments.size() <= 3) {
                 for (ItemEnchantment enchantment : this.enchantments) {
                     lore.add(ChatColor.BLUE + enchantment.getBaseEnchantment().getDisplayName() + " " + Util.toRoman(enchantment.getLevel()));
@@ -374,7 +374,18 @@ public class ItemBase {
         nbt.setString("reforgeType", reforge.toString());
         nbt.setString("item", item.toString());
 
-        if (description != null) nbt.setString("description", description.toString());
+        if (description != null && description.size() > 1) {
+            StringBuilder description = new StringBuilder();
+
+            for (String s : getDescription()) {
+                description.append("; ").append(s);
+            }
+
+            nbt.setString("description", description.substring(1, description.length() - 1));
+            Bukkit.getConsoleSender().sendMessage(description.substring(1, description.length() - 1));
+        } else {
+            nbt.setString("description", "");
+        }
 
         nbt.setBoolean("reforgeable", reforgeable);
         List<String> enchantmentNbt = new ArrayList<>();
@@ -388,7 +399,17 @@ public class ItemBase {
         nbt.setString("abilityType", abilityType);
         nbt.setString("abilityCooldown", abilityCooldown);
         nbt.setInteger("abilityCost", abilityCost);
-        nbt.setString("abilityDescription", abilityDescription.toString());
+
+        if (getAbilityDescription() != null && getAbilityDescription().size() > 1) {
+            StringBuilder abilityDescription = new StringBuilder();
+
+            for (String s : getAbilityDescription()) {
+                abilityDescription.append("; ").append(s);
+            }
+
+            nbt.setString("abilityDescription", abilityDescription.substring(1, abilityDescription.length() - 1));
+        }
+
         nbt.setInteger("damage", damage);
         nbt.setInteger("strength", strength + rStrength);
         nbt.setInteger("critChance", critChance + rCritChance);
