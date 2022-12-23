@@ -123,7 +123,7 @@ public class Merchant implements Listener {
         Util.fillBorder(inventory);
 
         for (MerchantItem item : this.items) {
-            ItemStack stack = item.getItem();
+            ItemStack stack = item.getItem().clone();
 
             if (item.isTrade()) continue; // TODO: Implement trades
 

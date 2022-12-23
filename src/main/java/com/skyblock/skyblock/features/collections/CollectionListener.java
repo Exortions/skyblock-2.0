@@ -1,9 +1,11 @@
 package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,25 +22,41 @@ public class CollectionListener implements Listener {
     public void onItemCollect(PlayerPickupItemEvent event) {
         if (event.getItem() == null || event.getItem().getItemStack().getType().equals(Material.AIR)) return;
 
+        ItemStack item = event.getItem().getItemStack();
+
         for (Collection collection : Collection.getCollections()) {
             if (collection.getMaterial().equals(event.getItem().getItemStack().getType())) {
                 boolean success = collection.collect(event.getPlayer(), event.getItem().getItemStack().getAmount(), event.getItem().getItemStack());
 
                 if (!success) continue;
 
-                ItemStack item = event.getItem().getItemStack();
+                ItemStack clone = Util.toSkyblockItem(item).clone();
+                clone.setAmount(item.getAmount());
 
-                NBTItem nbt = new NBTItem(item);
+                NBTItem nbt = new NBTItem(clone);
 
                 nbt.setBoolean("collected", true);
 
                 event.setCancelled(true);
 
-                event.getPlayer().getInventory().addItem(nbt.getItem());
+                event.getPlayer().getInventory().addItem(clone);
+                event.getPlayer().playSound(event.getItem().getLocation(), Sound.ITEM_PICKUP, 0.1f, 1);
 
                 event.getItem().remove();
+
+                return;
             }
         }
+
+        ItemStack clone = Util.toSkyblockItem(item).clone();
+        clone.setAmount(item.getAmount());
+
+        event.setCancelled(true);
+
+        event.getPlayer().getInventory().addItem(clone);
+        event.getPlayer().playSound(event.getItem().getLocation(), Sound.ITEM_PICKUP, 0.1f, 1);
+
+        event.getItem().remove();
     }
 
     @EventHandler

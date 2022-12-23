@@ -59,6 +59,8 @@ public class MerchantSellPriceHandler {
 
         String name = StringUtils.capitalize(ChatColor.stripColor(meta.getDisplayName()));
 
-        return prices.get(name);
+        if (prices.containsKey(name)) return item.getAmount() * prices.get(name);
+
+        return item.getAmount();
     }
 }

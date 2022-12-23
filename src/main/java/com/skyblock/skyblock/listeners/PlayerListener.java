@@ -26,6 +26,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -403,7 +405,7 @@ public class PlayerListener implements Listener {
         e.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPickup(PlayerPickupItemEvent e) {
         ItemStack item = e.getItem().getItemStack();
 
@@ -429,12 +431,17 @@ public class PlayerListener implements Listener {
                 } catch (NumberFormatException ignored) { }
             }
         }
+    }
 
-        try {
-            new ItemBase(item);
-        } catch (Exception ex) {
-            e.getItem().setItemStack(Util.toSkyblockItem(item));
-        }
+    @EventHandler
+    public void onCreative(InventoryCreativeEvent e) {
+        ItemStack item = e.getCursor();
+
+        if (item == null) return;
+
+        ItemStack clone = Util.toSkyblockItem(item).clone();
+        clone.setAmount(item.getAmount());
+        if (e.getCursor() != null) e.setCursor(clone);
     }
 
     @EventHandler

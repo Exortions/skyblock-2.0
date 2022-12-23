@@ -173,6 +173,15 @@ public class ItemHandler {
                 ItemStack clone = nbtItem.getItem().clone();
                 ItemMeta cloneMeta = clone.getItemMeta();
                 cloneMeta.spigot().setUnbreakable(true);
+
+                List<String> clonedLore = cloneMeta.getLore();
+
+                if (clonedLore.contains(ChatColor.YELLOW + "Click to view recipe!")) {
+                    clonedLore.remove(clonedLore.size() - 1);
+                    clonedLore.remove(clonedLore.size() - 1);
+                }
+
+                cloneMeta.setLore(clonedLore);
                 clone.setItemMeta(cloneMeta);
 
                 register(file.getName(), clone);
