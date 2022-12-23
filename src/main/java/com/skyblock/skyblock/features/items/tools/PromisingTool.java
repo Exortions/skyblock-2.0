@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.items.tools;
 
 import com.skyblock.skyblock.features.items.ListeningItem;
+import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -11,13 +12,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class PromisingTool extends ListeningItem {
+public class PromisingTool extends SkyblockItem {
     public PromisingTool(ItemStack baseItem, String internalName) {
         super(baseItem, internalName);
     }
 
-    @EventHandler
-    public void onBreak(BlockBreakEvent e) {
+    @Override
+    public void onBlockBreak(BlockBreakEvent e) {
         ItemStack item = e.getPlayer().getItemInHand();
 
         if (item == null) return;

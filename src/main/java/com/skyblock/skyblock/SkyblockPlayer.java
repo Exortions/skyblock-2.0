@@ -116,6 +116,7 @@ public class SkyblockPlayer {
         this.extraData.put("endStoneSwordDamage", 0);
 
         this.extraData.put("last_location", null);
+        this.extraData.put("dropOverrides", new HashMap<>());
 
         initConfig();
     }

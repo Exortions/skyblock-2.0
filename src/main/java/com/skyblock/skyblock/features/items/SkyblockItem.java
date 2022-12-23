@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import lombok.Getter;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -46,6 +47,10 @@ public abstract class SkyblockItem {
 
     public void onArmorUnEquip(PlayerArmorUnequipEvent event) {
         throw new UnsupportedOperationException("This item does not support unequipping armor");
+    }
+
+    public void onBlockBreak(BlockBreakEvent event) {
+        throw new UnsupportedOperationException("This item does not support breaking blocks");
     }
 
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
