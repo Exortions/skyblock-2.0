@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -95,7 +96,7 @@ public class ItemBase {
         String enchantmentsStr = nbt.getString("enchantments");
 
         if (enchantmentsStr.length() > 0) {
-            String[] enchantmentsList = enchantmentsStr.substring(1, enchantmentsStr.length() - 1).split(", ");
+            String[] enchantmentsList = enchantmentsStr.substring(1, enchantmentsStr.length() - 1).split("; ");
             try {
                 for (String enchantment : enchantmentsList)
                     this.enchantments.add(new ItemEnchantment(Skyblock.getPlugin(Skyblock.class).getEnchantmentHandler().getEnchantment(enchantment.split(";")[1]), Integer.parseInt(enchantment.split(";")[0])));
@@ -105,7 +106,7 @@ public class ItemBase {
         }
         this.enchantGlint = nbt.getBoolean("enchantGlint");
         String abilityDescriptionStr = nbt.getString("abilityDescription");
-        this.abilityDescription = Arrays.asList(abilityDescriptionStr.substring(1, abilityDescriptionStr.length() - 1).split(", "));
+        this.abilityDescription = Arrays.asList(abilityDescriptionStr.substring(1, abilityDescriptionStr.length() - 1).split("; "));
         this.abilityCooldown = nbt.getString("abilityCooldown");
         this.abilityName = nbt.getString("abilityName");
         this.abilityType = nbt.getString("abilityType");
@@ -124,7 +125,7 @@ public class ItemBase {
         this.item = this.getItem(rarity);
 
         String descriptionStr = nbt.getString("description");
-        String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split(", ");
+        String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split("; ");
         String[] descriptionArrClone = Arrays.copyOf(descriptionArr, descriptionArr.length + 1);
         descriptionArrClone[descriptionArrClone.length - 1] = "";
         this.description = Arrays.asList(descriptionArrClone);
