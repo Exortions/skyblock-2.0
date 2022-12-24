@@ -40,7 +40,7 @@
       "material": "DIAMOND",
       "data": 0,
       "rewards": [
-        "50;&9Diamond Minion &7Recipe",
+        "50;&9Diamond Minion &7Recipes",
         "100;&fEnchanted Book (Execute IV)&7 Recipe",
         "250;&fPortal to Deep Caverns &7Recipe",
         "1000;&aEnchanted Diamond &7Recipe",
@@ -56,7 +56,7 @@
       "material": "EMERALD",
       "data": 0,
       "rewards": [
-        "&9Emerald Minion &7Recipe",
+        "&9Emerald Minion &7Recipes",
         "100;&fTalisman of Coins &7Recipe",
         "250;&fMagnetic Talisman &7Recipe",
         "1000;&aEnchanted Emerald &7Recipe",
@@ -72,7 +72,7 @@
       "material": "END_STONE",
       "data": 0,
       "rewards": [
-        "50;&9End Stone Minion &7Recipe",
+        "50;&9End Stone Minion &7Recipes",
         "100;&fEnd Biome Stick &7Recipe",
         "250;&aPortal to The End &7Recipe",
         "1000;&aEnchanted End Stone &7Recipe",
@@ -89,7 +89,7 @@
       "material": "GLOWSTONE_DUST",
       "data": 0,
       "rewards": [
-        "&9Glowstone Minion &7Recipe",
+        "&9Glowstone Minion &7Recipes",
         "100;&fPortal to Blazing Fortress &7Recipe",
         "250;&8+&375 Mining Experience",
         "1000;&aEnchanted Glowstone Dust &7Recipe",
@@ -104,7 +104,7 @@
       "material": "GOLD_INGOT",
       "data": 0,
       "rewards": [
-        "&9Gold Minion &7Recipe",
+        "&9Gold Minion &7Recipes",
         "100;&aCleaver &7Recipe",
         "250;&fEnchanted Book (Looting II) &7Recipe",
         "500;&fPortal to the Gold Mine &7Recipe",
@@ -120,7 +120,7 @@
       "material": "GRAVEL",
       "data": 0,
       "rewards": [
-        "&9Gravel Minion &7Recipe",
+        "&9Gravel Minion &7Recipes",
         "100;&fFlint Shovel &7Recipe",
         "250;&fPortal to Spider's Den &7Recipe",
         "1000;&fEnchanted Book (Sharpness IV) &7Recipe",
@@ -136,7 +136,7 @@
       "material": "ICE",
       "data": 0,
       "rewards": [
-        "&9Ice Minion &7Recipe",
+        "&9Ice Minion &7Recipes",
         "100;&fEnchanted Book (Frost Walker I) &7Recipe",
         "250;&Packed Ice &7Recipe",
         "500;&aEnchanted Ice &7Recipe",
@@ -153,7 +153,7 @@
       "material": "IRON_INGOT",
       "data": 0,
       "rewards": [
-        "&9Iron Minion &7Recipe",
+        "&9Iron Minion &7Recipes",
         "100;&fGolem Hat &7Recipe",
         "250;&fEnchanted Book (Protection IV) &7Recipe",
         "1000;&aEnchanted Iron &7Recipe",
@@ -169,7 +169,7 @@
       "material": "INK_SACK",
       "data": 4,
       "rewards": [
-        "2&9Lapis Minion &7Recipe",
+        "2&9Lapis Minion &7Recipes",
         "500;&fExperience Bottle &7Recipe",
         "1000;&fEnchanted Book (Experience II) &7Recipe",
         "2000;&aEnchanted Lapis Lazuli &7Recipe",
@@ -186,7 +186,7 @@
       "material": "QUARTZ",
       "data": 0,
       "rewards": [
-        "&9Quartz Minion &7Recipe",
+        "&9Quartz Minion &7Recipes",
         "100;&aNight Saver &7Recipe",
         "250;&aDay Saver &7Recipe",
         "1000;&aEnchanted Quartz &7Recipe",
@@ -210,35 +210,43 @@
       ]
     },
     {
-      "ID": "Obsidian",
-      "&9Obsidian Minion &7Recipe",
-      "100;Enchanted Book (Lethality  IV)",
-      "250;Gravity Talisman",
-      "1000;Enchanted Obsidian",
-      "2000;Ender Chest Lv1 Upgrade",
-      "5000;Stun Potion",
-      "10000;Ender Chest Lv2 Upgrade",
-      "25000;Treecapitator",
-      "50000;Ender Chest Lv3 Upgrade"
+      "name": "Obsidian",
+      "material": "OBSIDIAN",
+      "data": 0,
+      "rewards": [
+        "&9Obsidian Minion &7Recipes",
+        "100;&fEnchanted Book (Lethality IV) &7Recipe",
+        "250;&aGravity Talisman &7Recipe",
+        "1000;&aEnchanted Obsidian &7Recipe",
+        "2000;&5Ender Chest &7Lv1 Upgrade",
+        "5000;&8Stun Potion &7Recipe",
+        "10000;&5Ender Chest &7Lv2 Upgrade",
+        "25000;&5Treecapitator &7Recipe",
+        "50000;&5Ender Chest &7Lv3 Upgrade"
+      ]
     },
     {
-      "ID": "Redstone",
-      "100;Redstone Minion",
-      "250;Small Accessory Bag Upgrade",
-      "750;Enchanted Book (Efficiency  IV)",
-      "1000;Enchanted Redstone",
-      "3000;Compass Talisman",
-      "5000;Weather Stick;Medium Accessory Bag Upgrade",
-      "10000;Travel Scroll to Deep Caverns",
-      "25000;Enchanted Redstone Block;Large Accessory Bag Upgrade",
-      "50000;Personal Compactor 4000",
-      "200000;Greater Accessory Bag Upgrade",
-      "400000;Giant Accessory Bag Upgrade",
-      "600000;Personal Compactor 5000;Massive Accessory Bag Upgrade",
-      "800000;Personal Compactor 6000;Humongous Accessory Bag Upgrade",
-      "1000000;Personal Compactor 7000;Colossal Accessory Bag Upgrade",
-      "1000000;Titanic Accessory Bag Upgrade",
-      "1000000;Preposterous Accessory Bag Upgrade"
+      "name": "Redstone",
+      "material": "REDSTONE",
+      "data": 0,
+      "rewards": [
+        "100;&9Redstone Minion &7Recipes",
+        "250;&aSmall Accessory Bag Upgrade",
+        "750;&fEnchanted Book (Efficiency IV) &7Recipe",
+        "1000;&aEnchanted Redstone &7Recipe",
+        "3000;&aWeather Stick &7Recipe",
+        "5000;&aMedium Accessory Bag Upgrade",
+        "10000;&9Travel Scroll to Deep Caverns &7Recipe",
+        "25000;&9Enchanted Redstone Block &7Recipe",
+        "50000;&aLarge Accessory Bag Upgrade",
+        "200000;&aGreater Accessory Bag Upgrade",
+        "400000;&aGiant Accessory Bag Upgrade",
+        "600000;&aMassive Accessory Bag Upgrade",
+        "800000;&aHumongous Accessory Bag Upgrade",
+        "1000000;&aColossal Accessory Bag Upgrade",
+        "1000000;&aTitanic Accessory Bag Upgrade",
+        "1000000;&aPreposterous Accessory Bag Upgrade"
+      ]
     }
   ]
 }
