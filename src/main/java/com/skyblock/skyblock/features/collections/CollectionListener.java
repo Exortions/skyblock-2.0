@@ -25,7 +25,7 @@ public class CollectionListener implements Listener {
         ItemStack item = event.getItem().getItemStack();
 
         for (Collection collection : Collection.getCollections()) {
-            if (collection.getMaterial().equals(event.getItem().getItemStack().getType())) {
+            if (collection.getMaterial().equals(event.getItem().getItemStack().getType()) && collection.getData() == event.getItem().getItemStack().getData().getData()) {
                 boolean success = collection.collect(event.getPlayer(), event.getItem().getItemStack().getAmount(), event.getItem().getItemStack());
 
                 if (!success) continue;
