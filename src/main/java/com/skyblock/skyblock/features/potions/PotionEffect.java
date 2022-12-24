@@ -19,6 +19,7 @@ public abstract class PotionEffect {
 
     public static final HashMap<String, Triple<Integer, PotionType, ChatColor>> getMaxLevelsAndColors = new HashMap<String, Triple<Integer, PotionType, ChatColor>>() {{
         put("strength", Triple.of(8, PotionType.STRENGTH, ChatColor.DARK_RED));
+        put("speed", Triple.of(8, PotionType.SPEED, ChatColor.DARK_BLUE));
     }};
 
     private final SkyblockPlayer player;
@@ -63,8 +64,8 @@ public abstract class PotionEffect {
         }.runTaskTimer(Skyblock.getPlugin(), 0, 1);
     }
 
-    public abstract void start();
-    public abstract void tick();
-    public abstract void end();
+    public void start() {}
+    public void tick() {}
+    public void end() {}
 
 }

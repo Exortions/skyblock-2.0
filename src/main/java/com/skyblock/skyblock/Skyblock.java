@@ -59,6 +59,7 @@ import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.objectives.QuestLineHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
 import com.skyblock.skyblock.features.potions.PotionEffectHandler;
+import com.skyblock.skyblock.features.potions.effects.SpeedEffect;
 import com.skyblock.skyblock.features.potions.effects.StrengthEffect;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
@@ -276,6 +277,7 @@ public final class Skyblock extends JavaPlugin {
         long start = System.currentTimeMillis();
 
         this.potionEffectHandler = new PotionEffectHandler(
+                SpeedEffect.class,
                 StrengthEffect.class
         );
 
