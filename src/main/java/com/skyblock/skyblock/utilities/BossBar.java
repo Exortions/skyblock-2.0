@@ -30,7 +30,7 @@ public class BossBar {
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
         wither = new EntityWither(world);
         wither.setSize(1.0f, 1.0f);
-        wither.setLocation(loc.getX(), player.getLocation().getY(), loc.getZ(), loc.getPitch(), loc.getYaw());
+        wither.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getPitch(), loc.getYaw());
         wither.setCustomName(message);
         wither.setInvisible(true);
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(wither);
