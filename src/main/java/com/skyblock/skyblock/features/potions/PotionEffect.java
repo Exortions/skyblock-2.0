@@ -56,10 +56,10 @@ public abstract class PotionEffect {
             @Override
             public void run() {
                 if (i == 0) {
+                    active = true;
+
                     if (!alreadyStarted) start();
                     i++;
-
-                    active = true;
                 }
 
                 if (getDuration() <= 0 || !active) {
