@@ -100,16 +100,20 @@
       ]
     },
     {
-      "ID": "Gold Ingot",
-      "&9Gold Minion &7Recipe",
-      "100;Cleaver",
-      "250;Enchanted Book (Looting  II)",
-      "500;Portal to the Gold Mine",
-      "1000;Enchanted Gold",
-      "2000;Absorption Potion",
-      "5000;Enchanted Book (Scavenger  II)",
-      "10000;Enchanted Gold Block",
-      "25000;Enchanted Book (Fortune  II)"
+      "name": "Gold Ingot",
+      "material": "GOLD_INGOT",
+      "data": 0,
+      "rewards": [
+        "&9Gold Minion &7Recipe",
+        "100;&aCleaver &7Recipe",
+        "250;&fEnchanted Book (Looting II) &7Recipe",
+        "500;&fPortal to the Gold Mine &7Recipe",
+        "1000;&aEnchanted Gold &7Recipe",
+        "2000;&6Absorption Potion &7Recipe",
+        "5000;&fEnchanted Book (Scavenger II) &7Recipe",
+        "10000;&9Enchanted Gold Block &7Recipe",
+        "25000;&fEnchanted Book (Fortune II) &7Recipe"
+      ]
     },
     {
       "ID": "Gravel",
