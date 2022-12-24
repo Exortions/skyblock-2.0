@@ -10,12 +10,11 @@
         "100;&fEnchanted Book (Smelting Touch I) &7Recipe",
         "250;&eHaste Potion &7Recipe",
         "1000;&aEnchanted Coal &7Recipe",
-        "2000;&aEnchanted Charcoal &7Recipe\n  &aSmall Mining Sack &7Recipe",
+        "2000;&aEnchanted Charcoal &7Recipe",
         "5000;&9Travel Scroll to the Gold Mine &7Recipe",
-        "10000;&9Enchanted Block of Coal &7Recipe\n  &9Medium Mining Sack &7Recipe",
+        "10000;&9Enchanted Block of Coal &7Recipe",
         "25000;&5Enchanted Lava Bucket &7Recipe",
-        "50000;&9Mystery Wither Skeleton Pet&7 Recipe\n  &5Large Mining Sack&7 Recipe",
-        "100000;&5Large Enchanted Mining Sack &7Recipe"
+        "50000;&9Mystery Wither Skeleton Pet&7 Recipe"
       ],
       "commands": []
     },
@@ -30,8 +29,7 @@
         "1000;&aEnchanted Cobblestone &7Recipe",
         "2000;&aCompactor &7Recipe",
         "5000;&9Mystery Silverfish Pet &7Recipe",
-        "10000;&aMiner's Outfit Helmet &7Recipe\n  &aMiner's Outfit Chestplate &7Recipe\n  &aMiner's Outfit Leggings &7Recipe\n  &aMiner's Outfit Boots &7Recipe",
-        "25000;&aHyper Furnace&7 Recipe",
+        "10000;&aMiners Outfit Helmet &7Recipe\n  &aMiners Outfit Chestplate &7Recipe\n  &aMiners Outfit Leggings &7Recipe\n  &aMiners Outfit Boots &7Recipe",
         "40000;&9Haste Ring &7Recipe",
         "70000;&9Super Compactor 3000&7 Recipe"
       ],
@@ -48,7 +46,7 @@
         "1000;&aEnchanted Diamond &7Recipe",
         "2000;&fEnchanted Book (Critical IV)&7 Recipe",
         "5000;&9Diamond Spreading &7Recipe",
-        "10000;&9Hardened Diamond Helmet &7Recipe\n  &9Hardened Diamond Chestplate &7Recipe\n  &9Hardened Diamond Leggings &\n  &9Hardened Diamond Boots &7Recipe",
+        "10000;&9Hardened Diamond Helmet &7Recipe\n  &9Hardened Diamond Chestplate &7Recipe\n  &9Hardened Diamond Leggings &7Recipe\n  &9Hardened Diamond Boots &7Recipe",
         "25000;&9Enchanted Diamond Block &7Recipe",
         "50000;&9Perfect Helmet - Tier I &7Recipe\n  &9Perfect Chestplate - Tier I &7Recipe\n  &9Perfect Leggings - Tier I &7Recipe\n  &9Perfect Boots - Tier I &7Recipe"
       ],
@@ -64,7 +62,6 @@
         "250;&fMagnetic Talisman &7Recipe",
         "1000;&aEnchanted Emerald &7Recipe",
         "5000;&aEmerald Ring &7Recipe",
-        "15000;&aPersonal Bank Upgrade\n  &fPersonal Bank Item &7Recipe",
         "30000;&9Enchanted Emerald Block &7Recipe",
         "50000;&5Emerald Blade &7Recipe",
         "100000;&5Emerald Armor Helmet &7Recipe\n  &5Emerald Armor Chestplate &7Recipe\n  &5Emerald Armor Leggings &7Recipe\n  &5Emerald Armor Boots &7Recipe"
@@ -83,7 +80,7 @@
         "2000;&aSilence Block &7Recipe",
         "5000;&aHaste Block &7Recipe",
         "10000;&9Mystery Endermite Pet &7Recipe",
-        "15000;&9Egg Travel Scroll to the End &7Recipe",
+        "15000;&9Travel Scroll to the End &7Recipe",
         "25000;&9Catalyst &7Recipe",
         "50000;&5End Stone Sword &7Recipe"
       ],
