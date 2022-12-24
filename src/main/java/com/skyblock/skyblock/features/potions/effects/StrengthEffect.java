@@ -22,9 +22,6 @@ public class StrengthEffect extends PotionEffect {
     }
 
     @Override
-    public void tick() {}
-
-    @Override
     public void end() {
         this.getPlayer().subtractStat(SkyblockStat.STRENGTH, getStrengthBonus.apply(this.getAmplifier()));
     }
