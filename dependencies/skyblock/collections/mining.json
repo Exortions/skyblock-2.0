@@ -149,17 +149,20 @@
       ]
     },
     {
-      "ID": "Iron Ingot",
-      "&9Iron Minion &7Recipe",
-      "100;Golem Hat",
-      "250;Enchanted Book (Protection  IV)",
-      "1000;Enchanted Iron",
-      "2000;Budget Hopper",
-      "5000;Golem Armor Set",
-      "10000;Enchanted Iron Block",
-      "25000;Golem Sword",
-      "50000;Enchanted Hopper"
-
+      "name": "Iron Ingot",
+      "material": "IRON_INGOT",
+      "data": 0,
+      "rewards": [
+        "&9Iron Minion &7Recipe",
+        "100;&fGolem Hat &7Recipe",
+        "250;&fEnchanted Book (Protection IV) &7Recipe",
+        "1000;&aEnchanted Iron &7Recipe",
+        "2000;&aBudget Hopper &7Recipe",
+        "5000;&9Golem Armor Helmet &7Recipe;&9Golem Armor Chestplate &7Recipe;&9Golem Armor Leggings &7Recipe;&9Golem Armor Boots &7Recipe",
+        "10000;&9Enchanted Iron Block &7Recipe",
+        "25000;&9Golem Sword &7Recipe",
+        "50000;&9Enchanted Hopper &7Recipe"
+      ]
     },
     {
       "ID": "Lapis Lazuli",
