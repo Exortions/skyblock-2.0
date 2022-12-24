@@ -198,12 +198,16 @@
       ]
     },
     {
-      "ID": "Netherrack",
-      "50;Nether Wart Island",
-      "250;Wounded Potion",
-      "500;Nether Brick Trade",
-      "1000;Enchanted Netherrack",
-      "5000;Magical Lava Bucket"
+      "name": "Netherrack",
+      "material": "NETHERRACK",
+      "data": 0,
+      "rewards": [
+        "50;&fNether Wart Island &7Recipe",
+        "250;&4Wounded Potion &7Recipe",
+        "500;&fNether Brick &7Trade",
+        "1000;&aEnchanted Netherrack &7Recipe",
+        "5000;&aMagical Lava Bucket &7Recipe"
+      ]
     },
     {
       "ID": "Obsidian",
