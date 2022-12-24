@@ -12,7 +12,7 @@ public class SpeedEffect extends PotionEffect {
     private static final Function<Integer, Double> calculateSpeedBonus = (level) -> Util.createFetchableDictionary(level - 1, 5, 10, 15, 20, 25, 30, 35, 40);
 
     public SpeedEffect(SkyblockPlayer player, String ignoredName, int amplifier, double duration, boolean alreadyStarted) {
-        super(player, "Speed", amplifier, duration, alreadyStarted, "Grants &a+" + calculateSpeedBonus.apply(amplifier) + " &f" + SkyblockStat.SPEED.getIcon() + " Speed&7.");
+        super(player, "Speed", amplifier, duration, alreadyStarted, "&7Grants &a+" + calculateSpeedBonus.apply(amplifier) + " &f" + SkyblockStat.SPEED.getIcon() + " Speed&7.");
     }
 
     @Override
