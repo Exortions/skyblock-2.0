@@ -13,6 +13,7 @@ import com.skyblock.skyblock.commands.misc.*;
 import com.skyblock.skyblock.commands.player.PlayerDataCommand;
 import com.skyblock.skyblock.commands.player.VisitCommand;
 import com.skyblock.skyblock.commands.player.WarpCommand;
+import com.skyblock.skyblock.commands.potion.CreatePotionCommand;
 import com.skyblock.skyblock.commands.potion.EffectCommand;
 import com.skyblock.skyblock.features.auction.AuctionBid;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
@@ -710,7 +711,8 @@ public final class Skyblock extends JavaPlugin {
                 new CreateCrystalCommand(),
                 new BazaarCommand(),
                 new RegenerateCommand(),
-                new EffectCommand()
+                new EffectCommand(),
+                new CreatePotionCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

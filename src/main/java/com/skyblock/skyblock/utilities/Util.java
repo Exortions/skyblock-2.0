@@ -6,7 +6,9 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
+import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -18,6 +20,7 @@ import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -26,11 +29,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.Potion;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
@@ -42,6 +48,7 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @UtilityClass
 public class Util {
@@ -76,6 +83,13 @@ public class Util {
         put(1_000_000_000_000_000L, "P");
         put(1_000_000_000_000_000_000L, "E");
     }};
+
+    private static final Function<Integer, Rarity> getRarityByPotionLevel = (level) -> {
+        if (level == 1 || level == 2) return Rarity.COMMON;
+        else if (level == 3 || level == 4) return Rarity.UNCOMMON;
+        else if (level == 5 || level == 6) return Rarity.RARE;
+        else return Rarity.EPIC;
+    };
 
     public String toRoman(int number) {
         if (number <= 0) return "";
@@ -753,11 +767,47 @@ public class Util {
         int seconds = (ticks - (hours * 1000) - (minutes * 50)) / 5;
 
         if (hours > 0) time += hours + ":";
-        if (minutes > 0) time += minutes + ":";
-        if (seconds > 0) time += seconds;
+        if (minutes > 0) {
+            if (minutes >= 10) time += minutes + ":";
+            else if (hours > 0) time += "0" + minutes + ":";
+            else time += minutes + ":";
+        }
+        if (seconds > 0) {
+            if (seconds >= 10) time += seconds;
+            else time += "0" + seconds;
+        }
         else time += "00";
 
         return time;
+    }
+
+    public ItemStack createPotion(String pot, int level, int duration) {
+        ItemStack stack = new Potion(PotionEffect.getMaxLevelsAndColors.get(pot).getSecond()).toItemStack(1);
+        PotionMeta meta = (PotionMeta) stack.getItemMeta();
+
+        Rarity rarity = getRarityByPotionLevel.apply(level);
+
+        meta.setDisplayName(rarity.getColor() + "" + WordUtils.capitalize(pot.replace("_", " ")) + " " + Util.toRoman(level) + " Potion");
+        meta.setLore(
+                Arrays.asList(Util.buildLore(
+                        "\n" + PotionEffect.getMaxLevelsAndColors.get(pot).getThird() + "" + WordUtils.capitalize(pot.replace("_", " ")) + " " + Util.toRoman(level) + "&f (" + Util.asTime(duration) + ")\n" +
+                                Skyblock.getPlugin().getPotionEffectHandler().createEffect(pot, null, level, duration, true).getDescription() + "\n\n" +
+                                rarity.coloredString(), '7'
+                ))
+        );
+
+        meta.clearCustomEffects();
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ATTRIBUTES);
+
+        stack.setItemMeta(meta);
+
+        NBTItem nbtItem = new NBTItem(stack);
+        nbtItem.setBoolean("potion.is_potion", true);
+        nbtItem.setString("potion.type", pot);
+        nbtItem.setInteger("potion.amplifier", level);
+        nbtItem.setInteger("potion.duration", 12000);
+
+        return nbtItem.getItem();
     }
 
 }
