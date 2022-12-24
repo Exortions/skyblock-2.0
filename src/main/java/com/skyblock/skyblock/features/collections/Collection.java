@@ -10,6 +10,7 @@ import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -126,7 +127,13 @@ public class Collection {
 
             for (String reward : rewards.stringify(level + 1)) {
                 String stripColor = ChatColor.stripColor(reward);
-                if (reward.endsWith("Recipe")) recipeRewards.add(stripColor.substring(2, stripColor.length() - 7).toUpperCase().replaceAll(" ", "_"));
+                if (reward.endsWith("Recipe")) {
+                    String result = stripColor.replace(" Recipe", "").toUpperCase().replaceAll(" ", "_");
+                    result = result.replace("__", "");
+                    result = result.substring(2);
+
+                    recipeRewards.add(result);
+                }
             }
 
             unlocked.addAll(recipeRewards);
@@ -227,10 +234,15 @@ public class Collection {
 
                     for (CollectionRewards.Reward reward : rewardsArray) {
                         String stripColor = ChatColor.stripColor(reward.getName());
-                        if (reward.getName().endsWith("Recipe")) requirements.add(stripColor.substring(2, stripColor.length() - 7).toUpperCase().replaceAll(" ", "_"));
+                        if (!stripColor.endsWith("Recipe")) continue;
+                        String result = stripColor.replace(" Recipe", "").toUpperCase().replaceAll(" ", "_");
+                        result = result.replace("__", "");
+
+                        requirements.add(result);
                     }
 
                     CraftingGUI.needsUnlocking.addAll(requirements);
+                    Bukkit.getConsoleSender().sendMessage(requirements + "");
 
                     CollectionRewards collectionRewards = new CollectionRewards(rewardsArray);
 

@@ -106,7 +106,7 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
         List<String> unlocked = (List<String>) skyblockPlayer.getValue("recipes.unlocked");
 
         handler.getRecipes().forEach(recipe -> {
-            if (!unlocked.contains(Util.getSkyblockId(recipe.getResult())) && needsUnlocking.contains(Util.getSkyblockId(recipe.getResult()))) return;
+            if (!unlocked.contains(Util.getSkyblockId(recipe.getResult()).toUpperCase()) && needsUnlocking.contains(Util.getSkyblockId(recipe.getResult()).toUpperCase())) return;
 
             if (recipe.toShapeless().equals(shapeless)) {
                 setItem(23, recipe.getResult());
