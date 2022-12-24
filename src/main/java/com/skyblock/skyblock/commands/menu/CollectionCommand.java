@@ -33,7 +33,7 @@ public class CollectionCommand implements Command {
     public void execute(Player player, String[] args, Skyblock plugin) {
         Inventory inventory;
 
-        SkyblockPlayer skyblockPlayer = new SkyblockPlayer(player.getUniqueId());
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         if (args.length == 0) {
             inventory = Bukkit.createInventory(null, 54, "Collection");

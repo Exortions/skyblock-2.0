@@ -95,7 +95,11 @@ public class SkyblockPlayer {
         after.accept(player);
     }
 
-    public SkyblockPlayer(UUID uuid) {
+    public SkyblockPlayer() {
+        throw new UnsupportedOperationException("Cannot instantiate an instance of SkyblockPlayer - Use SkyblockPlayer#getPlayer instead.");
+    }
+
+    private SkyblockPlayer(UUID uuid) {
         this.dataCache = new HashMap<>();
         this.predicateDamageModifiers = new ArrayList<>();
         this.activeEffects = new ArrayList<>();
