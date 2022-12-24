@@ -52,16 +52,20 @@
       ]
     },
     {
-      "ID": "Emerald",
-      "&9Emerald Minion &7Recipe",
-      "100;Talisman of Coins",
-      "250;Magnetic Talisman",
-      "1000;Enchanted Emerald",
-      "5000;Emerald Ring",
-      "15000;Personal Bank Upgrade",
-      "30000;Enchanted Emerald Block",
-      "50000;Emerald Blade",
-      "100000;Emerald Armor Set"
+      "name": "Emerald",
+      "material": "EMERALD",
+      "data": 0,
+      "rewards": [
+        "&9Emerald Minion &7Recipe",
+        "100;&fTalisman of Coins &7Recipe",
+        "250;&fMagnetic Talisman &7Recipe",
+        "1000;&aEnchanted Emerald &7Recipe",
+        "5000;&aEmerald Ring &7Recipe",
+        "15000;&aPersonal Bank Upgrade;&fPersonal Bank Item &7Recipe",
+        "30000;&9Enchanted Emerald Block &7Recipe",
+        "50000;&5Emerald Blade &7Recipe",
+        "100000;&5Emerald Armor Helmet &7Recipe;&5Emerald Armor Chestplate &7Recipe;&5Emerald Armor Leggings &7Recipe;&5Emerald Armor Boots &7Recipe"
+      ]
     },
     {
       "ID": "End Stone",
