@@ -1,0 +1,152 @@
+{
+  "category": "Fishing",
+  "collections": [
+    {
+      "name": "Clay",
+      "material": "CLAY_BALL",
+      "data": 0,
+      "rewards": [
+        "50;&9Clay Minion &7Recipes",
+        "100;&aEnchanted Clay &7Recipe",
+        "250;&fEnchanted Book (Respiration II) &7Recipe",
+        "1000;&fEnchanted Book (Frail IV) &7Recipe",
+        "2500;&aFarmers Rod &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Clownfish",
+      "material": "RAW_FISH",
+      "data": 2,
+      "rewards": [
+        "10;&aClownfish Hat &7Recipe",
+        "25;&fWater Bucket &7Trade",
+        "50;&fEnchanted Book (Magnet IV) &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Ink Sac",
+      "material": "INK_SACK",
+      "data": 0,
+      "rewards": [
+        "20;&fSquid Hat &7Recipe",
+        "40;&fDark Bait &7Recipe",
+        "100;&aEnchanted Ink Sack &7Recipe",
+        "200;&fDeep Ocean Biome Stick &7Recipe",
+        "400;&fEnchanted Book (Caster IV) &7Recipe",
+        "800;&fBlindness Potion &7Recipe",
+        "1500;&fEnchanted Book (Angler IV) &7Recipe",
+        "2500;&9Bait Ring &7Recipe",
+        "4000;&5Ink Wand &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Lily Pad",
+      "material": "WATER_LILY",
+      "data": 0,
+      "rewards": [
+        "10;&fSpooky Bait &7Recipe",
+        "50;&aBlobfish Hat &7Recipe",
+        "100;&fHealing Talisman &7Recipe",
+        "200;&aEnchanted Lily Pad &7Recipe",
+        "500;&9Challenging Rod &7Recipe",
+        "1500;&9Whale Bait &7Recipe",
+        "3000;&9Rod of Champions &7Recipe",
+        "6000;&aHealing Ring &7Recipe",
+        "10000;&5Rod of Legends &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Prismarine Crystals",
+      "material": "PRISMARINE_CRYSTALS",
+      "data": 0,
+      "rewards": [
+        "10;&aSea Lantern Hat &7Recipe",
+        "25;&fLight Bait &7Recipe",
+        "50;&aEnchanted Prismarine Crystals &7Recipe",
+        "100;&fEnchanted Book (Aqua Affinity I) &7Recipe",
+        "200;&9Guardian Chestplate &7Recipe",
+        "400;&aBlessed Bait &7Recipe",
+        "800;&fEnchanted Book (Blessing IV) &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Prismarine Shard",
+      "material": "PRISMARINE_SHARD",
+      "data": 0,
+      "rewards": [
+        "10;&fEnchanted Book (Impaling II) &7Recipe",
+        "25;&aPrismarine Blade &7Recipe",
+        "50;&aEnchanted Prismarine Shard &7Recipe",
+        "100;&fPrismarine Rod &7Recipe",
+        "200;&aPrismarine Bow &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Pufferfish",
+      "material": "RAW_FISH",
+      "data": 3,
+      "rewards": [
+        "20;&fPufferfish Hat &7Recipe",
+        "50;&aEnchanted Pufferfish &7Recipe",
+        "100;&fEnchanted Book (Cleave IV) &7Recipe",
+        "150;&fEnchanted Book (Depth Strider II) &7Recipe",
+        "400;&fSpiked Bait &7Recipe",
+        "800;&fEnchanted Book (Spiked Hook IV) &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Raw Fish",
+      "material": "RAW_FISH",
+      "data": 0,
+      "rewards": [
+        "20;&fFish Hat &7Recipe",
+        "50;&9Fishing Minion &7Recipes",
+        "250;&fPond Island &7Recipe",
+        "500;&fAngler Helmet &7Recipe\n  &fAngler Chestplate &7Recipe\n  &fAngler Leggings &7Recipe\n  &fAngler Boots &7Recipe",
+        "1000;&aEnchanted Raw Fish &7Recipe",
+        "15000;&9Enchanted Cooked Fish &7Recipe"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Raw Salmon",
+      "material": "RAW_FISH",
+      "data": 1,
+      "rewards": [
+        "20;&fMinnow Bait &7Recipe",
+        "50;&9Dodge Potion &7Recipe",
+        "100;&fEnchanted Book (Lure IV) &7Recipe",
+        "250;&aEnchanted Raw Salmon &7Recipe",
+        "500;&aSpeedster Rod &7Recipe",
+        "1000;&fFish Bait &7Recipe",
+        "5000;&9Enchanted Cooked Salmon &7Recipe",
+        "10000;&5Salmon Hat &8(&4COMING SOON&8)"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Sponge",
+      "material": "SPONGE",
+      "data": 0,
+      "rewards": [
+        "20;&fSponge Rod &7Recipe",
+        "50;&fSponge &7Trade",
+        "100;&aEnchanted Sponge &7Recipe",
+        "200;&fSea Creature Talisman &7Recipe",
+        "400;&5Stereo Pants &7Recipe",
+        "800;&aSea Creature Ring &7Recipe",
+        "1500;&9Enchanted Wet Sponge &7Recipe",
+        "2500;&9Sea Creature Artifact &7Recipe",
+        "4000;&5Sponge Helmet &7Recipe\n  &5Sponge Chestplate &7Recipe\n  &5Sponge Leggings &7Recipe\n  &5Sponge Boots &7Recipe"
+      ],
+      "commands": []
+    }
+  ]
+}
