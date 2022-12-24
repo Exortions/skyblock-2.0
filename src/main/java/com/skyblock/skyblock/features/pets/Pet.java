@@ -169,7 +169,6 @@ public abstract class Pet {
         ItemMeta meta = item.getItemMeta();
         List<String> lore = new ArrayList<>();
 
-
         int level = getLevel(xp, rarity);
 
         meta.setDisplayName(ChatColor.GRAY + "[Lvl " + level + "] " + rarity.getColor() + name);
@@ -190,6 +189,8 @@ public abstract class Pet {
         addIntLore("Intelligence", getPerIntelligence() + getBaseIntelligence() / level, lore, level);
 
         for (PetAbility ability : getAbilities(level)) {
+            if (ability == null) continue;
+
             if (rarity.getLevel() < ability.getRequiredRarity().getLevel()) continue;
             lore.add(" ");
             lore.add(ChatColor.GOLD + ability.getName());
