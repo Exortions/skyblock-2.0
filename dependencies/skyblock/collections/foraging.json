@@ -1,0 +1,107 @@
+{
+  "category": "Foraging",
+  "collections": [
+    {
+      "name": "Acacia Wood",
+      "material": "LOG_2",
+      "data": 0,
+      "rewards": [
+        "50;&fAcacia Minion &7Recipes",
+        "100;&fAcacia Leaves &7Trade",
+        "250;&fPortal to the Savanna Woodland &7Recipe",
+        "500;&fSuper Torch &8(&4COMING &4SOON&8)",
+        "1000;&fSavanna Biome Stick &7Recipe",
+        "2000;",
+        "5000;",
+        "10000;",
+        "250000;"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Birch Wood",
+      "material": "LOG",
+      "data": 2,
+      "rewards": [
+        "50;Birch Minion &7Recipes",
+        "100;",
+        "250;",
+        "500;",
+        "1000;",
+        "2000;",
+        "5000;",
+        "10000;",
+        "250000;"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Dark Oak",
+      "material": "LOG_2",
+      "data": 1,
+      "rewards": [
+        "50;Dark Oak Minion &7Recipes",
+        "100;",
+        "250;",
+        "1000;",
+        "2000;",
+        "5000;",
+        "10000;",
+        "15000;",
+        "250000;"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Jungle Wood",
+      "material": "LOG",
+      "data": 3,
+      "rewards": [
+        "50;Jungle Minion &7Recipes",
+        "100;",
+        "250;",
+        "500;",
+        "1000;",
+        "2000;",
+        "5000;",
+        "10000;",
+        "250000;"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Oak Wood",
+      "material": "LOG",
+      "data": 0,
+      "rewards": [
+        "50;Oak Minion &7Recipes",
+        "100;",
+        "250;",
+        "500;",
+        "1000;",
+        "2000;",
+        "5000;",
+        "10000;",
+        "250000;"
+      ],
+      "commands": []
+    },
+    {
+      "name": "Spruce Wood",
+      "material": "LOG",
+      "data": 1,
+      "rewards": [
+        "50;Spruce Minion &7Recipes",
+        "100;",
+        "250;",
+        "1000;",
+        "2000;",
+        "5000;",
+        "10000;",
+        "25000;",
+        "50000;"
+      ],
+      "commands": []
+    }
+  ]
+}
