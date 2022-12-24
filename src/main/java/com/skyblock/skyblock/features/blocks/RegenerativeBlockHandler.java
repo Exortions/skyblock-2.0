@@ -252,6 +252,8 @@ public class RegenerativeBlockHandler implements Listener {
 
         Material type = block.getType();
 
+        dropOverridenDrops(block, player);
+
         block.setType(next);
         new BukkitRunnable() {
             @Override
@@ -260,18 +262,16 @@ public class RegenerativeBlockHandler implements Listener {
                 block.setData(blocks.get(block.getLocation()).getData());
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), resetTimes.get(type) * 20);
-
-        dropOverridenDrops(block, player);
     }
 
     private void dropOverridenDrops(Block block, SkyblockPlayer player) {
         if (hasOverridenDrops(block, player)) {
             player.dropItems(Arrays.asList(getOverrideDrops(block, player)), block.getLocation());
-            return;
+        } else {
+            if (!player.hasTelekinesis())
+                block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
+            else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
         }
-
-        if (!player.hasTelekinesis()) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-        else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
     }
 
     public void breakNaturalBlock(BlockBreakEvent event, Block block, SkyblockPlayer player, String skill, double xp) {
@@ -281,9 +281,10 @@ public class RegenerativeBlockHandler implements Listener {
 
         Skill.reward(Objects.requireNonNull(Skill.parseSkill(skill)), xp, player);
         event.setCancelled(false);
-        this.regenerateBlock(block.getType(), block.getData(), block.getType(), player.getBrokenBlock().getData(), block, resetTimes.get(block.getType()));
 
         dropOverridenDrops(block, player);
+
+        this.regenerateBlock(block.getType(), block.getData(), block.getType(), player.getBrokenBlock().getData(), block, resetTimes.get(block.getType()));
     }
 
     public void regenerateBlock(Material id, byte data, Material newId, byte newData, Block block, int seconds) {
