@@ -10,13 +10,14 @@
         "100;&fEnchanted Book (Smelting Touch I) &7Recipe",
         "250;&eHaste Potion &7Recipe",
         "1000;&aEnchanted Coal &7Recipe",
-        "2000;&aEnchanted Charcoal &7Recipe;&aSmall Mining Sack &7Recipe",
+        "2000;&aEnchanted Charcoal &7Recipe\n  &aSmall Mining Sack &7Recipe",
         "5000;&9Travel Scroll to the Gold Mine &7Recipe",
-        "10000;&9Enchanted Block of Coal &7Recipe;&9Medium Mining Sack &7Recipe",
+        "10000;&9Enchanted Block of Coal &7Recipe\n  &9Medium Mining Sack &7Recipe",
         "25000;&5Enchanted Lava Bucket &7Recipe",
-        "50000;&9Mystery Wither Skeleton Pet&7 Recipe;&5Large Mining Sack&7 Recipe",
+        "50000;&9Mystery Wither Skeleton Pet&7 Recipe\n  &5Large Mining Sack&7 Recipe",
         "100000;&5Large Enchanted Mining Sack &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Cobblestone",
@@ -29,11 +30,12 @@
         "1000;&aEnchanted Cobblestone &7Recipe",
         "2000;&aCompactor &7Recipe",
         "5000;&9Mystery Silverfish Pet &7Recipe",
-        "10000;&aMiner's Outfit Helmet &7Recipe;&aMiner's Outfit Chestplate &7Recipe;&aMiner's Outfit Leggings &7Recipe;&aMiner's Outfit Boots &7Recipe",
+        "10000;&aMiner's Outfit Helmet &7Recipe\n  &aMiner's Outfit Chestplate &7Recipe\n  &aMiner's Outfit Leggings &7Recipe\n  &aMiner's Outfit Boots &7Recipe",
         "25000;&aHyper Furnace&7 Recipe",
         "40000;&9Haste Ring &7Recipe",
         "70000;&9Super Compactor 3000&7 Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Diamond",
@@ -46,30 +48,32 @@
         "1000;&aEnchanted Diamond &7Recipe",
         "2000;&fEnchanted Book (Critical IV)&7 Recipe",
         "5000;&9Diamond Spreading &7Recipe",
-        "10000;&9Hardened Diamond Helmet &7Recipe;&9Hardened Diamond Chestplate &7Recipe;&9Hardened Diamond Leggings &7Recipe;&9Hardened Diamond Boots &7Recipe",
+        "10000;&9Hardened Diamond Helmet &7Recipe\n  &9Hardened Diamond Chestplate &7Recipe\n  &9Hardened Diamond Leggings &\n  &9Hardened Diamond Boots &7Recipe",
         "25000;&9Enchanted Diamond Block &7Recipe",
-        "50000;&9Perfect Helmet - Tier I &7Recipe;&9Perfect Chestplate - Tier I &7Recipe;&9Perfect Leggings - Tier I &7Recipe;&9Perfect Boots - Tier I &7Recipe"
-      ]
+        "50000;&9Perfect Helmet - Tier I &7Recipe\n  &9Perfect Chestplate - Tier I &7Recipe\n  &9Perfect Leggings - Tier I &7Recipe\n  &9Perfect Boots - Tier I &7Recipe"
+      ],
+      "commands": []
     },
     {
       "name": "Emerald",
       "material": "EMERALD",
       "data": 0,
       "rewards": [
-        "&9Emerald Minion &7Recipes",
+        "50;&9Emerald Minion &7Recipes",
         "100;&fTalisman of Coins &7Recipe",
         "250;&fMagnetic Talisman &7Recipe",
         "1000;&aEnchanted Emerald &7Recipe",
         "5000;&aEmerald Ring &7Recipe",
-        "15000;&aPersonal Bank Upgrade;&fPersonal Bank Item &7Recipe",
+        "15000;&aPersonal Bank Upgrade\n  &fPersonal Bank Item &7Recipe",
         "30000;&9Enchanted Emerald Block &7Recipe",
         "50000;&5Emerald Blade &7Recipe",
-        "100000;&5Emerald Armor Helmet &7Recipe;&5Emerald Armor Chestplate &7Recipe;&5Emerald Armor Leggings &7Recipe;&5Emerald Armor Boots &7Recipe"
-      ]
+        "100000;&5Emerald Armor Helmet &7Recipe\n  &5Emerald Armor Chestplate &7Recipe\n  &5Emerald Armor Leggings &7Recipe\n  &5Emerald Armor Boots &7Recipe"
+      ],
+      "commands": []
     },
     {
       "name": "End Stone",
-      "material": "END_STONE",
+      "material": "ENDER_STONE",
       "data": 0,
       "rewards": [
         "50;&9End Stone Minion &7Recipes",
@@ -82,14 +86,15 @@
         "15000;&9Egg Travel Scroll to the End &7Recipe",
         "25000;&9Catalyst &7Recipe",
         "50000;&5End Stone Sword &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Glowstone Dust",
       "material": "GLOWSTONE_DUST",
       "data": 0,
       "rewards": [
-        "&9Glowstone Minion &7Recipes",
+        "50;&9Glowstone Minion &7Recipes",
         "100;&fPortal to Blazing Fortress &7Recipe",
         "250;&8+&375 Mining Experience",
         "1000;&aEnchanted Glowstone Dust &7Recipe",
@@ -97,14 +102,15 @@
         "5000;&aEnchanted Glowstone &7Recipe",
         "10000;&9Enchanted Redstone Lamp &7Recipe",
         "50000;&8+&315000 Mining Experience"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Gold Ingot",
       "material": "GOLD_INGOT",
       "data": 0,
       "rewards": [
-        "&9Gold Minion &7Recipes",
+        "50;&9Gold Minion &7Recipes",
         "100;&aCleaver &7Recipe",
         "250;&fEnchanted Book (Looting II) &7Recipe",
         "500;&fPortal to the Gold Mine &7Recipe",
@@ -113,14 +119,15 @@
         "5000;&fEnchanted Book (Scavenger II) &7Recipe",
         "10000;&9Enchanted Gold Block &7Recipe",
         "25000;&fEnchanted Book (Fortune II) &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Gravel",
       "material": "GRAVEL",
       "data": 0,
       "rewards": [
-        "&9Gravel Minion &7Recipes",
+        "50;&9Gravel Minion &7Recipes",
         "100;&fFlint Shovel &7Recipe",
         "250;&fPortal to Spider's Den &7Recipe",
         "1000;&fEnchanted Book (Sharpness IV) &7Recipe",
@@ -129,14 +136,15 @@
         "10000;&4Critical Potion &7Recipe",
         "15000;&9Travel Scroll to Spider's Den &7Recipe",
         "50000;&8+&35000; &3Mining Experience &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Ice",
       "material": "ICE",
       "data": 0,
       "rewards": [
-        "&9Ice Minion &7Recipes",
+        "50;&9Ice Minion &7Recipes",
         "100;&fEnchanted Book (Frost Walker I) &7Recipe",
         "250;&Packed Ice &7Recipe",
         "500;&aEnchanted Ice &7Recipe",
@@ -144,32 +152,34 @@
         "5000;&aIce Bait &7Recipe",
         "10000;&9Enchanted Packed Ice &7Recipe",
         "50000;&9Frozen Scythe &7Recipe",
-        "100000;&6Frozen Blaze Helmet &7Recipe;&6Frozen Blaze Chestplate &7Recipe;&6Frozen Blaze Leggings &7Recipe;&6Frozen Blaze Boots &7Recipe",
+        "100000;&6Frozen Blaze Helmet &7Recipe\n  &6Frozen Blaze Chestplate &7Recipe\n  &6Frozen Blaze Leggings &7Recipe\n  &6Frozen Blaze Boots &7Recipe",
         "250000;&6Auger Rod &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Iron Ingot",
       "material": "IRON_INGOT",
       "data": 0,
       "rewards": [
-        "&9Iron Minion &7Recipes",
+        "50;&9Iron Minion &7Recipes",
         "100;&fGolem Hat &7Recipe",
         "250;&fEnchanted Book (Protection IV) &7Recipe",
         "1000;&aEnchanted Iron &7Recipe",
         "2000;&aBudget Hopper &7Recipe",
-        "5000;&9Golem Armor Helmet &7Recipe;&9Golem Armor Chestplate &7Recipe;&9Golem Armor Leggings &7Recipe;&9Golem Armor Boots &7Recipe",
+        "5000;&9Golem Armor Helmet &7Recipe\n  &9Golem Armor Chestplate &7Recipe\n  &9Golem Armor Leggings &7Recipe\n  &9Golem Armor Boots &7Recipe",
         "10000;&9Enchanted Iron Block &7Recipe",
         "25000;&9Golem Sword &7Recipe",
         "50000;&9Enchanted Hopper &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Lapis Lazuli",
       "material": "INK_SACK",
       "data": 4,
       "rewards": [
-        "2&9Lapis Minion &7Recipes",
+        "50;&9Lapis Minion &7Recipes",
         "500;&fExperience Bottle &7Recipe",
         "1000;&fEnchanted Book (Experience II) &7Recipe",
         "2000;&aEnchanted Lapis Lazuli &7Recipe",
@@ -179,14 +189,15 @@
         "100000;&9Titanic Experience Bottle &7Recipe",
         "150000;&5Experience Artifact &7Recipe",
         "250000;&6Textbook &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Nether Quartz",
       "material": "QUARTZ",
       "data": 0,
       "rewards": [
-        "&9Quartz Minion &7Recipes",
+        "50;&9Quartz Minion &7Recipes",
         "100;&aNight Saver &7Recipe",
         "250;&aDay Saver &7Recipe",
         "1000;&aEnchanted Quartz &7Recipe",
@@ -195,7 +206,8 @@
         "10000;&9Night Crystal &7Recipe",
         "25000;&9Day Crystal &7Recipe",
         "50000;&aSolar Panel &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Netherrack",
@@ -207,14 +219,15 @@
         "500;&fNether Brick &7Trade",
         "1000;&aEnchanted Netherrack &7Recipe",
         "5000;&aMagical Lava Bucket &7Recipe"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Obsidian",
       "material": "OBSIDIAN",
       "data": 0,
       "rewards": [
-        "&9Obsidian Minion &7Recipes",
+        "50;&9Obsidian Minion &7Recipes",
         "100;&fEnchanted Book (Lethality IV) &7Recipe",
         "250;&aGravity Talisman &7Recipe",
         "1000;&aEnchanted Obsidian &7Recipe",
@@ -223,7 +236,8 @@
         "10000;&5Ender Chest &7Lv2 Upgrade",
         "25000;&5Treecapitator &7Recipe",
         "50000;&5Ender Chest &7Lv3 Upgrade"
-      ]
+      ],
+      "commands": []
     },
     {
       "name": "Redstone",
@@ -246,7 +260,8 @@
         "1000000;&aColossal Accessory Bag Upgrade",
         "1000000;&aTitanic Accessory Bag Upgrade",
         "1000000;&aPreposterous Accessory Bag Upgrade"
-      ]
+      ],
+      "commands": []
     }
   ]
 }
