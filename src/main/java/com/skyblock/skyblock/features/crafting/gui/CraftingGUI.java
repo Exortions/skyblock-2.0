@@ -1,7 +1,9 @@
-package com.skyblock.skyblock.features.crafting;
+package com.skyblock.skyblock.features.crafting.gui;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.event.SkyblockCraftEvent;
+import com.skyblock.skyblock.features.crafting.RecipeHandler;
+import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;

@@ -4,11 +4,13 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.collections.CollectionCategory;
+import com.skyblock.skyblock.features.collections.gui.CollectionRewardGUI;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -20,6 +22,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -96,11 +99,13 @@ public class CollectionCommand implements Command {
         } else if (Collection.getCollections().stream().anyMatch(col -> col.getName().replace(" ", "_").equalsIgnoreCase(inv))) {
             Collection collection = Collection.getCollections().stream().filter(col -> col.getName().replace(" ", "_").equalsIgnoreCase(inv)).findFirst().get();
 
-            inventory = Bukkit.createInventory(null, 54, collection.getName() + " Collection");
+            Gui gui = new Gui(collection.getName() + " Collection", 54, new HashMap<>());
 
-            Util.fillEmpty(inventory);
+            Util.fillEmpty(gui);
 
-            inventory.setItem(4, generateCollectionItem(skyblockPlayer, collection, true));
+            ItemStack collectionItem = generateCollectionItem(skyblockPlayer, collection, true);
+
+            gui.addItem(4, collectionItem);
 
             List<ItemStack> levelPanes = new ArrayList<>();
 
@@ -109,17 +114,35 @@ public class CollectionCommand implements Command {
             }
 
             for (int i = 0; i < levelPanes.size(); i++) {
-                inventory.setItem(18 + i, levelPanes.get(i));
+                ItemStack pane = levelPanes.get(i);
+
+                gui.addItem(18 + i, pane);
+
+                gui.getClickEvents().put(pane.getItemMeta().getDisplayName(), () -> {
+                    if (isRecipe(pane)) {
+                        new CollectionRewardGUI(pane, collectionItem, gui, player).show(player);
+                    }
+                });
             }
 
-            inventory.setItem(48, Util.buildBackButton());
-            inventory.setItem(49, Util.buildCloseButton());
+            gui.addItem(48, Util.buildBackButton());
+            gui.addItem(49, Util.buildCloseButton());
 
-            player.openInventory(inventory);
+            gui.show(player);
         } else {
             player.sendMessage(plugin.getPrefix() + ChatColor.RED + "Invalid collection category or collection");
         }
 
+    }
+
+    private boolean isRecipe(ItemStack item) {
+        List<String> lore = item.getItemMeta().getLore();
+
+        for (String s : lore) {
+            if (s.endsWith("Recipe")) return true;
+        }
+
+        return false;
     }
 
     private ItemStack generateCollectionLevel(SkyblockPlayer skyblockPlayer, Collection collection, int i) {

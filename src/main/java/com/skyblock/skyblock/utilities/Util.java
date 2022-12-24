@@ -810,4 +810,11 @@ public class Util {
         return nbtItem.getItem();
     }
 
+    public String getSkyblockId(ItemStack item) {
+        if (!notNull(item)) return "";
+
+        NBTItem nbt = new NBTItem(item);
+
+        return nbt.getString("skyblockId");
+    }
 }

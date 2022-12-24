@@ -1,7 +1,9 @@
 package com.skyblock.skyblock.features.crafting;
 
+import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.CraftingManager;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -21,6 +23,14 @@ public class RecipeHandler {
     public void init() {
         recipes.addAll(getShapedRecipeStrings());
         recipes.addAll(getShapelessRecipeStrings());
+    }
+
+    public SkyblockRecipe getRecipe(ItemStack result) {
+        for (SkyblockRecipe recipe : recipes) {
+            if (Util.getSkyblockId(recipe.getResult()).equals(Util.getSkyblockId(result))) return recipe;
+        }
+
+        return null;
     }
 
     private List<SkyblockRecipe> getShapelessRecipeStrings(){

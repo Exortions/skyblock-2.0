@@ -76,6 +76,7 @@ import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -201,9 +202,11 @@ public final class Skyblock extends JavaPlugin {
         int i = 0;
         for (Entity entity : removeables) {
             while (!entity.getLocation().getChunk().isLoaded()) {
-                entity.getLocation().getChunk().load(true);
+                entity.getLocation().getChunk().load(false);
             }
 
+            ((CraftEntity) entity).getHandle().setInvisible(true);
+            entity.teleport(new Location(entity.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
             entity.remove();
             i++;
         }
@@ -772,5 +775,6 @@ public final class Skyblock extends JavaPlugin {
 
     public void addRemoveable(Entity entity) {
         this.removeables.add(entity);
+
     }
 }
