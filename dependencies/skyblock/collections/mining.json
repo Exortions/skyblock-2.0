@@ -165,17 +165,21 @@
       ]
     },
     {
-      "ID": "Lapis Lazuli",
-      "2&9Lapis Minion &7Recipe",
-      "500;Experience Bottle",
-      "1000;Enchanted Book (Experience  II)",
-      "2000;Enchanted Lapis Lazuli",
-      "10000;Grand Experience Bottle",
-      "25000;Experience Potion",
-      "50000;Enchanted Lapis Block",
-      "100000;Titanic Experience Bottle",
-      "150000;Experience Artifact",
-      "250000;Textbook"
+      "name": "Lapis Lazuli",
+      "material": "INK_SACK",
+      "data": 4,
+      "rewards": [
+        "2&9Lapis Minion &7Recipe",
+        "500;&fExperience Bottle &7Recipe",
+        "1000;&fEnchanted Book (Experience II) &7Recipe",
+        "2000;&aEnchanted Lapis Lazuli &7Recipe",
+        "10000;&aGrand Experience Bottle &7Recipe",
+        "25000;&9Experience Potion &7Recipe",
+        "50000;&9Enchanted Lapis Block &7Recipe",
+        "100000;&9Titanic Experience Bottle &7Recipe",
+        "150000;&5Experience Artifact &7Recipe",
+        "250000;&6Textbook &7Recipe"
+      ]
     },
     {
       "ID": "Nether Quartz",
