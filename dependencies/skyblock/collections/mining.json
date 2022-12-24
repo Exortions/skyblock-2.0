@@ -95,13 +95,13 @@
       "data": 0,
       "rewards": [
         "50;&9Glowstone Minion &7Recipes",
-        "100;&fPortal to Blazing Fortress &7Recipe",
-        "250;&8+&375 Mining Experience",
+        "100;&fPortal to the Blazing Fortress &7Recipe",
+        "250;&8+&375 &7Mining Experience",
         "1000;&aEnchanted Glowstone Dust &7Recipe",
-        "2000;&9Travel Scroll to Blazing Fortress &7Recipe",
+        "2000;&9Travel Scroll to the Blazing Fortress &7Recipe",
         "5000;&aEnchanted Glowstone &7Recipe",
         "10000;&9Enchanted Redstone Lamp &7Recipe",
-        "50000;&8+&315000 Mining Experience"
+        "50000;&8+&315000 &7Mining Experience"
       ],
       "commands": []
     },
@@ -129,13 +129,13 @@
       "rewards": [
         "50;&9Gravel Minion &7Recipes",
         "100;&fFlint Shovel &7Recipe",
-        "250;&fPortal to Spider's Den &7Recipe",
+        "250;&fPortal to the Spiders Den &7Recipe",
         "1000;&fEnchanted Book (Sharpness IV) &7Recipe",
         "2000;&aEnchanted Flint &7Recipe",
         "5000;&fEnchanted Book (First Strike III) &7Recipe",
         "10000;&4Critical Potion &7Recipe",
-        "15000;&9Travel Scroll to Spider's Den &7Recipe",
-        "50000;&8+&35000; &3Mining Experience &7Recipe"
+        "15000;&9Travel Scroll to the Spiders Den &7Recipe",
+        "50000;&8+&35000 &7Mining Experience"
       ],
       "commands": []
     },
@@ -146,7 +146,7 @@
       "rewards": [
         "50;&9Ice Minion &7Recipes",
         "100;&fEnchanted Book (Frost Walker I) &7Recipe",
-        "250;&Packed Ice &7Recipe",
+        "250;&fPacked Ice &7Recipe",
         "500;&aEnchanted Ice &7Recipe",
         "1000;&fMagical Water Bucket &7Recipe",
         "5000;&aIce Bait &7Recipe",
@@ -163,7 +163,7 @@
       "data": 0,
       "rewards": [
         "50;&9Iron Minion &7Recipes",
-        "100;&fGolem Hat &7Recipe",
+        "100;&fGolem Hat &8(&4COMING &4SOON&8)",
         "250;&fEnchanted Book (Protection IV) &7Recipe",
         "1000;&aEnchanted Iron &7Recipe",
         "2000;&aBudget Hopper &7Recipe",
@@ -216,9 +216,7 @@
       "rewards": [
         "50;&fNether Wart Island &7Recipe",
         "250;&4Wounded Potion &7Recipe",
-        "500;&fNether Brick &7Trade",
-        "1000;&aEnchanted Netherrack &7Recipe",
-        "5000;&aMagical Lava Bucket &7Recipe"
+        "500;&fNether Brick &7Trade"
       ],
       "commands": []
     },
@@ -250,7 +248,7 @@
         "1000;&aEnchanted Redstone &7Recipe",
         "3000;&aWeather Stick &7Recipe",
         "5000;&aMedium Accessory Bag Upgrade",
-        "10000;&9Travel Scroll to Deep Caverns &7Recipe",
+        "10000;&9Travel Scroll to the Deep Caverns &7Recipe",
         "25000;&9Enchanted Redstone Block &7Recipe",
         "50000;&aLarge Accessory Bag Upgrade",
         "200000;&aGreater Accessory Bag Upgrade",
