@@ -59,9 +59,9 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.LOG_2, forests);
         put(Material.LEAVES, forests);
         put(Material.LEAVES_2, forests);
-        put(Material.YELLOW_FLOWER, forests);
-        put(Material.RED_ROSE, forests);
-        put(Material.DOUBLE_PLANT, forests);
+        put(Material.YELLOW_FLOWER, new String[]{"Forest", "The Park", "Flower House"});
+        put(Material.RED_ROSE, new String[]{"Forest", "The Park", "Flower House"});
+        put(Material.DOUBLE_PLANT, new String[]{"Forest", "The Park", "Flower House"});
         put(Material.STONE, mines);
         put(Material.COBBLESTONE, mines);
         put(Material.IRON_ORE, mines);
@@ -78,7 +78,7 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.OBSIDIAN, new String[]{"The End"});
         put(Material.ENDER_STONE, new String[]{"The End"});
         put(Material.CROPS, farms);
-        put(Material.CARROT, farms);
+        put(Material.CARROT, new String[] { "Farm", "The Barn", "Mushroom Desert", "Mountain" });
         put(Material.POTATO, farms);
         put(Material.PUMPKIN, farms);
         put(Material.MELON_BLOCK, farms);
