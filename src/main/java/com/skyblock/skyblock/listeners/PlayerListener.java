@@ -80,8 +80,8 @@ public class PlayerListener implements Listener {
 
             skyblockPlayer.tick();
 
-            IChatBaseComponent header = new ChatComponentText(ChatColor.AQUA + "You are playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET");
-            IChatBaseComponent footer = new ChatComponentText(ChatColor.GREEN + "Ranks, Boosters, & MORE! " + ChatColor.RED + "" + ChatColor.BOLD + "STORE.HYPIXEL.NET");
+            IChatBaseComponent header = new ChatComponentText(ChatColor.AQUA + "You are" + ChatColor.RED + " " + ChatColor.BOLD + "NOT" + ChatColor.RESET + " " +  ChatColor.AQUA + "playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET");
+            IChatBaseComponent footer = new ChatComponentText(ChatColor.RED + "" + ChatColor.BOLD + "NO" + ChatColor.RESET + " " + ChatColor.GREEN + "Ranks, Boosters, & MORE!");
 
             PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
 
