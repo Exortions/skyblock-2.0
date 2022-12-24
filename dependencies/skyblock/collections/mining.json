@@ -182,16 +182,20 @@
       ]
     },
     {
-      "ID": "Nether Quartz",
-      "&9Quartz Minion &7Recipe",
-      "100;Night Saver",
-      "250;Day Saver",
-      "1000;Enchanted Quartz",
-      "2000;Minion Expander",
-      "5000;Enchanted Quartz Block",
-      "10000;Night Crystal",
-      "25000;Day Crystal",
-      "50000;Solar Panel"
+      "name": "Nether Quartz",
+      "material": "QUARTZ",
+      "data": 0,
+      "rewards": [
+        "&9Quartz Minion &7Recipe",
+        "100;&aNight Saver &7Recipe",
+        "250;&aDay Saver &7Recipe",
+        "1000;&aEnchanted Quartz &7Recipe",
+        "2000;&9Minion Expander &7Recipe",
+        "5000;&9Enchanted Quartz Block &7Recipe",
+        "10000;&9Night Crystal &7Recipe",
+        "25000;&9Day Crystal &7Recipe",
+        "50000;&aSolar Panel &7Recipe"
+      ]
     },
     {
       "ID": "Netherrack",
