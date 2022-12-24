@@ -241,9 +241,6 @@ public class Collection {
                         requirements.add(result);
                     }
 
-                    CraftingGUI.needsUnlocking.addAll(requirements);
-                    Bukkit.getConsoleSender().sendMessage(requirements + "");
-
                     CollectionRewards collectionRewards = new CollectionRewards(rewardsArray);
 
                     Collection generated = new Collection(name, material, data, category, levelToExp.length, collectionRewards, levelToExp);
