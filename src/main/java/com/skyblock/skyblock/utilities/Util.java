@@ -664,7 +664,7 @@ public class Util {
     public ItemStack toSkyblockItem(ItemStack item) {
         Skyblock plugin = Skyblock.getPlugin();
 
-        if (item == null) return null;
+        if (!notNull(item)) return null;
 
         NBTItem nbt = new NBTItem(item);
         if (nbt.getBoolean("skyblockItem")) return item;

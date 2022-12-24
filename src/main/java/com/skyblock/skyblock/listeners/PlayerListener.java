@@ -436,7 +436,7 @@ public class PlayerListener implements Listener {
     public void onCreative(InventoryCreativeEvent e) {
         ItemStack item = e.getCursor();
 
-        if (item == null) return;
+        if (!Util.notNull(item)) return;
 
         ItemStack clone = Util.toSkyblockItem(item).clone();
         clone.setAmount(item.getAmount());
