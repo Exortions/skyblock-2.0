@@ -2,6 +2,7 @@ package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.potions.PotionEffect;
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
@@ -9,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.potion.PotionType;
 
 public class PotionListener implements Listener {
 
@@ -28,6 +28,13 @@ public class PotionListener implements Listener {
 
         if (SkyblockPlayer.getPlayer(event.getPlayer()).hasEffect(type)) {
             event.getPlayer().sendMessage(ChatColor.WHITE + "You already have " + PotionEffect.getMaxLevelsAndColors.get(type).getThird() + WordUtils.capitalize(type) + ChatColor.WHITE + " active!");
+
+            Util.delay(() -> {
+                for (org.bukkit.potion.PotionEffect effect : event.getPlayer().getActivePotionEffects()) {
+                    event.getPlayer().removePotionEffect(effect.getType());
+                }
+            }, 3);
+
             return;
         }
 
@@ -37,9 +44,11 @@ public class PotionListener implements Listener {
 
         event.getPlayer().setItemInHand(null);
 
-        for (PotionType t : PotionType.values()) {
-            event.getPlayer().removePotionEffect(t.getEffectType());
-        }
+        Util.delay(() -> {
+            for (org.bukkit.potion.PotionEffect effect : event.getPlayer().getActivePotionEffects()) {
+                event.getPlayer().removePotionEffect(effect.getType());
+            }
+        }, 3);
     }
 
 }
