@@ -16,7 +16,6 @@ public class RegenerateCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        try {
             ItemBase base = new ItemBase(player.getItemInHand());
 
             base.regenerate();
@@ -24,8 +23,5 @@ public class RegenerateCommand implements Command {
             player.sendMessage(plugin.getPrefix() + ChatColor.GREEN + "Successfully regenerated item!");
 
             player.setItemInHand(base.getStack());
-        } catch (Exception ex) {
-            player.sendMessage(ChatColor.RED + "You must be holding a Skyblock item to regenerate it!");
-        }
     }
 }

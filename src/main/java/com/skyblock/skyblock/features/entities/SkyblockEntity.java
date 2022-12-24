@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.entities;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.event.SkyblockEntityDeathEvent;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -10,6 +11,7 @@ import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -197,25 +199,8 @@ public abstract class SkyblockEntity {
 
             SkyblockPlayer lastDamager = getLastDamager();
             boolean hasTelekinesis = lastDamager.hasTelekinesis();
-            ItemStack inHand = lastDamager.getBukkitPlayer().getItemInHand();
-            try {
-                ItemBase item = new ItemBase(inHand);
 
-                if (item.getSkyblockId().equals("raider_axe")) {
-                    NBTItem nbtItem = new NBTItem(item.getStack());
-                    int kills = nbtItem.getInteger("raider_axe_kills");
-                    item.addNbt("raider_axe_kills", kills + 1);
-
-                    ItemBase regenerated = item.regenerate();
-                    ItemStack stack = regenerated.getStack();
-                    NBTItem nbt = new NBTItem(stack);
-                    nbt.setInteger("raider_axe_kills", kills + 1);
-
-                    regenerated.setStack(nbt.getItem());
-
-                    lastDamager.getBukkitPlayer().setItemInHand(regenerated.getStack());
-                }
-            } catch (Exception ignored) {}
+            Bukkit.getPluginManager().callEvent(new SkyblockEntityDeathEvent(this, lastDamager));
 
             for (EntityDrop drop : getDrops()) {
                 EntityDropRarity type = drop.getRarity();

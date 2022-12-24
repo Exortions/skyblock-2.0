@@ -56,7 +56,12 @@ public class ItemNBTCommand implements Command {
 
             try {
                 ItemBase base = new ItemBase(item.getItem());
-                player.setItemInHand(base.createStack());
+                if (base.regenerate()) {
+                    player.setItemInHand(base.getStack());
+                    return;
+                }
+
+                player.setItemInHand(base.getStack());
                 return;
             } catch (IllegalArgumentException ignored) {}
 

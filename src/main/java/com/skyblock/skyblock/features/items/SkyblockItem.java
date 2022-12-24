@@ -4,6 +4,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Getter;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -51,6 +52,10 @@ public abstract class SkyblockItem {
 
     public void onBlockBreak(BlockBreakEvent event) {
         throw new UnsupportedOperationException("This item does not support breaking blocks");
+    }
+
+    public void onRegenerate(ItemBase item) {
+        throw new UnsupportedOperationException("This item does not support regeneration");
     }
 
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {

@@ -8,6 +8,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.CriticalEnchantment;
+import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.features.reforge.ReforgeStat;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -576,18 +577,17 @@ public class ItemBase {
         this.stack = item.getItem();
     }
 
-    public ItemBase regenerate() {
-        if (this.dynamicGeneration != null) {
-            ItemBase item = dynamicGeneration.apply(this);
+    public boolean regenerate() {
+        SkyblockItemHandler handler = Skyblock.getPlugin().getSkyblockItemHandler();
+        if (handler != null) {
+            if (handler.isRegistered(orig)) {
+                handler.getRegistered(orig).onRegenerate(this);
 
-            if (item != null) {
-                item.createStack();
-
-                return item;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
 }
