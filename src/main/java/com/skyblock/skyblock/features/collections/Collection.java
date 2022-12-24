@@ -10,6 +10,7 @@ import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
@@ -93,6 +94,7 @@ public class Collection {
 
             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "  COLLECTION UNLOCKED " + ChatColor.YELLOW + this.name);
 
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 2);
             return true;
         }
 
@@ -116,6 +118,8 @@ public class Collection {
             builder.add("&e&l" + Constants.COLLECTION_SEPERATOR);
 
             builder.build(player);
+
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         }
 
         return true;

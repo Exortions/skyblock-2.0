@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.commands.menu;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.features.crafting.CraftingGUI;
+import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
