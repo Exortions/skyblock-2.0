@@ -75,6 +75,8 @@ import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
@@ -144,6 +146,28 @@ public final class Skyblock extends JavaPlugin {
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc remove all");
 
+        File cacheFile = new File(getDataFolder(), ".cache.yml");
+        FileConfiguration cache = YamlConfiguration.loadConfiguration(cacheFile);
+
+        List<String> oldRemoveables = cache.getStringList("removeables");
+
+        List<Entity> entities = Bukkit.getWorld(getSkyblockWorld().getName()).getEntities();
+
+        for (String old : oldRemoveables) {
+            UUID uuid = UUID.fromString(old);
+
+            if (entities.stream().noneMatch(entity -> entity.getUniqueId().equals(uuid))) continue;
+
+            entities.stream().filter(entity -> entity.getUniqueId().equals(uuid)).findFirst().ifPresent(Entity::remove);
+        }
+
+        cache.set("removeables", new ArrayList<>());
+        try {
+            cache.save(cacheFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         this.removeables = new ArrayList<>();
 
         this.initializeServerData();
@@ -200,15 +224,25 @@ public final class Skyblock extends JavaPlugin {
         this.fairySoulHandler.killAllSouls();
 
         int i = 0;
-        for (Entity entity : removeables) {
-            while (!entity.getLocation().getChunk().isLoaded()) {
-                entity.getLocation().getChunk().load(false);
-            }
 
-            ((CraftEntity) entity).getHandle().setInvisible(true);
-            entity.teleport(new Location(entity.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
-            entity.remove();
+        File cacheFile = new File(this.getDataFolder(), ".cache.yml");
+        FileConfiguration cache = YamlConfiguration.loadConfiguration(cacheFile);
+
+        List<String> removeablesList = new ArrayList<>();
+
+        for (Entity entity : removeables) {
+            UUID uuid = entity.getUniqueId();
+
+            removeablesList.add(uuid.toString());
+
             i++;
+        }
+
+        cache.set("removeables", removeablesList);
+        try {
+            cache.save(cacheFile);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         sendMessage(String.format("Removed %s Entities", i));
