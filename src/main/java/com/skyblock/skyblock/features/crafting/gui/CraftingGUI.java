@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.crafting.gui;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.event.SkyblockCraftEvent;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
@@ -20,20 +21,24 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
     private static final ItemStack recipeRequired = new ItemBuilder(ChatColor.RED + "Recipe Required", Material.BARRIER).toItemStack();
-
+    public static final List<String> needsUnlocking = new ArrayList<>();
     private final List<Integer> slots = Arrays.asList(10, 11, 12, 19, 20, 21, 28, 29, 30);
     private final BukkitRunnable task;
+    private Player opener;
     private SkyblockRecipe recipe;
     private List<Integer> excess;
 
     public CraftingGUI(Player opener) {
         super(null, 54, "Crafting Table");
+
+        this.opener = opener;
 
         Util.fillEmpty(this);
         updateStatus(false);
@@ -60,6 +65,8 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
         RecipeHandler handler = Skyblock.getPlugin(Skyblock.class).getRecipeHandler();
         StringBuilder string = new StringBuilder("[");
         StringBuilder ignoreAmount = new StringBuilder("[");
+
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(opener);
 
         setItem(23, recipeRequired);
         updateStatus(false);
@@ -96,7 +103,11 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
         String shapeless = string.toString().replaceAll(", AIR", "").replaceAll("AIR", "");
 
+        List<String> unlocked = (List<String>) skyblockPlayer.getValue("recipes.unlocked");
+
         handler.getRecipes().forEach(recipe -> {
+            if (!unlocked.contains(Util.getSkyblockId(recipe.getResult())) && needsUnlocking.contains(Util.getSkyblockId(recipe.getResult()))) return;
+
             if (recipe.toShapeless().equals(shapeless)) {
                 setItem(23, recipe.getResult());
                 updateStatus(true);

@@ -2,6 +2,8 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.collections.gui.CollectionRewardGUI;
+import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
@@ -119,6 +121,17 @@ public class Collection {
 
             builder.build(player);
 
+            List<String> recipeRewards = new ArrayList<>();
+            List<String> unlocked = (List<String>) skyblockPlayer.getValue("recipes.unlocked");
+
+            for (String reward : rewards.stringify(level + 1)) {
+                String stripColor = ChatColor.stripColor(reward);
+                if (reward.endsWith("Recipe")) recipeRewards.add(stripColor.substring(2, stripColor.length() - 7).toUpperCase().replaceAll(" ", "_"));
+            }
+
+            unlocked.addAll(recipeRewards);
+            skyblockPlayer.setValue("recipes.unlocked", unlocked);
+
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         }
 
@@ -209,6 +222,15 @@ public class Collection {
 
                         rewardsArray[i] = new CollectionRewards.Reward(reward, command, level);
                     }
+
+                    List<String> requirements = new ArrayList<>();
+
+                    for (CollectionRewards.Reward reward : rewardsArray) {
+                        String stripColor = ChatColor.stripColor(reward.getName());
+                        if (reward.getName().endsWith("Recipe")) requirements.add(stripColor.substring(2, stripColor.length() - 7).toUpperCase().replaceAll(" ", "_"));
+                    }
+
+                    CraftingGUI.needsUnlocking.addAll(requirements);
 
                     CollectionRewards collectionRewards = new CollectionRewards(rewardsArray);
 

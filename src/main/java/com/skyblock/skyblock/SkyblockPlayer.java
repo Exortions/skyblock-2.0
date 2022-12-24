@@ -656,6 +656,8 @@ public class SkyblockPlayer {
 
                 config.set("potions.active", new HashMap<>());
 
+                config.set("recipes.unlocked", new ArrayList<>());
+
                 config.save(configFile);
 
                 Bukkit.getConsoleSender().sendMessage("Config finished: " + config + "");
