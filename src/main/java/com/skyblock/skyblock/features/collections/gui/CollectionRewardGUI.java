@@ -42,6 +42,8 @@ public class CollectionRewardGUI extends Gui {
         int start = 23 - recipes.size();
 
         for (String recipe : recipes) {
+            if (recipe.contains("Mystery")) recipe = recipe.replace("Mystery ", "").replace(" Pet", "") + ";4";
+
             ItemStack neu = Skyblock.getPlugin().getItemHandler().getItem(recipe.toUpperCase().replace(" ", "_") + ".json");
             ItemStack edit = neu.clone();
             ItemMeta meta = edit.getItemMeta();

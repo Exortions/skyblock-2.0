@@ -9,10 +9,10 @@
   				"50;&9Blaze Minion &7Recipes",
   				"250;&fEnchanted Book (Fire Aspect I) &7Recipe",
   				"1000;&aEnchanted Blaze Powder &7Recipe",
-  				"2500;&fFire Talisman &7Recipe\n  &9Blaze Belt &7Recipe",
+  				"2500;&fFire Talisman &7Recipe",
   				"5000;&fEnchanted Book (Flame I) &7Recipe",
-  				"10000;&aEnchanted Blaze Rod &7Recipe\n  &9Blaze Wax &7Recipe",
-  				"25000;&5Blaze Helmet &7Recipe\n  &5Blaze Chestplate &7Recipe\n  &5Blaze Leggins &7Recipe\n  &5Blaze Boots &7Recipe\n  &5Vanquished Blaze Belt &7Recipe",
+  				"10000;&aEnchanted Blaze Rod &7Recipe",
+  				"25000;&5Blaze Helmet &7Recipe\n  &5Blaze Chestplate &7Recipe\n  &5Blaze Leggins &7Recipe\n  &5Blaze Boots &7Recipe",
   				"50000;&9Mystery Blaze Pet &7Recipe"
   			],
   			"commands": []
@@ -29,9 +29,8 @@
   				"1000;&aEnchanted Bone &7Recipe",
   				"5000;&9Mystery Skeleton Pet &7Recipe",
   				"10000;&5Hurricane Bow &7Recipe",
-  				"25000;&9Skeleton's Helmet &7Recipe",
-  				"50000;&6Runaan's Bow &7Recipe",
-  				"150000;&9Enchanted Bone Block &7Recipe"
+  				"25000;&9Skeleton Helmet &7Recipe",
+  				"50000;&6Runaans Bow &7Recipe"
   			],
   			"commands": []
   		},
@@ -40,13 +39,13 @@
   			"material": "ENDER_PEARL",
   			"data": 0,
   			"rewards": [	
-  				"50;&9Ender Man Minion &7Recipes",
+  				"50;&9Enderman Minion &7Recipes",
   				"250;&aEnchanted Ender Pearl &7Recipe",
   				"1000;&fEnchanted Book (Ender Slayer IV) &7Recipe",
   				"2500;&5End Island &8(&4COMING SOON&8)",
   				"5000;&9Ender Bow &7Recipe",
   				"10000;&aEnchanted Eye of Ender &7Recipe",
-  				"15000;&aTeleport Pad &7Trade\n  &9Absolute Ender Pearl &7Recipe",
+  				"15000;&aTeleport Pad &7Trade",
   				"25000;&9Aspect of the End &7Recipe",
   				"50000;&9Saving Grace &7Recipe"
   			],
@@ -60,10 +59,8 @@
   				"20;&9Ghast Minion &7Recipes",
   				"250;&fEnchanted Book (Giant Killer IV) &7Recipe",
   				"1000;&aEnchanted Ghast Tear &7Recipe",
-  				"2500;&fEnchanted Book (Vampirism IV) &7Recipe\n  &9Ghast Cloak &7Recipe",
-  				"5000;&aSilver Fang &7Recipe",
-  				"10000;&9Meteor Shard &7Recipe",
-  				"25000;&5Vanquished Ghast Cloak &7Recipe"
+  				"2500;&fEnchanted Book (Vampirism IV) &7Recipe",
+  				"5000;&aSilver Fang &7Recipe"
   			],
   			"commands": []
   		},
@@ -91,12 +88,10 @@
   			"rewards": [
   				"50;&9Magma Cube Minion &7Recipes",
   				"250;&fEnchanted Book (Fire Protection IV) &7Recipe",
-  				"1000;&fNether Biome Stick &7Recipe\n  &aEnchanted Magma Cream &7Recipe",
-  				"2500;&9Magma Necklace &7Recipe",
+  				"1000;&aEnchanted Magma Cream &7Recipe",
+  				"2500;&fNether Biome Stick &7Recipe",
   				"5000;&fLava Bucket &7Trade",
-  				"10000;&aLava Talisman &7Recipe\n  &9Searing Stone &7Recipe",
-  				"25000;&5Vanquished Magma Necklace &7Recipe",
-  				"50000;&9Whipped Magma Cream &7Recipe"
+  				"10000;&aLava Talisman &7Recipe"
   			],
   			"commands": []
   		},
@@ -109,12 +104,11 @@
   				"100;&fZombie Pickaxe &7Recipe",
   				"250;&fEnchanted Book (Smite IV) &7Recipe",
   				"1000;&aEnchanted Rotten Flesh &7Recipe",
-  				"2500;&fZombie Hat &7Recipe\n  &aSmall Combat Sack &7Recipe",
-  				"5000;&9Zombie's Heart &7Recipe",
-  				"10000;&9Zombie Sword &7Recipe\n  &9Medium Combat Sack &7Recipe",
-  				"25000;&5Zombie Chestplate &7Recipe\n  &5Zombie Leggins &7Recipe\n  &5Zombie Boots &7Recipe",
-  				"50000;&9Mystery Zombie Pet &7Recipe\n  &5Large Combat Sack &7Recipe",
-  				"100000;&5Large Enchanted Combat Sack &7Recipe"
+  				"2500;&fZombie Hat &7Recipe",
+  				"5000;&9Zombie Heart &7Recipe",
+  				"10000;&9Zombie Sword &7Recipe",
+  				"25000;&5Zombie Chestplate &7Recipe\n  &5Zombie Leggings &7Recipe\n  &5Zombie Boots &7Recipe",
+  				"50000;&9Mystery Zombie Pet &7Recipe"
   			],
   			"commands": []
   		},
@@ -127,7 +121,7 @@
   				"100;&fSlime Hat &7Recipe",
   				"250;&fEnchanted Book (Knockback I) &7Recipe",
   				"1000;&4Knockback Potion &7Recipe",
-  				"2500;&aEnchanted Slimeball &7Recipe",
+  				"2500;&aEnchanted Slime Ball &7Recipe",
   				"5000;&fEnchanted Book (Punch I) &7Recipe",
   				"10000;&aLaunch Pad &7Recipe",
   				"25000;&9Enchanted Slime Block &7Recipe",
@@ -164,7 +158,7 @@
   				"2500;&fEnchanted Book (Silk Touch I) &7Recipe",
   				"5000;&fEnchanted Book (Infinite Quiver IV) &7Recipe\n  &aLarge Quiver Upgrade",
   				"10000;&aGrappling Hook &7Recipe",
-  				"25000;&9Spider's Boots",
+  				"25000;&9Spider Boots",
   				"50000;&9Mystery Spider Pet &7Recipe\n  &aGiant Quiver Upgrade"
   			],
   			"commands": []
