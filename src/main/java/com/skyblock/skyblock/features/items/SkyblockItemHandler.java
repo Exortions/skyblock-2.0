@@ -54,6 +54,7 @@ public class SkyblockItemHandler {
         registerItem(new MidasSword());
         registerItem(new RaiderAxe());
         registerItem(new EmeraldBlade());
+        registerItem(new Cleaver());
 
         // Bows
         registerItem(new RunaansBow());

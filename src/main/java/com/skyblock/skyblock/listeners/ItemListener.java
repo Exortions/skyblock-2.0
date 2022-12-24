@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.event.SkyblockAbilityTriggerEvent;
+import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -67,6 +68,19 @@ public class ItemListener implements Listener {
                         handler.getRegistered(item).onEntityDamage(e);
                     }
                 }
+            }
+        } catch (UnsupportedOperationException ignored) { }
+    }
+
+    @EventHandler
+    public void onDamage(SkyblockEntityDamageByPlayerEvent e){
+        try {
+            Player player = e.getPlayer().getBukkitPlayer();
+
+            ItemStack item = player.getItemInHand();
+
+            if (handler.isRegistered(item)) {
+                handler.getRegistered(item).onEntityDamage(e);
             }
         } catch (UnsupportedOperationException ignored) { }
     }
