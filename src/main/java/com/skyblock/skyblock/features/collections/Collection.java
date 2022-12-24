@@ -27,14 +27,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 public class Collection {
 
+    public static final HashMap<String, List<String>> recipes = new HashMap<String, List<String>>() {{
+        put("Farming", new ArrayList<>());
+        put("Mining", new ArrayList<>());
+        put("Combat", new ArrayList<>());
+        put("Foraging", new ArrayList<>());
+        put("Fishing", new ArrayList<>());
+    }};
     private final HashMap<Integer, Integer> levelToExp;
     private final CollectionRewards rewards;
     private final Material material;
@@ -231,15 +235,23 @@ public class Collection {
                     }
 
                     List<String> requirements = new ArrayList<>();
+                    List<String> collectionRecipes = recipes.get(category);
 
                     for (CollectionRewards.Reward reward : rewardsArray) {
-                        String stripColor = ChatColor.stripColor(reward.getName());
-                        if (!stripColor.endsWith("Recipe")) continue;
-                        String result = stripColor.replace(" Recipe", "").toUpperCase().replaceAll(" ", "_");
-                        result = result.replace("__", "");
+                        for (String s : reward.getName().split("\n  ")) {
+                            String stripColor = ChatColor.stripColor(s);
+                            if (!stripColor.endsWith("Recipe")) continue;
+                            String result = stripColor.replace(" Recipe", "").toUpperCase().replaceAll(" ", "_");
+                            result = result.replace("__", "");
 
-                        requirements.add(result);
+                            requirements.add(result);
+                        }
                     }
+
+                    collectionRecipes.addAll(requirements);
+                    CraftingGUI.needsUnlocking.addAll(requirements);
+
+                    recipes.put(category, collectionRecipes);
 
                     CollectionRewards collectionRewards = new CollectionRewards(rewardsArray);
 

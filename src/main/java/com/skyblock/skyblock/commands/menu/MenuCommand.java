@@ -7,6 +7,7 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
+import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
@@ -28,6 +29,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @RequiresPlayer
@@ -54,7 +56,7 @@ public class MenuCommand implements Command {
         }
 
         ItemStack collection = this.getCollectionItem(unlockedCollections, totalCollections);
-        ItemStack recipeBook = this.createRecipeBookItem();
+        ItemStack recipeBook = this.createRecipeBookItem(skyblockPlayer);
         ItemStack trades = this.createTradesItem();
         ItemStack questLog = this.createQuestLogItem();
         ItemStack calendarAndEvents = this.createCalendarItem();
@@ -164,7 +166,19 @@ public class MenuCommand implements Command {
                 .toItemStack();
     }
 
-    public ItemStack createRecipeBookItem() {
+    public static ItemStack createRecipeBookItem(SkyblockPlayer skyblockPlayer) {
+        int unlocked = ((List<String>) skyblockPlayer.getValue("recipes.unlocked")).size();
+        int total = CraftingGUI.needsUnlocking.size();
+
+        double percent = Math.round((double) unlocked / (double) total * 1000) / 10.0;
+
+        int barLength = 20;
+        int barPercentPerBlock = 100 / barLength;
+        int barFilled = (int) Math.round(percent / barPercentPerBlock);
+        int barEmpty = barLength - barFilled;
+
+        String bar = ChatColor.DARK_GREEN + StringUtils.repeat("-", barFilled) + ChatColor.WHITE + StringUtils.repeat("-", barEmpty);
+
         return new ItemBuilder(
                 ChatColor.GREEN + "Recipe Book",
                 Material.BOOK)
@@ -175,8 +189,8 @@ public class MenuCommand implements Command {
                         ChatColor.GRAY + "special items! You can view how",
                         ChatColor.GRAY + "to craft these items here.",
                         "",
-                        ChatColor.GRAY + "Recipe Book Unlocked: " + ChatColor.YELLOW + "38.4" + ChatColor.GOLD + "%",
-                        ChatColor.DARK_GREEN + "" + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.WHITE + ChatColor.BOLD + ChatColor.STRIKETHROUGH + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + ChatColor.YELLOW + " 324" + ChatColor.GOLD + "/" + ChatColor.YELLOW + "844",
+                        ChatColor.GRAY + "Recipe Book Unlocked: " + ChatColor.YELLOW + percent + ChatColor.GOLD + "%",
+                        bar + ChatColor.YELLOW + " " + unlocked + ChatColor.GOLD + "/" + ChatColor.YELLOW + total,
                         "",
                         ChatColor.YELLOW + "Click to view!"
                 )

@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.collections;
 
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -45,7 +46,9 @@ public class CollectionRewards {
         List<String> list = new ArrayList<>();
 
         for (Reward reward : this.getReward(tier)) {
-            list.add("&7  " + reward.getName());
+            for (String s : reward.getName().split("\n  ")) {
+                list.add("&7  " + s);
+            }
         }
 
         return list;
