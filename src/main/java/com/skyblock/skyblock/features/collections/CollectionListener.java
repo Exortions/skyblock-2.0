@@ -119,7 +119,7 @@ public class CollectionListener implements Listener {
                     return;
                 }
 
-                player.performCommand("sb collection " + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase().replace(" ", "_"));
+                player.performCommand("sb collection " + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType()) && col.getData() == item.getDurability()).findFirst().get().getName().toLowerCase().replace(" ", "_"));
             }
         }
 

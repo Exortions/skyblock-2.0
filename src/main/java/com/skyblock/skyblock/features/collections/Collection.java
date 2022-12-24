@@ -67,10 +67,6 @@ public class Collection {
         for (int i = 0; i < levelToExp.length; i++) this.levelToExp.put(i, levelToExp[i]);
     }
 
-    public String getName() {
-        return name + ":" + data;
-    }
-
     public boolean collect(Player player, int amount, ItemStack stack) {
         NBTItem item;
 
