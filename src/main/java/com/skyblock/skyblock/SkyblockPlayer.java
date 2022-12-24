@@ -2,6 +2,7 @@ package com.skyblock.skyblock;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.event.SkyblockCoinsChangeEvent;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.features.auction.gui.AuctionCreationGUI;
@@ -550,6 +551,8 @@ public class SkyblockPlayer {
     public void setValue(String path, Object item) {
         dataCache.put(path, item);
         forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
+
+        if (path.equalsIgnoreCase("stats.purse")) Bukkit.getPluginManager().callEvent(new SkyblockCoinsChangeEvent(this));
     }
 
     public void saveToDisk() {
