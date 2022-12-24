@@ -261,6 +261,8 @@ public class Util {
     }
 
     public void setDamageIndicator(final Location loc, final String displayname, boolean format) {
+        if (ChatColor.stripColor(displayname).equals("0")) return;
+
         double randomX = Math.random();
         double randomY = Math.random();
         double randomZ = Math.random();
