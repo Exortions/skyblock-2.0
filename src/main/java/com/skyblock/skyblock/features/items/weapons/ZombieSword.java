@@ -46,7 +46,7 @@ public class ZombieSword extends SkyblockItem {
 
         if (!player.checkMana(70)) return;
 
-        int health = (int) (player.getStat(SkyblockStat.HEALTH) * 0.05);
+        int health = 120 + (int) (player.getStat(SkyblockStat.HEALTH) * 0.05);
         player.setStat(SkyblockStat.HEALTH, Math.min(player.getStat(SkyblockStat.HEALTH) + health, player.getStat(SkyblockStat.MAX_HEALTH)));
 
         List<Player> nearby = event.getPlayer().getNearbyEntities(7, 7, 7).stream().filter(e -> e instanceof Player).map(e -> (Player) e).collect(Collectors.toList());
