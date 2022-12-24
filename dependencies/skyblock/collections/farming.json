@@ -77,7 +77,7 @@
       "data": 0,
       "rewards": [
         "50;&fCow Minion &7Recipes",
-        "100;&fCow Head &7Recipe;&fMilk Bucket &7Trade",
+        "100;&fCow Head &7Recipe\n  &fMilk Bucket &7Trade",
         "250;&aSmall Backpack &7Recipe",
         "1000;&aEnchanted Raw Beef &7Recipe",
         "2500;&9Medium Backpack &7Recipe",

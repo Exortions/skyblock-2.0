@@ -11,10 +11,10 @@
         "250;&fPortal to the Savanna Woodland &7Recipe",
         "500;&fSuper Torch &8(&4COMING &4SOON&8)",
         "1000;&fSavanna Biome Stick &7Recipe",
-        "2000;",
-        "5000;",
-        "10000;",
-        "250000;"
+        "2000;&aEnchanted Acacia Wood &7Recipe",
+        "5000;&aSavanna Bow &7Recipe",
+        "10000;&8+&31000 &7Foraging Experience",
+        "250000;&aRepelling Candle &7Recipe"
       ],
       "commands": []
     },
@@ -23,15 +23,14 @@
       "material": "LOG",
       "data": 2,
       "rewards": [
-        "50;Birch Minion &7Recipes",
-        "100;",
-        "250;",
-        "500;",
-        "1000;",
-        "2000;",
-        "5000;",
-        "10000;",
-        "250000;"
+        "50;&fBirch Minion &7Recipes",
+        "100;&fBirch Leaves &7Trade",
+        "250;&fPortal to the Birch Park &7Recipe",
+        "500;&fSculptors Axe &7Recipe",
+        "1000;&fBirch Forest Biome Stick &7Recipe",
+        "2000;&aEnchanted Birch Wood &7Recipe",
+        "5000;&9Woodcutting Crystal &7Recipe",
+        "10000;&9Travel Scroll to The Park &7Recipe"
       ],
       "commands": []
     },
@@ -40,15 +39,15 @@
       "material": "LOG_2",
       "data": 1,
       "rewards": [
-        "50;Dark Oak Minion &7Recipes",
-        "100;",
-        "250;",
-        "1000;",
-        "2000;",
-        "5000;",
-        "10000;",
-        "15000;",
-        "250000;"
+        "50;&fDark Oak Minion &7Recipes",
+        "100;&fDark Oak Leaves &7Trade",
+        "250;&fPortal to the Dark Thicket &7Recipe",
+        "1000;&fRoofed Forest Biome Stick &7Recipe",
+        "2000;&aEnchanted Dark Oak Wood &7Recipe",
+        "5000;&fRoofed Forest Island &7Recipe",
+        "10000;&fEnchanted Book (Growth IV) &7Recipe",
+        "15000;&8+&32500 &7Foraging Experience",
+        "250000;&9Growth Helmet &7Recipe\n  &9Growth Chestplate &7Recipe\n  &9Growth Leggings &7Recipe\n  &9Growth Boots &7Recipe"
       ],
       "commands": []
     },
@@ -57,15 +56,15 @@
       "material": "LOG",
       "data": 3,
       "rewards": [
-        "50;Jungle Minion &7Recipes",
-        "100;",
-        "250;",
-        "500;",
-        "1000;",
-        "2000;",
-        "5000;",
-        "10000;",
-        "250000;"
+        "50;&fJungle Minion &7Recipes",
+        "100;&fJungle Leaves &7Trade",
+        "250;&fPortal to the Jungle Island &7Recipe",
+        "500;&fVines &7Trade",
+        "1000;&fJungle Biome Stick &7Recipe",
+        "2000;&aEnchanted Jungle Wood &7Recipe",
+        "5000;&aJungle Axe &7Recipe",
+        "10000;&8+&31000 &7Foraging Experience",
+        "250000;&9Mystery Ocelot Pet &7Recipe"
       ],
       "commands": []
     },
@@ -74,15 +73,15 @@
       "material": "LOG",
       "data": 0,
       "rewards": [
-        "50;Oak Minion &7Recipes",
-        "100;",
-        "250;",
-        "500;",
-        "1000;",
-        "2000;",
-        "5000;",
-        "10000;",
-        "250000;"
+        "50;&fOak Minion &7Recipes",
+        "100;&fOak Leaves &7Trade",
+        "250;&fLeaflet Helmet &7Recipe\n  &fLeaflet Chestplate &7Recipe\n  &fLeaflet Leggings &7Recipe\n  &fLeaflet Boots &7Recipe",
+        "500;&fSmall Storage &7Recipe",
+        "1000;&fForest Biome Stick &7Recipe",
+        "2000;&aEnchanted Oak Wood &7Recipe",
+        "5000;&aMedium Storage &7Recipe",
+        "10000;&aWood Affinity Talisman &7Recipe",
+        "250000;&9Large Storage &7Recipe"
       ],
       "commands": []
     },
@@ -91,15 +90,15 @@
       "material": "LOG",
       "data": 1,
       "rewards": [
-        "50;Spruce Minion &7Recipes",
-        "100;",
-        "250;",
-        "1000;",
-        "2000;",
-        "5000;",
-        "10000;",
-        "25000;",
-        "50000;"
+        "50;&fSpruce Minion &7Recipes",
+        "100;&fSpruce Leaves &7Trade",
+        "250;&fPortal to the Spruce Woods &7Recipe",
+        "1000;&fTaiga Biome Stick &7Recipe",
+        "2000;&aEnchanted Spruce Wood &7Recipe",
+        "5000;&aSawmill &8(&4COMING &4SOON&8)",
+        "10000;&8+&31000 &7Foraging Experience",
+        "25000;&9Mystery Wolf Pet &7Recipe",
+        "50000;&8+&35000 &7Foraging Experience"
       ],
       "commands": []
     }
