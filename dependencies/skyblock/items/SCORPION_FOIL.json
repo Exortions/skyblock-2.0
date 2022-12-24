@@ -26,10 +26,10 @@
   ],
   "recipe": {
     "A1": "TARANTULA_SILK:4",
-    "A2": "ENCHANTED_ACACIA_LOG:64",
+    "A2": "ENCHANTED_ACACIA_WOOD:64",
     "A3": "TARANTULA_SILK:4",
     "B1": "TARANTULA_SILK:4",
-    "B2": "ENCHANTED_ACACIA_LOG:64",
+    "B2": "ENCHANTED_ACACIA_WOOD:64",
     "B3": "TARANTULA_SILK:4",
     "C1": "TARANTULA_SILK:4",
     "C2": "STICK:1",

@@ -1,7 +1,7 @@
 {
   "itemid": "minecraft:log",
   "displayname": "§aEnchanted Jungle Wood",
-  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Jungle Wood\"},ExtraAttributes:{id:\"ENCHANTED_JUNGLE_LOG\"}}",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Jungle Wood\"},ExtraAttributes:{id:\"ENCHANTED_JUNGLE_WOOD\"}}",
   "damage": 3,
   "lore": [
     "§a§lUNCOMMON"
@@ -17,7 +17,7 @@
     "C2": "LOG-3:32",
     "C3": ""
   },
-  "internalname": "ENCHANTED_JUNGLE_LOG",
+  "internalname": "ENCHANTED_JUNGLE_WOOD",
   "clickcommand": "viewrecipe",
   "modver": "1.0.0",
   "infoType": "WIKI_URL",

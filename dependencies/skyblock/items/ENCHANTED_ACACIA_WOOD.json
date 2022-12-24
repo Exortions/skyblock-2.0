@@ -1,7 +1,7 @@
 {
   "itemid": "minecraft:log2",
   "displayname": "§aEnchanted Acacia Wood",
-  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Acacia Wood\"},ExtraAttributes:{id:\"ENCHANTED_ACACIA_LOG\"}}",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Acacia Wood\"},ExtraAttributes:{id:\"ENCHANTED_ACACIA_WOOD\"}}",
   "damage": 0,
   "lore": [
     "§a§lUNCOMMON"
@@ -17,7 +17,7 @@
     "C2": "LOG_2:32",
     "C3": ""
   },
-  "internalname": "ENCHANTED_ACACIA_LOG",
+  "internalname": "ENCHANTED_ACACIA_WOOD",
   "clickcommand": "viewrecipe",
   "modver": "1.0.0",
   "infoType": "WIKI_URL",

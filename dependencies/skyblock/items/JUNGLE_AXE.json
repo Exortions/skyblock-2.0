@@ -13,11 +13,11 @@
   ],
   "recipe": {
     "A1": "",
-    "A2": "ENCHANTED_JUNGLE_LOG:1",
-    "A3": "ENCHANTED_JUNGLE_LOG:1",
+    "A2": "ENCHANTED_JUNGLE_WOOD:1",
+    "A3": "ENCHANTED_JUNGLE_WOOD:1",
     "B1": "",
     "B2": "STICK:1",
-    "B3": "ENCHANTED_JUNGLE_LOG:1",
+    "B3": "ENCHANTED_JUNGLE_WOOD:1",
     "C1": "",
     "C2": "STICK:1",
     "C3": ""

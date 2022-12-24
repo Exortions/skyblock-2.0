@@ -1,7 +1,7 @@
 {
   "itemid": "minecraft:log",
   "displayname": "§aEnchanted Oak Wood",
-  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Oak Wood\"},ExtraAttributes:{id:\"ENCHANTED_OAK_LOG\"}}",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Oak Wood\"},ExtraAttributes:{id:\"ENCHANTED_OAK_WOOD\"}}",
   "damage": 0,
   "lore": [
     "§a§lUNCOMMON"
@@ -17,7 +17,7 @@
     "C2": "LOG:32",
     "C3": ""
   },
-  "internalname": "ENCHANTED_OAK_LOG",
+  "internalname": "ENCHANTED_OAK_WOOD",
   "clickcommand": "viewrecipe",
   "modver": "1.0.0",
   "infoType": "WIKI_URL",
