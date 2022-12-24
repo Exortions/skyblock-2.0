@@ -573,9 +573,9 @@ public class SkyblockPlayer {
     }
 
     private void initConfig() {
-        File folder = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "Players");
+        File folder = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "players");
         if (!folder.exists())  folder.mkdirs();
-        configFile = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "Players" + File.separator + getBukkitPlayer().getUniqueId() + ".yml");
+        configFile = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "players" + File.separator + getBukkitPlayer().getUniqueId() + ".yml");
         this.config = YamlConfiguration.loadConfiguration(configFile);
         if (!configFile.exists()) {
             try {

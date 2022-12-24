@@ -306,45 +306,11 @@ public class ItemHandler {
             }
 
             if (r.equals(Rarity.LEGENDARY)) break;
+
         }
-
-        Function<Integer, Rarity> getRarityByPotionLevel = (level) -> {
-            if (level == 1 || level == 2) return Rarity.COMMON;
-            else if (level == 3 || level == 4) return Rarity.UNCOMMON;
-            else if (level == 5 || level == 6) return Rarity.RARE;
-            else return Rarity.EPIC;
-        };
-
         for (String pot : POTIONS) {
             for (int i = 0; i < PotionEffect.getMaxLevelsAndColors.get(pot).getFirst(); i++) {
-                int level = i + 1;
-
-                ItemStack stack = new Potion(PotionEffect.getMaxLevelsAndColors.get(pot).getSecond()).toItemStack(1);
-                PotionMeta meta = (PotionMeta) stack.getItemMeta();
-
-                Rarity rarity = getRarityByPotionLevel.apply(level);
-
-                meta.setDisplayName(rarity.getColor() + "" + WordUtils.capitalize(pot.replace("_", " ")) + " " + Util.toRoman(level) + " Potion");
-                meta.setLore(
-                        Arrays.asList(Util.buildLore(
-                                "\n" + PotionEffect.getMaxLevelsAndColors.get(pot).getThird() + "" + WordUtils.capitalize(pot.replace("_", " ")) + " " + Util.toRoman(level) + "&f (" + Util.asTime(12000) + ")\n" +
-                                        Skyblock.getPlugin().getPotionEffectHandler().createEffect(pot, null, level, 12000, true).getDescription() + "\n\n" +
-                                        rarity.coloredString(), '7'
-                        ))
-                );
-
-                meta.clearCustomEffects();
-                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ATTRIBUTES);
-
-                stack.setItemMeta(meta);
-
-                NBTItem nbtItem = new NBTItem(stack);
-                nbtItem.setBoolean("potion.is_potion", true);
-                nbtItem.setString("potion.type", pot);
-                nbtItem.setInteger("potion.amplifier", level);
-                nbtItem.setInteger("potion.duration", 12000);
-
-                items.put(pot + "_" + level, nbtItem.getItem());
+                items.put(pot + "_" + i + 1, Util.createPotion(pot, i + 1, 12000));
             }
         }
 
