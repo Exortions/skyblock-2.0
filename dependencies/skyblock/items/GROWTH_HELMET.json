@@ -21,12 +21,12 @@
     "§9§lRARE HELMET"
   ],
   "recipe": {
-    "A1": "ENCHANTED_DARK_OAK_LOG:64",
-    "A2": "ENCHANTED_DARK_OAK_LOG:64",
-    "A3": "ENCHANTED_DARK_OAK_LOG:64",
-    "B1": "ENCHANTED_DARK_OAK_LOG:64",
+    "A1": "ENCHANTED_DARK_OAK_WOOD:64",
+    "A2": "ENCHANTED_DARK_OAK_WOOD:64",
+    "A3": "ENCHANTED_DARK_OAK_WOOD:64",
+    "B1": "ENCHANTED_DARK_OAK_WOOD:64",
     "B2": "",
-    "B3": "ENCHANTED_DARK_OAK_LOG:64",
+    "B3": "ENCHANTED_DARK_OAK_WOOD:64",
     "C1": "",
     "C2": "",
     "C3": ""

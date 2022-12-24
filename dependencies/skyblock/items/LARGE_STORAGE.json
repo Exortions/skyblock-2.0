@@ -14,15 +14,15 @@
     "§9§lRARE"
   ],
   "recipe": {
-    "A1": "ENCHANTED_OAK_LOG:32",
-    "A2": "ENCHANTED_OAK_LOG:32",
-    "A3": "ENCHANTED_OAK_LOG:32",
-    "B1": "ENCHANTED_OAK_LOG:32",
+    "A1": "ENCHANTED_OAK_WOOD:32",
+    "A2": "ENCHANTED_OAK_WOOD:32",
+    "A3": "ENCHANTED_OAK_WOOD:32",
+    "B1": "ENCHANTED_OAK_WOOD:32",
     "B2": "MEDIUM_ENCHANTED_CHEST:1",
-    "B3": "ENCHANTED_OAK_LOG:32",
-    "C1": "ENCHANTED_OAK_LOG:32",
-    "C2": "ENCHANTED_OAK_LOG:32",
-    "C3": "ENCHANTED_OAK_LOG:32"
+    "B3": "ENCHANTED_OAK_WOOD:32",
+    "C1": "ENCHANTED_OAK_WOOD:32",
+    "C2": "ENCHANTED_OAK_WOOD:32",
+    "C3": "ENCHANTED_OAK_WOOD:32"
   },
   "internalname": "LARGE_ENCHANTED_CHEST",
   "clickcommand": "viewrecipe",

@@ -11,15 +11,15 @@
     "§a§lUNCOMMON"
   ],
   "recipe": {
-    "A1": "ENCHANTED_OAK_LOG:1",
-    "A2": "ENCHANTED_OAK_LOG:1",
-    "A3": "ENCHANTED_OAK_LOG:1",
+    "A1": "ENCHANTED_OAK_WOOD:1",
+    "A2": "ENCHANTED_OAK_WOOD:1",
+    "A3": "ENCHANTED_OAK_WOOD:1",
     "B1": "ENCHANTED_PAPER:2",
     "B2": "ENCHANTED_PAPER:2",
     "B3": "ENCHANTED_PAPER:2",
-    "C1": "ENCHANTED_OAK_LOG:1",
-    "C2": "ENCHANTED_OAK_LOG:1",
-    "C3": "ENCHANTED_OAK_LOG:1"
+    "C1": "ENCHANTED_OAK_WOOD:1",
+    "C2": "ENCHANTED_OAK_WOOD:1",
+    "C3": "ENCHANTED_OAK_WOOD:1"
   },
   "internalname": "ENCHANTED_BOOKSHELF",
   "clickcommand": "viewrecipe",

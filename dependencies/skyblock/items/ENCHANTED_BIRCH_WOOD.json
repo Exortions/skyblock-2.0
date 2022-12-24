@@ -1,7 +1,7 @@
 {
   "itemid": "minecraft:log",
   "displayname": "§aEnchanted Birch Wood",
-  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Birch Wood\"},ExtraAttributes:{id:\"ENCHANTED_BIRCH_LOG\"}}",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Birch Wood\"},ExtraAttributes:{id:\"ENCHANTED_BIRCH_WOOD\"}}",
   "damage": 2,
   "lore": [
     "§a§lUNCOMMON"
@@ -17,7 +17,7 @@
     "C2": "LOG-2:32",
     "C3": ""
   },
-  "internalname": "ENCHANTED_BIRCH_LOG",
+  "internalname": "ENCHANTED_BIRCH_WOOD",
   "clickcommand": "viewrecipe",
   "modver": "1.0.0",
   "infoType": "WIKI_URL",

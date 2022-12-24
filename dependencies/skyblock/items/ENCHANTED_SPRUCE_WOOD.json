@@ -1,7 +1,7 @@
 {
   "itemid": "minecraft:log",
   "displayname": "§aEnchanted Spruce Wood",
-  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Spruce Wood\"},ExtraAttributes:{id:\"ENCHANTED_SPRUCE_LOG\"}}",
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§a§lUNCOMMON\"],Name:\"§aEnchanted Spruce Wood\"},ExtraAttributes:{id:\"ENCHANTED_SPRUCE_WOOD\"}}",
   "damage": 1,
   "lore": [
     "§a§lUNCOMMON"
@@ -17,7 +17,7 @@
     "C2": "LOG-1:32",
     "C3": ""
   },
-  "internalname": "ENCHANTED_SPRUCE_LOG",
+  "internalname": "ENCHANTED_SPRUCE_WOOD",
   "clickcommand": "viewrecipe",
   "modver": "1.0.0",
   "infoType": "WIKI_URL",

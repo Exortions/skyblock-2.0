@@ -12,15 +12,15 @@
     "§7Effective Radius: §b12"
   ],
   "recipe": {
-    "A1": "ENCHANTED_BIRCH_LOG:12",
-    "A2": "ENCHANTED_BIRCH_LOG:12",
-    "A3": "ENCHANTED_BIRCH_LOG:12",
-    "B1": "ENCHANTED_BIRCH_LOG:12",
+    "A1": "ENCHANTED_BIRCH_WOOD:12",
+    "A2": "ENCHANTED_BIRCH_WOOD:12",
+    "A3": "ENCHANTED_BIRCH_WOOD:12",
+    "B1": "ENCHANTED_BIRCH_WOOD:12",
     "B2": "ENCHANTED_QUARTZ:1",
-    "B3": "ENCHANTED_BIRCH_LOG:12",
-    "C1": "ENCHANTED_BIRCH_LOG:12",
-    "C2": "ENCHANTED_BIRCH_LOG:12",
-    "C3": "ENCHANTED_BIRCH_LOG:12"
+    "B3": "ENCHANTED_BIRCH_WOOD:12",
+    "C1": "ENCHANTED_BIRCH_WOOD:12",
+    "C2": "ENCHANTED_BIRCH_WOOD:12",
+    "C3": "ENCHANTED_BIRCH_WOOD:12"
   },
   "internalname": "WOODCUTTING_CRYSTAL",
   "clickcommand": "viewrecipe",
