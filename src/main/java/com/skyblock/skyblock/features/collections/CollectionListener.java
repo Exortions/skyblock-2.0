@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CollectionListener implements Listener {
 
@@ -104,7 +105,13 @@ public class CollectionListener implements Listener {
             }
 
             if (Collection.getCollections().stream().anyMatch(col -> col.getMaterial().equals(item.getType()))) {
-                if (SkyblockPlayer.getPlayer(player).getValue("collection." + Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).findFirst().get().getName().toLowerCase() + ".unlocked").equals(false)) {
+                AtomicBoolean unlocked = new AtomicBoolean(false);
+
+                Collection.getCollections().stream().filter(col -> col.getMaterial().equals(item.getType())).forEach(col -> {
+                    if (SkyblockPlayer.getPlayer(player).getValue("collection." + col.getName().toLowerCase() + ".unlocked").equals(true)) unlocked.set(true);
+                });
+
+                if (!unlocked.get()) {
                     player.sendMessage(ChatColor.RED + "You have not unlocked this collection yet!");
 
                     event.setCancelled(true);
