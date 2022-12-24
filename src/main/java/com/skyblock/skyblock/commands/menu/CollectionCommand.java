@@ -215,12 +215,18 @@ public class CollectionCommand implements Command {
         int currentExp = 0;
         int nextLevel = currentLevel + 1;
         int requiredExp = 0;
+        boolean maxed = true;
 
         if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level") != null) {
             currentLevel = (int) skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".level");
             currentExp = (int) skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".exp");
             nextLevel = currentLevel + 1;
-            requiredExp = collection.getLevelToExp().get(currentLevel);
+            requiredExp = Integer.MAX_VALUE;
+
+            if (collection.getLevelToExp().containsKey(currentLevel)){
+                requiredExp = collection.getLevelToExp().get(currentLevel);
+                maxed = false;
+            }
         }
 
         String nameSuffix = currentLevel == 0 ? "" : " " + Util.toRoman(currentLevel);
@@ -242,7 +248,7 @@ public class CollectionCommand implements Command {
                 Util.buildLore("&7View all of your " + collection.getName() + " Collection\n&7progress and rewards!")
         );
 
-        if (!inItemMenu) {
+        if (!inItemMenu && !maxed) {
             builder.addLore(
                     Util.buildLore("\n&7Progress to " + collection.getName() + " " + Util.toRoman(nextLevel) + ": &e" + percentage + "&6%\n" + bar + " &e" + Util.formatInt(currentExp) + "&6/&e" + Util.abbreviate(requiredExp) +
                             "\n\n&7Co-op Contributions:\n&b" + skyblockPlayer.getBukkitPlayer().getDisplayName() + "&7: &e" + Util.abbreviate(currentExp) +
