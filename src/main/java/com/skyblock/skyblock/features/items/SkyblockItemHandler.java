@@ -50,6 +50,7 @@ public class SkyblockItemHandler {
         registerItem(new UndeadSword());
         registerItem(new RevenantFalchion());
         registerItem(new SpiderSword());
+        registerItem(new ZombieSword());
 
         // Bows
         registerItem(new RunaansBow());
