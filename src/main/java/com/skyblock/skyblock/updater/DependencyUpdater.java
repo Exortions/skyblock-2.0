@@ -23,6 +23,7 @@ public class DependencyUpdater {
         add("collections" + File.separator + "farming.json");
         add("collections" + File.separator + "mining.json");
         add("collections" + File.separator + "foraging.json");
+        add("collections" + File.separator + "fishing.json");
         add("fairy_souls.json");
         add("holograms.json");
         add("prices.json");
