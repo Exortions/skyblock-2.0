@@ -68,17 +68,21 @@
       ]
     },
     {
-      "ID": "End Stone",
-      "50;End Stone Minion",
-      "100;End Biome Stick",
-      "250;Portal to The End",
-      "1000;Enchanted End Stone",
-      "2000;Silence Block",
-      "5000;Haste Block",
-      "10000;Endermite Pet",
-      "15000;Egg Travel Scroll to the End",
-      "25000;Catalyst",
-      "50000;End Stone Sword"
+      "name": "End Stone",
+      "material": "END_STONE",
+      "data": 0,
+      "rewards": [
+        "50;&9End Stone Minion &7Recipe",
+        "100;&fEnd Biome Stick &7Recipe",
+        "250;&aPortal to The End &7Recipe",
+        "1000;&aEnchanted End Stone &7Recipe",
+        "2000;&aSilence Block &7Recipe",
+        "5000;&aHaste Block &7Recipe",
+        "10000;&9Mystery Endermite Pet &7Recipe",
+        "15000;&9Egg Travel Scroll to the End &7Recipe",
+        "25000;&9Catalyst &7Recipe",
+        "50000;&5End Stone Sword &7Recipe",
+      ]
     },
     {
       "ID": "Glowstone Dust",
