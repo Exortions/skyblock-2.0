@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
 import com.skyblock.skyblock.features.objectives.gui.QuestLogGui;
 import com.skyblock.skyblock.features.pets.gui.PetsGUI;
 import de.tr7zw.nbtapi.NBTItem;
@@ -69,7 +70,7 @@ public class SkyblockMenuListener implements Listener {
                 skyblock.getGuiHandler().show("collection", player);
                 break;
             case "Recipe Book":
-                skyblock.getGuiHandler().show("recipe_book", player);
+                new RecipeBookGUI(player).show(player);
                 break;
             case "Trades":
                 skyblock.getGuiHandler().show("trades", player);

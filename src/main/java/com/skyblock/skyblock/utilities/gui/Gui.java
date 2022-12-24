@@ -3,6 +3,7 @@ package com.skyblock.skyblock.utilities.gui;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
 import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
+import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +51,7 @@ public class Gui implements Listener {
         put("To Auction House", AuctionHouseGUI.class);
         put("To Bazaar", BazaarCategoryGui.class);
         put("To SkyBlock Menu", SkyblockMenuAbstractGui.class);
+        put("To Recipe Book", RecipeBookGUI.class);
     }};
     private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
 
