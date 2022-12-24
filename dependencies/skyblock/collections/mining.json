@@ -81,20 +81,23 @@
         "10000;&9Mystery Endermite Pet &7Recipe",
         "15000;&9Egg Travel Scroll to the End &7Recipe",
         "25000;&9Catalyst &7Recipe",
-        "50000;&5End Stone Sword &7Recipe",
+        "50000;&5End Stone Sword &7Recipe"
       ]
     },
     {
-      "ID": "Glowstone Dust",
-      "&9Glowstone Minion &7Recipe",
-      "100;Portal to Blazing Fortress",
-      "250;+75 Mining Experience",
-      "1000;Enchanted Glowstone Dust",
-      "2000;Travel Scroll to Blazing Fortress",
-      "5000;Enchanted Glowstone",
-      "10000;Enchanted Redstone Lamp",
-      "25000;Glowstone Hat",
-      "50000;+15000 Mining Experience"
+      "name": "Glowstone Dust",
+      "material": "GLOWSTONE_DUST",
+      "data": 0,
+      "rewards": [
+        "&9Glowstone Minion &7Recipe",
+        "100;&fPortal to Blazing Fortress &7Recipe",
+        "250;&8+&375 Mining Experience",
+        "1000;&aEnchanted Glowstone Dust &7Recipe",
+        "2000;&9Travel Scroll to Blazing Fortress &7Recipe",
+        "5000;&aEnchanted Glowstone &7Recipe",
+        "10000;&9Enchanted Redstone Lamp &7Recipe",
+        "50000;&8+&315000 Mining Experience"
+      ]
     },
     {
       "ID": "Gold Ingot",
