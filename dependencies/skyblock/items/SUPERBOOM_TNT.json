@@ -1,0 +1,18 @@
+{
+  "internalname": "SUPERBOOM_TNT",
+  "itemid": "minecraft:tnt",
+  "displayname": "§9Superboom TNT",
+  "clickcommand": "",
+  "damage": 0,
+  "nbttag": "{ench:[],HideFlags:254,display:{Lore:[0:\"§7Breaks weak walls.\",1:\"\",2:\"§9§lRARE\"],Name:\"§9Superboom TNT\"},ExtraAttributes:{id:\"SUPERBOOM_TNT\"}}",
+  "modver": "1.0.0",
+  "lore": [
+    "§7Breaks weak walls.",
+    "",
+    "§9§lRARE"
+  ],
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Superboom_TNT"
+  ]
+}

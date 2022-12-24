@@ -1,0 +1,32 @@
+{
+  "itemid": "minecraft:diamond_boots",
+  "displayname": "§aDiamond Boots",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Defense: §a+15\",1:\"\",2:\"§7§8This item can be reforged!\",3:\"§a§lUNCOMMON BOOTS\"],Name:\"§aDiamond Boots\"},ExtraAttributes:{originTag:\"CRAFTING_GRID_COLLECT\",id:\"DIAMOND_BOOTS\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Defense: §a+15",
+    "",
+    "§7§8This item can be reforged!",
+    "§a§lUNCOMMON BOOTS"
+  ],
+  "internalname": "DIAMOND_BOOTS",
+  "crafttext": "",
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "DIAMOND:1",
+    "A2": "",
+    "A3": "DIAMOND:1",
+    "B1": "DIAMOND:1",
+    "B2": "",
+    "B3": "DIAMOND:1",
+    "C1": "",
+    "C2": "",
+    "C3": ""
+  },
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Diamond_Boots"
+  ]
+}

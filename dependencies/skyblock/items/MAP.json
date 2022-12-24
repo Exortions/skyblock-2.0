@@ -1,0 +1,28 @@
+{
+  "itemid": "minecraft:map",
+  "displayname": "§fEmpty Map",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fEmpty Map\"},ExtraAttributes:{id:\"MAP\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "MAP",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "PAPER:1",
+    "A2": "PAPER:1",
+    "A3": "PAPER:1",
+    "B1": "PAPER:1",
+    "B2": "COMPASS:1",
+    "B3": "PAPER:1",
+    "C1": "PAPER:1",
+    "C2": "PAPER:1",
+    "C3": "PAPER:1"
+  },
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Empty_Map"
+  ]
+}

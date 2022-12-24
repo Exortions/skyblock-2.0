@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:prismarine_crystals",
+  "displayname": "§fPrismarine Crystals",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fPrismarine Crystals\"},ExtraAttributes:{id:\"PRISMARINE_CRYSTALS\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "PRISMARINE_CRYSTALS",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Prismarine_Crystals"
+  ]
+}

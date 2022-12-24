@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:beef",
+  "displayname": "§fRaw Beef",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fRaw Beef\"},ExtraAttributes:{id:\"RAW_BEEF\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "RAW_BEEF",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Raw_Beef"
+  ]
+}

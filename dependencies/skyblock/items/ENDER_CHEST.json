@@ -1,0 +1,28 @@
+{
+  "itemid": "minecraft:ender_chest",
+  "displayname": "§fEnder Chest",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fEnder Chest\"},ExtraAttributes:{id:\"ENDER_CHEST\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "ENDER_CHEST",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "OBSIDIAN:1",
+    "A2": "OBSIDIAN:1",
+    "A3": "OBSIDIAN:1",
+    "B1": "OBSIDIAN:1",
+    "B2": "EYE_OF_ENDER:1",
+    "B3": "OBSIDIAN:1",
+    "C1": "OBSIDIAN:1",
+    "C2": "OBSIDIAN:1",
+    "C3": "OBSIDIAN:1"
+  },
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Ender_Chest"
+  ]
+}

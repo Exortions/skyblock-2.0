@@ -1,0 +1,36 @@
+{
+  "itemid": "minecraft:leather_boots",
+  "displayname": "§5Speedster Boots",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Defense: §a+65\",1:\"§7Speed: §a+15\",2:\"\",3:\"§6Full Set Bonus: Bonus Speed\",4:\"§7Increases §f✦ Speed §7by\",5:\"§7§a+20§7.\",6:\"\",7:\"§7§8This item can be reforged!\",8:\"§5§lEPIC BOOTS\"],color:14744823,Name:\"§5Speedster Boots\"},ExtraAttributes:{id:\"SPEEDSTER_BOOTS\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Defense: §a+65",
+    "§7Speed: §a+15",
+    "",
+    "§6Full Set Bonus: Bonus Speed",
+    "§7Increases §f✦ Speed §7by",
+    "§7§a+20§7.",
+    "",
+    "§7§8This item can be reforged!",
+    "§5§lEPIC BOOTS"
+  ],
+  "recipe": {
+    "A1": "ENCHANTED_SUGAR_CANE:1",
+    "A2": "",
+    "A3": "ENCHANTED_SUGAR_CANE:1",
+    "B1": "ENCHANTED_SUGAR_CANE:1",
+    "B2": "",
+    "B3": "ENCHANTED_SUGAR_CANE:1",
+    "C1": "",
+    "C2": "",
+    "C3": ""
+  },
+  "internalname": "SPEEDSTER_BOOTS",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Speedster_Armor"
+  ],
+  "crafttext": "Requires: Sugar Cane IX"
+}

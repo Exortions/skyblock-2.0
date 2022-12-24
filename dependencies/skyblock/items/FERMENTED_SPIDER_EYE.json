@@ -1,0 +1,28 @@
+{
+  "itemid": "minecraft:fermented_spider_eye",
+  "displayname": "§fFermented Spider Eye",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fFermented Spider Eye\"},ExtraAttributes:{id:\"FERMENTED_SPIDER_EYE\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "FERMENTED_SPIDER_EYE",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "SPIDER_EYE:1",
+    "A2": "BROWN_MUSHROOM:1",
+    "A3": "SUGAR:1",
+    "B1": "",
+    "B2": "",
+    "B3": "",
+    "C1": "",
+    "C2": "",
+    "C3": ""
+  },
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Fermented_Spider_Eye"
+  ]
+}

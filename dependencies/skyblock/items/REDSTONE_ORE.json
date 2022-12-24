@@ -1,0 +1,17 @@
+{
+  "itemid": "minecraft:redstone_ore",
+  "displayname": "§fRedstone Ore",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fRedstone Ore\"},ExtraAttributes:{id:\"REDSTONE_ORE\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "REDSTONE_ORE",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Redstone_Ore"
+  ]
+}

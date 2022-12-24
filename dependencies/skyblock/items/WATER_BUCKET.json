@@ -1,0 +1,16 @@
+{
+  "itemid": "minecraft:water_bucket",
+  "displayname": "§fWater Bucket",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fWater Bucket\"},ExtraAttributes:{id:\"WATER_BUCKET\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "WATER_BUCKET",
+  "clickcommand": "",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Water_Bucket"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "itemid": "minecraft:iron_pickaxe",
+  "displayname": "§fIron Pickaxe",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§8Breaking Power 3\",1:\"\",2:\"§7Damage: §c+25\",3:\"§7Mining Speed: §a+160\",4:\"\",5:\"§7§8This item can be reforged!\",6:\"§f§lCOMMON PICKAXE\"],Name:\"§fIron Pickaxe\"},ExtraAttributes:{id:\"IRON_PICKAXE\"}}",
+  "damage": 0,
+  "lore": [
+    "§8Breaking Power 3",
+    "",
+    "§7Damage: §c+25",
+    "§7Mining Speed: §a+160",
+    "",
+    "§7§8This item can be reforged!",
+    "§f§lCOMMON PICKAXE"
+  ],
+  "internalname": "IRON_PICKAXE",
+  "modver": "2.1.0-REL",
+  "vanilla": true,
+  "clickcommand": "viewrecipe",
+  "recipe": {
+    "A1": "IRON_INGOT:1",
+    "A2": "IRON_INGOT:1",
+    "A3": "IRON_INGOT:1",
+    "B1": "",
+    "B2": "STICK:1",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "crafttext": "",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://wiki.hypixel.net/Iron_Pickaxe"
+  ]
+}

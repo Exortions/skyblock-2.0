@@ -1,0 +1,35 @@
+{
+  "itemid": "minecraft:diamond_pickaxe",
+  "displayname": "§aDiamond Pickaxe",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§8Breaking Power 4\",1:\"\",2:\"§7Damage: §c+30\",3:\"§7Mining Speed: §a+230\",4:\"\",5:\"§7§8This item can be reforged!\",6:\"§a§lUNCOMMON PICKAXE\"],Name:\"§aDiamond Pickaxe\"},ExtraAttributes:{id:\"DIAMOND_PICKAXE\"}}",
+  "damage": 0,
+  "lore": [
+    "§8Breaking Power 4",
+    "",
+    "§7Damage: §c+30",
+    "§7Mining Speed: §a+230",
+    "",
+    "§7§8This item can be reforged!",
+    "§a§lUNCOMMON PICKAXE"
+  ],
+  "internalname": "DIAMOND_PICKAXE",
+  "vanilla": true,
+  "crafttext": "",
+  "clickcommand": "viewrecipe",
+  "modver": "2.1.0-REL",
+  "infoType": "WIKI_URL",
+  "recipe": {
+    "A1": "DIAMOND:1",
+    "A2": "DIAMOND:1",
+    "A3": "DIAMOND:1",
+    "B1": "",
+    "B2": "STICK:1",
+    "B3": "",
+    "C1": "",
+    "C2": "STICK:1",
+    "C3": ""
+  },
+  "info": [
+    "https://wiki.hypixel.net/Diamond_Pickaxe"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "itemid": "minecraft:potato",
+  "displayname": "§fPotato",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§f§lCOMMON\"],Name:\"§fPotato\"},ExtraAttributes:{id:\"POTATO_ITEM\"}}",
+  "damage": 0,
+  "lore": [
+    "§f§lCOMMON"
+  ],
+  "internalname": "POTATO_ITEM",
+  "clickcommand": "",
+  "modver": "1.0.0"
+}

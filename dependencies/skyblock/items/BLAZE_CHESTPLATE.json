@@ -1,0 +1,45 @@
+{
+  "itemid": "minecraft:leather_chestplate",
+  "displayname": "§5Blaze Chestplate",
+  "nbttag": "{Unbreakable:1b,HideFlags:254,display:{Lore:[0:\"§7Strength: §c+10\",1:\"\",2:\"§7Defense: §a+150\",3:\"§7Speed: §a+2\",4:\"\",5:\"§6Full Set Bonus: Blazing Aura\",6:\"§7Damages mobs within §a5§7 blocks\",7:\"§7for §a3%§7 of their max §7§c❤\",8:\"§cHealth §7per second.\",9:\"\",10:\"§7Max §c700 §7damage/s\",11:\"§7Blaze Rod Collection: §613k\",12:\"§8+100 per 5,000 rods\",13:\"\",14:\"§7Permanent §cFire §7and §cLava §7immunity.\",15:\"\",16:\"§7§8This item can be reforged!\",17:\"§5§lEPIC CHESTPLATE\"],color:16243251,Name:\"§5Blaze Chestplate\"},ExtraAttributes:{id:\"BLAZE_CHESTPLATE\"}}",
+  "damage": 0,
+  "lore": [
+    "§7Strength: §c+10",
+    "",
+    "§7Defense: §a+150",
+    "§7Speed: §a+2",
+    "",
+    "§6Full Set Bonus: Blazing Aura",
+    "§7Damages mobs within §a5§7 blocks",
+    "§7for §a3%§7 of their max §7§c❤",
+    "§cHealth §7per second.",
+    "",
+    "§7Max §c700 §7damage/s",
+    "§7Blaze Rod Collection: §613k",
+    "§8+100 per 5,000 rods",
+    "",
+    "§7Permanent §cFire §7and §cLava §7immunity.",
+    "",
+    "§7§8This item can be reforged!",
+    "§5§lEPIC CHESTPLATE"
+  ],
+  "recipe": {
+    "A1": "ENCHANTED_BLAZE_ROD:1",
+    "A2": "",
+    "A3": "ENCHANTED_BLAZE_ROD:1",
+    "B1": "ENCHANTED_BLAZE_ROD:1",
+    "B2": "ENCHANTED_BLAZE_ROD:1",
+    "B3": "ENCHANTED_BLAZE_ROD:1",
+    "C1": "ENCHANTED_BLAZE_ROD:1",
+    "C2": "ENCHANTED_BLAZE_ROD:1",
+    "C3": "ENCHANTED_BLAZE_ROD:1"
+  },
+  "internalname": "BLAZE_CHESTPLATE",
+  "clickcommand": "viewrecipe",
+  "modver": "1.0.0",
+  "infoType": "WIKI_URL",
+  "info": [
+    "https://hypixel-skyblock.fandom.com/wiki/Blaze_Armor"
+  ],
+  "crafttext": "Requires: Blaze Rod VIII"
+}
