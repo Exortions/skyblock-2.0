@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.objectives.impl.hub.timber;
+package com.skyblock.skyblock.features.objectives.impl.hub;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
@@ -56,6 +56,8 @@ public class TimberQuest extends QuestLine {
                                     "Thank you! Take this " + ChatColor.YELLOW + "Sweet Axe" + ChatColor.WHITE + ", it's so sweet that it drops apples from logs sometimes!",
                                     "You've got the knack for wood. Could you get some Birch Planks from The Park?",
                                     "My associate will be there waiting for you. He will reward you in Coins if you're up to the task!");
+
+                            new GiftGui(player, Skyblock.getPlugin().getItemHandler().getItem("SWEET_AXE.json")).show(player);
                         }
                     }
                 },

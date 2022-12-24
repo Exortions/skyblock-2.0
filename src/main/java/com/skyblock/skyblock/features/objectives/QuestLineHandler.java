@@ -1,12 +1,10 @@
 package com.skyblock.skyblock.features.objectives;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.features.location.SkyblockLocation;
-import com.skyblock.skyblock.features.objectives.impl.hub.ExploreHubQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.IntroduceYourselfQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.TimeToStrikeQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.auction.AuctioneerQuest;
-import com.skyblock.skyblock.features.objectives.impl.hub.timber.TimberQuest;
+import com.skyblock.skyblock.features.objectives.impl.hub.TimberQuest;
 import com.skyblock.skyblock.features.objectives.impl.starting.GettingStartedQuest;
 import lombok.Getter;
 
