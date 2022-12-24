@@ -132,17 +132,21 @@
       ]
     },
     {
-      "ID": "Ice",
-      "&9Ice Minion &7Recipe",
-      "100;Enchanted Book (Frost Walker  I)",
-      "250;Packed Ice",
-      "500;Enchanted Ice",
-      "1000;Magical Water Bucket",
-      "5000;Ice Bait",
-      "10000;Enchanted Packed Ice",
-      "50000;Frozen Scythe",
-      "100000;Frozen Blaze Armor",
-      "250000;Auger Rod"
+      "name": "Ice",
+      "material": "ICE",
+      "data": 0,
+      "rewards": [
+        "&9Ice Minion &7Recipe",
+        "100;&fEnchanted Book (Frost Walker I) &7Recipe",
+        "250;&Packed Ice &7Recipe",
+        "500;&aEnchanted Ice &7Recipe",
+        "1000;&fMagical Water Bucket &7Recipe",
+        "5000;&aIce Bait &7Recipe",
+        "10000;&9Enchanted Packed Ice &7Recipe",
+        "50000;&9Frozen Scythe &7Recipe",
+        "100000;&6Frozen Blaze Helmet &7Recipe;&6Frozen Blaze Chestplate &7Recipe;&6Frozen Blaze Leggings &7Recipe;&6Frozen Blaze Boots &7Recipe",
+        "250000;&6Auger Rod &7Recipe"
+      ]
     },
     {
       "ID": "Iron Ingot",
