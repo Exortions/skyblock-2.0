@@ -1,17 +1,22 @@
 {
-  "Collections": [
+  "category": "Mining",
+  "collections": [
     {
-      "ID": "Coal",
-      "I": "50;Coal Minion",
-      "II": "100;Enchanted Book (Smelting Touch  I)",
-      "III": "250;Haste Potion",
-      "IV": "1000;Enchanted Coal",
-      "V": "2000;Enchanted Charcoal;Small Mining Sack",
-      "VI": "5000;Travel Scroll to the Gold Mine",
-      "VII": "10000;Enchanted Block of Coal;Medium Mining Sack",
-      "VIII": "25000;Enchanted Lava Bucket",
-      "IX": "50000;Wither Skeleton Pet;Large Mining Sack",
-      "X": "100000;Large Enchanted Mining Sack"
+      "name": "Coal",
+      "material": "COAL",
+      "data": 0,
+      "rewards": [
+        "50;&9Coal Minion &7Recipes",
+        "100;&fEnchanted Book (Smelting Touch I) &7Recipe",
+        "250;&eHaste Potion &7Recipe",
+        "1000;&aEnchanted Coal &7Recipe",
+        "2000;&aEnchanted Charcoal &7Recipe;&aSmall Mining Sack &7Recipe",
+        "5000;&9Travel Scroll to the Gold Mine &7Recipe",
+        "10000;&9Enchanted Block of Coal &7Recipe;&9Medium Mining Sack &7Recipe",
+        "25000;&5Enchanted Lava Bucket &7Recipe",
+        "50000;&9Mystery Wither Skeleton Pet&7 Recipe;&5Large Mining Sack&7 Recipe",
+        "100000;&5Large Enchanted Mining Sack &7Recipe"
+      ]
     },
     {
       "ID": "Cobblestone",
@@ -169,7 +174,6 @@
       "VII": "10000;Ender Chest Lv2 Upgrade",
       "VIII": "25000;Treecapitator",
       "IX": "50000;Ender Chest Lv3 Upgrade"
-
     },
     {
       "ID": "Redstone",
