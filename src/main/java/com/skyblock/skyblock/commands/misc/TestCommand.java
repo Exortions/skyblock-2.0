@@ -35,6 +35,6 @@ public class TestCommand implements Command {
         player.sendMessage(escrow.getBuyOrders().toString());
         player.sendMessage(escrow.getSellOrders().toString());
 
-        new CalendarEventsGUI().show(player);
+        new CalendarEventsGUI(player).show(player);
     }
 }

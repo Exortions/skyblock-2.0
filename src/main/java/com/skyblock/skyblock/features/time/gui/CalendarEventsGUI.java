@@ -6,20 +6,29 @@ import com.skyblock.skyblock.features.time.SkyblockDate;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
 
 public class CalendarEventsGUI extends Gui {
-    public CalendarEventsGUI() {
+    public CalendarEventsGUI(Player player) {
         super("Calendar and Events", 54, new HashMap<>());
 
         Util.fillBorder(this);
 
+        addItem(50, new ItemBuilder(ChatColor.GREEN + "Calendar", Material.WATCH).addLore("&7Opens the full Skyblock", "&7Caldenar.", " ", ChatColor.YELLOW + "Click to view").toItemStack());
         addItem(49, Util.buildCloseButton());
         addItem(48, Util.buildBackButton());
 
         SkyblockTimeManager timeManager = Skyblock.getPlugin().getTimeManager();
+
+        getClickEvents().put(ChatColor.GREEN + "Calendar", () -> {
+            new MonthCalendarGUI(timeManager.getCurrentDate().getSeason(), timeManager.getCurrentDate().getDate(), player).show(player);
+        });
 
         SkyblockDate date = timeManager.getCurrentDate();
 

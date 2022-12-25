@@ -80,7 +80,7 @@ public class SkyblockMenuListener implements Listener {
                 new QuestLogGui(player).show(player);
                 break;
             case "Calendar and Events":
-                new CalendarEventsGUI().show(player);
+                new CalendarEventsGUI(player).show(player);
                 break;
             case "Ender Chest":
                 skyblock.getGuiHandler().show("ender_chest", player);

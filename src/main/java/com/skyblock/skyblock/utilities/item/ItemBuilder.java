@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.utilities.item;
 
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -246,6 +247,12 @@ public class ItemBuilder {
         nbt.setBoolean(key, value);
 
         this.item = nbt.getItem();
+
+        return this;
+    }
+
+    public ItemBuilder setSkullID(String id) {
+        this.item = Util.idToSkull(item, id);
 
         return this;
     }

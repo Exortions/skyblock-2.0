@@ -4,11 +4,11 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.data.ServerData;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +17,7 @@ public class SkyblockTimeManager {
     private final Skyblock skyblock;
 
     private final ServerData serverData;
+    private final List<String> activeEvents;
     private SkyblockDate currentDate;
 
     public static final int REAL_SECONDS_PER_SKYBLOCK_MINUTE = 1;
@@ -26,6 +27,8 @@ public class SkyblockTimeManager {
         this.skyblock = skyblock;
 
         this.serverData = skyblock.getServerData();
+
+        this.activeEvents = new ArrayList<>();
 
         this.currentDate = new SkyblockDate((String) serverData.get("date.season"), (int) serverData.get("date.day"));
 
@@ -61,6 +64,36 @@ public class SkyblockTimeManager {
         this.currentDate = new SkyblockDate((String) serverData.get("date.season"), (int) serverData.get("date.day"));
 
         this.updateInGameTime();
+        this.updateEvents();
+    }
+
+    public void updateEvents() {
+        List<String> prev = new ArrayList<>(activeEvents);
+
+        activeEvents.clear();
+
+        int day = currentDate.getDate();
+        String season = currentDate.getSeason();
+
+        if (day % 3 == 0) {
+            activeEvents.add("dark_auction");
+        }
+
+        if (season.equals("fall") && day >= 29) {
+            activeEvents.add("spooky_festival");
+        } else if (season.equals("winter") && (day == 25 || day == 26)) {
+            activeEvents.add("season_of_jerry");
+        } else if ((season.equals("summer") && (day == 2 || day == 3)) || (season.equals("winter") && (day == 2 || day == 3))) {
+            activeEvents.add("traveling_zoo");
+        } else if (season.equals("winter") && (day == 30)) {
+            activeEvents.add("new_year_cake_event");
+        } else if (season.equals("winter") && (day == 1)) {
+            activeEvents.add("jerry_workshop_open");
+        }
+
+        if (!prev.equals(activeEvents)) {
+            Bukkit.broadcastMessage(ChatColor.WHITE + "NEW EVENT STARTED, ACTIVE EVENTS: " + activeEvents);
+        }
     }
 
     public void updateInGameTime() {
@@ -126,6 +159,18 @@ public class SkyblockTimeManager {
         }
 
         return seasons.get(index + 1);
+    }
+
+    public String getLastSeason(String season) {
+        List<String> seasons = Arrays.asList("spring", "summer", "fall", "winter");
+
+        int index = seasons.indexOf(season);
+
+        if (index == 0) {
+            return seasons.get(3);
+        }
+
+        return seasons.get(index - 1);
     }
 
     public CalendarEvent getNextEvent() {
