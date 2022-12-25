@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,6 +53,23 @@ public class RecipeGUI extends Gui {
             int amount = Integer.parseInt(item.split(":")[1]);
 
             ItemStack neu = Skyblock.getPlugin().getItemHandler().getItem(id + ".json").clone();
+            neu.setAmount(1);
+
+            if (Skyblock.getPlugin().getRecipeHandler().getRecipe(neu) != null) {
+                ItemMeta meta = neu.getItemMeta();
+                List<String> lore = meta.getLore();
+
+                lore.add(" ");
+                lore.add(ChatColor.YELLOW + "Click to view recipe!");
+
+                meta.setLore(lore);
+                neu.setItemMeta(meta);
+
+                getClickEvents().put(neu.getItemMeta().getDisplayName(), () -> {
+                   new RecipeGUI(neu, this, player).show(player);
+                });
+            }
+
             neu.setAmount(amount);
 
             addItem(slot, neu);
