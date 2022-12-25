@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.items.armor.WiseDragonArmor;
 import com.skyblock.skyblock.features.items.armor.YoungDragonArmor;
 import com.skyblock.skyblock.features.items.misc.GrapplingHook;
 import com.skyblock.skyblock.features.items.misc.MaddoxBatphone;
+import com.skyblock.skyblock.features.items.misc.MagicalWaterBucket;
 import com.skyblock.skyblock.features.items.tools.*;
 import com.skyblock.skyblock.features.items.weapons.*;
 import com.skyblock.skyblock.utilities.Util;
@@ -29,6 +30,7 @@ public class SkyblockItemHandler {
         // Misc
         registerItem(new GrapplingHook(plugin));
         registerItem(new MaddoxBatphone());
+        registerItem(new MagicalWaterBucket(plugin));
 
         // Tools
         registerItem(new PromisingAxe());
@@ -54,6 +56,7 @@ public class SkyblockItemHandler {
         registerItem(new MidasSword());
         registerItem(new RaiderAxe());
         registerItem(new EmeraldBlade());
+        registerItem(new TacticiansSword());
 
         // Bows
         registerItem(new RunaansBow());

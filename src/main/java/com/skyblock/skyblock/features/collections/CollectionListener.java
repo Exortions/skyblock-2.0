@@ -1,8 +1,10 @@
 package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.event.SkyblockCollectItemEvent;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -44,6 +46,8 @@ public class CollectionListener implements Listener {
                 event.getPlayer().playSound(event.getItem().getLocation(), Sound.ITEM_PICKUP, 0.1f, 1);
 
                 event.getItem().remove();
+
+                Bukkit.getPluginManager().callEvent(new SkyblockCollectItemEvent(SkyblockPlayer.getPlayer(event.getPlayer()), collection, item.getAmount()));
 
                 return;
             }
