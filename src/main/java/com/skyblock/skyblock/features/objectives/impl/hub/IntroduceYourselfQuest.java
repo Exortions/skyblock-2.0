@@ -8,12 +8,16 @@ import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.objectives.gui.GiftGui;
 import com.skyblock.skyblock.utilities.Util;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,10 +31,7 @@ public class IntroduceYourselfQuest extends QuestLine {
 
     @Override
     public void onEnable() {
-        Skyblock skyblock = Skyblock.getPlugin();
-        NPCHandler npcHandler = skyblock.getNpcHandler();
-
-        npcHandler.registerNPC("leo", new NPC("Leo", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("leo", new NPC("Leo", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -5.5, 70, -89.5),
                 (p) -> {
                     sendDelayedMessages(p, "Leo",
@@ -39,7 +40,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "To check your Collection progress and rewards, open the Collection Menu in your Skyblock Menu");
                 }, "", ""));
 
-        npcHandler.registerNPC("tom", new NPC("Tom", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("tom", new NPC("Tom", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -14.5, 70, -84.5),
                 (p) -> {
                     sendDelayedMessages(p, "Tom",
@@ -47,7 +48,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "All Skyblock recipes can be found by opening the Recipe Book in your Skyblock Menu");
                 }, "", ""));
 
-        npcHandler.registerNPC("jamie", new NPC("Jamie", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("jamie", new NPC("Jamie", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -17.5, 70, -67.5),
                 (p) -> {
                     sendDelayedMessages(p, "Jamie", (player) -> {
@@ -58,14 +59,14 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "Abilities use your Mana as a resource. Here take this Rogue Sword. I don't need it!");
                 }, "", ""));
 
-        npcHandler.registerNPC("andrew", new NPC("Andrew", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("andrew", new NPC("Andrew", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), 9.5, 70, -64.5),
                 (p) -> {
                     sendDelayedMessages(p, "Andrew",
                             "If you find a bug or exploit, remember to report it on the forums!");
                 }, "", ""));
 
-        npcHandler.registerNPC("jack", new NPC("Jack", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("jack", new NPC("Jack", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -1.5, 70, -66.5),
                 (p) -> {
                     sendDelayedMessages(p, "Jack",
@@ -75,7 +76,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "The higher your ❤ Health stat, the faster your health will regenerate!");
                 }, "", ""));
 
-        npcHandler.registerNPC("vex", new NPC("Vex", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("vex", new NPC("Vex", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), 12.5, 70, -85.5),
                 (p) -> {
                     sendDelayedMessages(p, "Vex",
@@ -84,7 +85,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "You can trade with me if you want!");
                 }, "", ""));
 
-        npcHandler.registerNPC("stella", new NPC("Stella", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("stella", new NPC("Stella", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), 28.5, 70, -116.5),
                 (p) -> {
                     sendDelayedMessages(p, "Stella",
@@ -93,7 +94,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "Enter /coop followed by the name of all the friends you want to invite!");
                 }, "", ""));
 
-        npcHandler.registerNPC("duke", new NPC("Duke", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("duke", new NPC("Duke", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), 1.5, 70, -103.5),
                 (p) -> {
                     sendDelayedMessages(p, "Duke",
@@ -102,7 +103,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "If you do need some wood, the best place to get some is West of the Village!");
                 }, "", ""));
 
-        npcHandler.registerNPC("felix", new NPC("Felix", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("felix", new NPC("Felix", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -14.5, 70, -98.5),
                 (p) -> {
                     sendDelayedMessages(p, "Felix",
@@ -110,14 +111,14 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "Store items in this chest and access them at any time!");
                 }, "", ""));
 
-        npcHandler.registerNPC("lynn", new NPC("Lynn", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("lynn", new NPC("Lynn", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), 8.5, 70, -101.5),
                 (p) -> {
                     sendDelayedMessages(p, "Lynn",
                             "If you ever get lost during a quest, open your Quest Log in your SkyBlock Menu!");
                 }, "", ""));
 
-        npcHandler.registerNPC("liam", new NPC("Liam", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("liam", new NPC("Liam", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -35.5, 70, -97.5),
                 (p) -> {
                     sendDelayedMessages(p, "Liam",
@@ -125,7 +126,7 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "Anyone will be able to rent them, players, co-ops, even Guilds!");
                 }, "", ""));
 
-        npcHandler.registerNPC("ryu", new NPC("Ryu", true, false, true, Villager.Profession.BUTCHER,
+        registerVillager("ryu", new NPC("Ryu", true, false, true, Villager.Profession.BUTCHER,
                 new Location(Skyblock.getSkyblockWorld(), -6.5, 70, -118.5),
                 (p) -> {
                     sendDelayedMessages(p, "Ryu",
@@ -133,6 +134,27 @@ public class IntroduceYourselfQuest extends QuestLine {
                             "Farming, Mining, Foraging, Fishing, Combat, Enchanting and Alchemy",
                             "You can access yours skills through your Skyblock Menu");
                 }, "", ""));
+    }
+
+    private void registerVillager(String id, NPC npc) {
+        Skyblock skyblock = Skyblock.getPlugin();
+        NPCHandler npcHandler = skyblock.getNpcHandler();
+
+        npcHandler.registerNPC(id, npc);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (SkyblockPlayer player : SkyblockPlayer.playerRegistry.values()) {
+                    List<String> talked = (List<String>) player.getValue("quests.introduceYourself.talkedTo");
+                    if (talked.contains(npc.getName())) continue;
+
+                    Location loc = npc.getLocation();
+                    PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, true, (float) loc.getX(), (float) loc.getY() + 2.75f, (float) loc.getZ(), 0f, 0f, 0f, 2f, 1);
+                    ((CraftPlayer) player.getBukkitPlayer()).getHandle().playerConnection.sendPacket(packet);
+                }
+            }
+        }.runTaskTimer(skyblock, 5L, 5L);
     }
 
     @Override

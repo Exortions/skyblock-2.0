@@ -21,7 +21,11 @@
       "rewards": [
         "10;&aClownfish Hat &7Recipe",
         "25;&fWater Bucket &7Trade",
-        "50;&fEnchanted Book (Magnet IV) &7Recipe"
+        "50;&fEnchanted Book (Magnet IV) &7Recipe",
+        "100;&aSmall Sack of Sacks Upgrade",
+        "200;&aMedium Sack of Sacks Upgrade",
+        "400;&aLarge Sack of Sacks Upgrade",
+        "800;&aGreater Sack of Sacks Upgrade"
       ],
       "commands": []
     },
@@ -96,8 +100,11 @@
         "50;&aEnchanted Pufferfish &7Recipe",
         "100;&fEnchanted Book (Cleave IV) &7Recipe",
         "150;&fEnchanted Book (Depth Strider II) &7Recipe",
-        "400;&fSpiked Bait &7Recipe",
-        "800;&fEnchanted Book (Spiked Hook IV) &7Recipe"
+        "400;&fSpiked Bait &7Recipe\n  &aSmall Fishing Sack &7Recipe",
+        "800;&fEnchanted Book (Spiked Hook IV) &7Recipe",
+        "2400;&9Medium Fishing Sack &7Recipe",
+        "4800;&5Puffer Boat &8(&4COMING &4SOON&8)",
+        "9000;&5Large Fishing Sack &7Recipe"
       ],
       "commands": []
     },

@@ -104,11 +104,11 @@
   				"100;&fZombie Pickaxe &7Recipe",
   				"250;&fEnchanted Book (Smite IV) &7Recipe",
   				"1000;&aEnchanted Rotten Flesh &7Recipe",
-  				"2500;&fZombie Hat &7Recipe",
+  				"2500;&fZombie Hat &7Recipe\n  &aSmall Combat Sack &7Recipe",
   				"5000;&9Zombie Heart &7Recipe",
-  				"10000;&9Zombie Sword &7Recipe",
+  				"10000;&9Zombie Sword &7Recipe\n  &9Medium Combat Sack &7Recipe",
   				"25000;&5Zombie Chestplate &7Recipe\n  &5Zombie Leggings &7Recipe\n  &5Zombie Boots &7Recipe",
-  				"50000;&9Mystery Zombie Pet &7Recipe"
+  				"50000;&9Mystery Zombie Pet &7Recipe\n  &5Large Combat Sack &7Recipe"
   			],
   			"commands": []
   		},

@@ -27,10 +27,11 @@
         "100;&fBirch Leaves &7Trade",
         "250;&fPortal to the Birch Park &7Recipe",
         "500;&fSculptors Axe &7Recipe",
-        "1000;&fBirch Forest Biome Stick &7Recipe",
+        "1000;&fBirch Forest Biome Stick &7Recipe\n  &aSmall Foraging Sack &7Recipe",
         "2000;&aEnchanted Birch Wood &7Recipe",
-        "5000;&9Woodcutting Crystal &7Recipe",
-        "10000;&9Travel Scroll to The Park &7Recipe"
+        "5000;&9Woodcutting Crystal &7Recipe\n  &9Medium Foraging Sack &7Recipe",
+        "10000;&9Travel Scroll to The Park &7Recipe",
+        "25000;&5Large Foraging Sack &7Recipe"
       ],
       "commands": []
     },

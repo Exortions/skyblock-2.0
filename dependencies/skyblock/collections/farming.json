@@ -132,11 +132,11 @@
         "100;&8+&310 &7Farming Experience",
         "250;&8+&325 &7Farming Experience",
         "1000;&fMana Potion &7Recipe",
-        "2500;&aEnchanted Mutton &7Recipe",
+        "2500;&aEnchanted Mutton &7Recipe\n  &aSmall Husbandry Sack &7Recipe",
         "5000;&fEnchanted Book (Rainbow I) &7Recipe",
-        "10000;&9Mystery Sheep Pet &7Recipe",
+        "10000;&9Mystery Sheep Pet &7Recipe\n  &9Medium Husbandry Sack &7Recipe",
         "25000;&9Enchanted Cooked Mutton &7Recipe",
-        "50000;&9Polymorph Wand &8(&4COMING &4SOON&8)"
+        "50000;&9Polymorph Wand &8(&4COMING &4SOON&8)\n  &5Large Husbandry Sack &7Recipe"
       ],
       "commands": []
     },
@@ -284,10 +284,11 @@
         "100;&fEnchanted Book (Harvesting V) &7Recipe",
         "250;&fFarm Suit Helmet &7Recipe\n  &fFarm Suit Chestplate &7Recipe\n  &fFarm Suit Leggings &7Recipe\n  &fFarm Suit Boots &7Recipe",
         "500;&fFarming Talisman &7Recipe",
-        "1000;&fEnchanted Bread &7Recipe",
+        "1000;&fEnchanted Bread &7Recipe\n  &aSmall Agronomy Sack &7Recipe",
         "2500;&fFarming Island &7Recipe",
-        "10000;&aEnchanted Hay Block &7Recipe",
-        "15000;&9Farm Armor Helmet &7Recipe\n  &9Farm Armor Chestplate &7Recipe\n  &9Farm Armor Leggings &7Recipe\n  &9Farm Armor Boots &7Recipe"
+        "10000;&aEnchanted Hay Block &7Recipe\n  &9Medium Agronomy Sack &7Recipe",
+        "15000;&9Farm Armor Helmet &7Recipe\n  &9Farm Armor Chestplate &7Recipe\n  &9Farm Armor Leggings &7Recipe\n  &9Farm Armor Boots &7Recipe",
+        "50000;&5Large Agronomy Sack &7Recipe"
       ],
       "commands": []
     }

@@ -10,11 +10,11 @@
         "100;&fEnchanted Book (Smelting Touch I) &7Recipe",
         "250;&eHaste Potion &7Recipe",
         "1000;&aEnchanted Coal &7Recipe",
-        "2000;&aEnchanted Charcoal &7Recipe",
+        "2000;&aEnchanted Charcoal &7Recipe\n  &aSmall Mining Sack &7Recipe",
         "5000;&9Travel Scroll to the Gold Mine &7Recipe",
-        "10000;&9Enchanted Block of Coal &7Recipe",
+        "10000;&9Enchanted Block of Coal &7Recipe\n  &9Medium Mining Sack &7Recipe",
         "25000;&5Enchanted Lava Bucket &7Recipe",
-        "50000;&9Mystery Wither Skeleton Pet&7 Recipe"
+        "50000;&9Mystery Wither Skeleton Pet&7 Recipe\n  &5Large Mining Sack &7Recipe"
       ],
       "commands": []
     },
