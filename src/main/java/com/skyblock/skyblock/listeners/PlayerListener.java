@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
@@ -229,6 +230,8 @@ public class PlayerListener implements Listener {
                 }
 
                 display = damage * sentity.getEntityData().maximumHealth;
+
+                Bukkit.getPluginManager().callEvent(new SkyblockEntityDamageByPlayerEvent(player, sentity, display, e));
 
                 sentity.onDamage(e, player, crit, display);
 
