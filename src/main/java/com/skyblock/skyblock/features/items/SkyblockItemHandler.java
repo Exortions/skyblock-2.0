@@ -1,13 +1,8 @@
 package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.features.items.armor.StrongDragonArmor;
-import com.skyblock.skyblock.features.items.armor.SuperiorDragonArmor;
-import com.skyblock.skyblock.features.items.armor.WiseDragonArmor;
-import com.skyblock.skyblock.features.items.armor.YoungDragonArmor;
-import com.skyblock.skyblock.features.items.misc.GrapplingHook;
-import com.skyblock.skyblock.features.items.misc.MaddoxBatphone;
-import com.skyblock.skyblock.features.items.misc.MagicalWaterBucket;
+import com.skyblock.skyblock.features.items.armor.*;
+import com.skyblock.skyblock.features.items.misc.*;
 import com.skyblock.skyblock.features.items.tools.*;
 import com.skyblock.skyblock.features.items.weapons.*;
 import com.skyblock.skyblock.utilities.Util;
@@ -39,6 +34,8 @@ public class SkyblockItemHandler {
         registerItem(new SweetAxe());
         registerItem(new EfficientAxe());
         registerItem(new RookieHoe());
+        registerItem(new JungleAxe());
+        registerItem(new TreeCapitator());
 
         // Weapons
         registerItem(new AspectOfTheDragons(plugin));
