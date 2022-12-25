@@ -34,6 +34,8 @@ public class PigmanSword extends SkyblockItem {
             return;
         }
 
+        if (!player.checkMana(400)) return;
+
         player.addStat(SkyblockStat.DEFENSE, 300);
         Util.delay(() -> player.subtractStat(SkyblockStat.DEFENSE, 300), 20 * 5);
 
@@ -66,7 +68,7 @@ public class PigmanSword extends SkyblockItem {
 
                 @Override
                 public void run() {
-                    if (ticksAlive >= 1 * 20) {
+                    if (ticksAlive >= 20) {
                         stand.remove();
                         cancel();
                         return;
