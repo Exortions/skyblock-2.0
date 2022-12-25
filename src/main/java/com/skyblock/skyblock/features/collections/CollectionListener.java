@@ -27,6 +27,9 @@ public class CollectionListener implements Listener {
 
         ItemStack item = event.getItem().getItemStack();
 
+        if (item.getItemMeta().hasDisplayName())
+            if (item.getItemMeta().getDisplayName().startsWith("coins_")) return;
+
         for (Collection collection : Collection.getCollections()) {
             if (collection.getMaterial().equals(event.getItem().getItemStack().getType()) && collection.getData() == event.getItem().getItemStack().getData().getData()) {
                 boolean success = collection.collect(event.getPlayer(), event.getItem().getItemStack().getAmount(), event.getItem().getItemStack());
