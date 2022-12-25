@@ -819,4 +819,9 @@ public class Util {
 
         return nbt.getString("skyblockId");
     }
+
+    public long calculateAbilityDamage(double baseAbilityDamage, double intelligence, double abilityScaling, double bonusAbilityDamage) {
+        return (long) Math.floor(baseAbilityDamage * (1 + (intelligence / 100) * abilityScaling) + (1 + (bonusAbilityDamage / 100)));
+    }
+
 }
