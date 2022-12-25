@@ -8,6 +8,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
+import com.skyblock.skyblock.features.time.SkyblockDate;
 import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
@@ -240,8 +241,8 @@ public class MenuCommand implements Command {
                         ChatColor.GRAY + "upcoming events, and event",
                         ChatColor.GRAY + "rewards!",
                         "",
-                        ChatColor.GRAY + "Next Event: " + ChatColor.RED + "211th Season of Jerry",
-                        ChatColor.GRAY + "Starting in: " + ChatColor.YELLOW + "0d 22h 24m 35s",
+                        ChatColor.GRAY + "Next Event: " + Skyblock.getPlugin().getTimeManager().getNextEvent().getDisplayName(),
+                        ChatColor.GRAY + "Starting in: " + ChatColor.YELLOW + Skyblock.getPlugin().getTimeManager().getNextEvent().getIn(),
                         "",
                         ChatColor.YELLOW + "Click to view!"
                 )

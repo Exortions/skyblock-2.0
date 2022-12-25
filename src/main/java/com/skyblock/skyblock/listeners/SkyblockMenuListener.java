@@ -4,6 +4,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
 import com.skyblock.skyblock.features.objectives.gui.QuestLogGui;
 import com.skyblock.skyblock.features.pets.gui.PetsGUI;
+import com.skyblock.skyblock.features.time.gui.CalendarEventsGUI;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -79,7 +80,7 @@ public class SkyblockMenuListener implements Listener {
                 new QuestLogGui(player).show(player);
                 break;
             case "Calendar and Events":
-                skyblock.getGuiHandler().show("calendar_and_events", player);
+                new CalendarEventsGUI().show(player);
                 break;
             case "Ender Chest":
                 skyblock.getGuiHandler().show("ender_chest", player);

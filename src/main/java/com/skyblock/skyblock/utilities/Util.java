@@ -41,6 +41,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -594,8 +595,24 @@ public class Util {
         return Math.random() * (max - min) + min;
     }
 
+    // Found off stack overflow somewhere
     public String formatTime(long millis) {
-        return String.format("%02dm%02ds", TimeUnit.MILLISECONDS.toMinutes(millis), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+        if(millis < 0) {
+            throw new IllegalArgumentException("Duration must be greater than zero!");
+        }
+
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        millis -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        millis -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+
+        return(hours +
+                "h " +
+                minutes +
+                "m " +
+                seconds +
+                "s");
     }
 
     public ItemStack colorLeatherArmor(ItemStack stack, Color color) {

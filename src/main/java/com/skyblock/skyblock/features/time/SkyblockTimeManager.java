@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class SkyblockTimeManager {
     private final Skyblock skyblock;
 
     private final ServerData serverData;
+    private SkyblockDate currentDate;
 
     public static final int REAL_SECONDS_PER_SKYBLOCK_MINUTE = 1;
     public static final int TIME_BETWEEN_UPDATE = 10;
@@ -24,6 +26,8 @@ public class SkyblockTimeManager {
         this.skyblock = skyblock;
 
         this.serverData = skyblock.getServerData();
+
+        this.currentDate = new SkyblockDate((String) serverData.get("date.season"), (int) serverData.get("date.day"));
 
         this.updateInGameTime();
 
@@ -53,6 +57,8 @@ public class SkyblockTimeManager {
             serverData.set("date.day", 1);
             serverData.set("date.season", getNextSeason());
         }
+
+        this.currentDate = new SkyblockDate((String) serverData.get("date.season"), (int) serverData.get("date.day"));
 
         this.updateInGameTime();
     }
@@ -107,9 +113,13 @@ public class SkyblockTimeManager {
     }
 
     public String getNextSeason() {
+        return getNextSeason((String) serverData.get("date.season"));
+    }
+
+    public String getNextSeason(String season) {
         List<String> seasons = Arrays.asList("spring", "summer", "fall", "winter");
 
-        int index = seasons.indexOf(serverData.get("date.season"));
+        int index = seasons.indexOf(season);
 
         if (index == 3) {
             return seasons.get(0);
@@ -117,5 +127,31 @@ public class SkyblockTimeManager {
 
         return seasons.get(index + 1);
     }
+
+    public CalendarEvent getNextEvent() {
+        int diff = 0;
+
+        String season = currentDate.getSeason();
+        int day = currentDate.getDate();
+        while (true) {
+            day++;
+            if (day == 31) {
+                season = getNextSeason(season);
+                day = 1;
+            }
+
+            diff++;
+
+            if (season.equals("fall") && day == 30) {
+                return new CalendarEvent(CalendarEvent.EventType.SPOOKY_FESTIVAL, new Timestamp(System.currentTimeMillis() + diff * 120000L));
+            } else if (season.equals("winter") && day == 25) {
+                return new CalendarEvent(CalendarEvent.EventType.SEASON_OF_JERRY, new Timestamp(System.currentTimeMillis() + diff * 120000L));
+            } else if ((season.equals("summer") && day == 2) || (season.equals("winter") && day == 2)) {
+                return new CalendarEvent(CalendarEvent.EventType.TRAVELING_ZOO, new Timestamp(System.currentTimeMillis() + diff * 120000L));
+            }
+        }
+    }
+
+    public SkyblockDate getCurrentDate() { return currentDate; }
 
 }
