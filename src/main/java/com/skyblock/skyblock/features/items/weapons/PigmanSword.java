@@ -66,7 +66,7 @@ public class PigmanSword extends SkyblockItem {
 
                 @Override
                 public void run() {
-                    if (ticksAlive >= 2 * 20) {
+                    if (ticksAlive >= 1 * 20) {
                         stand.remove();
                         cancel();
                         return;
