@@ -1,13 +1,12 @@
 {
   "itemid": "minecraft:iron_pickaxe",
   "displayname": "§fIron Pickaxe",
-  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§8Breaking Power 3\",1:\"\",2:\"§7Damage: §c+25\",3:\"§7Mining Speed: §a+160\",4:\"\",5:\"§7§8This item can be reforged!\",6:\"§f§lCOMMON PICKAXE\"],Name:\"§fIron Pickaxe\"},ExtraAttributes:{id:\"IRON_PICKAXE\"}}",
+  "nbttag": "{HideFlags:254,display:{Lore:[0:\"§8Breaking Power 3\",1:\"\",2:\"§7Damage: §c+25\",3:\"\",4:\"§7§8This item can be reforged!\",5:\"§f§lCOMMON PICKAXE\"],Name:\"§fIron Pickaxe\"},ExtraAttributes:{id:\"IRON_PICKAXE\"}}",
   "damage": 0,
   "lore": [
     "§8Breaking Power 3",
     "",
     "§7Damage: §c+25",
-    "§7Mining Speed: §a+160",
     "",
     "§7§8This item can be reforged!",
     "§f§lCOMMON PICKAXE"
