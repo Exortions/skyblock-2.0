@@ -25,8 +25,6 @@ public class SneakyCreeper extends SkyblockEntity {
 
     @Override
     protected void tick() {
-    	boolean inv = ((Creeper) getVanilla()).getTarget() == null;
-        ((CraftEntity) getVanilla()).getHandle().setInvisible(inv);
-        if (!inv) lifeSpan = 15 * 20;
+        ((CraftEntity) getVanilla()).getHandle().setInvisible(((Creeper) getVanilla()).getTarget() == null);
     }
 }
