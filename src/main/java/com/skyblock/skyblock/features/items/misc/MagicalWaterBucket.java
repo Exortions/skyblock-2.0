@@ -1,0 +1,22 @@
+package com.skyblock.skyblock.features.items.misc;
+
+import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.items.ListeningItem;
+import com.skyblock.skyblock.utilities.Util;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+
+public class MagicalWaterBucket extends ListeningItem {
+
+    public MagicalWaterBucket(Skyblock plugin) {
+        super(plugin.getItemHandler().getItem("MAGICAL_WATER_BUCKET.json"), "magical_water_bucket");
+    }
+
+    @EventHandler
+    public void PlayerBucketEmptyEvent(PlayerBucketEmptyEvent event) {
+        if (!Util.getSkyblockId(event.getItemStack()).equals("magical_water_bucket")) return;
+
+        event.setItemStack(plugin.getItemHandler().getItem("MAGICAL_WATER_BUCKET.json"));
+    }
+
+}
