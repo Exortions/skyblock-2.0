@@ -20,7 +20,7 @@ public class RookieHoe extends SkyblockItem {
             !type.equals(Material.CROPS)) return;
 
         if (Util.random(0, 1) == 0) {
-            SkyblockPlayer.getPlayer(event.getPlayer()).dropItem(new ItemStack(Material.CROPS), event.getBlock().getLocation());
+            SkyblockPlayer.getPlayer(event.getPlayer()).dropItem(new ItemStack(Material.SEEDS), event.getBlock().getLocation());
         }
     }
 }

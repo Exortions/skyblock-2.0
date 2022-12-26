@@ -15,7 +15,7 @@ public class ObsidianDefender extends SkyblockEntity {
 
         loadStats(10000, 200, true, false, true,
                 new Equipment(new ItemStack(Material.OBSIDIAN), new ItemBuilder(Material.LEATHER_CHESTPLATE).dyeColor(Color.BLACK).toItemStack()
-                        , null, null, null), "Obsidian Defender", 55, 40);
+                        , null, null, null), "Obsidian Defender", 55, 40, "obsidian_defender");
     }
 
     @Override

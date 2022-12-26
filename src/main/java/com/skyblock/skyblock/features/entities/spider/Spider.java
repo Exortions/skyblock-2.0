@@ -20,28 +20,28 @@ public class Spider extends SkyblockEntity {
 
         switch (this.type){
             case SPLITTER_SPIDER_MEDIUM:
-                loadStats(180, 30, false, true, true, new Equipment(), "Splitter Spider", 2, 9);
+                loadStats(180, 30, false, true, true, new Equipment(), "Splitter Spider", 2, 9, "weak_splitter_spider");
                 break;
             case SPLITTER_SPIDER_INTERMEDIATE:
-                loadStats(9000, 850, false, true, true, new Equipment(), "Splitter Spider", 50, 36);
+                loadStats(9000, 850, false, true, true, new Equipment(), "Splitter Spider", 50, 36, "strong_splitter_spider");
                 break;
             case DASHER_SPIDER_EASY:
-                loadStats(170, 55, false, true, true, new Equipment(), "Dasher Spider", 4, 10);
+                loadStats(170, 55, false, true, true, new Equipment(), "Dasher Spider", 4, 10, "2coin_spider");
                 break;
             case DASHER_SPIDER_INTERMEDIATE:
-                loadStats(9000, 650, false, true, true, new Equipment(), "Dasher Spider", 50, 36);
+                loadStats(9000, 650, false, true, true, new Equipment(), "Dasher Spider", 50, 36, "3coin_spider");
                 break;
             case WEAVER_SPIDER:
-                loadStats(9100, 650, false, true, true, new Equipment(), "Weaver Spider", 50, 36);
+                loadStats(9100, 650, false, true, true, new Equipment(), "Weaver Spider", 50, 36, "3coin_spider");
                 break;
             case SPIDER_JOCKEY:
-                loadStats(7000, 550, false, true, true, new Equipment(), "Spider Jockey", 50, 9);
+                loadStats(7000, 550, false, true, true, new Equipment(), "Spider Jockey", 50, 9, "jockey_spider");
                 break;
             case VORACIOUS_SPIDER:
-                loadStats(9000, 700, false, true, true, new Equipment(), "Voracious Spider", 50, 36);
+                loadStats(9000, 700, false, true, true, new Equipment(), "Voracious Spider", 50, 36, "3coin_spider");
                 break;
             case TARANTULA_BROOD_MOTHER:
-                loadStats(6000, 250, false, true, true, new Equipment(), "Tarantula Brood Mother", 12, 25);
+                loadStats(6000, 250, false, true, true, new Equipment(), "Tarantula Brood Mother", 12, 25, "brood_mother");
                 break;
         }
     }

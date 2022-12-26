@@ -1,0 +1,61 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+      {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:warped_fungus_on_a_stick",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{CustomModelData:33,Base:{Type:\"\",Rarity:\"EPIC\",RarityColor:'{\"text\":\"\",\"color\":\"dark_purple\"}'},HideFlags:63,Unbreakable:1b,display:{Name:'[{\"text\":\"Summoning Eye\",\"color\":\"dark_purple\",\"italic\":false}]',Lore:['[{\"text\":\"Use this at the \",\"color\":\"gray\",\"italic\":false},{\"text\":\"Ender Altar\",\"color\":\"dark_purple\",\"italic\":false},{\"text\":\" \",\"color\":\"gray\",\"italic\":false}]','[{\"text\":\"in the \",\"color\":\"gray\",\"italic\":false},{\"text\":\"Dragon\\'s Nest\",\"color\":\"dark_purple\",\"italic\":false},{\"text\":\" \",\"color\":\"gray\",\"italic\":false}]','[{\"text\":\"to summon \",\"color\":\"gray\",\"italic\":false},{\"text\":\"Ender Dragons!\",\"color\":\"gray\",\"italic\":false}]','[{\"text\":\"\"}]','[{\"text\":\"EPIC\",\"color\":\"dark_purple\",\"italic\":false,\"bold\":true}]']}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 4.0,
+                "max": 8.0,
+                "type": "minecraft:uniform"
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0.0,
+                "max": 1.0
+              }
+            }
+          ],
+          "name": "minecraft:ender_pearl"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:scute",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{TempCoin:1b,BaseCoins:15}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

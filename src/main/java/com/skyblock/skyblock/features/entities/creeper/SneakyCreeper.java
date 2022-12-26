@@ -14,7 +14,7 @@ import java.util.List;
 public class SneakyCreeper extends SkyblockEntity {
     public SneakyCreeper() {
         super(EntityType.CREEPER);
-        loadStats(120, 80, false, false, true, new Equipment(), "Sneaky Creeper", 3, 8);
+        loadStats(120, 80, false, false, true, new Equipment(), "Sneaky Creeper", 3, 8, "");
     }
 
     @Override

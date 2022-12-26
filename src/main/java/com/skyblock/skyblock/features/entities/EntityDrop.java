@@ -12,13 +12,17 @@ public class EntityDrop {
     private ItemStack item;
     private EntityDropRarity rarity;
     private double chance;
-    private int amount;
+    private double min;
+    private double max;
 
     public EntityDrop(ItemStack item) {
-        this(item, EntityDropRarity.GUARANTEED, 1.0, 1);
+        this(item, EntityDropRarity.GUARANTEED, 1.0, 1, 1);
     }
-    public EntityDrop(ItemStack item, int amount) {
-        this(item, EntityDropRarity.GUARANTEED, 1.0, amount);
+    public EntityDrop(ItemStack item, double min, double max) {
+        this(item, EntityDropRarity.GUARANTEED, 1.0, min, max);
+    }
+    public EntityDrop(ItemStack item, EntityDropRarity rarity, double chance, int amount) {
+        this(item, rarity, chance, amount, amount);
     }
 
 }

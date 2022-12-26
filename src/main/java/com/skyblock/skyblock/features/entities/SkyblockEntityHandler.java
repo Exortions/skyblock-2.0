@@ -7,9 +7,11 @@ import java.util.HashMap;
 public class SkyblockEntityHandler {
 
     private final HashMap<Integer, SkyblockEntity> entities;
+    private final SkyblockMobDropHandler mobDropHandler;
 
     public SkyblockEntityHandler() {
         entities = new HashMap<>();
+        mobDropHandler = new SkyblockMobDropHandler();
     }
 
     public void registerEntity(SkyblockEntity entity) {
@@ -22,5 +24,9 @@ public class SkyblockEntityHandler {
 
     public SkyblockEntity getEntity(Entity entity) {
         return entities.get(entity.getEntityId());
+    }
+
+    public SkyblockMobDropHandler getMobDropHandler() {
+        return mobDropHandler;
     }
 }

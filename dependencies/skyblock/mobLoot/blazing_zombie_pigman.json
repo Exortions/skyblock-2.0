@@ -1,0 +1,46 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_nugget",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Base:{Vanilla:1b,Type:\"\",Rarity:\"COMMON\",RarityColor:'{\"text\":\"\",\"color\":\"white\"}'},display:{Name:'{\"text\":\"Gold Nugget\",\"color\":\"white\",\"italic\":false}',Lore:['[{\"text\":\"COMMON\",\"color\":\"white\",\"italic\":false,\"bold\":true}]']}}"
+            },
+			      {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0.0,
+                "max": 1.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:scute",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{TempCoin:1b,BaseCoins:4}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

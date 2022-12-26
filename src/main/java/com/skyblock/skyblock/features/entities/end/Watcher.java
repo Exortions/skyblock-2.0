@@ -16,7 +16,7 @@ public class Watcher extends SkyblockEntity {
 
         loadStats(9500, 500, true, false, true, new Equipment(getPlugin().getItemHandler().getItem("SUMMONING_EYE.json"),
                 new ItemBuilder(Material.LEATHER_CHESTPLATE).dyeColor(Color.BLACK).toItemStack(), new ItemBuilder(Material.LEATHER_LEGGINGS).dyeColor(Color.BLACK).toItemStack(),
-                new ItemBuilder(Material.LEATHER_BOOTS).dyeColor(Color.BLACK).toItemStack(), null), "Watcher", 55, 40);
+                new ItemBuilder(Material.LEATHER_BOOTS).dyeColor(Color.BLACK).toItemStack(), null), "Watcher", 55, 40, "watcher");
     }
 
     @Override

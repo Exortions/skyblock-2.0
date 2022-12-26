@@ -16,6 +16,6 @@ public class Endermite extends SkyblockEntity {
         int health = level == 37 ? 2000 : 2300;
         int damage = level == 37 ? 400 : 475;
         int xp = level == 37 ? 25 : 28;
-        loadStats(health, damage, false, false, true, new Equipment(), "Endermite", level, xp);
+        loadStats(health, damage, false, false, true, new Equipment(), "Endermite", level, xp, "endermite");
     }
 }

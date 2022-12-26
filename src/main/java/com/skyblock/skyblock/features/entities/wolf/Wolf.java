@@ -18,19 +18,19 @@ public class Wolf extends SkyblockEntity {
 
         switch (this.type){
             case RUINS:
-                loadStats(250, 90, false, false, true, new Equipment(), "Wolf", 15, 15);
+                loadStats(250, 90, false, false, true, new Equipment(), "Wolf", 15, 15, "wolf");
                 break;
             case OLD_WOLF:
-                loadStats(15000, 800, false, false, true, new Equipment(), "Old Wolf", 55, 45);
+                loadStats(15000, 800, false, false, true, new Equipment(), "Old Wolf", 55, 45, "old_wolf");
                 break;
             case PACK_SPIRIT:
-                loadStats(6000, 240, false, false, true, new Equipment(), "Pack Spirit", 30, 12);
+                loadStats(6000, 240, false, false, true, new Equipment(), "Pack Spirit", 30, 12, "pack_spirit");
                 break;
             case HOWLING_SPIRIT:
-                loadStats(7000, 400, false, false, true, new Equipment(), "Howling Spirit", 35, 22);
+                loadStats(7000, 400, false, false, true, new Equipment(), "Howling Spirit", 35, 22, "howling_spirit");
                 break;
             case SOUL_OF_THE_ALPHA:
-                loadStats(31150, 1140, false, false, true, new Equipment(), "Soul of the Alpha", 55, 50);
+                loadStats(31150, 1140, false, false, true, new Equipment(), "Soul of the Alpha", 55, 50, "soul_of_the_alpha");
                 break;
         }
     }

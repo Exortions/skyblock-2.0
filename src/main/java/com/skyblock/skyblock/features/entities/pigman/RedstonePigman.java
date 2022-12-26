@@ -14,7 +14,7 @@ import java.util.List;
 public class RedstonePigman extends SkyblockEntity {
     public RedstonePigman() {
         super(EntityType.PIG_ZOMBIE);
-        loadStats(250, 75, false, false, false, new Equipment(), "Redstone Pigman", 10, 20);
+        loadStats(250, 75, false, false, false, new Equipment(), "Redstone Pigman", 10, 20, "");
     }
 
     @Override

@@ -21,7 +21,7 @@ public class TreeCapitator extends SkyblockItem {
     ArrayList<Location> blockList = new ArrayList<>();
 
     public TreeCapitator() {
-        super(plugin.getItemHandler().getItem("TREECAPITATOR.json"), "treecapitator_axe");
+        super(plugin.getItemHandler().getItem("TREECAPITATOR.json"), "treecapitator");
     }
 
     public void addBlocks(World w, Location l, Material logMat) {

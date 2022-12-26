@@ -36,6 +36,8 @@ public class SkyblockEntityData {
     public int orbs;
     public int coins;
 
+    public String dropId;
+
     @Override
     public String toString() {
         JsonObject object = new JsonObject();
