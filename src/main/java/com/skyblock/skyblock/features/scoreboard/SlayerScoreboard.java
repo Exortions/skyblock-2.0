@@ -80,6 +80,6 @@ public class SlayerScoreboard extends Scoreboard {
                 addLine(3, ChatColor.RED + "Quest failed!");
         }
         addLine(2, ChatColor.WHITE + "  ");
-        addLine(1, ChatColor.YELLOW + "www.hypixel.net");
+        addLine(1, ChatColor.YELLOW + "original: www.hypixel.net");
     }
 }
