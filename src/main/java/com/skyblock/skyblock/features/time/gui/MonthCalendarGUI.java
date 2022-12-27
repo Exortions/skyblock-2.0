@@ -63,7 +63,7 @@ public class MonthCalendarGUI extends Gui {
     public List<ItemStack> getEvents(String season) {
         List<ItemStack> items = new ArrayList<>();
 
-        for (int day = 1; day < 31; day++) {
+        for (int day = 1; day < 32; day++) {
             ItemBuilder item = new ItemBuilder(ChatColor.GREEN + "Day " + day, Material.PAPER);
             item.setAmount(day);
 
@@ -82,7 +82,7 @@ public class MonthCalendarGUI extends Gui {
                 addEvent(item, Material.SKULL_ITEM, ChatColor.GREEN + "Travelling Zoo", 2);
                 item.setDamage((short) SkullType.PLAYER.ordinal());
                 item.setSkullID("ewogICJ0aW1lc3RhbXAiIDogMTU4ODU4NDM4MTU0OSwKICAicHJvZmlsZUlkIiA6ICI3NTE0NDQ4MTkxZTY0NTQ2OGM5NzM5YTZlMzk1N2JlYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJUaGFua3NNb2phbmciLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQ5ZmU1OTVjNmEwOGFkZWM4YjlkYWIwOTg2ODUzMjcxYzZiODdkODk3ZDczMThiMWJhZGFkMmMzNGJkNWEwZSIKICAgIH0KICB9Cn0=");
-            } else if (season.equals("winter") && (day == 30)) {
+            } else if (season.equals("winter") && (day == 31)) {
                 item.setMaterial(Material.CAKE);
                 item.addLore("&7All day: " + ChatColor.LIGHT_PURPLE + "New Year Cake Celebration &7(" + ChatColor.YELLOW + 2 + "d&7)");
                 item.addEnchantmentGlint();
