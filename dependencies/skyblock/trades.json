@@ -5,7 +5,7 @@
       "amount": 1,
       "cost": {
         "type": "coin",
-        "cost": "100"
+        "amount": 100
       }
     },
     {
@@ -13,7 +13,8 @@
       "amount": 2,
       "cost": {
         "type": "item",
-        "item": "skyblock:LOG"
+        "item": "skyblock:LOG",
+        "amount": 1
       }
     }
   ]
