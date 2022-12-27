@@ -3,11 +3,12 @@ package com.skyblock.skyblock.features.items;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.armor.*;
 import com.skyblock.skyblock.features.items.misc.*;
-import com.skyblock.skyblock.features.items.misc.healingWands.*;
 import com.skyblock.skyblock.features.items.tools.*;
 import com.skyblock.skyblock.features.items.weapons.*;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
+
+import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -27,9 +28,20 @@ public class SkyblockItemHandler {
         registerItem(new GrapplingHook(plugin));
         registerItem(new MaddoxBatphone());
         registerItem(new MagicalWaterBucket(plugin));
-        registerItem(new WandOfHealing(plugin));
-        registerItem(new WandOfMending(plugin));
-        registerItem(new WandOfRestoration(plugin));
+        registerItem(new WandOfHealing(plugin, "WAND_OF_HEALING", 60));
+        registerItem(new WandOfHealing(plugin, "WAND_OF_MENDING", 100));
+        registerItem(new WandOfHealing(plugin, "WAND_OF_RESTORATION", 120));
+        registerItem(new BiomeStick(plugin, "BIRCH_FOREST_BIOME_STICK", Biome.BIRCH_FOREST));
+        registerItem(new BiomeStick(plugin, "DEEP_OCEAN_BIOME_STICK", Biome.DEEP_OCEAN));
+        registerItem(new BiomeStick(plugin, "DESERT_BIOME_STICK", Biome.DESERT));
+        //registerItem(new BiomeStick(plugin, "END_FOREST_BIOME_STICK", Biome.END));
+        registerItem(new BiomeStick(plugin, "FOREST_BIOME_STICK", Biome.FOREST));
+        registerItem(new BiomeStick(plugin, "JUNGLE_BIOME_STICK", Biome.JUNGLE));
+        registerItem(new BiomeStick(plugin, "MESA_BIOME_STICK", Biome.MESA));
+        registerItem(new BiomeStick(plugin, "SAVANNA_BIOME_STICK", Biome.SAVANNA));
+        registerItem(new BiomeStick(plugin, "TAIGA_BIOME_STICK", Biome.TAIGA));
+        //registerItem(new BiomeStick(plugin, "NETHER_BIOME_STICK", Biome.NETHER));
+        registerItem(new BiomeStick(plugin, "ROOFED_FOREST_BIOME_STICK", Biome.ROOFED_FOREST));
 
         // Tools
         registerItem(new PromisingAxe());
@@ -69,6 +81,7 @@ public class SkyblockItemHandler {
         registerItem(new SuperiorDragonArmor());
         registerItem(new WiseDragonArmor());
         registerItem(new YoungDragonArmor());
+        registerItem(new LapisArmor());
     }
 
     public ArrayList<ItemStack> getItems() {
