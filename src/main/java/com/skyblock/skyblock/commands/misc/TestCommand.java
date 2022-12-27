@@ -9,6 +9,8 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
@@ -35,6 +37,8 @@ public class TestCommand implements Command {
         player.sendMessage(escrow.getBuyOrders().toString());
         player.sendMessage(escrow.getSellOrders().toString());
 
-        new CalendarEventsGUI(player).show(player);
+//        new CalendarEventsGUI(player).show(player);
+
+        player.teleport(new Location(Bukkit.createWorld(new WorldCreator(args[0])), 0, 100, 0));
     }
 }

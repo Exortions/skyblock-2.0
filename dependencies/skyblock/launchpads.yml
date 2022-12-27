@@ -84,8 +84,8 @@ launchpads:
       ==: org.bukkit.Location
       world: world
       x: -4
-      y: 126
-      z: -486
+      y: 137
+      z: -484
       pitch: 0
       yaw: -180
     infront:
@@ -98,10 +98,10 @@ launchpads:
       yaw: -180
     teleport:
       ==: org.bukkit.Location
-      world: world
-      x: -5
-      y: 119
-      z: -490
+      world: deep_caverns
+      x: 4
+      y: 157
+      z: 83.5
       pitch: 0.0
       yaw: -180.0
   Deep_to_Gold:
@@ -109,28 +109,28 @@ launchpads:
     end: The Gold Mine
     from:
       ==: org.bukkit.Location
-      world: world
-      x: -5
-      y: 119
-      z: -487
+      world: deep_caverns
+      x: 4
+      y: 157
+      z: 89
       pitch: 0.0
       yaw: 0.0
     to:
       ==: org.bukkit.Location
-      world: world
-      x: -8
-      y: 74
-      z: -399
+      world: deep_caverns
+      x: 1
+      y: 111
+      z: 177.5
       pitch: 0.0
       yaw: 0.0
     infront:
       ==: org.bukkit.Location
-      world: world
-      x: -4
-      y: 126
-      z: -486
-      pitch: 0
-      yaw: 0
+      world: deep_caverns
+      x: 4
+      y: 163
+      z: 90.5
+      pitch: 0.0
+      yaw: 0.0
     teleport:
       ==: org.bukkit.Location
       world: world

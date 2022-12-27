@@ -89,6 +89,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -170,6 +171,13 @@ public final class Skyblock extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Bukkit.createWorld(new WorldCreator("deep_caverns").type(WorldType.FLAT).generator(new ChunkGenerator() {
+            @Override
+            public byte[] generate(World world, Random random, int x, int z) {
+                return new byte[32768];
+            }
+        }));
 
         this.removeables = new ArrayList<>();
 
