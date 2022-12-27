@@ -11,6 +11,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
+import com.skyblock.skyblock.features.profile.ProfileGui;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -69,6 +70,16 @@ public class PlayerListener implements Listener {
         player.getBukkitPlayer().getWorld().setGameRuleValue("randomTickSpeed", "0");
 
         this.plugin.getMinionHandler().deleteAll(player.getBukkitPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onPlayerClickPlayer(PlayerInteractEntityEvent event) {
+        Player player = event.getPlayer();
+
+        if (!(event.getRightClicked() instanceof Player)) return;
+        if (event.getRightClicked().hasMetadata("NPC") || !player.getItemInHand().getType().equals(AIR) || player.isSneaking()) return;
+
+        new ProfileGui(player, (Player) event.getRightClicked()).show(player);
     }
 
     @EventHandler

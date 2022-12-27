@@ -44,7 +44,7 @@ public class MenuCommand implements Command {
 
         Inventory inventory = Bukkit.createInventory(null, 54, SkyblockMenuListener.MENU_NAME);
 
-        ItemStack yourSkyblockProfile = this.createSkyblockProfileItem(skyblockPlayer);
+        ItemStack yourSkyblockProfile = createSkyblockProfileItem(skyblockPlayer, true);
         ItemStack yourSkills = this.createSkillsItem(skyblockPlayer);
 
         int unlockedCollections = 0;
@@ -94,9 +94,9 @@ public class MenuCommand implements Command {
         player.openInventory(inventory);
     }
 
-    public ItemStack createSkyblockProfileItem(SkyblockPlayer skyblockPlayer) {
-        return new ItemBuilder(
-                ChatColor.GREEN + "Your SkyBlock Profile",
+    public static ItemStack createSkyblockProfileItem(SkyblockPlayer skyblockPlayer, boolean selfViewing) {
+        ItemBuilder builder = new ItemBuilder(
+                ChatColor.GREEN + (selfViewing ? "Your" : skyblockPlayer.getBukkitPlayer().getName() + (skyblockPlayer.getBukkitPlayer().getName().endsWith("s") ? "'" : "'s")) + " SkyBlock Profile",
                 Material.SKULL_ITEM,
                 1, (short) 3)
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -118,10 +118,12 @@ public class MenuCommand implements Command {
                         ChatColor.WHITE + " ❂ True Defense " + ChatColor.WHITE + skyblockPlayer.getStat(SkyblockStat.TRUE_DEFENSE),
                         ChatColor.RED + " ⫽ Ferocity " + ChatColor.WHITE + skyblockPlayer.getStat(SkyblockStat.FEROCITY),
                         ChatColor.RED + " ✹ Ability Damage " + ChatColor.WHITE + skyblockPlayer.getStat(SkyblockStat.ABILITY_DAMAGE),
-                        ChatColor.GOLD + " ⸕ Mining Speed " + ChatColor.WHITE + skyblockPlayer.getStat(SkyblockStat.MINING_SPEED),
-                        "",
-                        ChatColor.YELLOW + "Click to view!"
-                ).toItemStack();
+                        ChatColor.GOLD + " ⸕ Mining Speed " + ChatColor.WHITE + skyblockPlayer.getStat(SkyblockStat.MINING_SPEED)
+                );
+
+        if (selfViewing) builder.addLore("", ChatColor.YELLOW + "Click to view!");
+
+        return builder.toItemStack();
     }
 
     public ItemStack createSkillsItem(SkyblockPlayer player) {
