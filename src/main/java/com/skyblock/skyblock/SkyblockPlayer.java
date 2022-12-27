@@ -656,10 +656,9 @@ public class SkyblockPlayer {
                 config.set("quests.time_to_strike.zombiesKilled", 0);
 
                 config.set("locations.found", new ArrayList<>());
-
                 config.set("potions.active", new HashMap<>());
-
                 config.set("recipes.unlocked", new ArrayList<>());
+                config.set("trades.unlocked", new ArrayList<>());
 
                 config.save(configFile);
 
