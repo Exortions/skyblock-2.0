@@ -140,6 +140,7 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
+        if (event.getClickedInventory() == null) return;
         if (!event.getClickedInventory().equals(this)) return;
         if (!Util.notNull(event.getCurrentItem())) return;
 
@@ -164,10 +165,13 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
         Bukkit.getPluginManager().callEvent(new SkyblockCraftEvent(recipe, (Player) event.getWhoClicked()));
 
         for (int i = 0; i < slots.size(); i++) {
-            if (excess != null && excess.get(i) == 0 && getItem(slots.get(i)) == null) setItem(slots.get(i), null);
-            else {
+            if (excess != null && excess.get(i) == 0 && getItem(slots.get(i)) == null) {
+                setItem(slots.get(i), null);
+            } else {
+                int ex = (excess != null ? excess.get(i) : 0);
+
                 ItemStack item = getItem(slots.get(i));
-                item.setAmount(excess.get(i));
+                item.setAmount(ex);
                 setItem(slots.get(i), item);
             }
         }
