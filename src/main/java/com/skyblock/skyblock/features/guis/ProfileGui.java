@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.profile;
+package com.skyblock.skyblock.features.guis;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.commands.menu.MenuCommand;
