@@ -3,6 +3,8 @@ Made by Exortions and OptimusChen with help from UltraBlackLinux
 
 Used mob loot tables from the BlueCommander Hypixel Skyblock Remake
 
+Used Skyblock item JSON files from the NotEnoughItems Repository
+
 # Work in Progress
 
 Please note that this project is a work in progress - there are still many bugs, and many features are still not
