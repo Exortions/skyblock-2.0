@@ -5,6 +5,7 @@ import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
 import com.skyblock.skyblock.features.objectives.gui.QuestLogGui;
 import com.skyblock.skyblock.features.pets.gui.PetsGUI;
 import com.skyblock.skyblock.features.time.gui.CalendarEventsGUI;
+import com.skyblock.skyblock.features.trades.gui.TradeGui;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -74,7 +75,7 @@ public class SkyblockMenuListener implements Listener {
                 new RecipeBookGUI(player).show(player);
                 break;
             case "Trades":
-                skyblock.getGuiHandler().show("trades", player);
+                new TradeGui(player).show(player);
                 break;
             case "Quest Log":
                 new QuestLogGui(player).show(player);
