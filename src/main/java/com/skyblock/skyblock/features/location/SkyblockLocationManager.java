@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.location;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -48,7 +49,7 @@ public class SkyblockLocationManager {
             }
         } else {
             for (SkyblockLocation skyblockLocation : LOCATIONS_CACHE) {
-                if (Util.inCuboid(location, skyblockLocation.getPosition1(), skyblockLocation.getPosition2())) found.add(skyblockLocation);
+                if (Util.inCuboid(location, skyblockLocation.getPosition1(), skyblockLocation.getPosition2()) && location.getWorld().equals(skyblockLocation.getPosition1().getWorld())) found.add(skyblockLocation);
             }
         }
 
