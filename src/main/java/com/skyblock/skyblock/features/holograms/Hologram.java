@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.holograms;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 
@@ -20,6 +21,11 @@ public class Hologram {
 
     public Hologram(String location, String lines) {
         this.location = new Location(Skyblock.getSkyblockWorld(), Double.parseDouble(location.split(",")[0]), Double.parseDouble(location.split(",")[1]), Double.parseDouble(location.split(",")[2]));
+
+        if (location.contains("world")) {
+            this.location.setWorld(Bukkit.getWorld(location.split("world:")[1]));
+        }
+
         this.lines = Arrays.asList(Util.buildLore(lines));
     }
 

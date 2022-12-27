@@ -7,7 +7,7 @@
     "150,76,-359": "&bTravel to:\n&aThe Barn",
     "-10,65,-232": "&bTravel to:\n&aGold Mine",
     "-5,74,-269": "&bTravel to:\n&aHub Island",
-    "-7.5,68,-396.5": "&bTravel to:\n&aDeep Caverns",
+    "3.5,157,88,world:deep_caverns": "&bTravel to:\n&aDeep Caverns",
     "3.5,157,88.5": "&bTravel to:\n&aHub Island",
     "-225,73,-16": "&bTravel to:\n&aThe Park",
     "-273,82,-14": "&bTravel to:\n&aHub Island",
