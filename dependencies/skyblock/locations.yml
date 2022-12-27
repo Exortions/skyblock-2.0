@@ -538,3 +538,143 @@ Mushroom Desert:
   name: Mushroom Desert
   color: AQUA
   weight: 1
+Deep Caverns:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 0.0
+    z: -113.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 255.0
+    z: 124.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Deep Caverns
+  color: AQUA
+  weight: 3
+Lapis Quarry:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 136.0
+    z: -113.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 111.0
+    z: 124.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Lapis Quarry
+  color: AQUA
+  weight: 4
+Pigman's Den:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 83.0
+    z: -113.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 111.0
+    z: 124.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Pigman's Den
+  color: AQUA
+  weight: 4
+Slimehill:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 83.0
+    z: -113.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 50.0
+    z: 124.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Slimehill
+  color: AQUA
+  weight: 4
+Diamond Reserve:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 29.0
+    z: -113.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 50.0
+    z: 124.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Diamond Reserve
+  color: AQUA
+  weight: 4
+Obsidian Sanctuary:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 29.0
+    z: -113.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 0.0
+    z: 124.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Obsidian Sanctuary
+  color: AQUA
+  weight: 4
+Gunpowder Mines:
+  pos1:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: -91.0
+    y: 190.0
+    z: -124.0
+    pitch: 0.0
+    yaw: 0.0
+  pos2:
+    ==: org.bukkit.Location
+    world: deep_caverns
+    x: 91.0
+    y: 136.0
+    z: 40.0
+    pitch: 0.0
+    yaw: 0.0
+  name: Gunpowder Mines
+  color: AQUA
+  weight: 4

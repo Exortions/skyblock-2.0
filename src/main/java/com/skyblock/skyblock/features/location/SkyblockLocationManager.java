@@ -36,16 +36,14 @@ public class SkyblockLocationManager {
         if (LOCATIONS_CACHE.isEmpty()) {
             for (String name : this.getLocations()) {
                 Location pos1 = (Location) getField(name, "pos1");
-                pos1.setWorld(Skyblock.getSkyblockWorld());
 
                 Location pos2 = (Location) getField(name, "pos2");
-                pos2.setWorld(Skyblock.getSkyblockWorld());
 
                 temp = new SkyblockLocation(pos1, pos2, ChatColor.valueOf(((String) getField(name, "color")).toUpperCase()), (String) getField(name, "name"), (int) getField(name, "weight"));
 
                 LOCATIONS_CACHE.add(temp);
 
-                if (Util.inCuboid(location, temp.getPosition1(), temp.getPosition2())) found.add(temp);
+                if (Util.inCuboid(location, temp.getPosition1(), temp.getPosition2()) && location.getWorld().equals(pos1.getWorld())) found.add(temp);
                 else temp = null;
             }
         } else {
@@ -82,10 +80,8 @@ public class SkyblockLocationManager {
 
     public SkyblockLocation getLocation(String name) {
         Location pos1 = (Location) getField(name, "pos1");
-        pos1.setWorld(Skyblock.getSkyblockWorld());
 
         Location pos2 = (Location) getField(name, "pos2");
-        pos2.setWorld(Skyblock.getSkyblockWorld());
 
         return new SkyblockLocation(
                 pos1,
