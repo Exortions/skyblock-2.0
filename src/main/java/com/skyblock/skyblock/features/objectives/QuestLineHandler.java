@@ -20,7 +20,7 @@ public class QuestLineHandler {
         register("Village", new IntroduceYourselfQuest());
         register("Auction House", new AuctioneerQuest());
         register("Forest", new TimberQuest());
-        register("Bar", new TimeToStrikeQuest());
+        register(new String[] { "Bar", "Graveyard", "Spiders Den" }, new TimeToStrikeQuest());
 
         for (List<QuestLine> quest : quests.values()) {
             quest.forEach(QuestLine::onEnable);
@@ -30,6 +30,12 @@ public class QuestLineHandler {
     public void disable() {
         for (List<QuestLine> quest : quests.values()) {
             quest.forEach(QuestLine::onDisable);
+        }
+    }
+
+    public void register(String[] locations, QuestLine line) {
+        for (String loc : locations) {
+            register(loc, line);
         }
     }
 

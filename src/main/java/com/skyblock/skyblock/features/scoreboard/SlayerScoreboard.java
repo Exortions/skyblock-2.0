@@ -56,7 +56,7 @@ public class SlayerScoreboard extends Scoreboard {
             purse.append(ChatColor.YELLOW + " (+" + Util.formatInt((int) skyblockPlayer.getExtraData("lastpicked_coins")) + ")");
         }
 
-        addLine(3, purse.toString());
+        addLine(7, purse.toString());
         addLine(6, ChatColor.WHITE + "   ");
         addLine(5, ChatColor.WHITE + "Slayer Quest");
 

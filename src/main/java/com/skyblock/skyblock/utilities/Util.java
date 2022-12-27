@@ -747,6 +747,10 @@ public class Util {
         return coins;
     }
 
+    public void sendDelayedMessages(Player player, String npc, String... messages) {
+        sendDelayedMessages(player, npc, (p) -> {}, messages);
+    }
+
     public void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
         List<String> talked = (List<String>) SkyblockPlayer.getPlayer(player).getValue("quests.introduceYourself.talkedTo");
 
@@ -759,7 +763,7 @@ public class Util {
             if (i == messages.length - 1) {
                 Util.delay(() -> {
                     action.accept(player);
-                }, (i + 1) * 20);
+                }, (i + 1) * 30);
             }
         }
     }
