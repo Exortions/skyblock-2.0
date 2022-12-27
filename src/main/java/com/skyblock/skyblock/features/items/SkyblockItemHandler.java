@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.items;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.armor.*;
 import com.skyblock.skyblock.features.items.misc.*;
+import com.skyblock.skyblock.features.items.misc.healingWands.*;
 import com.skyblock.skyblock.features.items.tools.*;
 import com.skyblock.skyblock.features.items.weapons.*;
 import com.skyblock.skyblock.utilities.Util;
@@ -26,6 +27,9 @@ public class SkyblockItemHandler {
         registerItem(new GrapplingHook(plugin));
         registerItem(new MaddoxBatphone());
         registerItem(new MagicalWaterBucket(plugin));
+        registerItem(new WandOfHealing(plugin));
+        registerItem(new WandOfMending(plugin));
+        registerItem(new WandOfRestoration(plugin));
 
         // Tools
         registerItem(new PromisingAxe());
