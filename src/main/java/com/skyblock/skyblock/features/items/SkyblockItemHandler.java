@@ -69,6 +69,7 @@ public class SkyblockItemHandler {
         registerItem(new SuperiorDragonArmor());
         registerItem(new WiseDragonArmor());
         registerItem(new YoungDragonArmor());
+        registerItem(new LapisArmor());
     }
 
     public ArrayList<ItemStack> getItems() {
