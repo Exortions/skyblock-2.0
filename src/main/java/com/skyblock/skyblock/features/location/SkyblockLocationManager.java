@@ -5,6 +5,7 @@ import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -60,6 +61,15 @@ public class SkyblockLocationManager {
             else {
                 if (loc.getWeight() > temp.getWeight()) temp = loc;
             }
+        }
+
+        if (temp.getName().equals("The Park")) {
+            Biome biome = location.getBlock().getBiome();
+            if (biome.equals(Biome.BIRCH_FOREST)) temp = new SkyblockLocation(temp.getPosition1(), temp.getPosition2(), ChatColor.GREEN, "Birch Park", temp.getWeight() + 1);
+            if (biome.equals(Biome.ICE_PLAINS) || biome.equals(Biome.SWAMPLAND) || biome.equals(Biome.TAIGA)) temp = new SkyblockLocation(temp.getPosition1(), temp.getPosition2(), ChatColor.GREEN, "Spruce Woods", temp.getWeight() + 1);
+            if (biome.equals(Biome.ROOFED_FOREST)) temp = new SkyblockLocation(temp.getPosition1(), temp.getPosition2(), ChatColor.GREEN, "Dark Thicket", temp.getWeight() + 1);
+            if (biome.equals(Biome.SAVANNA)) temp = new SkyblockLocation(temp.getPosition1(), temp.getPosition2(), ChatColor.GREEN, "Savanna Woodland", temp.getWeight() + 1);
+            if (biome.equals(Biome.JUNGLE)) temp = new SkyblockLocation(temp.getPosition1(), temp.getPosition2(), ChatColor.GREEN, "Jungle Island", temp.getWeight() + 1);
         }
 
         return temp;

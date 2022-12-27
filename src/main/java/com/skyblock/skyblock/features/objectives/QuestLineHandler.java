@@ -19,7 +19,7 @@ public class QuestLineHandler {
         register("Private Island", new GettingStartedQuest());
         register("Village", new IntroduceYourselfQuest());
         register("Auction House", new AuctioneerQuest());
-        register("Forest", new TimberQuest());
+        register(new String[] { "Forest", "Birch Park" }, new TimberQuest());
         register(new String[] { "Bar", "Graveyard", "Spiders Den" }, new TimeToStrikeQuest());
 
         for (List<QuestLine> quest : quests.values()) {

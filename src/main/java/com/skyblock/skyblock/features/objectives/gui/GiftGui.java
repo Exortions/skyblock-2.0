@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.objectives.gui;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,6 +31,7 @@ public class GiftGui extends Gui {
 
         specificClickEvents.put(clone, () -> {
             player.getInventory().addItem(reward);
+            player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 1);
             player.closeInventory();
         });
     }

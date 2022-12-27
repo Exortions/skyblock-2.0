@@ -37,7 +37,7 @@ public class TimeToStrikeQuest extends QuestLine {
                 true,
                 false,
                 null,
-                new Location(Skyblock.getSkyblockWorld(), -86, 70, -70, 90, 0),
+                new Location(Skyblock.getSkyblockWorld(), -85.5, 70, -70, 90, 0),
                 (player) -> {
                     if (!(boolean) SkyblockPlayer.getPlayer(player).getValue("quests.time_to_strike.bartender.interacted")) {
                         if ((int) SkyblockPlayer.getPlayer(player).getValue("quests.time_to_strike.zombiesKilled") > 9) {
