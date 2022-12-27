@@ -6,6 +6,7 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.items.ListeningItem;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.Util;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -35,6 +36,8 @@ public class WandOfHealing extends ListeningItem {
         player.setCooldown(getInternalName(), cooldown);
         long thisRun = System.currentTimeMillis();
         player.setExtraData("healingWandRun", thisRun);
+
+        player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.LAVA_POP, 10, 0);
 
         Util.sendAbility(player, base.getAbilityName(), base.getAbilityCost());
 
