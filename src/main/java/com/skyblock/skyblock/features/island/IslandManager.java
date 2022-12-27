@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressWarnings("deprecation")
 public class IslandManager {
@@ -36,7 +37,11 @@ public class IslandManager {
     }
 
     public static void createIsland(Player player) {
-        if (Bukkit.getWorlds().contains(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()))) return;
+        File worldFile = new File(Bukkit.getWorldContainer(), ISLAND_PREFIX + player.getUniqueId().toString());
+        if (worldFile.exists()) {
+            World world = Bukkit.createWorld(new WorldCreator(worldFile.getName()));
+            return;
+        }
 
         WorldCreator creator = new WorldCreator(ISLAND_PREFIX + player.getUniqueId().toString()).type(WorldType.FLAT).generator(new ChunkGenerator() {
             @Override
@@ -45,7 +50,7 @@ public class IslandManager {
             }
         });
 
-        World world = creator.createWorld();
+        World world = Bukkit.createWorld(creator);
 
         player.teleport(new Location(world, 0, 100, 0));
 
@@ -88,6 +93,6 @@ public class IslandManager {
             }
         }.runTaskLater(Skyblock.getPlugin(Skyblock.class), 5);
 
+        world.save();
     }
-
 }

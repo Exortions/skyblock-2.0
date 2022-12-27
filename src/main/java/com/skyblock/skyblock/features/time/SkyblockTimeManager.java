@@ -56,7 +56,7 @@ public class SkyblockTimeManager {
             serverData.set("date.day", (int) serverData.get("date.day") + 1);
         }
 
-        if ((int) serverData.get("date.day") >= 30) {
+        if ((int) serverData.get("date.day") >= 31) {
             serverData.set("date.day", 1);
             serverData.set("date.season", getNextSeason());
         }
@@ -79,13 +79,13 @@ public class SkyblockTimeManager {
             activeEvents.add("dark_auction");
         }
 
-        if (season.equals("fall") && day >= 29) {
+        if (season.equals("fall") && day >= 30) {
             activeEvents.add("spooky_festival");
         } else if (season.equals("winter") && (day == 25 || day == 26)) {
             activeEvents.add("season_of_jerry");
         } else if ((season.equals("summer") && (day == 2 || day == 3)) || (season.equals("winter") && (day == 2 || day == 3))) {
             activeEvents.add("traveling_zoo");
-        } else if (season.equals("winter") && (day == 30)) {
+        } else if (season.equals("winter") && (day == 31)) {
             activeEvents.add("new_year_cake_event");
         } else if (season.equals("winter") && (day == 1)) {
             activeEvents.add("jerry_workshop_open");
@@ -180,14 +180,14 @@ public class SkyblockTimeManager {
         int day = currentDate.getDate();
         while (true) {
             day++;
-            if (day == 31) {
+            if (day == 32) {
                 season = getNextSeason(season);
                 day = 1;
             }
 
             diff++;
 
-            if (season.equals("fall") && day == 30) {
+            if (season.equals("fall") && day == 31) {
                 return new CalendarEvent(CalendarEvent.EventType.SPOOKY_FESTIVAL, new Timestamp(System.currentTimeMillis() + diff * 120000L));
             } else if (season.equals("winter") && day == 25) {
                 return new CalendarEvent(CalendarEvent.EventType.SEASON_OF_JERRY, new Timestamp(System.currentTimeMillis() + diff * 120000L));

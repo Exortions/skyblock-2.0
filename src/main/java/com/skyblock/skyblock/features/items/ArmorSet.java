@@ -27,6 +27,10 @@ public abstract class ArmorSet implements Listener {
     private final ItemStack boots;
     private final String id;
 
+    public ArmorSet(String helmet, String chest, String legs, String boots, String id) {
+        this(handler.getItem(helmet + ".json"), handler.getItem(chest + ".json"), handler.getItem(legs + ".json"), handler.getItem(boots + ".json"), id);
+    }
+
     public ArmorSet(ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots, String id) {
         this.helmet = helmet;
         this.chest = chest;
