@@ -80,6 +80,7 @@ public class Gui implements Listener {
         this.addableItems = new ArrayList<>();
         this.opened = new HashMap<>();
     }
+
     public void show(Player player) {
         if (this instanceof AbstractCommandGui) {
             player.performCommand(((AbstractCommandGui) this).command);

@@ -57,7 +57,7 @@ public class MenuCommand implements Command {
         }
 
         ItemStack collection = this.getCollectionItem(unlockedCollections, totalCollections);
-        ItemStack recipeBook = this.createRecipeBookItem(skyblockPlayer);
+        ItemStack recipeBook = MenuCommand.createRecipeBookItem(skyblockPlayer);
         ItemStack trades = this.createTradesItem();
         ItemStack questLog = this.createQuestLogItem();
         ItemStack calendarAndEvents = this.createCalendarItem();
