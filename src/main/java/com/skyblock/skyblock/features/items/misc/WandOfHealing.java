@@ -13,8 +13,7 @@ import java.util.HashMap;
 
 public class WandOfHealing extends ListeningItem {
     private final int healingAmount;
-    private final int cooldown = 1;
-    
+
     public WandOfHealing(Skyblock plugin, String type, int heals) {
         super(plugin.getItemHandler().getItem(type + ".json"), type.toLowerCase());
         healingAmount = heals;
@@ -24,26 +23,28 @@ public class WandOfHealing extends ListeningItem {
     public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
 
-	int manaCost = new ItemBase(event.getItem()).getAbilityCost();
-	if (!event.getPlayer().getItemInHand().equals(getItem()) || !player.checkMana(manaCost)) return;
+        int manaCost = new ItemBase(event.getItem()).getAbilityCost();
+        if (!event.getPlayer().getItemInHand().equals(getItem()) || !player.checkMana(manaCost)) return;
         else if (player.isOnCooldown(getInternalName())) {
             event.getPlayer().sendMessage(ChatColor.RED + "This ability is on cooldown.");
             return;
         }
+
+        int cooldown = 1;
         player.setCooldown(getInternalName(), cooldown);
         player.subtractMana(manaCost);
         long thisRun = System.currentTimeMillis();
         player.setExtraData("healingWandRun", thisRun);
 
         for (int i = 1; i < 8; ++i) {
-		Util.delay(() -> {
-		   if (((long) player.getExtraData("healingWandRun")) == thisRun) {
-			if (player.getStat(SkyblockStat.MAX_HEALTH) - player.getStat(SkyblockStat.HEALTH) >= healingAmount)
-			        player.setStat(SkyblockStat.HEALTH, player.getStat(SkyblockStat.HEALTH) + healingAmount);
-			else if (player.getStat(SkyblockStat.MAX_HEALTH) - player.getStat(SkyblockStat.HEALTH) < healingAmount)
-			        player.setStat(SkyblockStat.HEALTH, player.getStat(SkyblockStat.MAX_HEALTH));
-		   }
-		}, i * 20);
+            Util.delay(() -> {
+               if (((long) player.getExtraData("healingWandRun")) == thisRun) {
+                   if (player.getStat(SkyblockStat.MAX_HEALTH) - player.getStat(SkyblockStat.HEALTH) >= healingAmount)
+                       player.setStat(SkyblockStat.HEALTH, player.getStat(SkyblockStat.HEALTH) + healingAmount);
+                   else if (player.getStat(SkyblockStat.MAX_HEALTH) - player.getStat(SkyblockStat.HEALTH) < healingAmount)
+                       player.setStat(SkyblockStat.HEALTH, player.getStat(SkyblockStat.MAX_HEALTH));
+               }
+            }, i * 20);
         }
     }
 }

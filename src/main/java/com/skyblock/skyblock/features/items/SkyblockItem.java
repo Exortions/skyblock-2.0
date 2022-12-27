@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Getter;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -65,5 +66,9 @@ public abstract class SkyblockItem {
 
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
         return damage;
+    }
+
+    protected boolean isThisItem(ItemStack item) {
+        return Util.getSkyblockId(item).equals(Util.getSkyblockId(getItem()));
     }
 }
