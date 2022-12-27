@@ -39,6 +39,7 @@ import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionE
 import com.skyblock.skyblock.features.enchantment.enchantments.misc.EfficiencyEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.misc.TelekinesisEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
+import com.skyblock.skyblock.features.entities.EntityListener;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
@@ -725,6 +726,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new PetListener());
         registerListener(new MinionListener());
         registerListener(new PotionListener());
+        registerListener(new EntityListener());
 
         this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
