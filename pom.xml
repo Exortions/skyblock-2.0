@@ -64,7 +64,7 @@
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <url>https://maven.elmakers.com/repository/</url>
         </repository>
         <repository>
             <id>sonatype</id>
