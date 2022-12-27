@@ -44,14 +44,14 @@ public class CalendarEventsGUI extends Gui {
             if (getItems().containsKey(i)) continue;
 
             day++;
-            if (day == 31) {
+            if (day == 32) {
                 season = timeManager.getNextSeason(season);
                 day = 1;
             }
 
             diff++;
 
-            if (season.equals("fall") && day == 30) {
+            if (season.equals("fall") && day == 31) {
                 addItem(i, new CalendarEvent(CalendarEvent.EventType.SPOOKY_FESTIVAL, new Timestamp(System.currentTimeMillis() + diff * 120000L)).getDisplayItem());
             } else if (season.equals("winter") && day == 25) {
                 addItem(i, new CalendarEvent(CalendarEvent.EventType.SEASON_OF_JERRY, new Timestamp(System.currentTimeMillis() + diff * 120000L)).getDisplayItem());
