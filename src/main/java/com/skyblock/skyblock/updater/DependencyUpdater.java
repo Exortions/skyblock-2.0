@@ -33,6 +33,7 @@ public class DependencyUpdater {
         add("merchants.json");
         add("reforges.json");
         add("spawners.yml");
+        add("trades.json");
     }};
 
     private final Skyblock skyblock;

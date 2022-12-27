@@ -1,0 +1,20 @@
+{
+  "trades": [
+    {
+      "item": "skyblock:PORTAL_TO_THE_HUB",
+      "amount": 1,
+      "cost": {
+        "type": "coin",
+        "cost": "100"
+      }
+    },
+    {
+      "item": "skyblock:COAL",
+      "amount": 2,
+      "cost": {
+        "type": "item",
+        "item": "skyblock:LOG"
+      }
+    }
+  ]
+}

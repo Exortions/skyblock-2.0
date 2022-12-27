@@ -65,6 +65,7 @@ import com.skyblock.skyblock.features.potions.effects.StrengthEffect;
 import com.skyblock.skyblock.features.reforge.ReforgeHandler;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
+import com.skyblock.skyblock.features.trades.TradeHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.updater.DependencyUpdater;
 import com.skyblock.skyblock.utilities.Util;
@@ -124,8 +125,9 @@ public final class Skyblock extends JavaPlugin {
     private MinionHandler minionHandler;
     private SlayerHandler slayerHandler;
     private RecipeHandler recipeHandler;
-    private List<Entity> removeables;
+    private TradeHandler tradeHandler;
     private AuctionHouse auctionHouse;
+    private List<Entity> removeables;
     private SignManager signManager;
     private ItemHandler itemHandler;
     private BagManager bagManager;
@@ -137,7 +139,6 @@ public final class Skyblock extends JavaPlugin {
     private Date date;
 
     private int registeredListeners = 0;
-
 
     @Override
     public void onEnable() {
@@ -192,6 +193,7 @@ public final class Skyblock extends JavaPlugin {
         this.initializeFloatingCrystals();
 
         this.registerMerchants();
+        this.registerTrades();
         this.registerCollections();
         this.registerNpcs();
         this.registerGuis();
@@ -271,6 +273,15 @@ public final class Skyblock extends JavaPlugin {
         }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+    }
+
+    public void registerTrades() {
+        this.sendMessage("Registering trades...");
+        long start = System.currentTimeMillis();
+
+        this.tradeHandler = new TradeHandler(this);
+
+        this.sendMessage("Successfully registered &a" + this.tradeHandler.getTrades().size() + " &ftrades [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializePotions() {
