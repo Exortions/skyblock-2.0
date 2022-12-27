@@ -23,7 +23,8 @@ public class WandOfHealing extends ListeningItem {
     public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
 
-        int manaCost = new ItemBase(event.getItem()).getAbilityCost();
+        ItemBase base = new ItemBase(event.getItem());
+        int manaCost = base.getAbilityCost();
         if (!event.getPlayer().getItemInHand().equals(getItem()) || !player.checkMana(manaCost)) return;
         else if (player.isOnCooldown(getInternalName())) {
             event.getPlayer().sendMessage(ChatColor.RED + "This ability is on cooldown.");
@@ -32,9 +33,10 @@ public class WandOfHealing extends ListeningItem {
 
         int cooldown = 1;
         player.setCooldown(getInternalName(), cooldown);
-        player.subtractMana(manaCost);
         long thisRun = System.currentTimeMillis();
         player.setExtraData("healingWandRun", thisRun);
+
+        Util.sendAbility(player, base.getAbilityName(), base.getAbilityCost());
 
         for (int i = 1; i < 8; ++i) {
             Util.delay(() -> {
