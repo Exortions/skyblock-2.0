@@ -51,7 +51,7 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.COBBLESTONE, 7);
     }};
 
-    private static final String[] mines = new String[]{"Coal Mine", "Gold Mine", "Deep Caverns"};
+    private static final String[] mines = new String[]{"Coal Mine", "Gold Mine", "Deep Caverns", "Gunpowder Mines", "Lapis Quarry", "Pigman's Den", "Slimehill", "Diamond Reserve", "Obsidian Sanctuary"};
     private static final String[] farms = new String[]{"Farm", "The Barn", "Mushroom Desert"};
     private static final String[] forests = new String[]{"Forest", "The Park"};
     private static final HashMap<Material, String[]> locations = new HashMap<Material, String[]>() {{

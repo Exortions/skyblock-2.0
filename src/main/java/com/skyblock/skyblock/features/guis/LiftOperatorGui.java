@@ -67,7 +67,7 @@ public class LiftOperatorGui extends Gui {
         if (!((ArrayList<String>) player.getValue("locations.found")).contains(name)) {
             return new ItemBuilder(ChatColor.RED + name, Material.INK_SACK, 1, (short) 8).addLore(Util.buildLore("&7Travel down to this location\n&7to permanently unlock it!")).toItemStack();
         }
-        return new ItemBuilder(ChatColor.GREEN + name, icon, (short) data).addLore(Util.buildLore("&7Teleports you to the &b" + name + "&7!\n\n&eClick to travel!")).toItemStack();
+        return new ItemBuilder(ChatColor.GREEN + name, icon, (short) data).addLore(Util.buildLore("&7Teleports you to the\n&b" + name + "&7!\n\n&eClick to travel!")).toItemStack();
     }
 
 }
