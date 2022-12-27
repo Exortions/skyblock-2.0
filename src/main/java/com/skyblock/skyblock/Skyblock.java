@@ -44,6 +44,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
 import com.skyblock.skyblock.features.fairysouls.TiaGUI;
+import com.skyblock.skyblock.features.guis.LiftOperatorGui;
 import com.skyblock.skyblock.features.holograms.HologramManager;
 import com.skyblock.skyblock.features.items.Accessory;
 import com.skyblock.skyblock.features.items.SkyblockItem;
@@ -69,6 +70,7 @@ import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import com.skyblock.skyblock.features.trades.TradeHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.updater.DependencyUpdater;
+import com.skyblock.skyblock.utilities.TriConsumer;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
@@ -96,6 +98,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.*;
+import java.util.function.Consumer;
 
 @Getter
 @SuppressWarnings({"unused", "deprecation"})
@@ -543,6 +546,32 @@ public final class Skyblock extends JavaPlugin {
                         "NeIGEVhTQsg+GfcmtVhCCXdWX6tQpI/iUjPixUKaxea5q8xTpCKFSGqnIhSgG0CjPpxw9UKwC1yr4gIDsM5zPGjnIsD3PDP4F6Jaicx0YsiJGr861zxQDSlxpkcbGXrHRuNq92TT4/zojNMk6qPGtGeFApro7dXxU5Fq7HpyikHR2S4iaTZAF2L65rXqdogmQIBcTI5UVO2cZ3xNSr3j9y/nKGUx0SwVaIryt1sMHj2cO5Lknb9eiiG+vfw/LTlgwOmc9PXHhQB045SoBgGondcBZYBWVGCP9dTCNrvDBp963rzEkJMOfLfL+M2P+BT318BCBQzQ6JGJuILqhdY/Ph7qZJW2P9g8At9chbfnBdwMnHvjTshGN3XMzVg8BdxFAKydJMSocfF4j9KvPCtP1Hilk0pylqRAPe1cn0JpTZ1e/xzorzgqHdo0kXmf8gzLXHXDz8fYanZpQQCemwL3aOHy6nvAFFk/+j6kGLEaetTZgw8WAMJiyAxcpN/elfG9fxoX+pXMFtM9ItRA2Sf6EHdRKJTc4gB+yclkuCd3MgCiRDZU5NwpH8AhTmFZsjd0nHzHLXvpNPmSLAZiYi7EqG9SySEu7pJ4PXHZ0F80jKknNqh0CnnnqH4iKdMIUau33ENPKTLiuxwqxj9bv6ZtsCUZXn/mHWeCOiB6IBPjaR0="));
 
         this.sendMessage("Successfully registered NPCs [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
+
+        final int[] liftOperators = {0};
+
+        Consumer<Integer> spawnLiftOperator = (y) -> {
+            this.npcHandler.registerNPC(
+                    "lift_operator_" + liftOperators[0],
+                    new NPC(ChatColor.AQUA + "Lift Operator",
+                            true,
+                            true,
+                            false,
+                            null,
+                            new Location(Bukkit.getWorld("deep_caverns"), 45.5, y, 15.5),
+                            (player) -> new LiftOperatorGui(player).show(player),
+                            "ewogICJ0aW1lc3RhbXAiIDogMTU5Mzk5ODcxNjIyOSwKICAicHJvZmlsZUlkIiA6ICI2OTBkMDM2OGM2NTE0OGM5ODZjMzEwN2FjMmRjNjFlYyIsCiAgInByb2ZpbGVOYW1lIiA6ICJ5emZyXzciLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWRhODdjODAwNWJlM2QzMWZkNDMyM2NiMWE0NGI5ZjY5ZmQxOTgyYWY1YjljODdhMzU5NTUzNjY2ZWFjODUyYSIKICAgIH0KICB9Cn0=",
+                            "wbcgvF/NVdgPE80LE/KTpGVnHkvZ8L8lmdoflEjK3yfiOL4gXzdoP5hYoCG1nBh6wppNi4a7rNZf0RV0fnUgy18NQdrqVGh6crIpQ+ya6zSeegfD7jVyAGPRCcJmtu14jUIhZeWd22AOOq9H1QR/bF9xtRO4zkDrAA11qW9c49f6n6wYQpOcFDjSdBcg4hUFyEh7XlmbdhwphM6waJnA6FlPXm5gLfLr7n5Ug5xznoqviF/d7OlEDbgg37csjtDnkY99QnRdxjCET1Bvl2g1ZTQmOVplDmhuTrV8hndvJT4Gn1kcx531u17fyLsg6B7SLn8ojxLzTVJM4d47JqXkWfBz1bXby6owPgKM95dGf+IAAUopYJ3KLL76huakeSYN1koG6t17veFwVkFhJUqtSZKsSLyAGSyINUa0zMjz9VLkYQkqWw2RhXQLKLQs7qKzXcGdrtT52QZcuA9zRFskkPYukPEswektVlxwJuuMicRHk5BZlIicOgMjaHqR6HwAChzJPDQkPKIbXjrWEVtQCIPNbGkbIlz2+/owNc8vvuzwHrtjlh1gBw5cfM9bz83Kmr6KLAnDknQ0SeRAe5mF6+Vf4y07YI8yARCeTAcPd5SPmpX0nW7VRcCzOH3deGNgS3pzcusKsISfF+qAo50qRMEOCcosz6juMiborf8fu60=")
+            );
+
+            liftOperators[0]++;
+        };
+
+        spawnLiftOperator.accept(150);
+        spawnLiftOperator.accept(121);
+        spawnLiftOperator.accept(101);
+        spawnLiftOperator.accept(66);
+        spawnLiftOperator.accept(38);
+        spawnLiftOperator.accept(13);
     }
 
     public void registerMerchants() {
@@ -786,7 +815,7 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Initializing game rules...");
         long start = System.currentTimeMillis();
         List<World> worlds = Bukkit.getWorlds();
-        
+
         for (World world : worlds) {
             world.setGameRuleValue("doDaylightCycle", "false");
             world.setGameRuleValue("doWeatherCycle", "false");
@@ -830,7 +859,9 @@ public final class Skyblock extends JavaPlugin {
         return ChatColor.translateAlternateColorCodes('&', "&7[&3S&bB&7] &f");
     }
 
-    public static Skyblock getPlugin() { return Skyblock.getPlugin(Skyblock.class); }
+    public static Skyblock getPlugin() {
+        return Skyblock.getPlugin(Skyblock.class);
+    }
 
     public void addRemoveable(Entity entity) {
         this.removeables.add(entity);
