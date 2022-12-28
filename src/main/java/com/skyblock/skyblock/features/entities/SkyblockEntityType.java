@@ -5,6 +5,7 @@ import com.skyblock.skyblock.features.entities.end.Endermite;
 import com.skyblock.skyblock.features.entities.end.ObsidianDefender;
 import com.skyblock.skyblock.features.entities.end.Watcher;
 import com.skyblock.skyblock.features.entities.end.enderman.Enderman;
+import com.skyblock.skyblock.features.entities.skeleton.Skeleton;
 import com.skyblock.skyblock.features.entities.slime.EmeraldSlime;
 import com.skyblock.skyblock.features.entities.spider.Spider;
 import com.skyblock.skyblock.features.entities.wolf.Wolf;
@@ -24,6 +25,7 @@ public enum SkyblockEntityType {
     ENDERMITE(Endermite.class),
     SNEAKY_CREEPER(SneakyCreeper.class),
     EMERALD_SLIME(EmeraldSlime.class),
+    SKELETON(Skeleton.class),
     REDSTONE_PIGMAN(RedstonePigman.class);
 
     Class<? extends SkyblockEntity> baseClass;

@@ -14,13 +14,7 @@ import java.util.List;
 public class SneakyCreeper extends SkyblockEntity {
     public SneakyCreeper() {
         super(EntityType.CREEPER);
-        loadStats(120, 80, false, false, true, new Equipment(), "Sneaky Creeper", 3, 8, "");
-    }
-
-    @Override
-    public List<EntityDrop> getDrops() {
-        List<EntityDrop> drops = new ArrayList<>(Arrays.asList(new EntityDrop(handler.getItem("GUNPOWDER.json"))));
-        return drops;
+        loadStats(120, 80, false, false, true, new Equipment(), "Sneaky Creeper", 3, 8, "creeper");
     }
 
     @Override

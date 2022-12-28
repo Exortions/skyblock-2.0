@@ -7,7 +7,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
-@Usage(usage = "/sb createspawner <type> <subType>")
+@Usage(usage = "/sb createspawner <type> <subType> <limit> <delay>")
 public class CreateSpawnerCommand implements Command {
 
     @Override

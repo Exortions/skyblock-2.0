@@ -156,7 +156,7 @@ public class TimberQuest extends QuestLine {
 
     private static class TravelToParkObjective extends Objective {
         public TravelToParkObjective() {
-            super("travel_to_park", "Travel to The Park behind the woods");
+            super("travel_to_park", "Travel to The Park");
         }
 
         @EventHandler

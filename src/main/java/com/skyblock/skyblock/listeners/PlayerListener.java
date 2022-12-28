@@ -274,7 +274,7 @@ public class PlayerListener implements Listener {
                 Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(display), true);
             }
         } else if (e.getDamager().hasMetadata("skyblockEntityData")) {
-            if (e.getEntity() instanceof Player) {
+            if (e.getEntity() instanceof Player && !e.getEntity().hasMetadata("NPC")) {
                 Player p = (Player) e.getEntity();
                 SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
 
