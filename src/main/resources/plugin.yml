@@ -44,3 +44,7 @@ commands:
     aliases:
       - sb island
       - is
+  settings:
+    description: Opens the settings menu
+    aliases:
+      - sb settings

@@ -433,6 +433,7 @@ public class SkyblockPlayer {
             quest.fail();
         }
 
+        bukkitPlayer.setVelocity(new Vector(0, 0, 0));
         bukkitPlayer.setFallDistance(0.0f);
 
         if (isOnIsland()) return;
@@ -440,10 +441,7 @@ public class SkyblockPlayer {
         double sub = getDouble("stats.purse") / 2;
         bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatDouble(sub) + " coins!");
 
-        if (getExtraData("lastSpawn") == null) bukkitPlayer.performCommand("warp hub");
-        else bukkitPlayer.teleport((Location) getExtraData("lastSpawn"));
-
-        bukkitPlayer.setVelocity(new Vector(0, 0, 0));
+        bukkitPlayer.performCommand("warp hub");
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         setValue("stats.purse", sub);
@@ -663,6 +661,36 @@ public class SkyblockPlayer {
                 config.set("potions.active", new HashMap<>());
                 config.set("recipes.unlocked", new ArrayList<>());
                 config.set("trades.unlocked", new ArrayList<>());
+
+
+                config.set("settings.doubleTapDrop", false);
+                config.set("settings.rightClickProfiles", true);
+                config.set("settings.abilityCooldownSounds", true);
+                config.set("settings.rareDropSounds", true);
+                config.set("settings.menuSounds", true);
+                config.set("settings.romanNumerals", true);
+                config.set("settings.dynamicSlayerSidebar", true);
+                config.set("settings.romanNumerals", true);
+                config.set("settings.skyblockLevelsChat", true);
+                config.set("settings.zonesActionBar", true);
+                config.set("settings.abilityChat", true);
+                config.set("settings.abilityCooldownChat", true);
+                config.set("settings.compactChat", true);
+                config.set("settings.seaCreatureChat", true);
+                config.set("settings.autoRecombobulator", true);
+                config.set("settings.tradeRequests", true);
+                config.set("settings.inventoryFullNotif", true);
+                config.set("settings.arrowPickupFullQuiver", true);
+                config.set("settings.deathMessages", true);
+                config.set("settings.bidNotif", true);
+                config.set("settings.outbidNotif", true);
+                config.set("settings.bidNotif", true);
+                config.set("settings.bazaarFillNotif", true);
+                config.set("settings.guestingInvites", true);
+                config.set("settings.guestingNotif", true);
+                config.set("settings.coopInvites", true);
+                config.set("settings.coopTravelNotif", true);
+                
 
                 config.save(configFile);
 
