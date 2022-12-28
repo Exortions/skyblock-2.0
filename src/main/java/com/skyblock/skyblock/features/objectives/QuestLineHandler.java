@@ -5,6 +5,7 @@ import com.skyblock.skyblock.features.objectives.impl.hub.IntroduceYourselfQuest
 import com.skyblock.skyblock.features.objectives.impl.hub.TimeToStrikeQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.auction.AuctioneerQuest;
 import com.skyblock.skyblock.features.objectives.impl.hub.TimberQuest;
+import com.skyblock.skyblock.features.objectives.impl.mines.LostAndFoundQuest;
 import com.skyblock.skyblock.features.objectives.impl.starting.GettingStartedQuest;
 import lombok.Getter;
 
@@ -21,6 +22,7 @@ public class QuestLineHandler {
         register("Auction House", new AuctioneerQuest());
         register(new String[] { "Forest", "Birch Park" }, new TimberQuest());
         register(new String[] { "Bar", "Graveyard", "Spiders Den" }, new TimeToStrikeQuest());
+        register("Gold Mine", new LostAndFoundQuest());
 
         for (List<QuestLine> quest : quests.values()) {
             quest.forEach(QuestLine::onEnable);

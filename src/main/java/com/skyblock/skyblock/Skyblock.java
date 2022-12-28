@@ -807,7 +807,10 @@ public final class Skyblock extends JavaPlugin {
                 new RegenerateCommand(),
                 new EffectCommand(),
                 new CreatePotionCommand(),
-                new SettingsCommand()
+                new SettingsCommand(),
+                new HubCommand(),
+                new IslandCommand(),
+                new EffectsCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

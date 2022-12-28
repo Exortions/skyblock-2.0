@@ -657,12 +657,14 @@ public class SkyblockPlayer {
                 config.set("quests.timber.talkedToLumberjack", false);
                 config.set("quests.time_to_strike.bartender.interacted", false);
                 config.set("quests.time_to_strike.zombiesKilled", 0);
+                config.set("quests.lost_and_found.talkedToLazyMiner", false);
+                config.set("quests.lost_and_found.mined", 0);
+                config.set("quests.lost_and_found.foundPickaxe", false);
 
                 config.set("locations.found", new ArrayList<>());
                 config.set("potions.active", new HashMap<>());
                 config.set("recipes.unlocked", new ArrayList<>());
                 config.set("trades.unlocked", new ArrayList<>());
-
 
                 config.set("settings.doubleTapDrop", false);
                 config.set("settings.rightClickProfiles", true);
@@ -691,7 +693,6 @@ public class SkyblockPlayer {
                 config.set("settings.guestingNotif", true);
                 config.set("settings.coopInvites", true);
                 config.set("settings.coopTravelNotif", true);
-                
 
                 config.save(configFile);
 
