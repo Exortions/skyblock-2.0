@@ -45,7 +45,7 @@ public class CollectionListener implements Listener {
 
                 event.setCancelled(true);
 
-                event.getPlayer().getInventory().addItem(clone);
+                event.getPlayer().getInventory().addItem(nbt.getItem());
                 event.getPlayer().playSound(event.getItem().getLocation(), Sound.ITEM_PICKUP, 0.1f, 1);
 
                 event.getItem().remove();
