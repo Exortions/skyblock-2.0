@@ -75,4 +75,17 @@ public class QuestLineHandler {
 
         return null;
     }
+
+    public List<QuestLine> getQuests() {
+        List<QuestLine> quests = new ArrayList<>();
+
+        for (List<QuestLine> questLines : this.quests.values()) {
+            for (QuestLine quest : questLines) {
+                if (quests.contains(quest)) continue;
+                quests.add(quest);
+            }
+        }
+
+        return quests;
+    }
 }

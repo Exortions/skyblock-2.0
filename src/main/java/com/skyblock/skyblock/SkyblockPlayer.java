@@ -433,7 +433,6 @@ public class SkyblockPlayer {
             quest.fail();
         }
 
-        bukkitPlayer.setVelocity(new Vector(0, 0, 0));
         bukkitPlayer.setFallDistance(0.0f);
 
         if (isOnIsland()) return;
@@ -441,7 +440,10 @@ public class SkyblockPlayer {
         double sub = getDouble("stats.purse") / 2;
         bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatDouble(sub) + " coins!");
 
-        bukkitPlayer.performCommand("warp hub");
+        if (getExtraData("lastSpawn") == null) bukkitPlayer.performCommand("warp hub");
+        else bukkitPlayer.teleport((Location) getExtraData("lastSpawn"));
+
+        bukkitPlayer.setVelocity(new Vector(0, 0, 0));
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
 
         setValue("stats.purse", sub);

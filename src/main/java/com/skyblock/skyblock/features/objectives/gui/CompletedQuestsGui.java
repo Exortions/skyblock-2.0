@@ -35,28 +35,26 @@ public class CompletedQuestsGui extends Gui {
         clickEvents.put(ChatColor.GREEN + "Go Back", () -> player.performCommand("sb menu skyblock_menu"));
 
         int i = 10;
-        for (List<QuestLine> quests : Skyblock.getPlugin().getQuestLineHandler().getQuests().values()) {
-            for (QuestLine quest : quests) {
-                if (!compQuests.contains(quest.getName())) continue;
+        for (QuestLine quest : Skyblock.getPlugin().getQuestLineHandler().getQuests()) {
+            if (!compQuests.contains(quest.getName())) continue;
 
-                while (getItems().containsKey(i)) {
-                    i++;
+            while (getItems().containsKey(i)) {
+                i++;
 
-                    if (i == 54) break;
-                }
-
-                ItemBuilder item = new ItemBuilder(ChatColor.GREEN + quest.getDisplay(), Material.PAPER);
-                item.addEnchantmentGlint();
-                item.addLore(" ");
-
-                for (Objective objective : quest.getLine()) {
-                    item.addLore(ChatColor.GREEN + " ✔ " + ChatColor.WHITE + objective.getDisplay() + " " + objective.getSuffix(skyblockPlayer));
-                }
-
-                item.addLore(" ");
-
-                addItem(i, item.toItemStack());
+                if (i == 54) break;
             }
+
+            ItemBuilder item = new ItemBuilder(ChatColor.GREEN + quest.getDisplay(), Material.PAPER);
+            item.addEnchantmentGlint();
+            item.addLore(" ");
+
+            for (Objective objective : quest.getLine()) {
+                item.addLore(ChatColor.GREEN + " ✔ " + ChatColor.WHITE + objective.getDisplay() + " " + objective.getSuffix(skyblockPlayer));
+            }
+
+            item.addLore(" ");
+
+            addItem(i, item.toItemStack());
         }
     }
 }

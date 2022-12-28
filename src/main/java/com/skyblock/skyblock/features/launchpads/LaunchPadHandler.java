@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.launchpads;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Location;
@@ -105,6 +106,7 @@ public class LaunchPadHandler {
                         public void run() {
                             player.teleport(teleport);
                             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 10, 2);
+                            SkyblockPlayer.getPlayer(player).setExtraData("lastSpawn", teleport);
                         }
                     }.runTask(Skyblock.getPlugin());
 
