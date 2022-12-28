@@ -154,28 +154,6 @@ public final class Skyblock extends JavaPlugin {
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "npc remove all");
 
-        File cacheFile = new File(getDataFolder(), ".cache.yml");
-        FileConfiguration cache = YamlConfiguration.loadConfiguration(cacheFile);
-
-        List<String> oldRemoveables = cache.getStringList("removeables");
-
-        List<Entity> entities = Bukkit.getWorld(getSkyblockWorld().getName()).getEntities();
-
-        for (String old : oldRemoveables) {
-            UUID uuid = UUID.fromString(old);
-
-            if (entities.stream().noneMatch(entity -> entity.getUniqueId().equals(uuid))) continue;
-
-            entities.stream().filter(entity -> entity.getUniqueId().equals(uuid)).findFirst().ifPresent(Entity::remove);
-        }
-
-        cache.set("removeables", new ArrayList<>());
-        try {
-            cache.save(cacheFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         Bukkit.createWorld(new WorldCreator("deep_caverns").type(WorldType.FLAT).generator(new ChunkGenerator() {
             @Override
             public byte[] generate(World world, Random random, int x, int z) {
