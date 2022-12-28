@@ -188,9 +188,9 @@ public class TimberQuest extends QuestLine {
 
         @EventHandler
         public void onLogBreak(SkyblockLogBreakEvent event) {
-            SkyblockPlayer player = event.getPlayer();
+            if (!isThisObjective(event.getPlayer().getBukkitPlayer())) return;
 
-            if (!player.getQuestLine().getName().equals("timber")) return;
+            SkyblockPlayer player = event.getPlayer();
 
             int collectedLogs = (int) player.getValue("quests.timber.birchLogsBroken");
 
