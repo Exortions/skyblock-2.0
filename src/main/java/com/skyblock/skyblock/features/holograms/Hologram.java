@@ -46,6 +46,8 @@ public class Hologram {
 
             stands.add(stand);
         }
+
+        Skyblock.getPlugin().getRemoveables().addAll(stands);
     }
 
     public void despawn() {

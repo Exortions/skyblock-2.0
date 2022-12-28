@@ -199,19 +199,6 @@ public class SkyblockPlayer {
             } else if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA)) {
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MAX_MANA));
             }
-
-            if (getQuestLine() != null) {
-                Objective objective = getQuestLine().getObjective(this);
-
-                if (objective != null) {
-                    bossBar.setMessage(ChatColor.WHITE + "Objective: " + ChatColor.YELLOW + objective.getDisplay() + " " + objective.getSuffix(this));
-                    bossBar.update();
-                } else {
-                    bossBar.reset();
-                }
-            } else {
-                bossBar.reset();
-            }
         }
 
         if (tick % EVERY_THREE_SECONDS == 0) {
@@ -233,6 +220,19 @@ public class SkyblockPlayer {
             }
 
             hand = itemStack;
+        }
+
+        if (getQuestLine() != null) {
+            Objective objective = getQuestLine().getObjective(this);
+
+            if (objective != null) {
+                bossBar.setMessage(ChatColor.WHITE + "Objective: " + ChatColor.YELLOW + objective.getDisplay() + " " + objective.getSuffix(this));
+                bossBar.update();
+            } else {
+                bossBar.reset();
+            }
+        } else {
+            bossBar.reset();
         }
 
         if (pet != null) {

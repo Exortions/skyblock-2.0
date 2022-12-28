@@ -240,8 +240,6 @@ public final class Skyblock extends JavaPlugin {
         this.sendMessage("Disabling Skyblock...");
         long start = System.currentTimeMillis();
 
-        this.fairySoulHandler.killAllSouls();
-
         int i = 0;
 
         File cacheFile = new File(this.getDataFolder(), ".cache.yml");

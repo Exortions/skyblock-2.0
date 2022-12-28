@@ -101,18 +101,9 @@ public class FairySoulHandler {
         stand.setHelmet(Util.idToSkull(new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2OTIzYWQyNDczMTAwMDdmNmFlNWQzMjZkODQ3YWQ1Mzg2NGNmMTZjMzU2NWExODFkYzhlNmIyMGJlMjM4NyJ9fX0="));
         stand.setMetadata("isFairySoul", new FixedMetadataValue(Skyblock.getPlugin(), false));
 
+        Skyblock.getPlugin().addRemoveable(stand);
+
         souls.add(stand);
-    }
-
-    public void killAllSouls() {
-        souls.forEach((as) -> {
-            Location loc = as.getLocation();
-            if (!loc.getChunk().isLoaded()) loc.getChunk().load(false);
-
-            while (!loc.getChunk().isLoaded()) { loc.getChunk().load(false); }
-
-            as.remove();
-        });
     }
 
     public String getId(Chunk chunk) {
