@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.listeners;
 
+import com.avaje.ebeaninternal.server.lib.util.MailAddress;
 import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -274,7 +276,7 @@ public class PlayerListener implements Listener {
                 Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(display), true);
             }
         } else if (e.getDamager().hasMetadata("skyblockEntityData")) {
-            if (e.getEntity() instanceof Player && !e.getEntity().hasMetadata("NPC")) {
+            if (e.getEntity() instanceof Player) {
                 Player p = (Player) e.getEntity();
                 SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
 
@@ -474,5 +476,48 @@ public class PlayerListener implements Listener {
         if (!e.getAction().equals(Action.PHYSICAL)) return;
         if (!e.getClickedBlock().getType().equals(SOIL)) return;
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent e) {
+	Item item = e.getItemDrop();
+	SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+	if (Skyblock.getPlugin().getSkyblockItemHandler().isRegistered(item.getItemStack()) && (Boolean) player.getValue("settings.doubleTapDrop")) {
+		if (!player.hasExtraData("lastDropAttempt")) {
+			Map<String, Long> data = new HashMap<>();
+			data.put("time", 0L);
+			data.put("slot", 10L);
+			player.setExtraData("lastDropAttempt", data);
+		}
+		Map<String, Long> data = (Map) player.getExtraData("lastDropAttempt");
+		if (data.get("time") > System.currentTimeMillis() - 500 && data.get("slot") == Long.valueOf(e.getPlayer().getInventory().getHeldItemSlot())) {
+			return;
+		}
+		else {
+			// TextComponent settings = new TextComponent("&fSettings");
+			// settings.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sb something"));
+			// settings.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to view the Settings Menu!").create()));
+			// TextComponent menu = new TextComponent("&eSkyblock Menu");
+			// menu.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sb something"));
+			// settings.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to open your Skyblock Menu!").create()));
+			// BaseComponent[] message = new ComponentBuilder("You must double tap the drop button to drop this item!\nYou can disable this in the ")
+			// 					.color(net.md_5.bungee.api.ChatColor.RED)
+			// 				.append(settings)
+			// 				.append(" in your ").color(net.md_5.bungee.api.ChatColor.RED)
+			// 				.append(menu)
+			// 				.append("!").color(net.md_5.bungee.api.ChatColor.RED);
+			// e.getPlayer().spigot().sendMessage(message);
+			e.getPlayer().sendMessage(ChatColor.RED + "You must double tap the drop button to drop this item!\nYou can disable this item in the "
+			                          + ChatColor.WHITE + "Settings"
+			                          + ChatColor.RED + " in your "
+			                          + ChatColor.GREEN + "Skyblock Menu"
+			                          + ChatColor.RED + "!");
+			data = new HashMap<>();
+			data.put("time", System.currentTimeMillis());
+			data.put("slot", Long.valueOf(e.getPlayer().getInventory().getHeldItemSlot()));
+			player.setExtraData("lastDropAttempt", data);
+			e.setCancelled(true);
+		}
+	}
     }
 }
