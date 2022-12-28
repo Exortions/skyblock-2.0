@@ -10,9 +10,7 @@ import com.skyblock.skyblock.commands.menu.*;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
-import com.skyblock.skyblock.commands.player.PlayerDataCommand;
-import com.skyblock.skyblock.commands.player.VisitCommand;
-import com.skyblock.skyblock.commands.player.WarpCommand;
+import com.skyblock.skyblock.commands.player.*;
 import com.skyblock.skyblock.commands.potion.CreatePotionCommand;
 import com.skyblock.skyblock.commands.potion.EffectCommand;
 import com.skyblock.skyblock.features.auction.AuctionBid;
@@ -803,7 +801,9 @@ public final class Skyblock extends JavaPlugin {
                 new BazaarCommand(),
                 new RegenerateCommand(),
                 new EffectCommand(),
-                new CreatePotionCommand()
+                new CreatePotionCommand(),
+                new HubCommand(),
+                new IslandCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
