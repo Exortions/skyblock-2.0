@@ -252,12 +252,6 @@ public class PlayerListener implements Listener {
                 }
             }
 
-            if (player.getExtraData("cleave_enchantment") != null) {
-                float perc = (float) player.getExtraData("cleave_enchantment");
-                damage = damage * perc;
-                display = display * perc;
-            }
-
             e.setDamage(damage);
 
             try {

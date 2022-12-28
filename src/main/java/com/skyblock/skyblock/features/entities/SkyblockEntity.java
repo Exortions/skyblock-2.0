@@ -11,11 +11,15 @@ import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -276,10 +280,22 @@ public abstract class SkyblockEntity {
     }
 
     public void damage(long damage, SkyblockPlayer damager, boolean crit) {
+        damage(damage, damager, crit, ChatColor.GRAY);
+    }
+
+    public void damage(long damage, SkyblockPlayer damager, boolean crit, ChatColor colorOverride) {
+        if (getVanilla().isDead()) return;
+
         this.subtractHealth(damage);
         this.setLastDamager(damager);
 
-        Util.setDamageIndicator(this.vanilla.getLocation(), crit ? Util.addCritTexture(Math.round(damage)) : ChatColor.GRAY + "" + Util.formatLong(damage), false);
+        if (getVanilla() instanceof LivingEntity) {
+            PacketPlayOutEntityStatus packet = new PacketPlayOutEntityStatus(((CraftEntity) getVanilla()).getHandle(), (byte) 2);
+
+            Bukkit.getOnlinePlayers().forEach((p) -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
+        }
+
+        Util.setDamageIndicator(this.vanilla.getLocation(), crit ? Util.addCritTexture(Math.round(damage)) : colorOverride + "" + Util.formatLong(damage), false);
     }
 
     public void onDespawn() { }

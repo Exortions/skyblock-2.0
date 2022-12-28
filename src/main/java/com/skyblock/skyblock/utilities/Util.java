@@ -8,6 +8,9 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
+import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
+import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
+import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -24,10 +27,9 @@ import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -841,6 +843,31 @@ public class Util {
         NBTItem nbt = new NBTItem(item);
 
         return nbt.getString("skyblockId");
+    }
+
+    public boolean isSkyblockEntity(EntityDamageByEntityEvent e) {
+        return isSkyblockEntity(e.getEntity());
+    }
+
+    public boolean isSkyblockEntity(EntityDamageEvent e) {
+        return isSkyblockEntity(e.getEntity());
+    }
+
+    public boolean isSkyblockEntity(Entity e) {
+        return e.hasMetadata("skyblockEntityData");
+    }
+
+    public SkyblockEntity getSBEntity(EntityDamageByEntityEvent e) {
+        return Skyblock.getPlugin().getEntityHandler().getEntity(e.getEntity());
+    }
+
+    public int getEnchantmentLevel(String enchantment, SkyblockPlayer player) {
+        return getEnchantmentLevel(enchantment, player.getBukkitPlayer().getItemInHand());
+    }
+
+    public int getEnchantmentLevel(String enchantment, ItemStack item) {
+        ItemBase base = new ItemBase(item);
+        return base.getEnchantment(enchantment).getLevel();
     }
 
     public long calculateAbilityDamage(double baseAbilityDamage, double intelligence, double abilityScaling, double bonusAbilityDamage) {

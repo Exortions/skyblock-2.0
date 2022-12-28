@@ -20,23 +20,8 @@ public class VenomousEnchantment extends SwordEnchantment {
     }
 
     @Override
-    public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (player.getExtraData("venomous_enchantment") == null) return damage;
-
-        try {
-            ItemBase base = new ItemBase(player.getBukkitPlayer().getItemInHand());
-            int level = base.getEnchantment(this.getName()).getLevel();
-            return (level / 2f) * 10;
-        } catch (IllegalArgumentException | NullPointerException ignored) {}
-
-        return damage;
-    }
-
-    @Override
     public void onDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (player.getExtraData("venomous_enchantment") != null) return;
-
-        final double critChance = player.getPreciseStat(SkyblockStat.CRIT_CHANCE);
+        if (!Util.isSkyblockEntity(e)) return;
 
         for (int i = 0; i < 4; i++) {
             Util.delay(() -> {
@@ -45,12 +30,7 @@ public class VenomousEnchantment extends SwordEnchantment {
                     ThunderlordEnchantment.hits.put(player.getBukkitPlayer(), new ThunderlordEnchantment.ThunderlordInfo(info.getHits() - 1, info.getEntity()));
                 }
 
-                player.setExtraData("venomous_enchantment", true);
-                player.setStat(SkyblockStat.CRIT_CHANCE, 0, false);
-                Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(player.getBukkitPlayer(), e.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, damage));
-                ((LivingEntity) e.getEntity()).damage(0);
-                player.setStat(SkyblockStat.CRIT_CHANCE, critChance, false);
-                player.setExtraData("venomous_enchantment", null);
+                Util.getSBEntity(e).damage((long) ((Util.getEnchantmentLevel(this.getName(), player) / 2f) * 10), player, false, ChatColor.DARK_GREEN);
             }, i * 20);
         }
     }
