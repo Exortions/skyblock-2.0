@@ -808,7 +808,8 @@ public class Util {
         return time;
     }
 
-    public ItemStack createPotion(String pot, int level, int duration) {
+    public ItemStack createPotion(String potion, int level, int duration) {
+        String pot = potion.toLowerCase();
         ItemStack stack = new Potion(PotionEffect.getMaxLevelsAndColors.get(pot).getSecond()).toItemStack(1);
         PotionMeta meta = (PotionMeta) stack.getItemMeta();
 
