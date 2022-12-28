@@ -274,6 +274,8 @@ public class Util {
         final ArmorStand as = (ArmorStand)loc.getWorld().spawnEntity(loc.add(randomX, randomY, randomZ), EntityType.ARMOR_STAND);
         as.setVisible(false);
         as.setGravity(false);
+        as.setMarker(true);
+        as.setSmall(true);
 
         if (format) {
             DecimalFormat formatter = new DecimalFormat("#,###");
