@@ -61,6 +61,7 @@ public class SkyblockItemHandler {
         registerItem(new AspectOfTheJerry());
         registerItem(new EmberRod());
         registerItem(new EndSword());
+        registerItem(new Cleaver());
         registerItem(new GolemSword(plugin));
         registerItem(new UndeadSword());
         registerItem(new RevenantFalchion());

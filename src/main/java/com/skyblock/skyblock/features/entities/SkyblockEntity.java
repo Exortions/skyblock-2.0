@@ -160,6 +160,8 @@ public abstract class SkyblockEntity {
                         }
 
                         if (getEntityData().isHostile && living instanceof Monster) {
+                            ((Monster) living).setTarget(null);
+
                             for (Entity entity : getVanilla().getNearbyEntities(5, 2, 5)){
                                 if (entity instanceof Player) {
                                     ((Monster) living).setTarget((LivingEntity) entity);

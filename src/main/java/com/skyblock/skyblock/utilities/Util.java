@@ -857,8 +857,12 @@ public class Util {
         return e.hasMetadata("skyblockEntityData");
     }
 
+    public SkyblockEntity getSBEntity(Entity e) {
+        return Skyblock.getPlugin().getEntityHandler().getEntity(e);
+    }
+
     public SkyblockEntity getSBEntity(EntityDamageByEntityEvent e) {
-        return Skyblock.getPlugin().getEntityHandler().getEntity(e.getEntity());
+        return getSBEntity(e.getEntity());
     }
 
     public int getEnchantmentLevel(String enchantment, SkyblockPlayer player) {

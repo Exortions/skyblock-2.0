@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.enchantment.enchantments.sword;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
+import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.Bukkit;
@@ -30,7 +31,11 @@ public class VenomousEnchantment extends SwordEnchantment {
                     ThunderlordEnchantment.hits.put(player.getBukkitPlayer(), new ThunderlordEnchantment.ThunderlordInfo(info.getHits() - 1, info.getEntity()));
                 }
 
-                Util.getSBEntity(e).damage((long) ((Util.getEnchantmentLevel(this.getName(), player) / 2f) * 10), player, false, ChatColor.DARK_GREEN);
+                SkyblockEntity entity = Util.getSBEntity(e);
+
+                if (entity == null) return;
+
+                entity.damage((long) ((Util.getEnchantmentLevel(this.getName(), player) / 2f) * 10), player, false, ChatColor.DARK_GREEN);
             }, i * 20);
         }
     }

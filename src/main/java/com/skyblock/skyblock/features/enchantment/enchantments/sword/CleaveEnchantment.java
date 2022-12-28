@@ -32,7 +32,7 @@ public class CleaveEnchantment extends SwordEnchantment {
             for (Entity en : entity.getNearbyEntities((3.3 + (level - 1) * 0.3), 2, (3.3 + (level - 1) * 0.3))) {
                 if (en instanceof Player) continue;
 
-                Util.getSBEntity(e).damage((long) ((level * 3L) / 100F), player, false);
+                Util.getSBEntity(en).damage((long) ((level * 3L) / 100F), player, false);
             }
         }  catch (IllegalArgumentException | NullPointerException ignored) { }
     }

@@ -29,7 +29,6 @@ public class Cleaver extends ListeningItem {
             if (skyblockEntity == null) continue;
 
             skyblockEntity.damage((long) (event.getDamage() * 0.1f), SkyblockPlayer.getPlayer(player), false);
-            ((LivingEntity) skyblockEntity.getVanilla()).damage(0);
         }
     }
 }
