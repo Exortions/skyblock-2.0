@@ -90,7 +90,7 @@ public class SkyblockMenuListener implements Listener {
                 skyblock.getGuiHandler().show("settings", player);
                 break;
             case "Active Effects":
-                skyblock.getGuiHandler().show("active_effects", player);
+                player.performCommand("sb effects");
                 break;
             case "Pets":
                 new PetsGUI(player).show(player);
