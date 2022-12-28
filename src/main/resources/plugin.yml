@@ -35,3 +35,12 @@ commands:
     description: Teleports you to a player's island
     aliases:
       - sb visit
+  hub:
+    description: Teleports you to the hub
+    aliases:
+      - sb hub
+  island:
+    description: Teleports you to your island
+    aliases:
+      - sb island
+      - is
