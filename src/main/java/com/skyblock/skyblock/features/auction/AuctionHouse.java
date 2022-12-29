@@ -134,11 +134,12 @@ public class AuctionHouse {
             config.set("timeLeft", time);
             config.set("isBIN", isBIN);
             config.set("sold", false);
+            config.set("participants", new ArrayList<>(Collections.singletonList(seller)));
             config.createSection("bidHistory");
 
             config.save(file);
 
-            AUCTION_CACHE.put(UUID.fromString(file.getName().replace(".yml", "")), new Auction(item, seller, null, price, time, isBIN, false, UUID.fromString(file.getName().replace(".yml", "")), new ArrayList<>()));
+            AUCTION_CACHE.put(UUID.fromString(file.getName().replace(".yml", "")), new Auction(item, seller, null, price, time, isBIN, false, UUID.fromString(file.getName().replace(".yml", "")), new ArrayList<>(), new ArrayList<>(Collections.singletonList(seller))));
 
             return AUCTION_CACHE.get(UUID.fromString(file.getName().replace(".yml", "")));
         } catch (IOException ignored) { }
@@ -206,7 +207,7 @@ public class AuctionHouse {
 
                 Auction auction = new Auction(config.getItemStack("item"), Bukkit.getOfflinePlayer(config.getString("seller")), top,
                         config.getLong("price"), config.getLong("timeLeft"), config.getBoolean("isBIN"),
-                        config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history);
+                        config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history, (List<OfflinePlayer>) config.getList("participants"));
 
                 AUCTION_CACHE.put(auction.getUuid(), auction);
             }

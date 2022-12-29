@@ -112,7 +112,7 @@ public class AuctionManagingGUI extends Gui {
 
             addItem(i, auction.getDisplayItem(false, true));
 
-            clickEvents.put(getItems().get(i).getItemMeta().getDisplayName(), () -> {
+            specificClickEvents.put(getItems().get(i), () -> {
                 new AuctionInspectGUI(auction, player).show(player);
             });
 

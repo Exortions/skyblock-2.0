@@ -23,14 +23,14 @@ public class AuctionInspectGUI extends Gui {
         Util.fillEmpty(this);
 
         addItem(49, Util.buildBackButton("&7To Auction House"));
-        addItem(13, auction.getDisplayItem(true, opener.equals(auction.getSeller())));
+        addItem(13, auction.getDisplayItem(true, auction.isOwn(opener)));
 
-        boolean own = opener.equals(auction.getSeller());
+        boolean own = auction.isOwn(opener);
         SkyblockPlayer player = SkyblockPlayer.getPlayer(opener);
 
         long bid = auction.nextBid();
 
-        // screw ui, borrowed from: https://github.com/superischroma/Spectaculation/blob/main/src/main/java/me/superischroma/spectaculation/gui/AuctionViewGUI.java
+        // screw ui, from: https://github.com/superischroma/Spectaculation/blob/main/src/main/java/me/superischroma/spectaculation/gui/AuctionViewGUI.java
         if (auction.isBIN()) {
             if (auction.isExpired()) {
                 int topBidAmount = auction.getTopBid().getAmount();
@@ -108,6 +108,16 @@ public class AuctionInspectGUI extends Gui {
             if (own && auction.getBidHistory().size() == 0 && !auction.isExpired()) {
                 ItemBuilder cancel = new ItemBuilder(ChatColor.RED + "Cancel Auction", Material.STAINED_CLAY, (short) 14);
                 addItem(33, cancel.addLore("&7You may cancel auctions as", "&7long as they have " + ChatColor.RED + "0 &7bids!", " ", ChatColor.YELLOW + "Click to cancel auction!").toItemStack());
+
+                specificClickEvents.put(getItem(33), () -> {
+                    if (auction.getBidHistory().size() > 0) {
+                        opener.sendMessage(ChatColor.RED + "You cannot cancel this auction!");
+                        return;
+                    }
+
+                    auction.claim(opener);
+                    opener.closeInventory();
+                });
             }
         } else {
             if (auction.isExpired()) {

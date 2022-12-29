@@ -8,6 +8,7 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -21,11 +22,11 @@ public class BidConfirmationGUI extends Gui {
             put(ChatColor.GREEN + "Confirm", () -> {
                 auction.bid(player, amount);
                 player.closeInventory();
-                if (auction.isBIN()) {
-                    player.sendMessage(ChatColor.YELLOW + "Purchased " + auction.getItem().getItemMeta().getDisplayName());
-                } else {
-                    player.sendMessage(ChatColor.YELLOW + "Bid placed on " + auction.getItem().getItemMeta().getDisplayName());
+                if (!auction.isBIN()) {
+                    player.sendMessage(ChatColor.YELLOW + "Bid placed on " + auction.getItem().getItemMeta().getDisplayName() + ChatColor.YELLOW + ".");
                 }
+
+                player.playSound(player.getLocation(), Sound.LEVEL_UP, 10, 2);
             });
 
             put(ChatColor.RED + "Cancel", player::closeInventory);

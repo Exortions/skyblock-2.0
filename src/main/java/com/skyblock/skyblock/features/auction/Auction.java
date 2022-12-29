@@ -33,7 +33,7 @@ public class Auction {
     private List<OfflinePlayer> participants;
     private List<AuctionBid> bidHistory;
 
-    public Auction(ItemStack item, OfflinePlayer seller, OfflinePlayer topBidder, long price, long timeLeft, boolean isBIN, boolean sold, UUID uuid, List<AuctionBid> bidHistory) {
+    public Auction(ItemStack item, OfflinePlayer seller, OfflinePlayer topBidder, long price, long timeLeft, boolean isBIN, boolean sold, UUID uuid, List<AuctionBid> bidHistory, List<OfflinePlayer> participants) {
         this.item = item;
         this.seller = seller;
         this.topBidder = topBidder;
@@ -43,13 +43,7 @@ public class Auction {
         this.sold = sold;
         this.uuid = uuid;
         this.bidHistory = bidHistory;
-        this.participants = new ArrayList<>();
-
-        for (AuctionBid bid : bidHistory) {
-            participants.add(bid.getBidder());
-        }
-
-        participants.add(seller);
+        this.participants = participants;
     }
 
 
@@ -93,7 +87,7 @@ public class Auction {
         return Math.round(top * 1.15D);
     }
 
-    // screw ui, borrowed from: https://github.com/superischroma/Spectaculation/blob/main/src/main/java/me/superischroma/spectaculation/auction/AuctionItem.java
+    // screw ui, from: https://github.com/superischroma/Spectaculation/blob/main/src/main/java/me/superischroma/spectaculation/auction/AuctionItem.java
     public ItemStack getDisplayItem(boolean inspect, boolean yourAuction) {
         ItemStack stack = getItem().clone();
         ItemMeta meta = stack.getItemMeta();
@@ -131,7 +125,7 @@ public class Auction {
 
     public void claim(Player player) {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
-        if (player.equals(seller)) {
+        if (isOwn(player)) {
             if (bidHistory.size() == 0) {
                 player.getInventory().addItem(item);
                 player.sendMessage(ChatColor.YELLOW + "You collected " + getItem().getItemMeta().getDisplayName() + ChatColor.YELLOW + " back from an auction that nobody bought.");
@@ -163,11 +157,11 @@ public class Auction {
     }
 
     private void removeBidderOrOwner(Player player) {
+        participants.remove(player);
+
         if (participants.size() == 0) {
             Skyblock.getPlugin().getAuctionHouse().deleteAuction(this);
         }
-
-        participants.remove(player);
     }
 
     public void bid(Player player, long amount) {
@@ -223,7 +217,16 @@ public class Auction {
     }
 
     public boolean claimed(Player player) {
-        return !participants.contains(player);
+        boolean found = false;
+
+        for (OfflinePlayer p : participants) {
+            if (player.getName().equalsIgnoreCase(p.getName())) {
+                found = true;
+                break;
+            }
+        }
+
+        return !found;
     }
 
     public void sendToOwner(String message) {
@@ -251,5 +254,9 @@ public class Auction {
             builder.append(hours).append("h ");
         builder.append(minutes).append("m ").append(seconds).append("s");
         return builder.toString();
+    }
+
+    public boolean isOwn(Player opener) {
+        return seller.getName().equalsIgnoreCase(opener.getName());
     }
 }

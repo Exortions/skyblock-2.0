@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -45,18 +46,7 @@ public class AuctionCreationGUI extends Gui {
             ItemMeta meta = stack.getItemMeta();
             List<String> lore = new ArrayList<>();
 
-            ItemBase base;
-
-            try {
-                base = new ItemBase(auctioning);
-            } catch (IllegalArgumentException ex) {
-                player.sendMessage(ChatColor.RED + "You cannot auction this item!");
-
-                skyblockPlayer.setValue("auction.auctioningItem", null);
-
-                player.closeInventory();
-                return;
-            }
+            ItemBase base = new ItemBase(auctioning);
 
             meta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + ChatColor.UNDERLINE + "AUCTION FOR ITEM:");
 
@@ -74,6 +64,7 @@ public class AuctionCreationGUI extends Gui {
             clickEvents.put(ChatColor.GREEN + "" + ChatColor.BOLD + ChatColor.UNDERLINE + "AUCTION FOR ITEM:", () -> {
                 player.getInventory().addItem(auctioning);
                 skyblockPlayer.setValue("auction.auctioningItem", null);
+                player.playSound(player.getLocation(), Sound.CLICK, 10, 1);
                 new AuctionCreationGUI(player).show(player);
             });
         } else {
@@ -108,24 +99,26 @@ public class AuctionCreationGUI extends Gui {
                 return;
             }
 
-            Auction auction = ah.createAuction(auctioning, player, progress.getStarter(), progress.getDuration(), settings.getBin());
+            ah.createAuction(auctioning, player, progress.getStarter(), progress.getDuration(), settings.getBin());
             skyblockPlayer.subtractCoins(progress.getFee(settings.getBin()));
+
+            player.sendMessage(ChatColor.YELLOW + "Auction started for " + auctioning.getItemMeta().getDisplayName() + ChatColor.YELLOW + "!");
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 10, 2);
+
             skyblockPlayer.setProgress(null);
-            skyblockPlayer.setValue("auctions.auctioningItem", null);
-            new AuctionInspectGUI(auction, player).show(player);
+            skyblockPlayer.setValue("auction.auctioningItem", null);
+
+            player.closeInventory();
         });
 
         ItemBuilder bid = new ItemBuilder(ChatColor.WHITE + (settings.getBin() ? "Item price: " : "Starting bid: ") + ChatColor.GOLD + Util.formatInt(progress.getStarter()) + " coins",
                 settings.getBin() ? Material.GOLD_INGOT : Material.POWERED_RAIL);
 
         List<String> lore = new ArrayList<>();
-        if (settings.getBin())
-        {
+        if (settings.getBin()) {
             lore.add(ChatColor.GRAY + "The price at which you want");
             lore.add(ChatColor.GRAY + "to sell this item.");
-        }
-        else
-        {
+        } else {
             lore.add(ChatColor.GRAY + "The minimum price a player");
             lore.add(ChatColor.GRAY + "can offer to obtain your");
             lore.add(ChatColor.GRAY + "item.");
@@ -175,6 +168,7 @@ public class AuctionCreationGUI extends Gui {
 
         clickEvents.put(getItems().get(33).getItemMeta().getDisplayName(), () -> {
             settings.switchBin();
+            player.playSound(player.getLocation(), Sound.CLICK, 10, 1);
             new AuctionDurationGUI(player).show(player);
         });
 
@@ -201,13 +195,25 @@ public class AuctionCreationGUI extends Gui {
         if (current == null) return;
         if (current.getType() == Material.AIR) return;
 
-        e.setCancelled(true);
         Player player = (Player) e.getWhoClicked();
+
+        try {
+            new ItemBase(current);
+        } catch (IllegalArgumentException ex) {
+            player.sendMessage(ChatColor.RED + "You cannot auction this item!");
+            player.closeInventory();
+            return;
+        }
+
+        e.setCancelled(true);
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         skyblockPlayer.setValue("auction.auctioningItem", current);
         player.getInventory().setItem(e.getSlot(), new ItemStack(Material.AIR));
+
+        player.playSound(player.getLocation(), Sound.CLICK, 10, 1);
+
         new AuctionCreationGUI(player).show(player);
     }
 
