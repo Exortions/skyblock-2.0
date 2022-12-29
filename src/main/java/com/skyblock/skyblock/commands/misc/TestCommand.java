@@ -1,8 +1,12 @@
 package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
+import com.skyblock.skyblock.features.minions.MiningMinion;
+import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.time.gui.CalendarEventsGUI;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
@@ -20,25 +24,28 @@ public class TestCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        Escrow escrow = Skyblock.getPlugin().getBazaar().getEscrow();
-
-        EscrowTransaction transaction = escrow.createTransaction(player, player, 100, 300, escrow.getBazaar().getRawItems().get(0), Escrow.TransactionType.SELL, (trans) -> {
-            if (Bukkit.getPlayer(trans.getSeller().getUniqueId()) != null) {
-                Bukkit.getPlayer(trans.getSeller().getUniqueId()).sendMessage("order filled!");
-            }
-
-            if (Bukkit.getPlayer(trans.getBuyer().getUniqueId()) != null) {
-                Bukkit.getPlayer(trans.getBuyer().getUniqueId()).sendMessage("order filled!");
-            }
-        });
-
-        escrow.fillBuyOrder(transaction, 300);
-
-        player.sendMessage(escrow.getBuyOrders().toString());
-        player.sendMessage(escrow.getSellOrders().toString());
-
+//        Escrow escrow = Skyblock.getPlugin().getBazaar().getEscrow();
+//
+//        EscrowTransaction transaction = escrow.createTransaction(player, player, 100, 300, escrow.getBazaar().getRawItems().get(0), Escrow.TransactionType.SELL, (trans) -> {
+//            if (Bukkit.getPlayer(trans.getSeller().getUniqueId()) != null) {
+//                Bukkit.getPlayer(trans.getSeller().getUniqueId()).sendMessage("order filled!");
+//            }
+//
+//            if (Bukkit.getPlayer(trans.getBuyer().getUniqueId()) != null) {
+//                Bukkit.getPlayer(trans.getBuyer().getUniqueId()).sendMessage("order filled!");
+//            }
+//        });
+//
+//        escrow.fillBuyOrder(transaction, 300);
+//
+//        player.sendMessage(escrow.getBuyOrders().toString());
+//        player.sendMessage(escrow.getSellOrders().toString());
+//
 //        new CalendarEventsGUI(player).show(player);
+//
+//        player.teleport(new Location(Bukkit.createWorld(new WorldCreator(args[0])), 0, 100, 0));
 
-        player.teleport(new Location(Bukkit.createWorld(new WorldCreator(args[0])), 0, 100, 0));
+        MinionBase minion = new MiningMinion(MiningMinionType.COBBLESTONE);
+        minion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 6);
     }
 }
