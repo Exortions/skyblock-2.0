@@ -546,6 +546,18 @@ public class SkyblockPlayer {
         return dataCache.get(path);
     }
 
+    public int getIntValue(String path) {
+        return (int) getValue(path);
+    }
+
+    public String getStringValue(String path) {
+        return (String) getValue(path);
+    }
+
+    public boolean getBoolValue(String path) {
+        return (boolean) getValue(path);
+    }
+
     public double getDouble(String path) {
         return Double.parseDouble(getValue(path).toString());
     }

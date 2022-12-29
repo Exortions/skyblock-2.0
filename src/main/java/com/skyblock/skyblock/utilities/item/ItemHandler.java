@@ -49,6 +49,8 @@ public class ItemHandler {
 
     public static final List<String> POTIONS = new ArrayList<String>() {{
         add("strength");
+        add("speed");
+        add("healing");
     }};
 
     public static final List<String> ITEM_EXCLUSIONS = new ArrayList<String>() {{

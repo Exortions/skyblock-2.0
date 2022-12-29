@@ -47,6 +47,7 @@ import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
 import com.skyblock.skyblock.features.fairysouls.TiaGUI;
+import com.skyblock.skyblock.features.guis.GuyGui;
 import com.skyblock.skyblock.features.guis.LiftOperatorGui;
 import com.skyblock.skyblock.features.holograms.HologramManager;
 import com.skyblock.skyblock.features.items.Accessory;
@@ -479,7 +480,7 @@ public final class Skyblock extends JavaPlugin {
                         null,
                         new Location(getSkyblockWorld(), 20.5, 71, -40.5),
                         (player) -> {
-				SkyblockPlayer.getPlayer(player).setExtraData("personalBankLastUsed", 0L);
+				            SkyblockPlayer.getPlayer(player).setExtraData("personalBankLastUsed", 0L);
 	                        this.getGuiHandler().show("banker", player);
                         },
                         "ewogICJ0aW1lc3RhbXAiIDogMTY1NTg0NTIwODg3OSwKICAicHJvZmlsZUlkIiA6ICI2NmI0ZDRlMTFlNmE0YjhjYTFkN2Q5YzliZTBhNjQ5OSIsCiAgInByb2ZpbGVOYW1lIiA6ICJBcmFzdG9vWXNmIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYyYTExMGIwMmVmYzU4ZjJiYTc3YWVlZjE3ZGY3ZTMyOWQ4OTZjNDU5MDI0NDIzMzg0OWY0MmRhMDIzMjhhOSIKICAgIH0KICB9Cn0=",
@@ -549,6 +550,28 @@ public final class Skyblock extends JavaPlugin {
                         (player) -> player.performCommand("sb batphone"),
                         "ewogICJ0aW1lc3RhbXAiIDogMTU5NjQ5MTIwODg4NCwKICAicHJvZmlsZUlkIiA6ICJkNjBmMzQ3MzZhMTI0N2EyOWI4MmNjNzE1YjAwNDhkYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJCSl9EYW5pZWwiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTMzNmQ3Y2M5NWNiZjY2ODlmNWU4Yzk1NDI5NGVjOGQxZWZjNDk0YTQwMzEzMjViYjQyN2JjODFkNTZhNDg0ZCIKICAgIH0KICB9Cn0=",
                         "NeIGEVhTQsg+GfcmtVhCCXdWX6tQpI/iUjPixUKaxea5q8xTpCKFSGqnIhSgG0CjPpxw9UKwC1yr4gIDsM5zPGjnIsD3PDP4F6Jaicx0YsiJGr861zxQDSlxpkcbGXrHRuNq92TT4/zojNMk6qPGtGeFApro7dXxU5Fq7HpyikHR2S4iaTZAF2L65rXqdogmQIBcTI5UVO2cZ3xNSr3j9y/nKGUx0SwVaIryt1sMHj2cO5Lknb9eiiG+vfw/LTlgwOmc9PXHhQB045SoBgGondcBZYBWVGCP9dTCNrvDBp963rzEkJMOfLfL+M2P+BT318BCBQzQ6JGJuILqhdY/Ph7qZJW2P9g8At9chbfnBdwMnHvjTshGN3XMzVg8BdxFAKydJMSocfF4j9KvPCtP1Hilk0pylqRAPe1cn0JpTZ1e/xzorzgqHdo0kXmf8gzLXHXDz8fYanZpQQCemwL3aOHy6nvAFFk/+j6kGLEaetTZgw8WAMJiyAxcpN/elfG9fxoX+pXMFtM9ItRA2Sf6EHdRKJTc4gB+yclkuCd3MgCiRDZU5NwpH8AhTmFZsjd0nHzHLXvpNPmSLAZiYi7EqG9SySEu7pJ4PXHZ0F80jKknNqh0CnnnqH4iKdMIUau33ENPKTLiuxwqxj9bv6ZtsCUZXn/mHWeCOiB6IBPjaR0="));
+
+        this.npcHandler.registerNPC("guy",
+                new NPC("Guy",
+                        true,
+                        true,
+                        false,
+                        null,
+                        new Location(getSkyblockWorld(), 51.5, 79, -13.5),
+                        (p) -> {
+                            SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
+
+                            if (player.getIntValue("bank.personal.cooldown") == -1) {
+                                Util.sendDelayedMessages(p, "Guy", (pl) -> new GuyGui(p).show(p),
+                                        "Heard of the " + ChatColor.GREEN + "Personal Bank" + ChatColor.WHITE + "?",
+                                        "It will let you access your bank remotely.",
+                                        "Unlock it through " + ChatColor.GREEN + "Emerald" + ChatColor.WHITE + " collection.");
+                            } else {
+                                new GuyGui(p).show(p);
+                            }
+                        },
+                        "ewogICJ0aW1lc3RhbXAiIDogMTU5OTQ1NzU3MjI1NCwKICAicHJvZmlsZUlkIiA6ICI2MTI4MTA4MjU5M2Q0OGQ2OWIzMmI3YjlkMzIxMGUxMiIsCiAgInByb2ZpbGVOYW1lIiA6ICJuaWNyb25pYzcyMTk2IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2U5ZTIzYmU3ZjA0NTU2ZmEzMzM1MWE0Yzc3MWEzZjA1ZjRhNmQyN2RlNDEzYTM2ZDAyMzBjNjFmNzE2OTg3OTkiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==",
+                        "lu9SuKpv/U8XqaZTkleKzPDg8S1pcqA7LSWiWimR9x0BnkpK5CkyLwkWA1AMKCibQZSMPjoFFySNMVRcIhylv3yN0V6/Y6moJi1/SmRIeJJL/FovCUykzTSvbWsqJXfRyoi+5mUt6REj6bvJQruNtCedIHQD5a0Mrw3d8LbvZ0OlGPUbaAv1O7dW1O2uxmxCDSWMOL8PN+6fb/zYgA/XeJvSj97LafK4YAeb1YV362CeMkhmMP0uE5wj11+BnexEN+WaBzbRIUlBuSMB+Pw+7RoS4Nk7kxxKSNAR/pzlSqFHLkTlL88ljrLeyEooccpETSuqLh55/wsWSdesEDpSNjmfRYVX9EXOk783VRz3Btb+MItjiqmos5Mgmjelnx34utIPkAFbLyn/AUvWaNImxhWw/iDFYod+C/QNbUqR/H9ahIHzZXun4+6tKhVBgaCfLqaqF+V9Js8miapUpW16EEnElTNJ843+/HFgqex18q2vCTUX0tixtzHrFmwhhbBnT02DSvbvIxm9ucyNMwTpYhJ33I433pB67i1iQxiNBxaTTVSn2bGs4AKLgOjkTg3TsixEix02fCOzFl8bau/JlZMDmk7/2SAI74VRnreBVTEHjIAb7SRRXNy+zOxQJLzyMB+TwpGBBIUbNpCgjKu0aqu+Ld/FOO37dvBke8bv7Uw="));
 
         this.sendMessage("Successfully registered NPCs [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
 
