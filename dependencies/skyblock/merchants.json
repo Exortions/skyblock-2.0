@@ -796,6 +796,61 @@
         "You can enchant items by clicking any Enchantment Table. Enchanting costs experience levels - the more levels you spend, the better enchantments you will receive.",
         "Use the Enchantment Table to enchant an item!"
       ]
+    },
+    {
+      "name": "Iron Forger",
+      "id": "iron_forger_merchant",
+      "skinValue": "eyJ0aW1lc3RhbXAiOjE1ODUxNzk3NDMyMDEsInByb2ZpbGVJZCI6IjU2Njc1YjIyMzJmMDRlZTA4OTE3OWU5YzkyMDZjZmU4IiwicHJvZmlsZU5hbWUiOiJUaGVJbmRyYSIsInNpZ25hdHVyZVJlcXVpcmVkIjp0cnVlLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDYxMjZhNmY5OTJhZTg4YjYwMzNiYzIxMmNhMTEyZmYzZGQzZjcyN2VhYTdlZDkxYzc1NGU2OTU1YjAxY2I1MCJ9fX0=",
+      "skinSignature": "B/wginlQlILjBpX3PuKzr+A1gCcNtWnP7x3OSFgXIsb2XZXIziGnpV+E0hL2lrfMCW1LIn/jOwjyoQM0WkbmdiAF/tvyAURNiiUN2YHp4XrlGD75E+wRyeM21IhvNPNyukihxb+Uw60MFNxlwvQD7Uex+Pw6j/Li45H5T/W/7tyfWSXrDaPDORJ+tqD98HFqkVzZZuu/rSilIVOwU7lzKM2rDhS3Q87qQk/A23VVype/2p1Mkkz4afE3WH5TPhx8Os0a+iAh7LsToJ+qniq9aI4Klrs6W6gzgAwRqRWTVYU4F3O3ZFFFaDpC6u/xKpmlLSsjF31fInCmgaCH5rBZcG1RjE9Q28nOuYYfJoeIJY5IYwOeFfLWDsoQkD+imoNwkXEW4mre21804e8UVRoga0pWzxEF7kJw+/7ITkePZeomPq9Zn8XwCwV+P1hLyQKxsYSQbNkrrpAqdQh5nUearJGarpA9XSbxvA+ACsG/VYexqBB0CYKrZQvGk7OhmWmFdHBvNdxF0zynom4Y/LTYnh6vy0D6jlWs1GA0jiwE4/F9/SWgcFpg/VQJWYMuwn2ftSH+R/ii94f/EUMD+Q5FAicx9k6+aVhNCFuLFuvwPc6VlOI9qG+/kEho8oq7zdfotHt9HIJDOfvjKsISQxvYBIFndfpKBFn4jISGeCvPLQE=",
+      "items": [
+        {
+          "id": "IRON_PICKAXE.json",
+          "cost": 60,
+          "amount": 1,
+          "command": "sb item IRON_PICKAXE.json 1"
+        },
+        {
+          "id": "IRON_INGOT.json",
+          "cost": 100,
+          "amount": 20,
+          "command": "sb item IRON_INGOT.json 20"
+        },
+        {
+          "id": "CHAINMAIL_HELMET.json",
+          "cost": 50,
+          "amount": 1,
+          "command": "sb item CHAINMAIL_HELMET.json 1"
+        },
+        {
+          "id": "CHAINMAIL_CHESTPLATE.json",
+          "cost": 100,
+          "amount": 1,
+          "command": "sb item CHAINMAIL_CHESTPLATE.json 1"
+        },
+        {
+          "id": "CHAINMAIL_LEGGINGS.json",
+          "cost": 75,
+          "amount": 1,
+          "command": "sb item CHAINMAIL_LEGGINGS.json 1"
+        },
+        {
+          "id": "CHAINMAIL_BOOTS.json",
+          "cost": 50,
+          "amount": 1,
+          "command": "sb item CHAINMAIL_BOOTS.json 1"
+        }
+      ],
+      "location": {
+        "world": "world",
+        "x": -1.5,
+        "y": 75.0,
+        "z": -307.5
+      },
+      "interaction": [
+        "For my wares, you'll have to pay the iron price!",
+        "Seriously though, I accept Coins.",
+        "Click me again to open the Iron Forger Shop!"
+      ]
     }
   ]
 }
