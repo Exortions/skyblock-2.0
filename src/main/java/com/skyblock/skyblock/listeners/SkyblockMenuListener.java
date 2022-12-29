@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
 import com.skyblock.skyblock.features.objectives.gui.QuestLogGui;
 import com.skyblock.skyblock.features.pets.gui.PetsGUI;
@@ -41,7 +42,7 @@ public class SkyblockMenuListener implements Listener {
         event.setCancelled(true);
 
         Player player = (Player) event.getWhoClicked();
-
+	SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
         ItemStack clicked = event.getCurrentItem();
         NBTItem item = new NBTItem(clicked);
 
@@ -98,7 +99,14 @@ public class SkyblockMenuListener implements Listener {
             case "Crafting Table":
                 skyblock.getGuiHandler().show("crafting_table", player);
                 break;
-            case "Close":
+            case "Personal Bank": //only shown if available, no need to check
+		if (skyblockPlayer.hasExtraData("personalBankLastUsed")
+		    && (long) skyblockPlayer.getExtraData("personalBankLastUsed") < System.currentTimeMillis() - (int) skyblockPlayer.getValue("bank.personal.cooldown") * 60000) {
+			skyblockPlayer.setExtraData("personalBankUsed", true);
+                	player.performCommand("sb banker");
+		}
+		break;
+	    case "Close":
                 player.closeInventory();
                 break;
             default:

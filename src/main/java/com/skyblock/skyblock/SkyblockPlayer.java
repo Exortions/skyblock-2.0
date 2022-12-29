@@ -614,6 +614,7 @@ public class SkyblockPlayer {
                 config.set("bank.balance", 0.0);
                 config.set("bank.interest", 2);
                 config.set("bank.recent_transactions", new ArrayList<>());
+                config.set("bank.personal.cooldown", -1); // -1 = not aquired
 
                 for (String skill : Skill.SKILLS) {
                     config.set("skill." + skill.toLowerCase() + ".exp", 0.0);
