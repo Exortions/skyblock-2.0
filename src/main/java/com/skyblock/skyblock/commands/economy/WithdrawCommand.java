@@ -60,6 +60,11 @@ public class WithdrawCommand implements Command {
         } else {
             player.sendMessage(ChatColor.GREEN + "You have withdrawn " + ChatColor.GOLD + Util.abbreviate(amount) + " coins" + ChatColor.GREEN + "! " +
                     "You now have " + ChatColor.GOLD + Util.abbreviate(skyblockPlayer.getDouble("bank.balance")) + " coins" + ChatColor.GREEN + " in your account!");
+		if ((boolean) skyblockPlayer.getExtraData("personalBankUsed")) {
+			skyblockPlayer.setExtraData("personalBankUsed", false);
+			skyblockPlayer.setExtraData("personalBankLastUsed", System.currentTimeMillis());
+			Util.delay(() -> {player.closeInventory();}, 2);
+		}
         }
     }
 }
