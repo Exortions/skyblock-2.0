@@ -249,7 +249,42 @@ public class MiningMinion extends MinionBase {
         for (ItemStack drop : drops) {
             if (drop == null || drop.getType().equals(Material.AIR)) continue;
 
-            newInventory.add(drop);
+            for (int i = 0; i < newInventory.size(); i++) {
+                ItemStack item = newInventory.get(i);
+
+                if (item == null || item.getType().equals(Material.AIR)) continue;
+
+                if (item.getType().equals(drop.getType())) {
+                    int amount = item.getAmount() + drop.getAmount();
+
+                    if (amount > 64) {
+                        int newAmount = amount - 64;
+
+                        item.setAmount(64);
+                        drop.setAmount(newAmount);
+
+                        newInventory.set(i, item);
+                    } else {
+                        item.setAmount(amount);
+
+                        newInventory.set(i, item);
+                        drop = null;
+
+                        break;
+                    }
+                }
+            }
+
+            if (drop == null) continue;
+
+            for (int i = 0; i < newInventory.size(); i++) {
+                ItemStack item = newInventory.get(i);
+
+                if (item == null || item.getType().equals(Material.AIR)) {
+                    newInventory.set(i, drop);
+                    break;
+                }
+            }
         }
 
         if (newInventory.size() > (this.maxStorage / 64)) {

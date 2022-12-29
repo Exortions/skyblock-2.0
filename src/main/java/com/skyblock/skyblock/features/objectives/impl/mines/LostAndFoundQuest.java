@@ -150,7 +150,7 @@ public class LostAndFoundQuest extends QuestLine {
 
             ItemStack item = ((ArmorStand) event.getRightClicked()).getItemInHand();
 
-            event.getPlayer().sendMessage(item.toString());
+            if (!item.hasItemMeta()) return;
 
             if (item.getItemMeta().getDisplayName().equals("7f22f697-06a6-4a86-aa25-e86f82bf4219")) {
                 event.setCancelled(true);
