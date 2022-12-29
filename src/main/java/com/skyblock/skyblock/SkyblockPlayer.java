@@ -658,6 +658,7 @@ public class SkyblockPlayer {
                 config.set("quests.time_to_strike.bartender.interacted", false);
                 config.set("quests.time_to_strike.zombiesKilled", 0);
                 config.set("quests.lost_and_found.talkedToLazyMiner", false);
+                config.set("quests.lost_and_found.talkedToRusty", false);
                 config.set("quests.lost_and_found.mined", 0);
                 config.set("quests.lost_and_found.foundPickaxe", false);
 

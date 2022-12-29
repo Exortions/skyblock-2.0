@@ -3,18 +3,30 @@ package com.skyblock.skyblock.features.objectives.impl.mines;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.npc.NPC;
+import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.skills.Mining;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.gui.Gui;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTEntity;
+import net.minecraft.server.v1_8_R3.Entity;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 import java.util.*;
 
@@ -23,12 +35,27 @@ public class LostAndFoundQuest extends QuestLine {
     public LostAndFoundQuest() {
         super("lost_and_found", "Lost and Found", new TalkToLazyMinerObjective(), new FindPickaxeObjective(), new CollectIronAndGoldIngotsObjective(), new TalkToRustyObjective());
 
-        Skyblock.getPlugin().getNpcHandler().registerNPC(
+        ArmorStand pickaxe = (ArmorStand) Skyblock.getSkyblockWorld().spawnEntity(new Location(Skyblock.getSkyblockWorld(), -19.0, 24, -304.55, 90, -80), EntityType.ARMOR_STAND);
+        pickaxe.setCustomNameVisible(false);
+        pickaxe.setGravity(false);
+        pickaxe.setVisible(false);
+
+        pickaxe.setItemInHand(
+                new ItemBuilder("", Material.IRON_PICKAXE).addEnchantmentGlint().toItemStack()
+        );
+
+        pickaxe.setMetadata("skyblock.quest.lost_and_found.lazy_miner_pickaxe", new FixedMetadataValue(Skyblock.getPlugin(), true));
+
+        Skyblock.getPlugin().addRemoveable(pickaxe);
+
+        NPCHandler npcHandler = Skyblock.getPlugin().getNpcHandler();
+
+        npcHandler.registerNPC(
                 "lazy_miner",
                 new NPC("Lazy Miner", true, true, false, null, new Location(Skyblock.getSkyblockWorld(), -12.5, 78, -338.5),
                         (p) -> {
                             SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
-                            boolean talkedAlready = (boolean) player.getValue("quests.talkedToLazyMiner");
+                            boolean talkedAlready = (boolean) player.getValue("quests.lost_and_found.talkedToLazyMiner");
 
                             if (!talkedAlready) {
                                 Util.sendDelayedMessages(player.getBukkitPlayer(), "Lazy Miner", (pl) -> {
@@ -74,6 +101,37 @@ public class LostAndFoundQuest extends QuestLine {
                         "QP74duX5R3Owm4nqyDawIaIOq/j61geMjmu+0wHm2Gk7Pu8MNz2GciqeoPQIJrLOrmscju9ME7OAhgvV2NMTi9eqTceSMJNOBTBDqr/CYpA+qHAnl436eTo389+1Re3fKSumYukXIV176holRPLZDclssnLqqEpB4c1Sbwq0k0mlO1qcQcEht00vuRU5vsJAE5/018t1E8G9cBDDbgSSeOLh3g8Ad+ESY1ilVeuixlCkWTguNE/j8kp6PcQPLYFD6LzyJKoE6fhTjRhfA6BLIWZTPBfRiwoM1DyH+Rl48GCkfbgThjQVeVKO8F/54l21UARbNKR8XoDKdbXM+9ePt+U6o5VsiB2ezhDGcCdebjnhhU6P9jCqy8O34WGr8evjFti+YnZiWU1br8fwKWv8SEO1Ymz7dhQK7PY7WSpLGNv7NpIyjLCmr5572tzddTvcOQGp13P9hVs2/UvLtRN6GVHhgcg4OFah1zzSKiUoRhO5cv9OaXD3MKintyfqFvrzyCZMj3XlqLce429rcVLs1Yv5WQlhTB9l4B5BFfUxribjX4sOHimzrGkk9O/75L/GjxQdmlMBR3x5cU8Kaz5iGaMtERYO1L+FvaWa+bRU8zdAQUjZPq9go1EzpDK0om8c/4olRbB4Un9FQb4wwE/4Dxs7r6sTDXanRM7WJChn0mQ="
                 )
         );
+
+        npcHandler.registerNPC(
+                "rusty",
+                new NPC(
+                        "Rusty",
+                        true,
+                        false,
+                        true,
+                        Villager.Profession.LIBRARIAN,
+                        new Location(Skyblock.getSkyblockWorld(), -19.0, 78.0, -325.5),
+                        (p) -> {
+                            SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
+
+                            boolean alreadyTalked = (boolean) player.getValue("quests.lost_and_found.talkedToRusty");
+
+                            if (!alreadyTalked || getObjective(player).getId().equals("talk_to_rusty")) {
+                                Util.sendDelayedMessages(player.getBukkitPlayer(), "Rusty", (pl) -> getObjective(player).complete(pl),
+                                        "Hi, I'm the janitor of this mine.",
+                                        "You would not believe how many people leave ingots and stones behind them!",
+                                        "It drives me insane, everyone should be using " + ChatColor.DARK_PURPLE + "Telekinesis " + ChatColor.WHITE + "on their tools!",
+                                        "If you want I can apply Telekinesis on any of your items for " + ChatColor.GOLD + "100 coins" + ChatColor.WHITE + ".");
+
+                                return;
+                            }
+
+                            new RustyGui(player.getBukkitPlayer()).show(player.getBukkitPlayer());
+                        },
+                        null,
+                        null
+                )
+        );
     }
 
     private static final class TalkToLazyMinerObjective extends Objective {
@@ -89,10 +147,15 @@ public class LostAndFoundQuest extends QuestLine {
 
         @EventHandler
         public void onPlayerClickArmorStand(PlayerInteractEntityEvent event) {
-            if (event.getRightClicked() == null) return;
+            event.getPlayer().sendMessage("Test");
 
-            NBTEntity entity = new NBTEntity(event.getRightClicked());
-            if (entity.hasKey("skyblock.quest.lost_and_found.lazy_miner_pickaxe")) {
+            if (event.getRightClicked() == null || !event.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) return;
+
+            event.getPlayer().sendMessage(event.getRightClicked().getMetadata("skyblock.quest.lost_and_found.lazy_miner_pickaxe").toString());
+
+            if (event.getRightClicked().hasMetadata("skyblock.quest.lost_and_found.lazy_miner_pickaxe")) {
+                event.setCancelled(true);
+
                 if ((boolean) SkyblockPlayer.getPlayer(event.getPlayer()).getValue("quests.lost_and_found.foundPickaxe")) return;
 
                 event.getPlayer().performCommand("sb item IRON_PICKAXE.json");
@@ -133,6 +196,16 @@ public class LostAndFoundQuest extends QuestLine {
         public TalkToRustyObjective() {
             super("talk_to_rusty", "Talk to Rusty");
         }
+    }
+
+    private static final class RustyGui extends Gui {
+
+        public RustyGui(Player opener) {
+            super("Rusty the Janitor", 45, new HashMap<String, Runnable>() {{
+
+            }});
+        }
+
     }
 
 }
