@@ -671,16 +671,15 @@ public class SkyblockPlayer {
                 config.set("settings.abilityCooldownSounds", true);
                 config.set("settings.rareDropSounds", true);
                 config.set("settings.menuSounds", true);
-                config.set("settings.romanNumerals", true);
+                config.set("settings.romanSkillNumerals", true);
                 config.set("settings.dynamicSlayerSidebar", true);
                 config.set("settings.romanNumerals", true);
-                config.set("settings.skyblockLevelsChat", true);
+                //config.set("settings.skyblockLevelsChat", true);
                 config.set("settings.zonesActionBar", true);
                 config.set("settings.abilityChat", true);
                 config.set("settings.abilityCooldownChat", true);
                 config.set("settings.compactChat", true);
                 config.set("settings.seaCreatureChat", true);
-                config.set("settings.autoRecombobulator", true);
                 config.set("settings.tradeRequests", true);
                 config.set("settings.inventoryFullNotif", true);
                 config.set("settings.arrowPickupFullQuiver", true);

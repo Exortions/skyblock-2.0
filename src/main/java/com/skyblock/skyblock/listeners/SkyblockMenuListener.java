@@ -87,7 +87,7 @@ public class SkyblockMenuListener implements Listener {
                 skyblock.getGuiHandler().show("ender_chest", player);
                 break;
             case "Settings":
-                skyblock.getGuiHandler().show("settings", player);
+	        player.performCommand("sb settings");
                 break;
             case "Active Effects":
                 player.performCommand("sb effects");

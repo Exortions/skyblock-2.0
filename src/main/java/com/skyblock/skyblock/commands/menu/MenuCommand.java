@@ -65,6 +65,7 @@ public class MenuCommand implements Command {
         ItemStack pets = this.createPetsItem(skyblockPlayer);
         ItemStack craftingTable = this.createCraftingTableItem();
         ItemStack activeEffects = this.createActiveEffectsItem(skyblockPlayer);
+        ItemStack settings = this.createSettings(skyblockPlayer);
 
         Util.fillEmpty(inventory);
 
@@ -84,6 +85,7 @@ public class MenuCommand implements Command {
 
         inventory.setItem(47, this.createWarpItem(skyblockPlayer));
         inventory.setItem(49, Util.buildCloseButton());
+        inventory.setItem(50, settings);
 
         for (Bag bag : plugin.getBagManager().getBags().values()) {
             if ((boolean) skyblockPlayer.getValue("bag." + bag.getId() + ".unlocked")) {
@@ -299,6 +301,19 @@ public class MenuCommand implements Command {
                 .toItemStack();
     }
 
+    public ItemStack createSettings(SkyblockPlayer player) {
+        return new ItemBuilder(
+                ChatColor.GREEN + "Settings",
+                Material.REDSTONE_TORCH_ON)
+                .addLore(
+                        ChatColor.GRAY + "View and edit your Skyblock",
+                        ChatColor.GRAY + "settings.",
+                        "",
+                        ChatColor.YELLOW + "Click to view!"
+                )
+                .toItemStack();
+    }
+    
     public ItemStack createActiveEffectsItem(SkyblockPlayer player) {
         return new ItemBuilder(
                 ChatColor.GREEN + "Active Effects",
