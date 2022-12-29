@@ -57,6 +57,11 @@ public class DepositCommand implements Command {
             player.sendMessage(ChatColor.RED + "You don't have enough coins to deposit!");
         } else {
             player.sendMessage(ChatColor.GREEN + "You have successfully deposited " + ChatColor.GOLD + Util.abbreviate(depositAmount) + " coins" + ChatColor.GREEN + "! You now have " + ChatColor.GOLD + Util.abbreviate(skyblockPlayer.getDouble("bank.balance")) + ChatColor.GREEN + " coins in your account!");
+		if ((boolean) skyblockPlayer.getExtraData("personalBankUsed")) {
+			skyblockPlayer.setExtraData("personalBankUsed", false);
+			skyblockPlayer.setExtraData("personalBankLastUsed", System.currentTimeMillis());
+			Util.delay(() -> {player.closeInventory();}, 2);
+		}
         }
     }
 }
