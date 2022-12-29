@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.objectives.impl.mines;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.event.SkyblockCollectItemEvent;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;
@@ -11,29 +12,24 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
-import de.tr7zw.nbtapi.NBTEntity;
-import net.minecraft.server.v1_8_R3.Entity;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
 public class LostAndFoundQuest extends QuestLine {
 
     public LostAndFoundQuest() {
-        super("lost_and_found", "Lost and Found", new TalkToLazyMinerObjective(), new FindPickaxeObjective(), new CollectIronAndGoldIngotsObjective(), new TalkToRustyObjective());
+        super("lost_and_found", "Lost and Found", new TalkToLazyMinerObjective(), new FindPickaxeObjective(), new CollectIronAndGoldIngotsObjective(), new TalkToRustyObjective(), new ReachMiningVObjective());
 
         ArmorStand pickaxe = (ArmorStand) Skyblock.getSkyblockWorld().spawnEntity(new Location(Skyblock.getSkyblockWorld(), -19.0, 24, -304.55, 90, -80), EntityType.ARMOR_STAND);
         pickaxe.setCustomNameVisible(false);
@@ -41,10 +37,8 @@ public class LostAndFoundQuest extends QuestLine {
         pickaxe.setVisible(false);
 
         pickaxe.setItemInHand(
-                new ItemBuilder("", Material.IRON_PICKAXE).addEnchantmentGlint().toItemStack()
+                new ItemBuilder("7f22f697-06a6-4a86-aa25-e86f82bf4219", Material.IRON_PICKAXE).addEnchantmentGlint().toItemStack()
         );
-
-        pickaxe.setMetadata("skyblock.quest.lost_and_found.lazy_miner_pickaxe", new FixedMetadataValue(Skyblock.getPlugin(), true));
 
         Skyblock.getPlugin().addRemoveable(pickaxe);
 
@@ -117,7 +111,10 @@ public class LostAndFoundQuest extends QuestLine {
                             boolean alreadyTalked = (boolean) player.getValue("quests.lost_and_found.talkedToRusty");
 
                             if (!alreadyTalked || getObjective(player).getId().equals("talk_to_rusty")) {
-                                Util.sendDelayedMessages(player.getBukkitPlayer(), "Rusty", (pl) -> getObjective(player).complete(pl),
+                                Util.sendDelayedMessages(player.getBukkitPlayer(), "Rusty", (pl) -> {
+                                    getObjective(player).complete(pl);
+                                    player.setValue("quests.lost_and_found.talkedToRusty", true);
+                                },
                                         "Hi, I'm the janitor of this mine.",
                                         "You would not believe how many people leave ingots and stones behind them!",
                                         "It drives me insane, everyone should be using " + ChatColor.DARK_PURPLE + "Telekinesis " + ChatColor.WHITE + "on their tools!",
@@ -146,14 +143,16 @@ public class LostAndFoundQuest extends QuestLine {
         }
 
         @EventHandler
-        public void onPlayerClickArmorStand(PlayerInteractEntityEvent event) {
-            event.getPlayer().sendMessage("Test");
+        public void onPlayerClickArmorStand(PlayerInteractAtEntityEvent event) {
+            if (event.getRightClicked() == null) return;
 
-            if (event.getRightClicked() == null || !event.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) return;
+            if (event.getRightClicked().getType() != EntityType.ARMOR_STAND) return;
 
-            event.getPlayer().sendMessage(event.getRightClicked().getMetadata("skyblock.quest.lost_and_found.lazy_miner_pickaxe").toString());
+            ItemStack item = ((ArmorStand) event.getRightClicked()).getItemInHand();
 
-            if (event.getRightClicked().hasMetadata("skyblock.quest.lost_and_found.lazy_miner_pickaxe")) {
+            event.getPlayer().sendMessage(item.toString());
+
+            if (item.getItemMeta().getDisplayName().equals("7f22f697-06a6-4a86-aa25-e86f82bf4219")) {
                 event.setCancelled(true);
 
                 if ((boolean) SkyblockPlayer.getPlayer(event.getPlayer()).getValue("quests.lost_and_found.foundPickaxe")) return;
@@ -198,12 +197,34 @@ public class LostAndFoundQuest extends QuestLine {
         }
     }
 
-    private static final class RustyGui extends Gui {
+    private static final class ReachMiningVObjective extends Objective {
+        public ReachMiningVObjective() {
+            super("reach_mining_v", "Reach Mining V");
+        }
 
+        @Override
+        public String getSuffix(SkyblockPlayer player) {
+            return ChatColor.translateAlternateColorCodes('&', "&8(&b" + Skill.getLevel(Skill.getXP(new Mining(), player)) + "&8/&31,175 XP&8)");
+        }
+
+        @EventHandler
+        public void onCollectBlock(SkyblockCollectItemEvent event) {
+            if (!event.getCollection().getCategory().equalsIgnoreCase("mining")) return;
+
+            if (Skill.getLevel(Skill.getXP(new Mining(), event.getPlayer())) >= 5) {
+                complete(event.getPlayer().getBukkitPlayer());
+            }
+        }
+
+    }
+
+    private static final class RustyGui extends Gui {
         public RustyGui(Player opener) {
             super("Rusty the Janitor", 45, new HashMap<String, Runnable>() {{
-
             }});
+
+            Util.fillEmpty(this);
+
         }
 
     }
