@@ -373,6 +373,7 @@ public class PlayerListener implements Listener {
         }
 
         Skyblock.getPlugin().getFairySoulHandler().loadChunk(to.getChunk());
+        killRemovables(to.getChunk());
     }
 
     @EventHandler
@@ -522,8 +523,12 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onChunkLoad(ChunkLoadEvent e) throws IOException {
-        Entity[] entities = e.getChunk().getEntities();
+    public void onChunkLoad(ChunkLoadEvent e) {
+        killRemovables(e.getChunk());
+    }
+
+    private void killRemovables(Chunk chunk) {
+        Entity[] entities = chunk.getEntities();
 
         File cacheFile = new File(Skyblock.getPlugin().getDataFolder(), ".cache.yml");
         FileConfiguration cache = YamlConfiguration.loadConfiguration(cacheFile);
@@ -539,6 +544,9 @@ public class PlayerListener implements Listener {
         }
 
         cache.set("removeables", removables);
-        cache.save(cacheFile);
+
+        try {
+            cache.save(cacheFile);
+        } catch (IOException e) {}
     }
 }
