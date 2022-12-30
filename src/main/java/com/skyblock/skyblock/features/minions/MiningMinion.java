@@ -83,9 +83,6 @@ public class MiningMinion extends MinionBase {
         this.text.setSmall(true);
         this.text.setMarker(true);
 
-        this.inventory = new ArrayList<>();
-        for (int i = 0; i < level; ++i) inventory.add(new ItemStack(Material.AIR));
-
         this.minion = location.getWorld().spawn(location, ArmorStand.class);
         this.minion.setCustomName("");
         this.minion.setCustomNameVisible(false);
