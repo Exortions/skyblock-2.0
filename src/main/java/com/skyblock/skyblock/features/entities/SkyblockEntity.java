@@ -224,7 +224,7 @@ public abstract class SkyblockEntity {
 
             for (EntityDrop drop : drops) {
                 EntityDropRarity type = drop.getRarity();
-                double r = Util.random(0.0, 1.0);
+                double r = Util.random(0.0, 100);
                 double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND) / 100.0;
                 double c = drop.getChance() + magicFind;
                 if (r > c) continue;
