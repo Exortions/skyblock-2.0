@@ -28,7 +28,7 @@ public class ScorpionFoil extends SkyblockItem {
             @Override
             public void run() {
                 tickers.forEach((uuid, ticker) -> {
-                    if (!SkyblockPlayer.getPlayer(uuid).getBukkitPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Scorpion Foil")) {
+                    if (!SkyblockPlayer.getPlayer(uuid).getBukkitPlayer().getItemInHand().hasItemMeta() || !SkyblockPlayer.getPlayer(uuid).getBukkitPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Scorpion Foil")) {
                         tickers.remove(uuid);
                         return;
                     }
