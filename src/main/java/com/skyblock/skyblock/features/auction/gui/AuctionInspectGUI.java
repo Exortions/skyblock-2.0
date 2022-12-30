@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.auction.gui;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionBid;
@@ -18,7 +19,12 @@ import java.util.HashMap;
 public class AuctionInspectGUI extends Gui {
 
     public AuctionInspectGUI(Auction auction, Player opener) {
-        super((auction.isBIN() ? "BIN Auction House" : "Auction House"), 54, new HashMap<>());
+        super((auction == null ? "" : (auction.isBIN() ? "BIN Auction House" : "Auction House")), 54, new HashMap<>());
+
+        if (auction == null) {
+            Skyblock.getPlugin().getAuctionHouse().refreshDisplays();
+            return;
+        }
 
         Util.fillEmpty(this);
 

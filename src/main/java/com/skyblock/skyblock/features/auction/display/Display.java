@@ -48,30 +48,17 @@ public class Display {
         }
     }
 
+    private Auction currentAuction = null;
     private ItemStack previousItem = null;
-//    private Item item = null;
     private NPC item = null;
 
     public void update(Auction auction) {
+        this.currentAuction = auction;
+
         updateSign(location.clone().add(0, 0, 1), auction);
         updateSign(location.clone().add(0, 0, -1), auction);
         updateSign(location.clone().add(1, 0, 0), auction);
         updateSign(location.clone().add(-1, 0, 0), auction);
-
-//        if (previousItem != auction.getItem()) {
-//            if (this.item != null) item.remove();
-//
-//            item = location.getWorld().dropItem(location.clone().add(0, 1, 0), auction.getItem());
-//            item.setPickupDelay(Integer.MAX_VALUE);
-//            item.setCustomNameVisible(true);
-//            item.setCustomName(auction.getItem().getItemMeta().getDisplayName());
-//
-////            Skyblock.getPlugin().addRemoveable(item);
-//
-//            previousItem = auction.getItem();
-//        }
-//
-//        if (item != null) item.teleport(location.clone().add(0.5, 1, 0.5));
 
         if (previousItem != auction.getItem()) {
             if (this.item != null) item.despawn();
@@ -90,6 +77,13 @@ public class Display {
 
     public void updateItemPosition() {
         if (item != null) item.teleport(location.clone().add(0.5, 1, 0.5), PlayerTeleportEvent.TeleportCause.PLUGIN);
+    }
+
+    public boolean isPossibleSignLocation(Location loc) {
+        if (loc.add(0, 0, 1).distance(location) < 1) return true;
+        else if (loc.add(0, 0, -1).distance(location) < 1) return true;
+        else if (loc.add(1, 0, 0).distance(location) < 1) return true;
+        else return loc.add(-1, 0, 0).distance(location) < 1;
     }
 
 }

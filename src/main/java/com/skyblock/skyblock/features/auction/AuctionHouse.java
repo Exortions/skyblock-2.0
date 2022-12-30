@@ -33,6 +33,8 @@ public class AuctionHouse {
 
     private final File folder;
 
+    private final DisplayHandler handler;
+
     @Getter @Setter
     private boolean botFinished = false;
 
@@ -67,7 +69,7 @@ public class AuctionHouse {
             }
         }.runTaskAsynchronously(Skyblock.getPlugin()), 20);
 
-        new DisplayHandler(
+        this.handler = new DisplayHandler(
                 Skyblock.getPlugin(),
                 this,
                 new Display(20, 71, -79, 1),
@@ -280,6 +282,11 @@ public class AuctionHouse {
             }
         }
     }
+
+    public void refreshDisplays() {
+        handler.updateDisplays();
+    }
+
     public void init() {
         new BukkitRunnable() {
             @Override
