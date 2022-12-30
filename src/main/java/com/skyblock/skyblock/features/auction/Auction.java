@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class Auction {
     private UUID uuid;
     private List<OfflinePlayer> participants;
     private List<AuctionBid> bidHistory;
+    private boolean fake = false;
 
     public Auction(ItemStack item, OfflinePlayer seller, OfflinePlayer topBidder, long price, long timeLeft, boolean isBIN, boolean sold, UUID uuid, List<AuctionBid> bidHistory, List<OfflinePlayer> participants) {
         this.item = item;
@@ -167,6 +169,9 @@ public class Auction {
     public void bid(Player player, long amount) {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
+        AuctionHouse.FAKE.remove(getUuid());
+        setFake(false);
+
         AuctionBid prev = getBid(player);
         skyblockPlayer.subtractCoins((int) (amount - (prev != null ? prev.getAmount() : 0)));
         getBidHistory().add(new AuctionBid(player, this, (int) amount, System.currentTimeMillis()));
@@ -220,7 +225,7 @@ public class Auction {
         boolean found = false;
 
         for (OfflinePlayer p : participants) {
-            if (player.getName().equalsIgnoreCase(p.getName())) {
+            if (p.getUniqueId().equals(player.getUniqueId())) {
                 found = true;
                 break;
             }

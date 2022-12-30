@@ -31,12 +31,6 @@ public enum AuctionCategory {
 
                 return (stack instanceof ItemAxe) || (stack instanceof ItemSword);
             }, (short) 1),
-    ARMOR(new ItemBuilder(ChatColor.AQUA + "Armor", Material.DIAMOND_CHESTPLATE).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Hats", "&7 - Chestplates", "&7 - Leggings", "&7 - Boots", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(),
-            (itemStack) -> {
-                Item stack = CraftItemStack.asNMSCopy(itemStack).getItem();
-
-                return (stack instanceof ItemArmor) || (stack instanceof ItemSkull);
-            }, (short) 11),
     ACCESSORY(Util.idToSkull(new ItemBuilder(ChatColor.DARK_GREEN + "Accessories", Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Talismans", "&7 - Rings", "&7 - Orbs", "&7 - Artifacts", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTI5YWYyYTQzOTA5MmU0NTMzMGM1NzdhYzg3NDIxYmM3NmVmYzBiNTg5MzZkMTEwZDJjOThmYzhjOTgwNGNjMiJ9fX0="),
             (itemStack) -> {
                 try {
@@ -47,6 +41,12 @@ public enum AuctionCategory {
                     return false;
                 }
             }, (short) 13),
+    ARMOR(new ItemBuilder(ChatColor.AQUA + "Armor", Material.DIAMOND_CHESTPLATE).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Hats", "&7 - Chestplates", "&7 - Leggings", "&7 - Boots", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(),
+            (itemStack) -> {
+                Item stack = CraftItemStack.asNMSCopy(itemStack).getItem();
+
+                return ((stack instanceof ItemArmor) || (stack instanceof ItemSkull)) && !ACCESSORY.canPut.test(itemStack);
+            }, (short) 11),
     CONSUMABLES(new ItemBuilder(ChatColor.RED + "Consumables", Material.APPLE).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Potions", "&7 - Food", "&7 - Books", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(),
             (itemStack) -> {
                 Item stack = CraftItemStack.asNMSCopy(itemStack).getItem();

@@ -2,6 +2,8 @@ package com.skyblock.skyblock.features.auction;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.Rarity;
+import com.skyblock.skyblock.features.auction.bot.AuctionBot;
+import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,6 +22,7 @@ public class AuctionHouse {
 
     private static final String PATH = Skyblock.getPlugin().getDataFolder() + File.separator + "auctions";
     public static final HashMap<UUID, Auction> AUCTION_CACHE = new HashMap<>();
+    public static final List<UUID> FAKE = new ArrayList<>();
 
     private final File folder;
 
@@ -29,6 +32,15 @@ public class AuctionHouse {
         if (!folder.exists()) folder.mkdirs();
 
         init();
+
+        Util.delay(() -> {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    new AuctionBot().getAuctionsAPI(1);
+                }
+            }.runTaskAsynchronously(Skyblock.getPlugin());
+        }, 20);
     }
 
     public List<Auction> getBiddedAuctions(Player player) {
@@ -47,7 +59,8 @@ public class AuctionHouse {
         List<Auction> auctions = new ArrayList<>();
 
         for (Auction ah : getAuctions()) {
-            if (ah.getTopBidder() != null && ah.getTopBidder().getName().equals(player.getName())) auctions.add(ah);
+            if (ah.getTopBidder() != null)
+                if (ah.getTopBidder().getName().equals(player.getName())) auctions.add(ah);
         }
 
         return auctions;
@@ -78,20 +91,22 @@ public class AuctionHouse {
         }
 
         for (int i = start; i < end; i++) {
-            if (i == AUCTION_CACHE.size()) break;
+            try {
+                if (i == AUCTION_CACHE.size()) break;
 
-            Auction auction = new ArrayList<>(AUCTION_CACHE.values()).get(i);
+                Auction auction = new ArrayList<>(AUCTION_CACHE.values()).get(i);
 
-            if (auctions.contains(auction)) continue;
-            if (!category.getCanPut().test(auction.getItem())) continue;
-            if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
-            if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
-            if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
-            if (!ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) continue;
-            if ((auction.isSold() || auction.getTimeLeft() == 0) && timeSensitive) continue;
+                if (auctions.contains(auction)) continue;
+                if (!category.getCanPut().test(auction.getItem())) continue;
+                if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
+                if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
+                if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
+                if (!ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) continue;
+                if ((auction.isSold() || auction.getTimeLeft() == 0) && timeSensitive) continue;
 
-            auctions.add(auction);
-            if (page != 0) i = auctions.size() - 1;
+                auctions.add(auction);
+                if (page != 0) i = auctions.size() - 1;
+            } catch (ArrayIndexOutOfBoundsException ignored) {}
         }
 
         auctions.sort(new Comparator<Auction>() {
@@ -120,7 +135,17 @@ public class AuctionHouse {
         return auctions;
     }
 
-    public Auction createAuction(ItemStack item, Player seller, long price, long time, boolean isBIN) {
+    public Auction createFakeAuction(ItemStack item, OfflinePlayer seller, long price, long time, boolean isBIN, UUID id) {
+        Auction auction = new Auction(item, seller, null, price, time, isBIN, false, id, new ArrayList<>(), new ArrayList<>());
+        auction.setFake(true);
+
+        AUCTION_CACHE.put(id, auction);
+        FAKE.add(id);
+
+        return AUCTION_CACHE.get(id);
+    }
+
+    public Auction createAuction(ItemStack item, OfflinePlayer seller, long price, long time, boolean isBIN) {
         File file = new File(folder.getPath() + File.separator + UUID.randomUUID() + ".yml");
 
         try {
@@ -147,6 +172,10 @@ public class AuctionHouse {
         return null;
     }
 
+    public Auction createAuction(ItemStack item, Player seller, long price, long time, boolean isBIN) {
+        return createAuction(item, Bukkit.getOfflinePlayer(seller.getUniqueId()), price, time, isBIN);
+    }
+
     public void deleteAuction(Auction auction) {
         AUCTION_CACHE.remove(auction.getUuid());
         new File(folder.getPath() + File.separator + auction.getUuid() + ".yml").delete();
@@ -154,8 +183,14 @@ public class AuctionHouse {
 
     public void saveToDisk() {
         for (Auction auction : AUCTION_CACHE.values()) {
+            if (FAKE.contains(auction.getUuid())) continue;
+            if (auction.isFake()) continue;
+
             try {
                 File file = new File(folder.getPath() + File.separator + auction.getUuid() + ".yml");
+
+                if (!file.exists()) file.createNewFile();
+
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
                 config.set("item", auction.getItem());
@@ -165,6 +200,7 @@ public class AuctionHouse {
                 config.set("timeLeft", auction.getTimeLeft());
                 config.set("isBIN", auction.isBIN());
                 config.set("sold", auction.isSold());
+                config.set("participants", auction.getParticipants());
 
                 auction.getBidHistory().forEach((bid) -> {
                     if (bid.getAuction() == null) bid.setAuction(auction);
@@ -189,27 +225,32 @@ public class AuctionHouse {
 
         if (AUCTION_CACHE.isEmpty()) {
             for (File file : folder.listFiles()) {
-                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+                // fucking yml
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+                        OfflinePlayer top = config.getString("topBidder").equals("") ? null : Bukkit.getOfflinePlayer(config.getString("topBidder"));
 
-                OfflinePlayer top = config.getString("topBidder").equals("") ? null : Bukkit.getOfflinePlayer(config.getString("topBidder"));
+                        List<AuctionBid> history = new ArrayList<>();
 
-                List<AuctionBid> history = new ArrayList<>();
+                        for (String s1 : config.getConfigurationSection("bidHistory").getKeys(false)) {
+                            Map<String, Object> map = new HashMap<>();
 
-                for (String s1 : config.getConfigurationSection("bidHistory").getKeys(false)) {
-                    Map<String, Object> map = new HashMap<>();
+                            for (String s2 : config.getConfigurationSection("bidHistory." + s1).getKeys(false)) {
+                                map.put(s2, config.get("bidHistory." + s1 + "." + s2));
+                            }
 
-                    for (String s2 : config.getConfigurationSection("bidHistory." + s1).getKeys(false)) {
-                        map.put(s2, config.get("bidHistory." + s1 + "." + s2));
+                            history.add(AuctionBid.deserialize(map));
+                        }
+
+                        Auction auction = new Auction(config.getItemStack("item"), Bukkit.getOfflinePlayer(config.getString("seller")), top,
+                                config.getLong("price"), config.getLong("timeLeft"), config.getBoolean("isBIN"),
+                                config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history, (List<OfflinePlayer>) config.getList("participants"));
+
+                        AUCTION_CACHE.put(auction.getUuid(), auction);
                     }
-
-                    history.add(AuctionBid.deserialize(map));
-                }
-
-                Auction auction = new Auction(config.getItemStack("item"), Bukkit.getOfflinePlayer(config.getString("seller")), top,
-                        config.getLong("price"), config.getLong("timeLeft"), config.getBoolean("isBIN"),
-                        config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history, (List<OfflinePlayer>) config.getList("participants"));
-
-                AUCTION_CACHE.put(auction.getUuid(), auction);
+                }.runTaskAsynchronously(Skyblock.getPlugin());
             }
         }
 
