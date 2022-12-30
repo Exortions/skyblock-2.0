@@ -33,14 +33,14 @@ public class AuctionHouse {
 
         init();
 
-        Util.delay(() -> {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    new AuctionBot().getAuctionsAPI(1);
-                }
-            }.runTaskAsynchronously(Skyblock.getPlugin());
-        }, 20);
+        Util.delay(() -> new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!Skyblock.getPlugin().getConfig().getBoolean("auction_bot.enabled")) return;
+
+                new AuctionBot().getAuctionsAPI(1);
+            }
+        }.runTaskAsynchronously(Skyblock.getPlugin()), 20);
     }
 
     public List<Auction> getBiddedAuctions(Player player) {

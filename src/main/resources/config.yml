@@ -1,2 +1,7 @@
 general:
   skyblock_world: world # the world folder name
+auction_bot:
+  enabled: true # if the auction bot is enabled or not
+  use_real_name:
+    enabled: true # if you want to use the real name of the sellers of items
+    type: "random" # "mojang" for real name, "uuid" for first few characters of uuid, "random" for random name
