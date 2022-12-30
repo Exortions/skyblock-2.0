@@ -19,11 +19,13 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -225,8 +227,6 @@ public class MiningMinion extends MinionBase {
 
         ItemStack toCollect = this.inventory.get(inventoryIndex);
 
-        if (toCollect == null || toCollect.getType().equals(Material.AIR)) return;
-
         if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
             player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
             return;
@@ -243,60 +243,25 @@ public class MiningMinion extends MinionBase {
     @Override
     public void collect(SkyblockPlayer player) {
         ItemStack[] drops = this.type.getCalculateDrops().apply(this.level);
+	Inventory inventory = Bukkit.createInventory(null, this.maxStorage);
 
-        List<ItemStack> newInventory = new ArrayList<>(this.inventory);
-
+	this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
         for (ItemStack drop : drops) {
-            if (drop == null || drop.getType().equals(Material.AIR)) continue;
-
-            for (int i = 0; i < newInventory.size(); i++) {
-                ItemStack item = newInventory.get(i);
-
-                if (item == null || item.getType().equals(Material.AIR)) continue;
-
-                if (item.getType().equals(drop.getType())) {
-                    int amount = item.getAmount() + drop.getAmount();
-
-                    if (amount > 64) {
-                        int newAmount = amount - 64;
-
-                        item.setAmount(64);
-                        drop.setAmount(newAmount);
-
-                        newInventory.set(i, item);
-                    } else {
-                        item.setAmount(amount);
-
-                        newInventory.set(i, item);
-                        drop = null;
-
-                        break;
-                    }
-                }
-            }
-
-            if (drop == null) continue;
-
-            for (int i = 0; i < newInventory.size(); i++) {
-                ItemStack item = newInventory.get(i);
-
-                if (item == null || item.getType().equals(Material.AIR)) {
-                    newInventory.set(i, drop);
-                    break;
-                }
-            }
+	    inventory.addItem(drop);
+            this.resourcesGenerated += drop.getAmount();
         }
+        
+        List<ItemStack> newInventory = new ArrayList<>();
+	for (int i = 0; i < Math.floor(this.maxStorage / 64F); ++i) {
+		if (inventory.getItem(i) != null) newInventory.add(inventory.getItem(i));
+	}
 
-        if (newInventory.size() > (this.maxStorage / 64)) {
+        this.inventory = newInventory;
+		
+        if (newInventory.stream().filter(stack -> { return stack.getType() != Material.AIR; }).count() == Math.floor(this.maxStorage / 64F)) {
             this.text.setCustomName(ChatColor.RED + "My storage is full! :(");
             this.text.setCustomNameVisible(true);
             return;
-        }
-
-        this.inventory = newInventory;
-
-        for (ItemStack drop : drops) {
-            this.resourcesGenerated += drop.getAmount();
         }
 
         this.text.setCustomNameVisible(false);
@@ -326,9 +291,14 @@ public class MiningMinion extends MinionBase {
         this.gui.setItem(48, MinionHandler.MINION_INVENTORY_COLLECT_ALL);
 
         int slot = 21;
+        int invSlot = 0;
         for (int i = 0; i < 15; i++) {
             if (Math.floor(this.maxStorage / 64F) > i) {
-                this.gui.setItem(slot, new ItemStack(Material.AIR));
+	        if (invSlot < this.inventory.size())
+                	this.gui.setItem(slot, this.inventory.get(invSlot));
+                else
+                	this.gui.setItem(slot, new ItemStack(Material.AIR));
+                ++invSlot;
             } else {
                 this.gui.setItem(slot, new ItemBuilder(ChatColor.YELLOW + "Storage unlocked at tier " + Util.toRoman(this.type.getLevelRequirementForStorageSlot().apply(i)), Material.STAINED_GLASS_PANE).toItemStack());
             }
