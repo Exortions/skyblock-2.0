@@ -162,13 +162,17 @@ public class AuctionBot {
                         processed++;
                         totalProcessed[0]++;
 
+                        Skyblock.getPlugin().getAuctionHouse().setBotFinished(false);
+
                         if (processed == auctions.size()) {
                             skyblock.sendMessage("Finished processing thread " + index + " for the Auction Bot. [Total: " + totalProcessed[0] + 1 + "]");
                             complete[0]++;
+                            Skyblock.getPlugin().getAuctionHouse().setBotFinished(true);
                         }
 
                         if (complete[0] == THREAD_AMOUNT) {
                             skyblock.sendMessage("Finished processing all threads for the Auction Bot page &8" + page + "&f [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + "&f]");
+                            Skyblock.getPlugin().getAuctionHouse().setBotFinished(true);
                         }
                     }
                 }

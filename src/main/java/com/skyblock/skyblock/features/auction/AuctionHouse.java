@@ -3,8 +3,12 @@ package com.skyblock.skyblock.features.auction;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.features.auction.bot.AuctionBot;
+import com.skyblock.skyblock.features.auction.display.Display;
+import com.skyblock.skyblock.features.auction.display.DisplayHandler;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -25,6 +29,9 @@ public class AuctionHouse {
     public static final List<UUID> FAKE = new ArrayList<>();
 
     private final File folder;
+
+    @Getter @Setter
+    private boolean botFinished = false;
 
     public AuctionHouse() {
         folder = new File(PATH);
@@ -56,6 +63,45 @@ public class AuctionHouse {
                 }
             }
         }.runTaskAsynchronously(Skyblock.getPlugin()), 20);
+
+        new DisplayHandler(
+                Skyblock.getPlugin(),
+                this,
+                new Display(20, 71, -79, 1),
+                new Display(23, 71, -79, 2),
+                new Display(17, 71, -86, 3),
+                new Display(19, 71, -86, 4),
+                new Display(21, 71, -86, 5),
+                new Display(23, 71, -86, 6),
+                new Display(25, 71, -86, 7),
+                new Display(26, 71, -81, 8),
+                new Display(26, 71, -79, 9),
+                new Display(26, 71, -77, 10),
+                new Display(25, 71, -72, 11),
+                new Display(21, 71, -72, 12),
+                new Display(19, 71, -72, 13),
+                new Display(17, 71, -72, 14),
+                new Display(16, 78, -74, 15),
+                new Display(19, 78, -74, 16),
+                new Display(21, 78, -74, 17),
+                new Display(23, 78, -74, 18),
+                new Display(26, 78, -74, 19),
+                new Display(26, 78, -79, 20),
+                new Display(23, 78, -79, 21),
+                new Display(21, 78, -79, 22),
+                new Display(19, 78, -79, 23),
+                new Display(16, 78, -79, 24),
+                new Display(16, 78, -84, 25),
+                new Display(19, 78, -84, 26),
+                new Display(21, 78, -84, 27),
+                new Display(23, 78, -84, 28),
+                new Display(26, 78, -84, 29),
+                new Display(25, 78, -87, 30),
+                new Display(23, 78, -87, 31),
+                new Display(21, 78, -87, 32),
+                new Display(19, 78, -87, 33),
+                new Display(17, 78, -87, 34)
+        );
     }
 
     public List<Auction> getBiddedAuctions(Player player) {
@@ -90,6 +136,7 @@ public class AuctionHouse {
 
         return auctions;
     }
+
     public List<Auction> getAuctions() {
         return getAuctions(AuctionCategory.ALL, AuctionSettings.AuctionSort.HIGHEST, AuctionSettings.BinFilter.ALL, null, -1, "", false);
     }

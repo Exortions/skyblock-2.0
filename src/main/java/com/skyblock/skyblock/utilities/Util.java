@@ -879,4 +879,23 @@ public class Util {
         return (long) Math.floor(baseAbilityDamage * (1 + (intelligence / 100) * abilityScaling) + (1 + (bonusAbilityDamage / 100)));
     }
 
+    public String formatTimeLeft(long timeLeft) {
+        long seconds = timeLeft / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+
+        String time = "";
+
+        if (days > 0) time += days + "d ";
+        if (hours > 0) time += hours % 24 + "h ";
+        if (minutes > 0) time += minutes % 60 + "m ";
+        if (seconds > 0) time += seconds % 60 + "s";
+
+        if (days > 5) return days + "d";
+        if (hours > 5 && days == 0) return hours + "h";
+
+        return time;
+    }
+
 }
