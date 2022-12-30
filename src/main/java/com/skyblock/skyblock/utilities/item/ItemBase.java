@@ -44,6 +44,8 @@ public class ItemBase {
     private boolean reforgeable;
     private Reforge reforge;
 
+    private boolean isThick;
+
     private List<ItemEnchantment> enchantments;
     private boolean enchantGlint;
 
@@ -93,6 +95,7 @@ public class ItemBase {
         }
 
         this.reforgeable = nbt.getBoolean("reforgeable");
+        this.isThick = nbt.getBoolean("isThick");
         this.enchantments = new ArrayList<>();
         String enchantmentsStr = nbt.getString("enchantments");
 
@@ -138,11 +141,11 @@ public class ItemBase {
     }
 
     public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
-        this(new ItemStack(material, amount), material, name, reforgeType, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+        this(new ItemStack(material, amount), material, name, reforgeType, false, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
     }
 
-    public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable, HashMap<String, Object> nbt, Function<ItemBase, ItemBase> after) {
-        this(new ItemStack(material, amount), material, name, reforgeType, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+    public ItemBase(Material material, String name, Reforge reforgeType, boolean isThick, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable, HashMap<String, Object> nbt, Function<ItemBase, ItemBase> after) {
+        this(new ItemStack(material, amount), material, name, reforgeType, isThick, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
 
         NBTItem nbtItem = new NBTItem(this.stack);
 
@@ -160,7 +163,7 @@ public class ItemBase {
         this.regenerate();
     }
 
-    public ItemBase(ItemStack orig, Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
+    public ItemBase(ItemStack orig, Material material, String name, Reforge reforgeType, boolean isThick, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
         this.description = description;
         this.material = material;
         this.name = name;
@@ -169,6 +172,8 @@ public class ItemBase {
 
         this.reforge = reforgeType;
         this.reforgeable = reforgeable;
+
+        this.isThick = isThick;
 
         this.enchantments = enchantments;
         this.enchantGlint = enchantGlint;
@@ -227,7 +232,7 @@ public class ItemBase {
          */
         if (damage != 0) lore.add(ChatColor.GRAY + "Damage: " + ChatColor.RED + "+" + damage);
         if (strength != 0 || rStrength > 0)
-            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + rStrength) + (reforge != Reforge.NONE && rStrength > 0 ? " " + ChatColor.BLUE + "(+" + rStrength + ")" : ""));
+            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+" + (strength + rStrength) + ((reforge != Reforge.NONE && rStrength > 0) || isThick ? " " + ChatColor.BLUE + "(+" + rStrength + (isThick ? 100 : 0) + ")" : ""));
         if (critChance != 0 || rCritChance > 0)
             lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.RED + "+" + (critChance + rCritChance) + "%" + (reforge != Reforge.NONE && rCritChance > 0 ? " " + ChatColor.BLUE + "(+" + rCritChance + "%)" : ""));
         if (critDamage != 0 || rCritDamage > 0)
@@ -352,7 +357,7 @@ public class ItemBase {
             lore.add("" + ChatColor.WHITE + ChatColor.BOLD + rarity.toUpperCase());
 
         if (reforge != Reforge.NONE)
-            meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + " " + name);
+            meta.setDisplayName(nameColor + StringUtils.capitalize(reforge.toString().toLowerCase()) + (isThick ? " Thick " : " ") + name);
         else meta.setDisplayName(name);
 
         meta.setLore(lore);
