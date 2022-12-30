@@ -222,8 +222,6 @@ public abstract class SkyblockEntity {
 
             Util.shuffle(drops);
 
-            Bukkit.broadcastMessage(drops + "");
-
             for (EntityDrop drop : drops) {
                 EntityDropRarity type = drop.getRarity();
                 double r = Util.random(0.0, 100);
