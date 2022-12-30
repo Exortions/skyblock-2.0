@@ -264,7 +264,7 @@ public class ItemHandler {
     }
 
     public ItemStack getItem(String s) {
-        return items.get(s);
+        return items.get(s).clone();
     }
 
     private ItemStack parseLore(ItemStack item) {
