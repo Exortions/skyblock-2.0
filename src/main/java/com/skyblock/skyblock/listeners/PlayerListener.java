@@ -13,6 +13,7 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.guis.ProfileGui;
+import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
@@ -42,6 +43,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Material.*;
@@ -98,26 +100,6 @@ public class PlayerListener implements Listener {
             }
 
             skyblockPlayer.tick();
-
-            IChatBaseComponent header = new ChatComponentText(ChatColor.AQUA + "You are" + ChatColor.RED + " " + ChatColor.BOLD + "NOT" + ChatColor.RESET + " " +  ChatColor.AQUA + "playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET");
-            IChatBaseComponent footer = new ChatComponentText(ChatColor.RED + "" + ChatColor.BOLD + "NO" + ChatColor.RESET + " " + ChatColor.GREEN + "Ranks, Boosters, & MORE!");
-
-            PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
-
-            try {
-                Field headerField = packet.getClass().getDeclaredField("a");
-                Field footerField = packet.getClass().getDeclaredField("b");
-                headerField.setAccessible(true);
-                footerField.setAccessible(true);
-                headerField.set(packet, header);
-                footerField.set(packet, footer);
-                headerField.setAccessible(!headerField.isAccessible());
-                footerField.setAccessible(!footerField.isAccessible());
-            } catch (Exception ex) {
-                Skyblock.getPlugin().sendMessage("&cFailed to register tab list for &8" + player.getName() + "&c: &8" + ex.getMessage() + "&c!");
-            }
-
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 
             this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
 

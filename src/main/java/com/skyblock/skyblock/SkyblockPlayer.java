@@ -30,11 +30,15 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
 import lombok.Data;
+import net.minecraft.server.v1_8_R3.ChatComponentText;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -47,9 +51,11 @@ import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Data
 public class SkyblockPlayer {
@@ -169,6 +175,46 @@ public class SkyblockPlayer {
 
             this.bossBar = new BossBar(bukkitPlayer);
         }
+
+        List<PotionEffect> effects = getActiveEffects();
+        StringBuilder activeEffectsString = new StringBuilder();
+
+        Function<Double, String> convertTicksToMinutes = (ticks) -> {
+            double minutes = ticks / 20 / 60;
+            if (minutes % 1 == 0) return String.valueOf((int) minutes);
+            return String.format("%.2f", Math.ceil(minutes));
+        };
+
+        for (PotionEffect effect : effects) {
+            activeEffectsString.append(PotionEffect.getMaxLevelsAndColors.get(effect.getName().toLowerCase()).getThird()).append(effect.getName()).append(" ").append(Util.toRoman(effect.getAmplifier())).append(" ").append(ChatColor.WHITE).append(convertTicksToMinutes.apply(effect.getDuration())).append(" Minutes\n");
+        }
+
+        String activeEffects = activeEffectsString.toString();
+        boolean hasActiveEffects = effects.size() > 0;
+
+        IChatBaseComponent header = new ChatComponentText(
+                ChatColor.AQUA + "You are" + ChatColor.RED + " " + ChatColor.BOLD + "NOT" + ChatColor.RESET + " " +  ChatColor.AQUA + "playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET\n");
+        IChatBaseComponent footer = new ChatComponentText(
+                "\n" + ChatColor.GREEN + "" + ChatColor.BOLD + "Active Effects\n" +
+                        (hasActiveEffects ? ChatColor.GRAY + "You have " + ChatColor.YELLOW + effects.size() + ChatColor.GRAY + " active effects. Use\n" + ChatColor.GRAY + "\"" + ChatColor.GOLD + "/effects" + ChatColor.GRAY + "\" to see them!\n" + activeEffects + "\n" : ChatColor.GRAY + "No effects active. Drink potions or splash\n" + ChatColor.GRAY + "them on the ground to buff yourself!\n\n") +
+                        ChatColor.RED + "" + ChatColor.BOLD + "NO" + ChatColor.RESET + " " + ChatColor.GREEN + "Ranks, Boosters, & MORE!");
+
+        PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
+
+        try {
+            Field headerField = packet.getClass().getDeclaredField("a");
+            Field footerField = packet.getClass().getDeclaredField("b");
+            headerField.setAccessible(true);
+            footerField.setAccessible(true);
+            headerField.set(packet, header);
+            footerField.set(packet, footer);
+            headerField.setAccessible(!headerField.isAccessible());
+            footerField.setAccessible(!footerField.isAccessible());
+        } catch (Exception ex) {
+            Skyblock.getPlugin().sendMessage("&cFailed to register tab list for &8" + getBukkitPlayer().getName() + "&c: &8" + ex.getMessage() + "&c!");
+        }
+
+        ((CraftPlayer) getBukkitPlayer()).getHandle().playerConnection.sendPacket(packet);
 
         if (tick == 20) {
             NPC jerry = new NPC("Jerry", true, false, true, Villager.Profession.FARMER,

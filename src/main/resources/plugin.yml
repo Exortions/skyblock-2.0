@@ -48,3 +48,7 @@ commands:
     description: Opens the settings menu
     aliases:
       - sb settings
+  effects:
+    description: Shows your active effects
+    aliases:
+      - sb effects
