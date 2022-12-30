@@ -26,6 +26,9 @@ public class AuctionHouse {
 
     private static final String PATH = Skyblock.getPlugin().getDataFolder() + File.separator + "auctions";
     public static final HashMap<UUID, Auction> AUCTION_CACHE = new HashMap<>();
+    public static final HashMap<AuctionCategory, List<Auction>> CATEGORY_CACHE = new HashMap<AuctionCategory, List<Auction>>() {{
+        for (AuctionCategory c : AuctionCategory.values()) put(c, new ArrayList<>());
+    }};
     public static final List<UUID> FAKE = new ArrayList<>();
 
     private final File folder;
@@ -143,36 +146,19 @@ public class AuctionHouse {
 
     public List<Auction> getAuctions(AuctionCategory category, AuctionSettings.AuctionSort sort, AuctionSettings.BinFilter binFilter, Rarity teir, int page, String search, boolean timeSensitive) {
         List<Auction> auctions = new ArrayList<>();
+        List<Auction> clone = new ArrayList<>(CATEGORY_CACHE.get(category));
 
         int start = (page - 1) * 24;
         int end = page * 24;
 
         if (page == -1) {
             start = 0;
-            end = AUCTION_CACHE.size();
+            end = clone.size();
         }
 
-        if (end > AUCTION_CACHE.size()) end = AUCTION_CACHE.size();
+        if (end > clone.size()) end = clone.size();
 
-        int j = 0;
-        for (int i = start; i < AUCTION_CACHE.size(); i++) {
-            Auction auction = new ArrayList<>(AUCTION_CACHE.values()).get(i);
-
-            if (!category.getCanPut().test(auction.getItem())) continue;
-            if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
-            if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
-            if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
-            if (!search.equals("") && !ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase())) continue;
-            if ((auction.isSold() || auction.isExpired()) && timeSensitive) continue;
-
-            j++;
-
-            auctions.add(auction);
-
-            if (j == end) break;
-        }
-
-        auctions.sort(new Comparator<Auction>() {
+        clone.sort(new Comparator<Auction>() {
             @Override
             public int compare(Auction o1, Auction o2) {
                 switch (sort) {
@@ -194,6 +180,24 @@ public class AuctionHouse {
                 return false;
             }
         });
+
+        int j = start;
+        for (int i = start; i < clone.size(); i++) {
+            Auction auction = clone.get(i);
+
+            if ((auction.isSold() || auction.isExpired()) && timeSensitive) continue;
+            if (!search.equals("") && !ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase())) continue;
+            if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
+            if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
+            if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
+            if (!category.getCanPut().test(auction.getItem())) continue;
+
+            j++;
+
+            auctions.add(auction);
+
+            if (j == end) break;
+        }
 
         return auctions;
     }
@@ -310,6 +314,8 @@ public class AuctionHouse {
                         Auction auction = new Auction(config.getItemStack("item"), Bukkit.getOfflinePlayer(config.getString("seller")), top,
                                 config.getLong("price"), config.getLong("timeLeft"), config.getBoolean("isBIN"),
                                 config.getBoolean("sold"), UUID.fromString(file.getName().replace(".yml", "")), history, (List<OfflinePlayer>) config.getList("participants"));
+
+                        for (AuctionCategory cat : AuctionCategory.values()) if (cat.getCanPut().test(auction.getItem())) CATEGORY_CACHE.get(cat).add(auction);
 
                         AUCTION_CACHE.put(auction.getUuid(), auction);
                     }

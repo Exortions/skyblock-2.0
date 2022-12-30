@@ -34,6 +34,7 @@ public class Auction {
     private UUID uuid;
     private List<OfflinePlayer> participants;
     private List<AuctionBid> bidHistory;
+    private AuctionCategory category;
     private boolean fake = false;
 
     public Auction(ItemStack item, OfflinePlayer seller, OfflinePlayer topBidder, long price, long timeLeft, boolean isBIN, boolean sold, UUID uuid, List<AuctionBid> bidHistory, List<OfflinePlayer> participants) {

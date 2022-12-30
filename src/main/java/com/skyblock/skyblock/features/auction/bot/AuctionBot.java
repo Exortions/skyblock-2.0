@@ -3,6 +3,8 @@ package com.skyblock.skyblock.features.auction.bot;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionBid;
+import com.skyblock.skyblock.features.auction.AuctionCategory;
+import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 
@@ -120,18 +122,18 @@ public class AuctionBot {
                             UUID sellerId = getUUID(auction.get("auctioneer"));
                             String seller = uuidToName(sellerId);
 
-			    NBTContainer nbt = new NBTContainer(NBTReflectionUtil.readNBT(new ByteArrayInputStream(Base64.getDecoder().decode(auction.get("item_bytes").toString()))));
-			    NBTCompound extraAttributes = nbt.getCompoundList("i")
-			    .get(0).getCompound("tag")
-			    .getCompound("ExtraAttributes");
-			    if (extraAttributes.hasKey("enchantments")) {
-				    NBTCompound enchantments = extraAttributes.getCompound("enchantments");
-				    ItemBase base = new ItemBase(neu);
-				    for (String key : enchantments.getKeys()) {
-				        base.setEnchantment(key, enchantments.getInteger(key));
-				    }
-				    neu = base.createStack();
-			    }
+                            NBTContainer nbt = new NBTContainer(NBTReflectionUtil.readNBT(new ByteArrayInputStream(Base64.getDecoder().decode(auction.get("item_bytes").toString()))));
+                            NBTCompound extraAttributes = nbt.getCompoundList("i")
+                            .get(0).getCompound("tag")
+                            .getCompound("ExtraAttributes");
+                            if (extraAttributes.hasKey("enchantments")) {
+                                NBTCompound enchantments = extraAttributes.getCompound("enchantments");
+                                ItemBase base = new ItemBase(neu);
+                                for (String key : enchantments.getKeys()) {
+                                    base.setEnchantment(key, enchantments.getInteger(key));
+                                }
+                                neu = base.createStack();
+                            }
 			    
                             long startTime = (long) auction.get("start");
                             long endTime = (long) auction.get("end");
@@ -140,6 +142,15 @@ public class AuctionBot {
                             boolean bin = (boolean) auction.get("bin");
 
                             Auction auctionObject = Skyblock.getPlugin().getAuctionHouse().createFakeAuction(neu, Bukkit.getOfflinePlayer(seller), (highest == 0 ? start : highest), (endTime - startTime) / 50, bin, id);
+
+                            for (AuctionCategory cat : AuctionCategory.values()) {
+                                if (cat.getCanPut().test(auctionObject.getItem())) {
+                                    AuctionHouse.CATEGORY_CACHE.get(cat).add(auctionObject);
+                                    break;
+                                }
+                            }
+
+                            AuctionHouse.CATEGORY_CACHE.get(AuctionCategory.ALL).add(auctionObject);
 
                             JSONArray bids = (JSONArray) auction.get("bids");
 
