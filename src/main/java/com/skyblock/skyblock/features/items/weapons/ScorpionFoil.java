@@ -6,6 +6,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -59,9 +60,11 @@ public class ScorpionFoil extends SkyblockItem {
 
     @Override
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
+        if (e.getEntity().getType().equals(EntityType.SPIDER)) damage *= 3.5;
+
         if (empoweredAttacks.contains(player.getBukkitPlayer().getUniqueId())) {
             empoweredAttacks.remove(player.getBukkitPlayer().getUniqueId());
-            return damage * 3.5;
+            damage *= 3.5;
         }
 
         return damage;
