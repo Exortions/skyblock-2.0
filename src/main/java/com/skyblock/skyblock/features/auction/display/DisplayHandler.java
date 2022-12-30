@@ -4,6 +4,11 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -13,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class DisplayHandler {
+public class DisplayHandler implements Listener {
 
     private final AuctionHouse house;
 
@@ -23,6 +28,8 @@ public class DisplayHandler {
         this.house = house;
 
         this.displays.addAll(Arrays.asList(displays));
+
+        Bukkit.getPluginManager().registerEvents(this, plugin);
 
         new BukkitRunnable() {
             @Override
@@ -41,6 +48,20 @@ public class DisplayHandler {
                 Arrays.stream(displays).forEach(Display::updateItemPosition);
             }
         }.runTaskTimer(plugin, 0, 1);
+    }
+
+    @EventHandler
+    public void onSignRightClick(PlayerInteractEvent event) {
+        if (event.getClickedBlock() == null) return;
+
+        if (event.getClickedBlock().getType() != Material.SIGN && event.getClickedBlock().getType() != Material.WALL_SIGN) return;
+
+        Display display = displays.stream().filter(d -> d.isPossibleSignLocation(event.getClickedBlock().getLocation())).findFirst().orElse(null);
+
+        if (display == null) return;
+        if (display.getCurrentAuction() == null ) return;
+
+        event.getPlayer().performCommand("ah " + display.getCurrentAuction().getUuid().toString());
     }
 
     public void updateDisplays() {
