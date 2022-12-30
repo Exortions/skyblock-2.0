@@ -32,6 +32,15 @@ public class DisplayHandler {
                 updateDisplays();
             }
         }.runTaskTimer(plugin, 0, 20);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!house.isBotFinished()) return;
+
+                Arrays.stream(displays).forEach(Display::updateItemPosition);
+            }
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     public void updateDisplays() {

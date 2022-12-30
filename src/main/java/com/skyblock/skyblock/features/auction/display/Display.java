@@ -86,7 +86,9 @@ public class Display {
 
             previousItem = auction.getItem();
         }
+    }
 
+    public void updateItemPosition() {
         if (item != null) item.teleport(location.clone().add(0.5, 1, 0.5), PlayerTeleportEvent.TeleportCause.PLUGIN);
     }
 
