@@ -20,6 +20,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import lombok.experimental.UtilityClass;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.trait.ArmorStandTrait;
 import net.citizensnpcs.trait.LookClose;
 import net.citizensnpcs.trait.SkinTrait;
 import org.apache.commons.lang.StringUtils;
@@ -478,41 +479,28 @@ public class Util {
 
         npc.getEntity().getLocation().setDirection(location.getWorld().getSpawnLocation().toVector().subtract(location.toVector()).normalize());
 
-        ArmorStand stand = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0), ArmorStand.class);
+        NPC standNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, name, npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
+        standNPC.spawn(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
+
+        ArmorStandTrait stand = standNPC.getOrAddTrait(ArmorStandTrait.class);
         stand.setGravity(false);
         stand.setVisible(false);
-        stand.setCustomNameVisible(true);
-        stand.setCustomName(name);
+        stand.setMarker(true);
 
-        NBTEntity nbtas = new NBTEntity(stand);
-        nbtas.setBoolean("Invisible", true);
-        nbtas.setBoolean("Gravity", false);
-        nbtas.setBoolean("CustomNameVisible", true);
-        nbtas.setBoolean("Marker", true);
-        nbtas.setBoolean("Invulnerable", true);
+        standNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
+        standNPC.getEntity().setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(), true));
+        standNPC.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(), name));
+        standNPC.getEntity().setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(), true));
 
-        stand.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.95 : 2.15, 0));
-        stand.setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
-        stand.setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
-        stand.setMetadata("NPC", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
+        NPC clickNPC = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK", npc.getEntity().getLocation().add(0, !villager ? 1.6 : 1.8, 0));
+        clickNPC.spawn(npc.getEntity().getLocation().add(0, !villager ? 1.6 : 1.8, 0));
 
-        ArmorStand click = npc.getEntity().getWorld().spawn(npc.getEntity().getLocation().add(0, !villager ? 1.6 : 1.8, 0), ArmorStand.class);
-        click.setCustomName(ChatColor.YELLOW + "" + ChatColor.BOLD + "CLICK");
+        ArmorStandTrait click = clickNPC.getOrAddTrait(ArmorStandTrait.class);
         click.setGravity(false);
         click.setVisible(false);
-        click.setCustomNameVisible(true);
+        click.setMarker(true);
 
-        NBTEntity nbtEntity = new NBTEntity(click);
-        nbtEntity.setBoolean("Invisible", true);
-        nbtEntity.setBoolean("Gravity", false);
-        nbtEntity.setBoolean("CustomNameVisible", true);
-        nbtEntity.setBoolean("Marker", true);
-        nbtEntity.setBoolean("Invulnerable", true);
-
-        click.teleport(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.8, 0));
-
-        Skyblock.getPlugin().addRemoveable(stand);
-        Skyblock.getPlugin().addRemoveable(click);
+        clickNPC.getEntity().teleport(npc.getEntity().getLocation().add(0, !villager ? 1.7 : 1.8, 0));
 
         if (skin) {
             SkinTrait skinTrait = npc.getOrAddTrait(SkinTrait.class);

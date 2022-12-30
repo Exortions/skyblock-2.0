@@ -43,11 +43,6 @@ public class NPC implements Listener {
         List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, this.hasSkin, this.doesLookClose, this.villager, this.profession);
 
         this.npc = (net.citizensnpcs.api.npc.NPC) npcData.get(0);
-        this.stand = (ArmorStand) npcData.get(1);
-        this.click = (ArmorStand) npcData.get(2);
-
-        Skyblock.getPlugin().addRemoveable(this.stand);
-        Skyblock.getPlugin().addRemoveable(this.click);
     }
 
     @EventHandler

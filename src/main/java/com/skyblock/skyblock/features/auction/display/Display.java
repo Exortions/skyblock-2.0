@@ -7,6 +7,8 @@ import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.api.trait.trait.Equipment;
+import net.citizensnpcs.trait.ArmorStandTrait;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,12 +29,16 @@ public class Display {
         this.location = new Location(Skyblock.getSkyblockWorld(), x, y, z);
         this.rank = rank;
 
-        ArmorStand cage = (ArmorStand) this.location.getWorld().spawnEntity(this.location.clone().add(0.5, -0.5, 0.5), EntityType.ARMOR_STAND);
+        NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "", this.location.clone().add(0.5, -0.5, 0.5));
+        npc.data().set(NPC.Metadata.NAMEPLATE_VISIBLE, false);
+
+        ArmorStandTrait cage = npc.getOrAddTrait(ArmorStandTrait.class);
+        Equipment equipment = npc.getOrAddTrait(Equipment.class);
+
         cage.setGravity(false);
         cage.setVisible(false);
         cage.setMarker(true);
-        cage.setCustomNameVisible(false);
-        cage.setHelmet(new ItemStack(Material.GLASS));
+        equipment.set(Equipment.EquipmentSlot.HELMET, new ItemStack(Material.GLASS));
     }
 
     private void updateSign(Location loc, Auction auction) {

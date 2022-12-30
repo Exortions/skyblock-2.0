@@ -92,11 +92,6 @@ public class Merchant implements Listener {
         List<Object> npcData = Util.spawnSkyblockNpc(this.location, this.name, this.skinValue, this.skinSignature, true, true, this.villager, this.profession);
 
         this.npc = (NPC) npcData.get(0);
-        this.stand = (ArmorStand) npcData.get(1);
-        this.click = (ArmorStand) npcData.get(2);
-
-        Skyblock.getPlugin().addRemoveable(this.stand);
-        Skyblock.getPlugin().addRemoveable(this.click);
 
         npc.getEntity().setMetadata("merchant", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), true));
         npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));

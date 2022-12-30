@@ -16,6 +16,7 @@ import com.skyblock.skyblock.features.guis.ProfileGui;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
+import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
@@ -391,21 +392,21 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onArmorStand(PlayerArmorStandManipulateEvent e) {
-        if (e.getRightClicked().hasMetadata("isFairySoul")) {
+    public void onArmorStand(NPCRightClickEvent e) {
+        if (e.getNPC().getEntity().hasMetadata("isFairySoul")) {
             e.setCancelled(true);
 
-            SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getClicker());
             List<Location> found = ((ArrayList<Location>) player.getValue("fairySouls.found")).stream().peek(location -> location.setWorld(Skyblock.getSkyblockWorld())).collect(Collectors.toList());
 
-            if (!found.contains(e.getRightClicked().getLocation())) {
-                e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "SOUL! " + ChatColor.RESET + "" + ChatColor.WHITE + "You found a " + ChatColor.LIGHT_PURPLE + "Fairy Soul" + ChatColor.WHITE + "!");
-                found.add(e.getRightClicked().getLocation());
+            if (!found.contains(e.getNPC().getEntity().getLocation())) {
+                e.getClicker().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "SOUL! " + ChatColor.RESET + "" + ChatColor.WHITE + "You found a " + ChatColor.LIGHT_PURPLE + "Fairy Soul" + ChatColor.WHITE + "!");
+                found.add(e.getNPC().getEntity().getLocation());
                 player.setValue("fairySouls.found", found);
-                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.AMBIENCE_CAVE, 10, 2);
+                e.getClicker().playSound(e.getClicker().getLocation(), Sound.AMBIENCE_CAVE, 10, 2);
             } else {
-                e.getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "You have already found that Fairy Soul!");
-                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.SILVERFISH_KILL, 10, 2);
+                e.getClicker().sendMessage(ChatColor.LIGHT_PURPLE + "You have already found that Fairy Soul!");
+                e.getClicker().playSound(e.getClicker().getLocation(), Sound.SILVERFISH_KILL, 10, 2);
             }
         }
     }
