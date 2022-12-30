@@ -4,6 +4,12 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionBid;
 import com.skyblock.skyblock.utilities.Util;
+import com.skyblock.skyblock.utilities.item.ItemBase;
+
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTCompoundList;
+import de.tr7zw.nbtapi.NBTContainer;
+import de.tr7zw.nbtapi.NBTReflectionUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +20,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -113,6 +120,19 @@ public class AuctionBot {
                             UUID sellerId = getUUID(auction.get("auctioneer"));
                             String seller = uuidToName(sellerId);
 
+			    NBTContainer nbt = new NBTContainer(NBTReflectionUtil.readNBT(new ByteArrayInputStream(Base64.getDecoder().decode(auction.get("item_bytes").toString()))));
+			    NBTCompound extraAttributes = nbt.getCompoundList("i")
+			    .get(0).getCompound("tag")
+			    .getCompound("ExtraAttributes");
+			    if (extraAttributes.hasKey("enchantments")) {
+				    NBTCompound enchantments = extraAttributes.getCompound("enchantments");
+				    ItemBase base = new ItemBase(neu);
+				    for (String key : enchantments.getKeys()) {
+				        base.setEnchantment(key, enchantments.getInteger(key));
+				    }
+				    neu = base.createStack();
+			    }
+			    
                             long startTime = (long) auction.get("start");
                             long endTime = (long) auction.get("end");
                             long start = (long) auction.get("starting_bid");
