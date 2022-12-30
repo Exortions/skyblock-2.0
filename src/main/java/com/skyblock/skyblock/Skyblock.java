@@ -39,6 +39,7 @@ import com.skyblock.skyblock.features.enchantment.enchantments.*;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.FireProtectionEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.GrowthEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.bow.AimingEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.misc.EfficiencyEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.misc.TelekinesisEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
@@ -716,6 +717,7 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler.registerEnchantment(new FireProtectionEnchantment());
         this.enchantmentHandler.registerEnchantment(new SmiteEnchantment());
         this.enchantmentHandler.registerEnchantment(new EfficiencyEnchantment());
+        this.enchantmentHandler.registerEnchantment(new AimingEnchantment());
 
         this.sendMessage("Successfully registered &a" + this.enchantmentHandler.getEnchantments().size() + " &fenchantments [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
