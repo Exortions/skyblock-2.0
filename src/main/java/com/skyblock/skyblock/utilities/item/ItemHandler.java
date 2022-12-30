@@ -174,7 +174,7 @@ public class ItemHandler {
             Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cCould not find items folder!");
             Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cPlease make sure you have");
             Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cthe items folder in the plugin");
-            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cdata folder, located at!");
+            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cdata folder, located at:");
             Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &chttps://github.com/Exortions/skyblock-2.0/tree/master/dependencies/skyblock/");
             Skyblock.getPlugin().sendMessage("&c=============================================");
 
