@@ -26,10 +26,10 @@ public enum AuctionCategory {
                 try {
                     ItemBase base = new ItemBase(itemStack);
 
-                    return ChatColor.stripColor(base.getRarity().toLowerCase()).contains("sword");
+                    if (ChatColor.stripColor(base.getRarity().toLowerCase()).contains("sword")) return true;
                 } catch (IllegalArgumentException ignored) { }
 
-                return (stack instanceof ItemAxe) || (stack instanceof ItemSword);
+                return (stack instanceof ItemAxe) || (stack instanceof ItemSword) || (stack instanceof ItemBow);
             }, (short) 1),
     ACCESSORY(Util.idToSkull(new ItemBuilder(ChatColor.DARK_GREEN + "Accessories", Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal()).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Talismans", "&7 - Rings", "&7 - Orbs", "&7 - Artifacts", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTI5YWYyYTQzOTA5MmU0NTMzMGM1NzdhYzg3NDIxYmM3NmVmYzBiNTg5MzZkMTEwZDJjOThmYzhjOTgwNGNjMiJ9fX0="),
             (itemStack) -> {
@@ -57,7 +57,7 @@ public enum AuctionCategory {
             (itemStack) -> {
                 Item stack = CraftItemStack.asNMSCopy(itemStack).getItem();
 
-                return (stack instanceof ItemBlock);
+                return (stack instanceof ItemBlock) && !ARMOR.canPut.test(itemStack);
             }, (short) 12),
     MISC(new ItemBuilder(ChatColor.LIGHT_PURPLE + "Tools & Misc", Material.STICK).addLore(ChatColor.DARK_GRAY + "Category", " ", "&7Examples:", "&7 - Tools", "&7 - Specials", "&7 - Magic", "&7 - Staff items", " ", ChatColor.YELLOW + "Click to view items!").toItemStack(),
             (itemStack) -> (!BLOCKS.getCanPut().test(itemStack)) &&

@@ -10,6 +10,7 @@ import com.skyblock.skyblock.utilities.command.TrueAlias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -22,6 +23,8 @@ public class AuctionCommand implements Command, TrueAlias<AuctionCommand> {
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         AuctionHouse ah = plugin.getAuctionHouse();
+
+        Bukkit.broadcastMessage(AuctionHouse.AUCTION_CACHE.size() + "");
 
         if (args.length == 0) {
             new AuctionHouseGUI(player).show(player);

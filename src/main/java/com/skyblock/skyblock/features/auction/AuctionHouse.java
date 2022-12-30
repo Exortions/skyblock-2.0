@@ -90,23 +90,24 @@ public class AuctionHouse {
             end = AUCTION_CACHE.size();
         }
 
-        for (int i = start; i < end; i++) {
-            try {
-                if (i == AUCTION_CACHE.size()) break;
+        if (end > AUCTION_CACHE.size()) end = AUCTION_CACHE.size();
 
-                Auction auction = new ArrayList<>(AUCTION_CACHE.values()).get(i);
+        int j = 0;
+        for (int i = start; i < AUCTION_CACHE.size(); i++) {
+            Auction auction = new ArrayList<>(AUCTION_CACHE.values()).get(i);
 
-                if (auctions.contains(auction)) continue;
-                if (!category.getCanPut().test(auction.getItem())) continue;
-                if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
-                if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
-                if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
-                if (!ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) continue;
-                if ((auction.isSold() || auction.getTimeLeft() == 0) && timeSensitive) continue;
+            if (!category.getCanPut().test(auction.getItem())) continue;
+            if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
+            if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
+            if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
+            if (!search.equals("") && !ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase())) continue;
+            if ((auction.isSold() || auction.isExpired()) && timeSensitive) continue;
 
-                auctions.add(auction);
-                if (page != 0) i = auctions.size() - 1;
-            } catch (ArrayIndexOutOfBoundsException ignored) {}
+            j++;
+
+            auctions.add(auction);
+
+            if (j == end) break;
         }
 
         auctions.sort(new Comparator<Auction>() {
