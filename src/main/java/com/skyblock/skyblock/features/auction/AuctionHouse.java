@@ -38,7 +38,22 @@ public class AuctionHouse {
             public void run() {
                 if (!Skyblock.getPlugin().getConfig().getBoolean("auction_bot.enabled")) return;
 
-                new AuctionBot().getAuctionsAPI(1);
+                float TOTAL_AUCTIONS = 2000;
+                int pages = (int) Math.floor(TOTAL_AUCTIONS / 1000);
+
+                Skyblock.getPlugin().sendMessage("Starting auction bot...");
+
+                AuctionBot bot = new AuctionBot();
+
+                for (int i = 0; i < pages; i++) {
+                    int finalI = i;
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            bot.getAuctionsAPI(finalI + 1);
+                        }
+                    }.runTaskAsynchronously(Skyblock.getPlugin());
+                }
             }
         }.runTaskAsynchronously(Skyblock.getPlugin()), 20);
     }

@@ -359,7 +359,7 @@ public class Util {
     }
 
     public String getTimeDifferenceAndColor(long start, long end) {
-        return getColorBasedOnSize((end - start), 1, 2, 3) + "" + (end - start) + "ms";
+        return getColorBasedOnSize((end - start), 20, 5000, 10000) + "" + (end - start) + "ms";
     }
 
     public ChatColor getColorBasedOnSize(long num, int low, int med, int high) {
