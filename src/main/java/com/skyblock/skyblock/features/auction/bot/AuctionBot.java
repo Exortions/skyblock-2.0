@@ -37,10 +37,10 @@ public class AuctionBot {
     }
 
     public List<Auction> getAuctionsAPI(int page) {
+        long start = System.currentTimeMillis();
         List<Auction> auctions = new ArrayList<>();
 
         try {
-            Skyblock.getPlugin().sendMessage("Starting auction bot...");
             URL url = new URL("https://api.hypixel.net/skyblock/auctions?page=" + page);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -85,6 +85,8 @@ public class AuctionBot {
             skyblock.sendMessage("Queued " + queueForThreads.size() + " threads for the Auction Bot, containing " + auctionsJson.size() + " auctions in page " + page + " of the Hypixel API.");
 
             final int[] totalProcessed = {0};
+
+            final int[] complete = {0};
 
             final class AuctionBotThread extends BukkitRunnable {
 
@@ -142,6 +144,11 @@ public class AuctionBot {
 
                         if (processed == auctions.size()) {
                             skyblock.sendMessage("Finished processing thread " + index + " for the Auction Bot. [Total: " + totalProcessed[0] + 1 + "]");
+                            complete[0]++;
+                        }
+
+                        if (complete[0] == THREAD_AMOUNT) {
+                            skyblock.sendMessage("Finished processing all threads for the Auction Bot page &8" + page + "&f [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + "&f]");
                         }
                     }
                 }

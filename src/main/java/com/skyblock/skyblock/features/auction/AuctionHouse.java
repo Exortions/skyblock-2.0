@@ -41,6 +41,8 @@ public class AuctionHouse {
                 float TOTAL_AUCTIONS = 2000;
                 int pages = (int) Math.floor(TOTAL_AUCTIONS / 1000);
 
+                Skyblock.getPlugin().sendMessage("Starting auction bot...");
+
                 AuctionBot bot = new AuctionBot();
 
                 for (int i = 0; i < pages; i++) {
