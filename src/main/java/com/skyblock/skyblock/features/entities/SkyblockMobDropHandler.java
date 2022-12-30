@@ -87,7 +87,7 @@ public class SkyblockMobDropHandler {
                                 ItemStack item = CraftItemStack.asNewCraftStack(nms);
 
                                 List<EntityDrop> drops = loot_tables.get(entityName);
-                                drops.add(new EntityDrop(item, EntityDropRarity.COMMON, 1.0, min, max));
+                                drops.add(new EntityDrop(item, EntityDropRarity.COMMON, 100, min, max));
                                 loot_tables.put(entityName, drops);
                             }
                         }
