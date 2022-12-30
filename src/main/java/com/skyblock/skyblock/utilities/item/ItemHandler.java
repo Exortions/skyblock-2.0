@@ -18,6 +18,7 @@ import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -105,67 +106,80 @@ public class ItemHandler {
     public void init() {
         File folder = new File(skyblock.getDataFolder() + File.separator + "items");
 
-        for (File file : Objects.requireNonNull(folder.listFiles())) {
-            try {
-                JSONParser parser = new JSONParser();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
-                Object obj = parser.parse(bufferedReader);
+        try {
+            for (File file : Objects.requireNonNull(folder.listFiles())) {
+                try {
+                    JSONParser parser = new JSONParser();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+                    Object obj = parser.parse(bufferedReader);
 
-                JSONObject jsonObject =  (JSONObject) obj;
-                String itemId = (String) jsonObject.get("itemid");
-                String displayName = (String) jsonObject.get("displayname");
+                    JSONObject jsonObject = (JSONObject) obj;
+                    String itemId = (String) jsonObject.get("itemid");
+                    String displayName = (String) jsonObject.get("displayname");
 
-                String nbt = (String) jsonObject.get("nbttag");
+                    String nbt = (String) jsonObject.get("nbttag");
 
-                long damage = (long) jsonObject.get("damage");
+                    long damage = (long) jsonObject.get("damage");
 
-                JSONArray lore = (JSONArray) jsonObject.get("lore");
+                    JSONArray lore = (JSONArray) jsonObject.get("lore");
 
-                ItemStack item = CraftItemStack.asNewCraftStack(Item.d(itemId));
-                item.setDurability((short) damage);
+                    ItemStack item = CraftItemStack.asNewCraftStack(Item.d(itemId));
+                    item.setDurability((short) damage);
 
-                ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName(displayName);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(displayName);
 
-                //noinspection unchecked
-                meta.setLore(lore);
-                meta.spigot().setUnbreakable(true);
+                    //noinspection unchecked
+                    meta.setLore(lore);
+                    meta.spigot().setUnbreakable(true);
 
-                item.setItemMeta(meta);
+                    item.setItemMeta(meta);
 
-                net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
-                nms.setTag(MojangsonParser.parse(nbt));
+                    net.minecraft.server.v1_8_R3.ItemStack nms = CraftItemStack.asNMSCopy(item);
+                    nms.setTag(MojangsonParser.parse(nbt));
 
-                NBTItem nbtItem = new NBTItem(CraftItemStack.asBukkitCopy(nms));
-                nbtItem.setString("skyblockId", file.getName().replace(".json", "").toLowerCase());
+                    NBTItem nbtItem = new NBTItem(CraftItemStack.asBukkitCopy(nms));
+                    nbtItem.setString("skyblockId", file.getName().replace(".json", "").toLowerCase());
 
-                ItemStack clone = nbtItem.getItem().clone();
-                ItemMeta cloneMeta = clone.getItemMeta();
-                cloneMeta.spigot().setUnbreakable(true);
+                    ItemStack clone = nbtItem.getItem().clone();
+                    ItemMeta cloneMeta = clone.getItemMeta();
+                    cloneMeta.spigot().setUnbreakable(true);
 
-                List<String> clonedLore = cloneMeta.getLore();
+                    List<String> clonedLore = cloneMeta.getLore();
 
-                if (clonedLore.contains(ChatColor.YELLOW + "Click to view recipe!")) {
-                    clonedLore.remove(clonedLore.size() - 1);
-                    clonedLore.remove(clonedLore.size() - 1);
+                    if (clonedLore.contains(ChatColor.YELLOW + "Click to view recipe!")) {
+                        clonedLore.remove(clonedLore.size() - 1);
+                        clonedLore.remove(clonedLore.size() - 1);
+                    }
+
+                    cloneMeta.setLore(clonedLore);
+                    clone.setItemMeta(cloneMeta);
+
+                    register(file.getName(), clone);
+
+                    if (jsonObject.get("recipe") != null) {
+                        JSONObject recipe = (JSONObject) jsonObject.get("recipe");
+                        Skyblock.getPlugin(Skyblock.class).getRecipeHandler().getRecipes().add(
+                                new SkyblockRecipe(recipe, getItem(file.getName())));
+                    }
+
+                    bufferedReader.close();
+                } catch (MojangsonParseException | ParseException | IOException ex) {
+                    ex.printStackTrace();
+                    return;
                 }
-
-                cloneMeta.setLore(clonedLore);
-                clone.setItemMeta(cloneMeta);
-
-                register(file.getName(), clone);
-
-                if (jsonObject.get("recipe") != null) {
-                    JSONObject recipe = (JSONObject) jsonObject.get("recipe");
-                    Skyblock.getPlugin(Skyblock.class).getRecipeHandler().getRecipes().add(
-                            new SkyblockRecipe(recipe, getItem(file.getName())));
-                }
-
-                bufferedReader.close();
-            } catch (MojangsonParseException | ParseException | IOException ex) {
-                ex.printStackTrace();
-                return;
             }
+        } catch (NullPointerException ex) {
+            Skyblock.getPlugin().sendMessage("&c=============================================");
+            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cCould not find items folder!");
+            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cPlease make sure you have");
+            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cthe items folder in the plugin");
+            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &cdata folder, located at!");
+            Skyblock.getPlugin().sendMessage("&c  &4ERROR&c &chttps://github.com/Exortions/skyblock-2.0/tree/master/dependencies/skyblock/");
+            Skyblock.getPlugin().sendMessage("&c=============================================");
+
+            Bukkit.getPluginManager().disablePlugin(Skyblock.getPlugin());
+            return;
         }
 
         registerCustomItems();
