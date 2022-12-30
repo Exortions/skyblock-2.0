@@ -49,6 +49,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -877,6 +878,18 @@ public class Util {
 
     public long calculateAbilityDamage(double baseAbilityDamage, double intelligence, double abilityScaling, double bonusAbilityDamage) {
         return (long) Math.floor(baseAbilityDamage * (1 + (intelligence / 100) * abilityScaling) + (1 + (bonusAbilityDamage / 100)));
+    }
+
+    public static <T> List<T> shuffle(List<T> list) {
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = list.size() - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            T t = list.get(index);
+            list.set(index, list.get(i));
+            list.set(i, t);
+        }
+        return list;
     }
 
 }

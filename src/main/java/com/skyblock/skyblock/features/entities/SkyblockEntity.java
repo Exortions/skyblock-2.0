@@ -201,12 +201,13 @@ public abstract class SkyblockEntity {
     public List<EntityDrop> getDrops() {
         return new ArrayList<>();
     }
+    public List<EntityDrop> getRareDrops() { return new ArrayList<>(); }
 
     protected void tick() {}
 
     protected void onDeath() {
         if (getLastDamager() != null) {
-            boolean rare = false;
+            boolean foundRareDrop = false;
 
             SkyblockPlayer lastDamager = getLastDamager();
             boolean hasTelekinesis = lastDamager.hasTelekinesis();
@@ -217,21 +218,23 @@ public abstract class SkyblockEntity {
 
             if (!getDropId().equals("") && drops.isEmpty()) drops = Skyblock.getPlugin().getEntityHandler().getMobDropHandler().getDrops(getDropId());
 
+            drops.addAll(getRareDrops());
+
+            Util.shuffle(drops);
+
             for (EntityDrop drop : drops) {
                 EntityDropRarity type = drop.getRarity();
                 double r = Util.random(0.0, 1.0);
                 double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND) / 100.0;
                 double c = drop.getChance() + magicFind;
                 if (r > c) continue;
-                if (rare && type != EntityDropRarity.GUARANTEED) continue;
+                if (foundRareDrop && type != EntityDropRarity.COMMON) continue;
                 ItemStack stack = Util.toSkyblockItem(drop.getItem());
                 stack.setAmount((int) Util.random(drop.getMin(), drop.getMax()));
 
-                if (type != EntityDropRarity.GUARANTEED && type != EntityDropRarity.COMMON && getLastDamager() != null) {
-                    getLastDamager().getBukkitPlayer().sendMessage(type.getColor() + "" + ChatColor.BOLD +
-                            (type == EntityDropRarity.CRAZY_RARE ? "CRAZY " : "") + "RARE DROP!  " +
-                            ChatColor.GRAY + "(" + stack.getItemMeta().getDisplayName() + ChatColor.GRAY + ")" + (magicFind != 0.0 ? ChatColor.AQUA +
-                            " (+" + (int) (magicFind * 10000) + "% Magic Find!)" : ""));
+                if (type != EntityDropRarity.COMMON && getLastDamager() != null) {
+                    getLastDamager().getBukkitPlayer().playSound(getLastDamager().getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+                    getLastDamager().getBukkitPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "RARE DROP " + drop.getItem().getItemMeta().getDisplayName() + " " + ChatColor.AQUA + "(" + getLastDamager().getStat(SkyblockStat.MAGIC_FIND) + "% Magic Find)");
                 }
 
                 if (!hasTelekinesis) getLastDamager().dropItem(stack, getVanilla().getLocation());
@@ -243,7 +246,7 @@ public abstract class SkyblockEntity {
                     }
                 }
 
-                if (type != EntityDropRarity.GUARANTEED) rare = true;
+                if (type != EntityDropRarity.COMMON) foundRareDrop = true;
             }
 
             if (getEntityData().orbs > 0) {

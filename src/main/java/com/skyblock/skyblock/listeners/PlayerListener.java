@@ -270,6 +270,8 @@ public class PlayerListener implements Listener {
                 }
             } catch (Exception ignored) {}
 
+            if (e.getEntity() == null) return;
+
             if (crit) {
                 Util.setDamageIndicator(e.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
             } else {

@@ -12,6 +12,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -127,6 +128,9 @@ public class Auction {
 
     public void claim(Player player) {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+        player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 2);
+
         if (isOwn(player)) {
             if (bidHistory.size() == 0) {
                 player.getInventory().addItem(item);

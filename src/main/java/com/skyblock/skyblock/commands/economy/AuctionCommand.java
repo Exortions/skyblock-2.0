@@ -24,8 +24,6 @@ public class AuctionCommand implements Command, TrueAlias<AuctionCommand> {
     public void execute(Player player, String[] args, Skyblock plugin) {
         AuctionHouse ah = plugin.getAuctionHouse();
 
-        Bukkit.broadcastMessage(AuctionHouse.AUCTION_CACHE.size() + "");
-
         if (args.length == 0) {
             new AuctionHouseGUI(player).show(player);
             return;

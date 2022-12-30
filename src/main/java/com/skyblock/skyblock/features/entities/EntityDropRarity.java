@@ -8,13 +8,12 @@ import org.bukkit.ChatColor;
 @AllArgsConstructor
 public enum EntityDropRarity {
 
-    GUARANTEED(ChatColor.GREEN),
-    COMMON(ChatColor.GREEN),
-    OCCASIONAL(ChatColor.BLUE),
-    RARE(ChatColor.GOLD),
-    VERY_RARE(ChatColor.AQUA),
-    EXTRAORDINARILY_RARE(ChatColor.DARK_PURPLE),
-    CRAZY_RARE(ChatColor.LIGHT_PURPLE);
+    COMMON(ChatColor.WHITE),
+    UNCOMMON(ChatColor.GREEN),
+    RARE(ChatColor.BLUE),
+    LEGENDARY(ChatColor.GOLD),
+    PET(ChatColor.GOLD),
+    RNGESUS(ChatColor.LIGHT_PURPLE);
 
     private final ChatColor color;
 
