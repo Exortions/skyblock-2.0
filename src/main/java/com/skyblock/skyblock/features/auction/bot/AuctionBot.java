@@ -55,50 +55,101 @@ public class AuctionBot {
             JSONParser parser = new JSONParser();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             Object obj = parser.parse(in);
-            Bukkit.getConsoleSender().sendMessage("FINISHED REQUEST");
 
-            JSONObject jsonObject =  (JSONObject) obj;
+            JSONObject jsonObject = (JSONObject) obj;
             JSONArray auctionsJson = (JSONArray) jsonObject.get("auctions");
 
+            HashMap<Integer, List<Object>> queueForThreads = new HashMap<>();
+
+            int THREAD_AMOUNT = 20;
+
+            int queueIndex = 0;
+
+            for (int i = 0; i < THREAD_AMOUNT; i++) {
+                queueForThreads.put(i, new ArrayList<>());
+            }
+
             for (Object auc : auctionsJson) {
-                JSONObject auction = (JSONObject) auc;
+                List<Object> queue = queueForThreads.get(queueIndex);
+                queue.add(auc);
+                queueForThreads.put(queueIndex, queue);
 
-                String name = (String) auction.get("item_name");
-                String itemID = name.toUpperCase().replaceAll(" ", "_") + ".json";
-                ItemStack neu = Skyblock.getPlugin().getItemHandler().getItem(itemID);
+                if (queueIndex == THREAD_AMOUNT - 1) {
+                    queueIndex = 0;
+                } else {
+                    queueIndex++;
+                }
+            }
 
-                if (neu != null) {
-                    UUID id = getUUID(auction.get("uuid"));
-                    UUID sellerId = getUUID(auction.get("auctioneer"));
-                    String seller = uuidToName(sellerId);
+            Skyblock skyblock = Skyblock.getPlugin();
+            skyblock.sendMessage("Queued " + queueForThreads.size() + " threads for the Auction Bot, containing " + auctionsJson.size() + " auctions.");
 
-                    long startTime = (long) auction.get("start");
-                    long endTime = (long) auction.get("end");
-                    long start = (long) auction.get("starting_bid");
-                    long highest = (long) auction.get("highest_bid_amount");
-                    boolean bin = (boolean) auction.get("bin");
+            final int[] totalProcessed = {0};
 
-                    Auction auctionObject = Skyblock.getPlugin().getAuctionHouse().createFakeAuction(neu, Bukkit.getOfflinePlayer(seller), (highest == 0 ? start : highest), (endTime - startTime) / 50, bin, id);
+            final class AuctionBotThread extends BukkitRunnable {
 
-                    JSONArray bids = (JSONArray) auction.get("bids");
+                private final List<Object> auctions;
+                private final int index;
+                private int processed = 0;
 
-                    int i = 0;
-                    for (Object b : bids) {
-                        if (i >= 2) break;
+                public AuctionBotThread(int index) {
+                    this.auctions = queueForThreads.get(index);
+                    this.index = index;
+                }
 
-                        JSONObject bid = (JSONObject) b;
+                @Override
+                public void run() {
+                    for (Object auc : auctions) {
+                        JSONObject auction = (JSONObject) auc;
 
-                        UUID bidderId = getUUID(bid.get("bidder"));
-                        String bidder = uuidToName(bidderId);
-                        long amount = (long) bid.get("amount");
-                        long timeStamp = (long) bid.get("timestamp");
+                        String name = (String) auction.get("item_name");
+                        String itemID = name.toUpperCase().replaceAll(" ", "_") + ".json";
+                        ItemStack neu = Skyblock.getPlugin().getItemHandler().getItem(itemID);
 
-                        auctionObject.getBidHistory().add(new AuctionBid(Bukkit.getOfflinePlayer(bidder), auctionObject, (int) amount, timeStamp));
-                        i++;
+                        if (neu != null) {
+                            UUID id = getUUID(auction.get("uuid"));
+                            UUID sellerId = getUUID(auction.get("auctioneer"));
+                            String seller = uuidToName(sellerId);
+
+                            long startTime = (long) auction.get("start");
+                            long endTime = (long) auction.get("end");
+                            long start = (long) auction.get("starting_bid");
+                            long highest = (long) auction.get("highest_bid_amount");
+                            boolean bin = (boolean) auction.get("bin");
+
+                            Auction auctionObject = Skyblock.getPlugin().getAuctionHouse().createFakeAuction(neu, Bukkit.getOfflinePlayer(seller), (highest == 0 ? start : highest), (endTime - startTime) / 50, bin, id);
+
+                            JSONArray bids = (JSONArray) auction.get("bids");
+
+                            int i = 0;
+                            for (Object b : bids) {
+                                if (i >= 2) break;
+
+                                JSONObject bid = (JSONObject) b;
+
+                                UUID bidderId = getUUID(bid.get("bidder"));
+                                String bidder = uuidToName(bidderId);
+                                long amount = (long) bid.get("amount");
+                                long timeStamp = (long) bid.get("timestamp");
+
+                                auctionObject.getBidHistory().add(new AuctionBid(Bukkit.getOfflinePlayer(bidder), auctionObject, (int) amount, timeStamp));
+                                i++;
+                            }
+                        }
+
+                        processed++;
+                        totalProcessed[0]++;
+
+                        if (processed == auctions.size()) {
+                            skyblock.sendMessage("Finished processing thread " + index + " for the Auction Bot. [Total: " + totalProcessed[0] + 1 + "]");
+                        }
                     }
                 }
             }
 
+            for (int i = 0; i < THREAD_AMOUNT; i++) {
+                new AuctionBotThread(i).runTaskAsynchronously(Skyblock.getPlugin());
+            }
         } catch (IOException ignored) {
         } catch (ParseException ex) {
             Skyblock.getPlugin().sendMessage("&cFailed to initialize Auction Bot: &8" + ex.getMessage());
