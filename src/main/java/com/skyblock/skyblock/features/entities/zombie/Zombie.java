@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.features.entities.zombie;
 
+import com.skyblock.skyblock.features.entities.EntityDrop;
+import com.skyblock.skyblock.features.entities.EntityDropRarity;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -13,6 +15,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,7 +83,7 @@ public class Zombie extends SkyblockEntity {
                 loadStats(250, 200, true, false, true, equipment, "Zombie", 15, 20, "diamond_zombie");
                 break;
             case OBSIDIAN_SANCTUARY:
-                equipment.helmet = new ItemBuilder(Material.DIAMOND_HELMET).addEnchantmentGlint().toItemStack();
+                equipment.helmet = new ItemBuilder(Material.DIAMOND_BLOCK).addEnchantmentGlint().toItemStack();
                 equipment.chest = new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantmentGlint().toItemStack();
                 equipment.legs = new ItemBuilder(Material.DIAMOND_LEGGINGS).addEnchantmentGlint().toItemStack();
                 equipment.boots = new ItemBuilder(Material.DIAMOND_BOOTS).addEnchantmentGlint().toItemStack();
@@ -109,5 +112,15 @@ public class Zombie extends SkyblockEntity {
                 attributes.setValue(0.3);
             }
         }
+    }
+
+    @Override
+    public List<EntityDrop> getRareDrops() {
+        List<EntityDrop> drops = new ArrayList<>();
+
+        if (type.equals(ZombieType.LAPIS_ZOMBIE)) drops.addAll(Arrays.asList(new EntityDrop("LAPIS_ARMOR_HELMET", 1, 1), new EntityDrop("LAPIS_ARMOR_CHESTPLATE", 1, 1), new EntityDrop("LAPIS_ARMOR_LEGGINGS", 1, 1), new EntityDrop("LAPIS_ARMOR_BOOTS", 1, 1)));
+        if (type.equals(ZombieType.DIAMOND_RESERVE) || type.equals(ZombieType.OBSIDIAN_SANCTUARY)) drops.addAll(Arrays.asList(new EntityDrop("TANK_MINER_HELMET", 1, 1), new EntityDrop("TANK_MINER_CHESTPLATE", 1, 1), new EntityDrop("TANK_MINER_LEGGINGS", 1, 1), new EntityDrop("TANK_MINER_BOOTS", 1, 1)));
+
+        return drops;
     }
 }
