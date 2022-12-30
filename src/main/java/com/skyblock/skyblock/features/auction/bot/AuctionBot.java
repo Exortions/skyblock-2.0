@@ -82,7 +82,7 @@ public class AuctionBot {
             }
 
             Skyblock skyblock = Skyblock.getPlugin();
-            skyblock.sendMessage("Queued " + queueForThreads.size() + " threads for the Auction Bot, containing " + auctionsJson.size() + " auctions.");
+            skyblock.sendMessage("Queued " + queueForThreads.size() + " threads for the Auction Bot, containing " + auctionsJson.size() + " auctions in page " + page + " of the Hypixel API.");
 
             final int[] totalProcessed = {0};
 
