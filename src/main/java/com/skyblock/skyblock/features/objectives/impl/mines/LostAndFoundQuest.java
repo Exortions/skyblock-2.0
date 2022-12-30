@@ -12,6 +12,9 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.trait.trait.Equipment;
+import net.citizensnpcs.trait.ArmorStandTrait;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,16 +34,16 @@ public class LostAndFoundQuest extends QuestLine {
     public LostAndFoundQuest() {
         super("lost_and_found", "Lost and Found", new TalkToLazyMinerObjective(), new FindPickaxeObjective(), new CollectIronAndGoldIngotsObjective(), new TalkToRustyObjective(), new ReachMiningVObjective());
 
-        ArmorStand pickaxe = (ArmorStand) Skyblock.getSkyblockWorld().spawnEntity(new Location(Skyblock.getSkyblockWorld(), -19.0, 24, -304.55, 90, -80), EntityType.ARMOR_STAND);
-        pickaxe.setCustomNameVisible(false);
+        net.citizensnpcs.api.npc.NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "", new Location(Skyblock.getSkyblockWorld(), -19.0, 24, -304.55, 90, -80));
+        npc.data().set(net.citizensnpcs.api.npc.NPC.Metadata.NAMEPLATE_VISIBLE, false);
+
+        ArmorStandTrait pickaxe = npc.getOrAddTrait(ArmorStandTrait.class);
+        Equipment equipment = npc.getOrAddTrait(Equipment.class);
+
         pickaxe.setGravity(false);
         pickaxe.setVisible(false);
 
-        pickaxe.setItemInHand(
-                new ItemBuilder("7f22f697-06a6-4a86-aa25-e86f82bf4219", Material.IRON_PICKAXE).addEnchantmentGlint().toItemStack()
-        );
-
-        Skyblock.getPlugin().addRemoveable(pickaxe);
+        equipment.set(Equipment.EquipmentSlot.HAND, new ItemBuilder("7f22f697-06a6-4a86-aa25-e86f82bf4219", Material.IRON_PICKAXE).addEnchantmentGlint().toItemStack());
 
         NPCHandler npcHandler = Skyblock.getPlugin().getNpcHandler();
 
