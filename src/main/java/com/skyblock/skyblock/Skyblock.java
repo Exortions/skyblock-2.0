@@ -291,7 +291,12 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void initializeFloatingCrystals() {
+        this.sendMessage("Initializing floating crystals...");
+        long start = System.currentTimeMillis();
+
         this.floatingCrystalHandler = new FloatingCrystalHandler();
+
+        this.sendMessage("Successfully initialized floating crystals [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerHolograms() {
@@ -665,12 +670,17 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void initializeSpongeReplacers() {
+        this.sendMessage("Initializing sponge replacers...");
+        long start = System.currentTimeMillis();
+
         this.spongeReplacerHandler = new SpongeReplacerHandler();
 
         this.spongeReplacerHandler.registerReplacer(new SpongeReplacer("Gold Mine", new SpongeBlock(Material.STONE, 10), new SpongeBlock(Material.IRON_ORE, 3), new SpongeBlock(Material.GOLD_ORE, 2)));
         this.spongeReplacerHandler.registerReplacer(new SpongeReplacer("The End", new SpongeBlock(Material.OBSIDIAN, 1)));
 
         this.spongeReplacerHandler.startGeneration();
+
+        this.sendMessage("Successfully initialized sponge replacers [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerGuis() {
