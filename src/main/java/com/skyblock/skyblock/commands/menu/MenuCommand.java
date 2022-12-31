@@ -8,7 +8,6 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.bags.Bag;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
-import com.skyblock.skyblock.features.time.SkyblockDate;
 import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
@@ -26,7 +25,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
@@ -54,7 +52,8 @@ public class MenuCommand implements Command {
         for (Collection collection : Collection.getCollections()) {
             totalCollections++;
 
-            if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".unlocked").equals(true)) unlockedCollections++;
+            if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".unlocked").equals(true))
+                unlockedCollections++;
         }
 
         ItemStack collection = this.getCollectionItem(unlockedCollections, totalCollections);
@@ -85,8 +84,8 @@ public class MenuCommand implements Command {
         inventory.setItem(31, craftingTable);
         inventory.setItem(32, activeEffects);
         if ((int) skyblockPlayer.getValue("bank.personal.cooldown") != -1) {
-		bank = this.createPersonalBank(skyblockPlayer);
-		inventory.setItem(33, bank);
+            bank = this.createPersonalBank(skyblockPlayer);
+            inventory.setItem(33, bank);
         }
 
         inventory.setItem(47, this.createWarpItem(skyblockPlayer));
@@ -319,7 +318,7 @@ public class MenuCommand implements Command {
                 )
                 .toItemStack();
     }
-    
+
     public ItemStack createActiveEffectsItem(SkyblockPlayer player) {
         return new ItemBuilder(
                 ChatColor.GREEN + "Active Effects",
@@ -340,23 +339,22 @@ public class MenuCommand implements Command {
     }
 
     public ItemStack createPersonalBank(SkyblockPlayer player) {
-	String status;
-	int cooldown = (int) player.getValue("bank.personal.cooldown");
-	if (!((boolean) player.hasExtraData("personalBankLastUsed"))) {
-		player.setExtraData("personalBankLastUsed", 0L);
-	}
-	
-	if ((long) player.getExtraData("personalBankLastUsed") < System.currentTimeMillis() - cooldown * 60000) {
-		status = ChatColor.GREEN + "Available";
-	}
-	else {
-		status = ChatColor.RED + "Unavailable";
-	}
-		
-	ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
+        String status;
+        int cooldown = (int) player.getValue("bank.personal.cooldown");
+        if (!((boolean) player.hasExtraData("personalBankLastUsed"))) {
+            player.setExtraData("personalBankLastUsed", 0L);
+        }
+
+        if ((long) player.getExtraData("personalBankLastUsed") < System.currentTimeMillis() - cooldown * 60000) {
+            status = ChatColor.GREEN + "Available";
+        } else {
+            status = ChatColor.RED + "Unavailable";
+        }
+
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
 
         return new ItemBuilder(Util.idToSkull(skull.clone(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTM2ZTk0ZjZjMzRhMzU0NjVmY2U0YTkwZjJlMjU5NzYzODllYjk3MDlhMTIyNzM1NzRmZjcwZmQ0ZGFhNjg1MiJ9fX0="))
-		.setDisplayName(ChatColor.GREEN + "Personal Bank")
+                .setDisplayName(ChatColor.GREEN + "Personal Bank")
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
                 .addLore(
                         ChatColor.GRAY + "Contact your banker from",
