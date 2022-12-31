@@ -7,9 +7,7 @@ import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionHouse;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
-
 import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTCompoundList;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTReflectionUtil;
 import lombok.Getter;
@@ -28,10 +26,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Getter
@@ -67,7 +61,6 @@ public class AuctionBot {
 
             JSONObject jsonObject = (JSONObject) obj;
             JSONArray auctionsJson = (JSONArray) jsonObject.get("auctions");
-
             HashMap<Integer, List<Object>> queueForThreads = new HashMap<>();
 
             int THREAD_AMOUNT = 20;
@@ -124,8 +117,8 @@ public class AuctionBot {
 
                             NBTContainer nbt = new NBTContainer(NBTReflectionUtil.readNBT(new ByteArrayInputStream(Base64.getDecoder().decode(auction.get("item_bytes").toString()))));
                             NBTCompound extraAttributes = nbt.getCompoundList("i")
-                            .get(0).getCompound("tag")
-                            .getCompound("ExtraAttributes");
+                                    .get(0).getCompound("tag")
+                                    .getCompound("ExtraAttributes");
                             if (extraAttributes.hasKey("enchantments")) {
                                 NBTCompound enchantments = extraAttributes.getCompound("enchantments");
                                 ItemBase base = new ItemBase(neu);
@@ -134,7 +127,7 @@ public class AuctionBot {
                                 }
                                 neu = base.createStack();
                             }
-			    
+
                             long startTime = (long) auction.get("start");
                             long endTime = (long) auction.get("end");
                             long start = (long) auction.get("starting_bid");
