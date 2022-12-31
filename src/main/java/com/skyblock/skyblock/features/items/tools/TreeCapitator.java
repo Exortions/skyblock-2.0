@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
@@ -44,11 +45,25 @@ public class TreeCapitator extends SkyblockItem {
 
         addBlocks(event.getPlayer().getWorld(), event.getBlock().getLocation(), event.getBlock().getType());
 
+        int delay = 0;
+
         for (Location loc : blockList) {
-            BlockBreakEvent bev = new BlockBreakEvent(event.getPlayer().getWorld().getBlockAt(loc), event.getPlayer());
-            Bukkit.getPluginManager().callEvent(bev);
-            if (bev.isCancelled()) continue;
-            event.getPlayer().getWorld().getBlockAt(loc).setType(Material.AIR);
+            final boolean[] cancelled = {false};
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    BlockBreakEvent bev = new BlockBreakEvent(event.getPlayer().getWorld().getBlockAt(loc), event.getPlayer());
+                    Bukkit.getPluginManager().callEvent(bev);
+                    if (bev.isCancelled()) {
+                        cancelled[0] = true;
+                        return;
+                    }
+                    event.getPlayer().getWorld().getBlockAt(loc).setType(Material.AIR);
+                }
+            }.runTaskLater(plugin, delay);
+
+            if (!cancelled[0]) delay += 1;
         }
 
         blockList.clear();
