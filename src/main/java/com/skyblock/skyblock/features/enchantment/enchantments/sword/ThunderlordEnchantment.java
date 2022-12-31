@@ -4,20 +4,18 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
 import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 public class ThunderlordEnchantment extends SwordEnchantment {
+
+    public static final HashMap<Player, ThunderlordInfo> hits = new HashMap<>();
 
     @Getter
     @AllArgsConstructor
@@ -30,8 +28,6 @@ public class ThunderlordEnchantment extends SwordEnchantment {
             return "Hits: " + hits + " UUID: " + entity;
         }
     }
-
-    public static final HashMap<Player, ThunderlordInfo> hits = new HashMap<>();
 
     public ThunderlordEnchantment() {
         super("thunderlord", "Thunderlord", (level) -> "&7Strikes a monster with lightning\n&7every 3 consecutive hits,\n&7dealing " + ChatColor.GREEN + level * 10 + "% &7of your Strength\n&7as damage", 4);
