@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.listeners;
 
-import com.avaje.ebeaninternal.server.lib.util.MailAddress;
 import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
@@ -9,18 +8,16 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
+import com.skyblock.skyblock.features.guis.ProfileGui;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
-import com.skyblock.skyblock.features.guis.ProfileGui;
-import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -41,10 +38,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Material.*;
@@ -52,8 +47,9 @@ import static org.bukkit.Material.*;
 public class PlayerListener implements Listener {
 
     private final Skyblock plugin;
+
     public PlayerListener(Skyblock skyblock) {
-        plugin = skyblock;
+        this.plugin = skyblock;
     }
 
     @EventHandler
@@ -82,20 +78,21 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
 
         if (!(event.getRightClicked() instanceof Player)) return;
-        if (event.getRightClicked().hasMetadata("NPC") || !player.getItemInHand().getType().equals(AIR) || player.isSneaking()) return;
+        if (event.getRightClicked().hasMetadata("NPC") || !player.getItemInHand().getType().equals(AIR) || player.isSneaking())
+            return;
 
         new ProfileGui(player, (Player) event.getRightClicked()).show(player);
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
 
         for (Chunk c : player.getWorld().getLoadedChunks()) {
             Bukkit.getPluginManager().callEvent(new ChunkLoadEvent(c, false));
         }
 
-        SkyblockPlayer.registerPlayer(player.getUniqueId(), e, (skyblockPlayer) -> {
+        SkyblockPlayer.registerPlayer(player.getUniqueId(), event, (skyblockPlayer) -> {
             if (player.getItemInHand() != null) {
                 skyblockPlayer.setHand(player.getItemInHand());
             }
@@ -109,15 +106,16 @@ public class PlayerListener implements Listener {
             }
 
             Util.delay(() -> {
-                if (!Skyblock.getPlugin().getFairySoulHandler().initialized) Skyblock.getPlugin().getFairySoulHandler().init();
+                if (!Skyblock.getPlugin().getFairySoulHandler().initialized)
+                    Skyblock.getPlugin().getFairySoulHandler().init();
             }, 1);
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (player.isOnline()){
+                    if (player.isOnline()) {
                         skyblockPlayer.tick();
-                    }else{
+                    } else {
                         cancel();
                     }
                 }
@@ -126,16 +124,16 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onArmorEquip(PlayerArmorEquipEvent e){
-        SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
-        player.updateStats(e.getItemStack(), null);
+    public void onArmorEquip(PlayerArmorEquipEvent event) {
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
+        player.updateStats(event.getItemStack(), null);
     }
 
     @EventHandler
-    public void onArmorUnEquip(PlayerArmorUnequipEvent e){
-        if (!Arrays.asList(e.getPlayer().getInventory().getArmorContents()).contains(e.getItemStack())) {
-            SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
-            player.updateStats(null, e.getItemStack());
+    public void onArmorUnEquip(PlayerArmorUnequipEvent event) {
+        if (!Arrays.asList(event.getPlayer().getInventory().getArmorContents()).contains(event.getItemStack())) {
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
+            player.updateStats(null, event.getItemStack());
         }
     }
 
@@ -148,42 +146,42 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onDamage(EntityDamageEvent e){
-        if (e.getEntity().hasMetadata("merchant")) return;
+    public void onDamage(EntityDamageEvent event) {
+        if (event.getEntity().hasMetadata("merchant")) return;
 
-        if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) &&
-            !e.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
-            if (e.getEntity() instanceof Player){
-                if (!e.isCancelled()) {
-                    SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) e.getEntity());
-                    double damage = e.getDamage();
+        if (!event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) &&
+                !event.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
+            if (event.getEntity() instanceof Player) {
+                if (!event.isCancelled()) {
+                    SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getEntity());
+                    double damage = event.getDamage();
 
-                    e.setDamage(0);
+                    event.setDamage(0);
 
-                    player.damage(damage, e.getCause(), null);
+                    player.damage(damage, event.getCause(), null);
                 }
             } else {
-                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
-                    if (e.getEntity().hasMetadata("skyblockEntityData")) {
-                        SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
+                if (!event.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+                    if (event.getEntity().hasMetadata("skyblockEntityData")) {
+                        SkyblockEntity sentity = plugin.getEntityHandler().getEntity(event.getEntity());
                         if (sentity == null) return;
-                        int damage = (int) (e.getFinalDamage() / sentity.getEntityData().maximumHealth);
+                        int damage = (int) (event.getFinalDamage() / sentity.getEntityData().maximumHealth);
 
                         sentity.getEntityData().health = sentity.getEntityData().health - damage;
                     }
 
-                    Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(e.getFinalDamage()), true);
+                    Util.setDamageIndicator(event.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(event.getFinalDamage()), true);
                 }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onEntityDamage(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof ArmorStand || e.getEntity().hasMetadata("merchant")) return;
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof ArmorStand || event.getEntity().hasMetadata("merchant")) return;
 
-        if (e.getDamager() instanceof Player) {
-            Player p = (Player) e.getDamager();
+        if (event.getDamager() instanceof Player) {
+            Player p = (Player) event.getDamager();
 
             SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
             double damage = 5 + player.getStat(SkyblockStat.DAMAGE) + (player.getStat(SkyblockStat.STRENGTH) / 5F) * (1 + player.getStat(SkyblockStat.STRENGTH) / 100F);
@@ -192,7 +190,7 @@ public class PlayerListener implements Listener {
             for (BiFunction<SkyblockPlayer, Entity, Integer> func : player.getPredicateDamageModifiers()) {
                 if (func == null) return;
 
-                damage += (damage * func.apply(player, e.getEntity()) / 100);
+                damage += (damage * func.apply(player, event.getEntity()) / 100);
             }
 
             double combat = 4 * Skill.getLevel((double) player.getValue("skill.combat.exp"));
@@ -202,110 +200,104 @@ public class PlayerListener implements Listener {
             try {
                 ItemBase base = new ItemBase(p.getItemInHand());
 
-                for (ItemEnchantment ench : base.getEnchantments()) {
-                    damage = ench.getBaseEnchantment().getModifiedDamage(player, e, damage);
-                }
-            } catch (Exception ignored) {}
-
-            if (Util.notNull(p.getItemInHand()) && plugin.getSkyblockItemHandler().isRegistered(p.getItemInHand())) {
-                damage = plugin.getSkyblockItemHandler().getRegistered(p.getItemInHand()).getModifiedDamage(player, e, damage);
+                for (ItemEnchantment ench : base.getEnchantments())
+                    damage = ench.getBaseEnchantment().getModifiedDamage(player, event, damage);
+            } catch (Exception ignored) {
             }
 
-            if (player.getArmorSet() != null) {
-                damage = player.getArmorSet().getModifiedDamage(player, e, damage);
-            }
+            if (Util.notNull(p.getItemInHand()) && plugin.getSkyblockItemHandler().isRegistered(p.getItemInHand()))
+                damage = plugin.getSkyblockItemHandler().getRegistered(p.getItemInHand()).getModifiedDamage(player, event, damage);
+
+            if (player.getArmorSet() != null) damage = player.getArmorSet().getModifiedDamage(player, event, damage);
 
             double display = damage;
 
-            if (e.getEntity().hasMetadata("skyblockEntityData")) {
-                SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getEntity());
+            if (event.getEntity().hasMetadata("skyblockEntityData")) {
+                SkyblockEntity sentity = plugin.getEntityHandler().getEntity(event.getEntity());
                 if (sentity == null) return;
 
                 sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
                 sentity.setLastDamager(player);
 
-                if (crit) {
+                if (crit)
                     damage = (damage * (1 + player.getStat(SkyblockStat.CRIT_DAMAGE) / 100F)) / sentity.getEntityData().maximumHealth;
-                } else {
-                    damage = damage / sentity.getEntityData().maximumHealth;
-                }
+                else damage = damage / sentity.getEntityData().maximumHealth;
 
                 display = damage * sentity.getEntityData().maximumHealth;
 
-                Bukkit.getPluginManager().callEvent(new SkyblockEntityDamageByPlayerEvent(player, sentity, display, e));
+                Bukkit.getPluginManager().callEvent(new SkyblockEntityDamageByPlayerEvent(player, sentity, display, event));
 
-                sentity.onDamage(e, player, crit, display);
+                sentity.onDamage(event, player, crit, display);
 
                 sentity.getEntityData().health = (long) (sentity.getEntityData().health - display);
             } else {
-                if (!e.getEntity().getType().equals(EntityType.ARMOR_STAND) && crit) {
+                if (!event.getEntity().getType().equals(EntityType.ARMOR_STAND) && crit)
                     damage = damage * (1 + player.getStat(SkyblockStat.CRIT_DAMAGE) / 100F);
-                }
             }
 
-            e.setDamage(damage);
+            event.setDamage(damage);
 
             try {
                 ItemBase base = new ItemBase(p.getItemInHand());
 
                 for (ItemEnchantment ench : base.getEnchantments()) {
-                    ench.getBaseEnchantment().onDamage(player, e, damage);
+                    ench.getBaseEnchantment().onDamage(player, event, damage);
                 }
-            } catch (Exception ignored) {}
-
-            if (e.getEntity() == null) return;
-
-            if (crit) {
-                Util.setDamageIndicator(e.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
-            } else {
-                Util.setDamageIndicator(e.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(display), true);
+            } catch (Exception ignored) {
             }
-        } else if (e.getDamager().hasMetadata("skyblockEntityData")) {
-            if (e.getEntity() instanceof Player && !e.getEntity().hasMetadata("NPC")) {
-                Player p = (Player) e.getEntity();
+
+            if (event.getEntity() == null) return;
+
+            if (crit)
+                Util.setDamageIndicator(event.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
+            else
+                Util.setDamageIndicator(event.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(display), true);
+        } else if (event.getDamager().hasMetadata("skyblockEntityData")) {
+            if (event.getEntity() instanceof Player && !event.getEntity().hasMetadata("NPC")) {
+                Player p = (Player) event.getEntity();
                 SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
 
-                SkyblockEntity sentity = plugin.getEntityHandler().getEntity(e.getDamager());
+                SkyblockEntity sentity = plugin.getEntityHandler().getEntity(event.getDamager());
                 sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
 
                 player.damage(sentity.getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, sentity.getVanilla());
             }
-        } else if (e.getDamager() instanceof Arrow) {
-            Arrow arrow = (Arrow) e.getDamager();
+        } else if (event.getDamager() instanceof Arrow) {
+            Arrow arrow = (Arrow) event.getDamager();
             Entity entity = (Entity) arrow.getShooter();
 
-            Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(entity, e.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, e.getDamage()));
+            Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(entity, event.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, event.getDamage()));
         }
     }
 
     private static final HashMap<String, String[]> discoveryMessages = new HashMap<String, String[]>() {{
-        put("Auction House", new String[]{ "Auction off your special items", "Bid on other player's items" });
-        put("Village", new String[]{ "Purchase items at the Market", "Visit the Auction House", "Manage your Coins in the Bank", "Enchant items at the Library" });
-        put("Forest", new String[]{ "Visit the Lumberjack", "Chop down trees", "Travel to the Park" });
-        put("Farm", new String[]{ "Visit the Farmer", "Gather wheat", "Travel to the barn" });
-        put("Coal Mine", new String[]{ "Visit the Blacksmith", "Mine Coal", "Travel to the Gold Mine" });
-        put("Bank", new String[]{ "Talk to the Banker", "Store your coins to keep them safe", "Earn interest on your coins" });
-        put("Library", new String[]{ "Talk to the Librarian", "Enchant your items", "Buy items (Level 1 of Many Books)" });
-        put("Flower House", new String[]{ "Talk to Marco", "Gather Rose Red Dye", "Get Spray Can" });
-        put("Mountain", new String[]{ "Climb to the top!" });
-        put("Graveyard", new String[]{ "Fight Zombies", "Travel to the Spiders Den", "Talk to Pat", "Investigate the Catacombs" });
-        put("Ruins", new String[]{ "Explore the ancient ruins", "Watch out for the guard dogs!" });
-        put("Wizard Tower", new String[]{ "Talk to the Wizard", "Use the Wizard Portal" });
-        put("Blacksmith's House", new String[]{ "Upgrade equipment using reforges", "Combine items with the anvil" });
-        put("Colosseum Arena", new String[]{ "Participate in special events" });
-        put("Wilderness", new String[]{ "Fish", "Visit the Fisherman's Hut", "Visit the Fairy at the Fairy Pond", "Discover hidden secrets" });
-        put("Mushroom Desert", new String[]{ "Harvest all the things" });
-        put("The Barn", new String[]{ "Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows" });
-        put("Spiders Den", new String[]{ "Talk to Haymitch", "Watch out for Spiders!", "Try to make it to the top of the hill" });
-        put("The End", new String[]{ "Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows" });
-        put("Blazing Fortress", new String[]{ "Battle against nether mobs", "Defeat the Magma Cube Boss", "Collect nether wart, blaze rods, and magma cream" });
+        put("Auction House", new String[]{"Auction off your special items", "Bid on other player's items"});
+        put("Village", new String[]{"Purchase items at the Market", "Visit the Auction House", "Manage your Coins in the Bank", "Enchant items at the Library"});
+        put("Forest", new String[]{"Visit the Lumberjack", "Chop down trees", "Travel to the Park"});
+        put("Farm", new String[]{"Visit the Farmer", "Gather wheat", "Travel to the barn"});
+        put("Coal Mine", new String[]{"Visit the Blacksmith", "Mine Coal", "Travel to the Gold Mine"});
+        put("Bank", new String[]{"Talk to the Banker", "Store your coins to keep them safe", "Earn interest on your coins"});
+        put("Library", new String[]{"Talk to the Librarian", "Enchant your items", "Buy items (Level 1 of Many Books)"});
+        put("Flower House", new String[]{"Talk to Marco", "Gather Rose Red Dye", "Get Spray Can"});
+        put("Mountain", new String[]{"Climb to the top!"});
+        put("Graveyard", new String[]{"Fight Zombies", "Travel to the Spiders Den", "Talk to Pat", "Investigate the Catacombs"});
+        put("Ruins", new String[]{"Explore the ancient ruins", "Watch out for the guard dogs!"});
+        put("Wizard Tower", new String[]{"Talk to the Wizard", "Use the Wizard Portal"});
+        put("Blacksmith's House", new String[]{"Upgrade equipment using reforges", "Combine items with the anvil"});
+        put("Colosseum Arena", new String[]{"Participate in special events"});
+        put("Wilderness", new String[]{"Fish", "Visit the Fisherman's Hut", "Visit the Fairy at the Fairy Pond", "Discover hidden secrets"});
+        put("Mushroom Desert", new String[]{"Harvest all the things"});
+        put("The Barn", new String[]{"Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows"});
+        put("Spiders Den", new String[]{"Talk to Haymitch", "Watch out for Spiders!", "Try to make it to the top of the hill"});
+        put("The End", new String[]{"Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows"});
+        put("Blazing Fortress", new String[]{"Battle against nether mobs", "Defeat the Magma Cube Boss", "Collect nether wart, blaze rods, and magma cream"});
 
     }};
 
     @EventHandler
-    public void onMove(PlayerMoveEvent e) {
-        Location to = e.getTo();
-        Player player = e.getPlayer();
+    public void onMove(PlayerMoveEvent event) {
+        Location to = event.getTo();
+        Player player = event.getPlayer();
         Location bottom = new Location(to.getWorld(), to.getX(), to.getY() - 1, to.getZ());
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
@@ -362,86 +354,80 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onTeleport(EntityTeleportEvent e) {
-        if (e.getEntityType().equals(EntityType.ENDERMAN)) e.setCancelled(true);
+    public void onTeleport(EntityTeleportEvent event) {
+        if (event.getEntityType().equals(EntityType.ENDERMAN)) event.setCancelled(true);
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent e) {
-        SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+    public void onQuit(PlayerQuitEvent event) {
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
 
         player.onQuit();
     }
 
     @EventHandler
-    public void onArmorStand(NPCRightClickEvent e) {
-        if (e.getNPC().getEntity().hasMetadata("isFairySoul")) {
-            e.setCancelled(true);
+    public void onArmorStand(NPCRightClickEvent event) {
+        if (event.getNPC().getEntity().hasMetadata("isFairySoul")) {
+            event.setCancelled(true);
 
-            SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getClicker());
+            SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getClicker());
             List<Location> found = ((ArrayList<Location>) player.getValue("fairySouls.found")).stream().peek(location -> location.setWorld(Skyblock.getSkyblockWorld())).collect(Collectors.toList());
 
-            if (!found.contains(e.getNPC().getEntity().getLocation())) {
-                e.getClicker().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "SOUL! " + ChatColor.RESET + "" + ChatColor.WHITE + "You found a " + ChatColor.LIGHT_PURPLE + "Fairy Soul" + ChatColor.WHITE + "!");
-                found.add(e.getNPC().getEntity().getLocation());
+            if (!found.contains(event.getNPC().getEntity().getLocation())) {
+                event.getClicker().sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "SOUL! " + ChatColor.RESET + "" + ChatColor.WHITE + "You found a " + ChatColor.LIGHT_PURPLE + "Fairy Soul" + ChatColor.WHITE + "!");
+                found.add(event.getNPC().getEntity().getLocation());
                 player.setValue("fairySouls.found", found);
-                e.getClicker().playSound(e.getClicker().getLocation(), Sound.AMBIENCE_CAVE, 10, 2);
+                event.getClicker().playSound(event.getClicker().getLocation(), Sound.AMBIENCE_CAVE, 10, 2);
             } else {
-                e.getClicker().sendMessage(ChatColor.LIGHT_PURPLE + "You have already found that Fairy Soul!");
-                e.getClicker().playSound(e.getClicker().getLocation(), Sound.SILVERFISH_KILL, 10, 2);
+                event.getClicker().sendMessage(ChatColor.LIGHT_PURPLE + "You have already found that Fairy Soul!");
+                event.getClicker().playSound(event.getClicker().getLocation(), Sound.SILVERFISH_KILL, 10, 2);
             }
         }
     }
 
     @EventHandler
-    public void onUpdate(BlockPhysicsEvent e){
-        if (e.getChangedType().equals(AIR)){
-            e.setCancelled(true);
-        }
+    public void onUpdate(BlockPhysicsEvent event) {
+        if (event.getChangedType().equals(AIR)) event.setCancelled(true);
     }
 
     @EventHandler
-    public void onCombust(EntityCombustEvent e) {
-        e.setCancelled(true);
+    public void onCombust(EntityCombustEvent event) {
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPickup(PlayerPickupItemEvent e) {
-        ItemStack item = e.getItem().getItemStack();
+    public void onPickup(PlayerPickupItemEvent event) {
+        ItemStack item = event.getItem().getItemStack();
 
         if (item.getItemMeta().hasDisplayName()) {
             String name = item.getItemMeta().getDisplayName();
             if (name.startsWith("coins_")) {
                 try {
-                    SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+                    SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
                     int amount = Integer.parseInt(name.split("_")[1]);
 
                     player.addCoins(amount);
-                    player.getBukkitPlayer().playSound(e.getItem().getLocation(), Sound.ORB_PICKUP, 10, 2);
+                    player.getBukkitPlayer().playSound(event.getItem().getLocation(), Sound.ORB_PICKUP, 10, 2);
                     player.setExtraData("lastpicked_coins", amount);
 
-                    e.setCancelled(true);
-                    e.getItem().remove();
+                    event.setCancelled(true);
+                    event.getItem().remove();
 
-                    Util.delay(() -> {
-                        player.setExtraData("lastpicked_coins", null);
-                    }, 80);
-
-                    return;
-                } catch (NumberFormatException ignored) { }
+                    Util.delay(() -> player.setExtraData("lastpicked_coins", null), 80);
+                } catch (NumberFormatException ignored) {}
             }
         }
     }
 
     @EventHandler
-    public void onCreative(InventoryCreativeEvent e) {
-        ItemStack item = e.getCursor();
+    public void onCreative(InventoryCreativeEvent event) {
+        ItemStack item = event.getCursor();
 
         if (!Util.notNull(item)) return;
 
         ItemStack clone = Util.toSkyblockItem(item).clone();
         clone.setAmount(item.getAmount());
-        if (e.getCursor() != null) e.setCursor(clone);
+        if (event.getCursor() != null) event.setCursor(clone);
     }
 
     @EventHandler
@@ -458,16 +444,16 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onTrample(PlayerInteractEvent e) {
-        if (!e.getAction().equals(Action.PHYSICAL)) return;
-        if (!e.getClickedBlock().getType().equals(SOIL)) return;
-        e.setCancelled(true);
+    public void onTrample(PlayerInteractEvent event) {
+        if (!event.getAction().equals(Action.PHYSICAL)) return;
+        if (!event.getClickedBlock().getType().equals(SOIL)) return;
+        event.setCancelled(true);
     }
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e) {
-        Item item = e.getItemDrop();
-        SkyblockPlayer player = SkyblockPlayer.getPlayer(e.getPlayer());
+    public void onDrop(PlayerDropItemEvent event) {
+        Item item = event.getItemDrop();
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
         if (Skyblock.getPlugin().getSkyblockItemHandler().isRegistered(item.getItemStack()) && (Boolean) player.getValue("settings.doubleTapDrop")) {
             if (!player.hasExtraData("lastDropAttempt")) {
                 Map<String, Long> data = new HashMap<>();
@@ -475,41 +461,25 @@ public class PlayerListener implements Listener {
                 data.put("slot", 10L);
                 player.setExtraData("lastDropAttempt", data);
             }
-            Map<String, Long> data = (Map) player.getExtraData("lastDropAttempt");
-            if (data.get("time") > System.currentTimeMillis() - 500 && data.get("slot") == Long.valueOf(e.getPlayer().getInventory().getHeldItemSlot())) {
+            HashMap<String, Long> data = (HashMap<String, Long>) player.getExtraData("lastDropAttempt");
+            if (data.get("time") > System.currentTimeMillis() - 500 && data.get("slot").equals((long) event.getPlayer().getInventory().getHeldItemSlot()))
                 return;
-            }
-            else {
-                // TextComponent settings = new TextComponent("&fSettings");
-                // settings.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sb something"));
-                // settings.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to view the Settings Menu!").create()));
-                // TextComponent menu = new TextComponent("&eSkyblock Menu");
-                // menu.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/sb something"));
-                // settings.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to open your Skyblock Menu!").create()));
-                // BaseComponent[] message = new ComponentBuilder("You must double tap the drop button to drop this item!\nYou can disable this in the ")
-                // 					.color(net.md_5.bungee.api.ChatColor.RED)
-                // 				.append(settings)
-                // 				.append(" in your ").color(net.md_5.bungee.api.ChatColor.RED)
-                // 				.append(menu)
-                // 				.append("!").color(net.md_5.bungee.api.ChatColor.RED);
-                // e.getPlayer().spigot().sendMessage(message);
-                e.getPlayer().sendMessage(ChatColor.RED + "You must double tap the drop button to drop this item!\nYou can disable this item in the "
-                                          + ChatColor.WHITE + "Settings"
-                                          + ChatColor.RED + " in your "
-                                          + ChatColor.GREEN + "Skyblock Menu"
-                                          + ChatColor.RED + "!");
-                data = new HashMap<>();
-                data.put("time", System.currentTimeMillis());
-                data.put("slot", Long.valueOf(e.getPlayer().getInventory().getHeldItemSlot()));
-                player.setExtraData("lastDropAttempt", data);
-                e.setCancelled(true);
-            }
+            event.getPlayer().sendMessage(ChatColor.RED + "You must double tap the drop button to drop this item!\nYou can disable this item in the "
+                    + ChatColor.WHITE + "Settings"
+                    + ChatColor.RED + " in your "
+                    + ChatColor.GREEN + "Skyblock Menu"
+                    + ChatColor.RED + "!");
+            data = new HashMap<>();
+            data.put("time", System.currentTimeMillis());
+            data.put("slot", (long) event.getPlayer().getInventory().getHeldItemSlot());
+            player.setExtraData("lastDropAttempt", data);
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onChunkLoad(ChunkLoadEvent e) {
-        killRemovables(e.getChunk());
+    public void onChunkLoad(ChunkLoadEvent event) {
+        killRemovables(event.getChunk());
     }
 
     private void killRemovables(Chunk chunk) {
@@ -532,6 +502,6 @@ public class PlayerListener implements Listener {
 
         try {
             cache.save(cacheFile);
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
     }
 }
