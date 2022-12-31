@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -143,11 +142,11 @@ public class ItemBase {
     }
 
     public ItemBase(Material material, String name, Reforge reforgeType, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
-        this(new ItemStack(material, amount), material, name, reforgeType, false, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+        this(material, name, reforgeType, false, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
     }
 
     public ItemBase(Material material, String name, Reforge reforgeType, boolean isThick, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable, HashMap<String, Object> nbt, Function<ItemBase, ItemBase> after) {
-        this(new ItemStack(material, amount), material, name, reforgeType, isThick, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
+        this(material, name, reforgeType, isThick, amount, description, enchantments, enchantGlint, hasAbility, abilityName, abilityDescription, abilityType, abilityCost, abilityCooldown, rarity, skyblockId, damage, strength, health, critChance, critDamage, attackSpeed, intelligence, speed, defense, reforgeable);
 
         NBTItem nbtItem = new NBTItem(this.stack);
 
@@ -165,7 +164,7 @@ public class ItemBase {
         this.regenerate();
     }
 
-    public ItemBase(ItemStack orig, Material material, String name, Reforge reforgeType, boolean isThick, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
+    public ItemBase(Material material, String name, Reforge reforgeType, boolean isThick, int amount, List<String> description, List<ItemEnchantment> enchantments, boolean enchantGlint, boolean hasAbility, String abilityName, List<String> abilityDescription, String abilityType, int abilityCost, String abilityCooldown, String rarity, String skyblockId, int damage, int strength, int health, int critChance, int critDamage, int attackSpeed, int intelligence, int speed, int defense, boolean reforgeable) {
         this.description = description;
         this.material = material;
         this.name = name;
@@ -594,12 +593,10 @@ public class ItemBase {
 
     public boolean regenerate() {
         SkyblockItemHandler handler = Skyblock.getPlugin().getSkyblockItemHandler();
-        if (handler != null) {
-            if (handler.isRegistered(orig)) {
-                handler.getRegistered(orig).onRegenerate(this);
+        if (handler != null && handler.isRegistered(orig)) {
+            handler.getRegistered(orig).onRegenerate(this);
 
-                return true;
-            }
+            return true;
         }
 
         return false;
