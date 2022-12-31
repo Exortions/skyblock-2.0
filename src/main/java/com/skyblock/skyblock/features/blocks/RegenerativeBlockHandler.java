@@ -7,20 +7,19 @@ import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 @SuppressWarnings("deprecation")
 public class RegenerativeBlockHandler implements Listener {
@@ -163,7 +162,15 @@ public class RegenerativeBlockHandler implements Listener {
                 Skill.reward(Objects.requireNonNull(Skill.parseSkill("Mining")), 1.0, player);
 
                 if (!hasTelekinesis) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-                else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
+                else {
+                    for (ItemStack drop : block.getDrops()) {
+                        Item item = block.getWorld().dropItem(block.getLocation().add(0, block.getLocation().getY() + (255 - block.getLocation().getY()), 0), drop);
+
+                        Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
+
+                        item.remove();
+                    }
+                }
                 block.setType(Material.COBBLESTONE);
 
                 new BukkitRunnable() {
@@ -178,7 +185,15 @@ public class RegenerativeBlockHandler implements Listener {
                 Skill.reward(Objects.requireNonNull(Skill.parseSkill("Mining")), 1.0, player);
 
                 if (!hasTelekinesis) block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-                else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
+                else {
+                    for (ItemStack drop : block.getDrops()) {
+                        Item item = block.getWorld().dropItem(block.getLocation().add(0, block.getLocation().getY() + (255 - block.getLocation().getY()), 0), drop);
+
+                        Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
+
+                        item.remove();
+                    }
+                }
 
                 block.setType(Material.BEDROCK);
 
@@ -268,9 +283,17 @@ public class RegenerativeBlockHandler implements Listener {
         if (hasOverridenDrops(block, player)) {
             player.dropItems(Arrays.asList(getOverrideDrops(block, player)), block.getLocation());
         } else {
-            if (!player.hasTelekinesis())
+            if (!player.hasTelekinesis()) {
                 block.getDrops().forEach(drop -> block.getWorld().dropItemNaturally(block.getLocation(), drop));
-            else player.getBukkitPlayer().getInventory().addItem(block.getDrops().toArray(new ItemStack[0]));
+            } else {
+                for (ItemStack drop : block.getDrops()) {
+                    Item item = block.getWorld().dropItem(block.getLocation().add(0, block.getLocation().getY() + (255 - block.getLocation().getY()), 0), drop);
+
+                    Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
+
+                    item.remove();
+                }
+            }
         }
     }
 
