@@ -1,15 +1,9 @@
 package com.skyblock.skyblock.features.entities.creeper;
 
-import com.skyblock.skyblock.features.entities.EntityDrop;
-import com.skyblock.skyblock.features.entities.EntityDropRarity;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
-import com.skyblock.skyblock.utilities.Util;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.craftbukkit.v1_8_R3.entity.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EntityType;
 
 public class SneakyCreeper extends SkyblockEntity {
     public SneakyCreeper() {
