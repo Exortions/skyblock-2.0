@@ -1,12 +1,10 @@
 package com.skyblock.skyblock.features.items.tools;
 
-import com.skyblock.skyblock.features.items.ListeningItem;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -38,17 +36,11 @@ public class PromisingTool extends SkyblockItem {
 
                 for (String line : lore) {
                     String stripColor = ChatColor.stripColor(line);
-                    if (stripColor.startsWith("Will gain")) {
-                        if (250 - blocks >= 0) {
-                            lore.set(lore.indexOf(line), ChatColor.GRAY + "Will gain " + ChatColor.BLUE + "Efficiency " + (noEnchantment ? "I" : "II") + ChatColor.GRAY + " after");
-                        }
-                    }
+                    if (stripColor.startsWith("Will gain") && 250 - blocks >= 0)
+                        lore.set(lore.indexOf(line), ChatColor.GRAY + "Will gain " + ChatColor.BLUE + "Efficiency " + (noEnchantment ? "I" : "II") + ChatColor.GRAY + " after");
 
-                    if (stripColor.startsWith("breaking")) {
-                        if (250 - blocks >= 0) {
-                            lore.set(lore.indexOf(line), ChatColor.GRAY + "breaking " + ChatColor.GREEN + (noEnchantment ? 50 - blocks : 250 - blocks) + ChatColor.GRAY + " more blocks.");
-                        }
-                    }
+                    if (stripColor.startsWith("breaking") && 250 - blocks >= 0)
+                        lore.set(lore.indexOf(line), ChatColor.GRAY + "breaking " + ChatColor.GREEN + (noEnchantment ? 50 - blocks : 250 - blocks) + ChatColor.GRAY + " more blocks.");
                 }
 
                 base.setDescription(lore);
@@ -65,7 +57,8 @@ public class PromisingTool extends SkyblockItem {
 
                 base.setStack(null);
                 e.getPlayer().setItemInHand(base.createStack());
-            } catch (IllegalArgumentException ignored) {}
+            } catch (IllegalArgumentException ignored) {
+            }
         }
     }
 }
