@@ -2,14 +2,10 @@ package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.SkyblockItem;
-import com.skyblock.skyblock.utilities.Pair;
-import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -58,8 +54,7 @@ public class FlamingSword extends SkyblockItem {
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() == null || !event.getEntity().hasMetadata("should_take_fire_damage")) return;
 
-        if (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
-            if (event.getEntity().getMetadata("should_take_fire_damage").get(0).asBoolean()) event.setCancelled(true);
-        }
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK) && event.getEntity().getMetadata("should_take_fire_damage").get(0).asBoolean())
+            event.setCancelled(true);
     }
 }

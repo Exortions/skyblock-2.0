@@ -74,6 +74,7 @@ public class SkyblockItemHandler {
         registerItem(new PigmanSword());
         registerItem(new FrozenScythe());
         registerItem(new ScorpionFoil());
+        registerItem(new FlamingSword());
 
         // Bows
         registerItem(new RunaansBow());
