@@ -1,10 +1,13 @@
 package com.skyblock.skyblock.enums;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
+import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -16,9 +19,11 @@ public enum MiningMinionType implements MinionType<MiningMinionType> {
             "Cobblestone",
             (level) -> {
                 if (level == 1) {
-                    return new SkyblockCraftingRecipe(new HashMap<String, ItemStack>() {{
-                        put("a", new ItemStack(Material.COBBLESTONE, 1));
-                    }});
+                    return new SkyblockRecipe(
+                            new ShapedRecipe(Skyblock.getPlugin().getItemHandler().getItem("COBBLESTONE_GENERATOR_1"))
+                                    .shape("abc", "def", "ghi").setIngredient('a', Material.COBBLESTONE)
+                                    .setIngredient('b', Material.COBBLESTONE).setIngredient('c', Material.COBBLESTONE)
+                                    .setIngredient('d', Material.COBBLESTONE).setIngredient('c', Material.COBBLESTONE));
                 } else {
                     return null;
                 }
@@ -90,7 +95,7 @@ public enum MiningMinionType implements MinionType<MiningMinionType> {
     ;
 
     private final String name;
-    private final Function<Integer, SkyblockCraftingRecipe> recipe;
+    private final Function<Integer, SkyblockRecipe> recipe;
     private final Function<Integer, ItemStack> hand;
     private final Function<Integer, String> head;
     private final Color leatherArmorColor;
@@ -100,7 +105,7 @@ public enum MiningMinionType implements MinionType<MiningMinionType> {
     private final Function<Integer, ItemStack[]> calculateDrops;
     private final Function<Integer, Integer> levelRequirementForStorageSlot;
 
-    MiningMinionType(String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorColor, Function<Integer, Integer> timeBetweenActions, Function<Integer, Integer> getMaximumStorage, Material material, Function<Integer, ItemStack[]> calculateDrops, Function<Integer, Integer> levelRequirementForStorageSlot) {
+    MiningMinionType(String name, Function<Integer, SkyblockRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorColor, Function<Integer, Integer> timeBetweenActions, Function<Integer, Integer> getMaximumStorage, Material material, Function<Integer, ItemStack[]> calculateDrops, Function<Integer, Integer> levelRequirementForStorageSlot) {
         this.name = name;
         this.recipe = recipe;
         this.hand = hand;
