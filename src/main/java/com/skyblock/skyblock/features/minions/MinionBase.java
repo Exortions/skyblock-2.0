@@ -74,6 +74,10 @@ public abstract class MinionBase {
     public abstract void collect(SkyblockPlayer player, int slot);
     public abstract void collect(SkyblockPlayer player);
 
+    public void collectAll(SkyblockPlayer player) {
+        for (int i = 0; i < gui.getSize(); i++) collect(player, i);
+    }
+
     protected abstract void showInventory(SkyblockPlayer player);
 
     protected abstract void tick(SkyblockPlayer player, Location location);

@@ -10,15 +10,14 @@ import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -134,7 +133,18 @@ public class MiningMinion extends MinionBase {
 
     @Override
     public void pickup(SkyblockPlayer player, Location location) {
-        // TODO: Add pickup code + minion itemstack parser in ItemHandler
+        this.minion.remove();
+        this.text.remove();
+
+        player.getBukkitPlayer().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(type.name() + "_GENERATOR_" + level + ".json"));
+        player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+        collectAll(player);
+
+        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have %s out of a maximum of %s minions placed.");
+
+        Util.delay(() -> {
+            player.getBukkitPlayer().closeInventory();
+        }, 1);
     }
 
     @Override
@@ -225,6 +235,8 @@ public class MiningMinion extends MinionBase {
 
         int inventoryIndex = possibleSlots.indexOf(slot);
 
+        if (inventoryIndex >= inventory.size()) return;
+
         ItemStack toCollect = this.inventory.get(inventoryIndex);
 
         if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
@@ -232,7 +244,13 @@ public class MiningMinion extends MinionBase {
             return;
         }
 
-        player.getBukkitPlayer().getInventory().addItem(toCollect);
+        player.getBukkitPlayer().getInventory().addItem(Util.toSkyblockItem(toCollect));
+
+        Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
+
+        Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
+
+        Util.delay(item::remove, 1);
 
         this.inventory.set(inventoryIndex, new ItemStack(Material.AIR));
 
@@ -243,18 +261,19 @@ public class MiningMinion extends MinionBase {
     @Override
     public void collect(SkyblockPlayer player) {
         ItemStack[] drops = this.type.getCalculateDrops().apply(this.level);
-	Inventory inventory = Bukkit.createInventory(null, this.maxStorage);
+        Inventory inventory = Bukkit.createInventory(null, 54);
 
-	this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
+        this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
+
         for (ItemStack drop : drops) {
-	    inventory.addItem(drop);
+            inventory.addItem(drop);
             this.resourcesGenerated += drop.getAmount();
         }
-        
+
         List<ItemStack> newInventory = new ArrayList<>();
-	for (int i = 0; i < Math.floor(this.maxStorage / 64F); ++i) {
-		if (inventory.getItem(i) != null) newInventory.add(inventory.getItem(i));
-	}
+        for (int i = 0; i < Math.floor(this.maxStorage / 64F); ++i) {
+            if (inventory.getItem(i) != null) newInventory.add(inventory.getItem(i));
+        }
 
         this.inventory = newInventory;
 		
@@ -310,10 +329,6 @@ public class MiningMinion extends MinionBase {
             } else {
                 slot++;
             }
-        }
-
-        for (ItemStack item : this.inventory) {
-            this.gui.addItem(item);
         }
 
         player.getBukkitPlayer().openInventory(this.gui);

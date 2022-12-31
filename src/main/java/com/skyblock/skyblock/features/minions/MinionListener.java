@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -57,6 +58,17 @@ public class MinionListener implements Listener {
         }
 
         if (minion == null) return;
+
+        ItemStack current = event.getCurrentItem();
+
+        if (current.getItemMeta().hasDisplayName()) {
+            if (current.getItemMeta().getDisplayName().contains("Collect All")) {
+                minion.collectAll(player);
+                return;
+            }
+        }
+
+        if (current.getType().equals(Material.BEDROCK)) minion.pickup(player, minion.getMinion().getLocation());
 
         minion.collect(player, event.getSlot());
     }
