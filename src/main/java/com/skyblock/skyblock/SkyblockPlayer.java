@@ -29,6 +29,7 @@ import com.skyblock.skyblock.utilities.SkyblockMath;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTEntity;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -868,6 +869,7 @@ public class SkyblockPlayer {
 
     public void addPet(ItemStack pet) {
         ArrayList<ItemStack> pets = getPets();
+
         pets.add(pet);
 
         setValue("pets.pets", pets);
@@ -875,7 +877,11 @@ public class SkyblockPlayer {
 
     public void removePet(ItemStack pet) {
         ArrayList<ItemStack> pets = getPets();
-        pets.remove(pet);
+
+        for (ItemStack item : pets) {
+            NBTItem nbt = new NBTItem(item);
+            if (nbt.getString("uuid").equals(new NBTItem(pet).getString("uuid"))) pets.remove(item);
+        }
 
         setValue("pets.pets", pets);
     }
