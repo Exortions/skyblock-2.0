@@ -8,8 +8,6 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
-import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
-import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.utilities.gui.Gui;
@@ -44,13 +42,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -59,27 +55,7 @@ import java.util.function.Function;
 @UtilityClass
 public class Util {
 
-    public List<String> listOf(String... strings) {
-        return Arrays.asList(strings);
-    }
-
     private final static String EMPTY = "PLACEHOLDER STRING";
-
-    private final static TreeMap<Integer, String> romanMap = new TreeMap<Integer, String>(){{
-        put(1000, "M");
-        put(900, "CM");
-        put(500, "D");
-        put(400, "CD");
-        put(100, "C");
-        put(90, "XC");
-        put(50, "L");
-        put(40, "XL");
-        put(10, "X");
-        put(9, "IX");
-        put(5, "V");
-        put(4, "IV");
-        put(1, "I");
-    }};
 
     private static final NavigableMap<Long, String> suffixes = new TreeMap<Long, String>() {{
         put(1_000L, "k");
@@ -96,6 +72,26 @@ public class Util {
         else if (level == 5 || level == 6) return Rarity.RARE;
         else return Rarity.EPIC;
     };
+
+    public List<String> listOf(String... strings) {
+        return Arrays.asList(strings);
+    }
+
+    private final static TreeMap<Integer, String> romanMap = new TreeMap<Integer, String>() {{
+        put(1000, "M");
+        put(900, "CM");
+        put(500, "D");
+        put(400, "CD");
+        put(100, "C");
+        put(90, "XC");
+        put(50, "L");
+        put(40, "XL");
+        put(10, "X");
+        put(9, "IX");
+        put(5, "V");
+        put(4, "IV");
+        put(1, "I");
+    }};
 
     public String toRoman(int number) {
         if (number <= 0) return "";
@@ -165,11 +161,13 @@ public class Util {
     }
 
     public void fillEmpty(Gui gui) {
-        for (int i = 0; i < gui.getSlots(); i++) gui.addItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
+        for (int i = 0; i < gui.getSlots(); i++)
+            gui.addItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
     }
 
     public void fillEmpty(Inventory inventory, Material material, int data) {
-        for (int i = 0; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 0; i < inventory.getSize(); i++)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillBorder(Inventory inventory) {
@@ -179,8 +177,10 @@ public class Util {
     public void fillBorder(Inventory inventory, Material material, int data) {
         for (int i = 0; i < 9; i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
         for (int i = 45; i < 54; i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 9; i < 45; i += 9)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillBorder(Gui gui) {
@@ -199,8 +199,10 @@ public class Util {
     }
 
     public void fillSides(Inventory inventory, Material material, int data) {
-        for (int i = 9; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 17; i < 45; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 9; i < 45; i += 9)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
 
         inventory.setItem(0, new ItemBuilder(" ", material, (short) data).toItemStack());
         inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
@@ -209,9 +211,12 @@ public class Util {
     }
 
     public void fillSidesLeftOneIndented(Gui gui, Material material, int data) {
-        for (int i = 10; i < 45; i += 9) if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 17; i < 45; i += 9) if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 0; i < 9; i += 1) if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 10; i < 45; i += 9)
+            if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 45; i += 9)
+            if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 0; i < 9; i += 1)
+            if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
 
         if (gui.getItem(1) == null) gui.addItem(1, new ItemBuilder(" ", material, (short) data).toItemStack());
         if (gui.getItem(8) == null) gui.addItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
@@ -220,12 +225,15 @@ public class Util {
     }
 
     public void fillBottom(Inventory inventory, Material material, int data) {
-        for (int i = inventory.getSize() - 9; i < inventory.getSize(); i++) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = inventory.getSize() - 9; i < inventory.getSize(); i++)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillSides45Slots(Inventory inventory, Material material, int data) {
-        for (int i = 9; i < 36; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 17; i < 36; i += 9) inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 9; i < 36; i += 9)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
+        for (int i = 17; i < 36; i += 9)
+            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
 
         inventory.setItem(0, new ItemBuilder(" ", material, (short) data).toItemStack());
         inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
@@ -276,7 +284,7 @@ public class Util {
         randomY += 0.25;
         randomZ -= 0.5;
 
-        final ArmorStand as = (ArmorStand)loc.getWorld().spawnEntity(loc.add(randomX, randomY, randomZ), EntityType.ARMOR_STAND);
+        final ArmorStand as = (ArmorStand) loc.getWorld().spawnEntity(loc.add(randomX, randomY, randomZ), EntityType.ARMOR_STAND);
         as.setVisible(false);
         as.setGravity(false);
         as.setMarker(true);
@@ -410,7 +418,8 @@ public class Util {
 
         if (meta == null || !meta.hasLore()) return stack;
 
-        if (!meta.getLore().get(meta.getLore().size() - 1).contains("Right-Click for more trading options!")) return stack;
+        if (!meta.getLore().get(meta.getLore().size() - 1).contains("Right-Click for more trading options!"))
+            return stack;
 
         List<String> lore = meta.getLore();
         for (int i = 1; i < 7; i++) lore.remove(lore.size() - 1);
@@ -591,7 +600,7 @@ public class Util {
 
     // Found off stack overflow somewhere
     public String formatTime(long millis) {
-        if(millis < 0) {
+        if (millis < 0) {
             throw new IllegalArgumentException("Duration must be greater than zero!");
         }
 
@@ -601,7 +610,7 @@ public class Util {
         millis -= TimeUnit.MINUTES.toMillis(minutes);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 
-        return(hours +
+        return (hours +
                 "h " +
                 minutes +
                 "m " +
@@ -625,7 +634,8 @@ public class Util {
         String namespace = id.split(":")[0];
         String path = id.split(":")[1];
 
-        if (namespace.equals("skyblock")) return Skyblock.getPlugin().getItemHandler().getItem(path.toUpperCase() + ".json");
+        if (namespace.equals("skyblock"))
+            return Skyblock.getPlugin().getItemHandler().getItem(path.toUpperCase() + ".json");
         else {
             try {
                 return new ItemBuilder(new ItemStack(Material.valueOf(identifier.toUpperCase()))).setLore(Collections.singletonList(ChatColor.WHITE + "" + ChatColor.BOLD + "COMMON")).toItemStack();
@@ -674,6 +684,7 @@ public class Util {
         net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(bukkitItemStack);
         return nmsStack.getItem().a(nmsStack);
     }
+
     public ItemStack toSkyblockItem(ItemStack item) {
         Skyblock plugin = Skyblock.getPlugin();
 
@@ -684,7 +695,8 @@ public class Util {
 
         ItemStack neu = plugin.getItemHandler().getItem(item.getType().name() + ".json");
 
-        if (item.getDurability() != 0) neu = plugin.getItemHandler().getItem(item.getType().name() + "-" + item.getDurability() + ".json");
+        if (item.getDurability() != 0)
+            neu = plugin.getItemHandler().getItem(item.getType().name() + "-" + item.getDurability() + ".json");
 
         if (neu != null) return neu;
 
@@ -742,7 +754,8 @@ public class Util {
     }
 
     public void sendDelayedMessages(Player player, String npc, String... messages) {
-        sendDelayedMessages(player, npc, (p) -> {}, messages);
+        sendDelayedMessages(player, npc, (p) -> {
+        }, messages);
     }
 
     public void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
@@ -792,8 +805,7 @@ public class Util {
         if (seconds > 0) {
             if (seconds >= 10) time += seconds;
             else time += "0" + seconds;
-        }
-        else time += "00";
+        } else time += "00";
 
         return time;
     }
@@ -871,8 +883,7 @@ public class Util {
 
     public static <T> List<T> shuffle(List<T> list) {
         Random rnd = ThreadLocalRandom.current();
-        for (int i = list.size() - 1; i > 0; i--)
-        {
+        for (int i = list.size() - 1; i > 0; i--) {
             int index = rnd.nextInt(i + 1);
             T t = list.get(index);
             list.set(index, list.get(i));
