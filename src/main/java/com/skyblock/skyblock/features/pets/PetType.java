@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.pets;
 
+import com.skyblock.skyblock.features.pets.combat.BlackCat;
 import com.skyblock.skyblock.features.pets.combat.EnderDragon;
 import com.skyblock.skyblock.features.pets.fishing.BlueWhale;
 import com.skyblock.skyblock.features.pets.combat.Jerry;
@@ -17,6 +18,7 @@ public enum PetType {
     TIGER(Tiger.class),
     BLUE_WHALE(BlueWhale.class),
     ENDER_DRAGON(EnderDragon.class),
+    BLACK_CAT(BlackCat.class),
 
     ;
 

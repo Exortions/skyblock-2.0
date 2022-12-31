@@ -185,7 +185,7 @@ public abstract class Pet {
         addIntLore("Ferocity", getPerFerocity() + getBaseFerocity() / level, lore, level);
         addIntLore("Strength", getPerStrength() + getBaseStrength() / level, lore, level);
         addIntLore("Defense", getPerDefense() + getBaseDefense() / level, lore, level);
-        addPercentLore("Speed", getPerSpeed() + getBaseSpeed() / level, lore, level);
+        addIntLore("Speed", getPerSpeed() + getBaseSpeed() / level, lore, level);
         addIntLore("Intelligence", getPerIntelligence() + getBaseIntelligence() / level, lore, level);
 
         for (PetAbility ability : getAbilities(level)) {

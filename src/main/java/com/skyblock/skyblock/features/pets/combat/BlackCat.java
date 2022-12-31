@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.pets.combat;
 
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.pets.PetAbility;
@@ -49,6 +50,22 @@ public class BlackCat extends Pet {
                     public List<String> getDescription() {
                         return Util.buildLoreList("&7Increases your speed and speed\n&7cap by +&a" + hunter + "&7.");
                     }
+
+                    @Override
+                    public void onEquip(SkyblockPlayer player) {
+                        player.addStat(SkyblockStat.SPEED, hunter);
+
+                        player.setExtraData("black_cat.active", true);
+                        player.setExtraData("black_cat.hunter", hunter);
+                    }
+
+                    @Override
+                    public void onUnequip(SkyblockPlayer player) {
+                        player.subtractStat(SkyblockStat.SPEED, hunter);
+
+                        player.setExtraData("black_cat.active", false);
+                        player.setExtraData("black_cat.hunter", 0);
+                    }
                 },
                 new PetAbility() {
                     @Override
@@ -60,6 +77,24 @@ public class BlackCat extends Pet {
                     public List<String> getDescription() {
                         return Util.buildLoreList("&7Grants &d" + omen + " " + SkyblockStat.PET_LUCK.getIcon() + " Pet Luck&7.");
                     }
+
+                    @Override
+                    public void onEquip(SkyblockPlayer player) {
+                        double current = player.getStat(SkyblockStat.PET_LUCK);
+
+                        player.setStat(SkyblockStat.PET_LUCK, current + (current * omen / 100));
+
+                        player.setExtraData("black_cat.omen_bonus", omen);
+                    }
+
+                    @Override
+                    public void onUnequip(SkyblockPlayer player) {
+                        double current = player.getStat(SkyblockStat.PET_LUCK);
+
+                        player.setStat(SkyblockStat.PET_LUCK, current - (double) player.getExtraData("black_cat.omen_bonus"));
+
+                        player.setExtraData("black_cat.omen_bonus", 0);
+                    }
                 },
                 new PetAbility() {
                     @Override
@@ -70,6 +105,24 @@ public class BlackCat extends Pet {
                     @Override
                     public List<String> getDescription() {
                         return Util.buildLoreList("&7Grants &b" + superNatural + " " + SkyblockStat.MAGIC_FIND.getIcon() + " Magic Find&7.");
+                    }
+
+                    @Override
+                    public void onEquip(SkyblockPlayer player) {
+                        double current = player.getStat(SkyblockStat.MAGIC_FIND);
+
+                        player.setStat(SkyblockStat.MAGIC_FIND, current + (current * superNatural / 100));
+
+                        player.setExtraData("black_cat.super_natural_bonus", superNatural);
+                    }
+
+                    @Override
+                    public void onUnequip(SkyblockPlayer player) {
+                        double current = player.getStat(SkyblockStat.MAGIC_FIND);
+
+                        player.setStat(SkyblockStat.MAGIC_FIND, current - (double) player.getExtraData("black_cat.super_natural_bonus"));
+
+                        player.setExtraData("black_cat.super_natural_bonus", 0);
                     }
                 }
         );
@@ -86,8 +139,17 @@ public class BlackCat extends Pet {
     }
 
     @Override
+    public double getBaseIntelligence() {
+        return 1;
+    }
+
+    @Override
     public double getPerSpeed() {
         return 0.25;
     }
 
+    @Override
+    public double getBaseSpeed() {
+        return 0.25;
+    }
 }
