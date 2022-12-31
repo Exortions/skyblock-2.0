@@ -2,7 +2,6 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.features.collections.gui.CollectionRewardGUI;
 import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;
@@ -10,7 +9,6 @@ import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -27,7 +25,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class Collection {
@@ -118,7 +119,8 @@ public class Collection {
                     .add("")
                     .add("&a&l  REWARDS");
 
-            for (String s : this.rewards.stringify(level + 1)) builder.add(Util.buildLore("  " + s.replace("  \n", "    \n")));
+            for (String s : this.rewards.stringify(level + 1))
+                builder.add(Util.buildLore("  " + s.replace("  \n", "    \n")));
 
             if (this.rewards.stringify(level + 1).size() == 0) builder.add("    &cComing soon");
 
@@ -157,11 +159,9 @@ public class Collection {
 
         File folder = new File(skyblock.getDataFolder() + File.separator + "collections");
 
-        if (!folder.exists()) {
-            if (!folder.mkdirs()) {
-                skyblock.sendMessage("&cFailed to initialize collections: could not create folder &8collections");
-                Collection.INITIALIZED = false;
-            }
+        if (!folder.exists() && !folder.mkdirs()) {
+            skyblock.sendMessage("&cFailed to initialize collections: could not create folder &8collections");
+            Collection.INITIALIZED = false;
         }
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
