@@ -6,8 +6,6 @@ import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
 import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
 import com.skyblock.skyblock.features.time.gui.CalendarEventsGUI;
 import com.skyblock.skyblock.utilities.Util;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +28,20 @@ import java.util.Objects;
 
 @Getter
 public class Gui implements Listener {
+
+    private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
+
+    public final HashMap<ItemStack, Runnable> specificClickEvents;
+    public final HashMap<String, Runnable> clickEvents;
+    public final HashMap<Integer, ItemStack> items;
+    public final HashMap<Player, Boolean> opened;
+    public final List<ItemStack> addableItems;
+    public final int slots;
+    public String name;
+
+    public Gui(String name, int slots, HashMap<String, Runnable> clickEvents) {
+        this(name, slots, clickEvents, new HashMap<>());
+    }
 
     private static class AbstractCommandGui extends Gui {
         private final String command;
@@ -55,19 +67,6 @@ public class Gui implements Listener {
         put("To Recipe Book", RecipeBookGUI.class);
         put("To Calendar and Events", CalendarEventsGUI.class);
     }};
-    private static final HashMap<Gui, Boolean> REGISTERED_LISTENERS = new HashMap<>();
-
-    public final HashMap<ItemStack, Runnable> specificClickEvents;
-    public final HashMap<String, Runnable> clickEvents;
-    public final HashMap<Integer, ItemStack> items;
-    public final HashMap<Player, Boolean> opened;
-    public final List<ItemStack> addableItems;
-    public final int slots;
-    public String name;
-
-    public Gui(String name, int slots, HashMap<String, Runnable> clickEvents) {
-        this(name, slots, clickEvents, new HashMap<>());
-    }
 
     public Gui(String name, int slots, HashMap<String, Runnable> clickEvents, HashMap<ItemStack, Runnable> specificClickEvents) {
         this.name = name;
