@@ -28,7 +28,7 @@ public class EnderSlayerEnchantment extends SwordEnchantment {
             String description = "Increases damage dealt to\nEnder Dragons and\nEnderman by {damage}%.";
 
             return description.replace("{damage}", String.valueOf(getDamage.apply(level)));
-        }, 7);
+        }, 6);
     }
 
     @Override
