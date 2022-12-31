@@ -1,15 +1,24 @@
 package com.skyblock.skyblock.features.items.weapons;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
+import net.minecraft.server.v1_8_R3.AttributeInstance;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
@@ -34,49 +43,113 @@ public class FrozenScythe extends SkyblockItem {
                         .map(entity -> plugin.getEntityHandler().getEntity(entity))
                         .collect(Collectors.toList());
 
-        Location firedAt = player.getBukkitPlayer().getLocation().add(0, 1, 0);
+        Location origin;
+        Location loc = player.getBukkitPlayer().getLocation();
 
-        ArmorStand bolt = player.getBukkitPlayer().getWorld().spawn(player.getBukkitPlayer().getLocation().add(0, 1, 0), ArmorStand.class);
-        bolt.setGravity(true);
-//        bolt.setVisible(false);
-        bolt.setMarker(true);
-        bolt.setSmall(true);
+        player.getBukkitPlayer().playSound(loc, Sound.FIREWORK_LAUNCH, 1.0f, 10.0f);
 
-        bolt.setHelmet(new ItemStack(Material.ICE));
+        loc.add(0, 1, 0);
 
-        Vector target = player.getBukkitPlayer().getLocation().add(player.getBukkitPlayer().getLocation().getDirection().multiply(100)).toVector();
+        origin = loc.clone();
 
-        player.getBukkitPlayer().sendMessage("x: " + target.getBlockX() + " y: " + target.getBlockY() + " z: " + target.getBlockZ());
+        Vector to1 = loc.getDirection().normalize().multiply(0.3);
+        Vector to = loc.getDirection().normalize().multiply(1.0);
+
+        EulerAngle angle = new EulerAngle(0, 0, 12.0);
+
+        loc.add(to1);
+
+        ArmorStand firstStand = origin.getWorld().spawn(loc, ArmorStand.class);
+        firstStand.setVisible(false);
+        firstStand.setArms(true);
+        firstStand.setItemInHand(new ItemStack(Material.ICE));
+        firstStand.setSmall(true);
+        firstStand.setMarker(true);
+        firstStand.setRightArmPose(angle);
+
+        loc.add(to1);
+
+        ArmorStand secondStand = origin.getWorld().spawn(loc, ArmorStand.class);
+        secondStand.setVisible(false);
+        secondStand.setArms(true);
+        secondStand.setItemInHand(new ItemStack(Material.PACKED_ICE));
+        secondStand.setSmall(true);
+        secondStand.setMarker(true);
+        secondStand.setRightArmPose(angle);
+
+        loc.add(to1);
+
+        ArmorStand thirdStand = origin.getWorld().spawn(loc, ArmorStand.class);
+        thirdStand.setVisible(false);
+        thirdStand.setArms(true);
+        thirdStand.setItemInHand(new ItemStack(Material.ICE));
+        thirdStand.setSmall(true);
+        thirdStand.setMarker(true);
+        thirdStand.setRightArmPose(angle);
+
+        loc.add(to1);
+
+        ArmorStand fourthStand = origin.getWorld().spawn(loc, ArmorStand.class);
+        fourthStand.setVisible(false);
+        fourthStand.setArms(true);
+        fourthStand.setItemInHand(new ItemStack(Material.PACKED_ICE));
+        fourthStand.setSmall(true);
+        fourthStand.setMarker(true);
+        fourthStand.setRightArmPose(angle);
+
+        final boolean[] didHitBlock = {false};
 
         new BukkitRunnable() {
-            boolean hit = false;
-
             @Override
             public void run() {
-                if (bolt.isDead()) {
-                    cancel();
-                    return;
-                }
+                if (firstStand.getLocation().getBlock().getType() != Material.AIR) {
+                    didHitBlock[0] = true;
 
-                if (!hit) {
-                    Vector speed = target.subtract(bolt.getLocation().toVector()).normalize().multiply(1);
+                    firstStand.setGravity(false);
+                    secondStand.setGravity(false);
+                    thirdStand.setGravity(false);
+                    fourthStand.setGravity(false);
 
-                    bolt.setVelocity(speed);
-                }
-
-                ParticleEffect.CLOUD.display(bolt.getLocation(), 0, 0, 0, 0, 25, null);
-
-                if (bolt.getLocation().distance(firedAt) > 100) {
-                    hit = true;
                     Util.delay(() -> {
-                        bolt.remove();
-                        cancel();
-                    }, 60);
-                    return;
+                        firstStand.remove();
+                        secondStand.remove();
+                        thirdStand.remove();
+                        fourthStand.remove();
+                    }, 100);
+
+                    this.cancel();
+                }
+
+                ParticleEffect.CLOUD.display(firstStand.getLocation(), 0, 0, 0, 0, 1, null);
+
+                firstStand.setVelocity(to);
+                secondStand.setVelocity(to);
+                thirdStand.setVelocity(to);
+                fourthStand.setVelocity(to);
+
+                long damage = Util.calculateAbilityDamage(1000, player.getStat(SkyblockStat.MANA), 0.1, 0);
+
+                for (Entity entity : firstStand.getNearbyEntities(1, 1, 1)) {
+                    SkyblockEntity sentity = Skyblock.getPlugin().getEntityHandler().getEntity(entity);
+
+                    if (sentity == null) continue;
+
+                    sentity.damage(damage, player, false);
+                    EntityLiving nmsEntity = (EntityLiving) ((CraftEntity) entity).getHandle();
+                    AttributeInstance speed = nmsEntity.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED);
+                    // for 5 seconds, cut the speed in half
+                    speed.setValue(speed.getValue() / 2);
+                    Util.delay(() -> speed.setValue(speed.getValue() * 2), 100);
+                }
+
+                if (firstStand.getLocation().distance(origin) > 50) {
+                    firstStand.remove();
+                    secondStand.remove();
+                    thirdStand.remove();
+                    fourthStand.remove();
+                    this.cancel();
                 }
             }
-        }.runTaskTimer(plugin, 0, 1);
-
-        Util.sendAbility(player, "Ice Bolt", 50);
+        }.runTaskTimer(Skyblock.getPlugin(), 0, 1);
     }
 }
