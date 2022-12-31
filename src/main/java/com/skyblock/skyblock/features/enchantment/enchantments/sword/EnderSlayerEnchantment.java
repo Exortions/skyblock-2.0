@@ -1,93 +1,47 @@
 package com.skyblock.skyblock.features.enchantment.enchantments.sword;
 
+import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
+import com.skyblock.skyblock.features.entities.SkyblockEntity;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 
 public class EnderSlayerEnchantment extends SwordEnchantment {
 
-    private final HashMap<SkyblockPlayer, Integer> predicateDamageModifiers;
+    private static final Function<Integer, Double> getDamage = (level) -> Util.createFetchableDictionary(level, 15, 30, 45, 60, 80, 100);
 
     public EnderSlayerEnchantment() {
         super("ender_slayer", "Ender Slayer", (level) -> {
             String description = "Increases damage dealt to\nEnder Dragons and\nEnderman by {damage}%.";
 
-            int damage;
-
-            if (level <= 4) damage = level * 15;
-            else if (level == 5 || level == 6) damage = 60 + (level == 5 ? 20 : 40);
-            else damage =  130;
-
-            return description.replace("{damage}", String.valueOf(damage));
+            return description.replace("{damage}", String.valueOf(getDamage.apply(level)));
         }, 7);
-
-        this.predicateDamageModifiers = new HashMap<>();
     }
 
-    @EventHandler
-    public void onPlayerSwapMainItem(PlayerItemHeldEvent event) {
-        ItemStack item = event.getPlayer().getInventory().getItem(event.getNewSlot());
-
-        if (item == null || item.getType().equals(Material.AIR)) return;
-
-        ItemBase base;
+    @Override
+    public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
         try {
-            base = new ItemBase(item);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
+            ItemBase base = new ItemBase(player.getBukkitPlayer().getItemInHand());
+            int level = base.getEnchantment(this.getName()).getLevel();
 
-        SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
+            SkyblockEntity sentity = Skyblock.getPlugin().getEntityHandler().getEntity(e.getEntity());
 
-        if (!base.hasEnchantment(this) || this.predicateDamageModifiers.containsKey(player)) {
-            if (this.predicateDamageModifiers.get(player) == null) return;
+            if (sentity.getEntityType().equals(EntityType.ENDERMAN)) damage += (damage * ((getDamage.apply(level)) / 100F));
+        } catch (IllegalArgumentException | NullPointerException ignored) {}
 
-            int index = this.predicateDamageModifiers.get(player);
-
-            player.removePredicateDamageModifier(index);
-
-            return;
-        }
-
-        this.predicateDamageModifiers.put(player, player.getPredicateDamageModifiers().size() + 1);
-
-        player.addPredicateDamageModifier((skyblockPlayer, entity) -> {
-            ItemBase b;
-
-            if (player.getBukkitPlayer().getItemInHand() == null || player.getBukkitPlayer().getItemInHand().getType().equals(Material.AIR)) return 0;
-
-            try {
-                b = new ItemBase(player.getBukkitPlayer().getItemInHand());
-            } catch (IllegalArgumentException ex) {
-                return 0;
-            }
-
-            if (!entity.getType().equals(EntityType.ENDERMAN)) return 0;
-
-            ToIntFunction<Integer> levelToDamage = (level -> {
-                if (level <= 4) return level * 15;
-                else if (level == 5 || level == 6) return 60 + (level == 5 ? 20 : 40);
-                else return 130;
-            });
-
-            ItemEnchantment enchantment = b.getEnchantment("ender_slayer");
-
-            if (enchantment == null || enchantment.getBaseEnchantment() == null) return 0;
-
-            return levelToDamage.applyAsInt(
-                    b.getEnchantment("ender_slayer")
-                            .getLevel());
-        });
+        return damage;
     }
-
 }
