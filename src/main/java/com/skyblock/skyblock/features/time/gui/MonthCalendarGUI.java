@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.features.time.gui;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.features.time.CalendarEvent;
 import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
@@ -12,9 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +19,12 @@ import java.util.List;
 public class MonthCalendarGUI extends Gui {
 
     private static final HashMap<String, Integer> pages = new HashMap<String, Integer>() {{
-       put("spring", 1);
-       put("summer", 2);
+        put("spring", 1);
+        put("summer", 2);
         put("fall", 3);
         put("winter", 4);
     }};
+
     public MonthCalendarGUI(String month, int year, Player player) {
         super(WordUtils.capitalize(month), 54, new HashMap<>());
 
