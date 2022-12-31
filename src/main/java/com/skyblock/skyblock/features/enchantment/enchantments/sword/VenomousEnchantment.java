@@ -1,16 +1,11 @@
 package com.skyblock.skyblock.features.enchantment.enchantments.sword;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemBase;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public class VenomousEnchantment extends SwordEnchantment {
 
