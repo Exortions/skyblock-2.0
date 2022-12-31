@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.auction.display;
 
-import com.google.common.util.concurrent.UncheckedTimeoutException;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.utilities.Util;
@@ -13,7 +12,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -21,6 +19,10 @@ import org.bukkit.inventory.ItemStack;
 
 @Getter
 public class Display {
+
+    private Auction currentAuction = null;
+    private ItemStack previousItem = null;
+    private NPC item = null;
 
     private final Location location;
     private final int rank;
@@ -53,10 +55,6 @@ public class Display {
             sign.update();
         }
     }
-
-    private Auction currentAuction = null;
-    private ItemStack previousItem = null;
-    private NPC item = null;
 
     public void update(Auction auction) {
         this.currentAuction = auction;
