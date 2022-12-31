@@ -51,17 +51,17 @@ public class TestCommand implements Command {
 //
 //        player.teleport(new Location(Bukkit.createWorld(new WorldCreator(args[0])), 0, 100, 0));
 
-//        MinionBase minion = new MiningMinion(MiningMinionType.COBBLESTONE);
-//        minion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 6);
+        MinionBase minion = new MiningMinion(MiningMinionType.COBBLESTONE);
+        minion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 6);
 
-        ItemStack item = player.getItemInHand();
-
-        AuctionCategory category = AuctionCategory.valueOf(args[0]);
-        Rarity teir = Rarity.valueOf(args[1]);
+//        ItemStack item = player.getItemInHand();
+//
+//        AuctionCategory category = AuctionCategory.valueOf(args[0]);
+//        Rarity teir = Rarity.valueOf(args[1]);
 //        String search = args[2];
-
-        if (!category.getCanPut().test(item)) Bukkit.broadcastMessage("Failed Category Test");
-        if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(item).getString("rarity")).split(" ")[0]).equals(teir)) Bukkit.broadcastMessage("Failed Rarity Test");
+//
+//        if (!category.getCanPut().test(item)) Bukkit.broadcastMessage("Failed Category Test");
+//        if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(item).getString("rarity")).split(" ")[0]).equals(teir)) Bukkit.broadcastMessage("Failed Rarity Test");
 //        if (!ChatColor.stripColor(item.getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) Bukkit.broadcastMessage("Failed Search Test");
     }
 }
