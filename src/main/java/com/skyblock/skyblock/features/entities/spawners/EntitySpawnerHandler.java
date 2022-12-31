@@ -1,7 +1,9 @@
 package com.skyblock.skyblock.features.entities.spawners;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.features.location.SkyblockLocation;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -24,36 +26,37 @@ public class EntitySpawnerHandler {
         init();
     }
 
-    public void addSpawner(String type, String subType, Location location, int amount, int limit, long delay, int range) {
+    public void addSpawner(String type, String subType, SkyblockLocation location, Material material, int amount, int limit, long delay) {
+        addSpawner(type, subType, location.getPosition1(), location.getPosition2(), material, amount, limit, delay);
+    }
+
+    public void addSpawner(String type, String subType, Location pos1, Location pos2, Material material, int amount, int limit, long delay) {
         try {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-            if (!config.contains(subType)) {
-                config.createSection(subType);
-                config.set(subType + ".locations", new ArrayList<>());
+            String id = type + "_" + subType;
+
+            if (!config.contains(id)) {
+                config.createSection(id);
             }
 
-            config.set(subType + ".type", type);
-            config.set(subType + ".subType", subType);
-            config.set(subType + ".delay", delay);
-            config.set(subType + ".limit", limit);
-            config.set(subType + ".amount", amount);
-            config.set(subType + ".range", range);
-
-            List<Location> list = (List<Location>) config.getList(subType + ".locations");
-            list.add(location);
-
-            config.set(subType + ".locations", list);
+            config.set(id + ".type", type);
+            config.set(id + ".subType", subType);
+            config.set(id + ".delay", delay);
+            config.set(id + ".limit", limit);
+            config.set(id + ".amount", amount);
+            config.set(id + ".pos1", pos1);
+            config.set(id + ".pos2", pos2);
+            config.set(id + ".block", material.name());
 
             List<String> ids = config.getStringList("ids");
-            if (!ids.contains(subType)) ids.add(subType);
+            if (!ids.contains(id)) ids.add(id);
 
-            config.set(subType + ".locations", list);
             config.set("ids", ids);
 
             config.save(file);
 
-            loadSpawner(subType).start();
+            loadSpawner(id).start();
         } catch (IOException e) { }
     }
 

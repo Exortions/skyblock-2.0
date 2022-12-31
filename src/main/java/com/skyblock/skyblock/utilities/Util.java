@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -274,7 +275,7 @@ public class Util {
         );
     }
 
-    public void setDamageIndicator(final Location loc, final String displayname, boolean format) {
+    public void setDamageIndicator(Location loc, String displayname, boolean format) {
         if (ChatColor.stripColor(displayname).equals("0")) return;
 
         double randomX = Math.random();
@@ -881,7 +882,7 @@ public class Util {
         return (long) Math.floor(baseAbilityDamage * (1 + (intelligence / 100) * abilityScaling) + (1 + (bonusAbilityDamage / 100)));
     }
 
-    public static <T> List<T> shuffle(List<T> list) {
+    public <T> List<T> shuffle(List<T> list) {
         Random rnd = ThreadLocalRandom.current();
         for (int i = list.size() - 1; i > 0; i--) {
             int index = rnd.nextInt(i + 1);
@@ -909,6 +910,34 @@ public class Util {
         if (hours > 5 && days == 0) return hours + "h";
 
         return time;
+    }
+
+    public List<Block> blocksFromTwoPoints(Location loc1, Location loc2) {
+        List<Block> blocks = new ArrayList<>();
+
+        int topBlockX = (Math.max(loc1.getBlockX(), loc2.getBlockX()));
+        int bottomBlockX = (Math.min(loc1.getBlockX(), loc2.getBlockX()));
+
+        int topBlockY = (Math.max(loc1.getBlockY(), loc2.getBlockY()));
+        int bottomBlockY = (Math.min(loc1.getBlockY(), loc2.getBlockY()));
+
+        int topBlockZ = (Math.max(loc1.getBlockZ(), loc2.getBlockZ()));
+        int bottomBlockZ = (Math.min(loc1.getBlockZ(), loc2.getBlockZ()));
+
+        for(int x = bottomBlockX; x <= topBlockX; x++)
+        {
+            for(int z = bottomBlockZ; z <= topBlockZ; z++)
+            {
+                for(int y = bottomBlockY; y <= topBlockY; y++)
+                {
+                    Block block = loc1.getWorld().getBlockAt(x, y, z);
+
+                    blocks.add(block);
+                }
+            }
+        }
+
+        return blocks;
     }
 
 }

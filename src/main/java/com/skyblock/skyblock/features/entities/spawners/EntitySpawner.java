@@ -21,25 +21,29 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class EntitySpawner {
 
     private final List<SkyblockEntity> spawned;
-    private final List<Location> locations;
+    private final Location pos1;
+    private final Location pos2;
     private final long delay;
     private final int limit;
-    private final int range;
     private final int amount;
     private final SkyblockEntityType type;
     private final String subType;
+    private final List<Block> blocks;
+    private final Material mustSpawnOn;
     private int locationRequests = 0;
 
     public EntitySpawner(ConfigurationSection section) {
-        this.locations = (List<Location>) section.getList("locations");
+        this.pos1 = (Location) section.get("pos1");
+        this.pos2 = (Location) section.get("pos2");
         this.delay = section.getLong("delay");
         this.limit = section.getInt("limit");
         this.amount = section.getInt("amount");
-        this.range = section.getInt("range");
         this.subType = section.getString("subType");
+        this.mustSpawnOn = Material.valueOf(section.getString("block"));
         this.type = SkyblockEntityType.valueOf(section.getString("type"));
 
         this.spawned = new ArrayList<>();
+        this.blocks = Util.blocksFromTwoPoints(pos1, pos2);
     }
 
     public void start() {
@@ -50,54 +54,41 @@ public class EntitySpawner {
 
                 if (spawned.size() >= limit) return;
 
-                for (Location loc : locations) {
-                    if (!loc.getChunk().isLoaded()) continue;
-                    if (Bukkit.getOnlinePlayers().size() == 0) continue;
-                    Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc, 30, 30, 30);
+                for (int i = 0; i < amount; i++) {
+                    if (Bukkit.getOnlinePlayers().size() == 0) break;
 
                     AtomicBoolean players = new AtomicBoolean(false);
-                    entities.forEach((e) -> {
-                        if (e instanceof Player) players.set(true);
-                    });
+                    Bukkit.getOnlinePlayers().forEach((p) -> { if (Util.inCuboid(p.getLocation(), pos1, pos2)) players.set(true); });
+                    if (!players.get()) break;
 
-                    if (!players.get()) continue;
+                    Location random = random();
 
-                    for (int i = 0; i < amount; i++) {
-                        Location rand = random(loc);
+                    SkyblockEntity entity = type.getNewInstance(subType);
 
-                        SkyblockEntity entity = type.getNewInstance(subType);
+                    if (entity == null) continue;
 
-                        if (entity == null) continue;
-
-                        entity.spawn(rand);
-                        entity.setLifeSpan((int) delay);
-                        spawned.add(entity);
-                    }
+                    entity.spawn(random);
+                    entity.setLifeSpan((int) delay * 5);
+                    spawned.add(entity);
                 }
             }
         }.runTaskTimer(Skyblock.getPlugin(), 5L, delay);
     }
 
-    public Location random(Location loc) {
-        if (locationRequests > 120) {
+    public Location random() {
+        if (locationRequests > 500) {
             locationRequests = 0;
-            return loc;
+            return new Location(pos1.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
 
-        int randX = Util.random(-1 * range, range);
-        int randZ = Util.random(-1 * range, range);
-
-        Location rand = loc.clone();
-        rand.add(0, 0, 0);
-
-        Block block = rand.getBlock();
+        Block block = blocks.get(Util.random(0, blocks.size()));
 
         if (block.getType() != Material.AIR && block.getLocation().clone().add(0, 1, 0).getBlock().getType() == Material.AIR &&
-                block.getLocation().clone().add(0, 2, 0).getBlock().getType() == Material.AIR && block.getType().isSolid()) {
-            return rand;
+                block.getLocation().clone().add(0, 2, 0).getBlock().getType() == Material.AIR && block.getType().isSolid() && block.getLocation().getBlock().getType().equals(mustSpawnOn)) {
+            return block.getLocation().add(0.5, 1, 0.5);
         }
 
         locationRequests++;
-        return random(loc);
+        return random();
     }
 }

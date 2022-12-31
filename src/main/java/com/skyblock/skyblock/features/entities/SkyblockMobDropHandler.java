@@ -104,6 +104,7 @@ public class SkyblockMobDropHandler {
     }
 
     public int getCoins(String name) {
-        return coins.get(name);
+        if (coins.containsKey(name)) return coins.get(name);
+        return 0;
     }
 }
