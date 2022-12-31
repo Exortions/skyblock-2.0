@@ -2,22 +2,14 @@ package com.skyblock.skyblock.features.enchantment.enchantments.sword;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.function.Function;
-import java.util.function.ToIntFunction;
-
 
 public class EnderSlayerEnchantment extends SwordEnchantment {
 
