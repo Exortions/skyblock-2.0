@@ -44,6 +44,7 @@ public class ItemBase {
     private boolean reforgeable;
     private Reforge reforge;
 
+    private boolean appliedCritical;
     private boolean isThick;
 
     private List<ItemEnchantment> enchantments;
@@ -95,6 +96,7 @@ public class ItemBase {
         }
 
         this.reforgeable = nbt.getBoolean("reforgeable");
+        this.appliedCritical = nbt.getBoolean("appliedCritical");
         this.isThick = nbt.getBoolean("isThick");
         this.enchantments = new ArrayList<>();
         String enchantmentsStr = nbt.getString("enchantments");
@@ -173,6 +175,7 @@ public class ItemBase {
         this.reforge = reforgeType;
         this.reforgeable = reforgeable;
 
+        this.appliedCritical = false;
         this.isThick = isThick;
 
         this.enchantments = enchantments;
@@ -224,8 +227,13 @@ public class ItemBase {
         int rDefense = reforgeData.get(SkyblockStat.DEFENSE);
         int rHealth = reforgeData.get(SkyblockStat.HEALTH);
 
-        if (this.getEnchantment("critical") != null && this.hasEnchantment(this.getEnchantment("critical").getBaseEnchantment()))
-            rCritDamage += CriticalEnchantment.getCritDamageIncrease.apply(this.getEnchantment("critical").getLevel());
+        if (this.getEnchantment("critical") != null && this.hasEnchantment(this.getEnchantment("critical").getBaseEnchantment())
+                && !this.appliedCritical
+        ) {
+            damage += CriticalEnchantment.getCritDamageIncrease.apply(this.getEnchantment("critical").getLevel());
+
+            this.appliedCritical = true;
+        }
 
         /*
           Stats
@@ -393,6 +401,8 @@ public class ItemBase {
         }
 
         nbt.setBoolean("reforgeable", reforgeable);
+        nbt.setBoolean("appliedCritical", appliedCritical);
+        nbt.setBoolean("isThick", isThick);
         List<String> enchantmentNbt = new ArrayList<>();
         for (ItemEnchantment enchantment : this.enchantments) {
             enchantmentNbt.add(enchantment.getLevel() + ";" + enchantment.getBaseEnchantment().getName());
