@@ -3,6 +3,10 @@ package com.skyblock.skyblock.features.minions;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.features.minions.items.MinionItem;
+import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
+import com.skyblock.skyblock.features.minions.items.MinionItemType;
+
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -11,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -41,36 +46,76 @@ public class MinionListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getClickedInventory() == null || event.getWhoClicked() == null || event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
+        
+        MinionItemHandler mih = Skyblock.getPlugin().getMinionItemHandler();
+        ItemStack current = event.getCurrentItem();
+        SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
+        boolean isMinionInv = event.getClickedInventory().getName().contains("Minion");
 
-        if (!event.getClickedInventory().getName().contains("Minion")) return;
+        if (!player.getBukkitPlayer().getOpenInventory().getTopInventory().getName().contains("Minion")) return;
 
         event.setCancelled(true);
 
         MinionBase minion = null;
-
-        SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
-
         for (MinionHandler.MinionSerializable serializable : Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
-            if (serializable.getBase().getGui().equals(event.getClickedInventory())) {
+            if (serializable.getBase().getGui().equals(player.getBukkitPlayer().getOpenInventory().getTopInventory())) {
                 minion = serializable.getBase();
                 break;
             }
         }
-
         if (minion == null) return;
 
-        ItemStack current = event.getCurrentItem();
+        if (isMinionInv) {
+            if (mih.isRegistered(current)) {
+                boolean remove = mih.getRegistered(current).onItemClick(player.getBukkitPlayer(), current);
+                if (remove) {
+                    for (int i = 0; i < minion.minionItems.length; ++i) {
+                        if (minion.minionItems[i] != null && minion.minionItems[i].isThisItem(current)) {
+                            player.getBukkitPlayer().getInventory().addItem(mih.getRegistered(current).getItem());
+                            minion.minionItems[i].onUnEquip(minion);
+                            minion.minionItems[i] = null;
+                            break;
+                        }
+                    }
+                    minion.showInventory(player);
+                }
+            }
+            else {
+                if (current.getItemMeta().hasDisplayName()) {
+                    if (current.getItemMeta().getDisplayName().contains("Collect All")) {
+                        minion.collectAll(player);
+                        return;
+                    }
+                }
 
-        if (current.getItemMeta().hasDisplayName()) {
-            if (current.getItemMeta().getDisplayName().contains("Collect All")) {
-                minion.collectAll(player);
-                return;
+                if (current.getType().equals(Material.BEDROCK)) minion.pickup(player, minion.getMinion().getLocation());
+
+                minion.collect(player, event.getSlot());
             }
         }
+        else if (mih.isRegistered(current)) {
+            MinionItem item = mih.getRegistered(current);
 
-        if (current.getType().equals(Material.BEDROCK)) minion.pickup(player, minion.getMinion().getLocation());
+            if (!item.canStack) {
+                for (int i = 0; i < minion.minionItems.length; ++i) {
+                    if (minion.minionItems[i] != null && minion.minionItems[i].isThisItem(current)) return;
+                }
+            }
 
-        minion.collect(player, event.getSlot());
+            for (int i : minion.getItemSlots(item.getType()) ) {
+                if (minion.minionItems[i] == null) {
+                    minion.minionItems[i] = item;
+                    minion.minionItems[i].onEquip(minion);
+                    minion.showInventory(player);
+                    break;
+                }
+            }
+
+            if (current.getAmount() > 1) 
+                current.setAmount(current.getAmount() - 1);
+            else
+                player.getBukkitPlayer().getInventory().clear(event.getSlot());
+        }
     }
 
 }
