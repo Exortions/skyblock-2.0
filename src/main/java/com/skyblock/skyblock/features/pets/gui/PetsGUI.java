@@ -43,7 +43,6 @@ public class PetsGUI extends Gui {
 
                         skyblockPlayer.setExtraData("pets.petToItem", false);
 
-                        opener.closeInventory();
                         new PetsGUI(opener).show(opener);
                     } else {
                         ItemStack prev = (ItemStack) skyblockPlayer.getValue("pets.equip");
@@ -85,14 +84,12 @@ public class PetsGUI extends Gui {
                 boolean petToItem = (boolean) skyblockPlayer.getExtraData("pets.petToItem");
 
                 skyblockPlayer.setExtraData("pets.petToItem", !petToItem);
-                opener.closeInventory();
                 new PetsGUI(opener).show(opener);
             });
 
             Runnable runnable = () -> {
                 boolean hidePets = (boolean) skyblockPlayer.getValue("pets.hidePets");
                 skyblockPlayer.setValue("pets.hidePets", !hidePets);
-                opener.closeInventory();
                 new PetsGUI(opener).show(opener);
             };
 

@@ -6,6 +6,7 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
@@ -78,6 +79,11 @@ public abstract class Skill {
         Pet pet = player.getPet();
 
         if (pet != null) {
+            pet.setInGui(true);
+            player.removePet(pet.toItemStack());
+            player.setValue("pets.equip", null);
+            pet.setInGui(false);
+
             double petXp = (pet.getSkill().equals(skill)) ? xp : xp / 4;
 
             if (!pet.getSkill().equals(skill)) {
@@ -89,9 +95,6 @@ public abstract class Skill {
                     petXp = petXp * 1.5;
                 }
             }
-
-            player.removePet(pet.toItemStack());
-            player.setValue("pets.equip", null);
 
             int prevLevel = Pet.getLevel(pet.getXp(), pet.getRarity());
             pet.setXp(pet.getXp() + petXp);

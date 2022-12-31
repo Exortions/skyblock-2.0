@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -201,8 +202,8 @@ public abstract class Pet {
 
         if (level != 100) {
             int next = level + 1;
-            double progress = xp - getXP(level, rarity);
-            int goal = (int) (getXP(next, rarity) - getXP(level, rarity));
+            double progress = xp;
+            int goal = (int) (getXP(level, rarity));
 
             double percent = (progress / goal) * 100.0;
 
