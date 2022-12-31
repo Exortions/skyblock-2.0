@@ -1,4 +1,5 @@
 package com.skyblock.skyblock.features.merchants;
+
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Util;
@@ -36,6 +37,8 @@ public class Merchant implements Listener {
     private final String skinSignature;
     private final String skinValue;
 
+    private int interactionIteration = 0;
+
     private final List<String> initialDialogue;
 
     private NPC npc;
@@ -65,27 +68,26 @@ public class Merchant implements Listener {
     }
 
     private ArrayList<ItemStack> getSold(SkyblockPlayer player) {
-	if (!player.hasExtraData("merchantSold")) {
-		player.setExtraData("merchantSold", new ArrayList<ItemStack>());
-	}
-        return (ArrayList<ItemStack>) player.getExtraData("merchantSold");	
+        if (!player.hasExtraData("merchantSold")) {
+            player.setExtraData("merchantSold", new ArrayList<ItemStack>());
+        }
+        return (ArrayList<ItemStack>) player.getExtraData("merchantSold");
     }
 
     private ItemStack createBuyBack(SkyblockPlayer player) {
-            DecimalFormat formatter = new DecimalFormat("#,###");
-            formatter.setGroupingUsed(true);
-            if (getSold(player).size() > 0) {
-	        ItemStack lastSold = getSold(player).get(getSold(player).size() - 1).clone();
-	        NBTItem nbt = new NBTItem(lastSold);
-	        return new ItemBuilder(nbt.getItem()).addLore(
-		        Arrays.asList(Util.buildLore("\n&7Cost\n&6"
-		                                     + formatter.format(nbt.getDouble("merchantCost"))
-		                                     + " &6coins\n\n&eClick to buyback!")))
-		        .toItemStack();
-	    }
-	    else return new ItemBuilder(ChatColor.GREEN + "Sell Item", Material.HOPPER)
-	    				.setLore(Util.buildLore("&7Click items in your inventory to\n&7sell them to this shop!"))
-	                                .toItemStack();
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        formatter.setGroupingUsed(true);
+        if (getSold(player).size() > 0) {
+            ItemStack lastSold = getSold(player).get(getSold(player).size() - 1).clone();
+            NBTItem nbt = new NBTItem(lastSold);
+            return new ItemBuilder(nbt.getItem()).addLore(
+                            Arrays.asList(Util.buildLore("\n&7Cost\n&6"
+                                    + formatter.format(nbt.getDouble("merchantCost"))
+                                    + " &6coins\n\n&eClick to buyback!")))
+                    .toItemStack();
+        } else return new ItemBuilder(ChatColor.GREEN + "Sell Item", Material.HOPPER)
+                .setLore(Util.buildLore("&7Click items in your inventory to\n&7sell them to this shop!"))
+                .toItemStack();
     }
 
     public void createNpc() {
@@ -97,8 +99,6 @@ public class Merchant implements Listener {
         npc.getEntity().setMetadata("merchantName", new FixedMetadataValue(Skyblock.getPlugin(Skyblock.class), name));
     }
 
-    private int interactionIteration = 0;
-
     @EventHandler
     public void onRightClick(NPCRightClickEvent event) {
         if (!event.getNPC().equals(this.npc)) return;
@@ -107,7 +107,8 @@ public class Merchant implements Listener {
 
         if (player == null) return;
 
-        if ((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacting")) return;
+        if ((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacting"))
+            return;
 
         if (!((boolean) player.getValue("merchant." + this.getName().toLowerCase().replace(" ", "_") + ".interacted")) && this.initialDialogue.size() > 0) {
             int delay = 0;
@@ -169,7 +170,7 @@ public class Merchant implements Listener {
         }
 
         inventory.setItem(49, createBuyBack(player));
-	player.getBukkitPlayer().openInventory(inventory);
+        player.getBukkitPlayer().openInventory(inventory);
     }
 
     @EventHandler
@@ -206,7 +207,7 @@ public class Merchant implements Listener {
                 gui.addItem(24, buildShopOption(nbt.getItem(), 64, player, gui));
 
                 gui.getClickEvents().put(ChatColor.GREEN + "Go Back", () -> {
-                   player.getBukkitPlayer().openInventory(event.getInventory());
+                    player.getBukkitPlayer().openInventory(event.getInventory());
                 });
 
                 gui.show(player.getBukkitPlayer());
@@ -221,37 +222,34 @@ public class Merchant implements Listener {
 
             player.setValue("stats.purse", player.getDouble("stats.purse") - nbt.getInteger("merchantCost"));
 
-	    if (nbt.hasKey("merchantItem")) {
-	            player.getBukkitPlayer().performCommand(nbt.getString("merchantReward"));
+            if (nbt.hasKey("merchantItem")) {
+                player.getBukkitPlayer().performCommand(nbt.getString("merchantReward"));
 
-	            player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased "
-	                   + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for "
-	                   + ChatColor.GOLD + formatter.format(nbt.getInteger("merchantCost")) + " coins" + ChatColor.GREEN + "!");
-	    }
-	    else {
-		    nbt = new NBTItem((ItemStack) getSold(player).get(getSold(player).size() - 1));
-		    nbt.setBoolean("merchantSold", null);
-		    player.getBukkitPlayer().getInventory().addItem(nbt.getItem());
-	            player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have bought back " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + formatter.format(nbt.getInteger("merchantCost")) + " coins" + ChatColor.GREEN + "!");
-		    getSold(player).remove(getSold(player).size() - 1);
-        	    event.getInventory().setItem(49, createBuyBack(player));
+                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have purchased "
+                        + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for "
+                        + ChatColor.GOLD + formatter.format(nbt.getInteger("merchantCost")) + " coins" + ChatColor.GREEN + "!");
+            } else {
+                nbt = new NBTItem((ItemStack) getSold(player).get(getSold(player).size() - 1));
+                nbt.setBoolean("merchantSold", null);
+                player.getBukkitPlayer().getInventory().addItem(nbt.getItem());
+                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have bought back " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + formatter.format(nbt.getInteger("merchantCost")) + " coins" + ChatColor.GREEN + "!");
+                getSold(player).remove(getSold(player).size() - 1);
+                event.getInventory().setItem(49, createBuyBack(player));
 
-	   }
+            }
 
             player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
-        } else if (event.getClickedInventory() != null) {
-            if (event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
-                double price = Skyblock.getPlugin().getMerchantHandler().getPriceHandler().getPrice(item);
-                player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have sold " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + (int) price + " coins" + ChatColor.GREEN + "!");
-                player.addCoins(price);
-                nbt = new NBTItem(item);
-                nbt.setDouble("merchantCost", price);
-                nbt.setBoolean("merchantSold", true);
-                getSold(player).add(nbt.getItem());
-        	event.getInventory().setItem(49, createBuyBack(player));
-                event.setCurrentItem(null);
-                player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
-            }
+        } else if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getWhoClicked().getInventory())) {
+            double price = Skyblock.getPlugin().getMerchantHandler().getPriceHandler().getPrice(item);
+            player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have sold " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + " for " + ChatColor.GOLD + (int) price + " coins" + ChatColor.GREEN + "!");
+            player.addCoins(price);
+            nbt = new NBTItem(item);
+            nbt.setDouble("merchantCost", price);
+            nbt.setBoolean("merchantSold", true);
+            getSold(player).add(nbt.getItem());
+            event.getInventory().setItem(49, createBuyBack(player));
+            event.setCurrentItem(null);
+            player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
         }
     }
 
