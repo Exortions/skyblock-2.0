@@ -158,6 +158,9 @@ public class PlayerListener implements Listener {
 
                     event.setDamage(0);
 
+                    if (Util.notNull(player.getBukkitPlayer().getItemInHand()) && plugin.getSkyblockItemHandler().isRegistered(player.getBukkitPlayer().getItemInHand()))
+                        damage = plugin.getSkyblockItemHandler().getRegistered(player.getBukkitPlayer().getItemInHand()).getModifiedIncomingDamage(player, event, damage);
+
                     player.damage(damage, event.getCause(), null);
                 }
             } else {

@@ -10,6 +10,7 @@ import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Getter;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -62,6 +63,10 @@ public abstract class SkyblockItem {
 
     public void onRegenerate(ItemBase item) {
         throw new UnsupportedOperationException("This item does not support regeneration");
+    }
+
+    public double getModifiedIncomingDamage(SkyblockPlayer player, EntityDamageEvent event, double damage) {
+        return damage;
     }
 
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
