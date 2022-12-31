@@ -4,7 +4,6 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.SkyblockItem;
-import com.skyblock.skyblock.utilities.RotationUtil;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.ChatColor;
@@ -16,7 +15,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 public class AspectOfTheDragons extends SkyblockItem {
@@ -86,7 +84,6 @@ public class AspectOfTheDragons extends SkyblockItem {
         Location playersCursor = location.add(direction.multiply(2)).add(0, 1.75, 0);
 
         double offset = 0.75;
-        int rotation = 0;
 
         // TODO: Rotate (kill me now)
 
