@@ -10,11 +10,7 @@ import com.skyblock.skyblock.commands.menu.*;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
 import com.skyblock.skyblock.commands.merchant.SpawnMerchantCommand;
 import com.skyblock.skyblock.commands.misc.*;
-import com.skyblock.skyblock.commands.player.HubCommand;
-import com.skyblock.skyblock.commands.player.IslandCommand;
-import com.skyblock.skyblock.commands.player.PlayerDataCommand;
-import com.skyblock.skyblock.commands.player.VisitCommand;
-import com.skyblock.skyblock.commands.player.WarpCommand;
+import com.skyblock.skyblock.commands.player.*;
 import com.skyblock.skyblock.commands.potion.CreatePotionCommand;
 import com.skyblock.skyblock.commands.potion.EffectCommand;
 import com.skyblock.skyblock.commands.potion.EffectsCommand;
@@ -29,13 +25,11 @@ import com.skyblock.skyblock.features.blocks.RegenerativeBlockHandler;
 import com.skyblock.skyblock.features.blocks.SpongeBlock;
 import com.skyblock.skyblock.features.blocks.SpongeReplacer;
 import com.skyblock.skyblock.features.blocks.SpongeReplacerHandler;
-import com.skyblock.skyblock.features.blocks.crops.FloatingCrystal;
 import com.skyblock.skyblock.features.blocks.crops.FloatingCrystalHandler;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.collections.CollectionListener;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
-import com.skyblock.skyblock.features.enchantment.enchantments.*;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.FireProtectionEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.GrowthEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionEnchantment;
@@ -62,7 +56,6 @@ import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.minions.MinionListener;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
-import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.objectives.QuestLineHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
 import com.skyblock.skyblock.features.potions.PotionEffectHandler;
@@ -75,7 +68,6 @@ import com.skyblock.skyblock.features.time.SkyblockTimeManager;
 import com.skyblock.skyblock.features.trades.TradeHandler;
 import com.skyblock.skyblock.listeners.*;
 import com.skyblock.skyblock.updater.DependencyUpdater;
-import com.skyblock.skyblock.utilities.TriConsumer;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.CommandHandler;
 import com.skyblock.skyblock.utilities.data.ServerData;
@@ -84,20 +76,17 @@ import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.utilities.sign.SignManager;
 import de.tr7zw.nbtapi.NBTEntity;
-import de.tr7zw.nbtinjector.NBTInjector;
 import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -464,8 +453,8 @@ public final class Skyblock extends JavaPlugin {
                         null,
                         new Location(getSkyblockWorld(), 20.5, 71, -40.5),
                         (player) -> {
-				            SkyblockPlayer.getPlayer(player).setExtraData("personalBankLastUsed", 0L);
-	                        this.getGuiHandler().show("banker", player);
+                            SkyblockPlayer.getPlayer(player).setExtraData("personalBankLastUsed", 0L);
+                            this.getGuiHandler().show("banker", player);
                         },
                         "ewogICJ0aW1lc3RhbXAiIDogMTY1NTg0NTIwODg3OSwKICAicHJvZmlsZUlkIiA6ICI2NmI0ZDRlMTFlNmE0YjhjYTFkN2Q5YzliZTBhNjQ5OSIsCiAgInByb2ZpbGVOYW1lIiA6ICJBcmFzdG9vWXNmIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYyYTExMGIwMmVmYzU4ZjJiYTc3YWVlZjE3ZGY3ZTMyOWQ4OTZjNDU5MDI0NDIzMzg0OWY0MmRhMDIzMjhhOSIKICAgIH0KICB9Cn0=",
                         "EBEcNTFPKGK8a1kGPyV0rHzZlwjp3s6jH3NBpVnrt0dgiieIChfiknBr8AAeC6Petrw1YAeHPwq5hC358BLggCNQQOgcJ0vcrZpISSPMfxi03WliH7lY6l5kboc6ht1vEdAZgCt/Sn9mKXqw4DzuHK2+2kl1hPkBX3rE5swVcqm9e/xLGsftE6NWWVpxw90YobRYF3NMzHX4PlFXHpndbDdMaPMTIAwSjDyR+scuOJKgV8tVYRp27aGBKevJXafYxxg9v8P06rFYif6DlyhDgU5/qnwFZdxnYUPrT7CeyLKptxPUzjy+G9iOiH7rkSJwkj22zk4BEdrcmAL0jNFr4dXq9n9d9MFtZ6KEqjBwPfB1T5ixMYS6tdmnbZYSamFAKUuKv1Jxs6WqwS3FesA7lALNNuZfXdsWaSBlT7d+TCsqjhlUccOEW5KyeLdgBsmACiPfQ+EGH6NET+plxDAdoVU21YPJJosqHvWR5+RZUlaXZIEXnPfeN/2BzYjoQVktn1T44Qdv0MfYerfDG0GsyrVAMcoi6I2zzB97OeQi/eUtOxv4KIvTHLtmULJtvrr6jqeodg+RoL9twIPLfG/+CBm9lznYnp5kIJxIGCUJ8fk7mzSnO5vW/Ej0vxADYYwpJStrkapaspWe1LNRGEqYBw2kTnk10wFQiVeYdhTJH1I="
