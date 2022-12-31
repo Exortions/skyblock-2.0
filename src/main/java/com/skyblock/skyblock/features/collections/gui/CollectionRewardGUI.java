@@ -4,10 +4,8 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.crafting.gui.RecipeGUI;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,12 +16,7 @@ import java.util.List;
 public class CollectionRewardGUI extends Gui {
 
     private static final HashMap<ItemStack, List<String>> REWARDS_CACHE = new HashMap<>();
-    private static final HashMap<Integer, Integer> STARTS = new HashMap<Integer, Integer>() {{
-        put(1, 22);
-        put(2, 21);
-        put(3, 20);
-        put(4, 19);
-    }};
+
     public CollectionRewardGUI(ItemStack pane, ItemStack collectionItem, Gui prev, Player player) {
         super(ChatColor.stripColor(pane.getItemMeta().getDisplayName()) + " Rewards", 54, new HashMap<>());
 
