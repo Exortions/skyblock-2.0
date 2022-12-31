@@ -4,6 +4,8 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.features.minions.items.MinionItem;
+import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import net.minecraft.server.v1_8_R3.BlockPosition;
@@ -151,10 +153,10 @@ public class MiningMinion extends MinionBase {
     protected void tick(SkyblockPlayer player, Location location) {
         List<Block> blocks = new ArrayList<>();
 
-        for (int x = -2; x <= 2; x++) {
-            for (int z = -2; z <= 2; z++) {
+        int miningRadius = actionRadius + additionalActionRadius;
+        for (int x = miningRadius * -1; x <= miningRadius; x++) {
+            for (int z = miningRadius * - 1; z <= miningRadius; z++) {
                 Block block = location.clone().add(x, -1, z).getBlock();
-
                 blocks.add(block);
             }
         }
@@ -212,6 +214,9 @@ public class MiningMinion extends MinionBase {
                 }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
             }
         }
+        for (int i = 0; i < minionItems.length; ++i) {
+            if (minionItems[i] != null) minionItems[i].onTick(this);
+        }
     }
 
     @Override
@@ -261,6 +266,9 @@ public class MiningMinion extends MinionBase {
     @Override
     public void collect(SkyblockPlayer player) {
         ItemStack[] drops = this.type.getCalculateDrops().apply(this.level);
+        for (MinionItem i : this.minionItems) {
+            if (i != null) drops = i.onBlockCollect(this, drops);
+        }
         Inventory inventory = Bukkit.createInventory(null, 54);
 
         this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
@@ -301,12 +309,18 @@ public class MiningMinion extends MinionBase {
 
         this.gui.setItem(3, MinionHandler.MINION_INVENTORY_IDEAL_LAYOUT);
         this.gui.setItem(53, MinionHandler.MINION_INVENTORY_PICKUP_MINION);
+        
+        MinionItem skin = this.minionItems[getItemSlots(MinionItemType.SKIN).get(0)];
+        MinionItem fuel = this.minionItems[getItemSlots(MinionItemType.FUEL).get(0)];
+        MinionItem shipping = this.minionItems[getItemSlots(MinionItemType.SHIPPING).get(0)];
+        MinionItem up1 = this.minionItems[getItemSlots(MinionItemType.UPGRADE).get(0)];
+        MinionItem up2 = this.minionItems[getItemSlots(MinionItemType.UPGRADE).get(1)];
+        this.gui.setItem(10, skin == null ? MinionHandler.MINION_INVENTORY_UPGRADE_SKIN_SLOT : skin.getItem());
+        this.gui.setItem(19, fuel == null ? MinionHandler.MINION_INVENTORY_UPGRADE_FUEL_SLOT : fuel.getItem());
+        this.gui.setItem(28, shipping == null ? MinionHandler.MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT : shipping.getItem());
+        this.gui.setItem(37, up1 == null ? MinionHandler.MINION_INVENTORY_UPGRADE_SLOT : up1.getItem());
+        this.gui.setItem(46, up2 == null ?  MinionHandler.MINION_INVENTORY_UPGRADE_SLOT : up2.getItem());
 
-        this.gui.setItem(10, MinionHandler.MINION_INVENTORY_UPGRADE_SKIN_SLOT);
-        this.gui.setItem(19, MinionHandler.MINION_INVENTORY_UPGRADE_FUEL_SLOT);
-        this.gui.setItem(28, MinionHandler.MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT);
-        this.gui.setItem(37, MinionHandler.MINION_INVENTORY_UPGRADE_SLOT);
-        this.gui.setItem(46, MinionHandler.MINION_INVENTORY_UPGRADE_SLOT);
         this.gui.setItem(48, MinionHandler.MINION_INVENTORY_COLLECT_ALL);
 
         int slot = 21;

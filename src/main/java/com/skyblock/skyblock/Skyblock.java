@@ -54,6 +54,7 @@ import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
 import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.minions.MinionListener;
+import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.QuestLineHandler;
@@ -113,6 +114,7 @@ public final class Skyblock extends JavaPlugin {
     private SkyblockLocationManager locationManager;
     private PotionEffectHandler potionEffectHandler;
     private SkyblockItemHandler skyblockItemHandler;
+    private MinionItemHandler minionItemHandler;
     private SkyblockEntityHandler entityHandler;
     private LaunchPadHandler launchPadHandler;
     private QuestLineHandler questLineHandler;
@@ -850,6 +852,7 @@ public final class Skyblock extends JavaPlugin {
         this.itemHandler.init();
 
         this.skyblockItemHandler = new SkyblockItemHandler(this);
+        this.minionItemHandler = new MinionItemHandler(this);
 
         this.sendMessage("Successfully initialized items [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
