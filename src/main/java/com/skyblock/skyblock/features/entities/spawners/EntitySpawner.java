@@ -78,7 +78,7 @@ public class EntitySpawner {
             return new Location(pos1.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
 
-        Block block = blocks.get(Util.random(0, blocks.size()));
+        Block block = blocks.get(Util.random(0, blocks.size() - 1));
 
         if (block.getType() != Material.AIR && block.getLocation().clone().add(0, 1, 0).getBlock().getType() == Material.AIR &&
                 block.getLocation().clone().add(0, 2, 0).getBlock().getType() == Material.AIR && block.getType().isSolid() && block.getLocation().getBlock().getType().equals(mustSpawnOn)) {

@@ -13,6 +13,7 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.merchants.Merchant;
+import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
@@ -37,6 +38,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -64,6 +66,7 @@ public class SkyblockPlayer {
     private HashMap<String, Object> dataCache;
 
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
+    private List<MinionHandler.MinionSerializable> minions;
     private AuctionCreationGUI.AuctionProgress progress;
     private HashMap<SkyblockStat, Double> stats;
     private HashMap<String, Boolean> cooldowns;
@@ -117,6 +120,7 @@ public class SkyblockPlayer {
         this.cooldowns = new HashMap<>();
         this.extraData = new HashMap<>();
         this.stats = new HashMap<>();
+        this.minions = new ArrayList<>();
         this.petDisplay = null;
         this.damageModifier = 0;
         this.progress = null;
@@ -940,6 +944,8 @@ public class SkyblockPlayer {
             this.setValue("potions.active." + activeEffect.getName() + ".amplifier", activeEffect.getAmplifier());
             this.setValue("potions.active." + activeEffect.getName() + ".duration", activeEffect.getDuration());
         }
+
+        this.setValue("island.minions", getMinions());
 
         saveToDisk();
 

@@ -135,6 +135,14 @@ public class MiningMinion extends MinionBase {
 
     @Override
     public void pickup(SkyblockPlayer player, Location location) {
+        List<MinionHandler.MinionSerializable> minions = new ArrayList<>();
+
+        for (MinionHandler.MinionSerializable minion : player.getMinions()) {
+            if (!minion.getBase().getUuid().equals(getUuid())) minions.add(minion);
+        }
+
+        player.setMinions(minions);
+
         this.minion.remove();
         this.text.remove();
 
@@ -143,6 +151,10 @@ public class MiningMinion extends MinionBase {
         collectAll(player);
 
         player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have %s out of a maximum of %s minions placed.");
+
+        for (MinionItem item : minionItems) {
+            if (item != null) player.getBukkitPlayer().getInventory().addItem(item.getItem());
+        }
 
         Util.delay(() -> {
             player.getBukkitPlayer().closeInventory();
@@ -249,9 +261,12 @@ public class MiningMinion extends MinionBase {
             return;
         }
 
+        if (!Util.notNull(toCollect)) return;
+
         player.getBukkitPlayer().getInventory().addItem(Util.toSkyblockItem(toCollect));
 
         Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
+        item.setPickupDelay(Integer.MAX_VALUE);
 
         Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
 

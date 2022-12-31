@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.Getter;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.ArmorStand;
@@ -96,6 +98,7 @@ public class MinionHandler {
             result.put("owner", this.owner.toString());
             result.put("uuid", this.uuid.toString());
             result.put("level", this.level);
+            result.put("items", base.getInventory());
 
             return result;
         }
@@ -141,6 +144,13 @@ public class MinionHandler {
 
             if (type instanceof MiningMinionType) base = new MiningMinion((MiningMinionType) type, uuid);
             else base = null;
+
+            if (args.containsKey("items")) {
+                assert base != null;
+                base.setInventory((List<ItemStack>) args.get("items"));
+            } else {
+                throw new IllegalArgumentException("Could not find level in serialized data");
+            }
 
             return new MinionSerializable(base, type, location, owner, uuid, level);
         }
@@ -206,7 +216,10 @@ public class MinionHandler {
             this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
         }
 
-        this.minions.get(player.getBukkitPlayer().getUniqueId()).add(new MinionSerializable(minion, minion.getType(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel()));
+        MinionSerializable serialize = new MinionSerializable(minion, minion.getType(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel());
+
+        this.minions.get(player.getBukkitPlayer().getUniqueId()).add(serialize);
+        player.getMinions().add(serialize);
     }
 
     public void deleteAll(UUID uuid) {
