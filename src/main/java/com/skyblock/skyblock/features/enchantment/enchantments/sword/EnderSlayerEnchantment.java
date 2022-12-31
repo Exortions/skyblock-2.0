@@ -21,7 +21,7 @@ import java.util.function.ToIntFunction;
 
 public class EnderSlayerEnchantment extends SwordEnchantment {
 
-    private static final Function<Integer, Double> getDamage = (level) -> Util.createFetchableDictionary(level, 15, 30, 45, 60, 80, 100);
+    private static final Function<Integer, Double> getDamage = (level) -> Util.createFetchableDictionary(level - 1, 15, 30, 45, 60, 80, 100);
 
     public EnderSlayerEnchantment() {
         super("ender_slayer", "Ender Slayer", (level) -> {
