@@ -1,13 +1,9 @@
-package com.skyblock.skyblock.features.objectives.impl.hub.auction;
+package com.skyblock.skyblock.features.objectives.impl.hub;
 
 import com.skyblock.skyblock.event.SkyblockNPCClickEvent;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-
-import java.util.Collections;
-import java.util.List;
 
 public class AuctioneerQuest extends QuestLine {
     public AuctioneerQuest() {
