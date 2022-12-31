@@ -2,13 +2,7 @@ package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
-import java.util.Arrays;
 import java.util.List;
 
 public interface DynamicLore {
