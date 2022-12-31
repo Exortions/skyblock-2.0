@@ -224,10 +224,10 @@ public class LostAndFoundQuest extends QuestLine {
     private static final class RustyGui extends Gui {
         public RustyGui(Player opener) {
             super("Rusty the Janitor", 45, new HashMap<String, Runnable>() {{
+                put(ChatColor.RED + "Close", opener::closeInventory);
             }});
 
             Util.fillEmpty(this);
-
         }
 
     }

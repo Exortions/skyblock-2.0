@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.entities.wolf;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import net.minecraft.server.v1_8_R3.EntityWolf;
 import net.minecraft.server.v1_8_R3.GenericAttributes;
@@ -31,6 +30,8 @@ public class Wolf extends SkyblockEntity {
                 break;
             case SOUL_OF_THE_ALPHA:
                 loadStats(31150, 1140, false, false, true, new Equipment(), "Soul of the Alpha", 55, 50, "soul_of_the_alpha");
+                break;
+            default:
                 break;
         }
     }

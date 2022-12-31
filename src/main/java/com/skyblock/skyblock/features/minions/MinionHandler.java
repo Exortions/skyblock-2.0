@@ -23,6 +23,8 @@ import java.util.function.Function;
 
 public class MinionHandler {
 
+    private final HashMap<UUID, List<MinionSerializable>> minions;
+
     public static ItemStack MINION_INVENTORY_PICKUP_MINION = new ItemBuilder(ChatColor.GREEN + "Pickup Minion", Material.BEDROCK).addLore(ChatColor.YELLOW + "Click to pickup!").toItemStack();
     public static ItemStack MINION_INVENTORY_COLLECT_ALL = new ItemBuilder(ChatColor.GREEN + "Collect All", Material.CHEST).addLore(ChatColor.YELLOW + "Click to collect all items!").toItemStack();
     public static ItemStack MINION_INVENTORY_IDEAL_LAYOUT = new ItemBuilder(ChatColor.GREEN + "Ideal Layout", Material.REDSTONE_TORCH_ON).addLore(Util.buildLore("&7View the most effecient spot for\n&7this minion to be placed in.")).toItemStack();
@@ -145,8 +147,6 @@ public class MinionHandler {
 
     }
 
-    private final HashMap<UUID, List<MinionSerializable>> minions;
-
     public MinionHandler() {
         this.minions = new HashMap<>();
     }
@@ -164,7 +164,7 @@ public class MinionHandler {
 
             World world = Bukkit.createWorld(new WorldCreator(worldName));
 
-            if (world == null) throw new NullPointerException("Minion World is null (" + worldName + ")");
+            if (world == null) throw new IllegalArgumentException("Minion World is null (" + worldName + ")");
 
             try {
                 Chunk chunk = minion.getLocation().getChunk();
@@ -180,11 +180,9 @@ public class MinionHandler {
             }
 
             for (ArmorStand stand : minion.getLocation().getWorld().getEntitiesByClass(ArmorStand.class)) {
-                if (stand.hasMetadata("minion")) {
-                    if (stand.getMetadata("minion_id").get(0).asString().equals(minion.getUuid().toString())) {
-                        found = true;
-                        break;
-                    }
+                if (stand.hasMetadata("minion") && stand.getMetadata("minion_id").get(0).asString().equals(minion.getUuid().toString())) {
+                    found = true;
+                    break;
                 }
             }
 

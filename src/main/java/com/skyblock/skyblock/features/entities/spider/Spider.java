@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.entities.spider;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSkeleton;
 import org.bukkit.entity.EntityType;
@@ -42,6 +41,8 @@ public class Spider extends SkyblockEntity {
                 break;
             case TARANTULA_BROOD_MOTHER:
                 loadStats(6000, 250, false, true, true, new Equipment(), "Tarantula Brood Mother", 12, 25, "brood_mother");
+                break;
+            default:
                 break;
         }
     }

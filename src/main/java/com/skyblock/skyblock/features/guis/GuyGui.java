@@ -17,14 +17,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GuyGui extends Gui {
-    public GuyGui(Player p) {
+
+    private static final List<Integer> upgrades = Arrays.asList(-1, 60, 20, 5, 0, Integer.MAX_VALUE);
+    private static final int[] costs = new int[]{0, 200000, 1000000, 5000000};
+    private static final int[] collections = new int[]{15000, 50000, 100000, 250000};
+
+    public GuyGui(Player opener) {
         super("Guy", 36, new HashMap<>());
 
         Util.fillEmpty(this);
 
         addItem(31, Util.buildCloseButton());
 
-        SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
+        SkyblockPlayer player = SkyblockPlayer.getPlayer(opener);
         addItem(13, createUpgradeItem(player));
 
         getClickEvents().put(getItem(13).getItemMeta().getDisplayName(), () -> {
@@ -39,15 +44,11 @@ public class GuyGui extends Gui {
             player.setValue("bank.personal.cooldown", next);
             player.subtractCoins(cost);
 
-            p.sendMessage(ChatColor.GREEN + "Successfully upgraded your Personal Bank to " + next + " minutes.");
-            p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 2);
-            p.closeInventory();
+            opener.sendMessage(ChatColor.GREEN + "Successfully upgraded your Personal Bank to " + next + " minutes.");
+            opener.playSound(opener.getLocation(), Sound.NOTE_PLING, 10, 2);
+            opener.closeInventory();
         });
     }
-
-    private static final List<Integer> upgrades = Arrays.asList(-1, 60, 20, 5, 0, Integer.MAX_VALUE);
-    private static final int[] costs = new int[] {0, 200000, 1000000, 5000000};
-    private static final int[] collections = new int[] {15000, 50000, 100000, 250000};
 
     private ItemStack createUpgradeItem(SkyblockPlayer player) {
         int collection = player.getIntValue("collection.emerald.exp");

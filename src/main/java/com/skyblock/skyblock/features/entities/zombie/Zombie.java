@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.features.entities.zombie;
 
 import com.skyblock.skyblock.features.entities.EntityDrop;
-import com.skyblock.skyblock.features.entities.EntityDropRarity;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -90,6 +89,8 @@ public class Zombie extends SkyblockEntity {
                 equipment.hand = new ItemBuilder(Material.DIAMOND_SWORD).addEnchantmentGlint().toItemStack();
                 
                 loadStats(300, 275, true, false, true, equipment, "Zombie", 20, 20, "obsidian_zombie");
+                break;
+            default:
                 break;
         }
     }

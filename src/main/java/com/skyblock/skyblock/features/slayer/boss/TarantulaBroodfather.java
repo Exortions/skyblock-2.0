@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.slayer.boss;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.slayer.SlayerBoss;
@@ -37,6 +36,8 @@ public class TarantulaBroodfather extends SlayerBoss {
                 break;
             case 4:
                 loadStats(2400000, 400, false, true, true, new Equipment(), "Tarantula Broodfather", 260, 500);
+                break;
+            default:
                 break;
         }
 

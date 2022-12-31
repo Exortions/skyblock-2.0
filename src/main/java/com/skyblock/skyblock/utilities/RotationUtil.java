@@ -54,9 +54,14 @@ public class RotationUtil {
         double cr = Math.cos(roll);
         double sr = Math.sin(roll);
 
-        double x, bx;
-        double y, by;
-        double z, bz;
+        double x;
+        double bx;
+
+        double y;
+        double by;
+
+        double z;
+        double bz;
 
         for (Point point : points) {
             x = point.getX();

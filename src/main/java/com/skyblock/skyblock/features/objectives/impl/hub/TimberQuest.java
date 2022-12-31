@@ -12,13 +12,11 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,8 +44,6 @@ public class TimberQuest extends QuestLine {
                             SkyblockPlayer.getPlayer(p).setValue("quests.timber.talkedToLumberjack", true);
                         }, "Timber!", "My woodcutting assistant has fallen quite ill! Do you think you could take over for him?", "I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!");
                     } else {
-                        int logsCollected = (int) SkyblockPlayer.getPlayer(player).getValue("quests.timber.logsBroken");
-
                         if (getObjective(SkyblockPlayer.getPlayer(player)).getId().equals("collect_logs")) {
                             List<String> busyMessages = new ArrayList<String>() {{
                                 add("A lumberjack always pays his debts!");
