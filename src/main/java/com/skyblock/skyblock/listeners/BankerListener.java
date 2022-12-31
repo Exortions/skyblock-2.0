@@ -1,10 +1,7 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.utilities.sign.SignClickCompleteHandler;
-import com.skyblock.skyblock.utilities.sign.SignCompleteEvent;
 import com.skyblock.skyblock.utilities.sign.SignGui;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +18,8 @@ public class BankerListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getClickedInventory() == null || event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR)) return;
+        if (event.getClickedInventory() == null || event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR))
+            return;
 
         List<String> titles = new ArrayList<>(Arrays.asList("Personal Bank Account", "Bank Deposit", "Bank Withdrawal"));
 
@@ -58,7 +56,8 @@ public class BankerListener implements Listener {
                             int amount = Integer.parseInt(e.getLines()[0]);
                             player.performCommand("sb deposit " + amount);
                             player.performCommand("sb banker");
-                        } catch (NumberFormatException ignored) { }
+                        } catch (NumberFormatException ignored) {
+                        }
                     }
                 }.runTask(Skyblock.getPlugin()));
 
@@ -81,7 +80,8 @@ public class BankerListener implements Listener {
                                 int amount = Integer.parseInt(e.getLines()[0]);
                                 player.performCommand("sb withdraw " + amount);
                                 player.performCommand("sb banker");
-                            } catch (NumberFormatException ignored) { }
+                            } catch (NumberFormatException ignored) {
+                            }
                         }
                     }.runTask(Skyblock.getPlugin());
                 });
