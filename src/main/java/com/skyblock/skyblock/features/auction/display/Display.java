@@ -84,10 +84,10 @@ public class Display {
     }
 
     public boolean isPossibleSignLocation(Location loc) {
-        if (loc.add(0, 0, 1).distance(location) < 1) return true;
-        else if (loc.add(0, 0, -1).distance(location) < 1) return true;
-        else if (loc.add(1, 0, 0).distance(location) < 1) return true;
-        else return loc.add(-1, 0, 0).distance(location) < 1;
+        return loc.getBlockX() == location.getBlockX() && loc.getBlockY() == location.getBlockY() && loc.getBlockZ() == location.getBlockZ() + 1 ||
+                loc.getBlockX() == location.getBlockX() && loc.getBlockY() == location.getBlockY() && loc.getBlockZ() == location.getBlockZ() - 1 ||
+                loc.getBlockX() == location.getBlockX() + 1 && loc.getBlockY() == location.getBlockY() && loc.getBlockZ() == location.getBlockZ() ||
+                loc.getBlockX() == location.getBlockX() - 1 && loc.getBlockY() == location.getBlockY() && loc.getBlockZ() == location.getBlockZ();
     }
 
 }
