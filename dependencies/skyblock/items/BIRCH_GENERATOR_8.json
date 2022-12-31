@@ -16,15 +16,15 @@
     "§9§lRARE"
   ],
   "recipe": {
-    "A1": "ENCHANTED_BIRCH_LOG:8",
-    "A2": "ENCHANTED_BIRCH_LOG:8",
-    "A3": "ENCHANTED_BIRCH_LOG:8",
-    "B1": "ENCHANTED_BIRCH_LOG:8",
+    "A1": "ENCHANTED_BIRCH_WOOD:8",
+    "A2": "ENCHANTED_BIRCH_WOOD:8",
+    "A3": "ENCHANTED_BIRCH_WOOD:8",
+    "B1": "ENCHANTED_BIRCH_WOOD:8",
     "B2": "BIRCH_GENERATOR_7:1",
-    "B3": "ENCHANTED_BIRCH_LOG:8",
-    "C1": "ENCHANTED_BIRCH_LOG:8",
-    "C2": "ENCHANTED_BIRCH_LOG:8",
-    "C3": "ENCHANTED_BIRCH_LOG:8"
+    "B3": "ENCHANTED_BIRCH_WOOD:8",
+    "C1": "ENCHANTED_BIRCH_WOOD:8",
+    "C2": "ENCHANTED_BIRCH_WOOD:8",
+    "C3": "ENCHANTED_BIRCH_WOOD:8"
   },
   "internalname": "BIRCH_GENERATOR_8",
   "clickcommand": "viewrecipe",

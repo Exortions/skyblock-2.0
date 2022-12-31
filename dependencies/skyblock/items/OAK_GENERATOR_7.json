@@ -16,15 +16,15 @@
     "§9§lRARE"
   ],
   "recipe": {
-    "A1": "ENCHANTED_OAK_LOG:4",
-    "A2": "ENCHANTED_OAK_LOG:4",
-    "A3": "ENCHANTED_OAK_LOG:4",
-    "B1": "ENCHANTED_OAK_LOG:4",
+    "A1": "ENCHANTED_OAK_WOOD:4",
+    "A2": "ENCHANTED_OAK_WOOD:4",
+    "A3": "ENCHANTED_OAK_WOOD:4",
+    "B1": "ENCHANTED_OAK_WOOD:4",
     "B2": "OAK_GENERATOR_6:1",
-    "B3": "ENCHANTED_OAK_LOG:4",
-    "C1": "ENCHANTED_OAK_LOG:4",
-    "C2": "ENCHANTED_OAK_LOG:4",
-    "C3": "ENCHANTED_OAK_LOG:4"
+    "B3": "ENCHANTED_OAK_WOOD:4",
+    "C1": "ENCHANTED_OAK_WOOD:4",
+    "C2": "ENCHANTED_OAK_WOOD:4",
+    "C3": "ENCHANTED_OAK_WOOD:4"
   },
   "internalname": "OAK_GENERATOR_7",
   "clickcommand": "viewrecipe",
