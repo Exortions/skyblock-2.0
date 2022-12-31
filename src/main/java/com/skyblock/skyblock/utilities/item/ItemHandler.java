@@ -13,21 +13,16 @@ import com.skyblock.skyblock.features.potions.PotionEffect;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
-import net.minecraft.server.v1_8_R3.Enchantment;
 import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -129,7 +124,6 @@ public class ItemHandler {
                     ItemMeta meta = item.getItemMeta();
                     meta.setDisplayName(displayName);
 
-                    //noinspection unchecked
                     meta.setLore(lore);
                     meta.spigot().setUnbreakable(true);
 
@@ -232,7 +226,6 @@ public class ItemHandler {
             }
 
             if (r.equals(Rarity.LEGENDARY)) break;
-
         }
         for (String pot : POTIONS) {
             for (int i = 0; i < PotionEffect.getMaxLevelsAndColors.get(pot).getFirst(); i++) {
@@ -256,7 +249,8 @@ public class ItemHandler {
 
     public void register(String id, ItemStack item) {
         for (String potion : POTIONS) {
-            if (item.getItemMeta().getDisplayName().toLowerCase().contains(potion) && item.getType().equals(Material.POTION)) return;
+            if (item.getItemMeta().getDisplayName().toLowerCase().contains(potion) && item.getType().equals(Material.POTION))
+                return;
         }
 
         items.put(id, parseLore(item));
@@ -358,8 +352,8 @@ public class ItemHandler {
                         if (raw.startsWith("this item can be reforged!") ||
                                 raw.startsWith("cooldown: ") ||
                                 raw.startsWith("mana cost: ") ||
-                            j == lore.size() - 1){
-                            i = j-1;
+                                j == lore.size() - 1) {
+                            i = j - 1;
                             break;
                         }
 
@@ -380,8 +374,8 @@ public class ItemHandler {
                     for (int j = i; j < lore.size(); j++) {
                         String raw = ChatColor.stripColor(lore.get(j)).toLowerCase();
                         if (raw.startsWith("this item can be reforged!") ||
-                            raw.startsWith("item ability: ") ||
-                            j == lore.size() - 1){
+                                raw.startsWith("item ability: ") ||
+                                j == lore.size() - 1) {
                             i = j;
                             break;
                         }
