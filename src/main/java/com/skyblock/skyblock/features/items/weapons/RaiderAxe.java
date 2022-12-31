@@ -4,13 +4,10 @@ import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.event.SkyblockEntityDeathEvent;
 import com.skyblock.skyblock.features.items.DynamicLore;
 import com.skyblock.skyblock.features.items.ListeningItem;
-import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class RaiderAxe extends ListeningItem implements DynamicLore {
@@ -39,12 +36,13 @@ public class RaiderAxe extends ListeningItem implements DynamicLore {
 
                 e.getKiller().getBukkitPlayer().setItemInHand(item.getStack());
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
     public String[] toReplace() {
-        return new String[] {
+        return new String[]{
                 ChatColor.GRAY + "Kills: ",
                 ChatColor.GRAY + "Wood collections: "
         };
@@ -54,7 +52,7 @@ public class RaiderAxe extends ListeningItem implements DynamicLore {
     public String[] replaceWith(NBTItem nbtItem) {
         int kills = nbtItem.getInteger("raider_axe_kills");
         int coll = nbtItem.getInteger("raider_axe_collection");
-        return new String[] {
+        return new String[]{
                 ChatColor.GRAY + "Kills: " + ChatColor.RED + kills,
                 ChatColor.GRAY + "Wood collections: " + ChatColor.RED + coll
         };
