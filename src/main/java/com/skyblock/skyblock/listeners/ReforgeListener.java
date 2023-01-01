@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -24,6 +25,19 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ReforgeListener implements Listener {
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (!(event.getPlayer() instanceof Player)) return;
+
+        if (event.getInventory() == null) return;
+        if (!event.getInventory().getTitle().equals("Reforge Item")) return;
+        if (event.getInventory().getItem(13) == null) return;
+
+        Player player = (Player) event.getPlayer();
+
+        player.getInventory().addItem(event.getInventory().getItem(13));
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
