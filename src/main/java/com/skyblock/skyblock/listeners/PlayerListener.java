@@ -30,6 +30,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -182,6 +183,10 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof ArmorStand || event.getEntity().hasMetadata("merchant")) return;
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (event.getDamager() instanceof Player) {
             Player p = (Player) event.getDamager();
@@ -453,10 +458,27 @@ public class PlayerListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onClick(InventoryClickEvent e) {
+        ItemStack item = e.getCurrentItem();
+
+        if (item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Skyblock Menu")) {
+            ((Player) e.getWhoClicked()).performCommand("sb gui skyblock_menu");
+            e.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         Item item = event.getItemDrop();
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
+
+        ItemStack stack = item.getItemStack();
+
+        if (stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().contains("Skyblock Menu")) {
+            event.setCancelled(true);
+        }
+
         if (Skyblock.getPlugin().getSkyblockItemHandler().isRegistered(item.getItemStack()) && (Boolean) player.getValue("settings.doubleTapDrop")) {
             if (!player.hasExtraData("lastDropAttempt")) {
                 Map<String, Long> data = new HashMap<>();
