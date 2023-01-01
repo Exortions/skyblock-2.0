@@ -4,7 +4,6 @@ import com.skyblock.skyblock.features.entities.EntityDrop;
 import com.skyblock.skyblock.features.entities.EntityDropRarity;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
-import com.sun.org.apache.regexp.internal.RE;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
