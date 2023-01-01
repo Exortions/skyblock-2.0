@@ -24,8 +24,7 @@ public class WitherBow extends SkyblockItem {
 
     @Override
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (e.getDamager() instanceof Arrow && e.getEntity() instanceof Wither
-            || (e.getEntity() instanceof Skeleton && ((Skeleton) e.getEntity()).getSkeletonType() == SkeletonType.WITHER)) {
+        if (e.getEntity() instanceof Wither || (e.getEntity() instanceof Skeleton && ((Skeleton) e.getEntity()).getSkeletonType() == SkeletonType.WITHER)) {
             
             if (isThisItem(player.getBukkitPlayer().getItemInHand())) {
                 return damage * 2;
