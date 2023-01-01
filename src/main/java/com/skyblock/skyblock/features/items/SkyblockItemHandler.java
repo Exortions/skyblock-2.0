@@ -83,6 +83,8 @@ public class SkyblockItemHandler {
         registerItem(new EndstoneBow());
         registerItem(new WitherBow());
         registerItem(new SavannaBow());
+        registerItem(new MosquitoBow());
+
         // Armor Sets
         registerItem(new StrongDragonArmor());
         registerItem(new SuperiorDragonArmor());
