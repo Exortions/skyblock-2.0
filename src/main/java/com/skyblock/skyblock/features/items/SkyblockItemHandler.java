@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.items;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.items.armor.*;
+import com.skyblock.skyblock.features.items.bows.*;
 import com.skyblock.skyblock.features.items.misc.*;
 import com.skyblock.skyblock.features.items.tools.*;
 import com.skyblock.skyblock.features.items.weapons.*;

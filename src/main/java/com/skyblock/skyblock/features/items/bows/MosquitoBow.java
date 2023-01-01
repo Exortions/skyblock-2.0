@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.items.weapons;
+package com.skyblock.skyblock.features.items.bows;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
