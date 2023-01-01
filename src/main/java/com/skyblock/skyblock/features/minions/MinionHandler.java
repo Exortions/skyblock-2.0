@@ -76,10 +76,10 @@ public class MinionHandler {
         return stack;
     };
 
-    public static ItemStack createNextTeirItem(MinionBase minion) {
-        if (minion.getLevel() >= 11) return new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT).addLore("&7The highest tier of this minion", "&7has been reached!", " ", ChatColor.GREEN + "Highest tier has been reached!").toItemStack();
+    public static ItemStack createNextTierItem(MinionBase minion) {
+        if (minion.getLevel() >= 11) return new ItemBuilder(ChatColor.GREEN + "Next Tier", Material.GOLD_INGOT).addLore("&7The highest tier of this minion", "&7has been reached!", " ", ChatColor.GREEN + "Highest tier has been reached!").toItemStack();
 
-        ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT)
+        ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + "Next Tier", Material.GOLD_INGOT)
                 .addLore("&7View the items required to", "&7upgrade this minion to the next", "&7tier.", " ",
                         "&7Time Between Actions: &a" + minion.getTimeBetweenActions() + "s",
                         "&7Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage() + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(),

@@ -91,7 +91,7 @@ public class MinionListener implements Listener {
                         return;
                     }
 
-                    if (current.getItemMeta().getDisplayName().contains("Next Teir") && minion.getLevel() < 11) {
+                    if (current.getItemMeta().getDisplayName().contains("Next Tier") && minion.getLevel() < 11) {
                         new RecipeGUI(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + (minion.getLevel() + 1) + ".json"), null, minion.getGui(), player.getBukkitPlayer()).show(player.getBukkitPlayer());
                     }
 

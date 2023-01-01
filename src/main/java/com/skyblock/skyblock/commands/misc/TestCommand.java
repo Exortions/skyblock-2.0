@@ -57,11 +57,11 @@ public class TestCommand implements Command {
 //        ItemStack item = player.getItemInHand();
 //
 //        AuctionCategory category = AuctionCategory.valueOf(args[0]);
-//        Rarity teir = Rarity.valueOf(args[1]);
+//        Rarity tier = Rarity.valueOf(args[1]);
 //        String search = args[2];
 //
 //        if (!category.getCanPut().test(item)) Bukkit.broadcastMessage("Failed Category Test");
-//        if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(item).getString("rarity")).split(" ")[0]).equals(teir)) Bukkit.broadcastMessage("Failed Rarity Test");
+//        if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(item).getString("rarity")).split(" ")[0]).equals(tier)) Bukkit.broadcastMessage("Failed Rarity Test");
 //        if (!ChatColor.stripColor(item.getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) Bukkit.broadcastMessage("Failed Search Test");
     }
 }

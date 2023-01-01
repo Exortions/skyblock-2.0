@@ -146,7 +146,7 @@ public class AuctionHouse {
         return getAuctions(AuctionCategory.ALL, AuctionSettings.AuctionSort.HIGHEST, AuctionSettings.BinFilter.ALL, null, -1, "", false);
     }
 
-    public List<Auction> getAuctions(AuctionCategory category, AuctionSettings.AuctionSort sort, AuctionSettings.BinFilter binFilter, Rarity teir, int page, String search, boolean timeSensitive) {
+    public List<Auction> getAuctions(AuctionCategory category, AuctionSettings.AuctionSort sort, AuctionSettings.BinFilter binFilter, Rarity tier, int page, String search, boolean timeSensitive) {
         List<Auction> auctions = new ArrayList<>();
         List<Auction> clone = new ArrayList<>(CATEGORY_CACHE.get(category));
 
@@ -191,7 +191,7 @@ public class AuctionHouse {
             if (!search.equals("") && !ChatColor.stripColor(auction.getItem().getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase())) continue;
             if (binFilter.equals(AuctionSettings.BinFilter.BIN) && !auction.isBIN()) continue;
             if (binFilter.equals(AuctionSettings.BinFilter.AUCTIONS) && auction.isBIN()) continue;
-            if (teir != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(teir)) continue;
+            if (tier != null && !Rarity.valueOf(ChatColor.stripColor(new NBTItem(auction.getItem()).getString("rarity")).split(" ")[0]).equals(tier)) continue;
             if (!category.getCanPut().test(auction.getItem())) continue;
 
             j++;

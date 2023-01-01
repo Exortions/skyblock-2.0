@@ -364,7 +364,7 @@ public class MiningMinion extends MinionBase {
         Util.fillEmpty(this.gui);
 
         this.gui.setItem(4, MinionHandler.createMinionPreview.apply(this));
-        this.gui.setItem(5, MinionHandler.createNextTeirItem(this));
+        this.gui.setItem(5, MinionHandler.createNextTierItem(this));
 
         this.gui.setItem(3, MinionHandler.MINION_INVENTORY_IDEAL_LAYOUT);
         this.gui.setItem(50, MinionHandler.createQuickUpgrade(this, player.getBukkitPlayer()));

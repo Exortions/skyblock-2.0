@@ -26,14 +26,14 @@ public class AuctionSettings implements ConfigurationSerializable {
 
     private AuctionCategory category;
     private AuctionSort sort;
-    private Rarity teir;
+    private Rarity tier;
     private BinFilter binFilter;
     private Boolean bin;
 
-    public AuctionSettings(AuctionCategory category, AuctionSort sort, Rarity teir, BinFilter binFilter, Boolean bin) {
+    public AuctionSettings(AuctionCategory category, AuctionSort sort, Rarity tier, BinFilter binFilter, Boolean bin) {
         this.category = category;
         this.sort = sort;
-        this.teir = teir;
+        this.tier = tier;
         this.binFilter = binFilter;
         this.bin = bin;
     }
@@ -44,7 +44,7 @@ public class AuctionSettings implements ConfigurationSerializable {
 
         map.put("category", category.name());
         map.put("sort", sort.name());
-        map.put("teir", (teir == null ? "null" : teir.name()));
+        map.put("tier", (tier == null ? "null" : tier.name()));
         map.put("binFilter", binFilter.name());
         map.put("bin", bin.toString());
 
@@ -91,11 +91,11 @@ public class AuctionSettings implements ConfigurationSerializable {
             rarities.add(v.name());
         });
 
-        int newIndex = rarities.indexOf((teir != null ? teir.name() : "null")) + 1;
+        int newIndex = rarities.indexOf((tier != null ? tier.name() : "null")) + 1;
 
         if (newIndex == rarities.size()) newIndex = 0;
 
-        teir = (rarities.get(newIndex).equals("null") ? null : Rarity.valueOf(rarities.get(newIndex)));
+        tier = (rarities.get(newIndex).equals("null") ? null : Rarity.valueOf(rarities.get(newIndex)));
 
         update();
     }
@@ -119,7 +119,7 @@ public class AuctionSettings implements ConfigurationSerializable {
 
     public static AuctionSettings deserialize(Map<String, Object> value) {
         return new AuctionSettings(AuctionCategory.valueOf((String) value.get("category")),
-                AuctionSort.valueOf((String) value.get("sort")), (!value.get("teir").equals("null") ? Rarity.valueOf((String) value.get("teir")) : null),
+                AuctionSort.valueOf((String) value.get("sort")), (!value.get("tier").equals("null") ? Rarity.valueOf((String) value.get("tier")) : null),
                 BinFilter.valueOf((String) value.get("binFilter")), Boolean.parseBoolean((String) value.get("bin")));
     }
 }
