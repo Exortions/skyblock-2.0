@@ -9,6 +9,7 @@ import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 
 import com.skyblock.skyblock.utilities.item.ItemHandler;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -95,7 +96,8 @@ public class MinionListener implements Listener {
                     }
 
                     if (current.getItemMeta().getDisplayName().contains("Quick-Upgrade") && current.getItemMeta().hasLore() && current.getItemMeta().getLore().stream().anyMatch((s) -> s.contains("Click to upgrade!"))) {
-                        minion.upgrade(player, minion.level + 1);
+                        NBTItem nbt = new NBTItem(current);
+                        minion.upgrade(player, minion.level + 1, nbt.getString("item"), nbt.getInteger("amount"));
                     }
                 }
 

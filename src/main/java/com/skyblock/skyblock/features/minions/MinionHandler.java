@@ -9,6 +9,7 @@ import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.utilities.Pair;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import de.tr7zw.nbtapi.NBTItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -76,7 +77,7 @@ public class MinionHandler {
     };
 
     public static ItemStack createNextTeirItem(MinionBase minion) {
-        if (minion.getLevel() >= 11) return new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT).addLore("&7The highest tier of this minion", "has been reached!", " ", ChatColor.GREEN + "Highest tier has been reached!").toItemStack();
+        if (minion.getLevel() >= 11) return new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT).addLore("&7The highest tier of this minion", "&7has been reached!", " ", ChatColor.GREEN + "Highest tier has been reached!").toItemStack();
 
         ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT)
                 .addLore("&7View the items required to", "&7upgrade this minion to the next", "&7tier.", " ",
@@ -99,8 +100,7 @@ public class MinionHandler {
         builder.addLore(ChatColor.GRAY + "Time Between Actions: &a" + minion.getTimeBetweenActions() + "s",
                 ChatColor.GRAY + "Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage() + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(), " ");
 
-        SkyblockRecipe recipe = Skyblock.getPlugin().getRecipeHandler().getRecipe(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + minion.getLevel() + ".json"));
-        Bukkit.broadcastMessage(recipe.getItems() + "");
+        SkyblockRecipe recipe = Skyblock.getPlugin().getRecipeHandler().getRecipe(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + (minion.getLevel() + 1) + ".json"));
 
         HashMap<ItemStack, Integer> items = new HashMap<>();
         for (String item : recipe.getItems()) {
@@ -120,11 +120,25 @@ public class MinionHandler {
 
         StringBuilder req = new StringBuilder(ChatColor.RED + "You need ");
 
+        Map<String, Object> map = new HashMap<>();
+
         for (ItemStack item : items.keySet()) {
             int amount = items.get(item);
 
-            if (!player.getInventory().contains(item.getType(), amount))
-                req.append(ChatColor.GOLD).append(amount).append(" ").append(ChatColor.RED).append("more ").append(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+            int inInventory = 0;
+
+            map.put("item", item.getItemMeta().getDisplayName());
+            map.put("amount", amount);
+
+            for (ItemStack inv : player.getInventory().getContents()) {
+                if (inv == null) continue;
+                if (!inv.hasItemMeta()) continue;
+                if (!inv.getItemMeta().hasDisplayName()) continue;
+                if (inv.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) inInventory += inv.getAmount();
+            }
+
+            if (inInventory < amount)
+                req.append(ChatColor.GOLD).append(amount - inInventory).append(" ").append(ChatColor.RED).append("more ").append(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
         }
 
         if (req.toString().equals(ChatColor.RED + "You need ")) {
@@ -133,7 +147,14 @@ public class MinionHandler {
             builder.addLore(ChatPaginator.wordWrap(req.toString(), 17));
         }
 
-        return builder.toItemStack();
+        NBTItem nbt = new NBTItem(builder.toItemStack());
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getValue() instanceof String) nbt.setString(entry.getKey(), (String) entry.getValue());
+            if (entry.getValue() instanceof Integer) nbt.setInteger(entry.getKey(), (int) entry.getValue());
+        }
+
+        return nbt.getItem();
     }
 
     @Getter

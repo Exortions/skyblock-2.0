@@ -310,8 +310,41 @@ public class MiningMinion extends MinionBase {
     }
 
     @Override
-    public void upgrade(SkyblockPlayer player, int level) {
-        Bukkit.broadcastMessage("upgrade");
+    public void upgrade(SkyblockPlayer player, int level, String item, int amount) {
+        this.level = level;
+        player.getBukkitPlayer().closeInventory();
+        player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
+
+        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have upgraded your " + name + " to tier " + Util.toRoman(level));
+
+        List<MinionHandler.MinionSerializable> minions = new ArrayList<>();
+
+        for (MinionHandler.MinionSerializable minion : player.getMinions()) {
+            if (!minion.getUuid().equals(uuid)) minions.add(minion);
+        }
+
+        minions.add(new MinionHandler.MinionSerializable(this, type, minion.getLocation(), player.getBukkitPlayer().getUniqueId(), uuid, level));
+
+        player.setMinions(minions);
+
+        int amountRemoved = 0;
+        for (ItemStack itemInv : player.getBukkitPlayer().getInventory().getContents()) {
+            if (itemInv == null) continue;
+            if (!itemInv.hasItemMeta()) continue;
+            if (!itemInv.getItemMeta().hasDisplayName()) continue;
+            if (!itemInv.getItemMeta().getDisplayName().equals(item)) continue;
+
+            while (amountRemoved != amount && itemInv.getAmount() != 0) {
+                amountRemoved += 1;
+                if (itemInv.getAmount() != 1) itemInv.setAmount(itemInv.getAmount() - 1);
+                else {
+                    player.getBukkitPlayer().getInventory().remove(itemInv);
+                    break;
+                }
+            }
+
+            if (amountRemoved == amount) break;
+        }
     }
 
     @Override

@@ -86,7 +86,7 @@ public abstract class MinionBase {
     public abstract void spawn(SkyblockPlayer player, Location location, int level);
     public abstract void pickup(SkyblockPlayer player, Location location);
 
-    public abstract void upgrade(SkyblockPlayer player, int level);
+    public abstract void upgrade(SkyblockPlayer player, int level, String item, int amount);
     public abstract void collect(SkyblockPlayer player, int slot);
     public abstract void collect(SkyblockPlayer player);
     public abstract Material getMaterial();
