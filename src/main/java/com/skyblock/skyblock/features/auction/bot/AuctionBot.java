@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.auction.bot;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.auction.Auction;
 import com.skyblock.skyblock.features.auction.AuctionBid;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
@@ -119,13 +120,28 @@ public class AuctionBot {
                             NBTCompound extraAttributes = nbt.getCompoundList("i")
                                     .get(0).getCompound("tag")
                                     .getCompound("ExtraAttributes");
+
+                            ItemBase base = new ItemBase(neu);
+
                             if (extraAttributes.hasKey("enchantments")) {
                                 NBTCompound enchantments = extraAttributes.getCompound("enchantments");
-                                ItemBase base = new ItemBase(neu);
                                 for (String key : enchantments.getKeys()) {
                                     base.setEnchantment(key, enchantments.getInteger(key));
                                 }
                                 neu = base.createStack();
+                            }
+
+                            if (extraAttributes.hasKey("modifier")) {
+                                String reforgeString = extraAttributes.getString("modifier").toUpperCase();
+                                Reforge reforge = Reforge.valueOf(reforgeString);
+
+                                if (Skyblock.getPlugin().getReforgeHandler().getReforge(reforge) == null)
+                                    reforge = Reforge.NONE;
+
+                                if (reforgeString.equalsIgnoreCase("ancient")) reforge = Reforge.FIERCE;
+                                if (reforgeString.equalsIgnoreCase("fabled")) reforge = Reforge.SPICY;
+
+                                base.setReforge(reforge);
                             }
 
                             long startTime = (long) auction.get("start");

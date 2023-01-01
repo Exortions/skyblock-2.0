@@ -11,6 +11,7 @@ import lombok.Getter;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -88,6 +89,8 @@ public abstract class MinionBase {
     public abstract void upgrade(SkyblockPlayer player, int level);
     public abstract void collect(SkyblockPlayer player, int slot);
     public abstract void collect(SkyblockPlayer player);
+    public abstract Material getMaterial();
+    public abstract int getNextMaxStorage();
 
     public void collectAll(SkyblockPlayer player) {
         for (int i = 0; i < gui.getSize(); i++) collect(player, i);

@@ -88,7 +88,7 @@ public class MiningMinion extends MinionBase {
         this.minion.setCustomName("");
         this.minion.setCustomNameVisible(false);
         this.minion.setGravity(false);
-        this.minion.setVisible(false);
+        this.minion.setVisible(true);
         this.minion.setSmall(true);
         this.minion.setArms(true);
         this.minion.setBasePlate(false);
@@ -311,7 +311,17 @@ public class MiningMinion extends MinionBase {
 
     @Override
     public void upgrade(SkyblockPlayer player, int level) {
-        // TODO: Implement upgrade system
+        Bukkit.broadcastMessage("upgrade");
+    }
+
+    @Override
+    public Material getMaterial() {
+        return this.type.getMaterial();
+    }
+
+    @Override
+    public int getNextMaxStorage() {
+        return type.getGetMaximumStorage().apply(this.level + 1);
     }
 
     @Override
@@ -321,8 +331,10 @@ public class MiningMinion extends MinionBase {
         Util.fillEmpty(this.gui);
 
         this.gui.setItem(4, MinionHandler.createMinionPreview.apply(this));
+        this.gui.setItem(5, MinionHandler.createNextTeirItem(this));
 
         this.gui.setItem(3, MinionHandler.MINION_INVENTORY_IDEAL_LAYOUT);
+        this.gui.setItem(50, MinionHandler.createQuickUpgrade(this, player.getBukkitPlayer()));
         this.gui.setItem(53, MinionHandler.MINION_INVENTORY_PICKUP_MINION);
         
         MinionItem skin = this.minionItems[getItemSlots(MinionItemType.SKIN).get(0)];

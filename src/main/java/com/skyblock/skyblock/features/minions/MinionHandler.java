@@ -4,12 +4,15 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.enums.MinionType;
+import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.utilities.Pair;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import net.minecraft.server.v1_8_R3.Tuple;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,8 +20,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.ChatPaginator;
 
 import java.util.*;
 import java.util.function.Function;
@@ -69,6 +74,67 @@ public class MinionHandler {
 
         return stack;
     };
+
+    public static ItemStack createNextTeirItem(MinionBase minion) {
+        if (minion.getLevel() >= 11) return new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT).addLore("&7The highest tier of this minion", "has been reached!", " ", ChatColor.GREEN + "Highest tier has been reached!").toItemStack();
+
+        ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + "Next Teir", Material.GOLD_INGOT)
+                .addLore("&7View the items required to", "&7upgrade this minion to the next", "&7tier.", " ",
+                        "&7Time Between Actions: &a" + minion.getTimeBetweenActions() + "s",
+                        "&7Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage() + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(),
+                        " ", ChatColor.YELLOW + "Click to view!");
+
+        return builder.toItemStack();
+    }
+
+    public static ItemStack createQuickUpgrade(MinionBase minion, Player player) {
+        ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + "Quick-Upgrade Minion", Material.DIAMOND)
+                .addLore("&7Click here to upgrade your", "&7minion to the next tier.", " ");
+
+        if (minion.getLevel() >= 11){
+            builder.addLore(ChatColor.RED + "This minion has reached the", ChatColor.RED + "maximum tier.");
+            return builder.toItemStack();
+        }
+
+        builder.addLore(ChatColor.GRAY + "Time Between Actions: &a" + minion.getTimeBetweenActions() + "s",
+                ChatColor.GRAY + "Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage() + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(), " ");
+
+        SkyblockRecipe recipe = Skyblock.getPlugin().getRecipeHandler().getRecipe(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + minion.getLevel() + ".json"));
+        Bukkit.broadcastMessage(recipe.getItems() + "");
+
+        HashMap<ItemStack, Integer> items = new HashMap<>();
+        for (String item : recipe.getItems()) {
+            if (recipe.getItems().indexOf(item) == 4) continue;
+
+            String[] split = item.split(":");
+            ItemStack neu = Skyblock.getPlugin().getItemHandler().getItem(split[0] + ".json");
+            int amount = Integer.parseInt(split[1]);
+
+            if (!items.containsKey(neu)) {
+                items.put(neu, amount);
+                continue;
+            }
+
+            items.put(neu, items.get(neu) + amount);
+        }
+
+        StringBuilder req = new StringBuilder(ChatColor.RED + "You need ");
+
+        for (ItemStack item : items.keySet()) {
+            int amount = items.get(item);
+
+            if (!player.getInventory().contains(item.getType(), amount))
+                req.append(ChatColor.GOLD).append(amount).append(" ").append(ChatColor.RED).append("more ").append(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+        }
+
+        if (req.toString().equals(ChatColor.RED + "You need ")) {
+            builder.addLore(ChatColor.YELLOW + "Click to upgrade!");
+        } else {
+            builder.addLore(ChatPaginator.wordWrap(req.toString(), 17));
+        }
+
+        return builder.toItemStack();
+    }
 
     @Getter
     @AllArgsConstructor

@@ -2,11 +2,14 @@ package com.skyblock.skyblock.features.minions;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.crafting.gui.RecipeGUI;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 
+import com.skyblock.skyblock.utilities.item.ItemHandler;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -85,6 +88,14 @@ public class MinionListener implements Listener {
                     if (current.getItemMeta().getDisplayName().contains("Collect All")) {
                         minion.collectAll(player);
                         return;
+                    }
+
+                    if (current.getItemMeta().getDisplayName().contains("Next Teir") && minion.getLevel() < 11) {
+                        new RecipeGUI(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + (minion.getLevel() + 1) + ".json"), null, minion.getGui(), player.getBukkitPlayer()).show(player.getBukkitPlayer());
+                    }
+
+                    if (current.getItemMeta().getDisplayName().contains("Quick-Upgrade") && current.getItemMeta().hasLore() && current.getItemMeta().getLore().stream().anyMatch((s) -> s.contains("Click to upgrade!"))) {
+                        minion.upgrade(player, minion.level + 1);
                     }
                 }
 

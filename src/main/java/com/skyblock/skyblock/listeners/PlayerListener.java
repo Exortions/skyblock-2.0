@@ -33,6 +33,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -458,9 +459,16 @@ public class PlayerListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onWeather(WeatherChangeEvent e) {
+        e.setCancelled(true);
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClick(InventoryClickEvent e) {
         ItemStack item = e.getCurrentItem();
+
+        if (!Util.notNull(item)) return;
 
         if (item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Skyblock Menu")) {
             ((Player) e.getWhoClicked()).performCommand("sb gui skyblock_menu");
