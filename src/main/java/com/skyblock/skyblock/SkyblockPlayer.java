@@ -946,6 +946,7 @@ public class SkyblockPlayer {
         }
 
         this.setValue("island.minions", getMinions());
+        this.setValue("island.last_login", System.currentTimeMillis());
 
         saveToDisk();
 

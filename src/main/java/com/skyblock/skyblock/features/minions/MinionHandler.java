@@ -295,6 +295,11 @@ public class MinionHandler {
             }
 
             minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
+
+            long secondsSince = ((System.currentTimeMillis() - (long) player.getValue("island.last_login"))) / 1000;
+            long actionsPerformed = (long) Math.floor((secondsSince / minion.getBase().getTimeBetweenActions()) / 2);
+
+            for (int i = 0; i < actionsPerformed; i++) minion.getBase().collect(player);
         }
     }
 
