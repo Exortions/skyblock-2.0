@@ -225,7 +225,7 @@ public abstract class SkyblockEntity {
             for (EntityDrop drop : drops) {
                 EntityDropRarity type = drop.getRarity();
                 double r = Util.random(0.0, 100);
-                double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND) / 100.0;
+                double magicFind = getLastDamager().getStat(SkyblockStat.MAGIC_FIND);
                 double c = drop.getChance() + magicFind;
                 if (r > c) continue;
                 if (foundRareDrop && type != EntityDropRarity.COMMON) continue;
@@ -234,7 +234,7 @@ public abstract class SkyblockEntity {
 
                 if (type != EntityDropRarity.COMMON && getLastDamager() != null) {
                     getLastDamager().getBukkitPlayer().playSound(getLastDamager().getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
-                    getLastDamager().getBukkitPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "RARE DROP " + drop.getItem().getItemMeta().getDisplayName() + (getLastDamager().getStat(SkyblockStat.MAGIC_FIND) > 0 ? " " + ChatColor.AQUA + "(" + getLastDamager().getStat(SkyblockStat.MAGIC_FIND) + "% Magic Find)" : ""));
+                    getLastDamager().getBukkitPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "RARE DROP " + drop.getItem().getItemMeta().getDisplayName() + (magicFind > 0 ? " " + ChatColor.AQUA + "(" + magicFind + "% Magic Find)" : ""));
                 }
 
                 if (!hasTelekinesis) getLastDamager().dropItem(stack, getVanilla().getLocation());
