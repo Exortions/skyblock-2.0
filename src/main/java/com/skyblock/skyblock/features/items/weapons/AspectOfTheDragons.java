@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.items.weapons;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.SkyblockItem;
@@ -19,12 +18,8 @@ import java.util.HashMap;
 
 public class AspectOfTheDragons extends SkyblockItem {
 
-    private final Skyblock plugin;
-
-    public AspectOfTheDragons(Skyblock plugin) {
+    public AspectOfTheDragons() {
         super(plugin.getItemHandler().getItem("ASPECT_OF_THE_DRAGON.json"), "aspect_of_the_dragon");
-
-        this.plugin = plugin;
     }
 
     public Entity[] getEntitiesInFront(Player player, int range) {

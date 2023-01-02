@@ -55,15 +55,15 @@ public class SkyblockItemHandler {
         registerItem(new TreeCapitator());
 
         // Weapons
-        registerItem(new AspectOfTheDragons(plugin));
-        registerItem(new AspectOfTheEnd(plugin));
-        registerItem(new EndStoneSword(plugin));
-        registerItem(new RogueSword(plugin));
+        registerItem(new AspectOfTheDragons());
+        registerItem(new AspectOfTheEnd());
+        registerItem(new EndStoneSword());
+        registerItem(new RogueSword());
         registerItem(new AspectOfTheJerry());
         registerItem(new EmberRod());
         registerItem(new EndSword());
         registerItem(new Cleaver());
-        registerItem(new GolemSword(plugin));
+        registerItem(new GolemSword());
         registerItem(new UndeadSword());
         registerItem(new RevenantFalchion());
         registerItem(new ReaperFalchion());

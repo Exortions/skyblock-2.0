@@ -3,7 +3,6 @@ package com.skyblock.skyblock.features.items.weapons;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.Location;
@@ -18,7 +17,7 @@ import java.util.Set;
 
 public class AspectOfTheEnd extends SkyblockItem {
 
-    public AspectOfTheEnd(Skyblock plugin) {
+    public AspectOfTheEnd() {
         super(plugin.getItemHandler().getItem("ASPECT_OF_THE_END.json"), "aspect_of_the_end");
     }
 
