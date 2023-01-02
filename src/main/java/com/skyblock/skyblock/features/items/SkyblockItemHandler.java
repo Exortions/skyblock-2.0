@@ -66,6 +66,7 @@ public class SkyblockItemHandler {
         registerItem(new GolemSword(plugin));
         registerItem(new UndeadSword());
         registerItem(new RevenantFalchion());
+        registerItem(new ReaperFalchion());
         registerItem(new SpiderSword());
         registerItem(new ZombieSword());
         registerItem(new MidasSword());
