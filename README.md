@@ -1,5 +1,5 @@
 # Credit
-Made by Exortions and OptimusChen with help from UltraBlackLinux
+Made by Exortions, OptimusChen, and UltraBlackLinux
 
 Used mob loot tables from the BlueCommander Hypixel Skyblock Remake
 
