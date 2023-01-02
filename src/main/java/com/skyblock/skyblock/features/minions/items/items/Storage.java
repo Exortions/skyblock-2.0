@@ -75,15 +75,18 @@ public class Storage extends ListeningMinionItem {
             }
             
             event.getBlockPlaced().setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), minion.getUuid().toString()));
-            //event.getBlockPlaced().setMetadata("capacity", new FixedMetadataValue(Skyblock.getPlugin(), capacity));
-            //event.getBlockPlaced().setMetadata("minion_item", new FixedMetadataValue(Skyblock.getPlugin(), this));
             minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)] = this;
         }
     }
 
-    @EventHandler
+    @EventHandler(priority=EventPriority.HIGHEST)
     public void onMinionchestBreak(BlockBreakEvent event) {
-        if (event.getBlock().hasMetadata("minion_id")) {
+        if (event.getBlock().hasMetadata("minion_id")
+                && event.getBlock().getState() instanceof Chest
+                && ((Chest) event.getBlock().getState()).getBlockInventory().getTitle()
+                    .equals(getItem().getItemMeta().getDisplayName())) {
+            event.setCancelled(true);
+
             MinionBase minion = Skyblock.getPlugin().getMinionHandler().getMinion(
                 UUID.fromString(event.getBlock().getMetadata("minion_id").get(0).asString()));
 
@@ -92,6 +95,10 @@ public class Storage extends ListeningMinionItem {
                 event.getPlayer().getWorld().dropItem(event.getBlock().getLocation(), Util.toSkyblockItem(minion.inventory.get(minion.inventory.size() - 1))); //send to inventory?
                 minion.inventory.remove(minion.inventory.size() - 1);
             }
+
+            event.getBlock().setType(Material.AIR);
+
+            event.getPlayer().getWorld().dropItem(event.getBlock().getLocation(), getItem());            
         }
     }
 
