@@ -128,7 +128,6 @@ public class AuctionBot {
                                 for (String key : enchantments.getKeys()) {
                                     base.setEnchantment(key, enchantments.getInteger(key));
                                 }
-                                neu = base.createStack();
                             }
 
                             if (extraAttributes.hasKey("modifier")) {
@@ -143,6 +142,8 @@ public class AuctionBot {
 
                                 base.setReforge(reforge);
                             }
+
+                            neu = base.createStack();
 
                             long startTime = (long) auction.get("start");
                             long endTime = (long) auction.get("end");
