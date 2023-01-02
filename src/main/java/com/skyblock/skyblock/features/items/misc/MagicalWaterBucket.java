@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.items.misc;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.items.ListeningItem;
 import com.skyblock.skyblock.utilities.Util;
@@ -9,7 +8,7 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 public class MagicalWaterBucket extends ListeningItem {
 
-    public MagicalWaterBucket(Skyblock plugin) {
+    public MagicalWaterBucket() {
         super(plugin.getItemHandler().getItem("MAGICAL_WATER_BUCKET.json"), "magical_water_bucket");
     }
 

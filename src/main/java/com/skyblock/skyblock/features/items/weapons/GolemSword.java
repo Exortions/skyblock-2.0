@@ -7,7 +7,10 @@ import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -17,11 +20,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public class GolemSword extends SkyblockItem {
 
-    public GolemSword(Skyblock plugin) {
+    public GolemSword() {
         super(plugin.getItemHandler().getItem("GOLEM_SWORD.json"), "golem_sword");
     }
 

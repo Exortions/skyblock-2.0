@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.items.misc;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.items.ListeningItem;
 import org.bukkit.ChatColor;
@@ -9,11 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-
 public class GrapplingHook extends ListeningItem {
 
-    public GrapplingHook(Skyblock plugin) {
+    public GrapplingHook() {
         super(plugin.getItemHandler().getItem("GRAPPLING_HOOK.json"), "grappling_hook");
     }
 

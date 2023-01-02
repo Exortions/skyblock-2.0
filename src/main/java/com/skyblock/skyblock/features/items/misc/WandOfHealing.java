@@ -1,21 +1,20 @@
 package com.skyblock.skyblock.features.items.misc;
 
-import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.enums.*;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.items.ListeningItem;
-import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.Util;
-import org.bukkit.Sound;
-import org.bukkit.event.EventHandler;
+import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.event.player.PlayerInteractEvent;
+
 import java.util.HashMap;
 
 public class WandOfHealing extends ListeningItem {
     private final int healingAmount;
 
-    public WandOfHealing(Skyblock plugin, String type, int heals) {
+    public WandOfHealing(String type, int heals) {
         super(plugin.getItemHandler().getItem(type + ".json"), type.toLowerCase());
         healingAmount = heals;
     }

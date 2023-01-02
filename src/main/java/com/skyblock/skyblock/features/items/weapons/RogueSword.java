@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.features.items.weapons;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.items.SkyblockItem;
@@ -10,11 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RogueSword extends SkyblockItem {
 
-    public RogueSword(Skyblock plugin) {
+    public RogueSword() {
         super(plugin.getItemHandler().getItem("ROGUE_SWORD.json"), "rogue_sword");
     }
 

@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.items.weapons;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.items.SkyblockItem;
@@ -13,12 +12,9 @@ import java.util.HashMap;
 
 public class EndStoneSword extends SkyblockItem {
 
-    private final Skyblock plugin;
 
-    public EndStoneSword(Skyblock plugin) {
+    public EndStoneSword() {
         super(plugin.getItemHandler().getItem("END_STONE_SWORD.json"), "end_stone_sword");
-
-        this.plugin = plugin;
     }
 
     @Override
