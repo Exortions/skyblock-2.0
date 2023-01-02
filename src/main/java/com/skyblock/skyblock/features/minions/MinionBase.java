@@ -46,11 +46,9 @@ public abstract class MinionBase {
     protected ArmorStand minion;
     protected ArmorStand text;
 
-    protected double timeBetweenActions;
     protected int resourcesGenerated;
     protected int maxStorage;
     protected int actionRadius;
-    public int additionalActionRadius = 0;
 
     protected Inventory gui;
 
@@ -58,6 +56,10 @@ public abstract class MinionBase {
 
     protected final ArrayList<MinionItemType> minionItemSlots;
     public MinionItem[] minionItems; 
+    public double timeBetweenActions; // Modified by Fuel
+    public int additionalActionRadius = 0; // Modified by Upgrade
+    public int fuelAmount = 1;
+    public long fuelAddedTime = 0; // minutes
 
     public MinionBase(UUID uuid, MinionType<?> type, String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
         this.uuid = uuid;

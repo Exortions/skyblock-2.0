@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.minions.items.items;
+package com.skyblock.skyblock.features.minions.items.storages;
 
 import java.util.ArrayList;
 import java.util.UUID;

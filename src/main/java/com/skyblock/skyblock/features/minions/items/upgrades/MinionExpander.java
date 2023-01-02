@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.minions.items.items;
+package com.skyblock.skyblock.features.minions.items.upgrades;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

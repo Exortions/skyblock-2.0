@@ -4,9 +4,10 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.features.island.IslandManager;
-import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
-import com.skyblock.skyblock.features.minions.items.items.Storage;
+import com.skyblock.skyblock.features.minions.items.MinionItem;
+import com.skyblock.skyblock.features.minions.items.MinionFuel;
+import com.skyblock.skyblock.features.minions.items.storages.Storage;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 
@@ -228,6 +229,18 @@ public class MiningMinion extends MinionBase {
                 }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
             }
         }
+
+        for (int i = 0; i < minionItems.length; ++i) {
+            if (minionItems[i] != null && minionItems[i] instanceof MinionFuel) {
+                if (fuelAddedTime + ((MinionFuel) minionItems[i]).duration < Math.floor(System.currentTimeMillis() / 60000) && --fuelAmount < 1) {
+                    minionItems[i].onUnEquip(this);
+                    minionItems[i] = null;
+                }
+                break;
+            }
+        }
+
+        this.timeBetweenActions = this.type.getTimeBetweenActions().apply(this.level); // Fuel
         for (int i = 0; i < minionItems.length; ++i) {
             if (minionItems[i] != null) minionItems[i].onTick(this);
         }

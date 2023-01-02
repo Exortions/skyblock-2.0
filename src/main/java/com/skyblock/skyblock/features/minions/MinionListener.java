@@ -4,10 +4,11 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.crafting.gui.RecipeGUI;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.features.minions.items.MinionFuel;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
-import com.skyblock.skyblock.features.minions.items.items.Storage;
+import com.skyblock.skyblock.features.minions.items.storages.Storage;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -91,7 +92,9 @@ public class MinionListener implements Listener {
                 if (remove) {
                     for (int i = 0; i < minion.minionItems.length; ++i) {
                         if (minion.minionItems[i] != null && minion.minionItems[i].isThisItem(current)) {
-                            player.getBukkitPlayer().getInventory().addItem(mih.getRegistered(current).getItem());
+                            if (!(minion.minionItems[i] instanceof MinionFuel && ((MinionFuel) minion.minionItems[i]).duration != -1))
+                                player.getBukkitPlayer().getInventory().addItem(mih.getRegistered(current).getItem());
+                            
                             minion.minionItems[i].onUnEquip(minion);
                             minion.minionItems[i] = null;
                             break;
@@ -137,6 +140,7 @@ public class MinionListener implements Listener {
             }
         } else if (mih.isRegistered(current)) { //add upgrades
             MinionItem item = mih.getRegistered(current);
+            boolean takeAll = false;
 
             if (!item.stackable) {
                 for (int i = 0; i < minion.minionItems.length; ++i) {
@@ -146,6 +150,14 @@ public class MinionListener implements Listener {
 
             for (int i : minion.getItemSlots(item.getType()) ) {
                 if (minion.minionItems[i] == null && item.guiEquippable) {
+                    if (item instanceof MinionFuel) {
+                        if (item.stackable && current.getAmount() > 1)
+                            minion.fuelAmount = current.getAmount();
+                        else
+                            minion.fuelAmount = 1;
+
+                        minion.fuelAddedTime = System.currentTimeMillis() / 60000;
+                    }
                     minion.minionItems[i] = item;
                     minion.minionItems[i].onEquip(minion);
                     minion.showInventory(player);
@@ -153,7 +165,7 @@ public class MinionListener implements Listener {
                 }
             }
 
-            if (current.getAmount() > 1) 
+            if (current.getAmount() > 1 && !takeAll) 
                 current.setAmount(current.getAmount() - 1);
             else
                 player.getBukkitPlayer().getInventory().clear(event.getSlot());

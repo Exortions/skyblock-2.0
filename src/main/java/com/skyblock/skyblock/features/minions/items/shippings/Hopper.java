@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.minions.items.items;
+package com.skyblock.skyblock.features.minions.items.shippings;
 
 import java.util.HashMap;
 import java.util.UUID;
