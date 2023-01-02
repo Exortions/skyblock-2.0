@@ -65,7 +65,6 @@ public class EntitySpawner {
                 }
 
                 if (!hasPlayers) {
-                    Bukkit.broadcastMessage("bruh");
                     hasPlayers = true;
                     spawn();
                 }
