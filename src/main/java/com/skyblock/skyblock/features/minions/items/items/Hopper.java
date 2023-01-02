@@ -22,7 +22,7 @@ public class Hopper extends MinionItem /*implements DynamicLore*/ {
 
     private final float sellMultiplier;
     public Hopper(String type, float sellMultiplier) {
-        super(plugin.getItemHandler().getItem(type + "_HOPPER.json"), type.toLowerCase() + "hopper",  MinionItemType.SHIPPING, false);
+        super(plugin.getItemHandler().getItem(type + "_HOPPER.json"), type.toLowerCase() + "hopper",  MinionItemType.SHIPPING, false, true);
         this.sellMultiplier = sellMultiplier;
     }
 

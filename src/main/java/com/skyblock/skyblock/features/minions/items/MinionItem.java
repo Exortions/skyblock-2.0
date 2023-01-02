@@ -6,6 +6,8 @@ import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
+
+import lombok.Data;
 import lombok.Getter;
 
 import org.bukkit.entity.Player;
@@ -18,18 +20,21 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 @Getter
+@Data
 public abstract class MinionItem {
     protected static final Skyblock plugin = Skyblock.getPlugin(Skyblock.class);
     private final ItemStack item;
     private final String internalName;
-    private final MinionItemType type;
-    public final boolean canStack; 
+    protected final MinionItemType type;
+    public final boolean stackable; // use getter
+    public final boolean guiEquippable; // use getter
 
-    public MinionItem(ItemStack baseItem, String internalName, MinionItemType type, boolean canStack) {
+    public MinionItem(ItemStack baseItem, String internalName, MinionItemType type, boolean stackable, boolean guiEquippable) {
         this.item = baseItem;
         this.internalName = internalName;
         this.type = type;
-        this.canStack = canStack;
+        this.stackable = stackable;
+        this.guiEquippable = guiEquippable;
     }
 
     public boolean isThisItem(ItemStack item) {

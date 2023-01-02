@@ -11,7 +11,7 @@ import com.skyblock.skyblock.features.minions.items.MinionItemType;
 
 public class AutoSmelter extends MinionItem {
     public AutoSmelter() {
-        super(plugin.getItemHandler().getItem("AUTO_SMELTER.json"), "auto_smelter",  MinionItemType.UPGRADE, false);
+        super(plugin.getItemHandler().getItem("AUTO_SMELTER.json"), "auto_smelter",  MinionItemType.UPGRADE, false, true);
     }
 
     @Override

@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class ListeningMinionItem extends MinionItem implements Listener {
 
-    public ListeningMinionItem(ItemStack baseItem, String internalName, MinionItemType type, boolean canStack) {
-        super(baseItem, internalName, type, canStack);
+    public ListeningMinionItem(ItemStack baseItem, String internalName, MinionItemType type, boolean stackable, boolean guiEquippable) {
+        super(baseItem, internalName, type, stackable, guiEquippable);
 
         Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin(Skyblock.class));
     }

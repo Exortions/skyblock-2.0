@@ -55,10 +55,9 @@ public abstract class MinionBase {
     protected Inventory gui;
 
     public List<ItemStack> inventory;
-    public Block additionalStorage = null;
 
     protected final ArrayList<MinionItemType> minionItemSlots;
-    protected MinionItem[] minionItems; 
+    public MinionItem[] minionItems; 
 
     public MinionBase(UUID uuid, MinionType<?> type, String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorcolor, Function<Integer, Integer> getTimeBetweenActions, Function<Integer, Integer> getMaximumStorage) {
         this.uuid = uuid;
@@ -82,7 +81,7 @@ public abstract class MinionBase {
 
         this.inventory = new ArrayList<>();
 
-        minionItemSlots = new ArrayList<>(Arrays.asList(MinionItemType.SKIN, MinionItemType.FUEL, MinionItemType.SHIPPING, MinionItemType.UPGRADE, MinionItemType.UPGRADE));
+        minionItemSlots = new ArrayList<>(Arrays.asList(MinionItemType.SKIN, MinionItemType.FUEL, MinionItemType.SHIPPING, MinionItemType.UPGRADE, MinionItemType.UPGRADE, MinionItemType.STORAGE));
         minionItems = new MinionItem[minionItemSlots.size()];
     }
 

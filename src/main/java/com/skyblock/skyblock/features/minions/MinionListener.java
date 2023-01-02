@@ -6,12 +6,15 @@ import com.skyblock.skyblock.features.crafting.gui.RecipeGUI;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
+import com.skyblock.skyblock.features.minions.items.MinionItemType;
+import com.skyblock.skyblock.features.minions.items.items.Storage;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,9 +57,9 @@ public class MinionListener implements Listener {
         MinionItemHandler mih = Skyblock.getPlugin().getMinionItemHandler();
         ItemStack current = event.getCurrentItem();
         SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
-        boolean isMinionInv = event.getClickedInventory().getName().contains("Minion");
         Block targetBlock = player.getBukkitPlayer().getTargetBlock((Set<Material>) null, 4);
         boolean isMinionStorage = targetBlock.hasMetadata("minion_id"); 
+        boolean isMinionInv = event.getClickedInventory().getName().contains("Minion") && !isMinionStorage;
         if (!player.getBukkitPlayer().getOpenInventory().getTopInventory().getName().contains("Minion")) return;
 
         MinionBase minion = null;
@@ -71,7 +74,7 @@ public class MinionListener implements Listener {
         } else {
             for (MinionHandler.MinionSerializable serializable :
                     Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
-                if (serializable.getBase().additionalStorage.getLocation().equals(targetBlock.getLocation())) {
+                if (serializable.getBase().getUuid().toString().equals(targetBlock.getMetadata("minion_id").get(0).asString())) {
                     minion = serializable.getBase();
                     break;
                 }
@@ -122,22 +125,27 @@ public class MinionListener implements Listener {
                     }
 
                     minion.collect(player, new NBTItem(current).getInteger("slot"));
-                    
-                    player.getBukkitPlayer().closeInventory();
+
+                    if (isMinionInv) {
+                        minion.showInventory(player);
+                    }
+                    else {
+                        ((Storage) minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)]).openInventory((Chest) targetBlock.getState(), player.getBukkitPlayer());
+                    }
                     //((Storage) minion.additionalStorage.getMetadata("minion_item").get(0)).openInventory((Chest) minion.additionalStorage, player.getBukkitPlayer());
                 }
             }
         } else if (mih.isRegistered(current)) { //add upgrades
             MinionItem item = mih.getRegistered(current);
 
-            if (!item.canStack) {
+            if (!item.stackable) {
                 for (int i = 0; i < minion.minionItems.length; ++i) {
                     if (minion.minionItems[i] != null && minion.minionItems[i].isThisItem(current)) return;
                 }
             }
 
             for (int i : minion.getItemSlots(item.getType()) ) {
-                if (minion.minionItems[i] == null) {
+                if (minion.minionItems[i] == null && item.guiEquippable) {
                     minion.minionItems[i] = item;
                     minion.minionItems[i].onEquip(minion);
                     minion.showInventory(player);

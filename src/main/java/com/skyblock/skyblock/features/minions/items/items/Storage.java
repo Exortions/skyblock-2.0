@@ -29,6 +29,8 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 
 import de.tr7zw.nbtapi.NBTItem;
+import lombok.Data;
+import lombok.Getter;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.minions.MinionBase;
@@ -39,7 +41,7 @@ import com.skyblock.skyblock.features.minions.items.MinionItemType;
 public class Storage extends ListeningMinionItem {
     public final int capacity;
     public Storage(String name, int capacity) {
-        super(plugin.getItemHandler().getItem(name + "_STORAGE.json"), name.toLowerCase() + "_storage",  MinionItemType.STORAGE, false);
+        super(plugin.getItemHandler().getItem(name + "_STORAGE.json"), name.toLowerCase() + "_storage",  MinionItemType.STORAGE, false, false);
         this.capacity = capacity;
     }
 
@@ -59,23 +61,23 @@ public class Storage extends ListeningMinionItem {
         if (SkyblockPlayer.getPlayer(event.getPlayer()).isOnIsland() && event.getBlockPlaced().getState() instanceof Chest
                 && ((Chest) event.getBlockPlaced().getState()).getBlockInventory().getTitle().equals(getItem().getItemMeta().getDisplayName())) {
             MinionBase minion = findAdjacentMinion(event.getPlayer().getWorld(), event.getBlockPlaced().getLocation());
+
             if (minion == null) {
                 event.getPlayer().sendMessage(ChatColor.RED + "You need to place this next to a minion!");
                 event.setCancelled(true);
                 return;
             }
 
-            if (minion.additionalStorage != null) {
+            if (minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)] != null) {
                 event.getPlayer().sendMessage(ChatColor.RED + "This minion already has a chest!");
                 event.setCancelled(true);
                 return;
             }
             
-            System.out.println(minion.getUuid().toString());
             event.getBlockPlaced().setMetadata("minion_id", new FixedMetadataValue(Skyblock.getPlugin(), minion.getUuid().toString()));
-            event.getBlockPlaced().setMetadata("capacity", new FixedMetadataValue(Skyblock.getPlugin(), capacity));
+            //event.getBlockPlaced().setMetadata("capacity", new FixedMetadataValue(Skyblock.getPlugin(), capacity));
             //event.getBlockPlaced().setMetadata("minion_item", new FixedMetadataValue(Skyblock.getPlugin(), this));
-            minion.additionalStorage = event.getBlockPlaced(); //Todo: Check if already has
+            minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)] = this;
         }
     }
 
@@ -85,7 +87,7 @@ public class Storage extends ListeningMinionItem {
             MinionBase minion = Skyblock.getPlugin().getMinionHandler().getMinion(
                 UUID.fromString(event.getBlock().getMetadata("minion_id").get(0).asString()));
 
-            minion.additionalStorage = null;
+            minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)] = null;
             while(minion.inventory.size() > minion.getMaxStorage()/64) {
                 event.getPlayer().getWorld().dropItem(event.getBlock().getLocation(), Util.toSkyblockItem(minion.inventory.get(minion.inventory.size() - 1))); //send to inventory?
                 minion.inventory.remove(minion.inventory.size() - 1);
@@ -112,19 +114,29 @@ public class Storage extends ListeningMinionItem {
         int maxStorage = minion.getMaxStorage() / 64;
         if (lines == 1) {
             for (int i = 0; i < 3; ++i) {
-                NBTItem item = new NBTItem(minion.getInventory().get(maxStorage + itemIndex));
-                item.setInteger("slot", maxStorage + itemIndex);
-                gui.setItem(12 + i, maxStorage + itemIndex++ < minion.getInventory().size()
-                            ? item.getItem() : new ItemStack(Material.AIR));
+                ItemStack item = new ItemStack(Material.AIR);
+                if (maxStorage + itemIndex < minion.getInventory().size()) {
+                    NBTItem nbt = new NBTItem(minion.getInventory().get(maxStorage + itemIndex));
+                    nbt.setInteger("slot", maxStorage + itemIndex);
+                    item = nbt.getItem();
+                }
+
+                ++itemIndex;
+                gui.setItem(12 + i, item);
             }
         }
         else {
             for (int x = 0; x < lines; ++x) { //horizontal
                 for (int y = 0; y < 3; ++y) { //vertical 3-packs
-                    NBTItem item = new NBTItem(minion.getInventory().get(maxStorage + itemIndex));
-                    item.setInteger("slot", maxStorage + itemIndex);
-                    gui.setItem((int) (x + y * 9 + 4 - Math.floor(lines/2)), maxStorage + itemIndex++ < minion.getInventory().size()
-                                ? item.getItem() : new ItemStack(Material.AIR));
+                    ItemStack item = new ItemStack(Material.AIR);
+                    if (maxStorage + itemIndex < minion.getInventory().size()) {
+                        NBTItem nbt = new NBTItem(minion.getInventory().get(maxStorage + itemIndex));
+                        nbt.setInteger("slot", maxStorage + itemIndex);
+                        item = nbt.getItem();
+                    }
+
+                    ++itemIndex;
+                    gui.setItem((int) (x + y * 9 + 4 - Math.floor(lines/2)), item);
                 }
             }
         }

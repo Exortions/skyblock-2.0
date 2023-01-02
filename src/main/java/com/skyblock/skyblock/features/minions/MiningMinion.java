@@ -6,6 +6,7 @@ import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
+import com.skyblock.skyblock.features.minions.items.items.Storage;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 
@@ -253,10 +254,9 @@ public class MiningMinion extends MinionBase {
 
         Util.delay(item::remove, 1);
 
-        this.inventory.set(inventoryIndex, new ItemStack(Material.AIR));
+        this.inventory.remove(inventoryIndex);
 
         player.getBukkitPlayer().updateInventory();
-        this.showInventory(player);
     }
 
     @Override
@@ -270,8 +270,9 @@ public class MiningMinion extends MinionBase {
         this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
 
         int additionalStorageSlots = 0;
-        if (this.additionalStorage != null) additionalStorageSlots = this.additionalStorage.getMetadata("capacity").get(0).asInt();
-        
+        Storage storage = (Storage) this.minionItems[this.getItemSlots(MinionItemType.STORAGE).get(0)];
+        if (storage != null) additionalStorageSlots = storage.capacity;
+
 
         for (ItemStack drop : drops) {
             inventory.addItem(drop).values();

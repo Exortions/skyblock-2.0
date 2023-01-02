@@ -11,7 +11,7 @@ import com.skyblock.skyblock.features.minions.items.MinionItemType;
 
 public class MinionExpander extends MinionItem {
     public MinionExpander() {
-        super(plugin.getItemHandler().getItem("MINION_EXPANDER.json"), "minion_expander",  MinionItemType.UPGRADE, true);
+        super(plugin.getItemHandler().getItem("MINION_EXPANDER.json"), "minion_expander",  MinionItemType.UPGRADE, true, true);
     }
 
     @Override
