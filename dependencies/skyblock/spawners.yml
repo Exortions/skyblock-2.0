@@ -18,7 +18,7 @@ ZOMBIE_DIAMOND_RESERVE:
   subType: DIAMOND_RESERVE
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -41,7 +41,7 @@ SKELETON_DIAMOND_RESERVE:
   subType: DIAMOND_RESERVE
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -64,7 +64,7 @@ SKELETON_OBSIDIAN_SANCTUARY:
   subType: OBSIDIAN_SANCTUARY
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -87,7 +87,7 @@ ZOMBIE_OBSIDIAN_SANCTUARY:
   subType: OBSIDIAN_SANCTUARY
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -179,7 +179,7 @@ REDSTONE_PIGMAN_REDSTONE_PIGMAN:
   subType: REDSTONE_PIGMAN
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -202,7 +202,7 @@ ZOMBIE_LAPIS_ZOMBIE:
   subType: LAPIS_ZOMBIE
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -225,7 +225,7 @@ SNEAKY_CREEPER_SNEAKY_CREEPER:
   subType: SNEAKY_CREEPER
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: deep_caverns
@@ -248,7 +248,7 @@ ZOMBIE_GRAVEYARD:
   subType: GRAVEYARD
   delay: 200
   limit: 10
-  amount: 5
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: world
@@ -294,7 +294,7 @@ ZOMBIE_CRYPT_GHOUL:
   subType: CRYPT_GHOUL
   delay: 200
   limit: 30
-  amount: 10
+  amount: 15
   pos1:
     ==: org.bukkit.Location
     world: world
