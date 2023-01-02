@@ -1,6 +1,5 @@
 package com.skyblock.skyblock.features.items.misc;
 
-import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.items.DynamicLore;
 import com.skyblock.skyblock.features.items.ListeningItem;
@@ -18,7 +17,7 @@ public class BiomeStick extends ListeningItem implements DynamicLore {
 
     private final Biome biome;
 
-    public BiomeStick(Skyblock plugin, String sbid, Biome bio) {
+    public BiomeStick(String sbid, Biome bio) {
         super(plugin.getItemHandler().getItem(sbid + ".json"), sbid.toLowerCase());
         this.biome = bio;
     }

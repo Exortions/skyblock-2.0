@@ -26,23 +26,23 @@ public class SkyblockItemHandler {
         sets = new HashMap<>();
 
         // Misc
-        registerItem(new GrapplingHook(plugin));
+        registerItem(new GrapplingHook());
         registerItem(new MaddoxBatphone());
-        registerItem(new MagicalWaterBucket(plugin));
-        registerItem(new WandOfHealing(plugin, "WAND_OF_HEALING", 60));
-        registerItem(new WandOfHealing(plugin, "WAND_OF_MENDING", 100));
-        registerItem(new WandOfHealing(plugin, "WAND_OF_RESTORATION", 120));
-        registerItem(new BiomeStick(plugin, "BIRCH_FOREST_BIOME_STICK", Biome.BIRCH_FOREST));
-        registerItem(new BiomeStick(plugin, "DEEP_OCEAN_BIOME_STICK", Biome.DEEP_OCEAN));
-        registerItem(new BiomeStick(plugin, "DESERT_BIOME_STICK", Biome.DESERT));
-        //registerItem(new BiomeStick(plugin, "END_FOREST_BIOME_STICK", Biome.END));
-        registerItem(new BiomeStick(plugin, "FOREST_BIOME_STICK", Biome.FOREST));
-        registerItem(new BiomeStick(plugin, "JUNGLE_BIOME_STICK", Biome.JUNGLE));
-        registerItem(new BiomeStick(plugin, "MESA_BIOME_STICK", Biome.MESA));
-        registerItem(new BiomeStick(plugin, "SAVANNA_BIOME_STICK", Biome.SAVANNA));
-        registerItem(new BiomeStick(plugin, "TAIGA_BIOME_STICK", Biome.TAIGA));
-        //registerItem(new BiomeStick(plugin, "NETHER_BIOME_STICK", Biome.NETHER));
-        registerItem(new BiomeStick(plugin, "ROOFED_FOREST_BIOME_STICK", Biome.ROOFED_FOREST));
+        registerItem(new MagicalWaterBucket());
+        registerItem(new WandOfHealing("WAND_OF_HEALING", 60));
+        registerItem(new WandOfHealing("WAND_OF_MENDING", 100));
+        registerItem(new WandOfHealing("WAND_OF_RESTORATION", 120));
+        registerItem(new BiomeStick("BIRCH_FOREST_BIOME_STICK", Biome.BIRCH_FOREST));
+        registerItem(new BiomeStick("DEEP_OCEAN_BIOME_STICK", Biome.DEEP_OCEAN));
+        registerItem(new BiomeStick("DESERT_BIOME_STICK", Biome.DESERT));
+        //registerItem(new BiomeStick("END_FOREST_BIOME_STICK", Biome.END));
+        registerItem(new BiomeStick("FOREST_BIOME_STICK", Biome.FOREST));
+        registerItem(new BiomeStick("JUNGLE_BIOME_STICK", Biome.JUNGLE));
+        registerItem(new BiomeStick("MESA_BIOME_STICK", Biome.MESA));
+        registerItem(new BiomeStick("SAVANNA_BIOME_STICK", Biome.SAVANNA));
+        registerItem(new BiomeStick("TAIGA_BIOME_STICK", Biome.TAIGA));
+        //registerItem(new BiomeStick("NETHER_BIOME_STICK", Biome.NETHER));
+        registerItem(new BiomeStick("ROOFED_FOREST_BIOME_STICK", Biome.ROOFED_FOREST));
 
         // Tools
         registerItem(new PromisingAxe());
