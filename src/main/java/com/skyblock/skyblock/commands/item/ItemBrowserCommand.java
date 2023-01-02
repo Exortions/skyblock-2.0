@@ -83,7 +83,6 @@ public class ItemBrowserCommand implements Command {
 
             itemBrowser.addItem(53, new ItemBuilder(ChatColor.GREEN + "Next Page", Material.ARROW).toItemStack());
             itemBrowser.clickEvents.put(ChatColor.GREEN + "Next Page", () -> {
-                player.closeInventory();
                 player.performCommand(command);
                 itemBrowser.clickEvents.clear();
             });
@@ -91,7 +90,6 @@ public class ItemBrowserCommand implements Command {
             if (page != 0) {
                 itemBrowser.addItem(45, new ItemBuilder(ChatColor.GREEN + "Previous Page", Material.ARROW).toItemStack());
                 itemBrowser.clickEvents.put(ChatColor.GREEN + "Previous Page", () -> {
-                    player.closeInventory();
                     player.performCommand(backCommand);
                     itemBrowser.clickEvents.clear();
                 });
