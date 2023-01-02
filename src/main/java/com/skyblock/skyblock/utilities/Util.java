@@ -997,4 +997,16 @@ public class Util {
         return res;
     }
 
+    public List<SkyblockEntity> getNearbyEntities(Location location, double x, double y, double z) {
+        List<SkyblockEntity> entities = new ArrayList<>();
+
+        for (Entity entity : location.getWorld().getNearbyEntities(location, x, y, z)) {
+            SkyblockEntity sentity = Skyblock.getPlugin().getEntityHandler().getEntity(entity);
+
+            if (sentity != null) entities.add(sentity);
+        }
+
+        return entities;
+    }
+
 }

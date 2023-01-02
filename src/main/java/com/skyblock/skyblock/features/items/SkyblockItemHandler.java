@@ -94,11 +94,13 @@ public class SkyblockItemHandler {
         registerItem(new ExplosiveBow());
 
         // Armor Sets
-        registerItem(new StrongDragonArmor());
-        registerItem(new SuperiorDragonArmor());
-        registerItem(new WiseDragonArmor());
-        registerItem(new YoungDragonArmor());
-        registerItem(new LapisArmor());
+        registerArmorSet(new StrongDragonArmor());
+        registerArmorSet(new SuperiorDragonArmor());
+        registerArmorSet(new WiseDragonArmor());
+        registerArmorSet(new YoungDragonArmor());
+        registerArmorSet(new LapisArmor());
+        registerArmorSet(new SpeedsterArmor());
+        registerArmorSet(new SpongeArmor());
     }
 
     public ArrayList<ItemStack> getItems() {
@@ -138,7 +140,7 @@ public class SkyblockItemHandler {
         return items.get(s);
     }
 
-    private void registerItem(ArmorSet set){
+    private void registerArmorSet(ArmorSet set){
         sets.put(set.getId(), set);
     }
 

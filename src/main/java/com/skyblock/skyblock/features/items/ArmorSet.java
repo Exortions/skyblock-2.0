@@ -53,16 +53,17 @@ public abstract class ArmorSet implements Listener {
             });
         }
 
-        runnables.get(player).runTaskTimerAsynchronously(Skyblock.getPlugin(Skyblock.class), 5L, 1);
+        runnables.get(player).runTaskTimerAsynchronously(Skyblock.getPlugin(), 5L, 1);
     }
 
     public void stopFullSetBonus(Player player) {
         runnables.get(player).cancel();
+        runnables.remove(player);
     }
 
     public void onStatChange(Player player, SkyblockStat stat) { }
 
-    public abstract void tick(Player player);
+    public void tick(Player player) { }
     public double getModifiedDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
         return damage;
     }
