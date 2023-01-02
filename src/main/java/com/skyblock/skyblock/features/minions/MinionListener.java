@@ -1,33 +1,24 @@
 package com.skyblock.skyblock.features.minions;
 
-import com.sk89q.worldedit.extent.inventory.BlockBagException;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.crafting.gui.RecipeGUI;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
-import com.skyblock.skyblock.features.minions.items.items.Storage;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
-import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
@@ -68,7 +59,6 @@ public class MinionListener implements Listener {
         boolean isMinionStorage = targetBlock.hasMetadata("minion_id"); 
         if (!player.getBukkitPlayer().getOpenInventory().getTopInventory().getName().contains("Minion")) return;
 
-
         MinionBase minion = null;
         if (!isMinionStorage) {
             for (MinionHandler.MinionSerializable serializable :
@@ -78,8 +68,7 @@ public class MinionListener implements Listener {
                     break;
                 }
             }
-        }
-        else {
+        } else {
             for (MinionHandler.MinionSerializable serializable :
                     Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
                 if (serializable.getBase().additionalStorage.getLocation().equals(targetBlock.getLocation())) {
@@ -88,6 +77,7 @@ public class MinionListener implements Listener {
                 }
             }
         }
+
         if (minion == null) return;
 
         event.setCancelled(true);
@@ -106,8 +96,7 @@ public class MinionListener implements Listener {
                     }
                     minion.showInventory(player);
                 }
-            }
-            else {
+            } else {
                 if (current.getItemMeta().hasDisplayName()) {
                     if (current.getItemMeta().getDisplayName().contains("Collect All")) {
                         minion.collectAll(player);
@@ -143,12 +132,9 @@ public class MinionListener implements Listener {
                     //player.getBukkitPlayer().updateInventory();
                     player.getBukkitPlayer().closeInventory();
                     //((Storage) minion.additionalStorage.getMetadata("minion_item").get(0)).openInventory((Chest) minion.additionalStorage, player.getBukkitPlayer());
-                }
-                else
-                    minion.collect(player, event.getSlot());
+                } else minion.collect(player, event.getSlot());
             }
-        }
-        else if (mih.isRegistered(current)) { //add upgrades
+        } else if (mih.isRegistered(current)) { //add upgrades
             MinionItem item = mih.getRegistered(current);
 
             if (!item.canStack) {
