@@ -293,7 +293,6 @@ public class MiningMinion extends MinionBase {
         
 
         for (ItemStack drop : drops) {
-            drop.setAmount(64);
             inventory.addItem(drop).values();
             this.resourcesGenerated += drop.getAmount();
         }
