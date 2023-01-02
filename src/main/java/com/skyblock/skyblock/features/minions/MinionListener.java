@@ -115,24 +115,17 @@ public class MinionListener implements Listener {
 
                 if (current.getType().equals(Material.BEDROCK)) minion.pickup(player, minion.getMinion().getLocation());
 
-                if (isMinionStorage && current.getType() != Material.STAINED_GLASS_PANE) { //withdraw chest items
+                if (new NBTItem(current).hasKey("slot")) { //withdraw chest items
                     if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
                         player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
                         return;
                     }
 
-                    minion.inventory.remove(minion.inventory.lastIndexOf(current));
-                    player.getBukkitPlayer().getInventory().addItem(Util.toSkyblockItem(current)); //BUG: weird collection behviour
-
-                    Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getMinion().getLocation(), Util.toSkyblockItem(current));
-                    item.setPickupDelay(Integer.MAX_VALUE);
-                    Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
-                    Util.delay(item::remove, 1);
-
-                    //player.getBukkitPlayer().updateInventory();
+                    minion.collect(player, new NBTItem(current).getInteger("slot"));
+                    
                     player.getBukkitPlayer().closeInventory();
                     //((Storage) minion.additionalStorage.getMetadata("minion_item").get(0)).openInventory((Chest) minion.additionalStorage, player.getBukkitPlayer());
-                } else minion.collect(player, event.getSlot());
+                }
             }
         } else if (mih.isRegistered(current)) { //add upgrades
             MinionItem item = mih.getRegistered(current);

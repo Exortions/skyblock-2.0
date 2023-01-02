@@ -109,20 +109,22 @@ public class Storage extends ListeningMinionItem {
         Util.fillEmpty(gui);
         int lines = capacity / 64 / 3;
         int itemIndex = 0;
+        int maxStorage = minion.getMaxStorage() / 64;
         if (lines == 1) {
             for (int i = 0; i < 3; ++i) {
-                gui.setItem(12 + i, minion.getMaxStorage() / 64 + itemIndex < minion.getInventory().size()
-                                ? minion.getInventory().get(minion.getMaxStorage() / 64 + itemIndex++)
-                                : new ItemStack(Material.AIR));
+                NBTItem item = new NBTItem(minion.getInventory().get(maxStorage + itemIndex));
+                item.setInteger("slot", maxStorage + itemIndex);
+                gui.setItem(12 + i, maxStorage + itemIndex++ < minion.getInventory().size()
+                            ? item.getItem() : new ItemStack(Material.AIR));
             }
         }
         else {
             for (int x = 0; x < lines; ++x) { //horizontal
                 for (int y = 0; y < 3; ++y) { //vertical 3-packs
-                    gui.setItem((int) (x + y * 9 + 4 - Math.floor(lines/2)),
-                                minion.getMaxStorage() / 64 + itemIndex < minion.getInventory().size()
-                                ? minion.getInventory().get(minion.getMaxStorage() / 64 + itemIndex++)
-                                : new ItemStack(Material.AIR));
+                    NBTItem item = new NBTItem(minion.getInventory().get(maxStorage + itemIndex));
+                    item.setInteger("slot", maxStorage + itemIndex);
+                    gui.setItem((int) (x + y * 9 + 4 - Math.floor(lines/2)), maxStorage + itemIndex++ < minion.getInventory().size()
+                                ? item.getItem() : new ItemStack(Material.AIR));
                 }
             }
         }

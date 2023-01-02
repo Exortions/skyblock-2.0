@@ -8,6 +8,8 @@ import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+
+import de.tr7zw.nbtapi.NBTItem;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
@@ -53,7 +55,6 @@ public class MiningMinion extends MinionBase {
 
         this.type = minion;
 
-        this.resourcesGenerated = 0;
         this.timeBetweenActions = minion.getTimeBetweenActions().apply(this.level);
         this.maxStorage = minion.getGetMaximumStorage().apply(this.level);
     }
@@ -232,34 +233,14 @@ public class MiningMinion extends MinionBase {
     }
 
     @Override
-    public void collect(SkyblockPlayer player, int slot) {
-        List<Integer> possibleSlots = new ArrayList<>();
-
-        int slt = 21;
-        for (int i = 0; i < 15; i++) {
-            if (Math.floor(this.maxStorage / 64F) > i) possibleSlots.add(slt);
-
-            if (slt == 25) {
-                slt = 30;
-            } else if (slt == 34) {
-                slt = 39;
-            } else {
-                slt++;
-            }
-        }
-
-        if (!possibleSlots.contains(slot)) return;
-
-        int inventoryIndex = possibleSlots.indexOf(slot);
-
-        if (inventoryIndex >= inventory.size()) return;
-
-        ItemStack toCollect = this.inventory.get(inventoryIndex);
+    public void collect(SkyblockPlayer player, int inventoryIndex) {
 
         if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
             player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
             return;
         }
+
+        ItemStack toCollect = this.inventory.get(inventoryIndex);
 
         if (!Util.notNull(toCollect)) return;
 
@@ -391,8 +372,11 @@ public class MiningMinion extends MinionBase {
         int invSlot = 0;
         for (int i = 0; i < 15; i++) {
             if (Math.floor(this.maxStorage / 64F) > i) {
-	        if (invSlot < this.inventory.size())
-                	this.gui.setItem(slot, this.inventory.get(invSlot));
+	        if (invSlot < this.inventory.size() && this.inventory.get(invSlot).getType() != Material.AIR) {
+                    NBTItem item = new NBTItem(this.inventory.get(invSlot));
+                    item.setInteger("slot", invSlot);
+                    this.gui.setItem(slot, item.getItem());
+	        }
                 else
                 	this.gui.setItem(slot, new ItemStack(Material.AIR));
                 ++invSlot;
