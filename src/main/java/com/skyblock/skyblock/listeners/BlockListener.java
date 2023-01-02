@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BlockListener implements Listener {
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority=EventPriority.HIGH)
     public void onBlockPlace(BlockPlaceEvent event) {
         Material previous = event.getBlock().getType();
 
