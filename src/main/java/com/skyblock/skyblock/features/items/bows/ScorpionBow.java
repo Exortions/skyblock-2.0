@@ -54,6 +54,8 @@ public class ScorpionBow extends SkyblockItem {
                 }
 
                 event.getEntity().damage(damage, event.getPlayer(), false);
+
+                ticks++;
             }
         }.runTaskTimer(plugin, 0, 20);
     }
