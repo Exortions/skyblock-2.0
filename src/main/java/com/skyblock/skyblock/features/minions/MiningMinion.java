@@ -370,17 +370,16 @@ public class MiningMinion extends MinionBase {
         this.gui.setItem(48, MinionHandler.MINION_INVENTORY_COLLECT_ALL);
 
         int slot = 21;
-        int invSlot = 0;
         for (int i = 0; i < 15; i++) {
-            if (Math.floor(this.maxStorage / 64F) > i) {
-	        if (invSlot < this.inventory.size() && this.inventory.get(invSlot).getType() != Material.AIR) {
-                    NBTItem item = new NBTItem(this.inventory.get(invSlot));
-                    item.setInteger("slot", invSlot);
+            if (i < Math.floor(this.maxStorage / 64F) ) {
+	        if (i < this.inventory.size() && this.inventory.get(i).getType() != Material.AIR) {
+                    NBTItem item = new NBTItem(this.inventory.get(i));
+                    item.setInteger("slot", i);
                     this.gui.setItem(slot, item.getItem());
 	        }
                 else
-                	this.gui.setItem(slot, new ItemStack(Material.AIR));
-                ++invSlot;
+                    this.gui.setItem(slot, new ItemStack(Material.AIR));
+
             } else {
                 this.gui.setItem(slot, new ItemBuilder(ChatColor.YELLOW + "Storage unlocked at tier " + Util.toRoman(this.type.getLevelRequirementForStorageSlot().apply(i)), Material.STAINED_GLASS_PANE).toItemStack());
             }
@@ -390,10 +389,9 @@ public class MiningMinion extends MinionBase {
             } else if (slot == 34) {
                 slot = 39;
             } else {
-                slot++;
+                ++slot;
             }
         }
-
         player.getBukkitPlayer().openInventory(this.gui);
     }
 
