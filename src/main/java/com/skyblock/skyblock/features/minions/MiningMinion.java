@@ -304,7 +304,7 @@ public class MiningMinion extends MinionBase {
 
         this.inventory = newInventory;
 		
-        if (newInventory.stream().filter(stack -> { return stack.getType() != Material.AIR; }).size() == this.maxStorage) {
+        if (newInventory.stream().filter(stack -> stack.getType() != Material.AIR).count() == this.maxStorage) {
             this.text.setCustomName(ChatColor.RED + "My storage is full! :(");
             this.text.setCustomNameVisible(true);
             return;
