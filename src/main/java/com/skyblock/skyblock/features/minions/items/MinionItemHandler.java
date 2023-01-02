@@ -19,6 +19,9 @@ public class MinionItemHandler {
         items = new HashMap<>();
         registerItem(new AutoSmelter());
         registerItem(new MinionExpander());
+        registerItem(new Storage("SMALL", 3 * 64));
+        registerItem(new Storage("MEDIUM", 9 * 64));
+        registerItem(new Storage("LARGE", 15 * 64));
     }
 
     public ArrayList<ItemStack> getItems() {

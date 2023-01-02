@@ -4,5 +4,6 @@ public enum MinionItemType {
     SKIN,
     FUEL,
     SHIPPING,
-    UPGRADE;
+    UPGRADE,
+    STORAGE;
 }

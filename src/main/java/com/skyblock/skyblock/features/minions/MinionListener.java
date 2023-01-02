@@ -1,27 +1,36 @@
 package com.skyblock.skyblock.features.minions;
 
+import com.sk89q.worldedit.extent.inventory.BlockBagException;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.crafting.gui.RecipeGUI;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
+import com.skyblock.skyblock.features.minions.items.items.Storage;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
-
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemHandler;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class MinionListener implements Listener {
@@ -55,22 +64,36 @@ public class MinionListener implements Listener {
         ItemStack current = event.getCurrentItem();
         SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
         boolean isMinionInv = event.getClickedInventory().getName().contains("Minion");
-
+        Block targetBlock = player.getBukkitPlayer().getTargetBlock((Set<Material>) null, 4);
+        boolean isMinionStorage = targetBlock.hasMetadata("minion_id"); 
         if (!player.getBukkitPlayer().getOpenInventory().getTopInventory().getName().contains("Minion")) return;
 
-        event.setCancelled(true);
 
         MinionBase minion = null;
-        for (MinionHandler.MinionSerializable serializable : Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
-            if (serializable.getBase().getGui().equals(player.getBukkitPlayer().getOpenInventory().getTopInventory())) {
-                minion = serializable.getBase();
-                break;
+        if (!isMinionStorage) {
+            for (MinionHandler.MinionSerializable serializable :
+                    Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
+                if (serializable.getBase().getGui().equals(player.getBukkitPlayer().getOpenInventory().getTopInventory())) {
+                    minion = serializable.getBase();
+                    break;
+                }
+            }
+        }
+        else {
+            for (MinionHandler.MinionSerializable serializable :
+                    Skyblock.getPlugin().getMinionHandler().getMinions().get(player.getBukkitPlayer().getUniqueId())) {
+                if (serializable.getBase().additionalStorage.getLocation().equals(targetBlock.getLocation())) {
+                    minion = serializable.getBase();
+                    break;
+                }
             }
         }
         if (minion == null) return;
 
-        if (isMinionInv) {
-            if (mih.isRegistered(current)) {
+        event.setCancelled(true);
+
+        if (isMinionInv || isMinionStorage) {
+            if (mih.isRegistered(current) && !isMinionStorage) { //take upgrades
                 boolean remove = mih.getRegistered(current).onItemClick(player.getBukkitPlayer(), current);
                 if (remove) {
                     for (int i = 0; i < minion.minionItems.length; ++i) {
@@ -103,10 +126,29 @@ public class MinionListener implements Listener {
 
                 if (current.getType().equals(Material.BEDROCK)) minion.pickup(player, minion.getMinion().getLocation());
 
-                minion.collect(player, event.getSlot());
+                if (isMinionStorage && current.getType() != Material.STAINED_GLASS_PANE) { //withdraw chest items
+                    if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
+                        player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
+                        return;
+                    }
+
+                    minion.inventory.remove(minion.inventory.lastIndexOf(current));
+                    player.getBukkitPlayer().getInventory().addItem(Util.toSkyblockItem(current)); //BUG: weird collection behviour
+
+                    Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getMinion().getLocation(), Util.toSkyblockItem(current));
+                    item.setPickupDelay(Integer.MAX_VALUE);
+                    Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
+                    Util.delay(item::remove, 1);
+
+                    //player.getBukkitPlayer().updateInventory();
+                    player.getBukkitPlayer().closeInventory();
+                    //((Storage) minion.additionalStorage.getMetadata("minion_item").get(0)).openInventory((Chest) minion.additionalStorage, player.getBukkitPlayer());
+                }
+                else
+                    minion.collect(player, event.getSlot());
             }
         }
-        else if (mih.isRegistered(current)) {
+        else if (mih.isRegistered(current)) { //add upgrades
             MinionItem item = mih.getRegistered(current);
 
             if (!item.canStack) {
