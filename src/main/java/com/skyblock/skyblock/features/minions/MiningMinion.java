@@ -288,19 +288,24 @@ public class MiningMinion extends MinionBase {
 
         this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
 
+        int additionalStorageSlots = 0;
+        if (this.additionalStorage != null) additionalStorageSlots = this.additionalStorage.getMetadata("capacity").get(0).asInt();
+        
+
         for (ItemStack drop : drops) {
-            inventory.addItem(drop);
+            drop.setAmount(64);
+            inventory.addItem(drop).values();
             this.resourcesGenerated += drop.getAmount();
         }
 
         List<ItemStack> newInventory = new ArrayList<>();
-        for (int i = 0; i < Math.floor(this.maxStorage / 64F); ++i) {
+        for (int i = 0; i < Math.floor((this.maxStorage + additionalStorageSlots) / 64F); ++i) {
             if (inventory.getItem(i) != null) newInventory.add(inventory.getItem(i));
         }
 
         this.inventory = newInventory;
 		
-        if (newInventory.stream().filter(stack -> { return stack.getType() != Material.AIR; }).count() == Math.floor(this.maxStorage / 64F)) {
+        if (newInventory.stream().filter(stack -> { return stack.getType() != Material.AIR; }).size() == this.maxStorage) {
             this.text.setCustomName(ChatColor.RED + "My storage is full! :(");
             this.text.setCustomNameVisible(true);
             return;

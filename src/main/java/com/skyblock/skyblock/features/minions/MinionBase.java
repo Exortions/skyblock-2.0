@@ -12,6 +12,7 @@ import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -52,7 +53,9 @@ public abstract class MinionBase {
     public int additionalActionRadius = 0;
 
     protected Inventory gui;
-    protected List<ItemStack> inventory;
+
+    public List<ItemStack> inventory;
+    public Block additionalStorage = null;
 
     protected final ArrayList<MinionItemType> minionItemSlots;
     protected MinionItem[] minionItems; 
