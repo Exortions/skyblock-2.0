@@ -7,6 +7,7 @@ import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class BlockListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority=EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
         Material previous = event.getBlock().getType();
 
