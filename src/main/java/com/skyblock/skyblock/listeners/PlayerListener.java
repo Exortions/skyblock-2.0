@@ -6,6 +6,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.features.enchantment.EnchantingTableGUI;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.guis.ProfileGui;
@@ -447,7 +448,7 @@ public class PlayerListener implements Listener {
                 e.getPlayer().performCommand("sb craft");
             } else if (e.getClickedBlock().getType().equals(ENCHANTMENT_TABLE)) {
                 e.setCancelled(true);
-                e.getPlayer().performCommand("sb enchant");
+                e.getPlayer().openInventory(new EnchantingTableGUI(e.getPlayer(), e.getClickedBlock().getLocation()));
             }
         }
     }

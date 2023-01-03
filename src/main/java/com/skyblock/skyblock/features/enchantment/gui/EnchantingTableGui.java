@@ -31,9 +31,6 @@ public class EnchantingTableGui extends Gui {
 
     private final HashMap<EnchantingTableSelectionTier, List<ItemEnchantment>> enchantments = new HashMap<>();
 
-    private boolean internalRecentlyClicked = false;
-    private boolean recentlyClicked = false;
-
     public EnchantingTableGui(Player player) {
         super("Enchant Item", 54, new HashMap<String, Runnable>() {{
             put(ChatColor.RED + "Close", player::closeInventory);
@@ -91,21 +88,52 @@ public class EnchantingTableGui extends Gui {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!event.getClickedInventory().equals(this.player.getBukkitPlayer().getOpenInventory().getTopInventory()) || this.internalRecentlyClicked) return;
-
-        this.internalRecentlyClicked = true;
-
-        Util.delay(() -> this.internalRecentlyClicked = false, 2);
+        if (!event.getClickedInventory().equals(this.player.getBukkitPlayer().getOpenInventory().getTopInventory())) return;
 
         if (event.getSlot() == 13) {
+            event.setCancelled(false);
+
             ItemStack clone = event.getCurrentItem().clone();
-            this.player.getBukkitPlayer().getInventory().addItem(clone);
+            ItemStack cursor = event.getCursor();
 
-            this.resetItem();
+            if (cursor != null) {
+                ItemBase base;
 
-            this.show(this.player.getBukkitPlayer());
+                try {
+                    base = new ItemBase(cursor);
+                } catch (Exception ex) {
+                    this.player.getBukkitPlayer().sendMessage(ChatColor.RED + "You cannot enchant this item!");
+                    return;
+                }
+
+                player.getBukkitPlayer().sendMessage("test2");
+
+                player.getBukkitPlayer().sendMessage("test3");
+
+                List<ItemEnchantment> nine = this.enchant(base, EnchantingTableSelectionTier.NINE);
+                List<ItemEnchantment> eighteen = this.enchant(base, EnchantingTableSelectionTier.EIGHTEEN);
+                List<ItemEnchantment> sixty = this.enchant(base, EnchantingTableSelectionTier.SIXTY);
+
+                player.getBukkitPlayer().sendMessage("test4");
+
+                this.enchantments.put(EnchantingTableSelectionTier.NINE, nine);
+                this.enchantments.put(EnchantingTableSelectionTier.EIGHTEEN, eighteen);
+                this.enchantments.put(EnchantingTableSelectionTier.SIXTY, sixty);
+
+                player.getBukkitPlayer().sendMessage("test5");
+
+                for (EnchantingTableSelectionTier tier : EnchantingTableSelectionTier.values()) {
+                    this.addItem(tier.getSlot(), this.getEnchantingTableSelectionItem(base, tier));
+                }
+
+                player.getBukkitPlayer().sendMessage("test6");
+            } else {
+                player.getBukkitPlayer().setItemOnCursor(clone);
+
+                this.resetItem();
+            }
         }
 
         if (event.getCurrentItem().getType().equals(Material.EXP_BOTTLE) && (this.getItem(13) != null && !this.getItem(13).getType().equals(Material.AIR))) {
@@ -123,55 +151,19 @@ public class EnchantingTableGui extends Gui {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAddItem(InventoryClickEvent event) {
-        if (!event.getClickedInventory().equals(this.player.getBukkitPlayer().getInventory()) || this.recentlyClicked) return;
+        if (!event.getClickedInventory().equals(this.player.getBukkitPlayer().getInventory())) return;
 
         if (!this.player.getBukkitPlayer().getOpenInventory().getTopInventory().getName().equalsIgnoreCase(this.getName())) return;
 
-        event.setCancelled(true);
+        event.setCancelled(false);
 
-        this.recentlyClicked = true;
+//        this.recentlyClicked = true;
+//
+//        player.getBukkitPlayer().sendMessage("test");
+//
+//        Util.delay(() -> this.recentlyClicked = false, 2);
 
-        player.getBukkitPlayer().sendMessage("test");
 
-        Util.delay(() -> this.recentlyClicked = false, 2);
-
-        ItemBase base;
-
-        try {
-            base = new ItemBase(event.getCurrentItem());
-        } catch (Exception ex) {
-            this.player.getBukkitPlayer().sendMessage(ChatColor.RED + "You cannot enchant this item!");
-            return;
-        }
-
-        player.getBukkitPlayer().sendMessage("test2");
-
-        ItemStack clone = event.getCurrentItem().clone();
-
-        this.addItem(13, clone);
-        this.player.getBukkitPlayer().getInventory().removeItem(clone);
-
-        player.getBukkitPlayer().sendMessage("test3");
-
-        List<ItemEnchantment> nine = this.enchant(base, EnchantingTableSelectionTier.NINE);
-        List<ItemEnchantment> eighteen = this.enchant(base, EnchantingTableSelectionTier.EIGHTEEN);
-        List<ItemEnchantment> sixty = this.enchant(base, EnchantingTableSelectionTier.SIXTY);
-
-        player.getBukkitPlayer().sendMessage("test4");
-
-        this.enchantments.put(EnchantingTableSelectionTier.NINE, nine);
-        this.enchantments.put(EnchantingTableSelectionTier.EIGHTEEN, eighteen);
-        this.enchantments.put(EnchantingTableSelectionTier.SIXTY, sixty);
-
-        player.getBukkitPlayer().sendMessage("test5");
-
-        for (EnchantingTableSelectionTier tier : EnchantingTableSelectionTier.values()) {
-            this.addItem(tier.getSlot(), this.getEnchantingTableSelectionItem(base, tier));
-        }
-
-        player.getBukkitPlayer().sendMessage("test6");
-
-        this.show(this.player.getBukkitPlayer());
     }
 
     public ItemStack getEnchantingTableSelectionItem(ItemBase item, EnchantingTableSelectionTier tier) {
