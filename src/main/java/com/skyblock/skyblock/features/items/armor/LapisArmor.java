@@ -2,13 +2,8 @@ package com.skyblock.skyblock.features.items.armor;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.features.items.BlockHelmetSet;
-import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class LapisArmor extends BlockHelmetSet {
     public LapisArmor() {

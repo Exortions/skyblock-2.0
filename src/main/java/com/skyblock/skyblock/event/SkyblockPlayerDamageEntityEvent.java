@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 @Getter
 @AllArgsConstructor
-public class SkyblockEntityDamageByPlayerEvent extends SkyblockEvent {
+public class SkyblockPlayerDamageEntityEvent extends SkyblockEvent {
 
     private SkyblockPlayer player;
     private SkyblockEntity entity;

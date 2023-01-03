@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SkyblockCollectItemEvent extends SkyblockEvent {
+public class SkyblockPlayerCollectItemEvent extends SkyblockEvent {
 
     private final SkyblockPlayer player;
     private final Collection collection;

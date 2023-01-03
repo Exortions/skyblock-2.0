@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.blocks;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockLogBreakEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerLogBreakEvent;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
 import lombok.AllArgsConstructor;
@@ -299,7 +299,7 @@ public class RegenerativeBlockHandler implements Listener {
 
     public void breakNaturalBlock(BlockBreakEvent event, Block block, SkyblockPlayer player, String skill, double xp) {
         if (block.getType().equals(Material.LOG) || block.getType().equals(Material.LOG_2)) {
-            Bukkit.getPluginManager().callEvent(new SkyblockLogBreakEvent(player, block));
+            Bukkit.getPluginManager().callEvent(new SkyblockPlayerLogBreakEvent(player, block));
         }
 
         Skill.reward(Objects.requireNonNull(Skill.parseSkill(skill)), xp, player);

@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.bows;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class ScorpionBow extends SkyblockItem {
     }
 
     @Override
-    public void onEntityDamage(SkyblockEntityDamageByPlayerEvent event) {
+    public void onEntityDamage(SkyblockPlayerDamageEntityEvent event) {
         if (!active.contains(event.getPlayer().getBukkitPlayer().getUniqueId())) return;
 
         active.remove(event.getPlayer().getBukkitPlayer().getUniqueId());

@@ -1,7 +1,6 @@
 package com.skyblock.skyblock.features.npc;
 
-import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.event.SkyblockNPCClickEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerNPCClickEvent;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -53,7 +52,7 @@ public class NPC implements Listener {
 
         this.action.accept(player);
 
-        Bukkit.getPluginManager().callEvent(new SkyblockNPCClickEvent(player, this));
+        Bukkit.getPluginManager().callEvent(new SkyblockPlayerNPCClickEvent(player, this));
     }
 
     public static void sendMessages(Player player, String npc, String... messages) {

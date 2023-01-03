@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.crafting.gui;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockCraftEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerCraftEvent;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.utilities.Util;
@@ -162,7 +162,7 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
         event.getWhoClicked().getInventory().addItem(event.getCurrentItem());
         setItem(23, recipeRequired);
 
-        Bukkit.getPluginManager().callEvent(new SkyblockCraftEvent(recipe, (Player) event.getWhoClicked()));
+        Bukkit.getPluginManager().callEvent(new SkyblockPlayerCraftEvent(recipe, (Player) event.getWhoClicked()));
 
         for (int i = 0; i < slots.size(); i++) {
             if (excess != null && excess.get(i) == 0 && getItem(slots.get(i)) == null) {
