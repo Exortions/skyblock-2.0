@@ -2,7 +2,7 @@ package com.skyblock.skyblock;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockCoinsChangeEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerCoinUpdateEvent;
 import com.skyblock.skyblock.event.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
@@ -37,9 +37,7 @@ import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -620,7 +618,7 @@ public class SkyblockPlayer {
         dataCache.put(path, item);
         forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
 
-        if (path.equalsIgnoreCase("stats.purse")) Bukkit.getPluginManager().callEvent(new SkyblockCoinsChangeEvent(this));
+        if (path.equalsIgnoreCase("stats.purse")) Bukkit.getPluginManager().callEvent(new SkyblockPlayerCoinUpdateEvent(this));
     }
 
     public void saveToDisk() {

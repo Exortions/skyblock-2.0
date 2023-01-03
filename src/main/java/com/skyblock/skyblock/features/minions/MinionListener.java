@@ -135,7 +135,6 @@ public class MinionListener implements Listener {
                     else {
                         ((Storage) minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)]).openInventory((Chest) targetBlock.getState(), player.getBukkitPlayer());
                     }
-                    //((Storage) minion.additionalStorage.getMetadata("minion_item").get(0)).openInventory((Chest) minion.additionalStorage, player.getBukkitPlayer());
                 }
             }
         } else if (mih.isRegistered(current)) { //add upgrades
@@ -151,8 +150,10 @@ public class MinionListener implements Listener {
             for (int i : minion.getItemSlots(item.getType()) ) {
                 if (minion.minionItems[i] == null && item.guiEquippable) {
                     if (item instanceof MinionFuel) {
-                        if (item.stackable && current.getAmount() > 1)
-                            minion.fuelAmount = current.getAmount();
+                        if (item.stackable && current.getAmount() > 1) {
+                            minion.fuelAmount += current.getAmount();
+                            takeAll = true;
+                        }
                         else
                             minion.fuelAmount = 1;
 

@@ -2,10 +2,9 @@ package com.skyblock.skyblock.features.items.armor;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockAbilityTriggerEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerAbilityTriggerEvent;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.utilities.item.ItemBase;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
@@ -26,7 +25,7 @@ public class StrongDragonArmor extends ArmorSet {
     public void tick(Player player) {}
 
     @EventHandler
-    public void onAspectOfTheEnd(SkyblockAbilityTriggerEvent event) {
+    public void onAspectOfTheEnd(SkyblockPlayerAbilityTriggerEvent event) {
         SkyblockPlayer player = event.getPlayer();
         ItemBase base = event.getItem();
 

@@ -91,7 +91,7 @@ public class Storage extends ListeningMinionItem {
                 UUID.fromString(event.getBlock().getMetadata("minion_id").get(0).asString()));
 
             minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)] = null;
-            while(minion.inventory.size() > minion.getMaxStorage()/64) {
+            while(minion.inventory.size() > minion.getMaxStorage(minion.getLevel())) {
                 event.getPlayer().getWorld().dropItem(event.getBlock().getLocation(), Util.toSkyblockItem(minion.inventory.get(minion.inventory.size() - 1))); //send to inventory?
                 minion.inventory.remove(minion.inventory.size() - 1);
             }
@@ -116,9 +116,9 @@ public class Storage extends ListeningMinionItem {
         MinionBase minion = Skyblock.getPlugin().getMinionHandler().getMinion(UUID.fromString(chest.getMetadata("minion_id").get(0).asString()));
         Inventory gui = Bukkit.createInventory(null, 27, "Minion Chest");
         Util.fillEmpty(gui);
-        int lines = capacity / 64 / 3;
+        int lines = capacity / 3;
         int itemIndex = 0;
-        int maxStorage = minion.getMaxStorage() / 64;
+        int maxStorage = minion.getMaxStorage(minion.getLevel());
         if (lines == 1) {
             for (int i = 0; i < 3; ++i) {
                 ItemStack item = new ItemStack(Material.AIR);

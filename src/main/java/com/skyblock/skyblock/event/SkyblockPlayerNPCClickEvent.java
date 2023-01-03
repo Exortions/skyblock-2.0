@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 @Getter
 @AllArgsConstructor
-public class SkyblockNPCClickEvent extends SkyblockEvent {
+public class SkyblockPlayerNPCClickEvent extends SkyblockEvent {
 
     private Player player;
     private NPC npc;

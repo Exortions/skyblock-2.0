@@ -8,6 +8,7 @@ import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
+import com.skyblock.skyblock.features.minions.CobblestoneMinion;
 import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.time.gui.CalendarEventsGUI;
@@ -51,8 +52,8 @@ public class TestCommand implements Command {
 //
 //        player.teleport(new Location(Bukkit.createWorld(new WorldCreator(args[0])), 0, 100, 0));
 
-        MinionBase minion = new MiningMinion(MiningMinionType.COBBLESTONE);
-        minion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 6);
+            MinionBase minion = new CobblestoneMinion();
+            minion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 6);
 
 //        ItemStack item = player.getItemInHand();
 //

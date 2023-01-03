@@ -1,16 +1,14 @@
 package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockCoinsChangeEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerCoinUpdateEvent;
 import com.skyblock.skyblock.features.items.DynamicLore;
 import com.skyblock.skyblock.features.items.ListeningItem;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class EmeraldBlade extends ListeningItem implements DynamicLore {
@@ -19,7 +17,7 @@ public class EmeraldBlade extends ListeningItem implements DynamicLore {
     }
 
     @EventHandler
-    public void onCoin(SkyblockCoinsChangeEvent e) {
+    public void onCoin(SkyblockPlayerCoinUpdateEvent e) {
         for (ItemStack item : e.getPlayer().getBukkitPlayer().getInventory().getContents()) {
             if (!Util.notNull(item)) continue;
             if (!Util.getSkyblockId(item).equals(getInternalName())) continue;

@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 @Getter
 @AllArgsConstructor
-public class SkyblockAbilityTriggerEvent extends SkyblockEvent {
+public class SkyblockPlayerAbilityTriggerEvent extends SkyblockEvent {
 
     private final SkyblockPlayer player;
     private final ItemBase item;

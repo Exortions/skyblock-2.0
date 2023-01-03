@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockCollectItemEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerCollectItemEvent;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.items.DynamicLore;
 import com.skyblock.skyblock.features.items.ListeningItem;
@@ -11,7 +11,6 @@ import com.skyblock.skyblock.utilities.item.ItemBase;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class TacticiansSword extends ListeningItem implements DynamicLore {
     }
 
     @EventHandler
-    public void onCollectItem(SkyblockCollectItemEvent event) {
+    public void onCollectItem(SkyblockPlayerCollectItemEvent event) {
         SkyblockPlayer player = event.getPlayer();
 
         List<String> combatCollections = new ArrayList<String>() {{

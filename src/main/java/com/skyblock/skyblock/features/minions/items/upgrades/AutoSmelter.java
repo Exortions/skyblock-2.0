@@ -1,5 +1,7 @@
 package com.skyblock.skyblock.features.minions.items.upgrades;
 
+import java.util.ArrayList;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
@@ -15,31 +17,31 @@ public class AutoSmelter extends MinionItem {
     }
 
     @Override
-    public ItemStack[] onBlockCollect(MinionBase minion, ItemStack[] drops) {
-        for (int i = 0; i < drops.length; ++i) {
-            switch (drops[i].getType()) {
+    public ArrayList<ItemStack> onBlockCollect(MinionBase minion, ArrayList<ItemStack> drops) {
+        for (int i = 0; i < drops.size(); ++i) {
+            switch (drops.get(i).getType()) {
                 case COBBLESTONE:
-                    drops[i].setType(Material.STONE);
+                    drops.get(i).setType(Material.STONE);
                     break;
                 case SAND:
-                    drops[i].setType(Material.GLASS);
+                    drops.get(i).setType(Material.GLASS);
                     break;
                 case LOG:
                 case LOG_2:
-                    drops[i].setType(Material.COAL);
+                    drops.get(i).setType(Material.COAL);
                     break;
                 case GOLD_ORE:
-                    drops[i].setType(Material.GOLD_INGOT);
+                    drops.get(i).setType(Material.GOLD_INGOT);
                     break;
                 case IRON_ORE:
-                    drops[i].setType(Material.IRON_INGOT);
+                    drops.get(i).setType(Material.IRON_INGOT);
                     break;
                 case CLAY_BALL:
-                    drops[i].setType(Material.BRICK);
+                    drops.get(i).setType(Material.BRICK);
                     break;
                 case CACTUS:
-                    drops[i].setType(Material.INK_SACK);
-                    drops[i].setDurability(new Integer(2).shortValue()); //cactus green
+                    drops.get(i).setType(Material.INK_SACK);
+                    drops.get(i).setDurability(new Integer(2).shortValue()); //cactus green
                     break;
             }
         }

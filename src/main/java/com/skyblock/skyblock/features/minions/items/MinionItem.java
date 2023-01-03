@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Getter
@@ -44,8 +45,13 @@ public abstract class MinionItem {
     public void onEquip(MinionBase minion) {}
     public void onUnEquip(MinionBase minion) {}
     public void onTick(MinionBase minion) {}
+    public void postTick(MinionBase minion) {}
 
-    public ItemStack[] onBlockCollect(MinionBase minion, ItemStack[] drops) {
+    public float onSleep(MinionBase minion, float duration) {
+        return duration;
+    }
+
+    public ArrayList<ItemStack> onBlockCollect(MinionBase minion, ArrayList<ItemStack> drops) {
         return drops;
     }
     public boolean onItemClick(Player player, ItemStack item) {

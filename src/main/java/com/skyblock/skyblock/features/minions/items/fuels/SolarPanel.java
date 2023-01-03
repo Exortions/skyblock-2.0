@@ -25,10 +25,13 @@ public class SolarPanel extends MinionFuel {
     }
 
     @Override
-    public void onTick(MinionBase minion) {
+    public float onSleep(MinionBase minion, float duration) {
         long worldTime = minion.getMinion().getWorld().getTime();
-        if (worldTime > 6000 && worldTime < 18000) {
-            minion.timeBetweenActions -= minion.timeBetweenActions * 0.125;
+        double properTime = worldTime / 1000 + 6;
+        if (properTime > 6 && properTime < 18) {
+            return duration / 1.25f;
         }
+
+        return duration;
     }
 }
