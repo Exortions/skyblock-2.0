@@ -70,9 +70,27 @@ public class CobblestoneMinion extends MiningMinion {
 
     @Override
     public int getActionDelay(int level) {
-        return 14;
-
-        //FUEL HERE
+        switch (level) {
+            case 1:
+            case 2:
+                return 14;
+            case 3:
+            case 4:
+                return 12;
+            case 5:
+            case 6:
+                return 10;
+            case 7:
+            case 8:
+                return 9;
+            case 9:
+            case 10:
+                return 8;
+            case 11:
+                return 7;
+            default:
+                return 14;
+        }
     }
 
     @Override
