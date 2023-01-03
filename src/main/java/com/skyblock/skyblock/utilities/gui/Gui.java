@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.utilities.gui;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.auction.gui.AuctionHouseGUI;
 import com.skyblock.skyblock.features.bazaar.gui.BazaarCategoryGui;
 import com.skyblock.skyblock.features.crafting.gui.RecipeBookGUI;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -143,6 +145,7 @@ public class Gui implements Listener {
     public void onClick(InventoryClickEvent event) {
         if (event.getInventory().getName().equals(name) && opened.containsKey((Player) event.getWhoClicked())) {
             event.setCancelled(true);
+            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
 
             onInventoryClick(event);
 
@@ -175,7 +178,12 @@ public class Gui implements Listener {
                 return;
             }
 
-            if (clickEvents.containsKey(event.getCurrentItem().getItemMeta().getDisplayName())) clickEvents.get(event.getCurrentItem().getItemMeta().getDisplayName()).run();
+            if (clickEvents.containsKey(event.getCurrentItem().getItemMeta().getDisplayName())) {
+                clickEvents.get(event.getCurrentItem().getItemMeta().getDisplayName()).run();
+                if (skyblockPlayer.getBoolValue("settings.menuSounds")) {
+                    skyblockPlayer.getBukkitPlayer().playSound(skyblockPlayer.getBukkitPlayer().getLocation(), Sound.CLICK, 1, 1);
+                }
+            }
         }
     }
 
