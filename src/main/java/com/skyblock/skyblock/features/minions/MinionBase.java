@@ -5,6 +5,7 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MinionType;
 import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.features.minions.items.MinionFuel;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.features.minions.items.storages.Storage;
@@ -103,10 +104,50 @@ public abstract class MinionBase {
     public abstract int getMaxStorage(int level);
     public abstract ArrayList<ItemStack> calculateDrops(int level);
     public abstract int getSlotLevelRequirement(int level);
-
-    //TODO Hooks: onSleep, onTick, postTick
-    
     protected abstract void tick(SkyblockPlayer player, Location location);
+
+    private float onSleepHook() {
+        float delay = getActionDelay(this.level);
+        for (MinionItem i : minionItems) {
+            if (i != null) delay = i.onSleep(this, delay);
+        }
+        System.out.println(delay);
+
+        return delay;
+    }
+
+    private void onTickHook() {
+        for (MinionItem i : minionItems) {
+            if (i != null) i.onTick(this);
+        }
+    }
+
+    private void postTickHook() {
+        for (MinionItem i : minionItems) {
+            if (i != null) i.postTick(this);
+        }
+    }
+
+    private ArrayList<ItemStack> onBlockCollectHook(ArrayList<ItemStack> drops) {
+        for (MinionItem i : minionItems) {
+            if (i != null) drops = i.onBlockCollect(this, drops);
+        }
+
+        return drops;
+    }
+
+    private void checkFuelDuration() {
+        for (int i = 0; i < minionItems.length; ++i) {
+            if (minionItems[i] != null && minionItems[i] instanceof MinionFuel) {
+                int duration = ((MinionFuel) minionItems[i]).duration;
+                if (duration == -1) continue;
+                else if (fuelAddedTime + duration < Math.floor(System.currentTimeMillis() / 60000) && --fuelAmount < 1) {
+                    minionItems[i].onUnEquip(this);
+                    minionItems[i] = null;
+                }
+            }
+        }
+    }
 
     public void spawn(SkyblockPlayer player, Location location, int level) {
         if (!player.isOnIsland()) return;
@@ -163,12 +204,13 @@ public abstract class MinionBase {
                     return;
                 }
 
-                int ticksBetweenActions = getActionDelay(level) * 20;
+                int ticksBetweenActions = Math.round(onSleepHook() * 20);
 
                 if (i >= ticksBetweenActions) {
                     i = 0;
-
+                    onTickHook();
                     tick(player, location);
+                    postTickHook();
                 } else {
                     i++;
                 }
@@ -230,9 +272,8 @@ public abstract class MinionBase {
 
     public void collect(SkyblockPlayer player) {
         ArrayList<ItemStack> drops = calculateDrops(this.level);
-        for (MinionItem i : this.minionItems) {
-            //if (i != null) drops = i.onBlockCollect(this, drops); TODO FIX OR MOVE INTO calulateDrops
-        }
+        drops = onBlockCollectHook(drops);
+
         Inventory inventory = Bukkit.createInventory(null, 54);
 
         this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });

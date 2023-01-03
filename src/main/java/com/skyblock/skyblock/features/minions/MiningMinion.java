@@ -133,19 +133,5 @@ public abstract class MiningMinion extends MinionBase {
                 }.runTaskLater(Skyblock.getPlugin(Skyblock.class), i * 10);
             }
         }
-
-        for (int i = 0; i < minionItems.length; ++i) {
-            if (minionItems[i] != null && minionItems[i] instanceof MinionFuel) {
-                if (fuelAddedTime + ((MinionFuel) minionItems[i]).duration < Math.floor(System.currentTimeMillis() / 60000) && --fuelAmount < 1) {
-                    minionItems[i].onUnEquip(this);
-                    minionItems[i] = null;
-                }
-                break;
-            }
-        }
-
-        for (int i = 0; i < minionItems.length; ++i) {
-            if (minionItems[i] != null) minionItems[i].onTick(this);
-        }
     }
 }
