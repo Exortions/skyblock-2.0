@@ -6,6 +6,7 @@ import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.enums.MinionType;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.utilities.Pair;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -161,36 +162,55 @@ public class MinionHandler {
     public static class MinionSerializable implements ConfigurationSerializable {
 
         private final MinionBase base;
-        private final Material type;
+        private final String type;
         private final Location location;
         private final UUID owner;
         private final UUID uuid;
         private final int level;
 
+        private static ArrayList<ItemStack> serializeItems(MinionItem[] items) {
+            ArrayList<ItemStack> out = new ArrayList<>();
+            for (MinionItem minionItem : items) {
+                if (minionItem == null) out.add(null);
+                else out.add(minionItem.getItem());
+            }
+            return out;            
+        }
+
+        private static ArrayList<MinionItem> deSerializeItems(ArrayList<ItemStack> items) {
+            ArrayList<MinionItem> out = new ArrayList<>();
+            for (ItemStack minionItem : items) {
+                if (minionItem == null) out.add(null);
+                else out.add(Skyblock.getPlugin().getMinionItemHandler().getRegistered(minionItem));
+            }
+            return out;
+        }
+
         @Override
         public Map<String, Object> serialize() {
             LinkedHashMap<String, Object> result = new LinkedHashMap<>();
 
-            result.put("type", this.base.getMaterial());
+            result.put("type", this.base.getMaterial().name());
             result.put("location", this.location);
             result.put("owner", this.owner.toString());
             result.put("uuid", this.uuid.toString());
             result.put("level", this.level);
-            result.put("items", base.getInventory());
+            result.put("inventory", base.getInventory());
+            result.put("items", serializeItems(base.minionItems));
 
             return result;
         }
 
         public static MinionSerializable deserialize(Map<String, Object> args) {
             MinionBase base;
-            Material type;
+            String type;
             Location location;
             UUID owner;
             UUID uuid;
             int level;
 
             if (args.containsKey("type")) {
-                type = (Material) args.get("type");
+                type = (String) args.get("type");
             } else {
                 throw new IllegalArgumentException("Could not find serializable class MinionType<?> in serialized data");
             }
@@ -219,12 +239,19 @@ public class MinionHandler {
                 throw new IllegalArgumentException("Could not find level in serialized data");
             }
 
-            if (type == Material.COBBLESTONE) base = new CobblestoneMinion(uuid);
+            if (type == Material.COBBLESTONE.name()) base = new CobblestoneMinion(uuid);
             else base = null;
 
             if (args.containsKey("items")) {
                 assert base != null;
-                base.setInventory((List<ItemStack>) args.get("items"));
+                base.minionItems = (MinionItem[]) (deSerializeItems((ArrayList<ItemStack>) args.get("items"))).toArray();
+            } else {
+                throw new IllegalArgumentException("Could not find minion items in serialized data");
+            }
+
+            if (args.containsKey("inventory")) {
+                assert base != null;
+                base.setInventory((List<ItemStack>) args.get("inventory"));
             } else {
                 throw new IllegalArgumentException("Could not find level in serialized data");
             }
@@ -298,7 +325,7 @@ public class MinionHandler {
             this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
         }
 
-        MinionSerializable serialize = new MinionSerializable(minion, minion.getMaterial(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel());
+        MinionSerializable serialize = new MinionSerializable(minion, minion.getMaterial().name(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel());
 
         this.minions.get(player.getBukkitPlayer().getUniqueId()).add(serialize);
         player.getMinions().add(serialize);
