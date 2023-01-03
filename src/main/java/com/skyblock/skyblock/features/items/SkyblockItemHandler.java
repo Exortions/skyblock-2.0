@@ -82,6 +82,7 @@ public class SkyblockItemHandler {
         registerItem(new LeapingSword());
         registerItem(new PoochSword());
         registerItem(new InkWand());
+        registerItem(new SilkEdgeSword());
 
         // Bows
         registerItem(new RunaansBow());
