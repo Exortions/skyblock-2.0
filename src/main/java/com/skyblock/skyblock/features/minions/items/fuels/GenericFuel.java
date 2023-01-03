@@ -16,6 +16,6 @@ public class GenericFuel extends MinionFuel {
 
     @Override
     public void onTick(MinionBase minion) {
-        minion.timeBetweenActions -= minion.timeBetweenActions * bonus;
+        //minion.timeBetweenActions -= minion.timeBetweenActions * bonus;
     }
 }

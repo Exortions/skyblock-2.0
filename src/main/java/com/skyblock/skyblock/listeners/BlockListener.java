@@ -2,6 +2,7 @@ package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
+import com.skyblock.skyblock.features.minions.CobblestoneMinion;
 import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
@@ -41,7 +42,7 @@ public class BlockListener implements Listener {
                         return;
                     }
 
-                    new MiningMinion(MiningMinionType.COBBLESTONE).spawn(player, event.getBlock().getLocation().clone().add(0.5, 0, 0.5), Util.romanToDecimal(display.split(" ")[display.split(" ").length - 1]));
+                    new CobblestoneMinion().spawn(player, event.getBlock().getLocation().clone().add(0.5, 0, 0.5), Util.romanToDecimal(display.split(" ")[display.split(" ").length - 1]));
                     event.getPlayer().sendMessage(ChatColor.AQUA + String.format("You placed a minion! (%s/%s)", minionsPlaced + 1, minionSlots));
                     event.getPlayer().getWorld().getBlockAt(event.getBlock().getLocation()).setType(Material.AIR);
                 }

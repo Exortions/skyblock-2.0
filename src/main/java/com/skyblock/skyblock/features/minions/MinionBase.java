@@ -38,9 +38,11 @@ import java.util.UUID;
 import java.util.function.Function;
 
 @Getter
+@Data
 public abstract class MinionBase {
     protected final UUID uuid;
     protected final String name;
+    protected final String adjective;
     protected int level;
     protected final Color leatherArmorColor;
     protected final Material material; //arraylist of blocks here? Melon minions have a weird layout
@@ -76,6 +78,7 @@ public abstract class MinionBase {
         
         this.uuid = uuid;
         this.name = name;
+        this.adjective = adjective;
         this.leatherArmorColor = leatherArmorColor;
         this.material = material;
 
@@ -100,6 +103,8 @@ public abstract class MinionBase {
     public abstract int getMaxStorage(int level);
     public abstract ArrayList<ItemStack> calculateDrops(int level);
     public abstract int getSlotLevelRequirement(int level);
+
+    //TODO Hooks: onSleep, onTick, postTick
     
     protected abstract void tick(SkyblockPlayer player, Location location);
 
@@ -158,7 +163,7 @@ public abstract class MinionBase {
                     return;
                 }
 
-                int ticksBetweenActions = getTimeBetweenActions(level) * 20;
+                int ticksBetweenActions = getActionDelay(level) * 20;
 
                 if (i >= ticksBetweenActions) {
                     i = 0;
@@ -243,7 +248,7 @@ public abstract class MinionBase {
         }
 
         List<ItemStack> newInventory = new ArrayList<>();
-        for (int i = 0; i < Math.floor((this.maxStorage + additionalStorageSlots) / 64F); ++i) {
+        for (int i = 0; i < getMaxStorage(level) + additionalStorageSlots; ++i) {
             if (inventory.getItem(i) != null) newInventory.add(inventory.getItem(i));
         }
 
@@ -296,7 +301,7 @@ public abstract class MinionBase {
     }
 
     public Material getMaterial() {
-        return getMaterial();
+        return this.material;
     }
 
     public int getNextMaxStorage() {
@@ -330,7 +335,7 @@ public abstract class MinionBase {
 
         int slot = 21;
         for (int i = 0; i < 15; i++) {
-            if (i < Math.floor(this.maxStorage / 64F) ) {
+            if (i < getMaxStorage(level)) {
 	        if (i < this.inventory.size() && this.inventory.get(i).getType() != Material.AIR) {
                     NBTItem item = new NBTItem(this.inventory.get(i));
                     item.setInteger("slot", i);

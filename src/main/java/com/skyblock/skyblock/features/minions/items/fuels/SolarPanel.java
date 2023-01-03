@@ -28,7 +28,7 @@ public class SolarPanel extends MinionFuel {
     public void onTick(MinionBase minion) {
         long worldTime = minion.getMinion().getWorld().getTime();
         if (worldTime > 6000 && worldTime < 18000) {
-            minion.timeBetweenActions -= minion.timeBetweenActions * 0.125;
+            //minion.actionDelay -= minion.timeBetweenActions * 0.125;
         }
     }
 }

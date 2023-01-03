@@ -44,13 +44,13 @@ public class MinionHandler {
     public static Function<MinionBase, ItemStack> createMinionPreview = (minion) -> {
         ItemStack stack = new ItemBuilder(
                 ChatColor.BLUE +
-                        WordUtils.capitalize(minion.getType().name().toLowerCase().replace("_", " ")) +
+                        WordUtils.capitalize(minion.getName()) +
                         " Minion " +
                         Util.toRoman(minion.getLevel()),
                 Material.SKULL_ITEM
         ).toItemStack();
 
-        stack = Util.idToSkull(stack, minion.getHead().apply(minion.getLevel()));
+        stack = Util.idToSkull(stack, minion.getHead(minion.getLevel()));
 
         ItemMeta meta = stack.getItemMeta();
 
@@ -58,13 +58,12 @@ public class MinionHandler {
                 Arrays.asList(
                     Util.buildLore(
                             "Place this minion and it will\nstart generating and " +
-                                    MinionTypeAdjective.valueOf(minion.getType().getDeclaringClass().getSimpleName().toUpperCase().replace("MINIONTYPE", "")) +
-                                    "\n" +
-                                    minion.getType().name().toLowerCase().replace("_", " ") + "!" +
-                                    " Requires an open\narea to place " + minion.getType().name().toLowerCase().replace("_", " ") + ".\n" +
+                                    minion.getAdjective() + "\n" +
+                                    minion.getName().toLowerCase() + "!" +
+                                    " Requires an open\narea to place " + minion.getName().toLowerCase() + ".\n" +
                                     "Minions also work when you are\noffline!" +
-                                    "\n\nTime Between Action: &a" + minion.getTimeBetweenActions() + "s\n" +
-                                    "Max Storage: &e" + minion.getMaxStorage() + "\n" +
+                                    "\n\nTime Between Action: &a" + minion.getActionDelay(minion.getLevel()) + "s\n" +
+                                    "Max Storage: &e" + minion.getMaxStorage(minion.getLevel()) + "\n" +
                                     "Resources Generated: &b" + minion.getResourcesGenerated(),
                             '7'
                     )
@@ -81,8 +80,8 @@ public class MinionHandler {
 
         ItemBuilder builder = new ItemBuilder(ChatColor.GREEN + "Next Tier", Material.GOLD_INGOT)
                 .addLore("&7View the items required to", "&7upgrade this minion to the next", "&7tier.", " ",
-                        "&7Time Between Actions: &a" + minion.getTimeBetweenActions() + "s",
-                        "&7Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage() + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(),
+                        "&7Time Between Actions: &a" + minion.getActionDelay(minion.getLevel()) + "s",
+                        "&7Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage(minion.getLevel()) + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(),
                         " ", ChatColor.YELLOW + "Click to view!");
 
         return builder.toItemStack();
@@ -97,8 +96,8 @@ public class MinionHandler {
             return builder.toItemStack();
         }
 
-        builder.addLore(ChatColor.GRAY + "Time Between Actions: &a" + minion.getTimeBetweenActions() + "s",
-                ChatColor.GRAY + "Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage() + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(), " ");
+        builder.addLore(ChatColor.GRAY + "Time Between Actions: &a" + minion.getActionDelay(minion.getLevel()) + "s",
+                ChatColor.GRAY + "Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage(minion.getLevel()) + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(), " ");
 
         SkyblockRecipe recipe = Skyblock.getPlugin().getRecipeHandler().getRecipe(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + (minion.getLevel() + 1) + ".json"));
 
@@ -157,20 +156,12 @@ public class MinionHandler {
         return nbt.getItem();
     }
 
-    @Getter
-    @AllArgsConstructor
-    public enum MinionTypeAdjective {
-        MINING("mining");
-
-        private final String value;
-    }
-
     @Data
     @SerializableAs(value = "Minion")
     public static class MinionSerializable implements ConfigurationSerializable {
 
         private final MinionBase base;
-        private final MinionType<?> type;
+        private final Material type;
         private final Location location;
         private final UUID owner;
         private final UUID uuid;
@@ -180,7 +171,7 @@ public class MinionHandler {
         public Map<String, Object> serialize() {
             LinkedHashMap<String, Object> result = new LinkedHashMap<>();
 
-            result.put("type", this.base.getType().name());
+            result.put("type", this.base.getMaterial());
             result.put("location", this.location);
             result.put("owner", this.owner.toString());
             result.put("uuid", this.uuid.toString());
@@ -192,15 +183,14 @@ public class MinionHandler {
 
         public static MinionSerializable deserialize(Map<String, Object> args) {
             MinionBase base;
-
-            MinionType<?> type;
+            Material type;
             Location location;
             UUID owner;
             UUID uuid;
             int level;
 
             if (args.containsKey("type")) {
-                type = MinionType.getEnumValue((String) args.get("type"));
+                type = (Material) args.get("type");
             } else {
                 throw new IllegalArgumentException("Could not find serializable class MinionType<?> in serialized data");
             }
@@ -229,7 +219,7 @@ public class MinionHandler {
                 throw new IllegalArgumentException("Could not find level in serialized data");
             }
 
-            if (type instanceof MiningMinionType) base = new MiningMinion((MiningMinionType) type, uuid);
+            if (type == Material.COBBLESTONE) base = new CobblestoneMinion(uuid);
             else base = null;
 
             if (args.containsKey("items")) {
@@ -297,7 +287,7 @@ public class MinionHandler {
             minion.getBase().spawn(player, minion.getLocation(), minion.getLevel());
 
             long secondsSince = ((System.currentTimeMillis() - (long) player.getValue("island.last_login"))) / 1000;
-            long actionsPerformed = (long) Math.floor((secondsSince / minion.getBase().getTimeBetweenActions()) / 2);
+            long actionsPerformed = (long) Math.floor((secondsSince / minion.getBase().getActionDelay(minion.getLevel())) / 2);
 
             for (int i = 0; i < actionsPerformed; i++) minion.getBase().collect(player);
         }
@@ -308,7 +298,7 @@ public class MinionHandler {
             this.minions.put(player.getBukkitPlayer().getUniqueId(), new ArrayList<>());
         }
 
-        MinionSerializable serialize = new MinionSerializable(minion, minion.getType(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel());
+        MinionSerializable serialize = new MinionSerializable(minion, minion.getMaterial(), location, player.getBukkitPlayer().getUniqueId(), minion.getUuid(), minion.getLevel());
 
         this.minions.get(player.getBukkitPlayer().getUniqueId()).add(serialize);
         player.getMinions().add(serialize);

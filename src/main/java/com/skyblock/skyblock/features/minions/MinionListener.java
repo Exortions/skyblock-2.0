@@ -135,7 +135,6 @@ public class MinionListener implements Listener {
                     else {
                         ((Storage) minion.minionItems[minion.getItemSlots(MinionItemType.STORAGE).get(0)]).openInventory((Chest) targetBlock.getState(), player.getBukkitPlayer());
                     }
-                    //((Storage) minion.additionalStorage.getMetadata("minion_item").get(0)).openInventory((Chest) minion.additionalStorage, player.getBukkitPlayer());
                 }
             }
         } else if (mih.isRegistered(current)) { //add upgrades

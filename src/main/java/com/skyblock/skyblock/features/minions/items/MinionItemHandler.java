@@ -27,9 +27,9 @@ public class MinionItemHandler {
         registerItem(new DiamondSpreading());
 
         // Storages
-        registerItem(new Storage("SMALL", 3 * 64));
-        registerItem(new Storage("MEDIUM", 9 * 64));
-        registerItem(new Storage("LARGE", 15 * 64));
+        registerItem(new Storage("SMALL", 3));
+        registerItem(new Storage("MEDIUM", 9));
+        registerItem(new Storage("LARGE", 15));
 
         // Fuels
         /*registerItem(new GenericFuel("ENCHANTED_LAVA_BUCKET.json", "enchanted_lava_bucket", false, -1, 0.25f));
