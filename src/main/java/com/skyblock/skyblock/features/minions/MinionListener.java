@@ -147,6 +147,7 @@ public class MinionListener implements Listener {
                 }
             }
 
+
             for (int i : minion.getItemSlots(item.getType()) ) {
                 if (minion.minionItems[i] == null && item.guiEquippable) {
                     if (item instanceof MinionFuel) {

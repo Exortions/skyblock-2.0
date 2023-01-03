@@ -7,15 +7,15 @@ import com.skyblock.skyblock.features.minions.items.MinionFuel;
 
 @Getter
 public class GenericFuel extends MinionFuel {
-    protected final float bonus;
+    protected final float speed;
 
-    public GenericFuel(String item, String internalName, boolean stackable, int duration, float bonus) {
+    public GenericFuel(String item, String internalName, boolean stackable, int duration, float speed) {
         super(plugin.getItemHandler().getItem(item), internalName, stackable, duration);
-        this.bonus = bonus;
+        this.speed = speed;
     }
 
     @Override
-    public void onTick(MinionBase minion) {
-        //minion.timeBetweenActions -= minion.timeBetweenActions * bonus;
+    public float onSleep(MinionBase minion, float duration) {
+        return duration / speed;
     }
 }
