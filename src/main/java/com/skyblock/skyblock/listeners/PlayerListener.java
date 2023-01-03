@@ -5,7 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.enchantment.EnchantingTableGUI;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
