@@ -111,7 +111,6 @@ public abstract class MinionBase {
         for (MinionItem i : minionItems) {
             if (i != null) delay = i.onSleep(this, delay);
         }
-        System.out.println(delay);
 
         return delay;
     }
