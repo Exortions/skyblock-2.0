@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.minions;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
+import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
@@ -30,138 +31,105 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MiningMinion extends MinionBase {
-
-    private final MiningMinionType type;
-    private final Skyblock plugin;
-
-    public MiningMinion(MiningMinionType minion, UUID uuid) {
-        super(
-                uuid,
-                minion,
-                minion.getName(),
-                minion.getRecipe(),
-                minion.getHand(),
-                minion.getHead(),
-                minion.getLeatherArmorColor(),
-                minion.getTimeBetweenActions(),
-                minion.getGetMaximumStorage()
-        );
+    public MiningMinion() {
+        this(UUID.randomUUID());
+    }
+    public MiningMinion(UUID uuid) {
+        super(uuid, "Cobblestone", "mining", Color.GRAY, Material.COBBLESTONE);
 
         this.plugin = Skyblock.getPlugin();
-
-        this.type = minion;
-
-        this.timeBetweenActions = minion.getTimeBetweenActions().apply(this.level);
-        this.maxStorage = minion.getGetMaximumStorage().apply(this.level);
-    }
-
-    public MiningMinion(MiningMinionType minion) {
-        this(minion, UUID.randomUUID());
     }
 
     @Override
-    public void spawn(SkyblockPlayer player, Location location, int level) {
-        if (!location.getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) return;
-
-        this.plugin.getMinionHandler().initializeMinion(player, this, location);
-
-        if (this.minion != null) this.minion.remove();
-
-        this.level = level;
-
-        this.resourcesGenerated = 0;
-        this.timeBetweenActions = this.type.getTimeBetweenActions().apply(this.level);
-        this.maxStorage = this.type.getGetMaximumStorage().apply(this.level);
-
-        this.text = location.getWorld().spawn(location.clone().add(0, 1, 0), ArmorStand.class);
-        this.text.setCustomName("");
-        this.text.setCustomNameVisible(false);
-        this.text.setGravity(false);
-        this.text.setVisible(false);
-        this.text.setSmall(true);
-        this.text.setMarker(true);
-
-        this.minion = location.getWorld().spawn(location, ArmorStand.class);
-        this.minion.setCustomName("");
-        this.minion.setCustomNameVisible(false);
-        this.minion.setGravity(false);
-        this.minion.setVisible(true);
-        this.minion.setSmall(true);
-        this.minion.setArms(true);
-        this.minion.setBasePlate(false);
-        this.minion.setCanPickupItems(false);
-
-        ItemStack head = Util.idToSkull(new ItemBuilder("", Material.SKULL_ITEM, 1, (short) 3).toItemStack(), this.head.apply(this.level));
-        this.minion.setHelmet(head);
-
-        ItemStack hand = this.hand.apply(this.level);
-        this.minion.setItemInHand(hand);
-
-        this.minion.setChestplate(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_CHESTPLATE, 1).toItemStack(), this.leatherArmorColor));
-        this.minion.setLeggings(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_LEGGINGS, 1).toItemStack(), this.leatherArmorColor));
-        this.minion.setBoots(Util.colorLeatherArmor(new ItemBuilder("", Material.LEATHER_BOOTS, 1).toItemStack(), this.leatherArmorColor));
-
-        this.minion.setMetadata("minion", new FixedMetadataValue(this.plugin, true));
-        this.minion.setMetadata("minion_id", new FixedMetadataValue(this.plugin, this.uuid.toString()));
-
-        this.text.setMetadata("minion", new FixedMetadataValue(this.plugin, true));
-        this.text.setMetadata("minion_id", new FixedMetadataValue(this.plugin, this.uuid.toString()));
-
-        new BukkitRunnable() {
-            int i = 0;
-
-            @Override
-            public void run() {
-                if (minion == null || minion.isDead()) {
-                    cancel();
-                    return;
-                }
-
-                int ticksBetweenActions = getTimeBetweenActions.apply(level) * 20;
-
-                if (i >= ticksBetweenActions) {
-                    i = 0;
-
-                    tick(player, location);
-                } else {
-                    i++;
-                }
-            }
-        }.runTaskTimer(Skyblock.getPlugin(Skyblock.class), 0, 1);
+    public SkyblockCraftingRecipe getRecipe(int level) {
+        if (level == 1) {
+            return new SkyblockCraftingRecipe(new HashMap<String, ItemStack>() {{
+                put("a", new ItemStack(Material.COBBLESTONE, 1));
+            }});
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public void pickup(SkyblockPlayer player, Location location) {
-        List<MinionHandler.MinionSerializable> minions = new ArrayList<>();
+    public ItemStack getHand(int level) {
+        return new ItemStack(Material.WOOD_PICKAXE, 1);
+    }
+    
+    @Override
+    public String getHead(int level) {
+        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjljMzhmZTRmYzk4YTI0ODA3OWNkMDRjNjViNmJmZjliNDUwMTdmMTY0NjBkYWIzYzM0YzE3YmZjM2VlMWQyZiJ9fX0=";
+    }
 
-        for (MinionHandler.MinionSerializable minion : player.getMinions()) {
-            if (!minion.getBase().getUuid().equals(getUuid())) minions.add(minion);
+    @Override
+    public int getActionDelay(int level) {
+        return 14;
+
+        //FUEL HERE
+    }
+
+    @Override
+    public int getMaxStorage(int level) {
+        switch (level) {
+            case 1:
+                return 1;
+            case 2:
+            case 3:
+                return 3;
+            case 4:
+            case 5:
+                return 6;
+            case 6:
+            case 7:
+                return 9;
+            case 8:
+            case 9:
+                return 12;
+            default:
+                return 15;
         }
+    }
 
-        player.setMinions(minions);
+    @Override
+    public ArrayList<ItemStack> calculateDrops(int level) {
+        return new ArrayList<ItemStack>(Arrays.asList(new ItemStack(Material.COBBLESTONE)));
+        
+    }
 
-        this.minion.remove();
-        this.text.remove();
-
-        player.getBukkitPlayer().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(type.name() + "_GENERATOR_" + level + ".json"));
-        player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
-        collectAll(player);
-
-        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have %s out of a maximum of %s minions placed.");
-
-        for (MinionItem item : minionItems) {
-            if (item != null) player.getBukkitPlayer().getInventory().addItem(item.getItem());
+    @Override
+    public int getSlotLevelRequirement(int slot) {
+        switch (slot) {
+            case 0:
+                return 1;
+            case 1:
+            case 2:
+                return 2;
+            case 3:
+            case 4:
+            case 5:
+                return 4;
+            case 6:
+            case 7:
+            case 8:
+                return 6;
+            case 9:
+            case 10:
+            case 11:
+                return 8;
+            case 12:
+            case 13:
+            case 14:
+                return 10;
+            default:
+                return 0;
         }
-
-        Util.delay(() -> {
-            player.getBukkitPlayer().closeInventory();
-        }, 1);
     }
 
     @Override
@@ -177,14 +145,14 @@ public class MiningMinion extends MinionBase {
         }
 
         List<Block> air = blocks.stream().filter(block -> block.getType().equals(Material.AIR)).collect(Collectors.toList());
-        List<Block> ores = blocks.stream().filter(block -> block.getType().equals(this.type.getMaterial())).collect(Collectors.toList());
+        List<Block> ores = blocks.stream().filter(block -> block.getType().equals(getMaterial())).collect(Collectors.toList());
 
         if (air.size() != 0) {
             this.text.setCustomNameVisible(false);
 
             Block block = air.get(this.plugin.getRandom().nextInt(air.size()));
 
-            Material toSet = this.type.getMaterial();
+            Material toSet = getMaterial();
 
             block.setType(toSet);
 
@@ -240,172 +208,8 @@ public class MiningMinion extends MinionBase {
             }
         }
 
-        this.timeBetweenActions = this.type.getTimeBetweenActions().apply(this.level); // Fuel
         for (int i = 0; i < minionItems.length; ++i) {
             if (minionItems[i] != null) minionItems[i].onTick(this);
         }
     }
-
-    @Override
-    public void collect(SkyblockPlayer player, int inventoryIndex) {
-
-        if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
-            player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
-            return;
-        }
-
-        ItemStack toCollect = this.inventory.get(inventoryIndex);
-
-        if (!Util.notNull(toCollect)) return;
-
-        player.getBukkitPlayer().getInventory().addItem(Util.toSkyblockItem(toCollect));
-
-        Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
-        item.setPickupDelay(Integer.MAX_VALUE);
-
-        Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
-
-        Util.delay(item::remove, 1);
-
-        this.inventory.remove(inventoryIndex);
-
-        player.getBukkitPlayer().updateInventory();
-    }
-
-    @Override
-    public void collect(SkyblockPlayer player) {
-        ItemStack[] drops = this.type.getCalculateDrops().apply(this.level);
-        for (MinionItem i : this.minionItems) {
-            if (i != null) drops = i.onBlockCollect(this, drops);
-        }
-        Inventory inventory = Bukkit.createInventory(null, 54);
-
-        this.inventory.forEach((stack) -> { if (stack != null) inventory.addItem(stack); });
-
-        int additionalStorageSlots = 0;
-        Storage storage = (Storage) this.minionItems[this.getItemSlots(MinionItemType.STORAGE).get(0)];
-        if (storage != null) additionalStorageSlots = storage.capacity;
-
-
-        for (ItemStack drop : drops) {
-            inventory.addItem(drop).values();
-            this.resourcesGenerated += drop.getAmount();
-        }
-
-        List<ItemStack> newInventory = new ArrayList<>();
-        for (int i = 0; i < Math.floor((this.maxStorage + additionalStorageSlots) / 64F); ++i) {
-            if (inventory.getItem(i) != null) newInventory.add(inventory.getItem(i));
-        }
-
-        this.inventory = newInventory;
-		
-        if (newInventory.stream().filter(stack -> stack.getType() != Material.AIR).count() == this.maxStorage) {
-            this.text.setCustomName(ChatColor.RED + "My storage is full! :(");
-            this.text.setCustomNameVisible(true);
-            return;
-        }
-
-        this.text.setCustomNameVisible(false);
-    }
-
-    @Override
-    public void upgrade(SkyblockPlayer player, int level, String item, int amount) {
-        this.level = level;
-        player.getBukkitPlayer().closeInventory();
-        player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
-
-        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have upgraded your " + name + " to tier " + Util.toRoman(level));
-
-        List<MinionHandler.MinionSerializable> minions = new ArrayList<>();
-
-        for (MinionHandler.MinionSerializable minion : player.getMinions()) {
-            if (!minion.getUuid().equals(uuid)) minions.add(minion);
-        }
-
-        minions.add(new MinionHandler.MinionSerializable(this, type, minion.getLocation(), player.getBukkitPlayer().getUniqueId(), uuid, level));
-
-        player.setMinions(minions);
-
-        int amountRemoved = 0;
-        for (ItemStack itemInv : player.getBukkitPlayer().getInventory().getContents()) {
-            if (itemInv == null) continue;
-            if (!itemInv.hasItemMeta()) continue;
-            if (!itemInv.getItemMeta().hasDisplayName()) continue;
-            if (!itemInv.getItemMeta().getDisplayName().equals(item)) continue;
-
-            while (amountRemoved != amount && itemInv.getAmount() != 0) {
-                amountRemoved += 1;
-                if (itemInv.getAmount() != 1) itemInv.setAmount(itemInv.getAmount() - 1);
-                else {
-                    player.getBukkitPlayer().getInventory().remove(itemInv);
-                    break;
-                }
-            }
-
-            if (amountRemoved == amount) break;
-        }
-    }
-
-    @Override
-    public Material getMaterial() {
-        return this.type.getMaterial();
-    }
-
-    @Override
-    public int getNextMaxStorage() {
-        return type.getGetMaximumStorage().apply(this.level + 1);
-    }
-
-    @Override
-    protected void showInventory(SkyblockPlayer player) {
-        this.gui = Bukkit.createInventory(null, 54, StringUtils.capitalize(this.type.name().toLowerCase()) + " Minion " + Util.toRoman(this.level));
-
-        Util.fillEmpty(this.gui);
-
-        this.gui.setItem(4, MinionHandler.createMinionPreview.apply(this));
-        this.gui.setItem(5, MinionHandler.createNextTierItem(this));
-
-        this.gui.setItem(3, MinionHandler.MINION_INVENTORY_IDEAL_LAYOUT);
-        this.gui.setItem(50, MinionHandler.createQuickUpgrade(this, player.getBukkitPlayer()));
-        this.gui.setItem(53, MinionHandler.MINION_INVENTORY_PICKUP_MINION);
-        
-        MinionItem skin = this.minionItems[getItemSlots(MinionItemType.SKIN).get(0)];
-        MinionItem fuel = this.minionItems[getItemSlots(MinionItemType.FUEL).get(0)];
-        MinionItem shipping = this.minionItems[getItemSlots(MinionItemType.SHIPPING).get(0)];
-        MinionItem up1 = this.minionItems[getItemSlots(MinionItemType.UPGRADE).get(0)];
-        MinionItem up2 = this.minionItems[getItemSlots(MinionItemType.UPGRADE).get(1)];
-        this.gui.setItem(10, skin == null ? MinionHandler.MINION_INVENTORY_UPGRADE_SKIN_SLOT : skin.getItem());
-        this.gui.setItem(19, fuel == null ? MinionHandler.MINION_INVENTORY_UPGRADE_FUEL_SLOT : fuel.getItem());
-        this.gui.setItem(28, shipping == null ? MinionHandler.MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT : shipping.getItem());
-        this.gui.setItem(37, up1 == null ? MinionHandler.MINION_INVENTORY_UPGRADE_SLOT : up1.getItem());
-        this.gui.setItem(46, up2 == null ?  MinionHandler.MINION_INVENTORY_UPGRADE_SLOT : up2.getItem());
-
-        this.gui.setItem(48, MinionHandler.MINION_INVENTORY_COLLECT_ALL);
-
-        int slot = 21;
-        for (int i = 0; i < 15; i++) {
-            if (i < Math.floor(this.maxStorage / 64F) ) {
-	        if (i < this.inventory.size() && this.inventory.get(i).getType() != Material.AIR) {
-                    NBTItem item = new NBTItem(this.inventory.get(i));
-                    item.setInteger("slot", i);
-                    this.gui.setItem(slot, item.getItem());
-	        }
-                else
-                    this.gui.setItem(slot, new ItemStack(Material.AIR));
-
-            } else {
-                this.gui.setItem(slot, new ItemBuilder(ChatColor.YELLOW + "Storage unlocked at tier " + Util.toRoman(this.type.getLevelRequirementForStorageSlot().apply(i)), Material.STAINED_GLASS_PANE).toItemStack());
-            }
-
-            if (slot == 25) {
-                slot = 30;
-            } else if (slot == 34) {
-                slot = 39;
-            } else {
-                ++slot;
-            }
-        }
-        player.getBukkitPlayer().openInventory(this.gui);
-    }
-
 }
