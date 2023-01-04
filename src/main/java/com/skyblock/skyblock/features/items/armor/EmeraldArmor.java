@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class EmeraldArmor extends ArmorSet {
     public EmeraldArmor() {
-        super("EMERALD_ARMOR_HELMET", "EMERALD_ARMOR_CHESTPLATE", "EMERALD_ARMOR_LEGGINS", "EMERALD_ARMOR_BOOTS", "emerald_armor");
+        super("EMERALD_ARMOR_HELMET", "EMERALD_ARMOR_CHESTPLATE", "EMERALD_ARMOR_LEGGINGS", "EMERALD_ARMOR_BOOTS", "emerald_armor");
     }
 
     HashMap<String, Double> bonus = new HashMap<>();
@@ -18,7 +18,6 @@ public class EmeraldArmor extends ArmorSet {
     @Override
     public void fullSetBonus(Player player) {
         super.fullSetBonus(player);
-        System.out.println("full");
         SkyblockPlayer sbp = SkyblockPlayer.getPlayer(player);
         Double bonusval = Math.floor(sbp.getIntValue("collection.emerald.exp") / 3000);
         bonus.put(player.getName(), bonusval);
@@ -29,7 +28,6 @@ public class EmeraldArmor extends ArmorSet {
     @Override
     public void stopFullSetBonus(Player player) {
         super.fullSetBonus(player);
-        System.out.println("unfull");
         SkyblockPlayer sbp = SkyblockPlayer.getPlayer(player);
         Double bonusval = bonus.get(player.getName());
         sbp.subtractStat(SkyblockStat.DEFENSE, bonusval);
