@@ -209,13 +209,17 @@ public class MinionHandler {
             if (type == Material.COBBLESTONE.name()) base = new CobblestoneMinion(uuid); // MORE HERE
             else base = null;
 
+            base.setInventory((List<ItemStack>) args.get("inventory"));
+
             ArrayList<String> itemIDs = (ArrayList<String>) args.get("items");
 
             for (int i = 0; i < itemIDs.size(); ++i) {
                 base.minionItems[i] = Skyblock.getPlugin().getMinionItemHandler().getRegistered(itemIDs.get(i));
             }
 
-            base.setInventory((List<ItemStack>) args.get("inventory"));
+            base.setFuelAmount((int) args.get("fuelAmount"));
+            base.setFuelAddedTime((long) args.get("fuelAddedTime"));
+
 
             return new MinionSerializable(base, type, location, owner, uuid, level);
         }

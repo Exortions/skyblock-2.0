@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
-@Getter
 @Data
 public abstract class MinionBase {
     protected final UUID uuid;
