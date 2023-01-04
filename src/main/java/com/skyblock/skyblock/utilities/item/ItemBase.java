@@ -111,12 +111,14 @@ public class ItemBase {
         }
         this.enchantGlint = nbt.getBoolean("enchantGlint");
         String abilityDescriptionStr = nbt.getString("abilityDescription");
-        this.abilityDescription = Arrays.asList(abilityDescriptionStr.substring(1, abilityDescriptionStr.length() - 1).split("; "));
-        this.abilityCooldown = nbt.getString("abilityCooldown");
-        this.abilityName = nbt.getString("abilityName");
-        this.abilityType = nbt.getString("abilityType");
         this.hasAbility = nbt.getBoolean("hasAbility");
-        this.abilityCost = nbt.getInteger("abilityCost");
+        if (hasAbility) {
+            this.abilityDescription = Arrays.asList(abilityDescriptionStr.substring(1, abilityDescriptionStr.length() - 1).split("; "));
+            this.abilityCooldown = nbt.getString("abilityCooldown");
+            this.abilityName = nbt.getString("abilityName");
+            this.abilityType = nbt.getString("abilityType");
+            this.abilityCost = nbt.getInteger("abilityCost");
+        }
         this.intelligence = nbt.getInteger("intelligence");
         this.attackSpeed = nbt.getInteger("attackSpeed");
         this.critChance = nbt.getInteger("critChance");
@@ -266,7 +268,7 @@ public class ItemBase {
             lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+" + (intelligence + rMana) + (reforge != Reforge.NONE && rMana > 0 ? " " + ChatColor.BLUE + "(+" + rMana + ")" : ""));
         }
 
-        if (description.size() != 0) lore.add("");
+        if (description.size() != 0 && !lore.isEmpty()) lore.add("");
 
         /*
         Enchantments
@@ -316,6 +318,8 @@ public class ItemBase {
          */
         if (description != null && description.size() != 0 && !description.get(0).equals("laceholder descriptio"))
             lore.addAll(description);
+
+        for (String s : lore) lore.set(lore.indexOf(s), s.replaceAll(";", ""));
 
         /*
           Ability

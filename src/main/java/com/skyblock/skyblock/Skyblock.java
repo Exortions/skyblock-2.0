@@ -34,7 +34,7 @@ import com.skyblock.skyblock.features.enchantment.enchantments.armor.FireProtect
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.GrowthEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.bow.AimingEnchantment;
-import com.skyblock.skyblock.features.enchantment.enchantments.misc.EfficiencyEnchantment;
+import com.skyblock.skyblock.features.enchantment.enchantments.tool.EfficiencyEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.misc.TelekinesisEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
 import com.skyblock.skyblock.features.entities.EntityListener;

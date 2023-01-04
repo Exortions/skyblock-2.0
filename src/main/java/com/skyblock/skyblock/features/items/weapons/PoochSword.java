@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.EntityType;
@@ -23,7 +23,7 @@ public class PoochSword extends SkyblockItem {
     }
 
     @Override
-    public void onEntityDamage(SkyblockEntityDamageByPlayerEvent event) {
+    public void onEntityDamage(SkyblockPlayerDamageEntityEvent event) {
         if (!event.getEntity().getEntityType().equals(EntityType.WOLF)) return;
 
         event.getPlayer().addStat(SkyblockStat.STRENGTH, 150);

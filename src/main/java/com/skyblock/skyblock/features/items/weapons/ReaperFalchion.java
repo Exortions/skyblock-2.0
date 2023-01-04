@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class ReaperFalchion extends Falchion {
@@ -12,7 +12,7 @@ public class ReaperFalchion extends Falchion {
     }
 
     @Override
-    public void onEntityDamage(SkyblockEntityDamageByPlayerEvent event) {
+    public void onEntityDamage(SkyblockPlayerDamageEntityEvent event) {
         event.getPlayer().addStat(SkyblockStat.HEALTH, 10);
     }
 

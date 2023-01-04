@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.commands.enchantment;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.features.enchantment.gui.EnchantingTableGui;
+import com.skyblock.skyblock.features.enchantment.EnchantingTableGUI;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -17,7 +17,7 @@ public class EnchantCommand implements Command {
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         if (args.length == 0) {
-            new EnchantingTableGui(player).show(player);
+            player.openInventory(new EnchantingTableGUI(player, player.getLocation()));
             return;
         }
 

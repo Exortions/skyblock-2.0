@@ -4,7 +4,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockEntityDamageByPlayerEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Getter;
@@ -45,7 +45,7 @@ public abstract class SkyblockItem {
         throw new UnsupportedOperationException("This item does not support dealing damage");
     }
 
-    public void onEntityDamage(SkyblockEntityDamageByPlayerEvent event) {
+    public void onEntityDamage(SkyblockPlayerDamageEntityEvent event) {
         throw new UnsupportedOperationException("This item does not support dealing damage");
     }
 

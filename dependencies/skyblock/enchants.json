@@ -1,0 +1,762 @@
+{
+  "enchants": [
+    {
+      "name": "protection",
+      "weight": 10,
+      "levels": [
+        "1_min_1",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_54",
+        "5_min_55",
+        "5_max_75"
+      ]
+    },
+    {
+      "name": "fireprotection",
+      "weight": 5,
+      "levels": [
+        "1_min_10",
+        "1_max_17",
+        "2_min_18",
+        "2_max_25",
+        "3_min_26",
+        "3_max_33",
+        "4_min_34",
+        "4_max_46",
+        "5_min_47",
+        "5_max_65"
+      ]
+    },
+    {
+      "name": "blastprotection",
+      "weight": 2,
+      "levels": [
+        "1_min_5",
+        "1_max_12",
+        "2_min_13",
+        "2_max_20",
+        "3_min_21",
+        "3_max_28",
+        "4_min_29",
+        "4_max_41",
+        "5_min_42",
+        "5_max_65"
+      ]
+    },
+    {
+      "name": "projectileprotection",
+      "weight": 5,
+      "levels": [
+        "1_min_3",
+        "1_max_8",
+        "2_min_9",
+        "2_max_14",
+        "3_min_15",
+        "3_max_20",
+        "4_min_21",
+        "4_max_36",
+        "5_min_37",
+        "5_max_65"
+      ]
+    },
+    {
+      "name": "thorns",
+      "weight": 1,
+      "levels": [
+        "1_min_10",
+        "1_max_29",
+        "2_min_30",
+        "2_max_49",
+        "3_min_50",
+        "3_max_100"
+      ]
+    },
+    {
+      "name": "aquaaffinity",
+      "weight": 2,
+      "levels": [
+        "1_min_1",
+        "1_max_64"
+      ]
+    },
+    {
+      "name": "respiration",
+      "weight": 2,
+      "levels": [
+        "1_min_10",
+        "1_max_19",
+        "2_min_20",
+        "2_max_29",
+        "3_min_30",
+        "3_max_64"
+      ]
+    },
+    {
+      "name": "featherfalling",
+      "weight": 5,
+      "levels": [
+        "1_min_5",
+        "1_max_15",
+        "2_min_16",
+        "2_max_21",
+        "3_min_22",
+        "3_max_37",
+        "4_min_38",
+        "4_max_48",
+        "5_min_49",
+        "5_max_64"
+      ]
+    },
+    {
+      "name": "depthstrider",
+      "weight": 2,
+      "levels": [
+        "1_min_10",
+        "1_max_19",
+        "2_min_20",
+        "2_max_39",
+        "3_min_40",
+        "3_max_64"
+      ]
+    },
+    {
+      "name": "frostwalker",
+      "weight": 2,
+      "levels": [
+        "1_min_15",
+        "1_max_29",
+        "2_min_30",
+        "2_max_64"
+      ]
+    },
+    {
+      "name": "sharpness",
+      "weight": 10,
+      "levels": [
+        "1_min_1",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_80"
+      ]
+    },
+    {
+      "name": "smite",
+      "weight": 5,
+      "levels": [
+        "1_min_5",
+        "1_max_8",
+        "2_min_9",
+        "2_max_16",
+        "3_min_17",
+        "3_max_24",
+        "4_min_25",
+        "4_max_32",
+        "5_min_33",
+        "5_max_100"
+      ]
+    },
+    {
+      "name": "baneofarthropods",
+      "weight": 5,
+      "levels": [
+        "1_min_5",
+        "1_max_8",
+        "2_min_9",
+        "2_max_16",
+        "3_min_17",
+        "3_max_24",
+        "4_min_25",
+        "4_max_32",
+        "5_min_33",
+        "5_max_100"
+      ]
+    },
+    {
+      "name": "knockback",
+      "weight": 5,
+      "levels": [
+        "1_min_5",
+        "1_max_24",
+        "2_min_25",
+        "2_max_75"
+      ]
+    },
+    {
+      "name": "fireaspect",
+      "weight": 2,
+      "levels": [
+        "1_min_10",
+        "1_max_29",
+        "2_min_30",
+        "2_max_80"
+      ]
+    },
+    {
+      "name": "looting",
+      "weight": 2,
+      "levels": [
+        "1_min_15",
+        "1_max_23",
+        "2_min_24",
+        "2_max_32",
+        "3_min_33",
+        "3_max_83"
+      ]
+    },
+    {
+      "name": "cleave",
+      "weight": 5,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "critical",
+      "weight": 5,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "cubism",
+      "weight": 2,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "enderslayer",
+      "weight": 2,
+      "levels": [
+        "1_min_9",
+        "1_max_19",
+        "2_min_20",
+        "2_max_30",
+        "3_min_31",
+        "3_max_41",
+        "4_min_42",
+        "4_max_52",
+        "5_min_53",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "execute",
+      "weight": 3,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_30",
+        "4_min_31",
+        "4_max_38",
+        "5_min_39",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "experience",
+      "weight": 5,
+      "levels": [
+        "1_min_6",
+        "1_max_15",
+        "2_min_16",
+        "2_max_24",
+        "3_min_25",
+        "3_max_80"
+      ]
+    },
+    {
+      "name": "firststrike",
+      "weight": 5,
+      "levels": [
+        "1_min_6",
+        "1_max_10",
+        "2_min_11",
+        "2_max_17",
+        "3_min_18",
+        "3_max_24",
+        "4_min_25",
+        "4_max_70"
+      ]
+    },
+    {
+      "name": "giantkiller",
+      "weight": 6,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_31",
+        "4_min_32",
+        "4_max_40",
+        "5_min_41",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "impaling",
+      "weight": 4,
+      "levels": [
+        "1_min_10",
+        "1_max_21",
+        "2_min_22",
+        "2_max_32",
+        "3_min_33",
+        "3_max_80"
+      ]
+    },
+    {
+      "name": "lethality",
+      "weight": 5,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "lifesteal",
+      "weight": 5,
+      "levels": [
+        "1_min_10",
+        "1_max_23",
+        "2_min_24",
+        "2_max_36",
+        "3_min_37",
+        "3_max_70"
+      ]
+    },
+    {
+      "name": "luck",
+      "weight": 3,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_31",
+        "4_min_32",
+        "4_max_40",
+        "5_min_41",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "scavenger",
+      "weight": 6,
+      "levels": [
+        "1_min_6",
+        "1_max_12",
+        "2_min_13",
+        "2_max_18",
+        "3_min_19",
+        "3_max_55"
+      ]
+    },
+    {
+      "name": "thunderlord",
+      "weight": 3,
+      "levels": [
+        "1_min_6",
+        "1_max_8",
+        "2_min_9",
+        "2_max_11",
+        "3_min_12",
+        "3_max_14",
+        "4_min_15",
+        "4_max_17",
+        "5_min_18",
+        "5_max_55"
+      ]
+    },
+    {
+      "name": "telekinesis",
+      "weight": 1,
+      "levels": [
+        "1_min_0",
+        "1_max_100"
+      ]
+    },
+    {
+      "name": "vampirism",
+      "weight": 5,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_31",
+        "4_min_32",
+        "4_max_40",
+        "5_min_41",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "venomous",
+      "weight": 5,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "growth",
+      "weight": 7,
+      "levels": [
+        "1_min_12",
+        "1_max_20",
+        "2_min_21",
+        "2_max_31",
+        "3_min_32",
+        "3_max_42",
+        "4_min_43",
+        "4_max_56",
+        "5_min_57",
+        "5_max_75"
+      ]
+    },
+    {
+      "name": "aiming",
+      "weight": 4,
+      "levels": [
+        "1_min_8",
+        "1_max_12",
+        "2_min_13",
+        "2_max_23",
+        "3_min_24",
+        "3_max_34",
+        "4_min_35",
+        "4_max_48",
+        "5_min_49",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "infinitequiver",
+      "weight": 5,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "piercing",
+      "weight": 5,
+      "levels": [
+        "1_min_22",
+        "1_max_60"
+      ]
+    },
+    {
+      "name": "snipe",
+      "weight": 5,
+      "levels": [
+        "1_min_6",
+        "1_max_15",
+        "2_min_16",
+        "2_max_24",
+        "3_min_25",
+        "3_max_80"
+      ]
+    },
+    {
+      "name": "harvesting",
+      "weight": 10,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_31",
+        "4_min_32",
+        "4_max_40",
+        "5_min_41",
+        "5_max_75"
+      ]
+    },
+    {
+      "name": "rainbow",
+      "weight": 5,
+      "levels": [
+        "1_min_0",
+        "1_max_100"
+      ]
+    },
+    {
+      "name": "smeltingtouch",
+      "weight": 5,
+      "levels": [
+        "1_min_9",
+        "1_max_100"
+      ]
+    },
+    {
+      "name": "angler",
+      "weight": 4,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "blessing",
+      "weight": 4,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "caster",
+      "weight": 4,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "frail",
+      "weight": 4,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "magnet",
+      "weight": 4,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "spikedhook",
+      "weight": 4,
+      "levels": [
+        "1_min_7",
+        "1_max_11",
+        "2_min_12",
+        "2_max_22",
+        "3_min_23",
+        "3_max_33",
+        "4_min_34",
+        "4_max_44",
+        "5_min_45",
+        "5_max_70"
+      ]
+    },
+    {
+      "name": "power",
+      "weight": 10,
+      "levels": [
+        "1_min_1",
+        "1_max_10",
+        "2_min_11",
+        "2_max_20",
+        "3_min_21",
+        "3_max_30",
+        "4_min_31",
+        "4_max_40",
+        "5_min_41",
+        "5_max_100"
+      ]
+    },
+    {
+      "name": "punch",
+      "weight": 2,
+      "levels": [
+        "1_min_12",
+        "1_max_31",
+        "2_min_32",
+        "2_max_64"
+      ]
+    },
+    {
+      "name": "flame",
+      "weight": 2,
+      "levels": [
+        "1_min_20",
+        "1_max_66"
+      ]
+    },
+    {
+      "name": "efficiency",
+      "weight": 10,
+      "levels": [
+        "1_min_1",
+        "1_max_10",
+        "2_min_11",
+        "2_max_20",
+        "3_min_21",
+        "3_max_30",
+        "4_min_31",
+        "4_max_40",
+        "5_min_41",
+        "5_max_91"
+      ]
+    },
+    {
+      "name": "silktouch",
+      "weight": 1,
+      "levels": [
+        "1_min_15",
+        "1_max_65"
+      ]
+    },
+    {
+      "name": "fortune",
+      "weight": 2,
+      "levels": [
+        "1_min_15",
+        "1_max_23",
+        "2_min_24",
+        "2_max_32",
+        "3_min_33",
+        "3_max_83"
+      ]
+    },
+    {
+      "name": "luckofthesea",
+      "weight": 2,
+      "levels": [
+        "1_min_15",
+        "1_max_23",
+        "2_min_24",
+        "2_max_32",
+        "3_min_33",
+        "3_max_41",
+        "4_min_42",
+        "4_max_50",
+        "5_min_51",
+        "5_max_100"
+      ]
+    },
+    {
+      "name": "lure",
+      "weight": 2,
+      "levels": [
+        "1_min_15",
+        "1_max_23",
+        "2_min_24",
+        "2_max_32",
+        "3_min_33",
+        "3_max_41",
+        "4_min_42",
+        "4_max_50",
+        "5_min_51",
+        "5_max_100"
+      ]
+    }
+  ]
+}

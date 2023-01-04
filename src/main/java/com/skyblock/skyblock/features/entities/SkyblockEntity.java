@@ -160,11 +160,15 @@ public abstract class SkyblockEntity {
                         }
 
                         if (getEntityData().isHostile && living instanceof Monster) {
-                            ((Monster) living).setTarget(null);
+                            Monster monster = (Monster) living;
+
+                            if (monster.getTarget() != null && monster.getTarget().getLocation().distance(monster.getLocation()) > 10) {
+                                monster.setTarget(null);
+                            }
 
                             for (Entity entity : getVanilla().getNearbyEntities(5, 2, 5)){
-                                if (entity instanceof Player) {
-                                    ((Monster) living).setTarget((LivingEntity) entity);
+                                if (entity instanceof Player && !entity.hasMetadata("NPC")) {
+                                    monster.setTarget((LivingEntity) entity);
                                 }
                             }
 

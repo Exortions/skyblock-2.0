@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.objectives.impl.hub;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockLogBreakEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerLogBreakEvent;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;
@@ -126,7 +126,7 @@ public class TimberQuest extends QuestLine {
         }
 
         @EventHandler
-        public void onLogBreak(SkyblockLogBreakEvent event) {
+        public void onLogBreak(SkyblockPlayerLogBreakEvent event) {
             SkyblockPlayer player = event.getPlayer();
 
             if (!player.getQuestLine().getName().equals("timber")) return;
@@ -183,7 +183,7 @@ public class TimberQuest extends QuestLine {
         }
 
         @EventHandler
-        public void onLogBreak(SkyblockLogBreakEvent event) {
+        public void onLogBreak(SkyblockPlayerLogBreakEvent event) {
             if (!isThisObjective(event.getPlayer().getBukkitPlayer())) return;
 
             SkyblockPlayer player = event.getPlayer();

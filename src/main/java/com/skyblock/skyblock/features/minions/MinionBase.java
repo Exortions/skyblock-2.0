@@ -62,7 +62,7 @@ public abstract class MinionBase {
     protected final ArrayList<MinionItemType> minionItemSlots;
     public MinionItem[] minionItems; 
     public int additionalActionRadius = 0; // Modified by Upgrade
-    public int fuelAmount = 1;
+    public int fuelAmount = 0;
     public long fuelAddedTime = 0; // minutes
 
     protected Skyblock plugin;
@@ -362,11 +362,16 @@ public abstract class MinionBase {
         
         MinionItem skin = this.minionItems[getItemSlots(MinionItemType.SKIN).get(0)];
         MinionItem fuel = this.minionItems[getItemSlots(MinionItemType.FUEL).get(0)];
+        ItemStack fuelItem = null;
+        if (fuel != null) {
+            fuelItem = fuel.getItem();
+            fuelItem.setAmount(fuelAmount);
+        }
         MinionItem shipping = this.minionItems[getItemSlots(MinionItemType.SHIPPING).get(0)];
         MinionItem up1 = this.minionItems[getItemSlots(MinionItemType.UPGRADE).get(0)];
         MinionItem up2 = this.minionItems[getItemSlots(MinionItemType.UPGRADE).get(1)];
         this.gui.setItem(10, skin == null ? MinionHandler.MINION_INVENTORY_UPGRADE_SKIN_SLOT : skin.getItem());
-        this.gui.setItem(19, fuel == null ? MinionHandler.MINION_INVENTORY_UPGRADE_FUEL_SLOT : fuel.getItem());
+        this.gui.setItem(19, fuelItem == null ? MinionHandler.MINION_INVENTORY_UPGRADE_FUEL_SLOT : fuelItem);
         this.gui.setItem(28, shipping == null ? MinionHandler.MINION_INVENTORY_UPGRADE_AUTOMATED_SHIPPING_SLOT : shipping.getItem());
         this.gui.setItem(37, up1 == null ? MinionHandler.MINION_INVENTORY_UPGRADE_SLOT : up1.getItem());
         this.gui.setItem(46, up2 == null ?  MinionHandler.MINION_INVENTORY_UPGRADE_SLOT : up2.getItem());

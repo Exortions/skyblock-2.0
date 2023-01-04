@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SkyblockCoinsChangeEvent extends SkyblockEvent {
+public class SkyblockPlayerCoinUpdateEvent extends SkyblockEvent {
 
     private SkyblockPlayer player;
 

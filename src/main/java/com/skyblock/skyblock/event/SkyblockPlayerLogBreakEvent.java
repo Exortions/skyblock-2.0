@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 
 @Getter
 @AllArgsConstructor
-public class SkyblockLogBreakEvent extends SkyblockEvent {
+public class SkyblockPlayerLogBreakEvent extends SkyblockEvent {
 
     private final SkyblockPlayer player;
     private final Block block;

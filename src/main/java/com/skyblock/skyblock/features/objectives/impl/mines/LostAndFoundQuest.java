@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.objectives.impl.mines;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockCollectItemEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerCollectItemEvent;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;
@@ -211,7 +211,7 @@ public class LostAndFoundQuest extends QuestLine {
         }
 
         @EventHandler
-        public void onCollectBlock(SkyblockCollectItemEvent event) {
+        public void onCollectBlock(SkyblockPlayerCollectItemEvent event) {
             if (!event.getCollection().getCategory().equalsIgnoreCase("mining")) return;
 
             if (Skill.getLevel(Skill.getXP(new Mining(), event.getPlayer())) >= 5) {
