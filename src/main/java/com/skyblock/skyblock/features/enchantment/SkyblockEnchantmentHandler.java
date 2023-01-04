@@ -118,8 +118,8 @@ public class SkyblockEnchantmentHandler {
             instancesToCheck.add(FishingRodEnchantment.class);
         } else if (type.equalsIgnoreCase("sword")) {
             instancesToCheck.add(SwordEnchantment.class);
-        }
-
+        } else if (type.equalsIgnoreCase("hoe") || type.equalsIgnoreCase("axe") || type.equalsIgnoreCase("pickaxe") || type.equalsIgnoreCase("shovel"))
+            instancesToCheck.add(ToolEnchantment.class);
         if (type.equalsIgnoreCase("boots")) {
             instancesToCheck.add(BootEnchantment.class);
         }

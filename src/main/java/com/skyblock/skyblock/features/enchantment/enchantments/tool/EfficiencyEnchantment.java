@@ -1,12 +1,10 @@
-package com.skyblock.skyblock.features.enchantment.enchantments.misc;
+package com.skyblock.skyblock.features.enchantment.enchantments.tool;
 
-import com.skyblock.skyblock.features.enchantment.types.MiscEnchantment;
+import com.skyblock.skyblock.features.enchantment.types.ToolEnchantment;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.enchantments.Enchantment;
 
-import java.util.function.Function;
-
-public class EfficiencyEnchantment extends MiscEnchantment {
+public class EfficiencyEnchantment extends ToolEnchantment {
     public EfficiencyEnchantment() {
         super("efficiency", "Efficiency", (level) -> "&7Increases how quickly your tool\nbreaks blocks", 6);
     }

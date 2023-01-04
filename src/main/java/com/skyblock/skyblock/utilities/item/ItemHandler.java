@@ -237,10 +237,10 @@ public class ItemHandler {
 
         for (SkyblockEnchantment enchant : enchantmentHandler.getEnchantments()) {
             for (int i = 1; i <= enchant.getMaxLevel(); i++) {
+                List<String> desc = new ArrayList<>(Arrays.asList(ChatColor.GRAY + "Use this on an item in an Anvil", ChatColor.GRAY + "to apply it!", " "));
+                ItemBase base = new ItemBase(Material.ENCHANTED_BOOK, ChatColor.WHITE + "Enchanted Book", Reforge.NONE, 1, desc, Collections.singletonList(new ItemEnchantment(enchant, i)), true, false, "", Arrays.asList("placeholder description", "placeholder description", "placeholder description"), "", 0, "", "common", "enchanted_book_" + enchant.getName() + "_" + i, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
                 items.put(enchant.getName().toUpperCase() + ";" + i + ".json",
-                        new ItemBuilder(ChatColor.WHITE + "Enchanted Book", Material.ENCHANTED_BOOK)
-                                .addLore(ChatColor.BLUE + enchant.getDisplayName() + " " + Util.toRoman(i)).addLore(Util.enchantLore(enchant.getDescription(i)))
-                                .addLore(" ", "&7Use this on an item in an Anvil", "&7to apply it!", " ", ChatColor.WHITE + "" + ChatColor.BOLD + "COMMON").toItemStack());
+                        base.createStack());
             }
         }
 

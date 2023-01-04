@@ -3,16 +3,13 @@ package com.skyblock.skyblock.features.enchantment;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
-import com.skyblock.skyblock.features.enchantment.gui.EnchantingTableGui;
 import com.skyblock.skyblock.utilities.Pair;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.var;
 import net.minecraft.server.v1_8_R3.Item;
-import net.minecraft.server.v1_8_R3.ItemArmor;
 import net.minecraft.server.v1_8_R3.ItemTool;
 import org.apache.commons.lang3.Range;
 import org.bukkit.*;
@@ -21,13 +18,8 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -255,7 +247,8 @@ public class EnchantingTableGUI extends CraftInventoryCustom implements Listener
             if (enchants.contains(entry.getKey())) continue;
 
             if (Util.random(0, 100) < (mod + 1) / 50) {
-                enchants.add(random(possible, sum, item));
+                Pair<String, Integer> rand = random(possible, sum, item);
+                if (!enchants.contains(rand)) enchants.add(rand);
                 mod = mod / 2;
             }
         }
@@ -265,6 +258,8 @@ public class EnchantingTableGUI extends CraftInventoryCustom implements Listener
         List<ItemEnchantment> itemEnchantments = new ArrayList<>();
 
         for (Pair<String, Integer> enchant : enchants) {
+            if (enchant == null) continue;
+            if (enchant.first() == null) continue;
             SkyblockEnchantment ench = handler.getEnchantment(enchant.first().toLowerCase().replaceAll("_", ""));
             if (ench == null) continue;
             itemEnchantments.add(new ItemEnchantment(ench, enchant.getSecond()));
