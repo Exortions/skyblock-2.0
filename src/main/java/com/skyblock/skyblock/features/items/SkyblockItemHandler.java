@@ -106,6 +106,7 @@ public class SkyblockItemHandler {
         registerArmorSet(new SpeedsterArmor());
         registerArmorSet(new SpongeArmor());
         registerArmorSet(new LeafletArmor());
+        registerArmorSet(new UnstableDragonArmor());
     }
 
     public ArrayList<ItemStack> getItems() {
