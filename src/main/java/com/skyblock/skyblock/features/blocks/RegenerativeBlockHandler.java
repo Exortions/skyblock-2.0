@@ -131,12 +131,6 @@ public class RegenerativeBlockHandler implements Listener {
         Skyblock skyblock = Skyblock.getPlugin(Skyblock.class);
 
         if (!player.isNotOnPrivateIsland()) {
-            event.setCancelled(false);
-
-            for (ItemStack item : event.getBlock().getDrops(player.getBukkitPlayer().getItemInHand())) {
-                player.getBukkitPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation(), item);
-            }
-
             return;
         }
 
