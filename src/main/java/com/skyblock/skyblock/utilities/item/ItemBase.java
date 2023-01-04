@@ -7,6 +7,7 @@ import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
+import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.CriticalEnchantment;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
 import com.skyblock.skyblock.features.reforge.ReforgeStat;
@@ -604,6 +605,46 @@ public class ItemBase {
         }
 
         return false;
+    }
+
+    public void maxItem() {
+        boolean isSword = this.rarity.toUpperCase().contains("SWORD");
+        boolean isArmor = this.rarity.toUpperCase().contains("HELMET") || this.rarity.toUpperCase().contains("CHESTPLATE") || this.rarity.toUpperCase().contains("LEGGINGS") || this.rarity.toUpperCase().contains("BOOTS");
+        boolean isRanged = this.rarity.toUpperCase().contains("BOW");
+        boolean isHelmet = this.rarity.toUpperCase().contains("HELMET");
+        boolean isBoots = this.rarity.toUpperCase().contains("BOOTS");
+
+        SkyblockEnchantmentHandler enchantmentHandler = Skyblock.getPlugin().getEnchantmentHandler();
+
+        List<SkyblockEnchantment> enchantments = new ArrayList<>();
+
+        if (isSword) {
+            enchantments.addAll(enchantmentHandler.getEnchantments("sword"));
+
+            this.setReforge(Reforge.SPICY);
+        } else if (isHelmet) {
+            enchantments.addAll(enchantmentHandler.getEnchantments("helmet"));
+
+            this.setReforge(Reforge.FIERCE);
+        } else if (isBoots) {
+            enchantments.addAll(enchantmentHandler.getEnchantments("boots"));
+
+            this.setReforge(Reforge.FIERCE);
+        } else if (isArmor) {
+            enchantments.addAll(enchantmentHandler.getEnchantments("armor"));
+
+            this.setReforge(Reforge.FIERCE);
+        } else if (isRanged) {
+            enchantments.addAll(enchantmentHandler.getEnchantments("bow"));
+
+            this.setReforge(Reforge.RAPID);
+        }
+
+        for (SkyblockEnchantment enchantment : enchantments) {
+            this.addEnchantment(enchantment.getName(), enchantment.getMaxLevel());
+        }
+
+        this.createStack();
     }
 
 }

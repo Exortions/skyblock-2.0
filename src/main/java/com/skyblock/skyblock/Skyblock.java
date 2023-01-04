@@ -816,7 +816,8 @@ public final class Skyblock extends JavaPlugin {
                 new SettingsCommand(),
                 new HubCommand(),
                 new IslandCommand(),
-                new EffectsCommand()
+                new EffectsCommand(),
+                new MaxMyItemCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

@@ -110,7 +110,7 @@ public class SkyblockEnchantmentHandler {
     public List<SkyblockEnchantment> getEnchantments(String type) {
         List<Class<? extends SkyblockEnchantment>> instancesToCheck = new ArrayList<>(Collections.singletonList(MiscEnchantment.class));
 
-        if (type.equalsIgnoreCase("helmet") || type.equalsIgnoreCase("chestplate") || type.equalsIgnoreCase("leggings") || type.equalsIgnoreCase("boots")) {
+        if (type.equalsIgnoreCase("armor") || type.equalsIgnoreCase("helmet") || type.equalsIgnoreCase("chestplate") || type.equalsIgnoreCase("leggings") || type.equalsIgnoreCase("boots")) {
             instancesToCheck.add(ArmorEnchantment.class);
         } else if (type.equalsIgnoreCase("bow")) {
             instancesToCheck.add(BowEnchantment.class);
@@ -120,6 +120,7 @@ public class SkyblockEnchantmentHandler {
             instancesToCheck.add(SwordEnchantment.class);
         } else if (type.equalsIgnoreCase("hoe") || type.equalsIgnoreCase("axe") || type.equalsIgnoreCase("pickaxe") || type.equalsIgnoreCase("shovel"))
             instancesToCheck.add(ToolEnchantment.class);
+
         if (type.equalsIgnoreCase("boots")) {
             instancesToCheck.add(BootEnchantment.class);
         }
