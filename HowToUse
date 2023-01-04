@@ -1,0 +1,23 @@
+downloading steps:
+
+Import the git resporitory: git clone https://github.com/Exortions/skyblock-2.0
+
+Open the folder in intelijj
+
+wait till maven loads the dependencies
+
+Building steps:
+
+Click on top left File -> Projekt structure -> artifacts 
+
+click on the +
+
+hover over jar and click from module with dependencies
+
+
+then ok and choose your output directory then click OK
+
+
+hover over build - build artifacts wait till maven finishes building
+
+now you built it succsesfully
