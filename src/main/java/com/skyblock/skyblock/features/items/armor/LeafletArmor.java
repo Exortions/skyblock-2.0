@@ -23,7 +23,7 @@ public class LeafletArmor extends BlockHelmetSet {
 
     @EventHandler
     public void onPlayerLocationChange(SkyblockPlayerLocationChangeEvent event) {
-        if (event.getTo().equals("Forst") || event.getTo().equals("The Park")) {
+        if (event.getTo().equals("Forest") || event.getTo().equals("The Park")) {
             if (!tasks.containsKey(event.getPlayer().getBukkitPlayer().getUniqueId())) {
                 tasks.put(event.getPlayer().getBukkitPlayer().getUniqueId(), new BukkitRunnable() {
                     @Override
