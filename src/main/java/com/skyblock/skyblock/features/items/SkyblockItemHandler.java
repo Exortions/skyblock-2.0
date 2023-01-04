@@ -105,6 +105,7 @@ public class SkyblockItemHandler {
         registerArmorSet(new LapisArmor());
         registerArmorSet(new SpeedsterArmor());
         registerArmorSet(new SpongeArmor());
+        registerArmorSet(new LeafletArmor());
     }
 
     public ArrayList<ItemStack> getItems() {
