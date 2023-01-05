@@ -38,6 +38,7 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -998,4 +999,45 @@ public class SkyblockPlayer {
         return false;
     }
 
+    public List<ItemStack> getItemsInBag(String bag) {
+        List<ItemStack> items = new ArrayList<>();
+
+        for (String slot : ((ConfigurationSection) getValue("bag." + bag + ".items")).getKeys(false)) {
+            ItemStack item = ((ItemStack) getValue("bag." + bag + ".items." + slot)).clone();
+            if (!item.getType().equals(Material.AIR)) items.add(item);
+        }
+
+        return items;
+    }
+
+    public void removeFromQuiver() {
+        for (String slot : ((ConfigurationSection) getValue("bag.quiver.items")).getKeys(false)) {
+            ItemStack item = ((ItemStack) getValue("bag.quiver.items." + slot)).clone();
+            if (!item.getType().equals(Material.AIR)) {
+                if (item.getAmount() == 1) {
+                    setValue("bag.quiver.items." + slot, new ItemStack(Material.AIR));
+                } else {
+                    setValue("bag.quiver.items." + slot + ".amount", item.getAmount() - 1);
+
+                    Bukkit.broadcastMessage("bruh " + getQuiverAmount());
+                }
+                break;
+            }
+        }
+    }
+
+    public int getQuiverAmount() {
+        if (!getBoolValue("bag.quiver.unlocked")) return 0;
+
+        List<ItemStack> arrows = getItemsInBag("quiver");
+
+        int amount = 0;
+        for (ItemStack item : arrows) {
+            amount += item.getAmount();
+
+            if (amount >= 64) return 64;
+        }
+
+        return amount;
+    }
 }

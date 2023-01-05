@@ -10,6 +10,7 @@ import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.Reforge;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.potions.PotionEffect;
+import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -1040,6 +1041,10 @@ public class Util {
         }
 
         return entities;
+    }
+
+    public ItemStack createSkyblockMenu() {
+        return new ItemBuilder(SkyblockMenuListener.ITEM_NAME, Material.NETHER_STAR).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addLore(ChatColor.GRAY + "View all of your SkyBlock", ChatColor.GRAY + "progress, including your Skills,", ChatColor.GRAY + "Collections, Recipes, and more!", "", ChatColor.YELLOW + "Click to open!").toItemStack();
     }
 
 }

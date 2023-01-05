@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.event.SkyblockPlayerCollectionRewardEvent;
 import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;
@@ -9,6 +10,7 @@ import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -119,8 +121,10 @@ public class Collection {
                     .add("")
                     .add("&a&l  REWARDS");
 
-            for (String s : this.rewards.stringify(level + 1))
+            for (String s : this.rewards.stringify(level + 1)) {
                 builder.add(Util.buildLore("  " + s.replace("  \n", "    \n")));
+                Bukkit.getPluginManager().callEvent(new SkyblockPlayerCollectionRewardEvent(skyblockPlayer, s.substring(4)));
+            }
 
             if (this.rewards.stringify(level + 1).size() == 0) builder.add("    &cComing soon");
 

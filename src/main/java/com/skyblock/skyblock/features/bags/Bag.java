@@ -70,9 +70,13 @@ public class Bag implements Listener {
 
         int inventorySize = this.getSlots.applyAsInt(SkyblockPlayer.getPlayer(player)) + 9;
 
+        while (inventorySize % 9 != 0) {
+            inventorySize++;
+        }
+
         Inventory inventory = Bukkit.createInventory(null, inventorySize, this.name);
 
-        for (int i = limit; i < inventorySize; i++) inventory.setItem(i, new ItemBuilder(" ", Material.STAINED_GLASS_PANE, (short) 15).toItemStack());
+        Util.fillEmpty(inventory);
 
         for (int i = 0; i < limit; i++) {
             inventory.setItem(i, new ItemStack(Material.AIR));
@@ -135,12 +139,6 @@ public class Bag implements Listener {
         if (event.getSlot() < limit) {
             if (event.getCurrentItem() == null) return;
 
-            if (event.getCursor().getAmount() > 1) {
-                event.getWhoClicked().sendMessage(ChatColor.RED + "Bags only support single items!");
-                event.setCancelled(true);
-                return;
-            }
-
             if (!this.validate.test(event.getCursor()) && event.getAction() != InventoryAction.PICKUP_ONE && event.getAction() != InventoryAction.PICKUP_ALL) {
                 event.getWhoClicked().sendMessage(ChatColor.RED + "You cannot put this item in this bag!");
                 event.setCancelled(true);
@@ -168,6 +166,8 @@ public class Bag implements Listener {
                 }
 
                 skyblockPlayer.setValue("bag." + this.id + ".items." + slot, items.get(slot));
+                skyblockPlayer.setValue("bag." + this.id + ".items." + slot + ".amount", items.get(slot).getAmount());
+                Bukkit.broadcastMessage(skyblockPlayer.getIntValue("bag." + this.id + ".items." + slot + ".amount") + "");
             }
         }
 

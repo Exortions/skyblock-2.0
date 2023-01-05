@@ -32,15 +32,4 @@ public abstract class BlockHelmetSet extends ArmorSet {
             player.getInventory().setHelmet(cursor);
         }
     }
-
-    @EventHandler
-    public void onRightClick(PlayerInteractEvent e) {
-        if (e.getPlayer().getItemInHand() == null) return;
-        if (e.getPlayer().getInventory().getHelmet() != null) return;
-
-        if (Util.getSkyblockId(e.getPlayer().getItemInHand()).equalsIgnoreCase(Util.getSkyblockId(getHelmet()))) {
-            e.getPlayer().getInventory().setHelmet(e.getPlayer().getItemInHand());
-            e.getPlayer().setItemInHand(null);
-        }
-    }
 }

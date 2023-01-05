@@ -101,23 +101,21 @@ public class AnvilGUI extends CraftInventoryCustom implements Listener {
                     return;
                 }
 
-                if (true) {
-                    if (sacrifice) {
-                        setItem(14, buildPane(true, true));
-                        setItem(15, buildPane(true, true));
-                        setItem(24, buildPane(true, true));
-                    } else {
-                        setItem(11, buildPane(false, true));
-                        setItem(12, buildPane(false, true));
-                        setItem(20, buildPane(false, true));
-                    }
+                if (sacrifice) {
+                    setItem(14, buildPane(true, true));
+                    setItem(15, buildPane(true, true));
+                    setItem(24, buildPane(true, true));
+                } else {
+                    setItem(11, buildPane(false, true));
+                    setItem(12, buildPane(false, true));
+                    setItem(20, buildPane(false, true));
+                }
 
-                    if (getItem(29) != null && getItem(33) != null) {
-                        for (int i = 45; i < 54; i++) setItem(i, new ItemBuilder("", Material.STAINED_GLASS_PANE, (short) 5).toItemStack());
-                        setItem(49, Util.buildCloseButton());
-                        setItem(22, new ItemBuilder(ChatColor.GREEN + "Combine items", Material.ANVIL).addLore("&7Combine the items in the slots", "&7to the left and right below.", " ", "&7Cost", ChatColor.DARK_AQUA + "0 Exp Levels", " ", ChatColor.YELLOW + "Click to combine").addEnchantmentGlint().toItemStack());
-                        setItem(13, generateCombined());
-                    }
+                if (getItem(29) != null && getItem(33) != null) {
+                    for (int i = 45; i < 54; i++) setItem(i, new ItemBuilder("", Material.STAINED_GLASS_PANE, (short) 5).toItemStack());
+                    setItem(49, Util.buildCloseButton());
+                    setItem(22, new ItemBuilder(ChatColor.GREEN + "Combine items", Material.ANVIL).addLore("&7Combine the items in the slots", "&7to the left and right below.", " ", "&7Cost", ChatColor.DARK_AQUA + "0 Exp Levels", " ", ChatColor.YELLOW + "Click to combine").addEnchantmentGlint().toItemStack());
+                    setItem(13, generateCombined());
                 }
             }, 1);
         }

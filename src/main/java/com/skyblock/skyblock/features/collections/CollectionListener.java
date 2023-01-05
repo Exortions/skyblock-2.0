@@ -2,6 +2,8 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.event.SkyblockPlayerCollectItemEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerCollectionRewardEvent;
+import com.skyblock.skyblock.utilities.Pair;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -16,6 +18,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -133,4 +136,23 @@ public class CollectionListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onCollection(SkyblockPlayerCollectionRewardEvent e) {
+        SkyblockPlayer player = e.getPlayer();
+        String reward = e.getReward();
+        if (reward.contains("Accessory Bag Upgrade")) {
+            upgradeBag(player, "accessory_bag", Arrays.asList(0, 3, 9, 15, 21, 27, 33, 39, 45, 51, 57));
+        } else if (reward.contains("Quiver Upgrade")) {
+            upgradeBag(player, "quiver", Arrays.asList(0, 27, 36, 45));
+        }
+    }
+
+    private void upgradeBag(SkyblockPlayer player, String bag, List<Integer> slots) {
+        if (!player.getBoolValue("bag." + bag + ".unlocked")) player.setValue("bag." + bag + ".unlocked", true);
+
+        int current = player.getIntValue("bag." + bag + ".slots");
+        int next = slots.get(slots.indexOf(current) + 1);
+
+        player.setValue("bag." + bag + ".slots", next);
+    }
 }
