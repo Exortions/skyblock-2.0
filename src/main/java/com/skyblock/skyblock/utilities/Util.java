@@ -1014,4 +1014,14 @@ public class Util {
         return new ItemBuilder(SkyblockMenuListener.ITEM_NAME, Material.NETHER_STAR).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS).addLore(ChatColor.GRAY + "View all of your SkyBlock", ChatColor.GRAY + "progress, including your Skills,", ChatColor.GRAY + "Collections, Recipes, and more!", "", ChatColor.YELLOW + "Click to open!").toItemStack();
     }
 
+    public double triangularDistribution(double a, double b, double c) {
+        double F = (c - a) / (b - a);
+        double rand = Math.random();
+        if (rand < F) {
+            return a + Math.sqrt(rand * (b - a) * (c - a));
+        } else {
+            return b - Math.sqrt((1 - rand) * (b - a) * (b - c));
+        }
+    }
+
 }

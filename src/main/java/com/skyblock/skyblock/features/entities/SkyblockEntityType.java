@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.entities;
 
 import com.skyblock.skyblock.features.entities.creeper.SneakyCreeper;
+import com.skyblock.skyblock.features.entities.dragon.Dragon;
 import com.skyblock.skyblock.features.entities.end.Endermite;
 import com.skyblock.skyblock.features.entities.end.ObsidianDefender;
 import com.skyblock.skyblock.features.entities.end.Watcher;
@@ -26,6 +27,7 @@ public enum SkyblockEntityType {
     SNEAKY_CREEPER(SneakyCreeper.class),
     EMERALD_SLIME(EmeraldSlime.class),
     SKELETON(Skeleton.class),
+    DRAGON(Dragon.class),
     REDSTONE_PIGMAN(RedstonePigman.class);
 
     Class<? extends SkyblockEntity> baseClass;

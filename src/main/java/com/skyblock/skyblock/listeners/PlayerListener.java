@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.event.SkyblockPlayerDamageByEntityEvent;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.event.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.enchantment.AnvilGUI;
@@ -40,6 +41,7 @@ import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -239,7 +241,11 @@ public class PlayerListener implements Listener {
 
                 display = damage * sentity.getEntityData().maximumHealth;
 
-                Bukkit.getPluginManager().callEvent(new SkyblockPlayerDamageEntityEvent(player, sentity, display, event));
+                SkyblockPlayerDamageEntityEvent e = new SkyblockPlayerDamageEntityEvent(player, sentity, display, event);
+                Bukkit.getPluginManager().callEvent(e);
+
+                display = e.getDamage();
+                damage = e.getDamage() / sentity.getEntityData().maximumHealth;
 
                 sentity.onDamage(event, player, crit, display);
 
@@ -274,7 +280,12 @@ public class PlayerListener implements Listener {
                 SkyblockEntity sentity = plugin.getEntityHandler().getEntity(event.getDamager());
                 sentity.setLifeSpan(sentity.getLifeSpan() + 15 * 20);
 
-                player.damage(sentity.getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, sentity.getVanilla());
+                SkyblockPlayerDamageByEntityEvent e = new SkyblockPlayerDamageByEntityEvent(player, sentity, false, sentity.getEntityData().damage);
+                Bukkit.getPluginManager().callEvent(e);
+
+                double damage = e.getDamage();
+
+                player.damage(damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, sentity.getVanilla(), e.isTrueDamage());
             }
         } else if (event.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) event.getDamager();
@@ -556,6 +567,11 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
         killRemovables(event.getChunk());
+    }
+
+    @EventHandler
+    public void onPortal(PortalCreateEvent e) {
+        e.setCancelled(true);
     }
 
     private void killRemovables(Chunk chunk) {
