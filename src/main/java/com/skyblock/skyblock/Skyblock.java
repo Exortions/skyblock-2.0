@@ -383,7 +383,7 @@ public final class Skyblock extends JavaPlugin {
 
                             return base.getRarity().toUpperCase().contains("ACCESSORY");
                         }),
-                        (player, inventory) -> player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You have opened your Accessory Bag!"),
+                        (player, inventory) -> player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.HORSE_ARMOR, 10, 0),
                         (player, itemStack) -> {
                             Accessory.onEquip(itemStack, player);
 
@@ -408,6 +408,18 @@ public final class Skyblock extends JavaPlugin {
                         }
                 )
         );
+
+        this.bagManager.registerBag(
+                new Bag(
+                        "quiver",
+                        "Quiver",
+                        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNiM2FjZGMxMWNhNzQ3YmY3MTBlNTlmNGM4ZTliM2Q5NDlmZGQzNjRjNjg2OTgzMWNhODc4ZjA3NjNkMTc4NyJ9fX0=",
+                        "&7A masterfully crafted Quiver\n&7which holds any kind of\n&7projectile you can think of!",
+                        44,
+                        (stack -> stack.getType().equals(Material.ARROW)),
+                        (player, inventory) -> player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.HORSE_ARMOR, 10, 0),
+                        (player, itemStack) -> { },
+                        (player, itemStack) -> { }));
 
         this.sendMessage(
                 "Successfully registered " + ChatColor.GREEN +

@@ -6,6 +6,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.event.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.enchantment.AnvilGUI;
 import com.skyblock.skyblock.features.enchantment.EnchantingTableGUI;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
@@ -18,6 +19,7 @@ import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
+import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -476,7 +478,8 @@ public class PlayerListener implements Listener {
 
         if (!Util.notNull(item)) return;
 
-        if (item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Skyblock Menu")) {
+        if (item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Skyblock Menu") ||
+            item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("Quiver Arrow")) {
             ((Player) e.getWhoClicked()).performCommand("sb gui skyblock_menu");
             e.setCancelled(true);
         }
@@ -489,7 +492,8 @@ public class PlayerListener implements Listener {
 
         ItemStack stack = item.getItemStack();
 
-        if (stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().contains("Skyblock Menu")) {
+        if (stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().contains("Skyblock Menu") ||
+            stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().contains("Quiver Arrow")) {
             event.setCancelled(true);
         }
 
@@ -513,6 +517,39 @@ public class PlayerListener implements Listener {
             data.put("slot", (long) event.getPlayer().getInventory().getHeldItemSlot());
             player.setExtraData("lastDropAttempt", data);
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onSwitchItem(SkyblockPlayerItemHeldChangeEvent e) {
+        SkyblockPlayer player = e.getPlayer();
+
+        if (e.getNewItem().getType().equals(BOW) && player.getQuiverAmount() != 0) {
+            ItemBuilder quiver = new ItemBuilder(ChatColor.DARK_GRAY + "Quiver Arrow", ARROW).addLore("&7This item is in your inventory", "&7because you are holding your bow", "&7currently. Switch your held item", "&7to see the item that was here", "&7before.");
+
+            quiver.addEnchantmentGlint();
+            quiver.setAmount(player.getQuiverAmount());
+
+            player.getBukkitPlayer().getInventory().setItem(8, quiver.toItemStack());
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    ItemStack arrow = player.getBukkitPlayer().getInventory().getItem(8);
+
+                    if (!arrow.getType().equals(ARROW)) {
+                        cancel();
+                        return;
+                    }
+
+                    if (arrow.getAmount() != player.getQuiverAmount()) {
+                        player.removeFromQuiver();
+                        arrow.setAmount(player.getQuiverAmount());
+                    }
+                }
+            }.runTaskTimer(Skyblock.getPlugin(), 1, 1);
+        } else if (e.getOldItem().getType().equals(BOW)) {
+            player.getBukkitPlayer().getInventory().setItem(8, Util.createSkyblockMenu());
         }
     }
 
