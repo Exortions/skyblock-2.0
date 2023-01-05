@@ -760,6 +760,18 @@ public class SkyblockPlayer {
                 config.set("settings.coopInvites", true);
                 config.set("settings.coopTravelNotif", true);
 
+                config.set("harp.hymn_to_the_joy.best", 0);
+                config.set("harp.frere_jaques.best", -1);
+                config.set("harp.amazing_grace.best", -1);
+                config.set("harp.brahms_lullaby.best", -1);
+                config.set("harp.happy_birthday_to_you.best", -1);
+                config.set("harp.greensleeves.best", -1);
+                config.set("harp.geothermy.best", -1);
+                config.set("harp.minuet.best", -1);
+                config.set("harp.joy_to_the_world.best", -1);
+                config.set("harp.godly_imagination.best", -1);
+                config.set("harp.la_vie_en_rose.best", -1);
+
                 config.save(configFile);
 
                 Bukkit.getConsoleSender().sendMessage("Config finished: " + config + "");
