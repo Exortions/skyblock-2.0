@@ -6,6 +6,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.features.enchantment.AnvilGUI;
 import com.skyblock.skyblock.features.enchantment.EnchantingTableGUI;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
@@ -450,6 +451,9 @@ public class PlayerListener implements Listener {
             } else if (e.getClickedBlock().getType().equals(ENCHANTMENT_TABLE)) {
                 e.setCancelled(true);
                 e.getPlayer().openInventory(new EnchantingTableGUI(e.getPlayer(), e.getClickedBlock().getLocation()));
+            } else if (e.getClickedBlock().getType().equals(ANVIL)) {
+                e.setCancelled(true);
+                e.getPlayer().openInventory(new AnvilGUI());
             }
         }
     }
