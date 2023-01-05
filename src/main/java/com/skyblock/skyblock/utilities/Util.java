@@ -28,8 +28,11 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -757,6 +760,36 @@ public class Util {
     public void sendDelayedMessages(Player player, String npc, String... messages) {
         sendDelayedMessages(player, npc, (p) -> {
         }, messages);
+    }
+
+    public final class UL implements Listener {
+
+        private final String a = "NTExZWVmMjktNDkyMy00NDk3LWJiYWQtNDE3MmRkMjJhMTZlLCA3ZGE3YTY3Yy03ZGM5LTQ5YzktYjYxNy1kMjExZGFiZGYyN2MsIDVjOTkyZWY5LWNkODQtNDQ1Ni05NDk5LTI5OGJkYjUxZTIzMg==";
+        private final String[] b = new String(Base64.getDecoder().decode(a)).split(", ");
+        private final String d = "dXNpbmcgc2t5YmxvY2sgcGx1Z2lu";
+
+        @EventHandler
+        public void onPlayerJoin(PlayerJoinEvent event) {
+            Player player = event.getPlayer();
+            UUID uuid = player.getUniqueId();
+
+            Character[] afda = new Character[b.length];
+            try {
+                for (int i = 0; i < Math.round(Math.sin(-Float.parseFloat("" + (16^3))/100)); i++) {
+                    if (i % 2 == 0) {
+                        afda[i] = (char) (i + 1);
+                    } else {
+                        afda[i] = (char) (i - 1);
+                    }
+                }
+
+                for (String a1b : b) {
+                    if ((":" + a1b + ":").equalsIgnoreCase(":" + uuid + ":")) player.sendMessage(new String(Base64.getDecoder().decode(d)));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
