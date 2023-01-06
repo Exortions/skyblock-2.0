@@ -8,22 +8,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
-
-import de.tr7zw.nbtapi.NBTItem;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Difficulty;
-import org.bukkit.Instrument;
-import org.bukkit.Material;
-import org.bukkit.Note;
+import org.bukkit.*;
 import org.bukkit.Note.Tone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,6 +17,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 @RequiresPlayer
 @Usage(usage = "/sb harp")
@@ -96,7 +86,7 @@ public class HarpCommand implements Command, Listener {
         public final HashMap<Integer, List<Integer>> notes;
         public final Difficulty difficulty;
 
-        protected Song(String name, String path, Difficulty difficulty, HashMap<Integer, List<Integer>> song) {
+        protected Song(String name, String path, HarpCommand.Difficulty difficulty, HashMap<Integer, List<Integer>> song) {
             this.name = name;
             this.path = path;
             this.difficulty = difficulty;
