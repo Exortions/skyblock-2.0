@@ -23,14 +23,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
 public class Dragon extends SkyblockEntity implements Listener {
     @Getter
     @AllArgsConstructor
-    public static enum DragonType {
+    public enum DragonType {
 
         PROTECTOR(9000000, 1100, 85, 1.4),
         OLD(15000000, 1100, 18, 1.3),
@@ -46,6 +48,7 @@ public class Dragon extends SkyblockEntity implements Listener {
         private final double speedMultiplier;
     }
 
+    private final HashMap<UUID, Integer> damagers = new HashMap<>();
     private final DragonType type;
     private final boolean appliedSpeed;
     private boolean rushing;
@@ -72,14 +75,7 @@ public class Dragon extends SkyblockEntity implements Listener {
         dragon.setCustomNameVisible(false);
         dragon.setCustomName(ChatColor.RED + getEntityData().entityName);
 
-        if (dragon.getLocation().getY() < 45) {
-            Vector vel = dragon.getLocation().getDirection();
-            vel.setY(1.5);
-
-            dragon.setVelocity(vel);
-        }
-
-        if (tick % 500 == 0) {
+        if (tick % 500 == 0 && tick != 0) {
             switch (Util.random(0, 2)) {
                 case 0:
                     fireBall(dragon);
@@ -118,6 +114,9 @@ public class Dragon extends SkyblockEntity implements Listener {
 
                                     double damage = Util.triangularDistribution(300, 500, 700);
 
+                                    if (type.equals(DragonType.WISE)) damage += damage * 0.2;
+                                    if (type.equals(DragonType.SUPERIOR)) damage += damage * 0.15;
+
                                     Vector dir = player.getBukkitPlayer().getLocation().getDirection().normalize();
 
                                     dir.setY(3);
@@ -141,15 +140,23 @@ public class Dragon extends SkyblockEntity implements Listener {
     private void lightningStrike() {
         List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
 
-        double damage = Util.triangularDistribution(300, 500, 700);
-
-        for (Player player : players) {
-            player.getWorld().strikeLightningEffect(player.getLocation());
-
-            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
-            skyblockPlayer.damage(damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
-            player.sendMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.LIGHT_PURPLE + "used " + ChatColor.YELLOW + "Lightning Strike " + ChatColor.LIGHT_PURPLE + "on you for " + ChatColor.RED + (int) damage + " damage.");
+        for (int i = 0; i < 20; i++) {
+            getVanilla().getWorld().strikeLightningEffect(getVanilla().getLocation());
         }
+
+        Util.delay(() -> {
+            double damage = Util.triangularDistribution(300, 500, 700);
+            if (type.equals(DragonType.WISE)) damage += damage * 0.2;
+            if (type.equals(DragonType.SUPERIOR)) damage += damage * 0.15;
+
+            for (Player player : players) {
+                player.getWorld().strikeLightningEffect(player.getLocation());
+
+                SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+                skyblockPlayer.damage(damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
+                player.sendMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.LIGHT_PURPLE + "used " + ChatColor.YELLOW + "Lightning Strike " + ChatColor.LIGHT_PURPLE + "on you for " + ChatColor.RED + (int) damage + " damage.");
+            }
+        }, 40);
     }
 
     private void rush(EnderDragon dragon) {
@@ -166,6 +173,50 @@ public class Dragon extends SkyblockEntity implements Listener {
         speed.setValue(speed.getValue() * type.getSpeedMultiplier());
     }
 
+    private String getPlace(int place) {
+        try {
+            return (getDamaged().get(place - 1) != null ? getDamaged().get(place - 1).getName() + ChatColor.GRAY + " - " + ChatColor.YELLOW + damagers.get(getDamaged().get(place - 1).getUniqueId()) : ChatColor.RED + "N/A " + ChatColor.GRAY + "- " + ChatColor.RED + "N/A");
+        } catch (IndexOutOfBoundsException e) {
+            return ChatColor.RED + "N/A " + ChatColor.GRAY + "-" + ChatColor.RED + " N/A";
+        }
+    }
+
+    @Override
+    protected void onDeath() {
+        super.onDeath();
+
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+        getDamaged().sort((p1, p2) -> Math.toIntExact(damagers.get(p1.getUniqueId()) - damagers.get(p2.getUniqueId())));
+
+        for (Player p : players) {
+            p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+            p.sendMessage("                 " + ChatColor.GOLD + ChatColor.BOLD + getType().name() + " DRAGON DOWN!");
+            p.sendMessage(" ");
+            p.sendMessage("                " + ChatColor.GREEN + (getLastDamager() != null ? getLastDamager().getBukkitPlayer().getName() : "N/A") + ChatColor.GRAY + " dealt the final blow.");
+            p.sendMessage(" ");
+            p.sendMessage("              " + ChatColor.YELLOW + ChatColor.BOLD + "1st Damager " + ChatColor.GRAY + "- " + getPlace(1));
+            p.sendMessage("            " + ChatColor.GOLD + ChatColor.BOLD + "2nd Damager " + ChatColor.GRAY + "- " + getPlace(2));
+            p.sendMessage("                " + ChatColor.RED + ChatColor.BOLD + "3rd Damager " + ChatColor.GRAY + "- " + getPlace(3));
+            p.sendMessage(" ");
+            p.sendMessage("                 " + ChatColor.YELLOW + "Your Damage: " + ChatColor.GREEN + (damagers.containsKey(p.getUniqueId()) ? damagers.get(p.getUniqueId()) : ChatColor.RED + "N/A ") + ChatColor.GRAY + " (Position #" + (getDamaged().indexOf(p) + 1) + ")");
+            p.sendMessage("                     " + ChatColor.YELLOW + "Runecrafting Experience: " + ChatColor.LIGHT_PURPLE + 0);
+            p.sendMessage(" ");
+            p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        }
+
+        if (type.equals(DragonType.UNSTABLE)) {
+            for (Entity entity : getVanilla().getNearbyEntities(10, 10, 10)) {
+                if (!(entity instanceof Player)) return;
+
+                double damage = Util.triangularDistribution(1900, 2000, 2100);
+
+                SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) entity);
+                player.damage(damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla());
+                player.getBukkitPlayer().sendMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.LIGHT_PURPLE + "used " + ChatColor.YELLOW + "Implosion " + ChatColor.LIGHT_PURPLE + "on you for " + ChatColor.RED + (int) damage + " damage.");
+            }
+        }
+    }
+
     @EventHandler
     public void onDamage(SkyblockPlayerDamageByEntityEvent e) {
         if (!e.getEntity().getVanilla().equals(getVanilla())) return;
@@ -176,6 +227,7 @@ public class Dragon extends SkyblockEntity implements Listener {
             double damage = Util.triangularDistribution(300, 500, 700);
 
             if (type.equals(DragonType.STRONG)) damage += damage * 0.2;
+            if (type.equals(DragonType.SUPERIOR)) damage += damage * 0.15;
 
             e.setDamage(damage);
             e.setTrueDamage(true);
@@ -196,6 +248,12 @@ public class Dragon extends SkyblockEntity implements Listener {
     public void onDamage(SkyblockPlayerDamageEntityEvent e) {
         if (!e.getEntity().getVanilla().equals(getVanilla())) return;
 
+        getDamaged().add(e.getPlayer().getBukkitPlayer());
         if (type.equals(DragonType.PROTECTOR)) e.setDamage(e.getDamage() / 2f);
+
+        UUID id = e.getPlayer().getBukkitPlayer().getUniqueId();
+        if (!getDamagers().containsKey(id)) getDamagers().put(id, 0);
+
+        getDamagers().put(id, (int) (getDamagers().get(id) + e.getDamage()));
     }
 }

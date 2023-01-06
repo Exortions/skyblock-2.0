@@ -570,7 +570,7 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onPortal(PortalCreateEvent e) {
+    public void onPortal(EntityCreatePortalEvent e) {
         e.setCancelled(true);
     }
 

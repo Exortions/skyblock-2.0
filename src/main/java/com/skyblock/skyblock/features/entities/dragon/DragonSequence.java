@@ -4,6 +4,7 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Triple;
 import com.skyblock.skyblock.utilities.Util;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
@@ -34,7 +35,7 @@ public class DragonSequence implements Listener {
         }
     }
 
-    public static void startSequence(Dragon.DragonType type) {
+    public static void startSequence() {
         summoningEyeSequence();
 
         Util.delay(() -> {
@@ -51,6 +52,31 @@ public class DragonSequence implements Listener {
         }, 60);
 
         Util.delay(DragonSequence::explodeEgg, 100);
+
+        Util.delay(DragonSequence::spawnDragon, 100);
+    }
+
+    public static void spawnDragon() {
+        Dragon.DragonType type;
+        int rand = Util.random(0, 100);
+
+        if (inRange(rand, 0, 16)) type = Dragon.DragonType.PROTECTOR;
+        else if (inRange(rand, 16, 32)) type = Dragon.DragonType.OLD;
+        else if (inRange(rand, 32, 48)) type = Dragon.DragonType.WISE;
+        else if (inRange(rand, 48, 64)) type = Dragon.DragonType.UNSTABLE;
+        else if (inRange(rand, 64, 80)) type = Dragon.DragonType.YOUNG;
+        else if (inRange(rand, 80, 96)) type = Dragon.DragonType.STRONG;
+        else type = Dragon.DragonType.SUPERIOR;
+
+        Dragon dragon = new Dragon(type.name());
+
+        dragon.spawn(center);
+
+        Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.BOLD + ChatColor.LIGHT_PURPLE + "The " + ChatColor.RESET + ChatColor.RED + WordUtils.capitalize(dragon.getType().name().toLowerCase()) + " Dragon " + ChatColor.BOLD + ChatColor.LIGHT_PURPLE + "has spawned!");
+    }
+
+    private static boolean inRange(int i, int min, int max) {
+        return i >= min && i < max;
     }
 
     public static void endingSequence() {
@@ -114,7 +140,7 @@ public class DragonSequence implements Listener {
                 registered.add(falling);
 
                 Vector velocity = center.toVector().subtract(block.getLocation().toVector()).multiply(-1).normalize();
-                velocity.multiply(2);
+                velocity.multiply(4);
                 velocity.setY(3);
 
                 falling.setVelocity(velocity);
