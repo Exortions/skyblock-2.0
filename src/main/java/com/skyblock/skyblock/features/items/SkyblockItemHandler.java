@@ -29,6 +29,8 @@ public class SkyblockItemHandler {
         registerItem(new GrapplingHook());
         registerItem(new MaddoxBatphone());
         registerItem(new MagicalWaterBucket());
+        registerItem(new SummoningEye());
+        registerItem(new SleepingEye());
         registerItem(new WandOfHealing("WAND_OF_HEALING", 60));
         registerItem(new WandOfHealing("WAND_OF_MENDING", 100));
         registerItem(new WandOfHealing("WAND_OF_RESTORATION", 120));

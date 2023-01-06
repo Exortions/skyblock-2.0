@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class Dragon extends SkyblockEntity implements Listener {
     @Getter
     @AllArgsConstructor
-    enum DragonType {
+    public static enum DragonType {
 
         PROTECTOR(9000000, 1100, 85, 1.4),
         OLD(15000000, 1100, 18, 1.3),
@@ -108,6 +108,8 @@ public class Dragon extends SkyblockEntity implements Listener {
             Util.delay(() -> {
                 Fireball fire = dragon.launchProjectile(Fireball.class);
                 fire.setDirection(target.getLocation().toVector().subtract(dragon.getLocation().toVector()).normalize().add(new Vector(Util.random(0, 0.1), Util.random(0, 0.1), Util.random(0, 0.1))));
+                fire.setIsIncendiary(false);
+                fire.setYield(0f);
 
                 new BukkitRunnable() {
                     @Override
