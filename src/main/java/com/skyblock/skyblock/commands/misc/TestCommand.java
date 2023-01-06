@@ -9,6 +9,7 @@ import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import com.skyblock.skyblock.features.enchantment.AnvilGUI;
+import com.skyblock.skyblock.features.entities.dragon.DragonSequence;
 import com.skyblock.skyblock.features.minions.CobblestoneMinion;
 import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.features.minions.MinionBase;
@@ -56,7 +57,9 @@ public class TestCommand implements Command {
 //            MinionBase minion = new CobblestoneMinion();
 //            minion.spawn(SkyblockPlayer.getPlayer(player), player.getLocation(), 6);
 
-        player.openInventory(new AnvilGUI());
+//        player.openInventory(new AnvilGUI());
+
+        DragonSequence.endingSequence();
 
 //        ItemStack item = player.getItemInHand();
 //

@@ -40,6 +40,8 @@ import com.skyblock.skyblock.features.enchantment.enchantments.misc.TelekinesisE
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
 import com.skyblock.skyblock.features.entities.EntityListener;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
+import com.skyblock.skyblock.features.entities.dragon.DragonAltar;
+import com.skyblock.skyblock.features.entities.dragon.DragonSequence;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
 import com.skyblock.skyblock.features.fairysouls.TiaGUI;
@@ -235,6 +237,9 @@ public final class Skyblock extends JavaPlugin {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        DragonAltar.getMainAltar().onDisable();
+        DragonSequence.endingSequence();
 
         sendMessage(String.format("Removed %s Entities", i));
 
@@ -809,6 +814,7 @@ public final class Skyblock extends JavaPlugin {
         registerListener(new PotionListener());
         registerListener(new EntityListener());
         registerListener(new Util.UL());
+        registerListener(new DragonSequence());
 
         this.sendMessage("Successfully registered " + ChatColor.GREEN + registeredListeners + ChatColor.WHITE + " listeners [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
