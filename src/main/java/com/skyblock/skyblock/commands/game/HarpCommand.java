@@ -139,10 +139,7 @@ public class HarpCommand implements Command, Listener {
             lore.addAll(Arrays.asList(ChatColor.DARK_GRAY + difficultyString));
 
             if (unlocked) {
-                lore.addAll(Arrays.asList(
-                    ChatColor.DARK_GRAY + difficultyString,
-                    ChatColor.GRAY + "Best: " + formatScore(thisBest)
-                ));
+                lore.addAll(Arrays.asList(ChatColor.GRAY + "Best: " + formatScore(thisBest)));
             }
             
             lore.addAll(Arrays.asList(
