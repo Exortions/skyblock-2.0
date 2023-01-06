@@ -158,7 +158,7 @@ public class HarpCommand implements Command, Listener {
         hymnToTheJoy.put(4, Arrays.asList(3));
         hymnToTheJoy.put(5, Arrays.asList());
         hymnToTheJoy.put(6, Arrays.asList(4));
-        hymnToTheJoy.put(7, Arrays.asList(0));
+        hymnToTheJoy.put(7, Arrays.asList());
         hymnToTheJoy.put(8, Arrays.asList(4));
         hymnToTheJoy.put(9, Arrays.asList());
         hymnToTheJoy.put(10, Arrays.asList(3));
@@ -168,18 +168,18 @@ public class HarpCommand implements Command, Listener {
         hymnToTheJoy.put(14, Arrays.asList(1));
         hymnToTheJoy.put(15, Arrays.asList());
         hymnToTheJoy.put(16, Arrays.asList(0));
-        hymnToTheJoy.put(17, Arrays.asList(0));
+        hymnToTheJoy.put(17, Arrays.asList());
+        hymnToTheJoy.put(18, Arrays.asList(0));
         hymnToTheJoy.put(19, Arrays.asList());
-        hymnToTheJoy.put(18, Arrays.asList(1));
-        hymnToTheJoy.put(20, Arrays.asList());
-        hymnToTheJoy.put(21, Arrays.asList(2));
-        hymnToTheJoy.put(22, Arrays.asList());
-        hymnToTheJoy.put(23, Arrays.asList(2));
-        hymnToTheJoy.put(24, Arrays.asList());
+        hymnToTheJoy.put(20, Arrays.asList(1));
+        hymnToTheJoy.put(21, Arrays.asList());
+        hymnToTheJoy.put(22, Arrays.asList(2));
+        hymnToTheJoy.put(23, Arrays.asList());
+        hymnToTheJoy.put(24, Arrays.asList(2));
         hymnToTheJoy.put(25, Arrays.asList());
-        hymnToTheJoy.put(26, Arrays.asList(1));
+        hymnToTheJoy.put(26, Arrays.asList());
         hymnToTheJoy.put(27, Arrays.asList(1));
-        hymnToTheJoy.put(28, Arrays.asList());
+        hymnToTheJoy.put(28, Arrays.asList(1));
 
         songs.add(new Song("Hymn to the Joy", "hymn_to_the_joy", Difficulty.EASY, hymnToTheJoy));
         songs.add(new Song("Frère Jacques", "frere_jaques", Difficulty.EASY, null));
@@ -234,10 +234,12 @@ public class HarpCommand implements Command, Listener {
                     tick = 0;
                     if (!song.notes.containsKey(time)) {
                         cancel();
+                        bPlayer.closeInventory();
                         int score = Double.valueOf(((Double.valueOf((int) player.getExtraData("harpClicks")) / (int) player.getExtraData("harpNotes")) * 100)).intValue();
                         bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.GREEN + "Song Completed!");
                         bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.WHITE + "You Scored " + formatScore(score));
                         player.setValue("harp." + song.path + ".score", score);
+                        return;
                     }
                     paintHarp(bPlayer, song, time++);
                 }
@@ -252,11 +254,12 @@ public class HarpCommand implements Command, Listener {
 
         for (int noteList = time; noteList < song.notes.size(); ++noteList) { // T[C, D, E, F, G, A, B]
             int y = 0;
-            for (int relativeNoteTime = 5; relativeNoteTime > -2; --relativeNoteTime) { 
+            player.sendMessage("" + song.notes.get(time));
+            for (int relativeNoteTime = 4; relativeNoteTime > -2; --relativeNoteTime) {
                 for (int note = 0; note < 7; ++note) { // C D E F G A B
                     boolean hasNote = song.notes.containsKey(time + relativeNoteTime) && song.notes.get(time + relativeNoteTime).contains(note);
                     ItemStack icon;
-                    if (relativeNoteTime != 1)
+                    if (relativeNoteTime != 0)
                         icon = new ItemStack(hasNote ? Material.WOOL : Material.STAINED_GLASS_PANE);
                     else
                         icon = new ItemStack(Material.STAINED_CLAY); //TODO: set name
@@ -269,13 +272,25 @@ public class HarpCommand implements Command, Listener {
 
                     icon = item.toItemStack();
 
-                    if (!(relativeNoteTime == 1 && hasNote))
+                    if (!(relativeNoteTime == 0 && hasNote))
                         icon.setDurability((short) getNoteColor(note)[0]);
 
-                    if (y < 6)
-                        out.setItem(1 + note + y * 9, icon);
-                    else
-                        out.setItem(1 + note, icon);
+                       out.setItem(1 + note + y * 9, icon);
+                    // else
+                    //     out.setItem(1 + note, icon);
+                        
+                    // if (y == 0)
+                    //    out.setItem(1 + note, icon);
+                    // if (y == 1)
+                    //    out.setItem(1 + note + 9, icon);
+                    // if (y == 2)
+                    //    out.setItem(1 + note + 18, icon);
+                    // if (y == 3)
+                    //    out.setItem(1 + note + 27, icon);
+                    // if (y == 4)
+                    //    out.setItem(1 + note + 36, icon);
+                    // if (y == 5)
+                    //    out.setItem(1 + note + 45, icon);
                 }
                 ++y;
             }
@@ -289,19 +304,19 @@ public class HarpCommand implements Command, Listener {
 
         if (event.getInventory().getTitle().startsWith("Harp -")) {
             event.setCancelled(true);
-                ItemStack i = event.getCurrentItem();
-                String n = i.getItemMeta().getDisplayName();
-                if (i != null && i.getDurability() == 0) {
+            ItemStack i = event.getCurrentItem();
+            String n = i.getItemMeta().getDisplayName();
+            if (i != null && i.getDurability() == 0) {
                 player.setExtraData("harpClicks", (int) player.getExtraData("harpClicks") + 1);
-                Tone note = null;
-                if (n.contains(ChatColor.LIGHT_PURPLE + "")) note = Tone.C;
-                if (n.contains(ChatColor.YELLOW + "")) note = Tone.D;
-                if (n.contains(ChatColor.GREEN + "")) note = Tone.E;
-                if (n.contains(ChatColor.DARK_GREEN + "")) note = Tone.F;
-                if (n.contains(ChatColor.DARK_PURPLE + "")) note = Tone.G;
-                if (n.contains(ChatColor.BLUE + "")) note = Tone.A;
-                if (n.contains(ChatColor.AQUA + "")) note = Tone.B;
-                player.getBukkitPlayer().playNote(player.getBukkitPlayer().getLocation(), Instrument.PIANO, Note.natural(1, note));
+                Note note = null;
+                if (n.contains(ChatColor.LIGHT_PURPLE + "")) note = Note.natural(0, Tone.C);
+                if (n.contains(ChatColor.YELLOW + "")) note = Note.natural(0, Tone.D);
+                if (n.contains(ChatColor.GREEN + "")) note = Note.natural(0, Tone.E);
+                if (n.contains(ChatColor.DARK_GREEN + "")) note = Note.natural(0, Tone.F);
+                if (n.contains(ChatColor.DARK_PURPLE + "")) note = Note.natural(1, Tone.G);
+                if (n.contains(ChatColor.BLUE + "")) note = Note.natural(1, Tone.A);
+                if (n.contains(ChatColor.AQUA + "")) note = Note.natural(1, Tone.B);
+                player.getBukkitPlayer().playNote(player.getBukkitPlayer().getLocation(), Instrument.PIANO, note);
             }
             else {
                 int harpClicks = (int) player.getExtraData("harpClicks");
