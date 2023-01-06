@@ -2,6 +2,7 @@ package com.skyblock.skyblock.commands.game;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
@@ -11,6 +12,7 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.Note.Tone;
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -97,27 +99,18 @@ public class HarpCommand implements Command, Listener {
         public final int delay;
         public final String unlockedBy;
         public final ArrayList<Integer> notes;
-        public final Difficulty difficulty;
+        private String difficultyString;
 
-        protected Song(String name, String path, HarpCommand.Difficulty difficulty, int delay, String unlockedBy, ArrayList<Integer> song) {
+        public final int rewardIntelligence;
+        public final String rewardItem;
+
+        protected Song(String name, String path, HarpCommand.Difficulty difficulty, int delay, String unlockedBy, String rewardItem, ArrayList<Integer> song) {
             this.name = name;
             this.path = path;
             this.delay = delay;
             this.unlockedBy = unlockedBy;
-            this.difficulty = difficulty;
             this.notes = song;
-       }
-
-        public ItemStack getSelectorItem(SkyblockPlayer player) {
-            int unlockerBest;
-            if (unlockedBy == null) unlockerBest = 100;
-            else unlockerBest = (int) player.getValue("harp." + unlockedBy + ".best");
-            boolean unlocked = unlockerBest >= 90;
-            int thisBest = (int) player.getValue("harp." + path + ".best");
-
-            String difficultyString = null;
-            int rewardIntelligence = 0;
-            switch (difficulty) {
+             switch (difficulty) {
                 case EASY:
                     difficultyString = "Easy Song";
                     rewardIntelligence = 1;
@@ -134,7 +127,21 @@ public class HarpCommand implements Command, Listener {
                     difficultyString = "Virtuoso Song";
                     rewardIntelligence = 4;
                     break;
+                default:
+                    difficultyString = null;
+                    rewardIntelligence = 0;
+                    break;
             }
+            this.rewardItem = rewardItem;
+       }
+
+        public ItemStack getSelectorItem(SkyblockPlayer player) {
+            int unlockerBest;
+            if (unlockedBy == null) unlockerBest = 100;
+            else unlockerBest = (int) player.getValue("harp." + unlockedBy + ".best");
+            boolean unlocked = unlockerBest >= 90;
+            int thisBest = (int) player.getValue("harp." + path + ".best");
+
             List<String> lore = new ArrayList<>();
             lore.addAll(Arrays.asList(ChatColor.DARK_GRAY + difficultyString));
 
@@ -188,8 +195,10 @@ public class HarpCommand implements Command, Listener {
                     if (rawNote == null) notes.add(-1);
                     else notes.add(((Long) rawNote).intValue());
                 }
+                JSONObject rewards = (JSONObject) rawSong.get("rewards");
+                String item = (String) rewards.get("item");
 
-                this.songs.add(new Song(name, path, difficulty, delay, unlockedBy, notes));
+                this.songs.add(new Song(name, path, difficulty, delay, unlockedBy, item, notes));
             }
         } catch (ParseException | IOException ex) {
             ex.printStackTrace();
@@ -236,8 +245,24 @@ public class HarpCommand implements Command, Listener {
                         bPlayer.closeInventory();
                         int score = Double.valueOf(((Double.valueOf((int) player.getExtraData("harpClicks")) / (int) player.getExtraData("harpNotes")) * 100)).intValue();
                         bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.GREEN + "Song Completed!");
-                        bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.WHITE + "You Scored " + formatScore(score));
-                        player.setValue("harp." + song.path + ".score", score);
+                        bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] "
+                                            + ChatColor.WHITE + "You Scored "
+                                            + formatScore(score)
+                                            + ChatColor.WHITE + " on "
+                                            + ChatColor.GREEN +  song.name);
+                        if (player.getIntValue("harp." + song.path + ".score") < score) {
+                            player.setValue("harp." + song.path + ".score", score);
+                            if (score == 100) {
+                                player.addStat(SkyblockStat.MANA, song.rewardIntelligence);
+                                bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] "
+                                                    + ChatColor.WHITE + "Earned" + ChatColor.AQUA
+                                                    + "+" + song.rewardIntelligence + "Intelligence"
+                                                    + ChatColor.WHITE + " from mastering a new Song!");
+                                ItemStack rewardItemStack = Skyblock.getPlugin().getItemHandler().getItem(song.rewardItem);
+                                if (rewardItemStack != null)
+                                    bPlayer.getInventory().addItem(rewardItemStack);
+                            }
+                        }
                         return;
                     }
                     else if (player.hasExtraData("harpCancel")) {

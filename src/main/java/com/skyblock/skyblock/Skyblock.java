@@ -581,6 +581,21 @@ public final class Skyblock extends JavaPlugin {
                         "r6GGjK7Rb0X3mhJQFyMYn+5OU0JvzBYnxti3hGQfomrDMrI5NdWe/+huGw22UqSFt7pMoZH+04J0z0gFFFFmdY6p0gbcls/9W1qIxgjSFYbDM5y/v1xu3+o9sX5P4WY9WVLOV/RYilfTNIRHCu6+rb/X+x+4ftttaf+zyVvF/bMQq+EwgcRo0UNkXIOrzvH0CKNbEIF9D/9mHk2kBgElq6ucs5ohVSVkU9R4XWTbzs2v4LYmSumRSzKd4eB6L66R3CbCqt7nk8DLnsEmexcxR8u9k6BR1P2Itf2yGZPf1hdconNZKqKdv/sKgtPZo5wcIk5h5cGfezN1b2wHXbKBXV/EN2ZTvC5seNJlXDHy0vGhlThwqHPvd24E+aSHnLu+Gfujw72NR10VsL5cnxmLjmGQQh12ohus5ZO45nE8+UZEBq4gr1wdgMfTRF8XYYRXclKuFcPwKMFMjsGtvV4jVxEunuZitygHOzcjUF7dKYbBv8yFtP0UxWA9r2Phcf1JwqHWf0lSE9l2Qi+AKoz3HCBhKdxPvuIPET/VKCB4xQkrjm8pCQYyD9FOLz0/t6yLf4KOHEhSfcWM2ObzACAxH3Euz8KCFdYUQShVejAvahA2sJM/twqZdvDgVed4Apmhx/LAJjhGRTzIvg0D7HzZVyfArEEgQMi8ZDttE/5Lyk4="
                 ));
 
+        this.npcHandler.registerNPC("melody",
+                new NPC("Melody",
+                        true,
+                        true,
+                        false,
+                        null,
+                        new Location(Skyblock.getSkyblockWorld(), -398, 110, 35),
+                        (p) -> {
+                            Util.sendDelayedMessages(p, "Melody", "Hello!", "Want to learn the harp?", "I'll teach you! ❤", "Pick a song to get started!");
+                            p.performCommand("sb harp");
+                        },
+                        "eyJ0aW1lc3RhbXAiOjE1ODcwMTU4MTQ5NTIsInByb2ZpbGVJZCI6ImIwZDRiMjhiYzFkNzQ4ODlhZjBlODY2MWNlZTk2YWFiIiwicHJvZmlsZU5hbWUiOiJNaW5lU2tpbl9vcmciLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzRkMjM4Y2NjODE4YWIwYzBmZGViZDA3ZDRhNTZjMzUzZmY1ZWI1NDFjODVkMzg2MzYyMTYxNzgxZDFkZDc0Y2MifX19",
+                        "wUgPl5j42AXlnQnT2z1TCVg7rBcxi3dxcB5tJt6Hb+N9V3MlgUH1mtcSE88wClQxb1i9qlqqIk+R2UPaNf74xwxRqLELufuZ/JOCstsKrjQPY3t8nm3Xx6b101h8sm+5MpemFajF5j4ZC73mMk99HsEdGwWNGkV+oFl5+0lmyxO5mFcxPO15jrj2ZsjUH4rQQJRdaMNC6B1EBBsPQaVVG0nQV5/Mk2r4R1iTTXOSSn9ygtgkjlCMlLyrrE+1SdoD5015iDouXsqxpTXkngrtZLTEyTmo4GvqR5M+iMgEAj8aD4np0AEU4WgZ7dAMwCiYFFSXXigQxjwVxzQUX/6ZrYTdTNYnHSoCf6p2hc2vkabMS8aopJ4w5/e7Z4KM1rv3yn+umn5Hb42a8rcbOL7QWxuE5naFS9TZHn0WPl9CtLi2Yqv1YKy6hiVhv47r2++jOLYRoWCcA47aBi6vP/XRl20SUUSoK3+mnblnqF3wCUR0Z7xi2NLXDVzXz49CitDKhCN3Ve6nbkVgab1SXBkyl0qkY50k8v0nXtOd9wWmFSOSHiGxFB/pctwf+vx16BiydPRIluOhlFklBw6lMgzsG4NFhPfne4eV4YYt0HmkC86MsPpvzRgbnGWwBgPl7G9f3owOU4ilvMd9ea4+41EcCsB3sE23qfzR+7+17G7jRlI="
+                ));
+
         this.npcHandler.registerNPC("seymour",
                 new NPC("Seymour",
                         true,
