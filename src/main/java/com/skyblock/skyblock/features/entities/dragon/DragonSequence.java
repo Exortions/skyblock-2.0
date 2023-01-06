@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.entities.dragon;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Triple;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.*;
@@ -8,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -16,12 +18,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class DragonSequence implements Listener {
 
+    private static final Location center = new Location(Skyblock.getSkyblockWorld(), -671, 62, -277);
+    private static final List<Triple<Material, Byte, Location>> needsRegenerating = new ArrayList<>();
     private static List<FallingBlock> registered = new ArrayList<>();
 
     @EventHandler
@@ -31,8 +33,6 @@ public class DragonSequence implements Listener {
             if (registered.contains(block)) event.setCancelled(true);
         }
     }
-
-    private static List<Triple<Material, Byte, Location>> needsRegenerating = new ArrayList<>();
 
     public static void startSequence(Dragon.DragonType type) {
         summoningEyeSequence();
@@ -50,9 +50,7 @@ public class DragonSequence implements Listener {
             removePillar();
         }, 60);
 
-        Util.delay(() -> {
-            explodeEgg();
-        }, 100);
+        Util.delay(DragonSequence::explodeEgg, 100);
     }
 
     public static void endingSequence() {
@@ -91,11 +89,19 @@ public class DragonSequence implements Listener {
 
     private static void explodeEgg() {
         List<Block> blocks = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -661, 46, -266), new Location(Skyblock.getSkyblockWorld(), -679, 81, -284));
-        Location center = new Location(Skyblock.getSkyblockWorld(), -671, 62, -277);
 
         center.getWorld().playEffect(center, Effect.EXPLOSION_HUGE, 10);
         center.getWorld().playEffect(center.clone().add(0, 5, 0), Effect.EXPLOSION_HUGE, 10);
         center.getWorld().playEffect(center.clone().subtract(0, 5, 0), Effect.EXPLOSION_HUGE, 10);
+
+        for (Player player : center.getWorld().getPlayers()) {
+            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Nest")) {
+                player.playSound(player.getLocation(), Sound.EXPLODE, 100, 1);
+                player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
+            }
+        }
 
         for (Block block : blocks) {
             if (block.getType().equals(Material.AIR)) continue;
@@ -130,6 +136,14 @@ public class DragonSequence implements Listener {
 
     private static void summoningEyeSequence() {
         DragonAltar altar = DragonAltar.getMainAltar();
+
+        for (Player player : center.getWorld().getPlayers()) {
+            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Nest")) {
+                player.playSound(player.getLocation(), Sound.ENDERDRAGON_DEATH, 100, 1);
+            }
+        }
 
         for (Location l : altar.getFrames()) {
             Location loc = l.clone();
