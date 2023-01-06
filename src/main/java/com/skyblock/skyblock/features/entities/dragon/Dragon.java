@@ -5,6 +5,7 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageByEntityEvent;
 import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
+import com.skyblock.skyblock.utilities.TextUtil;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -190,16 +191,16 @@ public class Dragon extends SkyblockEntity implements Listener {
 
         for (Player p : players) {
             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-            p.sendMessage("                 " + ChatColor.GOLD + ChatColor.BOLD + getType().name() + " DRAGON DOWN!");
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.GOLD + ChatColor.BOLD + getType().name() + " DRAGON DOWN!");
+            p.sendMessage("");
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.GREEN + (getLastDamager() != null ? getLastDamager().getBukkitPlayer().getName() : "N/A") + ChatColor.GRAY + " dealt the final blow.");
+            p.sendMessage("");
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.YELLOW + ChatColor.BOLD + "1st Damager " + ChatColor.GREEN + "- " + getPlace(1));
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.GOLD + ChatColor.BOLD + "2nd Damager " + ChatColor.GREEN + "- " + getPlace(2));
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.RED + ChatColor.BOLD + "3rd Damager " + ChatColor.GREEN + "- " + getPlace(3));
             p.sendMessage(" ");
-            p.sendMessage("                " + ChatColor.GREEN + (getLastDamager() != null ? getLastDamager().getBukkitPlayer().getName() : "N/A") + ChatColor.GRAY + " dealt the final blow.");
-            p.sendMessage(" ");
-            p.sendMessage("              " + ChatColor.YELLOW + ChatColor.BOLD + "1st Damager " + ChatColor.GRAY + "- " + getPlace(1));
-            p.sendMessage("            " + ChatColor.GOLD + ChatColor.BOLD + "2nd Damager " + ChatColor.GRAY + "- " + getPlace(2));
-            p.sendMessage("                " + ChatColor.RED + ChatColor.BOLD + "3rd Damager " + ChatColor.GRAY + "- " + getPlace(3));
-            p.sendMessage(" ");
-            p.sendMessage("                 " + ChatColor.YELLOW + "Your Damage: " + ChatColor.GREEN + (damagers.containsKey(p.getUniqueId()) ? damagers.get(p.getUniqueId()) : ChatColor.RED + "N/A ") + ChatColor.GRAY + " (Position #" + (getDamaged().indexOf(p) + 1) + ")");
-            p.sendMessage("                     " + ChatColor.YELLOW + "Runecrafting Experience: " + ChatColor.LIGHT_PURPLE + 0);
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.YELLOW + "Your Damage: " + ChatColor.GREEN + (damagers.containsKey(p.getUniqueId()) ? Util.formatInt(damagers.get(p.getUniqueId())) : ChatColor.RED + "N/A ") + ChatColor.GRAY + " (Position #" + (getDamaged().indexOf(p) + 1) + ")");
+            TextUtil.sendCenteredMessage(p, "" + ChatColor.YELLOW + "Runecrafting Experience: " + ChatColor.LIGHT_PURPLE + 0);
             p.sendMessage(" ");
             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         }
