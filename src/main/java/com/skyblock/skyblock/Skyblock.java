@@ -35,9 +35,9 @@ import com.skyblock.skyblock.features.enchantment.enchantments.armor.FireProtect
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.GrowthEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.armor.ProtectionEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.bow.AimingEnchantment;
-import com.skyblock.skyblock.features.enchantment.enchantments.tool.EfficiencyEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.misc.TelekinesisEnchantment;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.*;
+import com.skyblock.skyblock.features.enchantment.enchantments.tool.EfficiencyEnchantment;
 import com.skyblock.skyblock.features.entities.EntityListener;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.dragon.DragonAltar;
@@ -594,6 +594,23 @@ public final class Skyblock extends JavaPlugin {
                         },
                         "ewogICJ0aW1lc3RhbXAiIDogMTU5OTQ2MDQ5OTc1NCwKICAicHJvZmlsZUlkIiA6ICI3NTE0NDQ4MTkxZTY0NTQ2OGM5NzM5YTZlMzk1N2JlYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJUaGFua3NNb2phbmciLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzhhYWM0ZTYzMTM5OGMwZjQ3ZmU4NTYxNWU3ZjQ5MjE1NTAwMDQwYmI5MDgxOWQ1NjhlODI0YWNmOTRiZmE0ZSIKICAgIH0KICB9Cn0=",
                         "hGGbYl4OuItrGiGXYYh6mCy1a5xknDipoYay1DFARt03+YJ6ebFagIMH7JgEY3CFed8WIxFcNivfpZ3q47e2KhNugR+6/X4KBrHtyz9fWVte2HGW7p2ShiYipcUL+8wBjvJ2ssEsWTUeGgqnBgo/sA3UdsWhB6E9iP34x4nm5lPfnKT2Jl9QyhsqXSOQYmidDUY5z0kGhmy0IXRoh92vF/lrzmdpS4TamfogRLGV1BivxZ8C71ImVczEm/JHWTGCdjwFBTdoZzkUOJ9IE+tbBUlOWWFMvjW+TY4Y3pBM5lzY3TMTpvG+rHZ0042E2SNfp2RmHaEAqMNb9JI57qfXKZ8zJB1/8gU+pFjuuXRsWuV0tWKLIUGSH3nIho/BidPBoe6YUsWCe9ySSrFprocKU96Ct6z5l8bsoJ5xtiOGSn/5JdUexc4IUF9ICFh7Xeu8rvGufH7s1BIyLgUBQQSvVpj31VharFkV0IVnwG/4c/YBYaaUUH07CW0woj577fd5nCVEs8pfJ7KNrChtna0LzDZQuELzDwmQO5mdOxWEwGurPvPx1uFm3tCDVBRUrj+CCVCQqIflg9s3nVTRSPZhl3ZlNW+L8/wVdjuXtGTXGWT9ou+nfGRT8c0ENrsVE3dkWe4o2BaokIIdCJ1isO+GS6oMNP6I07EGgxUZFe2kk8A="
+                ));
+
+        /*
+        Admin houses
+         */
+
+        this.npcHandler.registerNPC("sylent_",
+                new NPC(
+                        ChatColor.RED + "Sylent_",
+                        true,
+                        true,
+                        false,
+                        null,
+                        new Location(Skyblock.getSkyblockWorld(), -67.5, 69, -93.5),
+                        (p) -> Util.sendDelayedMessages(p, ChatColor.RED + "Sylent_", "You can hold as many talismans as you want in your inventory. They will always work."),
+                        "ewogICJ0aW1lc3RhbXAiIDogMTY3MzAzNTIyNDg4MSwKICAicHJvZmlsZUlkIiA6ICI1MWU4OTE1ZGJlM2E0ZDU4OTQ2OTNhMTZmM2M2MGM3MyIsCiAgInByb2ZpbGVOYW1lIiA6ICJTeWxlbnRfIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzIzNGU2ZmVjZTVhNTY0MzNiYWFlYmE3ODc4NjYyYjIzNjJiNGZmYjdkNTIzOWVhZDgzZmZjOTUyMjFmOGViYzUiCiAgICB9LAogICAgIkNBUEUiIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzIzNDBjMGUwM2RkMjRhMTFiMTVhOGIzM2MyYTdlOWUzMmFiYjIwNTFiMjQ4MWQwYmE3ZGVmZDYzNWNhN2E5MzMiCiAgICB9CiAgfQp9",
+                        "NniVgyJmfWI5OK/7t9q4hWalHgVMO/VR5HqTod6DY+00qkCZgPkEGBxWbAdxvfE4yrVK/TaPRsMS7cJcSP3k74WYEPIPnXthNfNbzsGPz17Ns3fsc/w4GaLp688zo0OG8TRKRJA2ECcoD1B0kaAuRLKsO7NyBBj8XLL+pHv5QwNeMXg53x2OxsoTf25/BdcJJ9bNVv84V+bCAs1gspnbYBWaODcKj3qUUkUPXrm7nHeafi7snXCIRN1L088Qv3Lu7HTor3sojn9rH1FaFCLGIuVimvW+HWGRdkq3soXJrvFPyIZzstKQtXGUjOSG6V1cNPYXCVO/A6VtW1VmU2Lio9/Q7xvjLF9U3fcD4rXHZz6YUy5iZz6YbznjMAdRzYiFgg7lpRd8Au4Gcykf6873IX0YXucwcB4GiPUkRVnoCLI8j2UbdbHy8MO0ydvP1u1QamhWbRjorSJfUBbk6o2NYeYIfuZ+Gcki3xgWtrc1R0Q6FXN+K5Cir2GvXlQXjKrz2W0tAb8kkl3/4ITRZwoJN22i0CqoVq/FawFJNsW7lG/W7t29uxsaySj34gyDYsQag19DWAwUaazq207JNGVMcJCji/55qT4OxItFrjg2EvfpdJ+DbWLY2BlOABXhGKEjuYCFsABZcO9tI7gwW/+rkLIlGOqHfprtKGC/sHG63PE="
                 ));
 
         final int[] liftOperators = {0};
