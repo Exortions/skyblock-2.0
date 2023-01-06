@@ -15,8 +15,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -104,11 +106,6 @@ public class HarpCommand implements Command, Listener {
             this.unlockedBy = unlockedBy;
             this.difficulty = difficulty;
             this.notes = song;
-            
-            //HashMap<Integer, List<Integer>> toNotes = new HashMap<>();
-            //for (int i = 0; i < 5; ++i) {
-            //    toNotes.put()
-            //}                       start delay here
        }
 
         public ItemStack getSelectorItem(SkyblockPlayer player) {
@@ -226,6 +223,7 @@ public class HarpCommand implements Command, Listener {
         player.setExtraData("harpClicks", 0);
 
         Player bPlayer = player.getBukkitPlayer();
+        bPlayer.openInventory(Bukkit.createInventory(null, 54, "Harp - " + song.name));
 
         new BukkitRunnable() {
             int tick = song.delay;
@@ -241,6 +239,13 @@ public class HarpCommand implements Command, Listener {
                         bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.GREEN + "Song Completed!");
                         bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.WHITE + "You Scored " + formatScore(score));
                         player.setValue("harp." + song.path + ".score", score);
+                        return;
+                    }
+                    else if (!player.hasExtraData("harpNotes")) {
+                        cancel();
+                        bPlayer.closeInventory();
+                        bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.RED + "Song cancelled!");
+                        bPlayer.playSound(bPlayer.getLocation(), Sound.CHICKEN_IDLE, 1, 1);
                         return;
                     }
                     paintHarp(bPlayer, song, time++);
@@ -267,13 +272,13 @@ public class HarpCommand implements Command, Listener {
                     else
                         icon = new ItemStack(Material.STAINED_CLAY); //TODO: set name
 
-                    ItemBuilder item = new ItemBuilder(icon);
+                    ItemMeta meta = icon.getItemMeta();
                     if (!hasNote)
-                        item.setDisplayName((ChatColor) getNoteColor(note)[1] + "|" + ChatColor.GRAY + " Click!");
+                        meta.setDisplayName((ChatColor) getNoteColor(note)[1] + "|" + ChatColor.GRAY + " Click!");
                     else
-                        item.setDisplayName((ChatColor) getNoteColor(note)[1] + "| Click!");
+                        meta.setDisplayName((ChatColor) getNoteColor(note)[1] + "| Click!");
 
-                    icon = item.toItemStack();
+                    icon.setItemMeta(meta);
 
                     if (!(relativeNoteTime == 0 && hasNote))
                         icon.setDurability((short) getNoteColor(note)[0]);
@@ -283,11 +288,12 @@ public class HarpCommand implements Command, Listener {
                 ++y;
             }
         }
-        player.openInventory(out);
+        player.getOpenInventory().getTopInventory().setContents(out.getContents());
+        // player.openInventory(out);
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onHarpClick(InventoryClickEvent event) {
         SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getWhoClicked());
 
         if (event.getInventory().getTitle().startsWith("Harp -")) {
@@ -295,15 +301,21 @@ public class HarpCommand implements Command, Listener {
             ItemStack i = event.getCurrentItem();
             String n = i.getItemMeta().getDisplayName();
             if (i != null && i.getDurability() == 0) {
-                player.setExtraData("harpClicks", (int) player.getExtraData("harpClicks") + 1);
                 Note note = null;
                 if (n.contains(ChatColor.LIGHT_PURPLE + "")) note = Note.natural(0, Tone.C);
-                if (n.contains(ChatColor.YELLOW + "")) note = Note.natural(0, Tone.D);
-                if (n.contains(ChatColor.GREEN + "")) note = Note.natural(0, Tone.E);
-                if (n.contains(ChatColor.DARK_GREEN + "")) note = Note.natural(0, Tone.F);
-                if (n.contains(ChatColor.DARK_PURPLE + "")) note = Note.natural(1, Tone.G);
-                if (n.contains(ChatColor.BLUE + "")) note = Note.natural(1, Tone.A);
-                if (n.contains(ChatColor.AQUA + "")) note = Note.natural(1, Tone.B);
+                else if (n.contains(ChatColor.YELLOW + "")) note = Note.natural(0, Tone.D);
+                else if (n.contains(ChatColor.GREEN + "")) note = Note.natural(0, Tone.E);
+                else if (n.contains(ChatColor.DARK_GREEN + "")) note = Note.natural(0, Tone.F);
+                else if (n.contains(ChatColor.DARK_PURPLE + "")) note = Note.natural(1, Tone.G);
+                else if (n.contains(ChatColor.BLUE + "")) note = Note.natural(1, Tone.A);
+                else if (n.contains(ChatColor.AQUA + "")) note = Note.natural(1, Tone.B);
+                else return;
+
+                ItemMeta meta = i.getItemMeta();
+                meta.setDisplayName(ChatColor.GRAY + "| Click!");
+                i.setItemMeta(meta);
+                
+                player.setExtraData("harpClicks", (int) player.getExtraData("harpClicks") + 1);
                 player.getBukkitPlayer().playNote(player.getBukkitPlayer().getLocation(), Instrument.PIANO, note);
             }
             else {
@@ -319,6 +331,13 @@ public class HarpCommand implements Command, Listener {
                     harp(player, s);
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onHarpClose(InventoryCloseEvent event) {
+        if (event.getInventory().getTitle().startsWith("Harp -")) {
+            SkyblockPlayer.getPlayer((Player) event.getPlayer()).setExtraData("harpNotes", null);
         }
     }
 }
