@@ -136,6 +136,7 @@ public class HarpCommand implements Command, Listener {
                     break;
             }
             List<String> lore = new ArrayList<>();
+            lore.addAll(Arrays.asList(ChatColor.DARK_GRAY + difficultyString));
 
             if (unlocked) {
                 lore.addAll(Arrays.asList(
@@ -221,6 +222,7 @@ public class HarpCommand implements Command, Listener {
         }
         player.setExtraData("harpNotes", notes);
         player.setExtraData("harpClicks", 0);
+        player.setExtraData("harpCancel", null);
 
         Player bPlayer = player.getBukkitPlayer();
         bPlayer.openInventory(Bukkit.createInventory(null, 54, "Harp - " + song.name));
@@ -241,9 +243,10 @@ public class HarpCommand implements Command, Listener {
                         player.setValue("harp." + song.path + ".score", score);
                         return;
                     }
-                    else if (!player.hasExtraData("harpNotes")) {
+                    else if (player.hasExtraData("harpCancel")) {
                         cancel();
                         bPlayer.closeInventory();
+                        player.setExtraData("harpCancel", null);
                         bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] " + ChatColor.RED + "Song cancelled!");
                         bPlayer.playSound(bPlayer.getLocation(), Sound.CHICKEN_IDLE, 1, 1);
                         return;
@@ -337,7 +340,7 @@ public class HarpCommand implements Command, Listener {
     @EventHandler
     public void onHarpClose(InventoryCloseEvent event) {
         if (event.getInventory().getTitle().startsWith("Harp -")) {
-            SkyblockPlayer.getPlayer((Player) event.getPlayer()).setExtraData("harpNotes", null);
+            SkyblockPlayer.getPlayer((Player) event.getPlayer()).setExtraData("harpCancel", true);
         }
     }
 }
