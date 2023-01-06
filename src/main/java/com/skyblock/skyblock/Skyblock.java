@@ -5,6 +5,7 @@ import com.skyblock.skyblock.commands.economy.BazaarCommand;
 import com.skyblock.skyblock.commands.economy.DepositCommand;
 import com.skyblock.skyblock.commands.economy.WithdrawCommand;
 import com.skyblock.skyblock.commands.enchantment.EnchantCommand;
+import com.skyblock.skyblock.commands.game.HarpCommand;
 import com.skyblock.skyblock.commands.item.*;
 import com.skyblock.skyblock.commands.menu.*;
 import com.skyblock.skyblock.commands.menu.npc.BankerCommand;
@@ -836,7 +837,8 @@ public final class Skyblock extends JavaPlugin {
                 new HubCommand(),
                 new IslandCommand(),
                 new EffectsCommand(),
-                new MaxMyItemCommand()
+                new MaxMyItemCommand(),
+                new HarpCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);
