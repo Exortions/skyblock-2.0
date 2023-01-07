@@ -851,6 +851,60 @@
         "Seriously though, I accept Coins.",
         "Click me again to open the Iron Forger Shop!"
       ]
+    },
+    {
+      "name": "Gold Forger",
+      "id": "gold_forger_merchant",
+      "skinValue": "ewogICJ0aW1lc3RhbXAiIDogMTU5MDg2NzkwOTc3OCwKICAicHJvZmlsZUlkIiA6ICJjZjJiMzU3YjI4Y2I0OTg1YmZlN2FjZmI1MDk0NGEyMiIsCiAgInByb2ZpbGVOYW1lIiA6ICJKb25hc0NLIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzM3Y2EwZmYxNzkzNmJlMzNlYWEzMTc2MjRkYjQ3NDRmYzNmMjkyZTYxMjM1Nzg1ODQ1MzI1OGU0ZjllN2NhNzkiCiAgICB9CiAgfQp9",
+      "skinSignature": "IabeoYzjMaweLhZz9VqvT2jiH049Uiw07OgGIChZmblx9ZYZJemoCHSGFuqepvabh2Eh4No1/4t/ffy3BmXFl59xhh1ucWKcpyXvHJFC86AkKijUm2VjvKZXVS0KGPKat9D5SDl+mAjbFris0tmEmNhaeYRzCEfbB0yMKP0zOdTaglfF874I+SaGO4ooR3Fby3zl7YCxCCDsT0vstmyzpIQtICVfIns7Klx0G7EKnAB09Kip+YyAY0ZQOYTpLPlk/ZQGhcmvfn4z6zgGgqXpDXywGT7264Px2N/fGrrhhvCg/2WZuasTxBp0c9cMif0xNKCsKqKnpn67QyPmQtGA0fN+Jrp7hGHD4tF6p8BaZoaYSkchPum0YV8IYspGlSg0MWVFP7QwfljM9lhkJmSdh5t1SUyxlu+OwyxPmp1qHNKEF878M24YPiF8SowxlsvXKye1BY9TWHRklPEC+/eeYMOMW0EFiYWc9WjlFs4Jw6KJARLHD2i6KACzZzvHHjCjHW5D2jy9UTAI4YDWa7NdTU6OXHbq8ukxrSF4+SQodJ7U9txcI86QwHSYtFTGKLQollerrbnvz0muioP/6O4ovwNK4KloaQdwfGE4t1QnoCtBrwYfwfa8FIoloLWIvec7fTGTFj+XuWPhIpIQzTG5+DmFwhEdRzZy+m3YlsUst/s=",
+      "items": [
+        {
+          "id": "GOLD_INGOT.json",
+          "cost": 110,
+          "amount": 20,
+          "command": "sb item GOLD_INGOT.json 20"
+        },
+        {
+          "id": "GOLD_HELMET.json",
+          "cost": 10,
+          "amount": 1,
+          "command": "sb item GOLD_HELMET.json 1"
+        },
+        {
+          "id": "GOLD_CHESTPLATE.json",
+          "cost": 16,
+          "amount": 1,
+          "command": "sb item GOLD_CHESTPLATE.json 1"
+        },
+        {
+          "id": "GOLD_LEGGINGS.json",
+          "cost": 14,
+          "amount": 1,
+          "command": "sb item GOLD_LEGGINGS.json 1"
+        },
+        {
+          "id": "GOLD_BOOTS.json",
+          "cost": 9,
+          "amount": 1,
+          "command": "sb item GOLD_BOOTS.json 1"
+        },
+        {
+          "id": "FANCY_SWORD.json",
+          "cost": 80,
+          "amount": 1,
+          "command": "sb item FANCY_SWORD.json 1"
+        }
+      ],
+      "location": {
+        "world": "world",
+        "x": -27.5,
+        "y": 74.0,
+        "z": -294.5
+      },
+      "interaction": [
+        "I love goooold!",
+        "Click me again to open the Gold Forger Shop!"
+      ]
     }
   ]
 }
