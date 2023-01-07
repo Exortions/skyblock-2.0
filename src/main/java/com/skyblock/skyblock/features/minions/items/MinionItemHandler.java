@@ -77,4 +77,9 @@ public class MinionItemHandler {
         if (!Util.notNull(stack)) return "";
         return new NBTItem(stack).getString("skyblockId");
     }
+
+    public MinionItem getRegistered(String id) {
+        if (items.containsKey(id))  return items.get(id);
+        else return null;
+    }
 }
