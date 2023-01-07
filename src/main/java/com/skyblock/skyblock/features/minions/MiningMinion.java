@@ -47,9 +47,7 @@ public abstract class MiningMinion extends MinionBase {
 
         this.plugin = Skyblock.getPlugin();
     }
-    @Override
-    public abstract SkyblockCraftingRecipe getRecipe(int level);
-    
+
     @Override
     public abstract ItemStack getHand(int level);
     

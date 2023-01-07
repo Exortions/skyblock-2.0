@@ -96,7 +96,6 @@ public abstract class MinionBase {
         minionItems = new MinionItem[minionItemSlots.size()];
     }
     
-    public abstract SkyblockCraftingRecipe getRecipe(int level);
     public abstract ItemStack getHand(int level);
     public abstract String getHead(int level);
     public abstract int getActionDelay(int level);
