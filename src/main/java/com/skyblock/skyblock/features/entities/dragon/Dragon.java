@@ -106,7 +106,7 @@ public class Dragon extends SkyblockEntity implements Listener {
                     lightningStrike();
                     break;
                 case 2:
-//                    rush(dragon);
+                    rush(dragon);
                     break;
             }
         }
@@ -227,6 +227,8 @@ public class Dragon extends SkyblockEntity implements Listener {
             p.sendMessage(" ");
             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         }
+
+        DragonSequence.endingSequence(true);
 
         if (type.equals(DragonType.UNSTABLE)) {
             for (Entity entity : getVanilla().getNearbyEntities(10, 10, 10)) {

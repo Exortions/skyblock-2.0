@@ -26,6 +26,7 @@ public class DragonSequence implements Listener {
     private static final List<Triple<Material, Byte, Location>> gateBlocks = new ArrayList<>();
     private static List<FallingBlock> registered = new ArrayList<>();
     private static EditSession session;
+    private static DragonGate dragonGate;
 
     @EventHandler
     public void EntityChangeBlock(EntityChangeBlockEvent event) {
@@ -51,6 +52,62 @@ public class DragonSequence implements Listener {
         Util.delay(DragonSequence::launchPlayers, 180);
     }
 
+    public static void endingSequence() {
+        endingSequence(false);
+    }
+
+    public static void endingSequence(boolean slow) {
+        openGate();
+
+        for (Triple<Material, Byte, Location> triple : gateBlocks) {
+            Material mat = triple.getFirst();
+            byte data = triple.getSecond();
+            Location loc = triple.getThird();
+
+            Block b = loc.getWorld().getBlockAt(loc);
+
+            b.setType(mat);
+            b.setData(data);
+        }
+
+        if (slow) {
+            HashMap<Double, List<Triple<Material, Byte, Location>>> regenByY = new HashMap<>();
+            for (Triple<Material, Byte, Location> triple : needsRegenerating) {
+                if (!regenByY.containsKey(triple.getThird().getY())) regenByY.put(triple.getThird().getY(), new ArrayList<>());
+                regenByY.get(triple.getThird().getY()).add(triple);
+            }
+
+            int i = 0;
+            for (List<Triple<Material, Byte, Location>> byY : regenByY.values()) {
+                Util.delay(() -> {
+                    for (Triple<Material, Byte, Location> triple : byY) {
+                        Material mat = triple.getFirst();
+                        byte data = triple.getSecond();
+                        Location loc = triple.getThird();
+
+                        Block b = loc.getWorld().getBlockAt(loc);
+
+                        b.setType(mat);
+                        b.setData(data);
+                    }
+                }, i * 30);
+
+                i++;
+            }
+        } else {
+            for (Triple<Material, Byte, Location> triple : needsRegenerating) {
+                Material mat = triple.getFirst();
+                byte data = triple.getSecond();
+                Location loc = triple.getThird();
+
+                Block b = loc.getWorld().getBlockAt(loc);
+
+                b.setType(mat);
+                b.setData(data);
+            }
+        }
+    }
+
     private static void gateClose() {
         List<Block> gate = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -602, 22, -280), new Location(Skyblock.getSkyblockWorld(), -597, 40, -272));
 
@@ -61,7 +118,9 @@ public class DragonSequence implements Listener {
         }
 
         session = Util.pasteSchematic(new Location(Skyblock.getSkyblockWorld(), -595, 22, -276), "gate_closed");
-        new DragonGate().spawn();
+
+        dragonGate = new DragonGate();
+        dragonGate.spawn();
     }
 
     public static void openGate() {
@@ -77,6 +136,8 @@ public class DragonSequence implements Listener {
             b.setType(mat);
             b.setData(data);
         }
+
+        dragonGate.despawn();
     }
 
     public static void playSound(Sound sound, int pitch) {
@@ -110,32 +171,6 @@ public class DragonSequence implements Listener {
 
     private static boolean inRange(int i, int min, int max) {
         return i >= min && i < max;
-    }
-
-    public static void endingSequence() {
-        openGate();
-
-        for (Triple<Material, Byte, Location> triple : needsRegenerating) {
-            Material mat = triple.getFirst();
-            byte data = triple.getSecond();
-            Location loc = triple.getThird();
-
-            Block b = loc.getWorld().getBlockAt(loc);
-
-            b.setType(mat);
-            b.setData(data);
-        }
-
-        for (Triple<Material, Byte, Location> triple : gateBlocks) {
-            Material mat = triple.getFirst();
-            byte data = triple.getSecond();
-            Location loc = triple.getThird();
-
-            Block b = loc.getWorld().getBlockAt(loc);
-
-            b.setType(mat);
-            b.setData(data);
-        }
     }
 
     private static void launchPlayers() {

@@ -61,6 +61,14 @@ public class DragonGate implements Listener {
         }.runTaskTimer(Skyblock.getPlugin(), 1, 1);
     }
 
+    public void despawn() {
+        npc.getEntity().remove();
+        npc.destroy();
+
+        healthDisplay.getEntity().remove();
+        healthDisplay.destroy();
+    }
+
     private String getHealthDisplay() {
         double filled = Math.floor(20 * (1.0f * health / maxHealth));
         StringBuilder builder = new StringBuilder();
@@ -77,6 +85,8 @@ public class DragonGate implements Listener {
 
     @EventHandler
     public void onHit(PlayerInteractEvent e) {
+        if (health <= 0) return;
+
         if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             List<Block> gate = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -602, 22, -280), new Location(Skyblock.getSkyblockWorld(), -597, 40, -272));
 
@@ -104,11 +114,7 @@ public class DragonGate implements Listener {
             health -= damage;
 
             if (health <= 0) {
-                npc.getEntity().remove();
-                npc.destroy();
-
-                healthDisplay.getEntity().remove();
-                healthDisplay.destroy();
+                despawn();
 
                 DragonSequence.openGate();
             }
