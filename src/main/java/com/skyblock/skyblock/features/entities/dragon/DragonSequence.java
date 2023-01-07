@@ -24,7 +24,7 @@ public class DragonSequence implements Listener {
     private static final Location center = new Location(Skyblock.getSkyblockWorld(), -671, 62, -277);
     private static final List<Triple<Material, Byte, Location>> needsRegenerating = new ArrayList<>();
     private static final List<Triple<Material, Byte, Location>> gateBlocks = new ArrayList<>();
-    private static List<FallingBlock> registered = new ArrayList<>();
+    private static final List<FallingBlock> registered = new ArrayList<>();
     private static EditSession session;
     private static DragonGate dragonGate;
 
@@ -85,6 +85,13 @@ public class DragonSequence implements Listener {
                         byte data = triple.getSecond();
                         Location loc = triple.getThird();
 
+                        if (loc.getY() == 47) {
+                            endingSequence(false);
+
+                            Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.LIGHT_PURPLE + "The Dragon Egg has spawned!");
+                            return;
+                        }
+
                         Block b = loc.getWorld().getBlockAt(loc);
 
                         b.setType(mat);
@@ -106,6 +113,10 @@ public class DragonSequence implements Listener {
                 b.setData(data);
             }
         }
+
+        needsRegenerating.clear();
+        gateBlocks.clear();
+        registered.clear();
     }
 
     private static void gateClose() {

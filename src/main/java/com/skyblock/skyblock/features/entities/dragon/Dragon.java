@@ -56,6 +56,7 @@ public class Dragon extends SkyblockEntity implements Listener {
     private final DragonType type;
     private final boolean appliedSpeed;
     private boolean rushing;
+    private boolean frozen;
     public Dragon(String arg) {
         super(EntityType.ENDER_DRAGON);
 
@@ -65,6 +66,7 @@ public class Dragon extends SkyblockEntity implements Listener {
 
         this.lifeSpan = 12000 * 60;
         this.appliedSpeed = false;
+        this.frozen = false;
 
         Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin());
     }
@@ -74,27 +76,37 @@ public class Dragon extends SkyblockEntity implements Listener {
         EnderDragon dragon = (EnderDragon) getVanilla();
         EntityEnderDragon nms = ((CraftEnderDragon) dragon).getHandle();
 
+        if (frozen) {
+            dragon.setVelocity(new Vector(0, 0, 0));
+            return;
+        }
+
         if (tick == 0){
             updateSpeed(nms);
+
+            try
+            {
+                Field b = PathfinderGoalSelector.class.getDeclaredField("b");
+                Field c = PathfinderGoalSelector.class.getDeclaredField("c");
+                b.setAccessible(true);
+                c.setAccessible(true);
+                ((List<?>) b.get(nms.goalSelector)).clear();
+                ((List<?>) c.get(nms.goalSelector)).clear();
+                ((List<?>) b.get(nms.targetSelector)).clear();
+                ((List<?>) c.get(nms.targetSelector)).clear();
+            }
+            catch (NoSuchFieldException | IllegalAccessException ex)
+            {
+                ex.printStackTrace();
+            }
         }
 
         dragon.setCustomNameVisible(false);
         dragon.setCustomName(ChatColor.RED + getEntityData().entityName);
 
-        try
-        {
-            Field b = PathfinderGoalSelector.class.getDeclaredField("b");
-            Field c = PathfinderGoalSelector.class.getDeclaredField("c");
-            b.setAccessible(true);
-            c.setAccessible(true);
-            ((List) b.get(nms.goalSelector)).clear();
-            ((List) c.get(nms.goalSelector)).clear();
-            ((List) b.get(nms.targetSelector)).clear();
-            ((List) c.get(nms.targetSelector)).clear();
-        }
-        catch (NoSuchFieldException | IllegalAccessException ex)
-        {
-            ex.printStackTrace();
+        if (getEntityData().health >= 0) {
+            dragon.setHealth(getEntityData().health / 100000f);
+            dragon.setMaxHealth(type.health / 100000f);
         }
 
         if (tick % 500 == 0 && tick != 0) {
@@ -118,6 +130,8 @@ public class Dragon extends SkyblockEntity implements Listener {
         List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
 
         Player target = players.get(Util.random(0, players.size() - 1));
+
+        freezeFor(60);
 
         for (int i = 0; i < 25; i++) {
             Util.delay(() -> {
@@ -155,12 +169,14 @@ public class Dragon extends SkyblockEntity implements Listener {
                         }
                     }
                 }.runTaskTimer(Skyblock.getPlugin(), 1, 1);
-            }, i * 10);
+            }, i);
         }
     }
 
     private void lightningStrike() {
         List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+
+        freezeFor(60);
 
         for (int i = 0; i < 5; i++) {
             Util.delay(() -> {
@@ -195,6 +211,14 @@ public class Dragon extends SkyblockEntity implements Listener {
     private void updateSpeed(EntityEnderDragon nms) {
         AttributeInstance speed = nms.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED);
         speed.setValue(speed.getValue() * type.getSpeedMultiplier());
+    }
+
+    private void freezeFor(int ticks) {
+        frozen = true;
+
+        Util.delay(() -> {
+            frozen = false;
+        }, ticks);
     }
 
     private String getPlace(int place) {
