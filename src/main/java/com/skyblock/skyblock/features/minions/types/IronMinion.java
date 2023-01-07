@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
+import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.features.minions.items.MinionFuel;
 import com.skyblock.skyblock.features.minions.items.storages.Storage;
 import com.skyblock.skyblock.utilities.Util;
@@ -37,35 +38,24 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CobblestoneMinion extends MiningMinion {
-    public CobblestoneMinion() {
+public class IronMinion extends MiningMinion {
+    public IronMinion() {
         this(UUID.randomUUID());
     }
-    public CobblestoneMinion(UUID uuid) {
-        super(uuid, "Cobblestone", "mining", Color.GRAY, Material.COBBLESTONE);
+    public IronMinion(UUID uuid) {
+        super(uuid, "Iron", "mining", Color.fromRGB(138, 138, 138), Material.IRON_ORE);
 
         this.plugin = Skyblock.getPlugin();
     }
 
     @Override
-    public SkyblockCraftingRecipe getRecipe(int level) {
-        if (level == 1) {
-            return new SkyblockCraftingRecipe(new HashMap<String, ItemStack>() {{
-                put("a", new ItemStack(Material.COBBLESTONE, 1));
-            }});
-        } else {
-            return null;
-        }
-    }
-
-    @Override
     public ItemStack getHand(int level) {
-        return new ItemStack(Material.WOOD_PICKAXE, 1);
+        return new ItemStack(Material.STONE_PICKAXE, 1);
     }
     
     @Override
     public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjljMzhmZTRmYzk4YTI0ODA3OWNkMDRjNjViNmJmZjliNDUwMTdmMTY0NjBkYWIzYzM0YzE3YmZjM2VlMWQyZiJ9fX0=";
+        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWY0MzUwMjJjYjM4MDlhNjhkYjBmY2NmYTg5OTNmYzE5NTRkYzY5N2E3MTgxNDk0OTA1YjAzZmRkYTAzNWU0YSJ9fX0=";
     }
 
     @Override
@@ -73,23 +63,23 @@ public class CobblestoneMinion extends MiningMinion {
         switch (level) {
             case 1:
             case 2:
-                return 14;
+                return 17;
             case 3:
             case 4:
-                return 12;
+                return 15;
             case 5:
             case 6:
-                return 10;
+                return 14;
             case 7:
             case 8:
-                return 9;
+                return 12;
             case 9:
             case 10:
-                return 8;
+                return 10;
             case 11:
-                return 7;
+                return 8;
             default:
-                return 14;
+                return 8;
         }
     }
 
@@ -117,7 +107,7 @@ public class CobblestoneMinion extends MiningMinion {
 
     @Override
     public ArrayList<ItemStack> calculateDrops(int level) {
-        return new ArrayList<ItemStack>(Arrays.asList(new ItemStack(Material.COBBLESTONE)));
+        return new ArrayList<ItemStack>(Arrays.asList(new ItemStack(Material.IRON_ORE)));
         
     }
 
@@ -150,3 +140,4 @@ public class CobblestoneMinion extends MiningMinion {
         }
     }
 }
+

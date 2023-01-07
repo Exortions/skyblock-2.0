@@ -7,6 +7,7 @@ import com.skyblock.skyblock.enums.MinionType;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
+import com.skyblock.skyblock.features.minions.types.CobblestoneMinion;
 import com.skyblock.skyblock.utilities.Pair;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
