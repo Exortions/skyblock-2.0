@@ -60,7 +60,8 @@ public class SummoningEye extends SkyblockItem {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 
         if (quantity >= 8) {
-            Util.delay(DragonSequence::startSequence, 20);
+            DragonSequence.playSound(Sound.ENDERMAN_STARE, 1);
+            Util.delay(DragonSequence::startSequence, 80);
         }
     }
 }

@@ -12,9 +12,11 @@ import lombok.Getter;
 import net.minecraft.server.v1_8_R3.AttributeInstance;
 import net.minecraft.server.v1_8_R3.EntityEnderDragon;
 import net.minecraft.server.v1_8_R3.GenericAttributes;
+import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
 import org.bukkit.entity.*;
@@ -24,6 +26,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -71,7 +74,9 @@ public class Dragon extends SkyblockEntity implements Listener {
         EnderDragon dragon = (EnderDragon) getVanilla();
         EntityEnderDragon nms = ((CraftEnderDragon) dragon).getHandle();
 
-        if (!isAppliedSpeed()) updateSpeed(nms);
+        if (tick == 0){
+            updateSpeed(nms);
+        }
 
         dragon.setCustomNameVisible(false);
         dragon.setCustomName(ChatColor.RED + getEntityData().entityName);
@@ -141,8 +146,10 @@ public class Dragon extends SkyblockEntity implements Listener {
     private void lightningStrike() {
         List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
 
-        for (int i = 0; i < 20; i++) {
-            getVanilla().getWorld().strikeLightningEffect(getVanilla().getLocation());
+        for (int i = 0; i < 5; i++) {
+            Util.delay(() -> {
+                getVanilla().getWorld().strikeLightningEffect(getVanilla().getLocation());
+            }, 10 * i);
         }
 
         Util.delay(() -> {
@@ -157,7 +164,7 @@ public class Dragon extends SkyblockEntity implements Listener {
                 skyblockPlayer.damage(damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
                 player.sendMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.LIGHT_PURPLE + "used " + ChatColor.YELLOW + "Lightning Strike " + ChatColor.LIGHT_PURPLE + "on you for " + ChatColor.RED + (int) damage + " damage.");
             }
-        }, 40);
+        }, 50);
     }
 
     private void rush(EnderDragon dragon) {

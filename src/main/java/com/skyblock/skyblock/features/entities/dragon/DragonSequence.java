@@ -7,10 +7,7 @@ import com.skyblock.skyblock.utilities.Util;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -18,8 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DragonSequence implements Listener {
 
@@ -37,23 +33,26 @@ public class DragonSequence implements Listener {
 
     public static void startSequence() {
         summoningEyeSequence();
-
         Util.delay(() -> {
-            List<Block> blocks = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -662, 13, -268), new Location(Skyblock.getSkyblockWorld(), -680, 45, -285));
+            playSound(Sound.ENDERDRAGON_DEATH, 2);
 
-            for (Block block : blocks) {
-                if (block.getType().equals(Material.STAINED_GLASS_PANE)) {
-                    needsRegenerating.add(Triple.of(block.getType(), block.getData(), block.getLocation()));
-                    block.setType(Material.AIR);
-                }
-            }
-
+            removeEdgePanes();
             removePillar();
-        }, 60);
+        }, 80);
 
-        Util.delay(DragonSequence::explodeEgg, 100);
+        Util.delay(DragonSequence::explodeEgg, 180);
 
-        Util.delay(DragonSequence::spawnDragon, 100);
+        Util.delay(DragonSequence::spawnDragon, 180);
+    }
+
+    public static void playSound(Sound sound, int pitch) {
+        for (Player player : center.getWorld().getPlayers()) {
+            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Nest")) {
+                player.playSound(player.getLocation(), sound, 100, pitch);
+            }
+        }
     }
 
     public static void spawnDragon() {
@@ -92,6 +91,30 @@ public class DragonSequence implements Listener {
         }
     }
 
+    private static void removeEdgePanes() {
+        List<Block> b = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -662, 14, -268), new Location(Skyblock.getSkyblockWorld(), -680, 28, -285));
+        HashMap<Double, List<Block>> blocks = new HashMap<>();
+
+        for (Block block : b) {
+            if (!blocks.containsKey(block.getLocation().getY())) blocks.put(block.getLocation().getY(), new ArrayList<>());
+            blocks.get(block.getLocation().getY()).add(block);
+        }
+
+        int i = 0;
+        for (List<Block> byY : blocks.values()) {
+            Util.delay(() -> {
+                for (Block block : byY) {
+                    if (block.getType().equals(Material.STAINED_GLASS_PANE)) {
+                        needsRegenerating.add(Triple.of(block.getType(), block.getData(), block.getLocation()));
+                        block.setType(Material.AIR);
+                    }
+                }
+            }, i);
+
+            i++;
+        }
+    }
+
     private static void removePillar() {
         List<Block> blocks = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -671, 9, -276), new Location(Skyblock.getSkyblockWorld(), -671, 45, -276));
         List<Block> pillar = new ArrayList<>();
@@ -116,10 +139,6 @@ public class DragonSequence implements Listener {
     private static void explodeEgg() {
         List<Block> blocks = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -661, 46, -266), new Location(Skyblock.getSkyblockWorld(), -679, 81, -284));
 
-        center.getWorld().playEffect(center, Effect.EXPLOSION_HUGE, 10);
-        center.getWorld().playEffect(center.clone().add(0, 5, 0), Effect.EXPLOSION_HUGE, 10);
-        center.getWorld().playEffect(center.clone().subtract(0, 5, 0), Effect.EXPLOSION_HUGE, 10);
-
         for (Player player : center.getWorld().getPlayers()) {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
@@ -133,18 +152,11 @@ public class DragonSequence implements Listener {
             if (block.getType().equals(Material.AIR)) continue;
             needsRegenerating.add(Triple.of(block.getType(), block.getData(), block.getLocation()));
 
-            if (exposed(block)) {
+            if (exposed(block) && Util.random(0, 1) == 0) {
                 FallingBlock falling = block.getWorld().spawnFallingBlock(block.getLocation(), block.getType(), block.getData());
                 falling.setDropItem(false);
 
                 registered.add(falling);
-
-                Vector velocity = center.toVector().subtract(block.getLocation().toVector()).multiply(-1).normalize();
-                velocity.multiply(4);
-                velocity.setY(3);
-
-                falling.setVelocity(velocity);
-
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -158,18 +170,14 @@ public class DragonSequence implements Listener {
 
             block.setType(Material.AIR);
         }
+
+        Location l = center.clone();
+        l.setY(47);
+        for (int i = 0; i < 13; i++) center.getWorld().spawn(l.clone().add(0, i * 2, 0), TNTPrimed.class).setFuseTicks(0);
     }
 
     private static void summoningEyeSequence() {
         DragonAltar altar = DragonAltar.getMainAltar();
-
-        for (Player player : center.getWorld().getPlayers()) {
-            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
-
-            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Nest")) {
-                player.playSound(player.getLocation(), Sound.ENDERDRAGON_DEATH, 100, 1);
-            }
-        }
 
         for (Location l : altar.getFrames()) {
             Location loc = l.clone();
@@ -183,24 +191,24 @@ public class DragonSequence implements Listener {
                 @Override
                 public void run() {
                     if (stand.isDead()) cancel();
-                    stand.setVelocity(new Vector(0, 0.1, 0));
+                    stand.setVelocity(new Vector(0, 0.025, 0));
                 }
             }.runTaskTimer(Skyblock.getPlugin(), 1, 1);
 
             stand.setVisible(false);
 
-            Util.delay(stand::remove, 60);
+            Util.delay(stand::remove, 80);
         }
 
         altar.reset();
     }
 
     private static boolean exposed(Block block) {
-        Location pos1 = block.getLocation().clone().add(1, 1, 1);
-        Location pos2 = block.getLocation().clone().add(-1, -1, -1);
-
-        for (Block b : Util.blocksFromTwoPoints(pos1, pos2)) if (b.getType().equals(Material.AIR)) return true;
-
-        return false;
+        return block.getLocation().clone().add(1, 0, 0).getBlock().getType().equals(Material.AIR) ||
+            block.getLocation().clone().add(-1, 0, 0).getBlock().getType().equals(Material.AIR) ||
+            block.getLocation().clone().add(0, 1, 0).getBlock().getType().equals(Material.AIR) ||
+            block.getLocation().clone().add(0, -1, 0).getBlock().getType().equals(Material.AIR) ||
+            block.getLocation().clone().add(0, 0, 1).getBlock().getType().equals(Material.AIR) ||
+            block.getLocation().clone().add(0, 0, -1).getBlock().getType().equals(Material.AIR);
     }
 }
