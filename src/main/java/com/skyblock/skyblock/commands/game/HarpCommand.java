@@ -140,7 +140,7 @@ public class HarpCommand implements Command, Listener {
             if (unlockedBy == null) unlockerBest = 100;
             else unlockerBest = (int) player.getValue("harp." + unlockedBy + ".best");
             boolean unlocked = unlockerBest >= 90;
-            int thisBest = (int) player.getValue("harp." + path + ".best");
+            int thisBest = player.getIntValue("harp." + path + ".best");
 
             List<String> lore = new ArrayList<>();
             lore.addAll(Arrays.asList(ChatColor.DARK_GRAY + difficultyString));
@@ -250,13 +250,13 @@ public class HarpCommand implements Command, Listener {
                                             + formatScore(score)
                                             + ChatColor.WHITE + " on "
                                             + ChatColor.GREEN +  song.name);
-                        if (player.getIntValue("harp." + song.path + ".score") < score) {
-                            player.setValue("harp." + song.path + ".score", score);
+                        if (score > player.getIntValue("harp." + song.path + ".best")) {
+                            player.setValue("harp." + song.path + ".best", score);
                             if (score == 100) {
                                 player.addStat(SkyblockStat.MANA, song.rewardIntelligence);
                                 bPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "[Harp] "
-                                                    + ChatColor.WHITE + "Earned" + ChatColor.AQUA
-                                                    + "+" + song.rewardIntelligence + "Intelligence"
+                                                    + ChatColor.WHITE + "Earned " + ChatColor.AQUA
+                                                    + "+" + song.rewardIntelligence + " Intelligence"
                                                     + ChatColor.WHITE + " from mastering a new Song!");
                                 ItemStack rewardItemStack = Skyblock.getPlugin().getItemHandler().getItem(song.rewardItem);
                                 if (rewardItemStack != null)
