@@ -10,7 +10,7 @@ import com.skyblock.skyblock.features.bazaar.escrow.Escrow;
 import com.skyblock.skyblock.features.bazaar.escrow.EscrowTransaction;
 import com.skyblock.skyblock.features.enchantment.AnvilGUI;
 import com.skyblock.skyblock.features.entities.dragon.DragonSequence;
-import com.skyblock.skyblock.features.minions.CobblestoneMinion;
+import com.skyblock.skyblock.features.minions.types.CobblestoneMinion;
 import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.time.gui.CalendarEventsGUI;

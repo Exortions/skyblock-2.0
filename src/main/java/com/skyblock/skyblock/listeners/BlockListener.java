@@ -2,7 +2,7 @@ package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.MiningMinionType;
-import com.skyblock.skyblock.features.minions.CobblestoneMinion;
+import com.skyblock.skyblock.features.minions.types.CobblestoneMinion;
 import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
