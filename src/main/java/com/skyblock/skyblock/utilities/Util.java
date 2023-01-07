@@ -4,6 +4,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
@@ -45,6 +50,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.Potion;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.time.Duration;
@@ -1055,6 +1062,21 @@ public class Util {
         } else {
             return b - Math.sqrt((1 - rand) * (b - a) * (b - c));
         }
+    }
+
+    public EditSession pasteSchematic(Location loc, String fileName) {
+        WorldEditPlugin we = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+        File schematic = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + fileName + ".schematic");
+        EditSession session = we.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(loc.getWorld()), 1000000);
+
+        try {
+            MCEditSchematicFormat.getFormat(schematic).load(schematic).paste(session, new com.sk89q.worldedit.Vector(loc.getX(), loc.getY(), loc.getZ()), false);
+        } catch (MaxChangedBlocksException
+                 | com.sk89q.worldedit.data.DataException | IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return session;
     }
 
 }

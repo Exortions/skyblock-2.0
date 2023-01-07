@@ -41,6 +41,7 @@ import com.skyblock.skyblock.features.enchantment.enchantments.tool.EfficiencyEn
 import com.skyblock.skyblock.features.entities.EntityListener;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.dragon.DragonAltar;
+import com.skyblock.skyblock.features.entities.dragon.DragonGate;
 import com.skyblock.skyblock.features.entities.dragon.DragonSequence;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;

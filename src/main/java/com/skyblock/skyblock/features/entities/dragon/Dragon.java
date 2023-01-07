@@ -81,6 +81,22 @@ public class Dragon extends SkyblockEntity implements Listener {
         dragon.setCustomNameVisible(false);
         dragon.setCustomName(ChatColor.RED + getEntityData().entityName);
 
+        try
+        {
+            Field b = PathfinderGoalSelector.class.getDeclaredField("b");
+            Field c = PathfinderGoalSelector.class.getDeclaredField("c");
+            b.setAccessible(true);
+            c.setAccessible(true);
+            ((List) b.get(nms.goalSelector)).clear();
+            ((List) c.get(nms.goalSelector)).clear();
+            ((List) b.get(nms.targetSelector)).clear();
+            ((List) c.get(nms.targetSelector)).clear();
+        }
+        catch (NoSuchFieldException | IllegalAccessException ex)
+        {
+            ex.printStackTrace();
+        }
+
         if (tick % 500 == 0 && tick != 0) {
             switch (Util.random(0, 2)) {
                 case 0:
@@ -90,7 +106,7 @@ public class Dragon extends SkyblockEntity implements Listener {
                     lightningStrike();
                     break;
                 case 2:
-                    rush(dragon);
+//                    rush(dragon);
                     break;
             }
         }

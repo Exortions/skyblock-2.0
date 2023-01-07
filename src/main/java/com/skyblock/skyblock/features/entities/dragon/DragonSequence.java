@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.entities.dragon;
 
+import com.sk89q.worldedit.EditSession;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Triple;
@@ -16,12 +17,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DragonSequence implements Listener {
 
     private static final Location center = new Location(Skyblock.getSkyblockWorld(), -671, 62, -277);
     private static final List<Triple<Material, Byte, Location>> needsRegenerating = new ArrayList<>();
+    private static final List<Triple<Material, Byte, Location>> gateBlocks = new ArrayList<>();
     private static List<FallingBlock> registered = new ArrayList<>();
+    private static EditSession session;
 
     @EventHandler
     public void EntityChangeBlock(EntityChangeBlockEvent event) {
@@ -33,6 +37,8 @@ public class DragonSequence implements Listener {
 
     public static void startSequence() {
         summoningEyeSequence();
+        gateClose();
+
         Util.delay(() -> {
             playSound(Sound.ENDERDRAGON_DEATH, 2);
 
@@ -41,8 +47,36 @@ public class DragonSequence implements Listener {
         }, 80);
 
         Util.delay(DragonSequence::explodeEgg, 180);
-
         Util.delay(DragonSequence::spawnDragon, 180);
+        Util.delay(DragonSequence::launchPlayers, 180);
+    }
+
+    private static void gateClose() {
+        List<Block> gate = Util.blocksFromTwoPoints(new Location(Skyblock.getSkyblockWorld(), -602, 22, -280), new Location(Skyblock.getSkyblockWorld(), -597, 40, -272));
+
+        for (Block block : gate) {
+            if (block.getType().equals(Material.AIR)) continue;
+            gateBlocks.add(Triple.of(block.getType(), block.getData(), block.getLocation()));
+            block.setType(Material.AIR);
+        }
+
+        session = Util.pasteSchematic(new Location(Skyblock.getSkyblockWorld(), -595, 22, -276), "gate_closed");
+        new DragonGate().spawn();
+    }
+
+    public static void openGate() {
+        session.undo(session);
+
+        for (Triple<Material, Byte, Location> triple : gateBlocks) {
+            Material mat = triple.getFirst();
+            byte data = triple.getSecond();
+            Location loc = triple.getThird();
+
+            Block b = loc.getWorld().getBlockAt(loc);
+
+            b.setType(mat);
+            b.setData(data);
+        }
     }
 
     public static void playSound(Sound sound, int pitch) {
@@ -79,6 +113,8 @@ public class DragonSequence implements Listener {
     }
 
     public static void endingSequence() {
+        openGate();
+
         for (Triple<Material, Byte, Location> triple : needsRegenerating) {
             Material mat = triple.getFirst();
             byte data = triple.getSecond();
@@ -88,6 +124,28 @@ public class DragonSequence implements Listener {
 
             b.setType(mat);
             b.setData(data);
+        }
+
+        for (Triple<Material, Byte, Location> triple : gateBlocks) {
+            Material mat = triple.getFirst();
+            byte data = triple.getSecond();
+            Location loc = triple.getThird();
+
+            Block b = loc.getWorld().getBlockAt(loc);
+
+            b.setType(mat);
+            b.setData(data);
+        }
+    }
+
+    private static void launchPlayers() {
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+
+        for (Player player : players) {
+            Vector vector = player.getLocation().getDirection().multiply(-1.5);
+            vector.setY(2);
+
+            player.setVelocity(vector);
         }
     }
 
@@ -152,7 +210,7 @@ public class DragonSequence implements Listener {
             if (block.getType().equals(Material.AIR)) continue;
             needsRegenerating.add(Triple.of(block.getType(), block.getData(), block.getLocation()));
 
-            if (exposed(block) && Util.random(0, 1) == 0) {
+            if (exposed(block) && Util.random(0, 5) == 0) {
                 FallingBlock falling = block.getWorld().spawnFallingBlock(block.getLocation(), block.getType(), block.getData());
                 falling.setDropItem(false);
 
