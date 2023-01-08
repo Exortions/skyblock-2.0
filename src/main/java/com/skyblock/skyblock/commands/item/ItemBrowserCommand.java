@@ -3,6 +3,7 @@ package com.skyblock.skyblock.commands.item;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.utilities.command.TrueAlias;
 import com.skyblock.skyblock.utilities.command.annotations.Alias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
@@ -21,13 +22,18 @@ import java.util.regex.Pattern;
 @Alias(aliases = { "ib" })
 @Usage(usage = "/sb itembrowser <page> <query>")
 @Description(description = "Shows a list of all items in the game")
-public class ItemBrowserCommand implements Command {
+public class ItemBrowserCommand implements Command, TrueAlias<ItemBrowserCommand> {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         List<ItemStack> items = new ArrayList<>();
         String command;
         String backCommand;
+
+        if (args.length == 0) {
+            player.performCommand("sb ib 1");
+            return;
+        }
 
         try {
             int page = Integer.parseInt(args[0]) - 1;
@@ -41,9 +47,6 @@ public class ItemBrowserCommand implements Command {
                 for (Map.Entry<String, ItemStack> entry : plugin.getItemHandler().getItems().entrySet()) {
                     Pattern pattern = Pattern.compile(".*" + query.toString().trim() + ".*", Pattern.CASE_INSENSITIVE);
                     if (pattern.matcher(entry.getKey()).matches()) items.add(entry.getValue());
-
-//                    if (entry.getValue().getItemMeta().getDisplayName().toLowerCase().contains(query.toString().toLowerCase())) {
-//                        items.add(entry.getValue());
 //                    }
                 }
 
@@ -73,7 +76,7 @@ public class ItemBrowserCommand implements Command {
                 try {
                     ItemStack item = items.get(i);
                     itemBrowser.addItem(setItemIndex, item);
-                    itemBrowser.clickEvents.put(item.getItemMeta().getDisplayName(), () -> player.getInventory().addItem(item));
+                    itemBrowser.specificClickEvents.put(item, () -> player.getInventory().addItem(item));
                     setItemIndex++;
                 } catch (IndexOutOfBoundsException e) {
                     break;

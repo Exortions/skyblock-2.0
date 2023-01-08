@@ -18,8 +18,10 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryCustom;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -113,8 +115,24 @@ public class EnchantingTableGUI extends CraftInventoryCustom implements Listener
     }
 
     @EventHandler
+    public void onClose(InventoryCloseEvent e) {
+        if (!e.getView().getTitle().equals(getName())) return;
+
+        HandlerList.unregisterAll(this);
+        if (getItem(13) != null) e.getPlayer().getInventory().addItem(getItem(13));
+    }
+
+    @EventHandler
     public void onClick(InventoryClickEvent e) {
         if (e.getClickedInventory() == null) return;
+
+        if (e.getClickedInventory().equals(e.getWhoClicked().getInventory()) &&
+                e.getWhoClicked().getOpenInventory().getTitle().equals(getName())) {
+            Util.delay(() -> {
+                Bukkit.getPluginManager().callEvent(new InventoryClickEvent(e.getView(), e.getSlotType(), 13, e.getClick(), e.getAction()));
+            }, 1);
+        }
+
         if (!e.getClickedInventory().equals(this)) return;
 
         e.setCancelled(true);
