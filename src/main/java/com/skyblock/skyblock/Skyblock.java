@@ -1,5 +1,9 @@
 package com.skyblock.skyblock;
 
+import com.skyblock.skyblock.commands.admin.CoinsCommand;
+import com.skyblock.skyblock.commands.admin.FairySoulCommand;
+import com.skyblock.skyblock.commands.admin.GameModeCommand;
+import com.skyblock.skyblock.commands.admin.SkillXpCommand;
 import com.skyblock.skyblock.commands.economy.AuctionCommand;
 import com.skyblock.skyblock.commands.economy.BazaarCommand;
 import com.skyblock.skyblock.commands.economy.DepositCommand;
@@ -41,7 +45,6 @@ import com.skyblock.skyblock.features.enchantment.enchantments.tool.EfficiencyEn
 import com.skyblock.skyblock.features.entities.EntityListener;
 import com.skyblock.skyblock.features.entities.SkyblockEntityHandler;
 import com.skyblock.skyblock.features.entities.dragon.DragonAltar;
-import com.skyblock.skyblock.features.entities.dragon.DragonGate;
 import com.skyblock.skyblock.features.entities.dragon.DragonSequence;
 import com.skyblock.skyblock.features.entities.spawners.EntitySpawnerHandler;
 import com.skyblock.skyblock.features.fairysouls.FairySoulHandler;
@@ -239,9 +242,6 @@ public final class Skyblock extends JavaPlugin {
             ex.printStackTrace();
         }
 
-        DragonAltar.getMainAltar().onDisable();
-        DragonSequence.endingSequence();
-
         sendMessage(String.format("Removed %s Entities", i));
 
         this.spongeReplacerHandler.endGeneration();
@@ -264,6 +264,11 @@ public final class Skyblock extends JavaPlugin {
         for (SkyblockPlayer skyblockPlayer : SkyblockPlayer.playerRegistry.values()) {
             skyblockPlayer.onQuit();
         }
+
+        try {
+            DragonAltar.getMainAltar().onDisable();
+            DragonSequence.endingSequence();
+        } catch (Exception ignored) { }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
@@ -902,6 +907,10 @@ public final class Skyblock extends JavaPlugin {
                 new IslandCommand(),
                 new EffectsCommand(),
                 new MaxMyItemCommand(),
+                new CoinsCommand(),
+                new GameModeCommand(),
+                new SkillXpCommand(),
+                new FairySoulCommand(),
                 new HarpCommand()
         );
 

@@ -57,3 +57,8 @@ commands:
     aliases:
       - sb ib
       - ib
+  gamemode:
+    description: Change gamemode of player
+    aliases:
+      - gm
+      - sb gamemode
