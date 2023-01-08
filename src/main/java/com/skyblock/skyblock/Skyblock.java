@@ -794,6 +794,7 @@ public final class Skyblock extends JavaPlugin {
         this.enchantmentHandler.registerEnchantment(new TelekinesisEnchantment());
         this.enchantmentHandler.registerEnchantment(new CriticalEnchantment());
         this.enchantmentHandler.registerEnchantment(new BaneOfArthropodsEnchantment());
+        this.enchantmentHandler.registerEnchantment(new LifeStealEnchantment());
         this.enchantmentHandler.registerEnchantment(new CubismEnchantment());
         this.enchantmentHandler.registerEnchantment(new DragonHunterEnchantment());
         this.enchantmentHandler.registerEnchantment(new FireProtectionEnchantment());

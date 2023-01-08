@@ -57,52 +57,10 @@ public class DragonSequence implements Listener {
     }
 
     public static void endingSequence(boolean slow) {
-        openGate();
+        try {
+            openGate();
 
-        for (Triple<Material, Byte, Location> triple : gateBlocks) {
-            Material mat = triple.getFirst();
-            byte data = triple.getSecond();
-            Location loc = triple.getThird();
-
-            Block b = loc.getWorld().getBlockAt(loc);
-
-            b.setType(mat);
-            b.setData(data);
-        }
-
-        if (slow) {
-            HashMap<Double, List<Triple<Material, Byte, Location>>> regenByY = new HashMap<>();
-            for (Triple<Material, Byte, Location> triple : needsRegenerating) {
-                if (!regenByY.containsKey(triple.getThird().getY())) regenByY.put(triple.getThird().getY(), new ArrayList<>());
-                regenByY.get(triple.getThird().getY()).add(triple);
-            }
-
-            int i = 0;
-            for (List<Triple<Material, Byte, Location>> byY : regenByY.values()) {
-                Util.delay(() -> {
-                    for (Triple<Material, Byte, Location> triple : byY) {
-                        Material mat = triple.getFirst();
-                        byte data = triple.getSecond();
-                        Location loc = triple.getThird();
-
-                        if (loc.getY() == 47) {
-                            endingSequence(false);
-
-                            Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.LIGHT_PURPLE + "The Dragon Egg has spawned!");
-                            return;
-                        }
-
-                        Block b = loc.getWorld().getBlockAt(loc);
-
-                        b.setType(mat);
-                        b.setData(data);
-                    }
-                }, i * 30);
-
-                i++;
-            }
-        } else {
-            for (Triple<Material, Byte, Location> triple : needsRegenerating) {
+            for (Triple<Material, Byte, Location> triple : gateBlocks) {
                 Material mat = triple.getFirst();
                 byte data = triple.getSecond();
                 Location loc = triple.getThird();
@@ -112,11 +70,55 @@ public class DragonSequence implements Listener {
                 b.setType(mat);
                 b.setData(data);
             }
-        }
 
-        needsRegenerating.clear();
-        gateBlocks.clear();
-        registered.clear();
+            if (slow) {
+                HashMap<Double, List<Triple<Material, Byte, Location>>> regenByY = new HashMap<>();
+                for (Triple<Material, Byte, Location> triple : needsRegenerating) {
+                    if (!regenByY.containsKey(triple.getThird().getY())) regenByY.put(triple.getThird().getY(), new ArrayList<>());
+                    regenByY.get(triple.getThird().getY()).add(triple);
+                }
+
+                int i = 0;
+                for (List<Triple<Material, Byte, Location>> byY : regenByY.values()) {
+                    Util.delay(() -> {
+                        for (Triple<Material, Byte, Location> triple : byY) {
+                            Material mat = triple.getFirst();
+                            byte data = triple.getSecond();
+                            Location loc = triple.getThird();
+
+                            if (loc.getY() == 47) {
+                                endingSequence(false);
+
+                                Bukkit.broadcastMessage(ChatColor.DARK_PURPLE + "☬ " + ChatColor.LIGHT_PURPLE + "The Dragon Egg has spawned!");
+                                return;
+                            }
+
+                            Block b = loc.getWorld().getBlockAt(loc);
+
+                            b.setType(mat);
+                            b.setData(data);
+                        }
+                    }, i * 30);
+
+                    i++;
+                }
+            } else {
+                for (Triple<Material, Byte, Location> triple : needsRegenerating) {
+                    Material mat = triple.getFirst();
+                    byte data = triple.getSecond();
+                    Location loc = triple.getThird();
+
+                    Block b = loc.getWorld().getBlockAt(loc);
+
+                    b.setType(mat);
+                    b.setData(data);
+                }
+            }
+
+            needsRegenerating.clear();
+            gateBlocks.clear();
+            registered.clear();
+        } catch (NullPointerException ignored) { }
     }
 
     private static void gateClose() {
