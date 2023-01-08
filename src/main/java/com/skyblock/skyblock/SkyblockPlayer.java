@@ -1036,15 +1036,20 @@ public class SkyblockPlayer {
     }
 
     public void removeFromQuiver() {
-        for (String slot : ((ConfigurationSection) getValue("bag.quiver.items")).getKeys(false)) {
+        Set<String> slots = ((ConfigurationSection) getValue("bag.quiver.items")).getKeys(false);
+        List<String> list = new ArrayList<>(slots);
+
+        Collections.reverse(list);
+
+        for (String slot : list) {
             ItemStack item = ((ItemStack) getValue("bag.quiver.items." + slot)).clone();
             if (!item.getType().equals(Material.AIR)) {
                 if (item.getAmount() == 1) {
                     setValue("bag.quiver.items." + slot, new ItemStack(Material.AIR));
                 } else {
-                    setValue("bag.quiver.items." + slot + ".amount", item.getAmount() - 1);
+                    item.setAmount(item.getAmount() - 1);
+                    setValue("bag.quiver.items." + slot, item);
 
-                    Bukkit.broadcastMessage("bruh " + getQuiverAmount());
                 }
                 break;
             }

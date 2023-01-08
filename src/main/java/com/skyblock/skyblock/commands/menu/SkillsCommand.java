@@ -133,19 +133,33 @@ public class SkillsCommand implements Command, Listener {
             rewardsString.append("&7   ").append(reward).append("\n");
         }
 
-        meta.setLore(
-                Arrays.asList(
-                    Util.buildLore(
-                            "&7" + skill.getDescription() + "\n\n" +
-                                    "Progress to Level " + Util.toRoman(nextLevel) + ": &e" + progress + "%\n" +
-                                    "" + Util.getProgressBar(progress, 20, 5) + " &e" + xp + "&6/&e" + Util.abbreviate((int) xpRequired) + "\n\n" +
-                                    (menu ? "&8Increase your " + skill.getName() + " level to\n&8unlock Perks, statistic bonuses\n&8and more!" : "Level " + Util.toRoman(nextLevel) + " Rewards:\n" +
-                                    rewardsString + "\n" +
-                                    "&eClick to view!"),
-                            '7'
+        if (nextLevel == 51) {
+            meta.setLore(
+                    Arrays.asList(
+                            Util.buildLore(
+                                    "&7" + skill.getDescription() + "\n\n" +
+                                            ChatColor.DARK_GRAY + "Max Skill level reached!\n" +
+                                            ChatColor.YELLOW + ChatColor.STRIKETHROUGH + "------------ " + ChatColor.RESET + ChatColor.GOLD  + "  " + Util.formatLong((long) xp) + " XP" + "\n\n" +
+                                            (menu ? "&8Increase your " + skill.getName() + " level to\n&8unlock Perks, statistic bonuses\n&8and more!" : "&eClick to view!"),
+                                    '7'
+                            )
                     )
-                )
-        );
+            );
+        } else {
+            meta.setLore(
+                    Arrays.asList(
+                            Util.buildLore(
+                                    "&7" + skill.getDescription() + "\n\n" +
+                                            "Progress to Level " + Util.toRoman(nextLevel) + ": &e" + progress + "%\n" +
+                                            "" + Util.getProgressBar(progress, 20, 5) + " &e" + xp + "&6/&e" + Util.abbreviate((int) xpRequired) + "\n\n" +
+                                            (menu ? "&8Increase your " + skill.getName() + " level to\n&8unlock Perks, statistic bonuses\n&8and more!" : "Level " + Util.toRoman(nextLevel) + " Rewards:\n" +
+                                                    rewardsString + "\n" +
+                                                    "&eClick to view!"),
+                                    '7'
+                            )
+                    )
+            );
+        }
 
         stack.setItemMeta(meta);
 
@@ -158,68 +172,70 @@ public class SkillsCommand implements Command, Listener {
         int previousSlot = 0;
 
         for (int i = startLevel - 1; i < endLevel + 1; i++) {
-            if (i == 0) {
+            try {
+                if (i == 0) {
+                    index++;
+                    continue;
+                }
+
+                int slot;
+
+                Material material;
+                ChatColor color;
+                short data = 0;
+
+                if (i % 5 == 0) material = skill.getGuiMilestoneIcon().getType();
+                else material = Material.STAINED_GLASS_PANE;
+
+                int level = Skill.getLevel(Skill.getXP(skill, player)) + 1;
+                boolean pane = material.equals(Material.STAINED_GLASS_PANE);
+
+                if (level > i) {
+                    if (pane) data = (short) 5;
+                    color = ChatColor.GREEN;
+                } else if (level == i) {
+                    if (pane) data = (short) 4;
+                    color = ChatColor.YELLOW;
+                } else {
+                    if (pane) data = (short) 14;
+                    color = ChatColor.RED;
+                }
+
+                if (index <= 3 || index == 11 || index == 12 || index == 13) slot = previousSlot + 9;
+                else if (index == 4 || index == 5 || index == 9 || index == 10 || index == 14 || index == 15 || index == 19 || index == 20) slot = previousSlot + 1;
+                else if (index <= 8 || index == 16 || index == 17 || index == 18) slot = previousSlot - 9;
+                else slot = previousSlot + 9;
+
                 index++;
-                continue;
-            }
 
-            int slot;
+                List<String> rewards = skill.getRewards(i, i - 1);
 
-            Material material;
-            ChatColor color;
-            short data = 0;
+                StringBuilder rewardsString = new StringBuilder();
 
-            if (i % 5 == 0) material = skill.getGuiMilestoneIcon().getType();
-            else material = Material.STAINED_GLASS_PANE;
+                rewardsString.append(ChatColor.YELLOW).append("  ").append(skill.getAlternate()).append(" ").append(Util.toRoman(i)).append("\n");
 
-            int level = Skill.getLevel(Skill.getXP(skill, player)) + 1;
-            boolean pane = material.equals(Material.STAINED_GLASS_PANE);
+                for (String reward : rewards) {
+                    rewardsString.append("&7   ").append(reward).append("\n");
+                }
 
-            if (level > i) {
-                if (pane) data = (short) 5;
-                color = ChatColor.GREEN;
-            } else if (level == i) {
-                if (pane) data = (short) 4;
-                color = ChatColor.YELLOW;
-            } else {
-                if (pane) data = (short) 14;
-                color = ChatColor.RED;
-            }
+                double xp = Skill.getXP(skill, player);
+                double required = Skill.XP.get(i - 1);
 
-            if (index <= 3 || index == 11 || index == 12 || index == 13) slot = previousSlot + 9;
-            else if (index == 4 || index == 5 || index == 9 || index == 10 || index == 14 || index == 15 || index == 19 || index == 20) slot = previousSlot + 1;
-            else if (index <= 8 || index == 16 || index == 17 || index == 18) slot = previousSlot - 9;
-            else slot = previousSlot + 9;
+                double percent = Math.round(xp / required * 1000) / 10.0;
 
-            index++;
+                inventory.setItem(slot, new ItemBuilder(" ", material, data)
+                        .setDisplayName(color + skill.getName() + " Level " + Util.toRoman(i))
+                        .setAmount(i)
+                        .setLore(
+                                Util.buildLore(
+                                        "Rewards:\n" + rewardsString
+                                                + (color == ChatColor.YELLOW ? "\n\nProgress: &e" + percent + "%\n" + Util.getProgressBar(percent, 20, 5) + " &e" + xp + "&6/&e" + Util.abbreviate((int) required) : ""),
+                                        '7')
+                        )
+                        .toItemStack());
 
-            List<String> rewards = skill.getRewards(i, i - 1);
-
-            StringBuilder rewardsString = new StringBuilder();
-
-            rewardsString.append(ChatColor.YELLOW).append("  ").append(skill.getAlternate()).append(" ").append(Util.toRoman(i)).append("\n");
-
-            for (String reward : rewards) {
-                rewardsString.append("&7   ").append(reward).append("\n");
-            }
-
-            double xp = Skill.getXP(skill, player);
-            double required = Skill.XP.get(i);
-
-            double percent = Math.round(xp / required * 1000) / 10.0;
-
-            inventory.setItem(slot, new ItemBuilder(" ", material, data)
-                    .setDisplayName(color + skill.getName() + " Level " + Util.toRoman(i))
-                    .setAmount(i)
-                    .setLore(
-                            Util.buildLore(
-                                    "Rewards:\n" + rewardsString
-                                        + (color == ChatColor.YELLOW ? "\n\nProgress: &e" + percent + "%\n" + Util.getProgressBar(percent, 20, 5) + " &e" + xp + "&6/&e" + Util.abbreviate((int) required) : ""),
-                                    '7')
-                    )
-                    .toItemStack());
-
-            previousSlot = slot;
+                previousSlot = slot;
+            } catch (ArrayIndexOutOfBoundsException ignored) { }
         }
     }
 

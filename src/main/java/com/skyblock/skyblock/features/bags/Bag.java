@@ -145,30 +145,28 @@ public class Bag implements Listener {
                 return;
             }
 
-            HashMap<Integer, ItemStack> items = new HashMap<>();
+            Util.delay(() -> {
+                HashMap<Integer, ItemStack> items = new HashMap<>();
 
-            for (int i = 0; i < limit; i++) items.put(i, event.getClickedInventory().getItem(i));
+                for (int i = 0; i < limit; i++) items.put(i, event.getClickedInventory().getItem(i));
 
-            items.put(event.getSlot(), event.getCursor());
+                SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(((Player) event.getWhoClicked()).getPlayer());
 
-            SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(((Player) event.getWhoClicked()).getPlayer());
-
-            if (Util.notNull(event.getCursor())) {
-                onPutItem.accept(skyblockPlayer, event.getCursor());
-            } else {
-                onRemoveItem.accept(skyblockPlayer, event.getCurrentItem());
-            }
-
-            for (int slot : items.keySet()) {
-                if (items.get(slot) == null) {
-                    skyblockPlayer.setValue("bag." + this.id + ".items." + slot, new ItemStack(Material.AIR));
-                    continue;
+                if (Util.notNull(event.getCursor())) {
+                    onPutItem.accept(skyblockPlayer, event.getCursor());
+                } else {
+                    onRemoveItem.accept(skyblockPlayer, event.getCurrentItem());
                 }
 
-                skyblockPlayer.setValue("bag." + this.id + ".items." + slot, items.get(slot));
-                skyblockPlayer.setValue("bag." + this.id + ".items." + slot + ".amount", items.get(slot).getAmount());
-                Bukkit.broadcastMessage(skyblockPlayer.getIntValue("bag." + this.id + ".items." + slot + ".amount") + "");
-            }
+                for (int slot : items.keySet()) {
+                    if (items.get(slot) == null) {
+                        skyblockPlayer.setValue("bag." + this.id + ".items." + slot, new ItemStack(Material.AIR));
+                        continue;
+                    }
+
+                    skyblockPlayer.setValue("bag." + this.id + ".items." + slot, items.get(slot));
+                }
+            }, 1);
         }
 
         if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) return;

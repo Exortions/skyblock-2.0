@@ -555,7 +555,13 @@ public class PlayerListener implements Listener {
 
                     if (arrow.getAmount() != player.getQuiverAmount()) {
                         player.removeFromQuiver();
-                        arrow.setAmount(player.getQuiverAmount());
+
+                        ItemBuilder quiver = new ItemBuilder(ChatColor.DARK_GRAY + "Quiver Arrow", ARROW).addLore("&7This item is in your inventory", "&7because you are holding your bow", "&7currently. Switch your held item", "&7to see the item that was here", "&7before.");
+
+                        quiver.addEnchantmentGlint();
+                        quiver.setAmount(player.getQuiverAmount());
+
+                        player.getBukkitPlayer().getInventory().setItem(8, quiver.toItemStack());
                     }
                 }
             }.runTaskTimer(Skyblock.getPlugin(), 1, 1);
