@@ -65,7 +65,7 @@ public class AnvilGUI extends CraftInventoryCustom implements Listener {
         if (!e.getView().getTitle().equals(getName())) return;
 
         HandlerList.unregisterAll(this);
-        if (getItem(22) != null) e.getPlayer().getInventory().addItem(getItem(22));
+        if (getItem(29) != null) e.getPlayer().getInventory().addItem(getItem(29));
         if (getItem(33) != null) e.getPlayer().getInventory().addItem(getItem(33));
     }
 
@@ -77,7 +77,7 @@ public class AnvilGUI extends CraftInventoryCustom implements Listener {
                 e.getWhoClicked().getOpenInventory().getTitle().equals(getName())) {
             Util.delay(() -> {
                 int slot = 33;
-                if (getItem(33) == null) slot = 22;
+                if (getItem(33) == null) slot = 29;
 
                 Bukkit.getPluginManager().callEvent(new InventoryClickEvent(e.getView(), e.getSlotType(), slot, e.getClick(), e.getAction()));
             }, 1);
