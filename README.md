@@ -39,13 +39,13 @@ Here are a list of some features that we currently have added:
     - Pets
     - Economy
     - Custom Mob Spawning
+    - Dragons
 
 # Coming Soon
 
 Here is a list of features that will be added soon:
 
     - Bazaar
-    - Dragon Fights
 
 # Installation
 
