@@ -10,7 +10,6 @@ import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.event.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.enchantment.AnvilGUI;
 import com.skyblock.skyblock.features.enchantment.EnchantingTableGUI;
-import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.guis.ProfileGui;
@@ -41,7 +40,6 @@ import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -314,9 +312,8 @@ public class PlayerListener implements Listener {
         put("Mushroom Desert", new String[]{"Harvest all the things"});
         put("The Barn", new String[]{"Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows"});
         put("Spiders Den", new String[]{"Talk to Haymitch", "Watch out for Spiders!", "Try to make it to the top of the hill"});
-        put("The End", new String[]{"Harvest wheat, carrots, potatoes, pumpkin, and melons", "Kill cows, chickens, and pigs", "Milk cows"});
+        put("The End", new String[]{"Fight Enderman and Endermites", "Mine End Stone and Obsidian", "Travel to the Dragon's Nest!"});
         put("Blazing Fortress", new String[]{"Battle against nether mobs", "Defeat the Magma Cube Boss", "Collect nether wart, blaze rods, and magma cream"});
-
     }};
 
     @EventHandler
