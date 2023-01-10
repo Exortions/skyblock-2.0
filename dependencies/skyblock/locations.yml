@@ -398,7 +398,7 @@ The End:
   name: The End
   color: LIGHT_PURPLE
   weight: 0
-Dragon's Den:
+Dragon's Nest:
   pos1:
     ==: org.bukkit.Location
     world: world
@@ -415,7 +415,7 @@ Dragon's Den:
     z: -220.0
     pitch: 0.0
     yaw: 0.0
-  name: Dragon's Den
+  name: Dragon's Nest
   color: DARK_PURPLE
   weight: 1
 Forest:
