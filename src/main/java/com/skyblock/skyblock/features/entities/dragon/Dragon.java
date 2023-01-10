@@ -16,7 +16,6 @@ import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
 import org.bukkit.entity.*;
@@ -127,7 +126,7 @@ public class Dragon extends SkyblockEntity implements Listener {
     }
 
     private void fireBall(EnderDragon dragon) {
-        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Den")).collect(Collectors.toList());
 
         Player target = players.get(Util.random(0, players.size() - 1));
 
@@ -174,7 +173,7 @@ public class Dragon extends SkyblockEntity implements Listener {
     }
 
     private void lightningStrike() {
-        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Den")).collect(Collectors.toList());
 
         freezeFor(60);
 
@@ -200,7 +199,7 @@ public class Dragon extends SkyblockEntity implements Listener {
     }
 
     private void rush(EnderDragon dragon) {
-        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Den")).collect(Collectors.toList());
 
         Player target = players.get(Util.random(0, players.size() - 1));
 
@@ -216,9 +215,7 @@ public class Dragon extends SkyblockEntity implements Listener {
     private void freezeFor(int ticks) {
         frozen = true;
 
-        Util.delay(() -> {
-            frozen = false;
-        }, ticks);
+        Util.delay(() -> frozen = false, ticks);
     }
 
     private String getPlace(int place) {
@@ -233,7 +230,7 @@ public class Dragon extends SkyblockEntity implements Listener {
     protected void onDeath() {
         super.onDeath();
 
-        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Nest")).collect(Collectors.toList());
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter((p) -> SkyblockPlayer.getPlayer(p).getCurrentLocationName().equals("Dragon's Den")).collect(Collectors.toList());
         getDamaged().sort((p1, p2) -> Math.toIntExact(damagers.get(p1.getUniqueId()) - damagers.get(p2.getUniqueId())));
 
         for (Player p : players) {

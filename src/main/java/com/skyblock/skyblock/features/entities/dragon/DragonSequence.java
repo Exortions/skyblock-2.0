@@ -157,7 +157,7 @@ public class DragonSequence implements Listener {
         for (Player player : center.getWorld().getPlayers()) {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Nest")) {
+            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Den")) {
                 player.playSound(player.getLocation(), sound, 100, pitch);
             }
         }
@@ -248,7 +248,7 @@ public class DragonSequence implements Listener {
         for (Player player : center.getWorld().getPlayers()) {
             SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Nest")) {
+            if (skyblockPlayer.getCurrentLocationName().equals("Dragon's Den")) {
                 player.playSound(player.getLocation(), Sound.EXPLODE, 100, 1);
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
             }
