@@ -32,6 +32,8 @@ public class BazaarSubItemGui extends Gui {
             put(ChatColor.GREEN + "View Graphs", () -> {
                 // TODO: implement graphs
             });
+
+            put(ChatColor.GREEN + "Buy Instantly", () -> new BazaarInstantBuyGui(player, item, 0).show(player));
         }});
 
         Util.fillEmpty(this);

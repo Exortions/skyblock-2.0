@@ -6,7 +6,6 @@ import com.skyblock.skyblock.features.bazaar.BazaarItem;
 import com.skyblock.skyblock.features.bazaar.BazaarSubItem;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
-import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,8 +21,6 @@ public class BazaarItemGui extends Gui {
                 put(subItem.getNamedIcon().toItemStack().getItemMeta().getDisplayName(), () -> {
                     new BazaarSubItemGui(player, subItem).show(player);
                 });
-
-                System.out.println(subItem.getIcon());
             }
         }});
 
