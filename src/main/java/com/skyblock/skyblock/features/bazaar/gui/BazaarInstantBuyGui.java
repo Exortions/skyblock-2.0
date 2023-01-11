@@ -32,6 +32,8 @@ public class BazaarInstantBuyGui extends Gui {
             put(ChatColor.GREEN + "Custom Amount", () -> {
 
             });
+
+            put(ChatColor.GREEN + "Go Back", () -> new BazaarSubItemGui(opener, item).show(opener));
         }});
 
         Util.fillEmpty(this);
