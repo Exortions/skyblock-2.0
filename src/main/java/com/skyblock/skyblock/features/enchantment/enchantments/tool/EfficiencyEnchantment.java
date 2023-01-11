@@ -12,7 +12,7 @@ public class EfficiencyEnchantment extends ToolEnchantment {
     @Override
     public void onEnchant(ItemBase base) {
         int level = base.getEnchantment(this.getName()).getLevel();
-        base.getOrig().addEnchantment(Enchantment.DIG_SPEED, level);
+        base.getOrig().addUnsafeEnchantment(Enchantment.DIG_SPEED, level);
     }
 
     @Override
