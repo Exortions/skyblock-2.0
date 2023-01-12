@@ -9,7 +9,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
-@Usage(usage = "/craft")
+@Usage(usage = "/sb craft")
 @Description(description = "Opens the crafting table")
 public class CraftCommand implements Command {
 
