@@ -9,7 +9,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
-@Usage(usage = "/island")
+@Usage(usage = "/sb island")
 @Description(description = "Teleports you to your island")
 public class IslandCommand implements Command, TrueAlias<IslandCommand> {
 
