@@ -9,7 +9,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
-@Usage(usage = "/batphone")
+@Usage(usage = "/sb batphone")
 @Description(description = "Opens the maddox batphone menu")
 public class BatphoneCommand implements Command {
 
