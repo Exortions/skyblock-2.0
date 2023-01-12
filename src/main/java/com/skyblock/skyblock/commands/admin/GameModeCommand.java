@@ -12,10 +12,10 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 @RequiresPlayer
-@Usage(usage = "Change gamemode")
 @Alias(aliases = { "gm", "gmode" })
 @Permission(permission = "skyblock.admin")
 @Description(description = "Vanilla gamemode command too slow")
+@Usage(usage = "/sb gamemode <0|s|survival|1|c|creative|2|a|adventure|3|sp|spectator>")
 public class GameModeCommand implements Command, ArgumentAlias, TrueAlias<GameModeCommand> {
 
     @Override
