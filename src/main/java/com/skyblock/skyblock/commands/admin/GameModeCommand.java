@@ -1,20 +1,22 @@
 package com.skyblock.skyblock.commands.admin;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.command.ArgumentAlias;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.TrueAlias;
 import com.skyblock.skyblock.utilities.command.annotations.*;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 @RequiresPlayer
-@Permission(permission = "skyblock.admin")
 @Usage(usage = "Change gamemode")
 @Alias(aliases = { "gm", "gmode" })
+@Permission(permission = "skyblock.admin")
 @Description(description = "Vanilla gamemode command too slow")
-public class GameModeCommand implements Command, TrueAlias<GameModeCommand> {
+public class GameModeCommand implements Command, ArgumentAlias, TrueAlias<GameModeCommand> {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
@@ -44,5 +46,15 @@ public class GameModeCommand implements Command, TrueAlias<GameModeCommand> {
         }
 
         player.sendMessage(String.format(ChatColor.GREEN + "Your gamemode has been updated to %s", ChatColor.YELLOW + player.getGameMode().name().toLowerCase()));
+    }
+
+    @Override
+    public HashMap<String, String> getArgumentAliases() {
+        return new HashMap<String, String>() {{
+            put("gms", "s");
+            put("gmc", "c");
+            put("gma", "a");
+            put("gmsp", "sp");
+        }};
     }
 }

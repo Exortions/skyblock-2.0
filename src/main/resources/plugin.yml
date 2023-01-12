@@ -62,3 +62,11 @@ commands:
     aliases:
       - gm
       - sb gamemode
+  gms:
+    description: Sets gamemode to survival
+  gmc:
+    description: Sets gamemode to creatve
+  gma:
+    description: Sets gamemode to adventure
+  gmsp:
+    description: Sets gamemode to spectator
