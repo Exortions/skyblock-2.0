@@ -316,7 +316,12 @@ public final class Skyblock extends JavaPlugin {
     }
 
     private void initializeQuests() {
+        this.sendMessage("Initializing quests...");
+        long start = System.currentTimeMillis();
+
         this.questLineHandler = new QuestLineHandler();
+
+        this.sendMessage("Successfully registered " + ChatColor.GREEN + this.questLineHandler.getQuests().size() + ChatColor.WHITE + " quests [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void initializeBazaar() {
@@ -355,7 +360,12 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void initializeFairySouls() {
+        this.sendMessage("Registering fairy souls...");
+        long start = System.currentTimeMillis();
+
         this.fairySoulHandler = new FairySoulHandler();
+
+        this.sendMessage("Successfully registered " + ChatColor.GREEN + this.fairySoulHandler.getSouls().size() + ChatColor.WHITE + " fairy souls ["  + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerBlockHandler() {
@@ -368,7 +378,12 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void registerSlayers() {
+        this.sendMessage("Registering slayers...");
+        long start = System.currentTimeMillis();
+
         this.slayerHandler = new SlayerHandler();
+
+        this.sendMessage("Successfully registered slayers [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerBags() {
@@ -677,9 +692,14 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void initializeRecipes() {
+        this.sendMessage("Initializing recipes...");
+        long start = System.currentTimeMillis();
+
         this.recipeHandler = new RecipeHandler();
 
         this.recipeHandler.init();
+
+        this.sendMessage("Successfully initialized " + ChatColor.GREEN + this.recipeHandler.getRecipes().size() + ChatColor.WHITE + " recipes [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerLocations() {
@@ -821,7 +841,9 @@ public final class Skyblock extends JavaPlugin {
     }
 
     public void registerCollections() {
+        this.sendMessage("Registering collections...");
         long start = System.currentTimeMillis();
+
         if (!Collection.INITIALIZED) {
             try {
                 Collection.initializeCollections(this);
@@ -830,6 +852,8 @@ public final class Skyblock extends JavaPlugin {
                 this.getServer().getPluginManager().disablePlugin(this);
             }
         }
+
+        this.sendMessage("Successfully registered " + ChatColor.GREEN + Collection.getCollections().size() + ChatColor.WHITE + " collections [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
 
     public void registerListeners() {
