@@ -9,7 +9,7 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
-@Usage(usage = "/hub")
+@Usage(usage = "/sb hub")
 @Description(description = "Teleports you to the hub")
 public class HubCommand implements Command, TrueAlias<HubCommand> {
 
