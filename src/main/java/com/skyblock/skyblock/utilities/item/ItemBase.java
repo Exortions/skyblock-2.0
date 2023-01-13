@@ -133,10 +133,14 @@ public class ItemBase {
         this.item = this.getItem(rarity);
 
         String descriptionStr = nbt.getString("description");
-        String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split("; ");
-        String[] descriptionArrClone = Arrays.copyOf(descriptionArr, descriptionArr.length + 1);
-        descriptionArrClone[descriptionArrClone.length - 1] = "";
-        this.description = Arrays.asList(descriptionArrClone);
+        if (descriptionStr.length() > 0) {
+            String[] descriptionArr = descriptionStr.substring(1, descriptionStr.length() - 1).split("; ");
+            String[] descriptionArrClone = Arrays.copyOf(descriptionArr, descriptionArr.length + 1);
+            descriptionArrClone[descriptionArrClone.length - 1] = "";
+            this.description = Arrays.asList(descriptionArrClone);
+        } else {
+            this.description = new ArrayList<>();
+        }
 
         this.stack = item;
         this.orig = item;

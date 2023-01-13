@@ -258,6 +258,10 @@ public class ItemHandler {
     }
 
     public ItemStack getItem(String s) {
+        if (!s.endsWith(".json")) {
+            s = s.toUpperCase();
+            s += ".json";
+        }
         return items.get(s) == null ? null : items.get(s).clone();
     }
 

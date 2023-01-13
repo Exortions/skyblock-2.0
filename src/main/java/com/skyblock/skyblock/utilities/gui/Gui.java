@@ -175,6 +175,9 @@ public class Gui implements Listener {
 
             if (specificClickEvents.containsKey(event.getCurrentItem())) {
                 specificClickEvents.get(event.getCurrentItem()).run();
+                if (skyblockPlayer.getBoolValue("settings.menuSounds")) {
+                    skyblockPlayer.getBukkitPlayer().playSound(skyblockPlayer.getBukkitPlayer().getLocation(), Sound.CLICK, 1, 1);
+                }
                 return;
             }
 
