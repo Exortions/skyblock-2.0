@@ -221,6 +221,7 @@ public class ItemHandler {
             if (r.equals(Rarity.VERY_SPECIAL)) continue;
             if (r.equals(Rarity.SPECIAL)) continue;
             if (r.equals(Rarity.MYTHIC)) continue;
+            if (r.equals(Rarity.DIVINE)) continue;
 
             for (PetType type : PetType.values()) {
                 Pet pet = type.newInstance();

@@ -93,7 +93,7 @@ public class MinionHandler {
         builder.addLore(ChatColor.GRAY + "Time Between Actions: &a" + minion.getActionDelay(minion.getLevel()) + "s",
                 ChatColor.GRAY + "Max Storage: " + ChatColor.DARK_GRAY + minion.getMaxStorage(minion.getLevel()) + " -> " + ChatColor.YELLOW + minion.getNextMaxStorage(), " ");
 
-        SkyblockRecipe recipe = Skyblock.getPlugin().getRecipeHandler().getRecipe(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name() + "_GENERATOR_" + (minion.getLevel() + 1) + ".json"));
+        SkyblockRecipe recipe = Skyblock.getPlugin().getRecipeHandler().getRecipe(Skyblock.getPlugin().getItemHandler().getItem(minion.getMaterial().name().replaceAll("_ORE", "") + "_GENERATOR_" + (minion.getLevel() + 1) + ".json"));
 
         HashMap<ItemStack, Integer> items = new HashMap<>();
         for (String item : recipe.getItems()) {
@@ -287,8 +287,6 @@ public class MinionHandler {
 
         this.minions.get(player.getBukkitPlayer().getUniqueId()).add(serialize);
         player.getMinions().add(serialize);
-
-        Bukkit.broadcastMessage(player.getMinions() + "");
     }
 
     public void deleteAll(UUID uuid) {
