@@ -5,9 +5,14 @@ import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.v1_8_R3.AttributeInstance;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import net.minecraft.server.v1_8_R3.GenericAttributes;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -76,6 +81,10 @@ public abstract class SlayerBoss extends SkyblockEntity {
 
         entity.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + "☠ " + ChatColor.WHITE + getEntityData().entityName + " " + ChatColor.GREEN + Util.format(Math.max(0, getEntityData().health)) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + Util.format(getEntityData().maximumHealth) + ChatColor.RED + "❤");
         display.teleport(new Location(entity.getWorld(), entity.getLocation().getX(), entity.getLocation().getY() + displayHeight, entity.getLocation().getZ()));
+
+        EntityLiving nms = ((CraftLivingEntity) entity).getHandle();
+        AttributeInstance kb = nms.getAttributeInstance(GenericAttributes.c);
+        kb.setValue(10);
 
         if (getVanilla().isDead()) display.remove();
     }
