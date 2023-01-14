@@ -22,7 +22,7 @@ public class ItemCategoryGUI extends Gui {
 
     private static final Skyblock plugin = Skyblock.getPlugin();
     public ItemCategoryGUI(BrowserCategory cat, int page, Player p) {
-        super("Item Category: " + WordUtils.capitalize(cat.name().toLowerCase()), 54, new HashMap<>());
+        super("Item Category: " + WordUtils.capitalize(cat.name().toLowerCase().replace('_', ' ')), 54, new HashMap<>());
 
         List<ItemStack> items = new ArrayList<>();
 
@@ -32,6 +32,8 @@ public class ItemCategoryGUI extends Gui {
 
             items.add(item);
         }
+
+        items.sort(Util.compareItems());
 
         int start = (page - 1) * 45;
         int end = (page - 1) * 45 + 45;
@@ -64,9 +66,7 @@ public class ItemCategoryGUI extends Gui {
 
                 for (String line : lines) search.append(line);
 
-                Util.delay(() -> {
-                    new ItemSearchGUI(search.toString(), 1, p).show(p);
-                }, 1);
+                Util.delay(() -> new ItemSearchGUI(search.toString(), 1, p).show(p), 1);
             });
 
             sign.open(p);
