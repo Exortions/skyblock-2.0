@@ -907,7 +907,10 @@ public class SkyblockPlayer {
 
         for (ItemStack item : pets) {
             NBTItem nbt = new NBTItem(item);
-            if (nbt.getString("uuid").equals(new NBTItem(pet).getString("uuid"))) pets.remove(item);
+            if (nbt.getString("uuid").equals(new NBTItem(pet).getString("uuid"))) {
+                pets.remove(item);
+                break;
+            }
         }
 
         setValue("pets.pets", pets);
