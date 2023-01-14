@@ -913,6 +913,13 @@ public class SkyblockPlayer {
         setValue("pets.pets", pets);
     }
 
+    public void replacePet(ItemStack old, ItemStack newPet) {
+        ArrayList<ItemStack> pets = getPets();
+        pets.set(pets.indexOf(old), newPet);
+
+        setValue("pets.pets", pets);
+    }
+
     public void setPet(Pet pet) {
         this.pet = pet;
 

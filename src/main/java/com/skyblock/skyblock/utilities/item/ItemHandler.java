@@ -218,18 +218,21 @@ public class ItemHandler {
         ).createStack());
 
         for (Rarity r : Rarity.values()) {
+            if (r.equals(Rarity.VERY_SPECIAL)) continue;
+            if (r.equals(Rarity.SPECIAL)) continue;
+            if (r.equals(Rarity.MYTHIC)) continue;
+
             for (PetType type : PetType.values()) {
                 Pet pet = type.newInstance();
                 if (pet == null) continue;
                 pet.setRarity(r);
-                items.put(type.name(), pet.toItemStack());
+                items.put(type.name() + "_" + r.toString().toUpperCase() + ".json", pet.toItemStack());
             }
-
-            if (r.equals(Rarity.LEGENDARY)) break;
         }
+
         for (String pot : POTIONS) {
             for (int i = 0; i < PotionEffect.getMaxLevelsAndColors.get(pot).getFirst(); i++) {
-                items.put(pot + "_" + i + 1, Util.createPotion(pot, i + 1, 12000));
+                items.put((pot + "_" + (i + 1)).toUpperCase() + ".json", Util.createPotion(pot, i + 1, 12000));
             }
         }
 

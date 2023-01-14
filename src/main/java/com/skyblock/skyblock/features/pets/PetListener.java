@@ -35,6 +35,7 @@ public class PetListener implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
+        if (!Util.notNull(e.getItemInHand())) return;
         NBTItem item = new NBTItem(e.getItemInHand());
 
         if (e.getBlock().getWorld().getName().startsWith(IslandManager.ISLAND_PREFIX)) e.setCancelled(item.getBoolean("isPet"));

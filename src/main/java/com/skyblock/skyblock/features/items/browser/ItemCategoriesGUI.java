@@ -33,8 +33,10 @@ public class ItemCategoriesGUI extends Gui {
         addItem(25, WAND);
         addItem(28, TRAVEL_SCROLL);
         addItem(29, MINION);
-        addItem(30, BLOCKS);
-        addItem(31, MISC);
+        addItem(30, PET);
+        addItem(31, POTION);
+        addItem(32, BLOCKS);
+        addItem(33, MISC);
 
         addItem(48, Util.buildCloseButton());
         addItem(49, new ItemBuilder(ChatColor.GREEN + "Search Items", Material.SIGN).addLore("&7Search through all items.").toItemStack());

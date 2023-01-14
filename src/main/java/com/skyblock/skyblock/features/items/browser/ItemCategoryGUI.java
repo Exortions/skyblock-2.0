@@ -27,8 +27,7 @@ public class ItemCategoryGUI extends Gui {
         List<ItemStack> items = new ArrayList<>();
 
         for (ItemStack item : plugin.getItemHandler().getItems().values()) {
-            if (Util.getSkyblockId(item).equals("")) continue;
-            if (!cat.getValidate().test(new ItemBase(item))) continue;
+            if (!cat.getValidate().test(item)) continue;
 
             items.add(item);
         }
