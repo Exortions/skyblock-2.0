@@ -253,7 +253,10 @@ public abstract class MinionBase {
 
             if (!Util.notNull(toCollect)) return;
 
-            Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
+            ItemStack stack = Util.toSkyblockItem(toCollect);
+            stack.setAmount(toCollect.getAmount());
+
+            Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), stack);
             item.setPickupDelay(Integer.MAX_VALUE);
 
             Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
