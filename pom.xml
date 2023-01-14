@@ -140,5 +140,10 @@
             <scope>system</scope>
             <systemPath>${basedir}/dependencies/plugins/Citizens-2.0.30-b2765.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+        </dependency>
     </dependencies>
 </project>
