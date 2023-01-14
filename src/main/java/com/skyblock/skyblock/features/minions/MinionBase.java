@@ -149,8 +149,6 @@ public abstract class MinionBase {
     public void spawn(SkyblockPlayer player, Location location, int level) {
         if (!player.isOnIsland()) return;
 
-        this.plugin.getMinionHandler().initializeMinion(player, this, location);
-
         if (this.minion != null) this.minion.remove();
 
         this.level = level;
@@ -191,6 +189,7 @@ public abstract class MinionBase {
         this.text.setMetadata("minion", new FixedMetadataValue(this.plugin, true));
         this.text.setMetadata("minion_id", new FixedMetadataValue(this.plugin, this.uuid.toString()));
 
+        this.plugin.getMinionHandler().initializeMinion(player, this, location);
         new BukkitRunnable() {
             int i = 0;
 
@@ -227,7 +226,7 @@ public abstract class MinionBase {
         this.minion.remove();
         this.text.remove();
 
-        player.getBukkitPlayer().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(name + "_GENERATOR_" + level + ".json"));
+        player.getBukkitPlayer().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(name + "_generator_" + level));
         player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
         collectAll(player);
 
@@ -243,28 +242,27 @@ public abstract class MinionBase {
     }
 
     public void collect(SkyblockPlayer player, int inventoryIndex) {
-
         if (player.getBukkitPlayer().getInventory().firstEmpty() == -1) {
             player.getBukkitPlayer().sendMessage(ChatColor.RED + "Your inventory does not have enough free space to add all items!");
             return;
         }
 
-        ItemStack toCollect = this.inventory.get(inventoryIndex);
+        try {
+            ItemStack toCollect = this.inventory.get(inventoryIndex);
 
-        if (!Util.notNull(toCollect)) return;
+            if (!Util.notNull(toCollect)) return;
 
-        player.getBukkitPlayer().getInventory().addItem(Util.toSkyblockItem(toCollect));
+            Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
+            item.setPickupDelay(Integer.MAX_VALUE);
 
-        Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
-        item.setPickupDelay(Integer.MAX_VALUE);
+            Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
 
-        Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
+            Util.delay(item::remove, 1);
 
-        Util.delay(item::remove, 1);
+            this.inventory.remove(inventoryIndex);
 
-        this.inventory.remove(inventoryIndex);
-
-        player.getBukkitPlayer().updateInventory();
+            player.getBukkitPlayer().updateInventory();
+        } catch (IndexOutOfBoundsException ignored) { }
     }
 
     public void collect(SkyblockPlayer player) {

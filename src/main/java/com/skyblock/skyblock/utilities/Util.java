@@ -702,6 +702,8 @@ public class Util {
 
         if (!notNull(item)) return null;
 
+        int amount = item.getAmount();
+
         NBTItem nbt = new NBTItem(item);
         if (nbt.getBoolean("skyblockItem")) return item;
 
@@ -724,6 +726,7 @@ public class Util {
         meta.setLore(lore);
 
         item.setItemMeta(meta);
+        item.setAmount(amount);
 
         return item;
     }

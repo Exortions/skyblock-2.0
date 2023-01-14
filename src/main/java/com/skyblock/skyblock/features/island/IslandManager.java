@@ -32,7 +32,12 @@ public class IslandManager {
     }
 
     public static boolean deleteWorld(Player player) {
-        Bukkit.getWorlds().remove(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()));
+        Bukkit.unloadWorld(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()), false);
+        return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
+    }
+
+    public static boolean deleteWorld(OfflinePlayer player) {
+        Bukkit.unloadWorld(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()), false);
         return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
     }
 

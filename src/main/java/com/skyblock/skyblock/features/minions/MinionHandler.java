@@ -186,7 +186,7 @@ public class MinionHandler {
             result.put("level", this.level);
 
             result.put("inventory", base.getInventory());
-            result.put("items", Arrays.asList(items));
+            result.put("items", items);
             result.put("fuelAmount", base.getFuelAmount());
             result.put("fuelAddedTime", base.getFuelAddedTime());
 
@@ -207,7 +207,7 @@ public class MinionHandler {
             uuid = UUID.fromString((String) args.get("uuid"));
             level = (int) args.get("level");
 
-            if (type == Material.COBBLESTONE.name()) base = new CobblestoneMinion(uuid); // MORE HERE
+            if (type.equals(Material.COBBLESTONE.name())) base = new CobblestoneMinion(uuid); // MORE HERE
             else base = null;
 
             base.setInventory((List<ItemStack>) args.get("inventory"));
@@ -219,7 +219,7 @@ public class MinionHandler {
             }
 
             base.setFuelAmount((int) args.get("fuelAmount"));
-            base.setFuelAddedTime((long) args.get("fuelAddedTime"));
+            base.setFuelAddedTime(((Integer) args.get("fuelAddedTime")).longValue());
 
 
             return new MinionSerializable(base, type, location, owner, uuid, level);
@@ -295,6 +295,8 @@ public class MinionHandler {
 
         this.minions.get(player.getBukkitPlayer().getUniqueId()).add(serialize);
         player.getMinions().add(serialize);
+
+        Bukkit.broadcastMessage(player.getMinions() + "");
     }
 
     public void deleteAll(UUID uuid) {
