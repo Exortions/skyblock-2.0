@@ -63,7 +63,7 @@ public enum BrowserCategory {
     }
 
     private static ItemStack category(ItemStack base, String name, String lore) {
-        return new ItemBuilder(base).setDisplayName(ChatColor.GREEN + name + "s").setLore(ChatColor.GRAY + "View all " + lore.toLowerCase() + " items.").addItemFlags(ItemFlag.values()).toItemStack();
+        return new ItemBuilder(base).setDisplayName(ChatColor.GREEN + name + (name.equalsIgnoreCase("All") || name.equalsIgnoreCase("miscellaneous") ? "" : "s")).setLore(ChatColor.GRAY + "View all " + lore.toLowerCase() + " items.").addItemFlags(ItemFlag.values()).toItemStack();
     }
 
     private static Predicate<ItemBase> validation(String rarity) {

@@ -4,8 +4,6 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
-import com.skyblock.skyblock.utilities.sign.SignClickCompleteHandler;
-import com.skyblock.skyblock.utilities.sign.SignCompleteEvent;
 import com.skyblock.skyblock.utilities.sign.SignGui;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -48,18 +46,14 @@ public class ItemCategoriesGUI extends Gui {
 
                 for (String line : lines) search.append(line);
 
-                Util.delay(() -> {
-                    new ItemSearchGUI(search.toString(), 1, p).show(p);
-                }, 1);
+                Util.delay(() -> new ItemSearchGUI(search.toString(), 1, p).show(p), 1);
             });
 
             sign.open(p);
         });
 
         for (BrowserCategory cat : BrowserCategory.values())
-            getSpecificClickEvents().put(cat.getItem(), () -> {
-                new ItemCategoryGUI(cat, 1, p).show(p);
-            });
+            getSpecificClickEvents().put(cat.getItem(), () -> new ItemCategoryGUI(cat, 1, p).show(p));
     }
 
     private void addItem(int slot, BrowserCategory cat) { addItem(slot, cat.getItem()); }
