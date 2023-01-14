@@ -20,7 +20,7 @@ public class LifeStealEnchantment extends SwordEnchantment {
             ItemBase base = new ItemBase(e.getPlayer().getBukkitPlayer().getItemInHand());
             int level = base.getEnchantment(this.getName()).getLevel();
 
-            e.getPlayer().heal(e.getDamage() * level / 10f);
+            e.getPlayer().heal((int) (e.getDamage() * level / 10f));
         } catch (IllegalArgumentException | NullPointerException ignored) {}
     }
 }

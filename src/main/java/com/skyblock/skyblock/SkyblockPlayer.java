@@ -444,10 +444,6 @@ public class SkyblockPlayer {
         }
     }
 
-    public void heal(double percent) {
-        heal((int) (getStat(SkyblockStat.MAX_HEALTH) * percent));
-    }
-
     public void kill(EntityDamageEvent.DamageCause cause, Entity killer) {
         bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
         setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));

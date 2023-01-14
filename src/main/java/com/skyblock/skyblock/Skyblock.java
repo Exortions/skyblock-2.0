@@ -936,6 +936,8 @@ public final class Skyblock extends JavaPlugin {
                 new HarpCommand(),
                 new LoopCommand(),
                 new WipeCommand(),
+                new HealCommand(),
+                new SlayerbossCommand(),
                 new SlayerbossCommand(),
                 new LaunchCommand()
         );
