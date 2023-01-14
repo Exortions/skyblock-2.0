@@ -23,8 +23,17 @@ public class LaunchCommand implements Command {
         }
 
         Player target = Bukkit.getPlayer(args[0]);
-        int x = Integer.parseInt(args[1]);
-        int y = Integer.parseInt(args[2]);
+
+        double x;
+        double y;
+
+        try {
+            x = Double.parseDouble(args[1]);
+            y = Double.parseDouble(args[2]);
+        } catch (NumberFormatException ex) {
+            sender.sendMessage(ChatColor.RED + "Invalid number!");
+            return;
+        }
 
         if (target == null) {
             sender.sendMessage(ChatColor.RED + "Player not found.");
