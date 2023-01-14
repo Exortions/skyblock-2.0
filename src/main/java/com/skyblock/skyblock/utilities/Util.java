@@ -571,12 +571,16 @@ public class Util {
     }
 
     public void delay(Runnable run, int ticks) {
+        delay(run, (long) ticks);
+    }
+
+    public void delay(Runnable run, long ticks) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 run.run();
             }
-        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), ticks);
+        }.runTaskLater(Skyblock.getPlugin(), ticks);
     }
 
     public String getProgressBar(double percent, double max, double perBar) {
