@@ -226,19 +226,20 @@ public abstract class MinionBase {
         this.minion.remove();
         this.text.remove();
 
+        int minionsPlaced = ((List<Object>) player.getValue("island.minions")).size();
+        int minionSlots = (int) player.getValue("island.minion.slots");
+
+        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have " + minionsPlaced + " out of a maximum of " + minionSlots + " minions placed.");
+
         player.getBukkitPlayer().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(name + "_generator_" + level));
         player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
         collectAll(player);
-
-        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have %s out of a maximum of %s minions placed.");
 
         for (MinionItem item : minionItems) {
             if (item != null) player.getBukkitPlayer().getInventory().addItem(item.getItem());
         }
 
-        Util.delay(() -> {
-            player.getBukkitPlayer().closeInventory();
-        }, 1);
+        Util.delay(() -> player.getBukkitPlayer().closeInventory(), 1);
     }
 
     public void collect(SkyblockPlayer player, int inventoryIndex) {
