@@ -1,8 +1,10 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.minions.types.CobblestoneMinion;
 import com.skyblock.skyblock.utilities.Util;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,8 +13,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.reflections.Reflections;
 
 import java.util.List;
+import java.util.Set;
 
 public class BlockListener implements Listener {
 
@@ -45,7 +49,33 @@ public class BlockListener implements Listener {
 
                     spawnAt.setPitch(event.getPlayer().getLocation().getPitch() * -1);
 
-                    new CobblestoneMinion().spawn(player, spawnAt, Util.fromRoman(display.split(" ")[display.split(" ").length - 1]));
+                    Reflections reflections = new Reflections("com.skyblock.skyblock.features.minions.types");
+                    Set<Class<? extends MinionBase>> minions = reflections.getSubTypesOf(MinionBase.class);
+
+                    MinionBase minion = null;
+
+                    String minionToPlace = ChatColor.stripColor(WordUtils.capitalize(display.split(" Minion")[0]).replace(" ", ""));
+
+                    for (Class<? extends MinionBase> minionClass : minions) {
+                        if (minionClass.getSimpleName().equals(minionToPlace + "Minion")) {
+                            try {
+                                minion = minionClass.newInstance();
+                            } catch (InstantiationException | IllegalAccessException ex) {
+                                player.getBukkitPlayer().sendMessage(ChatColor.RED + "Could not place minion: " + ex.getMessage());
+                                event.setCancelled(true);
+                                return;
+                            }
+                        }
+                    }
+
+                    if (minion == null) {
+                        player.getBukkitPlayer().sendMessage(ChatColor.RED + "Could not place minion: Minion not found!");
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    minion.spawn(player, spawnAt, Util.fromRoman(display.split(" ")[display.split(" ").length - 1]));
+
                     event.getPlayer().sendMessage(ChatColor.AQUA + String.format("You placed a minion! (%s/%s)", minionsPlaced + 1, minionSlots));
                     event.getPlayer().getWorld().getBlockAt(event.getBlock().getLocation()).setType(Material.AIR);
 
