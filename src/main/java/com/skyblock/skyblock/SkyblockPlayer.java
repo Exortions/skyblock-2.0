@@ -868,7 +868,7 @@ public class SkyblockPlayer {
         return getDouble("stats.purse");
     }
 
-    public boolean hasActiveSlayer() { return Skyblock.getPlugin().getSlayerHandler().getSlayer(bukkitPlayer) != null; }
+    public boolean hasActiveSlayer() { return Skyblock.getPlugin().getSlayerHandler().getSlayer(bukkitPlayer).getQuest() != null; }
 
     public SlayerHandler.SlayerData getActiveSlayer() {
         return Skyblock.getPlugin().getSlayerHandler().getSlayer(bukkitPlayer);

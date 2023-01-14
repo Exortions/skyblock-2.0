@@ -20,7 +20,7 @@ public class GameModeCommand implements Command, ArgumentAlias, TrueAlias<GameMo
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        if (args.length != 1) return;
+        if (args.length != 1)  { sendUsage(player); return; }
 
         switch (args[0]) {
             case "0":

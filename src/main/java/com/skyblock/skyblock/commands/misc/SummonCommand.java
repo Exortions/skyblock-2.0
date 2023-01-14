@@ -24,6 +24,7 @@ public class SummonCommand implements Command {
             for (int i = 0; i < amount; i++) {
                 try {
                     SkyblockEntityType.valueOf(args[0].toUpperCase()).getNewInstance(args[1]).spawn(player.getLocation());
+                    player.sendMessage(ChatColor.GREEN + "Success!");
                 } catch (NullPointerException ex) {
                     player.sendMessage(ChatColor.RED + "Could not find mob with identifier " + ChatColor.DARK_GRAY + "skyblock:" + args[0].toLowerCase() + "." + args[1].toLowerCase() + ChatColor.RED + "!");
                 }

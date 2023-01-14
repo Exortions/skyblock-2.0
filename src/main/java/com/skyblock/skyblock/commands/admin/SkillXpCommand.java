@@ -20,7 +20,7 @@ public class SkillXpCommand implements Command {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
-        if (args.length != 2) return;
+        if (args.length != 2) { sendUsage(player); return; }
 
         String skill = WordUtils.capitalize(args[0].toLowerCase());
         int amount = Integer.parseInt(args[1]);

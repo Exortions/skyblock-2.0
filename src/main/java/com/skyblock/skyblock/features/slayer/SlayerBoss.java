@@ -59,7 +59,7 @@ public abstract class SlayerBoss extends SkyblockEntity {
         startTime = System.currentTimeMillis();
 
         SlayerQuest quest = Skyblock.getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
-        quest.setTimeToSpawn(System.currentTimeMillis() - quest.getTimeToSpawn());
+        if (quest != null) quest.setTimeToSpawn(System.currentTimeMillis() - quest.getTimeToSpawn());
         
         return super.spawn(location);
     }
@@ -95,13 +95,15 @@ public abstract class SlayerBoss extends SkyblockEntity {
         }
 
         SlayerQuest quest = getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
-        quest.setTimeToKill(System.currentTimeMillis() - startTime);
-        
+
         spawner.playSound(spawner.getLocation(), Sound.LEVEL_UP, 1, 2);
         spawner.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "NICE! SLAYER BOSS SLAIN!");
         spawner.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "→ " + ChatColor.GRAY + "Talk to Maddox to claim your " + getSlayerType().getAlternative() + " Slayer XP!");
 
-        quest.setState(SlayerQuest.QuestState.FINISHED);
+        if (quest != null) {
+            quest.setTimeToKill(System.currentTimeMillis() - startTime);
+            quest.setState(SlayerQuest.QuestState.FINISHED);
+        }
     }
 
     @Override
@@ -109,7 +111,7 @@ public abstract class SlayerBoss extends SkyblockEntity {
         super.onDespawn();
 
         SlayerQuest quest = getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
-        quest.fail();
+        if (quest != null) quest.fail();
     }
 
     @Override

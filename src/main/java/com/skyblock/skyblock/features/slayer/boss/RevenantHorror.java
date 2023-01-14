@@ -85,14 +85,14 @@ public class RevenantHorror extends SlayerBoss {
         nms.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(getMovementSpeed());
 
         if (tick % 50 == 0) {
-            skyblockPlayer.damage(getEntityData().damage / 2f, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
+            skyblockPlayer.damage(getEntityData().damage / 2f, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla());
         }
 
         if (tick % 20 == 0 && getLevel() >= 2) {
             for (Entity entity : getVanilla().getNearbyEntities(8.5, 5, 8.5)) {
                 if (entity instanceof Player) {
                     SkyblockPlayer p = SkyblockPlayer.getPlayer((Player) entity);
-                    p.damage(getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla(), true);
+                    p.damage(getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla());
                 }
             }
         }

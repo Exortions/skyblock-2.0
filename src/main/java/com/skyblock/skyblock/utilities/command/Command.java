@@ -2,6 +2,7 @@ package com.skyblock.skyblock.utilities.command;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.utilities.command.annotations.*;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -44,5 +45,7 @@ public interface Command {
     default void execute(Player player, String[] args, Skyblock plugin) {
         throw new UnsupportedOperationException("This command does not support being executed by a player");
     }
+
+    default void sendUsage(Player p) { p.sendMessage(ChatColor.RED + usage()); }
 
 }

@@ -140,6 +140,7 @@ public class SlayerHandler {
     }
 
     public SlayerData getSlayer(Player player) {
+        if (!slayers.containsKey(player)) return new SlayerData(null, null);
         return slayers.get(player);
     }
 }

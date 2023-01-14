@@ -1,9 +1,6 @@
 package com.skyblock.skyblock;
 
-import com.skyblock.skyblock.commands.admin.CoinsCommand;
-import com.skyblock.skyblock.commands.admin.FairySoulCommand;
-import com.skyblock.skyblock.commands.admin.GameModeCommand;
-import com.skyblock.skyblock.commands.admin.SkillXpCommand;
+import com.skyblock.skyblock.commands.admin.*;
 import com.skyblock.skyblock.commands.economy.AuctionCommand;
 import com.skyblock.skyblock.commands.economy.BazaarCommand;
 import com.skyblock.skyblock.commands.economy.DepositCommand;
@@ -935,7 +932,9 @@ public final class Skyblock extends JavaPlugin {
                 new GameModeCommand(),
                 new SkillXpCommand(),
                 new FairySoulCommand(),
-                new HarpCommand()
+                new HarpCommand(),
+                new LoopCommand(),
+                new SlayerbossCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

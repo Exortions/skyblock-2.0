@@ -19,7 +19,7 @@ public class CoinsCommand implements Command {
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
         if (args.length < 2) {
-            player.performCommand("sb coins set " + args[1]);
+            player.performCommand("sb coins set " + args[0]);
             return;
         }
 
