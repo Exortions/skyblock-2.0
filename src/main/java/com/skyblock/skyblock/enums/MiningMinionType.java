@@ -14,25 +14,38 @@ public enum MiningMinionType implements MinionType<MiningMinionType> {
 
     COBBLESTONE(
             "Cobblestone",
-            (level) -> {
-                if (level == 1) {
-                    return new SkyblockCraftingRecipe(new HashMap<String, ItemStack>() {{
-                        put("a", new ItemStack(Material.COBBLESTONE, 1));
-                    }});
-                } else {
-                    return null;
-                }
-            },
             (level) -> new ItemStack(Material.WOOD_PICKAXE, 1),
             (level) -> "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjljMzhmZTRmYzk4YTI0ODA3OWNkMDRjNjViNmJmZjliNDUwMTdmMTY0NjBkYWIzYzM0YzE3YmZjM2VlMWQyZiJ9fX0=",
             Color.GRAY,
-            (level) -> 14,
+            (level) -> {
+                switch (level) {
+                    case 2:
+                    case 3:
+                        return 12;
+                    case 5:
+                    case 6:
+                        return 10;
+                    case 7:
+                    case 8:
+                        return 9;
+                    case 9:
+                    case 10:
+                        return 8;
+                    case 11:
+                        return 7;
+                    case 12:
+                        return 6;
+                    default:
+                        return 14;
+                }
+            },
             (level) -> {
                 int stacks;
 
                 switch (level) {
                     case 1:
                         stacks = 1;
+                        break;
                     case 2:
                     case 3:
                         stacks = 3;
@@ -90,7 +103,6 @@ public enum MiningMinionType implements MinionType<MiningMinionType> {
     ;
 
     private final String name;
-    private final Function<Integer, SkyblockCraftingRecipe> recipe;
     private final Function<Integer, ItemStack> hand;
     private final Function<Integer, String> head;
     private final Color leatherArmorColor;
@@ -100,9 +112,8 @@ public enum MiningMinionType implements MinionType<MiningMinionType> {
     private final Function<Integer, ItemStack[]> calculateDrops;
     private final Function<Integer, Integer> levelRequirementForStorageSlot;
 
-    MiningMinionType(String name, Function<Integer, SkyblockCraftingRecipe> recipe, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorColor, Function<Integer, Integer> timeBetweenActions, Function<Integer, Integer> getMaximumStorage, Material material, Function<Integer, ItemStack[]> calculateDrops, Function<Integer, Integer> levelRequirementForStorageSlot) {
+    MiningMinionType(String name, Function<Integer, ItemStack> hand, Function<Integer, String> head, Color leatherArmorColor, Function<Integer, Integer> timeBetweenActions, Function<Integer, Integer> getMaximumStorage, Material material, Function<Integer, ItemStack[]> calculateDrops, Function<Integer, Integer> levelRequirementForStorageSlot) {
         this.name = name;
-        this.recipe = recipe;
         this.hand = hand;
         this.head = head;
         this.leatherArmorColor = leatherArmorColor;
