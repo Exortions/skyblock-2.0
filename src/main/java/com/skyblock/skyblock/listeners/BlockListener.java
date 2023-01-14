@@ -45,6 +45,8 @@ public class BlockListener implements Listener {
                     new CobblestoneMinion().spawn(player, event.getBlock().getLocation().clone().add(0.5, 0, 0.5), Util.romanToDecimal(display.split(" ")[display.split(" ").length - 1]));
                     event.getPlayer().sendMessage(ChatColor.AQUA + String.format("You placed a minion! (%s/%s)", minionsPlaced + 1, minionSlots));
                     event.getPlayer().getWorld().getBlockAt(event.getBlock().getLocation()).setType(Material.AIR);
+
+                    event.getPlayer().setItemInHand(null);
                 }
             }
         }
