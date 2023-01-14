@@ -66,6 +66,7 @@ import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.QuestLineHandler;
 import com.skyblock.skyblock.features.pets.PetListener;
 import com.skyblock.skyblock.features.potions.PotionEffectHandler;
+import com.skyblock.skyblock.features.potions.effects.HasteEffect;
 import com.skyblock.skyblock.features.potions.effects.HealingEffect;
 import com.skyblock.skyblock.features.potions.effects.SpeedEffect;
 import com.skyblock.skyblock.features.potions.effects.StrengthEffect;
@@ -287,7 +288,8 @@ public final class Skyblock extends JavaPlugin {
         this.potionEffectHandler = new PotionEffectHandler(
                 SpeedEffect.class,
                 HealingEffect.class,
-                StrengthEffect.class
+                StrengthEffect.class,
+                HasteEffect.class
         );
 
         this.sendMessage("Successfully initialized potions [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
