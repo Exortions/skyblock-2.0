@@ -21,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public abstract class MinionBase {
                       Color leatherArmorColor,
                       Material material) {
 
-        plugin = Skyblock.getPlugin();
+        this.plugin = Skyblock.getPlugin();
         this.minion = null;
         this.level = 1;
         
@@ -179,6 +180,9 @@ public abstract class MinionBase {
         this.text.setMetadata("minion_id", new FixedMetadataValue(this.plugin, this.uuid.toString()));
 
         this.plugin.getMinionHandler().initializeMinion(player, this, location);
+
+        this.minion.setHeadPose(new EulerAngle(0, Math.toRadians(location.getPitch()), 0));
+
         new BukkitRunnable() {
             int i = 0;
 
