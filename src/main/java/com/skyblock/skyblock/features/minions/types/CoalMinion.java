@@ -23,11 +23,6 @@ public class CoalMinion extends MiningMinion {
     public ItemStack getHand(int level) {
         return new ItemStack(Material.WOOD_PICKAXE, 1);
     }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI1YjhkMmVhOTY1Yzc4MDY1MmQyOWMyNmIxNTcyNjg2ZmQ3NGY2ZmU2NDAzYjVhMzgwMDk1OWZlYjJhZDkzNSJ9fX0=";
-    }
 
     @Override
     public int getActionDelay(int level) {

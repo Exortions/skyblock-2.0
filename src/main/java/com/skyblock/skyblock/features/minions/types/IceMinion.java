@@ -25,11 +25,6 @@ public class IceMinion extends MiningMinion {
     public ItemStack getHand(int level) {
         return new ItemBuilder(Material.WOOD_PICKAXE).addEnchantmentGlint().toItemStack();
     }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTUwMDA2NDMyMWIxMjk3MmY4ZTU3NTA3OTNlYzFjODIzZGE0NjI3NTM1ZTlkMTJmZWFlZTc4Mzk0Yjg2ZGFiZSJ9fX0=";
-    }
 
     @Override
     public int getActionDelay(int level) {

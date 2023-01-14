@@ -52,8 +52,10 @@ public abstract class MiningMinion extends MinionBase {
     public abstract ItemStack getHand(int level);
     
     @Override
-    public abstract String getHead(int level);
-    
+    public String getHead(int level) {
+        return MinionBase.getHeadVaueFromMinion(name, level);
+    }
+
     @Override
     public abstract int getActionDelay(int level);
     

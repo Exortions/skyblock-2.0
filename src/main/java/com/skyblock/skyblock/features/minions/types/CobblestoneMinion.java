@@ -2,6 +2,7 @@ package com.skyblock.skyblock.features.minions.types;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.minions.MiningMinion;
+import com.skyblock.skyblock.features.minions.MinionBase;
 import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,11 +23,6 @@ public class CobblestoneMinion extends MiningMinion {
     @Override
     public ItemStack getHand(int level) {
         return new ItemStack(Material.WOOD_PICKAXE, 1);
-    }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjljMzhmZTRmYzk4YTI0ODA3OWNkMDRjNjViNmJmZjliNDUwMTdmMTY0NjBkYWIzYzM0YzE3YmZjM2VlMWQyZiJ9fX0=";
     }
 
     @Override

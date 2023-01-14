@@ -2,28 +2,18 @@ package com.skyblock.skyblock.features.minions;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.MinionType;
-import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
-import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionFuel;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.features.minions.items.storages.Storage;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
-
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTCompoundList;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
-import lombok.Getter;
-
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Item;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -36,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Data
 public abstract class MinionBase {
@@ -433,4 +422,45 @@ public abstract class MinionBase {
         }
         return slots;
     }
+
+    public static String getHeadVaueFromMinion(String minion, int level) {
+        ItemStack item = Skyblock.getPlugin().getItemHandler().getItem(minion.toUpperCase() + "_GENERATOR_" + level);
+
+        if (item == null) return null;
+        if (item.getType() != Material.SKULL_ITEM) return null;
+
+        // get game profile from item
+        NBTItem nbtItem = new NBTItem(item);
+        NBTCompound skullOwner = nbtItem.getCompound("SkullOwner");
+        if (skullOwner == null) return null;
+        NBTCompound properties = skullOwner.getCompound("Properties");
+        if (properties == null) return null;
+        NBTCompoundList textures = properties.getCompoundList("textures");
+        if (textures == null) return null;
+        NBTCompound texture = textures.get(0);
+        if (texture == null) return null;
+
+        return texture.getString("Value");
+
+//        Collection<Property> props = profile.getProperties().get("textures");
+//        Property prop = props.iterator().next();
+//        String value = prop.getValue();
+//
+//        JSONObject json;
+//
+//        try {
+//            json = (JSONObject) new JSONParser().parse(new String(Base64.getDecoder().decode(value)));
+//        } catch (ParseException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//
+//        if (json == null) return null;
+//
+//        JSONObject textures = (JSONObject) json.get("textures");
+//        JSONObject skin = (JSONObject) textures.get("SKIN");
+//
+//        return (String) skin.get("url");
+    }
 }
+
