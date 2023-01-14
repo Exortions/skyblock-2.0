@@ -31,7 +31,7 @@ public class VenomousEnchantment extends SwordEnchantment {
                 if (entity == null) return;
 
                 entity.damage((long) ((Util.getEnchantmentLevel(this.getName(), player) / 2f) * 10), player, false, ChatColor.DARK_GREEN);
-            }, i * 20);
+            }, (i + 1) * 20);
         }
     }
 }

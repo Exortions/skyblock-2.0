@@ -5,6 +5,7 @@ import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.enchantment.types.SwordEnchantment;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Pair;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -40,31 +41,33 @@ public class FireAspectEnchantment extends SwordEnchantment {
         if (sentity == null) return damage;
 
         try {
-            ItemBase base = new ItemBase(player.getBukkitPlayer().getItemInHand());
-            int level = base.getEnchantment(this.getName()).getLevel();
-            Pair<Integer, Integer> stats = getStats.apply(level);
+            Util.delay(() -> {
+                ItemBase base = new ItemBase(player.getBukkitPlayer().getItemInHand());
+                int level = base.getEnchantment(this.getName()).getLevel();
+                Pair<Integer, Integer> stats = getStats.apply(level);
 
-            e.getEntity().setFireTicks(1 + (stats.getFirst() * 20));
-            e.getEntity().setMetadata("should_take_fire_damage", new FixedMetadataValue(Skyblock.getPlugin(), false));
+                e.getEntity().setFireTicks(1 + (stats.getFirst() * 20));
+                e.getEntity().setMetadata("should_take_fire_damage", new FixedMetadataValue(Skyblock.getPlugin(), false));
 
-            new BukkitRunnable() {
-                int tick = 0;
+                new BukkitRunnable() {
+                    int tick = 0;
 
-                @Override
-                public void run() {
-                    if (tick >= stats.getFirst()) {
-                        e.getEntity().removeMetadata("should_take_fire_damage", Skyblock.getPlugin());
-                        this.cancel();
-                        return;
+                    @Override
+                    public void run() {
+                        if (tick >= stats.getFirst()) {
+                            e.getEntity().removeMetadata("should_take_fire_damage", Skyblock.getPlugin());
+                            this.cancel();
+                            return;
+                        }
+
+                        tick++;
+
+                        double percentOfDamage = (damage * stats.getSecond()) / 100F;
+
+                        sentity.damage((long) percentOfDamage, player, false);
                     }
-
-                    tick++;
-
-                    double percentOfDamage = (damage * stats.getSecond()) / 100F;
-
-                    sentity.damage((long) percentOfDamage, player, false);
-                }
-            }.runTaskTimer(Skyblock.getPlugin(), 0, 20);
+                }.runTaskTimer(Skyblock.getPlugin(), 0, 20);
+            }, 10);
         } catch (IllegalArgumentException | NullPointerException ignored) {
             return damage;
         }
