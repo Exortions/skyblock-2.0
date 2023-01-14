@@ -33,6 +33,8 @@ public class ItemCategoryGUI extends Gui {
             items.add(item);
         }
 
+        items.sort(Util.compareItems());
+
         int start = (page - 1) * 45;
         int end = (page - 1) * 45 + 45;
 

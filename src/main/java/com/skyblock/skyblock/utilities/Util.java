@@ -115,6 +115,26 @@ public class Util {
         return romanMap.get(l) + toRoman(number - l);
     }
 
+    public int fromRoman(String roman) {
+        int result = 0;
+        for (int i = 0; i < roman.length(); i++) {
+            int s1 = value(roman.charAt(i));
+            if (i + 1 < roman.length()) {
+                int s2 = value(roman.charAt(i + 1));
+                if (s1 >= s2) {
+                    result = result + s1;
+                } else {
+                    result = result + s2 - s1;
+                    i++;
+                }
+            } else {
+                result = result + s1;
+                i++;
+            }
+        }
+        return result;
+    }
+
     public String[] buildLore(String lore) {
         return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
     }
@@ -1077,6 +1097,22 @@ public class Util {
         }
 
         return session;
+    }
+
+    public Comparator<ItemStack> compareItems() {
+        return (o1, o2) -> {
+            String name1 = o1.hasItemMeta() ? ChatColor.stripColor(o1.getItemMeta().getDisplayName()) : "";
+            String name2 = o2.hasItemMeta() ? ChatColor.stripColor(o2.getItemMeta().getDisplayName()) : "";
+
+            if (name1.matches(".*\\d+.*") && name2.matches(".*\\d+.*")) {
+                int compare = name1.compareTo(name2);
+                if (compare != 0) return compare;
+
+                return Util.fromRoman(name1) - Util.fromRoman(name2);
+            } else {
+                return name1.compareTo(name2);
+            }
+        };
     }
 
 }
