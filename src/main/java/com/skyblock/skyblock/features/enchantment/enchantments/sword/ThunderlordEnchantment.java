@@ -35,7 +35,7 @@ public class ThunderlordEnchantment extends SwordEnchantment {
 
     @Override
     public void onDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (!Util.isSkyblockEntity(e)) return;
+        if (Util.isNotSkyblockEntity(e)) return;
 
         if (hits.containsKey(player.getBukkitPlayer())) {
             if (!hits.get(player.getBukkitPlayer()).getEntity().equals(e.getEntity().getUniqueId())) {
