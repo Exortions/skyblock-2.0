@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 public class StrengthEffect extends PotionEffect {
 
-    private static final Function<Integer, Double> getStrengthBonus = (level) -> Util.createFetchableDictionary(level - 1, 5, 12.5, 20, 30, 40, 50, 60, 75);
+    private static final Function<Integer, Double> getStrengthBonus = (level) -> Util.createFetchableDictionary(level - 1, 5.0, 12.5, 20.0, 30.0, 40.0, 50.0, 60.0, 75.0);
 
     public StrengthEffect(SkyblockPlayer player, String ignoredName, int amplifier, double duration, boolean alreadyStarted) {
         super(player, "Strength", amplifier, duration, alreadyStarted,
