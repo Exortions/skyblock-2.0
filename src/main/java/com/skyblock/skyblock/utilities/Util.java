@@ -822,6 +822,13 @@ public class Util {
         return dictionary.get(index);
     }
 
+    @SafeVarargs
+    public <T> T createFetchableDictionary(int index, T... values) {
+        List<T> dictionary = new ArrayList<>(Arrays.asList(values));
+
+        return dictionary.get(index);
+    }
+
     public String asTime(int ticks) {
         String time = "";
 
