@@ -2,8 +2,8 @@ package com.skyblock.skyblock;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockPlayerCoinUpdateEvent;
-import com.skyblock.skyblock.event.SkyblockPlayerItemHeldChangeEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCoinUpdateEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
 import com.skyblock.skyblock.features.auction.gui.AuctionCreationGUI;

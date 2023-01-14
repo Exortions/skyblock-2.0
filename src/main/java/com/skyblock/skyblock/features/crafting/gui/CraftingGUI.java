@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.crafting.gui;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerCraftEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCraftEvent;
 import com.skyblock.skyblock.features.crafting.RecipeHandler;
 import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.utilities.Util;

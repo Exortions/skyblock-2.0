@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.objectives.impl.hub;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockEntityDeathEvent;
+import com.skyblock.skyblock.events.SkyblockEntityDeathEvent;
 import com.skyblock.skyblock.features.entities.zombie.Zombie;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
@@ -13,8 +13,6 @@ import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;

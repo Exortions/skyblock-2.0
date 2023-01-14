@@ -1,6 +1,6 @@
 package com.skyblock.skyblock.features.objectives.impl.starting;
 
-import com.skyblock.skyblock.event.SkyblockPlayerCraftEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCraftEvent;
 import com.skyblock.skyblock.features.objectives.Objective;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

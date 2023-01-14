@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.ListeningItem;
 import org.bukkit.entity.Entity;

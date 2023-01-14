@@ -1,9 +1,8 @@
 package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerCollectItemEvent;
-import com.skyblock.skyblock.event.SkyblockPlayerCollectionRewardEvent;
-import com.skyblock.skyblock.utilities.Pair;
+import com.skyblock.skyblock.events.SkyblockPlayerCollectItemEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCollectionRewardEvent;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;

@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.objectives.impl.mines;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerCollectItemEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCollectItemEvent;
 import com.skyblock.skyblock.features.npc.NPC;
 import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;

@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.armor;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockPlayerLocationChangeEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerLocationChangeEvent;
 import com.skyblock.skyblock.features.items.BlockHelmetSet;
 import org.bukkit.event.EventHandler;
 import org.bukkit.scheduler.BukkitRunnable;

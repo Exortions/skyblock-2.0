@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.blocks;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerLogBreakEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerLogBreakEvent;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.skills.Skill;
 import lombok.AllArgsConstructor;

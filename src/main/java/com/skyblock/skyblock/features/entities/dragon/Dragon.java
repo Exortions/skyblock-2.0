@@ -2,8 +2,8 @@ package com.skyblock.skyblock.features.entities.dragon;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerDamageByEntityEvent;
-import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageByEntityEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.TextUtil;
 import com.skyblock.skyblock.utilities.Util;

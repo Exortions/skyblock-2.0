@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.event;
+package com.skyblock.skyblock.events;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
