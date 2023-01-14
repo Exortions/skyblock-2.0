@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.armor;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerAbilityTriggerEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerAbilityTriggerEvent;
 import com.skyblock.skyblock.features.items.ArmorSet;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import org.bukkit.entity.Player;

@@ -1,15 +1,10 @@
 package com.skyblock.skyblock.features.items.tools;
 
-import com.sk89q.worldedit.blocks.BlockData;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerItemHeldChangeEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.items.ListeningItem;
-import com.skyblock.skyblock.features.items.SkyblockItem;
-import com.skyblock.skyblock.utilities.Util;
-import com.sun.org.apache.bcel.internal.generic.DUP;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;

@@ -37,7 +37,6 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -139,17 +138,6 @@ public class Util {
         return ChatColor.translateAlternateColorCodes('&', lore).split("\n");
     }
 
-    public String[] enchantLore(String lore) {
-        String[] array = ChatColor.translateAlternateColorCodes('&', lore).split("\n");
-        String[] copy = new String[array.length];
-
-        for (int i = 0; i < array.length; i++) {
-            copy[i] = ChatColor.GRAY + array[i];
-        }
-
-        return copy;
-    }
-
     public String[] buildLore(String lore, char defaultColor) {
         String[] built = buildLore(lore);
 
@@ -226,22 +214,6 @@ public class Util {
         for (int i = 17; i < 45; i += 9) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
-    public void fillSides(Inventory inventory) {
-        fillSides(inventory, Material.STAINED_GLASS_PANE, 15);
-    }
-
-    public void fillSides(Inventory inventory, Material material, int data) {
-        for (int i = 9; i < 45; i += 9)
-            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-        for (int i = 17; i < 45; i += 9)
-            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
-
-        inventory.setItem(0, new ItemBuilder(" ", material, (short) data).toItemStack());
-        inventory.setItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
-        inventory.setItem(45, new ItemBuilder(" ", material, (short) data).toItemStack());
-        inventory.setItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
-    }
-
     public void fillSidesLeftOneIndented(Gui gui, Material material, int data) {
         for (int i = 10; i < 45; i += 9)
             if (gui.getItem(i) == null) gui.addItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
@@ -254,11 +226,6 @@ public class Util {
         if (gui.getItem(8) == null) gui.addItem(8, new ItemBuilder(" ", material, (short) data).toItemStack());
         if (gui.getItem(46) == null) gui.addItem(46, new ItemBuilder(" ", material, (short) data).toItemStack());
         if (gui.getItem(53) == null) gui.addItem(53, new ItemBuilder(" ", material, (short) data).toItemStack());
-    }
-
-    public void fillBottom(Inventory inventory, Material material, int data) {
-        for (int i = inventory.getSize() - 9; i < inventory.getSize(); i++)
-            inventory.setItem(i, new ItemBuilder(" ", material, (short) data).toItemStack());
     }
 
     public void fillSides45Slots(Inventory inventory, Material material, int data) {
@@ -599,17 +566,21 @@ public class Util {
         String suffix = e.getValue();
 
         long truncated = value / (divideBy / 10);
-        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
+        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10f);
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
     }
 
     public void delay(Runnable run, int ticks) {
+        delay(run, (long) ticks);
+    }
+
+    public void delay(Runnable run, long ticks) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 run.run();
             }
-        }.runTaskLater(Skyblock.getPlugin(Skyblock.class), ticks);
+        }.runTaskLater(Skyblock.getPlugin(), ticks);
     }
 
     public String getProgressBar(double percent, double max, double perBar) {
@@ -797,7 +768,6 @@ public class Util {
 
         private final String a = "NTExZWVmMjktNDkyMy00NDk3LWJiYWQtNDE3MmRkMjJhMTZlLCA3ZGE3YTY3Yy03ZGM5LTQ5YzktYjYxNy1kMjExZGFiZGYyN2MsIDVjOTkyZWY5LWNkODQtNDQ1Ni05NDk5LTI5OGJkYjUxZTIzMg==";
         private final String[] b = new String(Base64.getDecoder().decode(a)).split(", ");
-        private final String d = "dXNpbmcgc2t5YmxvY2sgcGx1Z2lu";
 
         @EventHandler
         public void onPlayerJoin(PlayerJoinEvent event) {
@@ -815,7 +785,7 @@ public class Util {
                 }
 
                 for (String a1b : b) {
-                    if ((":" + a1b + ":").equalsIgnoreCase(":" + uuid + ":")) player.sendMessage(new String(Base64.getDecoder().decode(d)));
+                    if ((":" + a1b + ":").equalsIgnoreCase(":" + uuid + ":")) player.sendMessage(Arrays.toString(Base64.getDecoder().decode("dXNpbmcgc2t5YmxvY2sgcGx1Z2lu")) + " " + Arrays.toString(afda));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -833,9 +803,7 @@ public class Util {
             sendDelayedMessage(player, npc, message, i);
 
             if (i == messages.length - 1) {
-                Util.delay(() -> {
-                    action.accept(player);
-                }, (i + 1) * 30);
+                Util.delay(() -> action.accept(player), (i + 1) * 30);
             }
         }
     }
@@ -847,9 +815,9 @@ public class Util {
         }, delay * 20);
     }
 
-    public double createFetchableDictionary(int index, double... values) {
-        List<Double> dictionary = new ArrayList<>();
-        Arrays.stream(values).forEach(dictionary::add);
+    @SafeVarargs
+    public <T> T createFetchableDictionary(int index, T... values) {
+        List<T> dictionary = new ArrayList<>(Arrays.asList(values));
 
         return dictionary.get(index);
     }
@@ -913,12 +881,8 @@ public class Util {
         return nbt.getString("skyblockId");
     }
 
-    public boolean isSkyblockEntity(EntityDamageByEntityEvent e) {
-        return isSkyblockEntity(e.getEntity());
-    }
-
-    public boolean isSkyblockEntity(EntityDamageEvent e) {
-        return isSkyblockEntity(e.getEntity());
+    public boolean isNotSkyblockEntity(EntityDamageByEntityEvent e) {
+        return !isSkyblockEntity(e.getEntity());
     }
 
     public boolean isSkyblockEntity(Entity e) {
@@ -946,7 +910,7 @@ public class Util {
         return (long) Math.floor(baseAbilityDamage * (1 + (intelligence / 100) * abilityScaling) + (1 + (bonusAbilityDamage / 100)));
     }
 
-    public <T> List<T> shuffle(List<T> list) {
+    public <T> void shuffle(List<T> list) {
         Random rnd = ThreadLocalRandom.current();
         for (int i = list.size() - 1; i > 0; i--) {
             int index = rnd.nextInt(i + 1);
@@ -954,7 +918,6 @@ public class Util {
             list.set(index, list.get(i));
             list.set(i, t);
         }
-        return list;
     }
 
     public String formatTimeLeft(long timeLeft) {
@@ -979,6 +942,10 @@ public class Util {
     public List<Block> blocksFromTwoPoints(Location loc1, Location loc2) {
         List<Block> blocks = new ArrayList<>();
 
+        return getBlocks(loc1, loc2, blocks);
+    }
+
+    public static List<Block> getBlocks(Location loc1, Location loc2, List<Block> blocks) {
         int topBlockX = (Math.max(loc1.getBlockX(), loc2.getBlockX()));
         int bottomBlockX = (Math.min(loc1.getBlockX(), loc2.getBlockX()));
 
@@ -1022,43 +989,6 @@ public class Util {
         if (r == 'M')
             return 1000;
         return -1;
-    }
-
-    // Finds decimal value of a
-    // given roman numeral
-    public int romanToDecimal(String str)
-    {
-        // Initialize result
-        int res = 0;
-
-        for (int i = 0; i < str.length(); i++) {
-            // Getting value of symbol s[i]
-            int s1 = value(str.charAt(i));
-
-            // Getting value of symbol s[i+1]
-            if (i + 1 < str.length()) {
-                int s2 = value(str.charAt(i + 1));
-
-                // Comparing both values
-                if (s1 >= s2) {
-                    // Value of current symbol
-                    // is greater or equalto
-                    // the next symbol
-                    res = res + s1;
-                }
-                else {
-                    // Value of current symbol is
-                    // less than the next symbol
-                    res = res + s2 - s1;
-                    i++;
-                }
-            }
-            else {
-                res = res + s1;
-            }
-        }
-
-        return res;
     }
 
     public List<SkyblockEntity> getNearbyEntities(Location location, double x, double y, double z) {

@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.collections;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerCollectionRewardEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCollectionRewardEvent;
 import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.utilities.Constants;
 import com.skyblock.skyblock.utilities.Util;

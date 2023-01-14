@@ -17,7 +17,7 @@ public class VenomousEnchantment extends SwordEnchantment {
 
     @Override
     public void onDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (!Util.isSkyblockEntity(e)) return;
+        if (Util.isNotSkyblockEntity(e)) return;
 
         for (int i = 0; i < 4; i++) {
             Util.delay(() -> {

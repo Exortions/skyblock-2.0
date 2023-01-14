@@ -1,42 +1,13 @@
 package com.skyblock.skyblock.features.minions;
 
 import com.skyblock.skyblock.Skyblock;
-import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.MiningMinionType;
-import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
-import com.skyblock.skyblock.features.island.IslandManager;
-import com.skyblock.skyblock.features.minions.items.MinionItemType;
-import com.skyblock.skyblock.features.minions.items.MinionItem;
-import com.skyblock.skyblock.features.minions.MiningMinion;
-import com.skyblock.skyblock.features.minions.items.MinionFuel;
-import com.skyblock.skyblock.features.minions.items.storages.Storage;
-import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemBuilder;
 
-import de.tr7zw.nbtapi.NBTItem;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class IronMinion extends MiningMinion {
     public IronMinion() {
@@ -51,11 +22,6 @@ public class IronMinion extends MiningMinion {
     @Override
     public ItemStack getHand(int level) {
         return new ItemStack(Material.STONE_PICKAXE, 1);
-    }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWY0MzUwMjJjYjM4MDlhNjhkYjBmY2NmYTg5OTNmYzE5NTRkYzY5N2E3MTgxNDk0OTA1YjAzZmRkYTAzNWU0YSJ9fX0=";
     }
 
     @Override

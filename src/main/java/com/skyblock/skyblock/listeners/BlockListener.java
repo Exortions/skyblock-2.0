@@ -1,11 +1,10 @@
 package com.skyblock.skyblock.listeners;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.MiningMinionType;
 import com.skyblock.skyblock.features.minions.types.CobblestoneMinion;
-import com.skyblock.skyblock.features.minions.MiningMinion;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,9 +41,15 @@ public class BlockListener implements Listener {
                         return;
                     }
 
-                    new CobblestoneMinion().spawn(player, event.getBlock().getLocation().clone().add(0.5, 0, 0.5), Util.romanToDecimal(display.split(" ")[display.split(" ").length - 1]));
+                    Location spawnAt = event.getBlock().getLocation().add(0.5, 0, 0.5);
+
+                    spawnAt.setPitch(event.getPlayer().getLocation().getPitch() * -1);
+
+                    new CobblestoneMinion().spawn(player, spawnAt, Util.fromRoman(display.split(" ")[display.split(" ").length - 1]));
                     event.getPlayer().sendMessage(ChatColor.AQUA + String.format("You placed a minion! (%s/%s)", minionsPlaced + 1, minionSlots));
                     event.getPlayer().getWorld().getBlockAt(event.getBlock().getLocation()).setType(Material.AIR);
+
+                    event.getPlayer().setItemInHand(null);
                 }
             }
         }

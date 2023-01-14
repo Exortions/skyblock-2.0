@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 @RequiresPlayer
 @Permission(permission = "skyblock.admin")
 @Usage(usage = "/sb slayerboss zombie/spider/wolf level")
-@Description(description = "Spawns a slayerboss")
+@Description(description = "Spawns a slayer boss")
 public class SlayerbossCommand implements Command {
 
     @Override

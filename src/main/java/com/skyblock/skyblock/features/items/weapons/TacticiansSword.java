@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockPlayerCollectItemEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCollectItemEvent;
 import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.items.DynamicLore;
 import com.skyblock.skyblock.features.items.ListeningItem;

@@ -15,8 +15,8 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 @RequiresPlayer
-@Permission(permission = "skyblock.admin")
 @Usage(usage = "/sb loop /<command>")
+@Permission(permission = "skyblock.admin")
 @Description(description = "Loops commands")
 public class LoopCommand implements Command {
 

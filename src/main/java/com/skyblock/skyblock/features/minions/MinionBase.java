@@ -2,28 +2,18 @@ package com.skyblock.skyblock.features.minions;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.MinionType;
-import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
-import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.minions.items.MinionFuel;
 import com.skyblock.skyblock.features.minions.items.MinionItem;
 import com.skyblock.skyblock.features.minions.items.MinionItemType;
 import com.skyblock.skyblock.features.minions.items.storages.Storage;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
-
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTCompoundList;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
-import lombok.Getter;
-
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Item;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -36,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Data
 public abstract class MinionBase {
@@ -226,19 +215,20 @@ public abstract class MinionBase {
         this.minion.remove();
         this.text.remove();
 
+        int minionsPlaced = ((List<Object>) player.getValue("island.minions")).size();
+        int minionSlots = (int) player.getValue("island.minion.slots");
+
+        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have " + minionsPlaced + " out of a maximum of " + minionSlots + " minions placed.");
+
         player.getBukkitPlayer().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(name + "_generator_" + level));
         player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 10, 2);
         collectAll(player);
-
-        player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "You picked up a minion! You currently have %s out of a maximum of %s minions placed.");
 
         for (MinionItem item : minionItems) {
             if (item != null) player.getBukkitPlayer().getInventory().addItem(item.getItem());
         }
 
-        Util.delay(() -> {
-            player.getBukkitPlayer().closeInventory();
-        }, 1);
+        Util.delay(() -> player.getBukkitPlayer().closeInventory(), 1);
     }
 
     public void collect(SkyblockPlayer player, int inventoryIndex) {
@@ -252,7 +242,10 @@ public abstract class MinionBase {
 
             if (!Util.notNull(toCollect)) return;
 
-            Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), Util.toSkyblockItem(toCollect));
+            ItemStack stack = Util.toSkyblockItem(toCollect);
+            stack.setAmount(toCollect.getAmount());
+
+            Item item = player.getBukkitPlayer().getWorld().dropItem(minion.getLocation(), stack);
             item.setPickupDelay(Integer.MAX_VALUE);
 
             Bukkit.getPluginManager().callEvent(new PlayerPickupItemEvent(player.getBukkitPlayer(), item, 0));
@@ -429,4 +422,45 @@ public abstract class MinionBase {
         }
         return slots;
     }
+
+    public static String getHeadVaueFromMinion(String minion, int level) {
+        ItemStack item = Skyblock.getPlugin().getItemHandler().getItem(minion.toUpperCase() + "_GENERATOR_" + level);
+
+        if (item == null) return null;
+        if (item.getType() != Material.SKULL_ITEM) return null;
+
+        // get game profile from item
+        NBTItem nbtItem = new NBTItem(item);
+        NBTCompound skullOwner = nbtItem.getCompound("SkullOwner");
+        if (skullOwner == null) return null;
+        NBTCompound properties = skullOwner.getCompound("Properties");
+        if (properties == null) return null;
+        NBTCompoundList textures = properties.getCompoundList("textures");
+        if (textures == null) return null;
+        NBTCompound texture = textures.get(0);
+        if (texture == null) return null;
+
+        return texture.getString("Value");
+
+//        Collection<Property> props = profile.getProperties().get("textures");
+//        Property prop = props.iterator().next();
+//        String value = prop.getValue();
+//
+//        JSONObject json;
+//
+//        try {
+//            json = (JSONObject) new JSONParser().parse(new String(Base64.getDecoder().decode(value)));
+//        } catch (ParseException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//
+//        if (json == null) return null;
+//
+//        JSONObject textures = (JSONObject) json.get("textures");
+//        JSONObject skin = (JSONObject) textures.get("SKIN");
+//
+//        return (String) skin.get("url");
+    }
 }
+

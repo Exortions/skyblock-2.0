@@ -57,6 +57,7 @@ import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
+import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.minions.MinionListener;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
@@ -936,7 +937,9 @@ public final class Skyblock extends JavaPlugin {
                 new LoopCommand(),
                 new WipeCommand(),
                 new HealCommand(),
-                new SlayerbossCommand()
+                new SlayerbossCommand(),
+                new SlayerbossCommand(),
+                new LaunchCommand()
         );
 
         Objects.requireNonNull(getCommand("skyblock")).setExecutor(this.commandHandler);

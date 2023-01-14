@@ -23,11 +23,6 @@ public class SandMinion extends MiningMinion {
     public ItemStack getHand(int level) {
         return new ItemStack(Material.WOOD_SPADE, 1);
     }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODFmOGUyYWQwMjFlZWZkMTIxN2U2NTBlODQ4YjU3NjIyMTQ0ZDJiZjhhMzlmYmQ1MGRhYjkzN2E3ZWFjMTBkZSJ9fX0=";
-    }
 
     @Override
     public int getActionDelay(int level) {

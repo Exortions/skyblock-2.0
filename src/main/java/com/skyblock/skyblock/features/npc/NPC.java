@@ -1,6 +1,6 @@
 package com.skyblock.skyblock.features.npc;
 
-import com.skyblock.skyblock.event.SkyblockPlayerNPCClickEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerNPCClickEvent;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
 import net.citizensnpcs.api.event.NPCRightClickEvent;

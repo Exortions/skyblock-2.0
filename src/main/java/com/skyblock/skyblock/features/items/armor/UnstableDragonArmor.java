@@ -2,15 +2,12 @@ package com.skyblock.skyblock.features.items.armor;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerAbilityTriggerEvent;
 import com.skyblock.skyblock.features.items.ArmorSet;
-import com.skyblock.skyblock.utilities.item.ItemBase;
 
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -19,7 +19,7 @@ public class CleaveEnchantment extends SwordEnchantment {
 
     @Override
     public void onDamage(SkyblockPlayer player, EntityDamageByEntityEvent e, double damage) {
-        if (!Util.isSkyblockEntity(e)) return;
+        if (Util.isNotSkyblockEntity(e)) return;
 
         try {
             ItemBase base = new ItemBase(player.getBukkitPlayer().getItemInHand());

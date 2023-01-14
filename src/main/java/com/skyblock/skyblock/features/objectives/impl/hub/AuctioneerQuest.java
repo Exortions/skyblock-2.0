@@ -1,6 +1,6 @@
 package com.skyblock.skyblock.features.objectives.impl.hub;
 
-import com.skyblock.skyblock.event.SkyblockPlayerNPCClickEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerNPCClickEvent;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import org.bukkit.event.EventHandler;

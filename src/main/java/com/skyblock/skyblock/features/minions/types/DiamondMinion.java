@@ -23,11 +23,6 @@ public class DiamondMinion extends MiningMinion {
     public ItemStack getHand(int level) {
         return new ItemStack(Material.STONE_PICKAXE, 1);
     }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjM1NGJiZTYwNGRmZTU4YmY5MmU3NzI5NzMwZDBjOGUzNzg0NGU4MzFlZTM4MTZkN2U4NDI3YzI3YTE4MjRhMiJ9fX0=";
-    }
 
     @Override
     public int getActionDelay(int level) {

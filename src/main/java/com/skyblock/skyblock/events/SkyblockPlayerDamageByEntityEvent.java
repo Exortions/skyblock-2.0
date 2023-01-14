@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.event;
+package com.skyblock.skyblock.events;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;

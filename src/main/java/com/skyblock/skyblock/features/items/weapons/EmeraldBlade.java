@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockPlayerCoinUpdateEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerCoinUpdateEvent;
 import com.skyblock.skyblock.features.items.DynamicLore;
 import com.skyblock.skyblock.features.items.ListeningItem;
 import com.skyblock.skyblock.utilities.Util;

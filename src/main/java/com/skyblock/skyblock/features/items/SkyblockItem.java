@@ -4,7 +4,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorEquipEvent;
 import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import lombok.Getter;

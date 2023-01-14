@@ -15,9 +15,9 @@ import org.bukkit.entity.Player;
 import java.io.File;
 
 @RequiresPlayer
-@Permission(permission = "skyblock.admin")
 @Usage(usage = "/sb wipe player")
-@Description(description = "Wipes a players account")
+@Permission(permission = "skyblock.admin")
+@Description(description = "Wipes a player's account")
 public class WipeCommand implements Command {
 
     @Override

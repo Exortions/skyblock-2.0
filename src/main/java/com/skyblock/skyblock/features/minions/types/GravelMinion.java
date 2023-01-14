@@ -23,11 +23,6 @@ public class GravelMinion extends MiningMinion {
     public ItemStack getHand(int level) {
         return new ItemStack(Material.WOOD_SPADE, 1);
     }
-    
-    @Override
-    public String getHead(int level) {
-        return "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzQ1ODUwN2VkMzFjZjlhMzg5ODZhYzg3OTUxNzNjNjA5NjM3ZjAzZGE2NTNmMzA0ODNhNzIxZDNmYmU2MDJkIn19fQ==";
-    }
 
     @Override
     public int getActionDelay(int level) {

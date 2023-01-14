@@ -2,37 +2,19 @@ package com.skyblock.skyblock.features.minions;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.enums.MiningMinionType;
-import com.skyblock.skyblock.features.crafting.SkyblockCraftingRecipe;
-import com.skyblock.skyblock.features.island.IslandManager;
-import com.skyblock.skyblock.features.minions.items.MinionItemType;
-import com.skyblock.skyblock.features.minions.items.MinionItem;
-import com.skyblock.skyblock.features.minions.items.MinionFuel;
-import com.skyblock.skyblock.features.minions.items.storages.Storage;
-import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemBuilder;
 
-import de.tr7zw.nbtapi.NBTItem;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -52,8 +34,10 @@ public abstract class MiningMinion extends MinionBase {
     public abstract ItemStack getHand(int level);
     
     @Override
-    public abstract String getHead(int level);
-    
+    public String getHead(int level) {
+        return MinionBase.getHeadVaueFromMinion(name, level);
+    }
+
     @Override
     public abstract int getActionDelay(int level);
     

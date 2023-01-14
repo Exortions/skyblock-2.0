@@ -2,7 +2,7 @@ package com.skyblock.skyblock.features.items.weapons;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
-import com.skyblock.skyblock.event.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.entity.EntityType;

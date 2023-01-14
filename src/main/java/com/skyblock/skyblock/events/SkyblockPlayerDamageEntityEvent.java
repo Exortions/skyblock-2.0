@@ -1,10 +1,9 @@
-package com.skyblock.skyblock.event;
+package com.skyblock.skyblock.events;
 
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 @Data
