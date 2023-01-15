@@ -48,11 +48,14 @@ public abstract class MinionBase {
 
     public List<ItemStack> inventory;
 
+
+    // calculation for additional speed: base speed / (1 + combined speed boost percent)
+
     protected final ArrayList<MinionItemType> minionItemSlots;
     public MinionItem[] minionItems; 
     public int additionalActionRadius = 0; // Modified by Upgrade
     public int fuelAmount = 0;
-    public long fuelAddedTime = 0; // minutes
+    public long fuelAddedTime = 0; // (in minutes)
 
     protected Skyblock plugin;
 

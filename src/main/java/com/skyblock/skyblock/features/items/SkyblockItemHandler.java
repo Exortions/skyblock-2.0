@@ -111,6 +111,7 @@ public class SkyblockItemHandler {
         registerArmorSet(new UnstableDragonArmor());
         registerArmorSet(new GolemArmor());
         registerArmorSet(new EmeraldArmor());
+        registerArmorSet(new MinersOutfit());
     }
 
     public ArrayList<ItemStack> getItems() {

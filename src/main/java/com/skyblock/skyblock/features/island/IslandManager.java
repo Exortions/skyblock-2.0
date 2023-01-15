@@ -7,6 +7,7 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
@@ -16,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressWarnings("deprecation")
 public class IslandManager {
@@ -32,19 +32,23 @@ public class IslandManager {
     }
 
     public static boolean deleteWorld(Player player) {
-        Bukkit.unloadWorld(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()), false);
-        return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
+        return deleteWorld(player.getUniqueId());
     }
 
-    public static boolean deleteWorld(OfflinePlayer player) {
-        Bukkit.unloadWorld(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()), false);
-        return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
+    public static boolean deleteWorld(UUID uuid) {
+        World world = getIsland(uuid);
+
+        File worldFolder = world.getWorldFolder();
+
+        Bukkit.unloadWorld(world, false);
+
+        return Util.deleteFolderRecursive(worldFolder);
     }
 
     public static void createIsland(Player player) {
         File worldFile = new File(Bukkit.getWorldContainer(), ISLAND_PREFIX + player.getUniqueId().toString());
         if (worldFile.exists()) {
-            World world = Bukkit.createWorld(new WorldCreator(worldFile.getName()));
+            Bukkit.createWorld(new WorldCreator(worldFile.getName()));
             return;
         }
 

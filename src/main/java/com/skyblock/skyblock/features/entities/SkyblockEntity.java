@@ -42,7 +42,7 @@ public abstract class SkyblockEntity {
     protected int lifeSpan;
     @Setter
     private SkyblockPlayer lastDamager;
-    private List<Player> damaged;
+    private final List<Player> damaged;
 
     public static class Equipment {
         public ItemStack hand;
@@ -140,7 +140,7 @@ public abstract class SkyblockEntity {
                         onDeath();
                         cancel();
                         plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
-                    }else{
+                    } else {
                         vanilla.setCustomNameVisible(true);
                         vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
                         ((LivingEntity) vanilla).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 5, true, false));

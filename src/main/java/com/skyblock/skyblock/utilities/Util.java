@@ -1048,4 +1048,19 @@ public class Util {
         };
     }
 
+    public boolean deleteFolderRecursive(File folder) {
+        if (!folder.exists() || !folder.isDirectory()) return false;
+
+        boolean success = true;
+
+        for (File file : Objects.requireNonNull(folder.listFiles())) {
+            if (file.isDirectory()) for (File file1 : Objects.requireNonNull(file.listFiles())) success = file1.delete();
+            success = (file.delete() && success);
+        }
+
+        success = (folder.delete() && success);
+
+        return success;
+    }
+
 }
