@@ -15,10 +15,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressWarnings("deprecation")
 public class IslandManager {
@@ -50,7 +48,7 @@ public class IslandManager {
     public static void createIsland(Player player) {
         File worldFile = new File(Bukkit.getWorldContainer(), ISLAND_PREFIX + player.getUniqueId().toString());
         if (worldFile.exists()) {
-            World world = Bukkit.createWorld(new WorldCreator(worldFile.getName()));
+            Bukkit.createWorld(new WorldCreator(worldFile.getName()));
             return;
         }
 
