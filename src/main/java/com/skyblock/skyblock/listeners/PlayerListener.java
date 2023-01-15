@@ -115,6 +115,8 @@ public class PlayerListener implements Listener {
             Util.delay(() -> {
                 if (!Skyblock.getPlugin().getFairySoulHandler().initialized)
                     Skyblock.getPlugin().getFairySoulHandler().init();
+
+                player.performCommand("sb island");
             }, 1);
 
             new BukkitRunnable() {
