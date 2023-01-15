@@ -200,8 +200,8 @@ public class SkyblockPlayer {
         IChatBaseComponent header = new ChatComponentText(
                 ChatColor.AQUA + "You are" + ChatColor.RED + " " + ChatColor.BOLD + "NOT" + ChatColor.RESET + " " +  ChatColor.AQUA + "playing on " + ChatColor.YELLOW + "" + ChatColor.BOLD + "MC.HYPIXEL.NET\n");
         IChatBaseComponent footer = new ChatComponentText(
-                "\n" + ChatColor.GREEN + "" + ChatColor.BOLD + "Active Effects\n" +
-                        (hasActiveEffects ? ChatColor.GRAY + "You have " + ChatColor.YELLOW + effects.size() + ChatColor.GRAY + " active effects. Use\n" + ChatColor.GRAY + "\"" + ChatColor.GOLD + "/effects" + ChatColor.GRAY + "\" to see them!\n" + activeEffects + "\n" : ChatColor.GRAY + "No effects active. Drink potions or splash\n" + ChatColor.GRAY + "them on the ground to buff yourself!\n\n") +
+                "\n" + ChatColor.GREEN + "" + ChatColor.BOLD + "Active Effects\n" + "" +
+                        (hasActiveEffects ? ChatColor.GRAY + "        You have " + ChatColor.YELLOW + effects.size() + ChatColor.GRAY + " active effects. Use\n" + ChatColor.GRAY + "\"" + ChatColor.GOLD + "/effects" + ChatColor.GRAY + "\" to see them!\n" + activeEffects + "\n" : ChatColor.GRAY + "         No effects active. Drink potions or splash\n" + ChatColor.GRAY + "them on the ground to buff yourself!\n\n") +
                         ChatColor.RED + "" + ChatColor.BOLD + "NO" + ChatColor.RESET + " " + ChatColor.GREEN + "Ranks, Boosters, & MORE!");
 
         PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
