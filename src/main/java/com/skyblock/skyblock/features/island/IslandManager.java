@@ -7,6 +7,7 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.utilities.Util;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
@@ -43,16 +44,7 @@ public class IslandManager {
 
         Bukkit.unloadWorld(world, false);
 
-        boolean success = true;
-
-        for (File file : Objects.requireNonNull(worldFolder.listFiles())) {
-            if (file.isDirectory()) for (File file1 : Objects.requireNonNull(file.listFiles())) success = file1.delete();
-            success = (file.delete() && success);
-        }
-
-        success = (worldFolder.delete() && success);
-
-        return success;
+        return Util.deleteFolderRecursive(worldFolder);
     }
 
     public static void createIsland(Player player) {
