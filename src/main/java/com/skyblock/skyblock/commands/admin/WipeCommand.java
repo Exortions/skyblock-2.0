@@ -10,27 +10,28 @@ import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 
-@RequiresPlayer
-@Usage(usage = "/sb wipe player")
+@Usage(usage = "/sb wipe <player>")
 @Permission(permission = "skyblock.admin")
 @Description(description = "Wipes a player's account")
 public class WipeCommand implements Command {
 
     @Override
-    public void execute(Player player, String[] args, Skyblock plugin) {
-        if (args.length != 1) { sendUsage(player); return; }
+    public void execute(CommandSender sender, String[] args, Skyblock plugin) {
+        if (args.length != 1) { sendUsage(sender); return; }
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-        if (target.isOnline()) ((Player) target).kickPlayer(ChatColor.RED + "Wipe occurring");
+        if (target.isOnline()) ((Player) target).kickPlayer(ChatColor.RED + "Your account has been wiped!");
 
         File playerData = new File(Skyblock.getPlugin().getDataFolder() + File.separator + "players" + File.separator + target.getUniqueId() + ".yml");
-        playerData.delete();
 
-        player.sendMessage(ChatColor.GREEN + "Successfully wiped " + target.getName());
+        boolean success = IslandManager.deleteWorld(target.getUniqueId()) && playerData.delete();
+
+        sender.sendMessage(success ? ChatColor.GREEN + "Successfully wiped " + target.getName() : ChatColor.RED + "Failed to wipe " + target.getName());
     }
 }

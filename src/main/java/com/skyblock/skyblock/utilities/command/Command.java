@@ -46,6 +46,7 @@ public interface Command {
         throw new UnsupportedOperationException("This command does not support being executed by a player");
     }
 
-    default void sendUsage(Player p) { p.sendMessage(ChatColor.RED + usage()); }
+    default void sendUsage(Player player) { player.sendMessage(ChatColor.RED + usage()); }
+    default void sendUsage(CommandSender sender) { sender.sendMessage(ChatColor.RED + usage()); }
 
 }

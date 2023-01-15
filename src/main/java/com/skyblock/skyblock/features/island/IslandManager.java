@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,13 +33,26 @@ public class IslandManager {
     }
 
     public static boolean deleteWorld(Player player) {
-        Bukkit.unloadWorld(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()), false);
-        return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
+        return deleteWorld(player.getUniqueId());
     }
 
-    public static boolean deleteWorld(OfflinePlayer player) {
-        Bukkit.unloadWorld(Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()), false);
-        return Bukkit.getWorld(ISLAND_PREFIX + player.getUniqueId().toString()).getWorldFolder().delete();
+    public static boolean deleteWorld(UUID uuid) {
+        World world = getIsland(uuid);
+
+        File worldFolder = world.getWorldFolder();
+
+        Bukkit.unloadWorld(world, false);
+
+        boolean success = true;
+
+        for (File file : Objects.requireNonNull(worldFolder.listFiles())) {
+            if (file.isDirectory()) for (File file1 : Objects.requireNonNull(file.listFiles())) success = file1.delete();
+            success = (file.delete() && success);
+        }
+
+        success = (worldFolder.delete() && success);
+
+        return success;
     }
 
     public static void createIsland(Player player) {
