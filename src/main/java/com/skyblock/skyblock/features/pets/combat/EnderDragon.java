@@ -3,11 +3,15 @@ package com.skyblock.skyblock.features.pets.combat;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
+import com.skyblock.skyblock.features.entities.end.ObsidianDefender;
+import com.skyblock.skyblock.features.entities.end.Watcher;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.pets.PetAbility;
 import com.skyblock.skyblock.features.skills.Combat;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Arrays;
@@ -42,6 +46,18 @@ public class EnderDragon extends Pet {
                     @Override
                     public List<String> getDescription() {
                         return Util.buildLoreList("&7Deal &a" + endStrike.get() + "% &7more damage to\n&7end mobs.");
+                    }
+
+                    @Override
+                    public void onDamage(SkyblockPlayerDamageEntityEvent e) {
+                        EntityType type = e.getEntity().getVanilla().getType();
+                        if (type.equals(EntityType.ENDERMAN) ||
+                                type.equals(EntityType.ENDER_DRAGON) ||
+                                type.equals(EntityType.ENDERMITE) ||
+                                e.getEntity() instanceof ObsidianDefender ||
+                                e.getEntity() instanceof Watcher) {
+                            e.setDamage(e.getDamage() + (e.getDamage() * (endStrike.get() / 100f)));
+                        }
                     }
                 },
                 new PetAbility() {

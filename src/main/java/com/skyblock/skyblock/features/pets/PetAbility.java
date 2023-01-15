@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.pets;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -24,7 +25,7 @@ public interface PetAbility {
         throw new UnsupportedOperationException("This pet ability does not support being hurt");
     }
 
-    default void onDamage(EntityDamageByEntityEvent e) {
+    default void onDamage(SkyblockPlayerDamageEntityEvent e) {
         throw new UnsupportedOperationException("This pet ability does not support dealing damage");
     }
 

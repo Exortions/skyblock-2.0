@@ -21,7 +21,7 @@ public class SuperiorDragonArmor extends ArmorSet {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         skyblockPlayer.forEachStat((s) -> {
-            skyblockPlayer.addStatMultiplier(s, 0.1);
+            if (!s.equals(SkyblockStat.HEALTH)) skyblockPlayer.addStatMultiplier(s, 0.1);
         });
     }
 
@@ -30,7 +30,7 @@ public class SuperiorDragonArmor extends ArmorSet {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         skyblockPlayer.forEachStat((s) -> {
-            skyblockPlayer.subtractStatMultiplier(s, 0.1);
+            if (!s.equals(SkyblockStat.HEALTH)) skyblockPlayer.subtractStatMultiplier(s, 0.1);
         });
     }
 

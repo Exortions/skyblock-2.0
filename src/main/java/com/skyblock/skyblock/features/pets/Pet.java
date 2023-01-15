@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.pets;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.Rarity;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -348,7 +349,7 @@ public abstract class Pet {
         }
     }
 
-    public void onDamage(EntityDamageByEntityEvent e) {
+    public void onDamage(SkyblockPlayerDamageEntityEvent e) {
         for (PetAbility ability : getAbilities(getLevel())) {
             try {
                 ability.onDamage(e);

@@ -79,6 +79,7 @@ public abstract class Skill {
         Pet pet = player.getPet();
 
         if (pet != null) {
+            pet.unequip(player);
             pet.setInGui(true);
             player.removePet(pet.toItemStack());
             player.setValue("pets.equip", null);
@@ -104,6 +105,7 @@ public abstract class Skill {
                 player.getBukkitPlayer().sendMessage(ChatColor.GREEN + "Your " + pet.getColoredName() + ChatColor.GREEN + " levelled up to level " + ChatColor.BLUE + level + ChatColor.GREEN + "!");
             }
 
+            pet.equip(player);
             player.addPet(pet.toItemStack());
             player.setValue("pets.equip", pet.toItemStack());
         }

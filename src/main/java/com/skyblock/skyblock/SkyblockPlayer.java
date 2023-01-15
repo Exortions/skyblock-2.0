@@ -253,10 +253,10 @@ public class SkyblockPlayer {
         }
 
         if (tick % EVERY_THREE_SECONDS == 0) {
-            if (getStatNoMult(SkyblockStat.HEALTH) < getStatNoMult(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStatNoMult(SkyblockStat.MAX_HEALTH) / 100)) {
-                updateHealth((int) (1.5 + getStatNoMult(SkyblockStat.MAX_HEALTH)/100));
+            if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH) / 100)) {
+                updateHealth((int) (1.5 + getStat(SkyblockStat.MAX_HEALTH)/100));
             }else{
-                setStat(SkyblockStat.HEALTH, getStatNoMult(SkyblockStat.MAX_HEALTH));
+                setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
                 getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
             }
         }
@@ -436,10 +436,10 @@ public class SkyblockPlayer {
     }
 
     public void heal(int hp) {
-        if (getStatNoMult(SkyblockStat.HEALTH) < getStatNoMult(SkyblockStat.MAX_HEALTH) - hp) {
+        if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - hp) {
             updateHealth(hp);
         }else{
-            setStat(SkyblockStat.HEALTH, getStatNoMult(SkyblockStat.MAX_HEALTH));
+            setStat(SkyblockStat.HEALTH, getStat(SkyblockStat.MAX_HEALTH));
             getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
         }
     }
@@ -918,7 +918,16 @@ public class SkyblockPlayer {
 
     public void replacePet(ItemStack old, ItemStack newPet) {
         ArrayList<ItemStack> pets = getPets();
-        pets.set(pets.indexOf(old), newPet);
+
+        int index = 0;
+        for (int i = 0; i < pets.size(); i++) {
+            if (new NBTItem(pets.get(i)).getString("uuid").equals(new NBTItem(newPet).getString("uuid"))) {
+                index = i;
+                break;
+            }
+        }
+
+        pets.set(index, newPet);
 
         setValue("pets.pets", pets);
     }

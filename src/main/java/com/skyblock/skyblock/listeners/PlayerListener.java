@@ -242,6 +242,8 @@ public class PlayerListener implements Listener {
                 SkyblockPlayerDamageEntityEvent e = new SkyblockPlayerDamageEntityEvent(player, sentity, display, event);
                 Bukkit.getPluginManager().callEvent(e);
 
+                if (player.getPet() != null) player.getPet().onDamage(e);
+
                 display = e.getDamage();
                 damage = e.getDamage() / sentity.getEntityData().maximumHealth;
 

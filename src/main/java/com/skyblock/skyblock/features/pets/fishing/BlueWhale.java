@@ -11,6 +11,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,7 +39,7 @@ public class BlueWhale extends Pet {
 
                      @Override
                      public List<String> getDescription() {
-                         return Arrays.asList("All potions heal " + ChatColor.RED + "+" + (ingestMult.get() * level) + "❤");
+                         return Collections.singletonList("All potions heal " + ChatColor.RED + "+" + (ingestMult.get() * level) + "❤");
                      }
                  },
                 new PetAbility() {
@@ -62,21 +63,12 @@ public class BlueWhale extends Pet {
                     public void onEquip(SkyblockPlayer player) {
                         double def = (float) (player.getStat(SkyblockStat.MAX_HEALTH) / bulkHp.get()) * (0.03 * level);
                         player.setStat(SkyblockStat.DEFENSE, player.getStat (SkyblockStat.DEFENSE) + (int) def, false);
-                        player.setExtraData("blue_whale_bulk", def);
                     }
 
                     @Override
                     public void onUnequip(SkyblockPlayer player) {
-                        double def = (double) player.getExtraData("blue_whale_bulk");
+                        double def = (float) (player.getStat(SkyblockStat.MAX_HEALTH) / bulkHp.get()) * (0.03 * level);
                         player.subtractStat(SkyblockStat.DEFENSE, (int) def);
-                    }
-
-                    @Override
-                    public void onStatChange(SkyblockPlayer player, SkyblockStat stat, double amount) {
-                        if (!stat.equals(SkyblockStat.MAX_HEALTH)) return;
-                        double def = (double) player.getExtraData("blue_whale_bulk");
-                        player.subtractStat(SkyblockStat.DEFENSE, (int) def);
-                        onEquip(player);
                     }
                 },
                 new PetAbility() {
@@ -87,7 +79,7 @@ public class BlueWhale extends Pet {
 
                     @Override
                     public List<String> getDescription() {
-                        return Arrays.asList("Gain " + ChatColor.RED + "+" + (0.2 * level) + "% Max ❤ Health");
+                        return Collections.singletonList("Gain " + ChatColor.RED + "+" + (0.2 * level) + "% Max ❤ Health");
                     }
 
                     @Override
@@ -97,12 +89,12 @@ public class BlueWhale extends Pet {
 
                     @Override
                     public void onEquip(SkyblockPlayer player) {
-                        player.addStatMultiplier(SkyblockStat.MAX_HEALTH, (0.2 * level));
+                        player.addStatMultiplier(SkyblockStat.MAX_HEALTH, ((0.2 * level) / 100f));
                     }
 
                     @Override
                     public void onUnequip(SkyblockPlayer player) {
-                        player.subtractStatMultiplier(SkyblockStat.MAX_HEALTH, (0.2 * level));
+                        player.subtractStatMultiplier(SkyblockStat.MAX_HEALTH, ((0.2 * level) / 100f));
                     }
                 });
     }
