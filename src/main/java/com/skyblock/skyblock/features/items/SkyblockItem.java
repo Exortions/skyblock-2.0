@@ -29,6 +29,11 @@ public abstract class SkyblockItem {
         this.internalName = internalName;
     }
 
+    public SkyblockItem(String internalName) {
+        this.internalName = internalName;
+        this.item = plugin.getItemHandler().getItem(internalName);
+    }
+
     public void onRightClick(PlayerInteractEvent event, HashMap<String, Object> data) {
         throw new UnsupportedOperationException("This item does not support right clicking");
     }

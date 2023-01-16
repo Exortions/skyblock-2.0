@@ -23,17 +23,19 @@ public interface DynamicLore {
             }
         }
 
-        for (String s : ability) {
-            for (String rep : toReplace()) {
-                if (s.startsWith(rep)) {
-                    ability.set(ability.indexOf(s), replaceWith(new NBTItem(base.getOrig()))[i]);
-                    i++;
+        if (ability != null) {
+            for (String s : ability) {
+                for (String rep : toReplace()) {
+                    if (s.startsWith(rep)) {
+                        ability.set(ability.indexOf(s), replaceWith(new NBTItem(base.getOrig()))[i]);
+                        i++;
+                    }
                 }
             }
         }
 
         base.setDescription(lore);
-        base.setAbilityDescription(ability);
+        if (ability != null) base.setAbilityDescription(ability);
 
         base.setStack(null);
 

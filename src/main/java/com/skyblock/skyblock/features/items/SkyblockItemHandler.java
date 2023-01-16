@@ -45,6 +45,7 @@ public class SkyblockItemHandler {
         registerItem(new BiomeStick("TAIGA_BIOME_STICK", Biome.TAIGA));
         //registerItem(new BiomeStick("NETHER_BIOME_STICK", Biome.NETHER));
         registerItem(new BiomeStick("ROOFED_FOREST_BIOME_STICK", Biome.ROOFED_FOREST));
+        registerItem(new PlumberSponge());
 
         // Tools
         registerItem(new PromisingAxe());
