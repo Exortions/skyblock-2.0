@@ -36,13 +36,13 @@ public class TarantulaGUI extends Gui {
 
         Util.fillEmpty(this);
 
-        addItem(48, Util.buildBackButton("To Slayer"));
+        addItem(48, Util.buildBackButton("&7To Slayer"));
         addItem(49, Util.buildCloseButton());
 
         addItem(11, SlayerGUI.getStartItem(SlayerType.TARANTULA, 1, 750, 35, 5, 100, 1));
-        addItem(12, SlayerGUI.getStartItem(SlayerType.TARANTULA, 2, 30000, 45, 25, 2000, 2));
-        addItem(13, SlayerGUI.getStartItem(SlayerType.TARANTULA, 3, 900000, 210, 100, 10000, 2));
-        addItem(14, SlayerGUI.getStartItem(SlayerType.TARANTULA, 4, 2400000, 530, 500, 50000, 2));
+        addItem(12, SlayerGUI.getStartItem(SlayerType.TARANTULA, 2, 30000, 110, 25, 2000, 2));
+        addItem(13, SlayerGUI.getStartItem(SlayerType.TARANTULA, 3, 900000, 525, 100, 10000, 2));
+        addItem(14, SlayerGUI.getStartItem(SlayerType.TARANTULA, 4, 2400000, 1325, 500, 50000, 2));
 
         addItem(15, new ItemBuilder(ChatColor.RED + "Not released yet!", Material.COAL_BLOCK).addLore(ChatColor.GRAY + "This boss is still in", ChatColor.GRAY + "development!").toItemStack());
     }

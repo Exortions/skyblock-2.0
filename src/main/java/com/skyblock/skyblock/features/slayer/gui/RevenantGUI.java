@@ -37,13 +37,13 @@ public class RevenantGUI extends Gui {
 
         Util.fillEmpty(this);
 
-        addItem(48, Util.buildBackButton("To Slayer"));
+        addItem(48, Util.buildBackButton("&7To Slayer"));
         addItem(49, Util.buildCloseButton());
 
         addItem(11, SlayerGUI.getStartItem(SlayerType.REVENANT, 1, 500, 15, 5, 100, 1));
-        addItem(12, SlayerGUI.getStartItem(SlayerType.REVENANT, 2, 20000, 25, 25, 2000, 2));
-        addItem(13, SlayerGUI.getStartItem(SlayerType.REVENANT, 3, 400000, 120, 100, 10000, 3));
-        addItem(14, SlayerGUI.getStartItem(SlayerType.REVENANT, 4, 1500000, 400, 500, 50000, 3));
+        addItem(12, SlayerGUI.getStartItem(SlayerType.REVENANT, 2, 20000, 50, 25, 2000, 2));
+        addItem(13, SlayerGUI.getStartItem(SlayerType.REVENANT, 3, 400000, 300, 100, 10000, 3));
+        addItem(14, SlayerGUI.getStartItem(SlayerType.REVENANT, 4, 1500000, 1000, 500, 50000, 3));
 
         addItem(15, new ItemBuilder(ChatColor.RED + "Not released yet!", Material.COAL_BLOCK).addLore(ChatColor.GRAY + "This boss is still in", ChatColor.GRAY + "development!").toItemStack());
     }

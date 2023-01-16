@@ -36,13 +36,13 @@ public class SvenPackmaster extends SlayerBoss {
                 loadStats(2000, 60, false, false, true, new Equipment(), "Sven Packmaster", 20, 50);
                 break;
             case 2:
-                loadStats(40000, 75, false, false, true, new Equipment(), "Sven Packmaster", 100, 100);
+                loadStats(40000, 200, false, false, true, new Equipment(), "Sven Packmaster", 100, 100);
                 break;
             case 3:
-                loadStats(750000, 135, false, false, true, new Equipment(), "Sven Packmaster", 430, 200);
+                loadStats(750000, 450, false, false, true, new Equipment(), "Sven Packmaster", 430, 200);
                 break;
             case 4:
-                loadStats(2000000, 330, false, false, true, new Equipment(), "Sven Packmaster", 700, 500);
+                loadStats(2000000, 1100, false, false, true, new Equipment(), "Sven Packmaster", 700, 500);
                 break;
         }
 

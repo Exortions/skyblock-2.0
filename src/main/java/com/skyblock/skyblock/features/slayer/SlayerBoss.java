@@ -1,6 +1,7 @@
 package com.skyblock.skyblock.features.slayer;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageByEntityEvent;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import net.minecraft.server.v1_8_R3.AttributeInstance;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.GenericAttributes;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -17,16 +19,18 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Getter
-public abstract class SlayerBoss extends SkyblockEntity {
+public abstract class SlayerBoss extends SkyblockEntity implements Listener {
 
     private static final List<Integer> XP_REWARDS = Arrays.asList(5, 25, 100, 500);
-
     private final SlayerType slayerType;
     private final double displayHeight;
     private final Player spawner;
@@ -34,6 +38,9 @@ public abstract class SlayerBoss extends SkyblockEntity {
     private ArmorStand display;
     private final int level;
     private long startTime;
+
+    private int expectedDamage;
+    private int damage;
 
     @Setter
     private boolean failed;
@@ -49,7 +56,12 @@ public abstract class SlayerBoss extends SkyblockEntity {
         this.lifeSpan = 180 * 20;
         this.failed = false;
 
+        this.damage = 0;
+        this.expectedDamage = 0;
+
         this.rewardXp = XP_REWARDS.get(level - 1);
+
+        Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin());
     }
 
     @Override
@@ -86,6 +98,9 @@ public abstract class SlayerBoss extends SkyblockEntity {
         AttributeInstance kb = nms.getAttributeInstance(GenericAttributes.c);
         kb.setValue(10);
 
+        if (tick % 20 == 0) {
+            expectedDamage += getEntityData().damage;
+        }
         if (getVanilla().isDead()) display.remove();
     }
 
@@ -113,6 +128,8 @@ public abstract class SlayerBoss extends SkyblockEntity {
             quest.setTimeToKill(System.currentTimeMillis() - startTime);
             quest.setState(SlayerQuest.QuestState.FINISHED);
         }
+
+        HandlerList.unregisterAll(this);
     }
 
     @Override
@@ -121,6 +138,20 @@ public abstract class SlayerBoss extends SkyblockEntity {
 
         SlayerQuest quest = getPlugin().getSlayerHandler().getSlayer(spawner).getQuest();
         if (quest != null) quest.fail();
+
+        HandlerList.unregisterAll(this);
+    }
+
+    @EventHandler
+    public void onDamage(SkyblockPlayerDamageByEntityEvent e) {
+        if (!e.getEntity().getVanilla().equals(getVanilla())) return;
+        if (e.isTrueDamage()) return;
+
+        int damageLeft = Math.min(0, expectedDamage - damage);
+        double d = Math.max(damageLeft, e.getDamage());
+
+        damage += d;
+        e.setDamage(d);
     }
 
     @Override

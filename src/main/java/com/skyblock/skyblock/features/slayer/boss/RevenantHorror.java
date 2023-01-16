@@ -56,13 +56,13 @@ public class RevenantHorror extends SlayerBoss {
                 loadStats(500, 15, true, false, false, equipment, "Revenant Horror", 10, 50);
                 break;
             case 2:
-                loadStats(20000, 25, true, false, false, equipment, "Revenant Horror", 70, 100);
+                loadStats(20000, 50, true, false, false, equipment, "Revenant Horror", 70, 100);
                 break;
             case 3:
-                loadStats(400000, 90, true, false, false, equipment, "Revenant Horror", 310, 200);
+                loadStats(400000, 300, true, false, false, equipment, "Revenant Horror", 310, 200);
                 break;
             case 4:
-                loadStats(1500000, 300, true, false, false, equipment, "Revenant Horror", 610, 500);
+                loadStats(1500000, 1000, true, false, false, equipment, "Revenant Horror", 610, 500);
                 break;
         }
 
@@ -85,7 +85,7 @@ public class RevenantHorror extends SlayerBoss {
         nms.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(getMovementSpeed());
 
         if (tick % 50 == 0) {
-            skyblockPlayer.damage(getEntityData().damage / 2f, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla());
+            skyblockPlayer.damage(getEntityData().damage, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getVanilla());
         }
 
         if (tick % 20 == 0 && getLevel() >= 2) {

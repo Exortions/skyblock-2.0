@@ -3,6 +3,7 @@ package com.skyblock.skyblock;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.skyblock.skyblock.enums.SkyblockStat;
 import com.skyblock.skyblock.events.SkyblockPlayerCoinUpdateEvent;
+import com.skyblock.skyblock.events.SkyblockPlayerDamageByEntityEvent;
 import com.skyblock.skyblock.events.SkyblockPlayerItemHeldChangeEvent;
 import com.skyblock.skyblock.features.auction.AuctionCategory;
 import com.skyblock.skyblock.features.auction.AuctionSettings;
@@ -426,11 +427,22 @@ public class SkyblockPlayer {
     public void damage(double damage, EntityDamageEvent.DamageCause cause, Entity attacker, boolean trueDamage) {
         double d = trueDamage ? damage : (damage - (damage * ((getStat(SkyblockStat.DEFENSE) / (getStat(SkyblockStat.DEFENSE) + 100F)))));
 
+        if (attacker != null && Util.isSkyblockEntity(attacker)) {
+            SkyblockEntity sentity = Skyblock.getPlugin().getEntityHandler().getEntity(attacker);
+            SkyblockPlayerDamageByEntityEvent e = new SkyblockPlayerDamageByEntityEvent(this, sentity, trueDamage, d);
+
+            Bukkit.getPluginManager().callEvent(e);
+
+            d = e.getDamage();
+            attacker = e.getEntity().getVanilla();
+        }
+
         if ((getStat(SkyblockStat.HEALTH) - d) <= 0) {
             kill(cause, attacker);
             return;
         }
 
+        getBukkitPlayer().damage(0);
         Util.setDamageIndicator(bukkitPlayer.getLocation(), ChatColor.GRAY + "" + Math.round(d), true);
         setStat(SkyblockStat.HEALTH, (int) (getStat(SkyblockStat.HEALTH) - d));
     }
