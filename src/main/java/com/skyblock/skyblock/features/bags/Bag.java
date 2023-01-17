@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.utilities.Util;
-import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -21,11 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
@@ -46,7 +42,6 @@ public class Bag implements Listener {
     private final BiConsumer<SkyblockPlayer, ItemStack> onPutItem;
     private final BiConsumer<SkyblockPlayer, ItemStack> onRemoveItem;
 
-
     public Bag(String id, String name, String headValue, String lore, int skyblockMenuSlot, Predicate<ItemStack> validate, BiConsumer<SkyblockPlayer, Inventory> onOpen, BiConsumer<SkyblockPlayer, ItemStack> onPutItem, BiConsumer<SkyblockPlayer, ItemStack> onRemoveItem) {
         this.skyblockMenuSlot = skyblockMenuSlot;
         this.onRemoveItem = onRemoveItem;
@@ -61,6 +56,24 @@ public class Bag implements Listener {
         this.getSlots = (player) -> (int) player.getValue("bag." + id + ".slots");
 
         Bukkit.getPluginManager().registerEvents(this, Skyblock.getPlugin(Skyblock.class));
+    }
+
+    public List<ItemStack> getContents(Player player) {
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+        int limit = this.getSlots.applyAsInt(skyblockPlayer);
+
+        List<ItemStack> contents = new ArrayList<>();
+
+        for (int i = 0; i < limit; i++) {
+            ItemStack item = (ItemStack) skyblockPlayer.getValue("bag." + this.id + ".items." + i);
+
+            if (item == null || item.getType() == Material.AIR) continue;
+
+            if (this.validate.test(item)) contents.add(item);
+        }
+
+        return contents;
     }
 
     public Inventory show(Player player) {

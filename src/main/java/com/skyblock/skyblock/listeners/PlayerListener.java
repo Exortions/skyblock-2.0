@@ -5,6 +5,7 @@ import com.inkzzz.spigot.armorevent.PlayerArmorUnequipEvent;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.events.SkyblockPlayerBowShootEvent;
 import com.skyblock.skyblock.events.SkyblockPlayerDamageByEntityEvent;
 import com.skyblock.skyblock.events.SkyblockPlayerDamageEntityEvent;
 import com.skyblock.skyblock.events.SkyblockPlayerItemHeldChangeEvent;
@@ -530,6 +531,25 @@ public class PlayerListener implements Listener {
             player.setExtraData("lastDropAttempt", data);
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onBowShoot(EntityShootBowEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+
+        SkyblockPlayer player = SkyblockPlayer.getPlayer((Player) event.getEntity());
+
+        Material arrow = ARROW;
+
+        ItemStack next = player.getNextQuiverItem();
+
+        if (next != null) {
+            arrow = next.getType();
+        }
+
+        SkyblockPlayerBowShootEvent e = new SkyblockPlayerBowShootEvent(player, arrow, event.getForce());
+
+        Bukkit.getPluginManager().callEvent(e);
     }
 
     @EventHandler

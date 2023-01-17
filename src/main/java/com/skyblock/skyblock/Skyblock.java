@@ -57,7 +57,6 @@ import com.skyblock.skyblock.features.launchpads.LaunchPadHandler;
 import com.skyblock.skyblock.features.location.SkyblockLocationManager;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.merchants.MerchantHandler;
-import com.skyblock.skyblock.features.minions.MinionBase;
 import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.minions.MinionListener;
 import com.skyblock.skyblock.features.minions.items.MinionItemHandler;
@@ -444,12 +443,12 @@ public final class Skyblock extends JavaPlugin {
                         "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNiM2FjZGMxMWNhNzQ3YmY3MTBlNTlmNGM4ZTliM2Q5NDlmZGQzNjRjNjg2OTgzMWNhODc4ZjA3NjNkMTc4NyJ9fX0=",
                         "&7A masterfully crafted Quiver\n&7which holds any kind of\n&7projectile you can think of!",
                         44,
-                        (stack -> stack.getType().equals(Material.ARROW)),
+                        (stack -> stack.getType().equals(Material.ARROW) || stack.getType().equals(Material.PRISMARINE_SHARD) || stack.getType().equals(Material.MAGMA_CREAM) || stack.getType().equals(Material.SLIME_BALL)),
                         (player, inventory) -> player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.HORSE_ARMOR, 10, 0),
-                        (player, itemStack) -> {
-                        },
-                        (player, itemStack) -> {
-                        }));
+                        (player, itemStack) -> {},
+                        (player, itemStack) -> {}
+                )
+        );
 
         this.sendMessage(
                 "Successfully registered " + ChatColor.GREEN +
