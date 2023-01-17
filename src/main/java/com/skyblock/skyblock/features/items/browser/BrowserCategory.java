@@ -42,8 +42,12 @@ public enum BrowserCategory {
         if (Util.isNotSkyblockItem(base)) return false;
         return new ItemBase(base).getSkyblockId().contains("generator");
     }),
-    BLOCKS(category(COBBLESTONE, "Block"), (base) -> CraftItemStack.asNMSCopy(base).getItem() instanceof ItemBlock),
+    ENCHANTED_BOOK(category(Material.ENCHANTED_BOOK, "Enchanted Book"), (base) -> base.getType().equals(Material.ENCHANTED_BOOK)),
+    SACK(category(Skyblock.getPlugin().getItemHandler().getItem("large_combat_sack"), "Sack"), (base) -> base.getItemMeta().getDisplayName().contains("Sack") && !base.getType().equals(INK_SACK)),
+    MATERIAL(category(Skyblock.getPlugin().getItemHandler().getItem("enchanted_diamond_block"), "Material"), (base) -> base.getItemMeta().getDisplayName().contains("Enchanted") && !base.getType().equals(Material.ENCHANTED_BOOK) && !SACK.getValidate().test(base)),
+    BLOCKS(category(COBBLESTONE, "Block"), (base) -> CraftItemStack.asNMSCopy(base).getItem() instanceof ItemBlock && !MATERIAL.getValidate().test(base)),
     PET(category(Skyblock.getPlugin().getItemHandler().getItem("tiger_legendary"), "Pet"), (item) -> Util.isNotSkyblockItem(item) && new NBTItem(item).getBoolean("isPet")),
+    PET_ITEM(category(Skyblock.getPlugin().getItemHandler().getItem("pet_item_tier_boost"), "Pet Item"), validation("Pet Item")),
     POTION(category(Skyblock.getPlugin().getItemHandler().getItem("strength_1"), "Potion"), (item) -> Util.isNotSkyblockItem(item) && item.getType().equals(Material.POTION)),
     MISC(category(STICK, "Miscellaneous"), (base) -> {
         for (BrowserCategory c : values()) {

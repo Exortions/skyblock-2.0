@@ -135,6 +135,8 @@ public class Gui implements Listener {
         return this.items.get(slot);
     }
 
+    protected boolean getSpecificClickSound() { return true; }
+
     public void fillEmpty(ItemStack stack) {
         for (int i = 0; i < this.slots; i++) {
             if (!this.items.containsKey(i)) this.items.put(i, stack);
@@ -175,7 +177,7 @@ public class Gui implements Listener {
 
             if (specificClickEvents.containsKey(event.getCurrentItem())) {
                 specificClickEvents.get(event.getCurrentItem()).run();
-                if (skyblockPlayer.getBoolValue("settings.menuSounds")) {
+                if (skyblockPlayer.getBoolValue("settings.menuSounds") && getSpecificClickSound()) {
                     skyblockPlayer.getBukkitPlayer().playSound(skyblockPlayer.getBukkitPlayer().getLocation(), Sound.CLICK, 1, 1);
                 }
                 return;
