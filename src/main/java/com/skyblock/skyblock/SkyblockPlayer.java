@@ -60,6 +60,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Data
 public class SkyblockPlayer {
@@ -1051,17 +1052,6 @@ public class SkyblockPlayer {
         return false;
     }
 
-    public List<ItemStack> getItemsInBag(String bag) {
-        List<ItemStack> items = new ArrayList<>();
-
-        for (String slot : ((ConfigurationSection) getValue("bag." + bag + ".items")).getKeys(false)) {
-            ItemStack item = ((ItemStack) getValue("bag." + bag + ".items." + slot)).clone();
-            if (!item.getType().equals(Material.AIR)) items.add(item);
-        }
-
-        return items;
-    }
-
     public void removeFromQuiver() {
         Set<String> slots = ((ConfigurationSection) getValue("bag.quiver.items")).getKeys(false);
         List<String> list = new ArrayList<>(slots);
@@ -1083,12 +1073,15 @@ public class SkyblockPlayer {
         }
     }
 
-    public int getQuiverAmount() {
+    public int getQuiverAmount(Material... types) {
         if (!getBoolValue("bag.quiver.unlocked")) return 0;
 
-        List<ItemStack> arrows = getItemsInBag("quiver");
+        List<ItemStack> arrows = Skyblock.getPlugin().getBagManager().getBagContents("quiver", this.getBukkitPlayer());
+
+        if (types.length != 0) arrows = arrows.stream().filter(item -> Arrays.asList(types).contains(item.getType())).collect(Collectors.toList());
 
         int amount = 0;
+
         for (ItemStack item : arrows) {
             amount += item.getAmount();
 
@@ -1097,4 +1090,23 @@ public class SkyblockPlayer {
 
         return amount;
     }
+
+    public ItemStack getNextQuiverItem() {
+        if (!getBoolValue("bag.quiver.unlocked")) return null;
+
+        Set<String> slots = ((ConfigurationSection) getValue("bag.quiver.items")).getKeys(false);
+        List<String> list = new ArrayList<>(slots);
+
+        Collections.reverse(list);
+
+        for (String slot : list) {
+            ItemStack item = ((ItemStack) getValue("bag.quiver.items." + slot)).clone();
+            if (!item.getType().equals(Material.AIR)) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
 }
