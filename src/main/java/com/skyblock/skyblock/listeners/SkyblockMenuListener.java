@@ -10,6 +10,7 @@ import com.skyblock.skyblock.features.trades.gui.TradeGui;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,14 +36,14 @@ public class SkyblockMenuListener implements Listener {
     public void onSkyblockMenuClick(InventoryClickEvent event) {
         if (
                 event.getClickedInventory() == null
-                || !Objects.equals(event.getClickedInventory().getTitle(), MENU_NAME)
-                || event.getCurrentItem() == null
+                        || !Objects.equals(event.getClickedInventory().getTitle(), MENU_NAME)
+                        || event.getCurrentItem() == null
         ) return;
 
         event.setCancelled(true);
 
         Player player = (Player) event.getWhoClicked();
-	SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
         ItemStack clicked = event.getCurrentItem();
         NBTItem item = new NBTItem(clicked);
 
@@ -64,49 +65,50 @@ public class SkyblockMenuListener implements Listener {
 
         switch (name) {
             case "Your SkyBlock Profile":
-                skyblock.getGuiHandler().show("profile", player);
+                open(() -> skyblock.getGuiHandler().show("profile", player), skyblockPlayer);
                 break;
             case "Your Skills":
-                skyblock.getGuiHandler().show("skills", player);
+                open(() -> skyblock.getGuiHandler().show("skills", player), skyblockPlayer);
                 break;
             case "Collection":
-                skyblock.getGuiHandler().show("collection", player);
+                open(() -> skyblock.getGuiHandler().show("collection", player), skyblockPlayer);
                 break;
             case "Recipe Book":
-                new RecipeBookGUI(player).show(player);
+                open(() -> new RecipeBookGUI(player).show(player), skyblockPlayer);
                 break;
             case "Trades":
-                new TradeGui(player).show(player);
+                open(() -> new TradeGui(player).show(player), skyblockPlayer);
                 break;
             case "Quest Log":
-                new QuestLogGui(player).show(player);
+                open(() -> new QuestLogGui(player).show(player), skyblockPlayer);
                 break;
             case "Calendar and Events":
-                new CalendarEventsGUI(player).show(player);
+                open(() -> new CalendarEventsGUI(player).show(player), skyblockPlayer);
                 break;
             case "Ender Chest":
-                skyblock.getGuiHandler().show("ender_chest", player);
+                open(() -> skyblock.getGuiHandler().show("ender_chest", player), skyblockPlayer);
                 break;
             case "Settings":
-	        player.performCommand("sb settings");
+                open(() -> player.performCommand("sb settings"), skyblockPlayer);
                 break;
             case "Active Effects":
-                player.performCommand("sb effects");
+                open(() -> player.performCommand("sb effects"), skyblockPlayer);
                 break;
             case "Pets":
-                new PetsGUI(player).show(player);
+                open(()-> new PetsGUI(player).show(player), skyblockPlayer);
                 break;
             case "Crafting Table":
-                skyblock.getGuiHandler().show("crafting_table", player);
+                open(() -> skyblock.getGuiHandler().show("crafting_table", player), skyblockPlayer);
                 break;
-            case "Personal Bank": //only shown if available, no need to check
-		if (skyblockPlayer.hasExtraData("personalBankLastUsed")
-		    && (long) skyblockPlayer.getExtraData("personalBankLastUsed") < System.currentTimeMillis() - (int) skyblockPlayer.getValue("bank.personal.cooldown") * 60000) {
-			skyblockPlayer.setExtraData("personalBankUsed", true);
-                	player.performCommand("sb banker");
-		}
-		break;
-	    case "Close":
+            case "Personal Bank":
+                if (skyblockPlayer.hasExtraData("personalBankLastUsed") && (long) skyblockPlayer.getExtraData("personalBankLastUsed") < System.currentTimeMillis() - (int) skyblockPlayer.getValue("bank.personal.cooldown") * 60000) {
+                    open(() -> {
+                        skyblockPlayer.setExtraData("personalBankUsed", true);
+                        player.performCommand("sb banker");
+                    }, skyblockPlayer);
+                }
+                break;
+            case "Close":
                 player.closeInventory();
                 break;
             default:
@@ -114,18 +116,28 @@ public class SkyblockMenuListener implements Listener {
         }
     }
 
+    public void open(Runnable to, SkyblockPlayer player) {
+        if (player.getBoolValue("settings.menuSounds"))
+            player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.CLICK, 1, 1);
+
+        to.run();
+    }
+
     @EventHandler
     public void onSkyblockMenuOpen(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR) || player.getItemInHand().getItemMeta().getDisplayName() == null) return;
+        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR) || player.getItemInHand().getItemMeta().getDisplayName() == null)
+            return;
 
-        if (player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NAME)) skyblock.getGuiHandler().show("skyblock_menu", player);
+        if (player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(ITEM_NAME))
+            skyblock.getGuiHandler().show("skyblock_menu", player);
     }
 
     @EventHandler
     public void onSkyblockMenuDrag(InventoryClickEvent event) {
-        if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR) || event.getCurrentItem().getItemMeta().getDisplayName() == null) return;
+        if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR) || event.getCurrentItem().getItemMeta().getDisplayName() == null)
+            return;
 
         if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ITEM_NAME)) event.setCancelled(true);
     }
