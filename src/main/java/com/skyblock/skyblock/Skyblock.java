@@ -900,7 +900,7 @@ public final class Skyblock extends JavaPlugin {
                 new ItemBrowserCommand(),
                 new GuiCommand(),
                 new CollectionCommand(),
-                new MenuCommand(),
+                new SkyblockMenuCommand(),
                 new PlayerDataCommand(),
                 new EnchantCommand(),
                 new SummonCommand(),

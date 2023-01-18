@@ -11,6 +11,8 @@ import com.skyblock.skyblock.features.crafting.gui.CraftingGUI;
 import com.skyblock.skyblock.listeners.SkyblockMenuListener;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
+import com.skyblock.skyblock.utilities.command.TrueAlias;
+import com.skyblock.skyblock.utilities.command.annotations.Alias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
@@ -33,9 +35,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiresPlayer
-@Usage(usage = "/sb menu")
+@Alias(aliases = "menu")
+@Usage(usage = "/sb skyblockmenu")
 @Description(description = "Opens the Skyblock Menu")
-public class MenuCommand implements Command {
+public class SkyblockMenuCommand implements Command, TrueAlias<SkyblockMenuCommand> {
 
     @Override
     public void execute(Player player, String[] args, Skyblock plugin) {
@@ -57,7 +60,7 @@ public class MenuCommand implements Command {
         }
 
         ItemStack collection = this.getCollectionItem(unlockedCollections, totalCollections);
-        ItemStack recipeBook = MenuCommand.createRecipeBookItem(skyblockPlayer);
+        ItemStack recipeBook = SkyblockMenuCommand.createRecipeBookItem(skyblockPlayer);
         ItemStack trades = this.createTradesItem();
         ItemStack questLog = this.createQuestLogItem();
         ItemStack calendarAndEvents = this.createCalendarItem();

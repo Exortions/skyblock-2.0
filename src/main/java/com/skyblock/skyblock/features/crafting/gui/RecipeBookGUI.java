@@ -1,8 +1,7 @@
 package com.skyblock.skyblock.features.crafting.gui;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.commands.menu.MenuCommand;
-import com.skyblock.skyblock.features.collections.gui.CollectionRewardGUI;
+import com.skyblock.skyblock.commands.menu.SkyblockMenuCommand;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -24,7 +23,7 @@ public class RecipeBookGUI extends Gui {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         Util.fillEmpty(this);
-        addItem(4, MenuCommand.createRecipeBookItem(skyblockPlayer));
+        addItem(4, SkyblockMenuCommand.createRecipeBookItem(skyblockPlayer));
 
         addItem(49, Util.buildCloseButton());
         addItem(48, Util.buildBackButton());

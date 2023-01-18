@@ -1,7 +1,7 @@
 package com.skyblock.skyblock.features.guis;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.commands.menu.MenuCommand;
+import com.skyblock.skyblock.commands.menu.SkyblockMenuCommand;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
@@ -36,7 +36,7 @@ public class ProfileGui extends Gui {
         SkyblockPlayer target = SkyblockPlayer.getPlayer(targetPlayer);
 
         ItemStack emptySlot = new ItemBuilder(ChatColor.RED + "Empty Slot!", Material.STAINED_GLASS_PANE, 1, DyeColor.RED.getData()).addLore(Util.buildLore("&cThis slot is currently\n&cempty!")).toItemStack();
-        ItemStack profile = MenuCommand.createSkyblockProfileItem(target, false);
+        ItemStack profile = SkyblockMenuCommand.createSkyblockProfileItem(target, false);
 
         addItem(22, profile);
 

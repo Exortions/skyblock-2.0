@@ -70,3 +70,7 @@ commands:
     description: Sets gamemode to adventure
   gmsp:
     description: Sets gamemode to spectator
+  skyblockmenu:
+    description: Opens the skyblock menu
+    aliases:
+      - sb menu
