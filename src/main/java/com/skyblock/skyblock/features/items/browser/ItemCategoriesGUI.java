@@ -29,14 +29,18 @@ public class ItemCategoriesGUI extends Gui {
         addItem(21, SHOVEL);
         addItem(22, HOE);
         addItem(23, ACCESSORIE);
-        addItem(24, FISHING);
-        addItem(25, WAND);
-        addItem(28, TRAVEL_SCROLL);
-        addItem(29, MINION);
-        addItem(30, PET);
-        addItem(31, POTION);
-        addItem(32, BLOCKS);
-        addItem(33, MISC);
+        addItem(24, MATERIAL);
+        addItem(25, FISHING);
+        addItem(28, WAND);
+        addItem(29, ENCHANTED_BOOK);
+        addItem(30, SACK);
+        addItem(31, TRAVEL_SCROLL);
+        addItem(32, MINION);
+        addItem(33, PET);
+        addItem(34, PET_ITEM);
+        addItem(37, POTION);
+        addItem(38, BLOCKS);
+        addItem(39, MISC);
 
         addItem(48, Util.buildCloseButton());
         addItem(49, new ItemBuilder(ChatColor.GREEN + "Search Items", Material.SIGN).addLore("&7Search through all items.").toItemStack());

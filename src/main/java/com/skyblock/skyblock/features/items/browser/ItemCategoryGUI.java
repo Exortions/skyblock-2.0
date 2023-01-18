@@ -11,6 +11,7 @@ import com.skyblock.skyblock.utilities.sign.SignGui;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,7 +44,10 @@ public class ItemCategoryGUI extends Gui {
             try {
                 ItemStack item = items.get(i);
                 addItem(setItemIndex, item);
-                getSpecificClickEvents().put(item, () -> p.getInventory().addItem(item));
+                getSpecificClickEvents().put(item, () -> {
+                    p.getInventory().addItem(item);
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 2);
+                });
                 setItemIndex++;
             } catch (IndexOutOfBoundsException e) {
                 break;
@@ -74,5 +78,10 @@ public class ItemCategoryGUI extends Gui {
         getClickEvents().put(ChatColor.GREEN + "Go Back", () -> new ItemCategoriesGUI(p).show(p));
         getClickEvents().put(ChatColor.GREEN + "Previous Page", () -> new ItemCategoryGUI(cat, page - 1, p).show(p));
         getClickEvents().put(ChatColor.GREEN + "Next Page", () -> new ItemCategoryGUI(cat, page + 1, p).show(p));
+    }
+
+    @Override
+    protected boolean getSpecificClickSound() {
+        return false;
     }
 }
