@@ -35,7 +35,7 @@ public abstract class MinionBase {
     protected final String adjective;
     protected int level;
     protected final Color leatherArmorColor;
-    protected final Material material; //arraylist of blocks here? Melon minions have a weird layout
+    protected final Material material; // TODO: Make array? (for multiple materials)
 
     protected ArmorStand minion;
     protected ArmorStand text;
