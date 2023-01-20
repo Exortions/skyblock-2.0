@@ -22,6 +22,7 @@ Here are a list of some features that we currently have added:
     - Auction House
     - Slayer
     - Fairy Souls
+    - Crystals
     - Private Islands
     - Mining System
     - Crafting System
@@ -35,7 +36,7 @@ Here are a list of some features that we currently have added:
     - Custom Mobs
     - Launch Pads
     - Minions
-    - Quest NPCs
+    - Quests
     - Pets
     - Economy
     - Custom Mob Spawning
