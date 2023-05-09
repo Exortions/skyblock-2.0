@@ -266,6 +266,7 @@ public class Dragon extends SkyblockEntity implements Listener {
 
     @EventHandler
     public void onDamage(SkyblockPlayerDamageByEntityEvent e) {
+        if (e.getEntity() == null) return;
         if (!e.getEntity().getVanilla().equals(getVanilla())) return;
 
         Player player = e.getPlayer().getBukkitPlayer();

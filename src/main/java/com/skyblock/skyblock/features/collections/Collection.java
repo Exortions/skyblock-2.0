@@ -10,6 +10,7 @@ import com.skyblock.skyblock.utilities.chat.ChatMessageBuilder;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -117,7 +118,7 @@ public class Collection {
 
             builder
                     .add("&e&l" + Constants.COLLECTION_SEPERATOR)
-                    .add("&6&l  COLLECTION LEVEL UP &e" + StringUtils.capitalize(this.name.toLowerCase()) + " &8" + (level == 0 ? 0 : Util.toRoman(level)) + " ➜ &e" + Util.toRoman(level + 1))
+                    .add("&6&l  COLLECTION LEVEL UP &e" + WordUtils.capitalize(this.name.toLowerCase()) + " " + (level == 0 ? "" : "&8" + (Util.toRoman(level)) + " ➜ &e") + Util.toRoman(level + 1))
                     .add("")
                     .add("&a&l  REWARDS");
 
