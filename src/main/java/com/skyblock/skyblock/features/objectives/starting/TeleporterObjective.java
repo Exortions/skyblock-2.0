@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.objectives.impl.starting;
+package com.skyblock.skyblock.features.objectives.starting;
 
 import com.skyblock.skyblock.features.objectives.Objective;
 import org.bukkit.Material;

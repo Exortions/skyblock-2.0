@@ -195,10 +195,13 @@ public class Gui implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         if (e.getInventory().getName().equals(name) && opened.containsKey((Player) e.getPlayer())) {
+            onClose((Player) e.getPlayer());
+
             HandlerList.unregisterAll(this);
             opened.remove((Player) e.getPlayer());
         }
     }
 
+    public void onClose(Player p) { }
     public void onInventoryClick(InventoryClickEvent e) { }
 }

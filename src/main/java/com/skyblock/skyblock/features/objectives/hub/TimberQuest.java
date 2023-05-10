@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.objectives.impl.hub;
+package com.skyblock.skyblock.features.objectives.hub;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;

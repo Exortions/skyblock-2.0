@@ -1,5 +1,6 @@
 package com.skyblock.skyblock.features.npc;
 
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.events.SkyblockPlayerNPCClickEvent;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Data;
@@ -56,13 +57,19 @@ public class NPC implements Listener {
     }
 
     public static void sendMessages(Player player, String npc, String... messages) {
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+        if (skyblockPlayer.isTalkingToNPC()) return;
+
+        skyblockPlayer.setExtraData("isInteracting", true);
+
         int i = 0;
         for (String message : messages) {
-            Util.delay(() -> {
-                sendMessage(player, npc, message);
-            }, i * 20);
+            Util.delay(() -> sendMessage(player, npc, message), i * 20);
             i++;
         }
+
+        Util.delay(() -> skyblockPlayer.setExtraData("isInteracting", false), messages.length * 20);
     }
     public static void sendMessage(Player player, String npc, String message) {
         sendMessage(player, npc, message, true);

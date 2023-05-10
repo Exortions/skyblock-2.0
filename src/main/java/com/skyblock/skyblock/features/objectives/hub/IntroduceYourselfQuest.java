@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.objectives.impl.hub;
+package com.skyblock.skyblock.features.objectives.hub;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
@@ -10,7 +10,6 @@ import com.skyblock.skyblock.features.objectives.gui.GiftGui;
 import com.skyblock.skyblock.utilities.Util;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -178,8 +177,13 @@ public class IntroduceYourselfQuest extends QuestLine {
 
     private void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
         List<String> talked = (List<String>) SkyblockPlayer.getPlayer(player).getValue("quests.introduceYourself.talkedTo");
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+        if (skyblockPlayer.isTalkingToNPC()) return;
 
         if (talked.contains(npc)) return;
+
+        skyblockPlayer.setExtraData("isInteracting", true);
 
         for (int i = 0; i < messages.length; i++) {
             String message = messages[i];
@@ -195,9 +199,11 @@ public class IntroduceYourselfQuest extends QuestLine {
                     if (talked.size() == 12) {
                         complete(player);
                     }
-                }, (i + 1) * 20);
+                }, (i + 1) * 30);
             }
         }
+
+        Util.delay(() -> skyblockPlayer.setExtraData("isInteracting", false), messages.length * 20);
     }
 
     private void sendDelayedMessage(Player player, String npc, String message, int delay) {

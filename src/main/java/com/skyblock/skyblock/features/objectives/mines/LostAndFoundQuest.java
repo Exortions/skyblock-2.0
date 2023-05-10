@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.objectives.impl.mines;
+package com.skyblock.skyblock.features.objectives.mines;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;

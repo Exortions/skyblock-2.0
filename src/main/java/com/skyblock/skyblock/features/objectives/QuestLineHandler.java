@@ -1,12 +1,12 @@
 package com.skyblock.skyblock.features.objectives;
 
 import com.skyblock.skyblock.SkyblockPlayer;
-import com.skyblock.skyblock.features.objectives.impl.hub.IntroduceYourselfQuest;
-import com.skyblock.skyblock.features.objectives.impl.hub.TimeToStrikeQuest;
-import com.skyblock.skyblock.features.objectives.impl.hub.AuctioneerQuest;
-import com.skyblock.skyblock.features.objectives.impl.hub.TimberQuest;
-import com.skyblock.skyblock.features.objectives.impl.mines.LostAndFoundQuest;
-import com.skyblock.skyblock.features.objectives.impl.starting.GettingStartedQuest;
+import com.skyblock.skyblock.features.objectives.hub.IntroduceYourselfQuest;
+import com.skyblock.skyblock.features.objectives.hub.TimeToStrikeQuest;
+import com.skyblock.skyblock.features.objectives.hub.AuctioneerQuest;
+import com.skyblock.skyblock.features.objectives.hub.TimberQuest;
+import com.skyblock.skyblock.features.objectives.mines.LostAndFoundQuest;
+import com.skyblock.skyblock.features.objectives.starting.GettingStartedQuest;
 import lombok.Getter;
 
 import java.util.*;

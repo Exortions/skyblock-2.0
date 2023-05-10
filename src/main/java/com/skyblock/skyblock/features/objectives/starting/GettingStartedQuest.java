@@ -1,6 +1,5 @@
-package com.skyblock.skyblock.features.objectives.impl.starting;
+package com.skyblock.skyblock.features.objectives.starting;
 
-import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 
 public class GettingStartedQuest extends QuestLine {

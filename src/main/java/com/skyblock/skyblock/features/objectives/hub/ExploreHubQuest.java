@@ -1,6 +1,5 @@
-package com.skyblock.skyblock.features.objectives.impl.hub;
+package com.skyblock.skyblock.features.objectives.hub;
 
-import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 
 public class ExploreHubQuest extends QuestLine {

@@ -270,11 +270,14 @@ public class PlayerListener implements Listener {
             }
 
             if (event.getEntity() == null) return;
+            if (event.getEntity() instanceof Player) return;
+            if (event.getEntity().hasMetadata("NPC")) return;
 
-            if (crit)
+            if (crit) {
                 Util.setDamageIndicator(event.getEntity().getLocation(), Util.addCritTexture((int) Math.round(display)), false);
-            else
+            } else {
                 Util.setDamageIndicator(event.getEntity().getLocation(), ChatColor.GRAY + "" + Math.round(display), true);
+            }
         } else if (event.getDamager().hasMetadata("skyblockEntityData")) {
             if (event.getEntity() instanceof Player && !event.getEntity().hasMetadata("NPC")) {
                 Player p = (Player) event.getEntity();

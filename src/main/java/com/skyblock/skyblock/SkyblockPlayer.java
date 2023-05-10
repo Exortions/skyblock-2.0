@@ -17,6 +17,7 @@ import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.minions.MinionHandler;
 import com.skyblock.skyblock.features.npc.NPC;
+import com.skyblock.skyblock.features.npc.NPCHandler;
 import com.skyblock.skyblock.features.objectives.Objective;
 import com.skyblock.skyblock.features.objectives.QuestLine;
 import com.skyblock.skyblock.features.pets.Pet;
@@ -132,6 +133,7 @@ public class SkyblockPlayer {
 
         this.tick = 0;
 
+        // Default Extra Data
         this.extraData.put("fullSetBonus", false);
         this.extraData.put("fullSetBonusType", null);
 
@@ -140,6 +142,7 @@ public class SkyblockPlayer {
 
         this.extraData.put("last_location", null);
         this.extraData.put("dropOverrides", new HashMap<>());
+        this.extraData.put("isInteracting", false);
 
         initConfig();
     }
@@ -223,22 +226,27 @@ public class SkyblockPlayer {
 
         ((CraftPlayer) getBukkitPlayer()).getHandle().playerConnection.sendPacket(packet);
 
-        if (tick == 20) {
+        NPCHandler npcs = Skyblock.getPlugin().getNpcHandler();
+        if (tick == 20 && !npcs.getNPCs().containsKey("jerry_" + bukkitPlayer.getUniqueId())) {
             NPC jerry = new NPC("Jerry", true, false, true, Villager.Profession.FARMER,
                     new Location(Bukkit.getWorld(IslandManager.ISLAND_PREFIX + bukkitPlayer.getUniqueId()), 2.5, 100, 26.5),
                     (p) -> {
                         if (p.getUniqueId().equals(bukkitPlayer.getUniqueId())) {
-                            NPC.sendMessages(p, "Jerry",
-                                    "Your Skyblock island is part of a much larger universe",
-                                    "The Skyblock universe is full of islands to explore and resources to discover!",
-                                    "Use the Portal to warp to the first of those islands - The Skyblock Hub!");
+                            if (((List<String>) getValue("quests.completedObjectives")).contains("jerry")) {
+                                // Jerry GUI
+                            } else {
+                                NPC.sendMessages(p, "Jerry",
+                                        "Your Skyblock island is part of a much larger universe",
+                                        "The Skyblock universe is full of islands to explore and resources to discover!",
+                                        "Use the Portal to warp to the first of those islands - The Skyblock Hub!");
+                            }
                         } else {
                             NPC.sendMessage(p, "Jerry", "Jerry doesn't speak to strangers!", false);
                             p.playSound(p.getLocation(), Sound.VILLAGER_NO, 10, 1);
                         }
                     }, "", "");
 
-            Skyblock.getPlugin().getNpcHandler().registerNPC("jerry_" + bukkitPlayer.getUniqueId().toString(), jerry);
+            npcs.registerNPC("jerry_" + bukkitPlayer.getUniqueId().toString(), jerry);
             jerry.spawn();
         }
 
@@ -1108,5 +1116,7 @@ public class SkyblockPlayer {
 
         return null;
     }
+
+    public boolean isTalkingToNPC() { return (boolean) extraData.get("isInteracting"); }
 
 }
