@@ -7,6 +7,7 @@ import com.skyblock.skyblock.features.crafting.SkyblockRecipe;
 import com.skyblock.skyblock.features.enchantment.ItemEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
+import com.skyblock.skyblock.features.items.browser.BrowserCategory;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.features.pets.PetType;
 import com.skyblock.skyblock.features.potions.PotionEffect;
@@ -266,6 +267,7 @@ public class ItemHandler {
             s = s.toUpperCase();
             s += ".json";
         }
+
         return items.get(s) == null ? null : items.get(s).clone();
     }
 

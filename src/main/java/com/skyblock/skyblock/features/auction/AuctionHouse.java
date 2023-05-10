@@ -291,8 +291,12 @@ public class AuctionHouse {
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (Auction auction : AUCTION_CACHE.values()) {
-                    auction.tickPassed();
+                try {
+                    for (Auction auction : AUCTION_CACHE.values()) {
+                        auction.tickPassed();
+                    }
+                } catch (ConcurrentModificationException ignored) {
+                    // AH hasn't been initialized yet so just ignore
                 }
             }
         }.runTaskTimerAsynchronously(Skyblock.getPlugin(), 5L, 1);

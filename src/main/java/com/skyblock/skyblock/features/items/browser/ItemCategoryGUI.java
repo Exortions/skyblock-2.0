@@ -8,6 +8,7 @@ import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import com.skyblock.skyblock.utilities.sign.SignClickCompleteHandler;
 import com.skyblock.skyblock.utilities.sign.SignCompleteEvent;
 import com.skyblock.skyblock.utilities.sign.SignGui;
+import de.tr7zw.nbtapi.NBTItem;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,9 +16,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ItemCategoryGUI extends Gui {
 
@@ -25,12 +24,21 @@ public class ItemCategoryGUI extends Gui {
     public ItemCategoryGUI(BrowserCategory cat, int page, Player p) {
         super("Item Category: " + WordUtils.capitalize(cat.name().toLowerCase().replace('_', ' ')), 54, new HashMap<>());
 
+        List<BrowserCategory> noStack = Arrays.asList(BrowserCategory.SWORD, BrowserCategory.HELMET, BrowserCategory.ACCESSORIE, BrowserCategory.WAND,
+                BrowserCategory.SACK, BrowserCategory.TRAVEL_SCROLL, BrowserCategory.MINION, BrowserCategory.PET,
+                BrowserCategory.PET_ITEM);
+
         List<ItemStack> items = new ArrayList<>();
 
         for (ItemStack item : plugin.getItemHandler().getItems().values()) {
             if (!cat.getValidate().test(item)) continue;
 
-            items.add(item);
+            NBTItem nbt = new NBTItem(item.clone());
+            if (noStack.contains(cat)) {
+                nbt.setString(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+            }
+
+            items.add(nbt.getItem());
         }
 
         items.sort(Util.compareItems());
@@ -43,6 +51,7 @@ public class ItemCategoryGUI extends Gui {
         for (int i = start; i < end; i++) {
             try {
                 ItemStack item = items.get(i);
+
                 addItem(setItemIndex, item);
                 getSpecificClickEvents().put(item, () -> {
                     p.getInventory().addItem(item);
