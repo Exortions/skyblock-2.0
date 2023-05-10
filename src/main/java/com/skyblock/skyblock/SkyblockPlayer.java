@@ -251,8 +251,6 @@ public class SkyblockPlayer {
         }
 
         if (tick % EVERY_SECOND == 0) {
-            board.updateScoreboard();
-
             ActionBarAPI.sendActionBar(getBukkitPlayer(), actionBar);
 
             if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA) - ((getStatNoMult(SkyblockStat.MAX_MANA) + 100)/50)) {
@@ -270,6 +268,8 @@ public class SkyblockPlayer {
                 getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
             }
         }
+
+        board.updateScoreboard();
 
         if (!hand.equals(bukkitPlayer.getItemInHand())) {
             ItemStack itemStack = bukkitPlayer.getItemInHand();

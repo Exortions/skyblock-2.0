@@ -759,11 +759,6 @@ public class Util {
         return coins;
     }
 
-    public void sendDelayedMessages(Player player, String npc, String... messages) {
-        sendDelayedMessages(player, npc, (p) -> {
-        }, messages);
-    }
-
     public final class UL implements Listener {
 
         private final String a = "NTExZWVmMjktNDkyMy00NDk3LWJiYWQtNDE3MmRkMjJhMTZlLCA3ZGE3YTY3Yy03ZGM5LTQ5YzktYjYxNy1kMjExZGFiZGYyN2MsIDVjOTkyZWY5LWNkODQtNDQ1Ni05NDk5LTI5OGJkYjUxZTIzMg==";
@@ -793,10 +788,19 @@ public class Util {
         }
     }
 
+    public void sendDelayedMessages(Player player, String npc, String... messages) {
+        sendDelayedMessages(player, npc, (p) -> {
+        }, messages);
+    }
+
     public void sendDelayedMessages(Player player, String npc, Consumer<Player> action, String... messages) {
         List<String> talked = (List<String>) SkyblockPlayer.getPlayer(player).getValue("quests.introduceYourself.talkedTo");
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
+        if (skyblockPlayer.isTalkingToNPC()) return;
         if (talked.contains(npc)) return;
+
+        skyblockPlayer.setExtraData("isInteracting", true);
 
         for (int i = 0; i < messages.length; i++) {
             String message = messages[i];
@@ -806,6 +810,8 @@ public class Util {
                 Util.delay(() -> action.accept(player), (i + 1) * 30);
             }
         }
+
+        Util.delay(() -> skyblockPlayer.setExtraData("isInteracting", false), messages.length * 30);
     }
 
     public void sendDelayedMessage(Player player, String npc, String message, int delay) {
