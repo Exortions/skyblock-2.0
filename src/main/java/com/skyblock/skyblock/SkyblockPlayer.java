@@ -143,6 +143,7 @@ public class SkyblockPlayer {
         this.extraData.put("last_location", null);
         this.extraData.put("dropOverrides", new HashMap<>());
         this.extraData.put("isInteracting", false);
+        this.extraData.put("personalBankUsed", false);
 
         initConfig();
     }
