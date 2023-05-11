@@ -289,6 +289,29 @@ public class ItemHandler {
         return item.clone();
     }
 
+    public ItemStack getItem(ItemStack item) {
+        NBTItem nbt = new NBTItem(item);
+        ItemStack skyblock = item;
+
+        if (nbt.hasKey("skyblockId")) {
+            skyblock = getItem(Util.getSkyblockId(item));
+        }
+
+        if (item.getType().equals(Material.SKULL_ITEM)) {
+
+            for (String stackables : stackableHeads) {
+                if (item.getItemMeta().getDisplayName().toLowerCase().contains(stackables)) return item.clone();
+            }
+
+            nbt = new NBTItem(item.clone());
+            nbt.setString(UUID.randomUUID().toString(), "dontstackanymoreplease");
+
+            return nbt.getItem();
+        }
+
+        return skyblock.clone();
+    }
+
     private ItemStack parseLore(ItemStack item) {
         NBTItem nbt = new NBTItem(item);
         ItemMeta meta = item.getItemMeta();

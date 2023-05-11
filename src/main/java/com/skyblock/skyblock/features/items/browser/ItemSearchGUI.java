@@ -45,7 +45,7 @@ public class ItemSearchGUI extends Gui {
                 ItemStack item = items.get(i);
                 addItem(setItemIndex, item);
                 getSpecificClickEvents().put(item, () -> {
-                    p.getInventory().addItem(plugin.getItemHandler().getItem(Util.getSkyblockId(item)));
+                    p.getInventory().addItem(plugin.getItemHandler().getItem(item));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 2);
                 });
                 setItemIndex++;
