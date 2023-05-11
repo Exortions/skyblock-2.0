@@ -24,21 +24,12 @@ public class ItemCategoryGUI extends Gui {
     public ItemCategoryGUI(BrowserCategory cat, int page, Player p) {
         super("Item Category: " + WordUtils.capitalize(cat.name().toLowerCase().replace('_', ' ')), 54, new HashMap<>());
 
-        List<BrowserCategory> noStack = Arrays.asList(BrowserCategory.SWORD, BrowserCategory.HELMET, BrowserCategory.ACCESSORIE, BrowserCategory.WAND,
-                BrowserCategory.SACK, BrowserCategory.TRAVEL_SCROLL, BrowserCategory.MINION, BrowserCategory.PET,
-                BrowserCategory.PET_ITEM);
-
         List<ItemStack> items = new ArrayList<>();
 
         for (ItemStack item : plugin.getItemHandler().getItems().values()) {
             if (!cat.getValidate().test(item)) continue;
 
-            NBTItem nbt = new NBTItem(item.clone());
-            if (noStack.contains(cat)) {
-                nbt.setString(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-            }
-
-            items.add(nbt.getItem());
+            items.add(item.clone());
         }
 
         items.sort(Util.compareItems());
@@ -54,7 +45,7 @@ public class ItemCategoryGUI extends Gui {
 
                 addItem(setItemIndex, item);
                 getSpecificClickEvents().put(item, () -> {
-                    p.getInventory().addItem(item);
+                    p.getInventory().addItem(plugin.getItemHandler().getItem(Util.getSkyblockId(item)));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 2);
                 });
                 setItemIndex++;

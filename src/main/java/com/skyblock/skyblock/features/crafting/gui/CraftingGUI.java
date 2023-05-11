@@ -159,7 +159,7 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
 
         if (event.getSlot() != 23 || event.getCurrentItem().getType().equals(Material.BARRIER)) return;
 
-        event.getWhoClicked().getInventory().addItem(event.getCurrentItem());
+        event.getWhoClicked().getInventory().addItem(Skyblock.getPlugin().getItemHandler().getItem(Util.getSkyblockId(event.getCurrentItem())));
         setItem(23, recipeRequired);
 
         Bukkit.getPluginManager().callEvent(new SkyblockPlayerCraftEvent(recipe, (Player) event.getWhoClicked()));
@@ -182,6 +182,14 @@ public class CraftingGUI extends CraftInventoryCustom implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
         if (!event.getInventory().equals(this)) return;
+
+        for (int slot : slots) {
+            ItemStack item = getItem(slot);
+
+            if (item != null) {
+                event.getPlayer().getInventory().addItem(item);
+            }
+        }
 
         task.cancel();
         HandlerList.unregisterAll(this);

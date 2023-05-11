@@ -262,13 +262,30 @@ public class ItemHandler {
         reversed.put(parseLore(item), id.replace(".json", ""));
     }
 
+    private static final List<String> stackableHeads = Arrays.asList("fragment");
     public ItemStack getItem(String s) {
         if (!s.endsWith(".json")) {
             s = s.toUpperCase();
             s += ".json";
         }
 
-        return items.get(s) == null ? null : items.get(s).clone();
+        ItemStack item = items.get(s);
+
+        if (item == null) return null;
+
+        if (item.getType().equals(Material.SKULL_ITEM)) {
+
+            for (String stackables : stackableHeads) {
+                if (item.getItemMeta().getDisplayName().toLowerCase().contains(stackables)) return item.clone();
+            }
+
+            NBTItem nbt = new NBTItem(item.clone());
+            nbt.setString(UUID.randomUUID().toString(), "dontstackanymoreplease");
+
+            return nbt.getItem();
+        }
+
+        return item.clone();
     }
 
     private ItemStack parseLore(ItemStack item) {
