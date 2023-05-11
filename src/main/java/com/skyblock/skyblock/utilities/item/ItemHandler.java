@@ -42,6 +42,7 @@ import java.util.function.Function;
 public class ItemHandler {
     private final HashMap<String, ItemStack> items = new HashMap<>();
     private final HashMap<ItemStack, String> reversed = new HashMap<>();
+    private final HashMap<BrowserCategory, List<ItemStack>> categories = new HashMap<>();
     private final Skyblock skyblock;
 
     public static final List<String> POTIONS = new ArrayList<String>() {{

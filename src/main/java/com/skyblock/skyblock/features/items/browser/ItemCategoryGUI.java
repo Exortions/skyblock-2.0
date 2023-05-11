@@ -5,6 +5,7 @@ import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.gui.Gui;
 import com.skyblock.skyblock.utilities.item.ItemBase;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
+import com.skyblock.skyblock.utilities.item.ItemHandler;
 import com.skyblock.skyblock.utilities.sign.SignClickCompleteHandler;
 import com.skyblock.skyblock.utilities.sign.SignCompleteEvent;
 import com.skyblock.skyblock.utilities.sign.SignGui;
@@ -24,15 +25,22 @@ public class ItemCategoryGUI extends Gui {
     public ItemCategoryGUI(BrowserCategory cat, int page, Player p) {
         super("Item Category: " + WordUtils.capitalize(cat.name().toLowerCase().replace('_', ' ')), 54, new HashMap<>());
 
+        ItemHandler handler = plugin.getItemHandler();
         List<ItemStack> items = new ArrayList<>();
 
-        for (ItemStack item : plugin.getItemHandler().getItems().values()) {
-            if (!cat.getValidate().test(item)) continue;
+        if (handler.getCategories().containsKey(cat)) {
+            items.addAll(handler.getCategories().get(cat));
+        } else {
+            for (ItemStack item : plugin.getItemHandler().getItems().values()) {
+                if (!cat.getValidate().test(item)) continue;
 
-            items.add(item.clone());
+                items.add(item.clone());
+            }
+
+            items.sort(Util.compareItems());
+
+            handler.getCategories().put(cat, items);
         }
-
-        items.sort(Util.compareItems());
 
         int start = (page - 1) * 45;
         int end = (page - 1) * 45 + 45;
