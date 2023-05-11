@@ -293,7 +293,7 @@ public class ItemHandler {
         NBTItem nbt = new NBTItem(item);
         ItemStack skyblock = item;
 
-        if (nbt.hasKey("skyblockId")) {
+        if (nbt.hasKey("skyblockId") && skyblock.getType() != Material.ENCHANTED_BOOK) {
             skyblock = getItem(Util.getSkyblockId(item));
         }
 
