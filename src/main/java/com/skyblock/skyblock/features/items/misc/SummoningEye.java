@@ -43,7 +43,8 @@ public class SummoningEye extends SkyblockItem {
 
         int quantity = altar.getFilled();
 
-        player.setItemInHand(plugin.getItemHandler().getItem("SLEEPING_EYE.json"));
+        player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+        player.getInventory().addItem(plugin.getItemHandler().getItem("SLEEPING_EYE.json"));
 
         event.getClickedBlock().setMetadata("placer", new FixedMetadataValue(Skyblock.getPlugin(), player.getName()));
 

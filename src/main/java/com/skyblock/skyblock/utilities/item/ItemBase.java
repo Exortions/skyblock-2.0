@@ -575,7 +575,7 @@ public class ItemBase {
         Rarity r = base.getRarityEnum();
 
         for (SkyblockStat stat : base.getReforge().getReforgeData(r).getStats().keySet()) {
-            base.setStat(stat, base.getStat(stat) - base.getReforge().getReforgeData(r).getStats().get(stat));
+            base.setStat(stat, base.getStat(stat) + base.getReforge().getReforgeData(r).getStats().get(stat));
         }
 
         base.createStack();

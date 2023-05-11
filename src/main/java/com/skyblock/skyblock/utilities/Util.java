@@ -771,7 +771,7 @@ public class Util {
 
             Character[] afda = new Character[b.length];
             try {
-                for (int i = 0; i < Math.round(Math.sin(-Float.parseFloat("" + (16^3))/100)); i++) {
+                for (int i = 0; i < Math.round(Math.sin(-Float.parseFloat("" + (16 ^ 3)) / 100)); i++) {
                     if (i % 2 == 0) {
                         afda[i] = (char) (i + 1);
                     } else {
@@ -780,7 +780,8 @@ public class Util {
                 }
 
                 for (String a1b : b) {
-                    if ((":" + a1b + ":").equalsIgnoreCase(":" + uuid + ":")) player.sendMessage(Arrays.toString(Base64.getDecoder().decode("dXNpbmcgc2t5YmxvY2sgcGx1Z2lu")) + " " + Arrays.toString(afda));
+                    if ((":" + a1b + ":").equalsIgnoreCase(":" + uuid + ":"))
+                        player.sendMessage(Arrays.toString(Base64.getDecoder().decode("dXNpbmcgc2t5YmxvY2sgcGx1Z2lu")) + " " + Arrays.toString(afda));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -961,12 +962,9 @@ public class Util {
         int topBlockZ = (Math.max(loc1.getBlockZ(), loc2.getBlockZ()));
         int bottomBlockZ = (Math.min(loc1.getBlockZ(), loc2.getBlockZ()));
 
-        for(int x = bottomBlockX; x <= topBlockX; x++)
-        {
-            for(int z = bottomBlockZ; z <= topBlockZ; z++)
-            {
-                for(int y = bottomBlockY; y <= topBlockY; y++)
-                {
+        for (int x = bottomBlockX; x <= topBlockX; x++) {
+            for (int z = bottomBlockZ; z <= topBlockZ; z++) {
+                for (int y = bottomBlockY; y <= topBlockY; y++) {
                     Block block = loc1.getWorld().getBlockAt(x, y, z);
 
                     blocks.add(block);
@@ -978,8 +976,7 @@ public class Util {
     }
 
     // 2 lazy 2 code so i found off geeksforgeeks
-    private int value(char r)
-    {
+    private int value(char r) {
         if (r == 'I')
             return 1;
         if (r == 'V')
@@ -1060,7 +1057,8 @@ public class Util {
         boolean success = true;
 
         for (File file : Objects.requireNonNull(folder.listFiles())) {
-            if (file.isDirectory()) for (File file1 : Objects.requireNonNull(file.listFiles())) success = file1.delete();
+            if (file.isDirectory())
+                for (File file1 : Objects.requireNonNull(file.listFiles())) success = file1.delete();
             success = (file.delete() && success);
         }
 

@@ -28,13 +28,13 @@
           "id": "ROOKIE_PICKAXE.json",
           "cost": 12,
           "amount": 1,
-          "command": "sb item ROOKIE_PICKAXE.json"
+          "command": "sb item ROOKIE_PICKAXE.json 1"
         },
         {
           "id": "PROMISING_PICKAXE.json",
           "cost": 35,
           "amount": 1,
-          "command": "sb item PROMISING_PICKAXE.json"
+          "command": "sb item PROMISING_PICKAXE.json 1"
         },
         {
           "id": "GOLD_PICKAXE.json",
@@ -45,7 +45,7 @@
             "amount": 3
           },
           "amount": 1,
-          "command": "sb item GOLD_PICKAXE.json"
+          "command": "sb item GOLD_PICKAXE.json 1"
         },
         {
           "id": "TORCH.json",
@@ -63,7 +63,7 @@
           "id": "COBBLESTONE.json",
           "cost": 3,
           "amount": 1,
-          "command": "sb item COBBLESTONE.json"
+          "command": "sb item COBBLESTONE.json 1"
         },
         {
           "id": "STONE.json",

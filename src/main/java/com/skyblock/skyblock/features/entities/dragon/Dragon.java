@@ -16,6 +16,7 @@ import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEnderDragon;
 import org.bukkit.entity.*;
@@ -79,6 +80,7 @@ public class Dragon extends SkyblockEntity implements Listener {
             dragon.setVelocity(new Vector(0, 0, 0));
             return;
         }
+
 
         if (tick == 0){
             updateSpeed(nms);

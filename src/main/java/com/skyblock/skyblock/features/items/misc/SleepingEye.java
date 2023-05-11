@@ -38,7 +38,9 @@ public class SleepingEye extends SkyblockItem {
         state.update();
 
 
-        player.setItemInHand(plugin.getItemHandler().getItem("SUMMONING_EYE.json"));
+
+
+        player.getInventory().addItem(plugin.getItemHandler().getItem("SUMMONING_EYE.json"));
         player.sendMessage(ChatColor.DARK_PURPLE + "You recovered a Summoning Eye");
 
         block.removeMetadata("placer", Skyblock.getPlugin());

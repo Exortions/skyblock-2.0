@@ -45,52 +45,60 @@ public class EntitySpawner {
     }
 
     public void start() {
-        new BukkitRunnable() {
+        BukkitRunnable spawnTask = new BukkitRunnable() {
             @Override
             public void run() {
                 spawn();
             }
-        }.runTaskTimer(Skyblock.getPlugin(), 5L, delay);
+        };
+        spawnTask.runTaskTimer(Skyblock.getPlugin(), 5L, delay);
 
-        new BukkitRunnable() {
+        BukkitRunnable playerCheckTask = new BukkitRunnable() {
             @Override
             public void run() {
-                if (Bukkit.getOnlinePlayers().size() == 0) return;
-
-                AtomicBoolean players = new AtomicBoolean(false);
-                Bukkit.getOnlinePlayers().forEach((p) -> { if (Util.inCuboid(p.getLocation(), pos1, pos2)) players.set(true); });
-                if (!players.get()) {
-                    hasPlayers = false;
+                if (Bukkit.getOnlinePlayers().isEmpty()) {
                     return;
                 }
 
-                if (!hasPlayers) {
+                AtomicBoolean players = new AtomicBoolean(false);
+                Bukkit.getOnlinePlayers().forEach((p) -> {
+                    if (Util.inCuboid(p.getLocation(), pos1, pos2)) {
+                        players.set(true);
+                    }
+                });
+
+                if (!players.get()) {
+                    hasPlayers = false;
+                } else if (!hasPlayers) {
                     hasPlayers = true;
                     spawn();
                 }
             }
-        }.runTaskTimer(Skyblock.getPlugin(), 5L, 1);
+        };
+        playerCheckTask.runTaskTimer(Skyblock.getPlugin(), 5L, 1);
     }
 
     private void spawn() {
         spawned.removeIf((entity) -> entity.getVanilla().isDead() || entity.getLifeSpan() <= 0);
 
-        if (spawned.size() >= limit) return;
+        if (spawned.size() >= limit) {
+            return;
+        }
 
         for (int i = 0; i < amount; i++) {
-            if (Bukkit.getOnlinePlayers().size() == 0) break;
-
-            if (!hasPlayers) break;
+            if (Bukkit.getOnlinePlayers().isEmpty() || !hasPlayers) {
+                break;
+            }
 
             Location random = random();
 
             SkyblockEntity entity = type.getNewInstance(subType);
 
-            if (entity == null) continue;
-
-            entity.spawn(random);
-            entity.setLifeSpan((int) delay);
-            spawned.add(entity);
+            if (entity != null) {
+                entity.spawn(random);
+                entity.setLifeSpan((int) delay);
+                spawned.add(entity);
+            }
         }
     }
 
@@ -100,10 +108,12 @@ public class EntitySpawner {
             return new Location(pos1.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
 
-        Block block = blocks.get(Util.random(0, blocks.size() - 1));
+        int index = Util.random(0, blocks.size() - 1);
+        Block block = blocks.get(index);
 
         if (block.getType() != Material.AIR && block.getLocation().clone().add(0, 1, 0).getBlock().getType() == Material.AIR &&
                 block.getLocation().clone().add(0, 2, 0).getBlock().getType() == Material.AIR && block.getType().isSolid() && block.getLocation().getBlock().getType().equals(mustSpawnOn)) {
+            locationRequests = 0;
             return block.getLocation().add(0.5, 1, 0.5);
         }
 
