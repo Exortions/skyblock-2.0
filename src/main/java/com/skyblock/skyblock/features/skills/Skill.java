@@ -3,6 +3,7 @@ package com.skyblock.skyblock.features.skills;
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.enums.SkyblockStat;
+import com.skyblock.skyblock.events.SkyblockPlayerSkillXPChangeEvent;
 import com.skyblock.skyblock.features.pets.Pet;
 import com.skyblock.skyblock.utilities.Util;
 import lombok.Getter;
@@ -75,6 +76,8 @@ public abstract class Skill {
         player.setValue("skill." + skill.getName().toLowerCase() + ".exp", curr + xp);
         skill.update(player, (int) (curr));
         player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.ORB_PICKUP, 1f, 2f);
+
+        Bukkit.getPluginManager().callEvent(new SkyblockPlayerSkillXPChangeEvent(skill, player, xp));
 
         Pet pet = player.getPet();
 

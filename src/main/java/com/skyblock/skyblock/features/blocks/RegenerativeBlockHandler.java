@@ -71,13 +71,13 @@ public class RegenerativeBlockHandler implements Listener {
         put(Material.EMERALD_ORE, mines);
         put(Material.DIAMOND_ORE, mines);
         put(Material.DIAMOND_BLOCK, mines);
-        put(Material.NETHERRACK, new String[]{"Blazing Fortress"});
-        put(Material.QUARTZ_ORE, new String[]{"Blazing Fortress"});
-        put(Material.GLOWSTONE, new String[]{"Blazing Fortress"});
-        put(Material.OBSIDIAN, new String[]{"The End"});
+        put(Material.NETHERRACK, new String[] {"Blazing Fortress"});
+        put(Material.QUARTZ_ORE, new String[] {"Blazing Fortress"});
+        put(Material.GLOWSTONE, new String[] {"Blazing Fortress"});
+        put(Material.OBSIDIAN, new String[] {"Coal Mine", "Gold Mine", "Deep Caverns", "Gunpowder Mines", "Lapis Quarry", "Pigman's Den", "Slimehill", "Diamond Reserve", "Obsidian Sanctuary", "Dragon's Den", "The End"});
         put(Material.ENDER_STONE, new String[]{"The End"});
         put(Material.CROPS, farms);
-        put(Material.CARROT, new String[] { "Farm", "The Barn", "Mushroom Desert", "Mountain" });
+        put(Material.CARROT, new String[] {"Farm", "The Barn", "Mushroom Desert", "Mountain"});
         put(Material.POTATO, farms);
         put(Material.PUMPKIN, farms);
         put(Material.MELON_BLOCK, farms);

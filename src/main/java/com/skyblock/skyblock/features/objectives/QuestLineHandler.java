@@ -5,6 +5,7 @@ import com.skyblock.skyblock.features.objectives.hub.IntroduceYourselfQuest;
 import com.skyblock.skyblock.features.objectives.hub.TimeToStrikeQuest;
 import com.skyblock.skyblock.features.objectives.hub.AuctioneerQuest;
 import com.skyblock.skyblock.features.objectives.hub.TimberQuest;
+import com.skyblock.skyblock.features.objectives.mines.GoingDeeperQuest;
 import com.skyblock.skyblock.features.objectives.mines.LostAndFoundQuest;
 import com.skyblock.skyblock.features.objectives.starting.GettingStartedQuest;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class QuestLineHandler {
         register(new String[] { "Forest", "Birch Park" }, new TimberQuest());
         register(new String[] { "Bar", "Graveyard", "Spiders Den" }, new TimeToStrikeQuest());
         register("Gold Mine", new LostAndFoundQuest());
+        register(new String[] {"Gold Mine", "Deep Caverns", "Gunpowder Mines", "Lapis Quarry", "Pigman's Den", "Slimehill", "Diamond Reserve", "Obsidian Sanctuary"}, new GoingDeeperQuest());
 
         for (List<QuestLine> quest : quests.values()) {
             quest.forEach(QuestLine::onEnable);
@@ -45,7 +47,10 @@ public class QuestLineHandler {
         if (quests.containsKey(location)) {
             quests.get(location).add(line);
         } else {
-            quests.put(location, Collections.singletonList(line));
+            ArrayList<QuestLine> list = new ArrayList<>();
+            list.add(line);
+
+            quests.put(location, list);
         }
     }
 

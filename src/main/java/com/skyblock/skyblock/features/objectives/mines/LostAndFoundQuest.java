@@ -32,7 +32,7 @@ import java.util.*;
 public class LostAndFoundQuest extends QuestLine {
 
     public LostAndFoundQuest() {
-        super("lost_and_found", "Lost and Found", new TalkToLazyMinerObjective(), new FindPickaxeObjective(), new CollectIronAndGoldIngotsObjective(), new TalkToRustyObjective(), new ReachMiningVObjective());
+        super("lost_and_found", "Lost and Found", new TalkToLazyMinerObjective(), new FindPickaxeObjective(), new CollectIronAndGoldIngotsObjective());
 
         net.citizensnpcs.api.npc.NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.ARMOR_STAND, "", new Location(Skyblock.getSkyblockWorld(), -19.0, 24, -304.55, 90, -80));
         npc.data().set(net.citizensnpcs.api.npc.NPC.Metadata.NAMEPLATE_VISIBLE, false);
@@ -112,8 +112,11 @@ public class LostAndFoundQuest extends QuestLine {
                             SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
 
                             boolean alreadyTalked = (boolean) player.getValue("quests.lost_and_found.talkedToRusty");
+                            Objective obj = getObjective(player);
 
-                            if (!alreadyTalked || getObjective(player).getId().equals("talk_to_rusty")) {
+                            if (obj == null) return;
+
+                            if (!alreadyTalked && obj.getId().equals("talk_to_rusty")) {
                                 Util.sendDelayedMessages(player.getBukkitPlayer(), "Rusty", (pl) -> {
                                     getObjective(player).complete(pl);
                                     player.setValue("quests.lost_and_found.talkedToRusty", true);
@@ -132,6 +135,11 @@ public class LostAndFoundQuest extends QuestLine {
                         null
                 )
         );
+    }
+
+    @Override
+    protected boolean hasCompletionMessage() {
+        return true;
     }
 
     private static final class TalkToLazyMinerObjective extends Objective {
@@ -173,13 +181,6 @@ public class LostAndFoundQuest extends QuestLine {
             super("collect_iron_and_gold_ingots", "Collect iron and gold ingots");
         }
 
-        @Override
-        public String getSuffix(SkyblockPlayer player) {
-            int collected = (int) player.getValue("quests.lost_and_found.mined");
-
-            return ChatColor.translateAlternateColorCodes('&', "&7(&e" + collected + "&7/&a2&7)");
-        }
-
         @EventHandler
         public void onPickupItem(PlayerPickupItemEvent event) {
             if (event.getItem() == null || event.getItem().getItemStack().getType().equals(Material.AIR)) return;
@@ -194,32 +195,12 @@ public class LostAndFoundQuest extends QuestLine {
         }
     }
 
-    private static final class TalkToRustyObjective extends Objective {
-        public TalkToRustyObjective() {
-            super("talk_to_rusty", "Talk to Rusty");
-        }
-    }
-
-    private static final class ReachMiningVObjective extends Objective {
-        public ReachMiningVObjective() {
-            super("reach_mining_v", "Reach Mining V");
-        }
-
-        @Override
-        public String getSuffix(SkyblockPlayer player) {
-            return ChatColor.translateAlternateColorCodes('&', "&8(&b" + Skill.getLevel(Skill.getXP(new Mining(), player)) + "&8/&31,175 XP&8)");
-        }
-
-        @EventHandler
-        public void onCollectBlock(SkyblockPlayerCollectItemEvent event) {
-            if (!event.getCollection().getCategory().equalsIgnoreCase("mining")) return;
-
-            if (Skill.getLevel(Skill.getXP(new Mining(), event.getPlayer())) >= 5) {
-                complete(event.getPlayer().getBukkitPlayer());
-            }
-        }
-
-    }
+//    private static final class TalkToRustyObjective extends Objective {
+//        public TalkToRustyObjective() {
+//            super("talk_to_rusty", "Talk to Rusty");
+//        }
+//    }
+//
 
     private static final class RustyGui extends Gui {
         public RustyGui(Player opener) {
