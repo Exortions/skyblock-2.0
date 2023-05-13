@@ -48,11 +48,6 @@ public class GoingDeeperQuest extends QuestLine {
             super("reach_mining_v", "Reach Mining V");
         }
 
-        @Override
-        public String getSuffix(SkyblockPlayer player) {
-            return ChatColor.translateAlternateColorCodes('&', "&8(&b" + Skill.getLevel(Skill.getXP(new Mining(), player)) + "&8/&31,175 XP&8)");
-        }
-
         @EventHandler
         public void onCollectBlock(SkyblockPlayerSkillXPChangeEvent event) {
             if (!isThisObjective(event.getPlayer().getBukkitPlayer())) return;
