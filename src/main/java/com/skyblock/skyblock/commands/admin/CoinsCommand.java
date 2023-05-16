@@ -26,13 +26,13 @@ public class CoinsCommand implements Command {
         SkyblockPlayer sb = SkyblockPlayer.getPlayer(player);
         switch (args[0]) {
             case "add":
-                sb.addCoins(Integer.parseInt(args[1]));
+                sb.addCoins(Long.parseLong(args[1]));
                 break;
             case "remove":
-                sb.subtractCoins(Integer.parseInt(args[1]));
+                sb.subtractCoins(Long.parseLong(args[1]));
                 break;
             case "set":
-                sb.setValue("stats.purse", Integer.parseInt(args[1]));
+                sb.setValue("stats.purse", Long.parseLong(args[1]));
                 break;
         }
 
