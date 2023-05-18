@@ -1,10 +1,11 @@
 package com.skyblock.skyblock.features.objectives;
 
 import com.skyblock.skyblock.SkyblockPlayer;
+import com.skyblock.skyblock.features.objectives.foraging.IntoTheWoodsQuest;
 import com.skyblock.skyblock.features.objectives.hub.IntroduceYourselfQuest;
 import com.skyblock.skyblock.features.objectives.hub.TimeToStrikeQuest;
 import com.skyblock.skyblock.features.objectives.hub.AuctioneerQuest;
-import com.skyblock.skyblock.features.objectives.hub.TimberQuest;
+import com.skyblock.skyblock.features.objectives.foraging.TimberQuest;
 import com.skyblock.skyblock.features.objectives.mines.GoingDeeperQuest;
 import com.skyblock.skyblock.features.objectives.mines.LostAndFoundQuest;
 import com.skyblock.skyblock.features.objectives.starting.GettingStartedQuest;
@@ -22,6 +23,7 @@ public class QuestLineHandler {
         register("Village", new IntroduceYourselfQuest());
         register("Auction House", new AuctioneerQuest());
         register(new String[] { "Forest", "Birch Park" }, new TimberQuest());
+        register(new String[] { "Forest", "Birch Park", "Spruce Woods", "Dark Thicket", "Savanna Woodland", "Jungle Island" }, new IntoTheWoodsQuest());
         register(new String[] { "Bar", "Graveyard", "Spiders Den" }, new TimeToStrikeQuest());
         register("Gold Mine", new LostAndFoundQuest());
         register(new String[] {"Gold Mine", "Deep Caverns", "Gunpowder Mines", "Lapis Quarry", "Pigman's Den", "Slimehill", "Diamond Reserve", "Obsidian Sanctuary"}, new GoingDeeperQuest());

@@ -1,4 +1,4 @@
-package com.skyblock.skyblock.features.objectives.hub;
+package com.skyblock.skyblock.features.objectives.foraging;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.SkyblockPlayer;
@@ -78,10 +78,12 @@ public class TimberQuest extends QuestLine {
                 new Location(Skyblock.getSkyblockWorld(), -286, 82, -16),
                 (p) -> {
                     SkyblockPlayer player = SkyblockPlayer.getPlayer(p);
+                    QuestLine quest = Skyblock.getPlugin().getQuestLineHandler().getFromPlayer(player);
+
                     String[] dialogue = new String[] { "Hello!", "Fine time to cut some wood!", "I'm quite forgetful, I tend to say the same thing over and over again." };
-                    if (getObjective(player).getId().equals("talk_to_charlie")) {
+                    if (quest != null && quest.getObjective(player).getId().contains("talk_to_charlie")) {
                         Util.sendDelayedMessages(p, "Charlie", (player1 -> {
-                            getObjective(player).complete(p);
+                            quest.getObjective(player).complete(p);
                         }), dialogue);
                     } else {
                         Util.sendDelayedMessages(p, "Charlie", dialogue);

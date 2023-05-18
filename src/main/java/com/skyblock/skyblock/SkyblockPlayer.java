@@ -776,6 +776,7 @@ public class SkyblockPlayer {
                 config.set("quests.timber.logsBroken", 0);
                 config.set("quests.timber.birchLogsBroken", 0);
                 config.set("quests.timber.talkedToLumberjack", false);
+                config.set("quests.intothewoods.darkOakLogsBroken", 0);
                 config.set("quests.time_to_strike.bartender.interacted", false);
                 config.set("quests.time_to_strike.zombiesKilled", 0);
                 config.set("quests.lost_and_found.talkedToLazyMiner", false);

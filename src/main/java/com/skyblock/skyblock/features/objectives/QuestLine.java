@@ -34,7 +34,7 @@ public class QuestLine {
             return obj;
         }
 
-        return null;
+        return new Objective("", "");
     }
 
     public Objective getNext(Objective obj) {
