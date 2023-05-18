@@ -2,6 +2,7 @@ package com.skyblock.skyblock.commands.player;
 
 import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.island.IslandManager;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.TrueAlias;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
@@ -35,6 +36,13 @@ public class WarpCommand implements Command, TrueAlias<WarpCommand> {
 
         if (warps.containsKey(warpName)) {
             player.teleport(warps.get(warpName));
+
+            return;
+        }
+
+        // Operator Warps
+        if (player.isOp()) {
+            player.teleport(Util.getSpawnLocation(warpName));
         }
     }
 }

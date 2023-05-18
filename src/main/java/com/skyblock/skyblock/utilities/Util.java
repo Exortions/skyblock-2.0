@@ -1069,4 +1069,40 @@ public class Util {
         return success;
     }
 
+    public Location getSpawnLocation(String skyblockLocation) {
+        skyblockLocation = ChatColor.stripColor(skyblockLocation).replaceAll(" ", "_").toLowerCase();
+
+        switch (skyblockLocation) {
+            case "gold_mine":
+                return new Location(Skyblock.getSkyblockWorld(), -4, 74, -273, -180, 0);
+            case "spiders_den":
+                return new Location(Skyblock.getSkyblockWorld(), -201, 84, -232, 135, 0);
+            case "the_end":
+            case "dragon's_nest":
+                return new Location(Skyblock.getSkyblockWorld(), -499, 101, -275, 90, 0);
+            case "the_park":
+            case "birch_park":
+            case "spruce_woods":
+            case "dark_thicket":
+            case "savanna_woodland":
+            case "jungle_island":
+                return new Location(Skyblock.getSkyblockWorld(), -276, 82, -12, 90, 0);
+            case "blazing_fortress":
+                return new Location(Skyblock.getSkyblockWorld(), -310, 83, -381, -180, 0);
+            case "the_barn":
+                return new Location(Skyblock.getSkyblockWorld(), 113, 71, -206, -145, 0);
+            case "mushroom_desert":
+                return new Location(Skyblock.getSkyblockWorld(), 154, 77, -364, -145, 0);
+            case "deep_caverns":
+            case "gunpowder_mines":
+            case "lapis_quarry":
+            case "pigman's_den":
+            case "slimehill":
+            case "diamond_reserve":
+            case "obsidian_sanctuary":
+                return new Location(Bukkit.getWorld("deep_caverns"), 4, 157, 83.5, -180, 0);
+        }
+
+        return new Location(Skyblock.getSkyblockWorld(), -2 , 70,  -84,  -180, 0);
+    }
 }

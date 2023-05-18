@@ -522,15 +522,19 @@ public class SkyblockPlayer {
 
         bukkitPlayer.setFallDistance(0.0f);
 
-        if (isOnIsland()) return;
+        if (isOnIsland()) {
+            bukkitPlayer.performCommand("warp home");
+            return;
+        }
 
         double sub = getDouble("stats.purse") / 2;
         bukkitPlayer.sendMessage(ChatColor.RED + "You died and lost " + Util.formatDouble(sub) + " coins!");
-      	if (getExtraData("lastSpawn") == null) bukkitPlayer.performCommand("warp hub");
-        else bukkitPlayer.teleport((Location) getExtraData("lastSpawn"));
 
-        bukkitPlayer.setVelocity(new Vector(0, 0, 0));
+        bukkitPlayer.teleport(Util.getSpawnLocation(getCurrentLocationName()));
+
         bukkitPlayer.playSound(bukkitPlayer.getLocation(), Sound.ZOMBIE_METAL, 1f, 2f);
+
+        Util.delay(() -> bukkitPlayer.setVelocity(new Vector(0, 0, 0)), 2);
 
         setValue("stats.purse", sub);
     }
