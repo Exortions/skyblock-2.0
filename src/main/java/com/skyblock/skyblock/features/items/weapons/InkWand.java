@@ -29,8 +29,8 @@ public class InkWand extends SkyblockItem {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        if (skyblockPlayer.isOnCooldown("ink_wand")) {
-            player.sendMessage(ChatColor.RED + "Ability is on cooldown");
+        if (skyblockPlayer.isOnCooldown(getInternalName())) {
+            skyblockPlayer.sendOnCooldown(getInternalName());
             return;
         }
 

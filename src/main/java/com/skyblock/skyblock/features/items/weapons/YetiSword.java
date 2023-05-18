@@ -40,8 +40,8 @@ public class YetiSword extends ListeningItem {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        if (skyblockPlayer.isOnCooldown("yeti_sword")) {
-            player.sendMessage(ChatColor.RED + "Ability is on cooldown");
+        if (skyblockPlayer.isOnCooldown(getInternalName())) {
+            skyblockPlayer.sendOnCooldown(getInternalName());
             return;
         }
 

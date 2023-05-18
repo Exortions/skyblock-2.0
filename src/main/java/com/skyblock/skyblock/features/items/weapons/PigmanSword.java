@@ -29,7 +29,7 @@ public class PigmanSword extends SkyblockItem {
         SkyblockPlayer player = SkyblockPlayer.getPlayer(event.getPlayer());
 
         if (player.isOnCooldown(getInternalName())) {
-            player.getBukkitPlayer().sendMessage(ChatColor.RED + "This ability is on cooldown.");
+            player.sendOnCooldown(getInternalName());
 
             return;
         }

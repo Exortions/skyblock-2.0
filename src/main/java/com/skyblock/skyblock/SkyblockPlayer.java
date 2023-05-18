@@ -13,6 +13,7 @@ import com.skyblock.skyblock.features.collections.Collection;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.island.IslandManager;
 import com.skyblock.skyblock.features.items.ArmorSet;
+import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.features.location.SkyblockLocation;
 import com.skyblock.skyblock.features.merchants.Merchant;
 import com.skyblock.skyblock.features.minions.MinionHandler;
@@ -73,6 +74,7 @@ public class SkyblockPlayer {
     private AuctionCreationGUI.AuctionProgress progress;
     private HashMap<SkyblockStat, Double> stats;
     private HashMap<String, Boolean> cooldowns;
+    private HashMap<String, Integer> cooldownTimers;
     private HashMap<String, Object> extraData;
     private List<PotionEffect> activeEffects;
     private AuctionSettings auctionSettings;
@@ -121,6 +123,7 @@ public class SkyblockPlayer {
         this.bukkitPlayer = Bukkit.getPlayer(uuid);
         this.hand = Util.getEmptyItemBase();
         this.cooldowns = new HashMap<>();
+        this.cooldownTimers = new HashMap<>();
         this.extraData = new HashMap<>();
         this.stats = new HashMap<>();
         this.minions = new ArrayList<>();
@@ -595,7 +598,28 @@ public class SkyblockPlayer {
     public void setCooldown(String id, int secondsDelay) {
         cooldowns.put(id, false);
 
+        cooldownTimers.put(id, secondsDelay);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                cooldownTimers.put(id, cooldownTimers.get(id) - 1);
+
+                if (cooldownTimers.get(id) == 0) cancel();
+            }
+        }.runTaskTimer(Skyblock.getPlugin(), 0, 20);
+
         delay(() -> cooldowns.put(id, true), secondsDelay);
+    }
+
+    public void sendOnCooldown(String id) {
+        int seconds = cooldownTimers.get(id);
+
+        getBukkitPlayer().sendMessage(ChatColor.RED + "This ability is on cooldown for " + Math.max(seconds, 1) + "s.");
+
+        if (getBoolValue("settings.abilityCooldownSounds")) {
+            getBukkitPlayer().playSound(getBukkitPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 0);
+        }
     }
 
     public void delay(Runnable runnable, int delay) {

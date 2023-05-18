@@ -24,7 +24,7 @@ public class AspectOfTheJerry extends SkyblockItem {
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
         if (skyblockPlayer.isOnCooldown(getInternalName())) {
-            player.sendMessage(ChatColor.RED + "This ability is on cooldown.");
+            skyblockPlayer.sendOnCooldown(getInternalName());
 
             return;
         }

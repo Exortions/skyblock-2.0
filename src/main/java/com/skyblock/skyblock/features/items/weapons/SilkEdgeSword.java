@@ -60,8 +60,8 @@ public class SilkEdgeSword extends ListeningItem {
         Player player = event.getPlayer();
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        if (skyblockPlayer.isOnCooldown("silk_edge_sword")) {
-            player.sendMessage(ChatColor.RED + "Ability is on cooldown");
+        if (skyblockPlayer.isOnCooldown(getInternalName())) {
+            skyblockPlayer.sendOnCooldown(getInternalName());
             return;
         }
 
