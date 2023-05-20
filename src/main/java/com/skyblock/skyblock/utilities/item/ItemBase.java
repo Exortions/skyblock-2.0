@@ -10,6 +10,7 @@ import com.skyblock.skyblock.features.enchantment.SkyblockEnchantment;
 import com.skyblock.skyblock.features.enchantment.SkyblockEnchantmentHandler;
 import com.skyblock.skyblock.features.enchantment.enchantments.sword.CriticalEnchantment;
 import com.skyblock.skyblock.features.items.SkyblockItemHandler;
+import com.skyblock.skyblock.features.reforge.ReforgeData;
 import com.skyblock.skyblock.features.reforge.ReforgeStat;
 import com.skyblock.skyblock.utilities.Util;
 import de.tr7zw.nbtapi.NBTItem;
@@ -120,15 +121,20 @@ public class ItemBase {
             this.abilityType = nbt.getString("abilityType");
             this.abilityCost = nbt.getInteger("abilityCost");
         }
-        this.intelligence = nbt.getInteger("intelligence");
-        this.attackSpeed = nbt.getInteger("attackSpeed");
-        this.critChance = nbt.getInteger("critChance");
-        this.critDamage = nbt.getInteger("critDamage");
-        this.strength = nbt.getInteger("strength");
-        this.defense = nbt.getInteger("defense");
-        this.damage = nbt.getInteger("damage");
-        this.health = nbt.getInteger("health");
-        this.speed = nbt.getInteger("speed");
+
+        ReforgeStat stats = reforge.getReforgeData(rarityEnum);
+
+        if (stats == null) stats = new ReforgeStat(rarityEnum, new HashMap<>(), new ReforgeData(null, null, null));
+
+        this.intelligence = nbt.getInteger("intelligence") - stats.get(SkyblockStat.MANA);
+        this.attackSpeed = nbt.getInteger("attackSpeed") - stats.get(SkyblockStat.ATTACK_SPEED);
+        this.critChance = nbt.getInteger("critChance") - stats.get(SkyblockStat.CRIT_CHANCE);
+        this.critDamage = nbt.getInteger("critDamage") - stats.get(SkyblockStat.CRIT_DAMAGE);
+        this.strength = nbt.getInteger("strength") - stats.get(SkyblockStat.STRENGTH);
+        this.defense = nbt.getInteger("defense") - stats.get(SkyblockStat.DEFENSE);
+        this.damage = nbt.getInteger("damage") - stats.get(SkyblockStat.DAMAGE);
+        this.health = nbt.getInteger("health") - stats.get(SkyblockStat.HEALTH);
+        this.speed = nbt.getInteger("speed") - stats.get(SkyblockStat.SPEED);
         this.skyblockId = nbt.getString("skyblockId");
         this.item = this.getItem(rarity);
 
