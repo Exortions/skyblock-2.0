@@ -29,6 +29,7 @@ import com.skyblock.skyblock.features.skills.Skill;
 import com.skyblock.skyblock.features.slayer.SlayerHandler;
 import com.skyblock.skyblock.features.slayer.SlayerQuest;
 import com.skyblock.skyblock.features.slayer.SlayerType;
+import com.skyblock.skyblock.sql.SQLConfiguration;
 import com.skyblock.skyblock.utilities.BossBar;
 import com.skyblock.skyblock.utilities.SkyblockMath;
 import com.skyblock.skyblock.utilities.Util;
@@ -78,7 +79,7 @@ public class SkyblockPlayer {
     private HashMap<String, Object> extraData;
     private List<PotionEffect> activeEffects;
     private AuctionSettings auctionSettings;
-    private FileConfiguration config;
+    private SQLConfiguration config;
     private ArmorStand petDisplay;
     private BossBar bossBar;
     private Player bukkitPlayer;
@@ -163,7 +164,7 @@ public class SkyblockPlayer {
                 if (pet != null) pet.setActive(true);
             }
 
-            config = YamlConfiguration.loadConfiguration(configFile);
+            config = new SQLConfiguration(configFile, this);
 
             if (getValue("auction.auctionSettings") == null) {
                 auctionSettings = new AuctionSettings(AuctionCategory.WEAPON, AuctionSettings.AuctionSort.HIGHEST, null, AuctionSettings.BinFilter.ALL, false);
@@ -683,13 +684,9 @@ public class SkyblockPlayer {
 
     public void saveToDisk() {
         for (Map.Entry<String, Object> entry : dataCache.entrySet()) {
-            try {
-                config.set(entry.getKey(), entry.getValue());
-                config.save(configFile);
-                config = YamlConfiguration.loadConfiguration(configFile);
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+            config.set(entry.getKey(), entry.getValue());
+            config.updateYamlFile();
+            config = new SQLConfiguration(configFile, this);
         }
     }
 
@@ -709,10 +706,12 @@ public class SkyblockPlayer {
         File folder = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "players");
         if (!folder.exists())  folder.mkdirs();
         configFile = new File(Skyblock.getPlugin(Skyblock.class).getDataFolder() + File.separator + "players" + File.separator + getBukkitPlayer().getUniqueId() + ".yml");
-        this.config = YamlConfiguration.loadConfiguration(configFile);
+        this.config = new SQLConfiguration(configFile, this);
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
+
+                config.initializeUUID();
 
                 forEachStat((s) -> {
                     config.set("stats." + s.name().toLowerCase(), 0);
@@ -832,7 +831,7 @@ public class SkyblockPlayer {
                 config.set("harp.godly_imagination.best", -1);
                 config.set("harp.la_vie_en_rose.best", -1);
 
-                config.save(configFile);
+                config.updateYamlFile();
 
                 Bukkit.getConsoleSender().sendMessage("Config finished: " + config + "");
             } catch (IOException e){
