@@ -18,7 +18,7 @@ public class SQLConfiguration {
     private final File file;
     private FileConfiguration config;
     private final SkyblockPlayer player;
-    private Connection connection;
+    private final Connection connection;
 
     public SQLConfiguration(File file, SkyblockPlayer player) {
         this.file = file;

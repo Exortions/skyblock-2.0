@@ -96,6 +96,8 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        long start = System.currentTimeMillis();
+
         for (Chunk c : player.getWorld().getLoadedChunks()) {
             Bukkit.getPluginManager().callEvent(new ChunkLoadEvent(c, false));
         }
@@ -131,6 +133,8 @@ public class PlayerListener implements Listener {
                 }
             }.runTaskTimer(plugin, 5L, 1);
         });
+
+        player.sendMessage(ChatColor.AQUA + "[DEBUG] " + ChatColor.YELLOW + "Took " + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.YELLOW + " to retrieve your Skyblock Data!");
     }
 
     @EventHandler

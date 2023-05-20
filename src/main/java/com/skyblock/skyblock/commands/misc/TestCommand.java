@@ -1,11 +1,14 @@
 package com.skyblock.skyblock.commands.misc;
 
 import com.skyblock.skyblock.Skyblock;
+import com.skyblock.skyblock.SkyblockPlayer;
 import com.skyblock.skyblock.features.entities.dragon.DragonSequence;
+import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.command.Command;
 import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @RequiresPlayer
@@ -41,7 +44,7 @@ public class TestCommand implements Command {
 
 //        player.openInventory(new AnvilGUI());
 
-        DragonSequence.endingSequence();
+//        DragonSequence.endingSequence();
 
 //        ItemStack item = player.getItemInHand();
 //
@@ -52,5 +55,14 @@ public class TestCommand implements Command {
 //        if (!category.getCanPut().test(item)) Bukkit.broadcastMessage("Failed Category Test");
 //        if (!Rarity.valueOf(ChatColor.stripColor(new NBTItem(item).getString("rarity")).split(" ")[0]).equals(tier)) Bukkit.broadcastMessage("Failed Rarity Test");
 //        if (!ChatColor.stripColor(item.getItemMeta().getDisplayName()).toLowerCase().contains(search.toLowerCase()) && !search.equals("")) Bukkit.broadcastMessage("Failed Search Test");
+
+        long start = System.currentTimeMillis();
+
+        SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
+
+        boolean cached = skyblockPlayer.getDataCache().containsKey(args[0]);
+        skyblockPlayer.getValue(args[0]);
+
+        player.sendMessage(ChatColor.AQUA + "[DEBUG] " + ChatColor.YELLOW + "Took " + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.YELLOW + " to retrieve " + (cached ? "cached" : "uncached") + " data: " + ChatColor.GREEN + args[0] + ChatColor.YELLOW + "!");
     }
 }

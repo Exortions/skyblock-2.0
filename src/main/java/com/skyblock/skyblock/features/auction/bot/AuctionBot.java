@@ -152,6 +152,8 @@ public class AuctionBot {
 
                             Auction auctionObject = Skyblock.getPlugin().getAuctionHouse().createFakeAuction(neu, Bukkit.getOfflinePlayer(seller), (highest == 0 ? start : highest), (endTime - startTime) / 50, bin, id);
 
+                            if (auctionObject == null) continue;
+
                             for (AuctionCategory cat : AuctionCategory.values()) {
                                 if (cat.getCanPut().test(auctionObject.getItem())) {
                                     AuctionHouse.CATEGORY_CACHE.get(cat).add(auctionObject);

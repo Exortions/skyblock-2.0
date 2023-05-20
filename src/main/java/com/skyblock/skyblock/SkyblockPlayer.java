@@ -653,7 +653,6 @@ public class SkyblockPlayer {
     }
 
     public Object getValue(String path) {
-        if (tick == 0) return config.get(path);
         if (!dataCache.containsKey(path)) dataCache.put(path, config.get(path));
 
         return dataCache.get(path);
