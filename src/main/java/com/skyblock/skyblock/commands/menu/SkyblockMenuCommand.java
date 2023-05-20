@@ -49,15 +49,8 @@ public class SkyblockMenuCommand implements Command, TrueAlias<SkyblockMenuComma
         ItemStack yourSkyblockProfile = createSkyblockProfileItem(skyblockPlayer, true);
         ItemStack yourSkills = this.createSkillsItem(skyblockPlayer);
 
-        int unlockedCollections = 0;
-        int totalCollections = 0;
-
-        for (Collection collection : Collection.getCollections()) {
-            totalCollections++;
-
-            if (skyblockPlayer.getValue("collection." + collection.getName().toLowerCase() + ".unlocked").equals(true))
-                unlockedCollections++;
-        }
+        int unlockedCollections = skyblockPlayer.getIntValue("collection.unlocked");
+        int totalCollections = Collection.getCollections().size();
 
         ItemStack collection = this.getCollectionItem(unlockedCollections, totalCollections);
         ItemStack recipeBook = SkyblockMenuCommand.createRecipeBookItem(skyblockPlayer);

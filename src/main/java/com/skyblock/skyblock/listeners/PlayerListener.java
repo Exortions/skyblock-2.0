@@ -119,7 +119,11 @@ public class PlayerListener implements Listener {
                 if (!Skyblock.getPlugin().getFairySoulHandler().initialized)
                     Skyblock.getPlugin().getFairySoulHandler().init();
 
-                player.performCommand("sb island");
+                if (skyblockPlayer.isOnIsland()) {
+                    player.performCommand("is");
+                }
+
+                player.teleport(Util.getSpawnLocation(skyblockPlayer.getCurrentLocationName()));
             }, 1);
 
             new BukkitRunnable() {

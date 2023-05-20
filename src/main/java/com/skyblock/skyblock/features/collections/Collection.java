@@ -103,6 +103,8 @@ public class Collection {
         if (skyblockPlayer.getValue("collection." + this.name.toLowerCase() + ".unlocked").equals(false)) {
             skyblockPlayer.setValue("collection." + this.name.toLowerCase() + ".unlocked", true);
 
+            skyblockPlayer.setValue("collection.unlocked", skyblockPlayer.getIntValue("collection.unlocked") + 1);
+
             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "  COLLECTION UNLOCKED " + ChatColor.YELLOW + this.name);
 
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 2);

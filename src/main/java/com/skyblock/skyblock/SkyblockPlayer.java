@@ -727,6 +727,8 @@ public class SkyblockPlayer {
 
                 config.set("stats.purse", 0.0);
 
+                config.set("collection.unlocked", 0);
+
                 for (Collection collection : Collection.getCollections()) {
                     config.set("collection." + collection.getName().toLowerCase() + ".level", 0);
                     config.set("collection." + collection.getName().toLowerCase() + ".exp", 0);
