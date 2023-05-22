@@ -103,12 +103,12 @@ public class PlayerListener implements Listener {
                 skyblockPlayer.setHand(player.getItemInHand());
             }
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
+//            new BukkitRunnable() {
+//                @Override
+//                public void run() {
                     skyblockPlayer.tick();
-                }
-            }.runTaskLater(plugin, 20L);
+//                }
+//            }.runTaskLater(plugin, 20L);
 
             this.plugin.getMinionHandler().reloadPlayer(skyblockPlayer, false);
 
