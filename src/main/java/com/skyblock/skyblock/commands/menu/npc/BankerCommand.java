@@ -79,7 +79,7 @@ public class BankerCommand implements Command {
                     String timeString = Util.calculateTimeAgoWithPeriodAndDuration(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), ZoneId.systemDefault());
                     String plusOrMinus = amount > 0 ? "&a+" : "&c-";
 
-                    transactions.add(plusOrMinus + " &6" + Util.formatInt(Util.assertPositive((int) amount)) + "&7, &e" + timeString + " &7by " + by);
+                    transactions.add(plusOrMinus + " &6" + Util.formatInt(Util.abs((int) amount)) + "&7, &e" + timeString + " &7by " + by);
                 }
 
                 inventory.setItem(15, new ItemBuilder(ChatColor.GREEN + "Recent Transactions", Material.PAPER).setLore(
