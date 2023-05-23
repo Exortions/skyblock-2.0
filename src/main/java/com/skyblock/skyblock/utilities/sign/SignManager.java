@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -79,7 +78,7 @@ public class SignManager {
             final ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
 
             try {
-                pipeline.addBefore("packet_handler", player.getName(), handler);
+                pipeline.addBefore("packet_handler", "sb-sign-manager", handler);
             } catch (Exception ignored) {} // player already has a handler
         }
 
