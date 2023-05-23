@@ -5,12 +5,12 @@ import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.items.SkyblockItem;
 import com.skyblock.skyblock.utilities.Util;
 import com.skyblock.skyblock.utilities.item.ItemBase;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
@@ -70,47 +70,45 @@ public class AspectOfTheDragons extends SkyblockItem {
             skyblockPlayer.setCooldown(getInternalName(), 5);
         }
 
-        this.playEffect(player.getLocation().add(player.getLocation().getDirection().multiply(2)), player.getLocation().getDirection());
+        this.playEffect(player);
 
         Util.sendAbility(skyblockPlayer, "Dragon Rage", cost);
     }
 
-    public void playEffect(Location location, Vector direction) {
-        Location playersCursor = location.add(direction.multiply(2)).add(0, 1.75, 0);
 
-        double offset = 0.75;
+    public void playEffect(Player player) {
+        double circles = 5;
+        double delay = 2.5;
+        double distance = 0.75;
 
-        // TODO: Rotate (kill me now)
+        double radius = 0.75;
+        double amount = 8;
 
-        // top
-        ParticleEffect.FLAME.display(playersCursor.add(0, offset, 0), 0, 0, 0, 0, 1, null);
-        playersCursor.subtract(0, offset, 0);
+        Vector dir = player.getLocation().getDirection();
+        Location location = player.getLocation().add(0, 0.75, 0);
 
-        // bottom
-        ParticleEffect.FLAME.display(playersCursor.add(0, -offset, 0));
-        playersCursor.subtract(0, -offset, 0);
+        for (int c = 0; c < circles; c++) {
+            int iteration = c;
 
-        // left
-        ParticleEffect.FLAME.display(playersCursor.add(direction.getZ() * (offset / 2), 0, -direction.getX() * (offset / 2)));
-        playersCursor.subtract(direction.getZ() * (offset / 2), 0, -direction.getX() * (offset / 3) + (offset / 4));
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Vector direction = dir.clone();
+                    Location loc = location.clone().add(direction.multiply(3 + (iteration * distance))).add(0, 0.75, 0);
 
-        // right
-        ParticleEffect.FLAME.display(playersCursor.add(-direction.getZ() * (offset / 2), 0, direction.getX() * (offset / 2)));
-        playersCursor.subtract(-direction.getZ() * (offset / 2), 0, direction.getX() * (offset / 2));
+                    Vector x1 = new Vector(-direction.clone().normalize().getZ(), 0d, direction.clone().normalize().getX()).normalize();
+                    Vector x2 = direction.clone().normalize().crossProduct(x1).normalize();
 
-        // top left
-        ParticleEffect.FLAME.display(playersCursor.add(direction.getZ() * offset / 3, offset - (offset / 3), -direction.getX() * offset / 3));
-        playersCursor.subtract(direction.getZ() * offset / 3, offset - (offset / 3), -direction.getX() * offset / 3);
+                    x1 = Util.rotateAroundAxisZ(x1, iteration * (360 / circles * 2));
+                    x2 = Util.rotateAroundAxisZ(x2, iteration * (360 / circles * 2));
 
-        // top right
-        ParticleEffect.FLAME.display(playersCursor.add(-direction.getZ() * offset / 3, offset - (offset / 3), direction.getX() * offset / 3));
-        playersCursor.subtract(-direction.getZ() * offset / 3, offset - (offset / 3), direction.getX() * offset / 3);
+                    for (int i = 0; i < 8; i++) {
+                        Location position = loc.clone().add(x1.clone().multiply(radius * Math.sin((double) i / amount * Math.PI * 2d))).add(x2.clone().multiply(radius * Math.cos((double) i / amount * Math.PI * 2d)));
 
-        // bottom left
-        ParticleEffect.FLAME.display(playersCursor.add(direction.getZ() * offset / 3, -offset + (offset / 3), -direction.getX() * offset / 3));
-        playersCursor.subtract(direction.getZ() * offset / 3, -offset + (offset / 3), -direction.getX() * offset / 3);
-
-        // bottom right
-        ParticleEffect.FLAME.display(playersCursor.add(-direction.getZ() * offset / 3, -offset + (offset / 3), direction.getX() * offset / 3));
+                        ParticleEffect.FLAME.display(position, 0, 0, 0, 0, 3, null);
+                    }
+                }
+            }.runTaskLater(plugin, (long) (c * delay));
+        }
     }
 }

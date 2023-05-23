@@ -48,6 +48,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.Potion;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
@@ -1105,4 +1106,41 @@ public class Util {
 
         return new Location(Skyblock.getSkyblockWorld(), -2 , 70,  -84,  -180, 0);
     }
+
+    public Vector rotateAroundAxisX(Vector v, double angle) {
+        double y, z, cos, sin;
+
+        cos = Math.cos(angle);
+        sin = Math.sin(angle);
+
+        y = v.getY() * cos - v.getZ() * sin;
+        z = v.getY() * sin + v.getZ() * cos;
+
+        return v.setY(y).setZ(z);
+    }
+
+    public Vector rotateAroundAxisY(Vector v, double angle) {
+        double x, z, cos, sin;
+
+        cos = Math.cos(angle);
+        sin = Math.sin(angle);
+
+        x = v.getX() * cos + v.getZ() * sin;
+        z = v.getX() * -sin + v.getZ() * cos;
+
+        return v.setX(x).setZ(z);
+    }
+
+    public Vector rotateAroundAxisZ(Vector v, double angle) {
+        double x, y, cos, sin;
+
+        cos = Math.cos(angle);
+        sin = Math.sin(angle);
+
+        x = v.getX() * cos - v.getY() * sin;
+        y = v.getX() * sin + v.getY() * cos;
+
+        return v.setX(x).setY(y);
+    }
+
 }
