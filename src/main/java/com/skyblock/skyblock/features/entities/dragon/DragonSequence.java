@@ -130,7 +130,15 @@ public class DragonSequence implements Listener {
             block.setType(Material.AIR);
         }
 
-        session = Util.pasteSchematic(new Location(Skyblock.getSkyblockWorld(), -595, 22, -276), "gate_closed");
+        try {
+            session = Util.pasteSchematic(new Location(Skyblock.getSkyblockWorld(), -595, 22, -276), "gate_closed");
+        } catch (Exception ex) {
+            session = null;
+
+            Bukkit.broadcastMessage(ChatColor.RED + "Cannot summon dragon: Gate schematic not found or corrupted!");
+
+            return;
+        }
 
         dragonGate = new DragonGate();
         dragonGate.spawn();

@@ -49,7 +49,10 @@ public class DragonGate implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (healthDisplay.getEntity().isDead()) cancel();
+                if (healthDisplay.getEntity() == null || healthDisplay.getEntity().isDead()) {
+                    cancel();
+                    return;
+                }
                 healthDisplay.getEntity().setCustomName(getHealthDisplay());
             }
         }.runTaskTimer(Skyblock.getPlugin(), 1, 1);
