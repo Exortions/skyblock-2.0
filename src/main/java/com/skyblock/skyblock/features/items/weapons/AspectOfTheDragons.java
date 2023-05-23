@@ -46,7 +46,7 @@ public class AspectOfTheDragons extends SkyblockItem {
 
         if (!skyblockPlayer.checkMana(cost)) return;
 
-        Entity[] entities = getEntitiesInFront(player, 4);
+        Entity[] entities = getEntitiesInFront(player, 7);
 
         player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 0.5f, 1);
 
