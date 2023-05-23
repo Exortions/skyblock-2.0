@@ -11,10 +11,30 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.UUID;
 
 public class SQLConfiguration {
 
     private static final String TABLE_NAME = "players";
+    private static final File f = new File(Skyblock.getPlugin().getDataFolder().getAbsolutePath() + File.separator + "database.db");
+
+    public static boolean delete(UUID uuid) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + f.getAbsolutePath());
+
+            String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = '" + uuid.toString() + "'";
+
+            Statement statement = connection.createStatement();
+
+            statement.execute(sql);
+
+            return true;
+        } catch (SQLException | ClassNotFoundException e) {
+            return false;
+        }
+    }
+
     private final File file;
     private FileConfiguration config;
     private final SkyblockPlayer player;
@@ -25,8 +45,6 @@ public class SQLConfiguration {
         this.player = player;
 
         this.config = YamlConfiguration.loadConfiguration(file);
-
-        File f = new File(Skyblock.getPlugin().getDataFolder().getAbsolutePath() + File.separator + "database.db");
 
         try {
             Class.forName("org.sqlite.JDBC");
