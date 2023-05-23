@@ -32,6 +32,7 @@ import java.util.List;
 public abstract class SkyblockEntity {
 
     protected static final ItemHandler handler = Skyblock.getPlugin().getItemHandler();
+    protected static final SkyblockEntityHandler entityHandler = Skyblock.getPlugin().getEntityHandler();
     private Entity vanilla;
     private final EntityType entityType;
     @Setter
@@ -131,19 +132,25 @@ public abstract class SkyblockEntity {
                 ((Enderman) vanilla).setCarriedMaterial(getEntityData().hand.getData());
             }
 
-            plugin.getEntityHandler().registerEntity(this);
+            entityHandler.registerEntity(this);
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (vanilla.isDead()){
+                        entityHandler.unregisterEntity(vanilla.getEntityId());
+
                         onDeath();
                         cancel();
-                        plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                     } else {
+                        String name = ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + Math.max(0, getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤";
+
                         vanilla.setCustomNameVisible(true);
-                        vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
-                        ((LivingEntity) vanilla).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 5, true, false));
+                        vanilla.setCustomName(name);
+
+                        if (!(vanilla instanceof LivingEntity)) return;
+
+                        living.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 5, true, false));
 
                         if (getEntityData().health <= 0) {
                             if (getLastDamager() != null) {
@@ -152,8 +159,6 @@ public abstract class SkyblockEntity {
                                 Skill.reward(getEntityData().skill, getEntityData().xp, getLastDamager());
                             }
 
-                            vanilla.setCustomName(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + (0) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤");
-                            plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
                             living.setHealth(0);
                         }
 
@@ -162,21 +167,21 @@ public abstract class SkyblockEntity {
 
                             if (monster.getTarget() != null && monster.getTarget().getLocation().distance(monster.getLocation()) > 10) {
                                 monster.setTarget(null);
-                            }
 
-                            for (Entity entity : getVanilla().getNearbyEntities(5, 2, 5)){
-                                if (entity instanceof Player && !entity.hasMetadata("NPC")) {
-                                    monster.setTarget((LivingEntity) entity);
+                                for (Entity entity : getVanilla().getNearbyEntities(5, 2, 5)){
+                                    if (entity instanceof Player && !entity.hasMetadata("NPC")) {
+                                        monster.setTarget((LivingEntity) entity);
+                                    }
                                 }
-                            }
 
-                            if (((Monster) living).getTarget() != null) lifeSpan += 15 * 20;
+                                if (((Monster) living).getTarget() != null) lifeSpan += 15 * 20;
+                            }
                         }
 
                         lifeSpan--;
 
                         if (lifeSpan < 0) {
-                            plugin.getEntityHandler().unregisterEntity(vanilla.getEntityId());
+                            entityHandler.unregisterEntity(vanilla.getEntityId());
                             vanilla.remove();
                             onDespawn();
                             onDeath();
@@ -184,6 +189,7 @@ public abstract class SkyblockEntity {
                         }
 
                         tick();
+
                         tick++;
                     }
                 }

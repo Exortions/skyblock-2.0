@@ -4,6 +4,9 @@ import com.skyblock.skyblock.Skyblock;
 import com.skyblock.skyblock.features.entities.SkyblockEntity;
 import com.skyblock.skyblock.features.entities.SkyblockEntityType;
 import com.skyblock.skyblock.utilities.Util;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Getter
 public class EntitySpawner {
 
     private final List<SkyblockEntity> spawned;
@@ -28,6 +32,7 @@ public class EntitySpawner {
     private final List<Block> blocks;
     private final Material mustSpawnOn;
     private int locationRequests = 0;
+    @Setter
     private boolean hasPlayers = false;
 
     public EntitySpawner(ConfigurationSection section) {
@@ -51,28 +56,9 @@ public class EntitySpawner {
                 spawn();
             }
         }.runTaskTimer(Skyblock.getPlugin(), 5L, delay);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (Bukkit.getOnlinePlayers().size() == 0) return;
-
-                AtomicBoolean players = new AtomicBoolean(false);
-                Bukkit.getOnlinePlayers().forEach((p) -> { if (Util.inCuboid(p.getLocation(), pos1, pos2)) players.set(true); });
-                if (!players.get()) {
-                    hasPlayers = false;
-                    return;
-                }
-
-                if (!hasPlayers) {
-                    hasPlayers = true;
-                    spawn();
-                }
-            }
-        }.runTaskTimer(Skyblock.getPlugin(), 5L, 1);
     }
 
-    private void spawn() {
+    public void spawn() {
         spawned.removeIf((entity) -> entity.getVanilla().isDead() || entity.getLifeSpan() <= 0);
 
         if (spawned.size() >= limit) return;
