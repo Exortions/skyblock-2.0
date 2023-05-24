@@ -59,6 +59,7 @@ import org.bukkit.util.Vector;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.sql.*;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -1148,5 +1149,42 @@ public class SkyblockPlayer {
     }
 
     public boolean isTalkingToNPC() { return (boolean) extraData.get("isInteracting"); }
+
+    public void loadCache() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    Class.forName("org.sqlite.JDBC");
+                    Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLConfiguration.f.getAbsolutePath());
+
+                    DatabaseMetaData metaData = connection.getMetaData();
+                    ResultSet resultSet = metaData.getColumns(null, null, "players", null);
+
+                    List<String> columns = new ArrayList<>();
+
+                    while (resultSet.next()) {
+                        String columnName = resultSet.getString("COLUMN_NAME");
+                        columns.add(columnName);
+                    }
+
+                    int i = 0;
+                    for (String column : columns) {
+                        column = column.replaceAll("_", ".");
+                        if (dataCache.containsKey(column)) continue;
+
+                        String finalColumn = column;
+                        Util.delay(() -> {
+                            dataCache.put(finalColumn, config.get(finalColumn));
+                        }, i * 5);
+
+                        i++;
+                    }
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.runTaskLaterAsynchronously(Skyblock.getPlugin(), 20);
+    }
 
 }

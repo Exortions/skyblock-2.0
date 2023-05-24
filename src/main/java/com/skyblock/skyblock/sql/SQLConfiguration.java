@@ -16,7 +16,7 @@ import java.util.UUID;
 public class SQLConfiguration {
 
     private static final String TABLE_NAME = "players";
-    private static final File f = new File(Skyblock.getPlugin().getDataFolder().getAbsolutePath() + File.separator + "database.db");
+    public static final File f = new File(Skyblock.getPlugin().getDataFolder().getAbsolutePath() + File.separator + "database.db");
 
     public static boolean delete(UUID uuid) {
         try {

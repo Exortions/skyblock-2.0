@@ -124,6 +124,8 @@ public class PlayerListener implements Listener {
                 player.teleport(Util.getSpawnLocation(skyblockPlayer.getCurrentLocationName()));
             }, 1);
 
+            skyblockPlayer.loadCache();
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
