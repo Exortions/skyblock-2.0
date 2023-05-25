@@ -578,12 +578,6 @@ public class ItemBase {
     public static ItemStack reforge(ItemStack stack, Reforge reforge) {
         ItemBase base = new ItemBase(stack);
 
-        Rarity r = base.getRarityEnum();
-
-        for (SkyblockStat stat : base.getReforge().getReforgeData(r).getStats().keySet()) {
-            base.setStat(stat, base.getStat(stat) - base.getReforge().getReforgeData(r).getStats().get(stat));
-        }
-
         base.createStack();
 
         base.setReforge(reforge);
@@ -655,6 +649,49 @@ public class ItemBase {
         }
 
         this.createStack();
+    }
+
+    public int getIntelligence() {
+        return intelligence + getReforgeStat(SkyblockStat.MANA);
+    }
+
+    public int getAttackSpeed() {
+        return attackSpeed + getReforgeStat(SkyblockStat.ATTACK_SPEED);
+    }
+
+    public int getCritChance() {
+        return critChance + getReforgeStat(SkyblockStat.CRIT_CHANCE);
+    }
+
+    public int getCritDamage() {
+        return critDamage + getReforgeStat(SkyblockStat.CRIT_DAMAGE);
+    }
+
+    public int getStrength() {
+        return strength + getReforgeStat(SkyblockStat.STRENGTH);
+    }
+
+    public int getDefense() {
+        return defense + getReforgeStat(SkyblockStat.DEFENSE);
+    }
+
+    public int getHealth() {
+        return health + getReforgeStat(SkyblockStat.HEALTH);
+    }
+
+    public int getDamage() {
+        return damage + getReforgeStat(SkyblockStat.DAMAGE);
+    }
+
+    public int getSpeed() {
+        return speed + getReforgeStat(SkyblockStat.SPEED);
+    }
+
+    private int getReforgeStat(SkyblockStat stat) {
+        if (reforge == null) return 0;
+        if (reforge.getReforgeData(rarityEnum) == null) return 0;
+
+        return reforge.getReforgeData(rarityEnum).get(stat);
     }
 
 }
