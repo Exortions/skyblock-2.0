@@ -233,7 +233,7 @@ public class SQLConfiguration {
     }
 
     private String parsePaths(String path) {
-        return path.replaceAll("\\.", "_").replaceAll(" ", "_");
+        return path.replaceAll("\\.", "_").replaceAll(" ", "__");
     }
 
     private String getId() {

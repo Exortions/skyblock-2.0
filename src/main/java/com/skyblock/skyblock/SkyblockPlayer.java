@@ -1170,7 +1170,7 @@ public class SkyblockPlayer {
 
                     int i = 0;
                     for (String column : columns) {
-                        column = column.replaceAll("_", ".");
+                        column = column.replaceAll("__", " ").replaceAll("_", ".");
                         if (dataCache.containsKey(column)) continue;
 
                         String finalColumn = column;
