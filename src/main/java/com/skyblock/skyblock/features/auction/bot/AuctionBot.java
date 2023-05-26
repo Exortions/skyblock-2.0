@@ -150,7 +150,7 @@ public class AuctionBot {
                             long highest = (long) auction.get("highest_bid_amount");
                             boolean bin = (boolean) auction.get("bin");
 
-                            Auction auctionObject = Skyblock.getPlugin().getAuctionHouse().createFakeAuction(neu, Bukkit.getOfflinePlayer(seller), (highest == 0 ? start : highest), (endTime - startTime) / 50, bin, id);
+                            Auction auctionObject = Skyblock.getPlugin().getAuctionHouse().createFakeAuction(neu, Util.blankPlayer(seller), (highest == 0 ? start : highest), (endTime - startTime) / 50, bin, id);
 
                             if (auctionObject == null) continue;
 
@@ -176,7 +176,7 @@ public class AuctionBot {
                                 long amount = (long) bid.get("amount");
                                 long timeStamp = (long) bid.get("timestamp");
 
-                                auctionObject.getBidHistory().add(new AuctionBid(Bukkit.getOfflinePlayer(bidder), auctionObject, (int) amount, timeStamp));
+                                auctionObject.getBidHistory().add(new AuctionBid(Util.blankPlayer(bidder), auctionObject, (int) amount, timeStamp));
                                 i++;
                             }
                         }

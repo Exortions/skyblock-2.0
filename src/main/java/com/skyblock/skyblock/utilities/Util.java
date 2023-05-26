@@ -1143,4 +1143,75 @@ public class Util {
         return v.setX(x).setY(y);
     }
 
+    public OfflinePlayer blankPlayer(String name) {
+        return new OfflinePlayer() {
+            @Override
+            public boolean isOnline() {
+                return false;
+            }
+
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public UUID getUniqueId() {
+                return UUID.randomUUID();
+            }
+
+            @Override
+            public boolean isBanned() {
+                return false;
+            }
+
+            @Override
+            public void setBanned(boolean banned) { }
+
+            @Override
+            public boolean isWhitelisted() { return true; }
+
+            @Override
+            public void setWhitelisted(boolean value) { }
+
+            @Override
+            public Player getPlayer() {
+                return null;
+            }
+
+            @Override
+            public long getFirstPlayed() {
+                return 0;
+            }
+
+            @Override
+            public long getLastPlayed() {
+                return 0;
+            }
+
+            @Override
+            public boolean hasPlayedBefore() {
+                return true;
+            }
+
+            @Override
+            public Location getBedSpawnLocation() {
+                return null;
+            }
+
+            @Override
+            public Map<String, Object> serialize() {
+                return null;
+            }
+
+            @Override
+            public boolean isOp() {
+                return false;
+            }
+
+            @Override
+            public void setOp(boolean value) { }
+        };
+    }
+
 }

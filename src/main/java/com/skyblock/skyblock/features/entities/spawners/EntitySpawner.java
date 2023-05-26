@@ -70,6 +70,8 @@ public class EntitySpawner {
 
             Location random = random();
 
+            if (random == null) continue;
+
             SkyblockEntity entity = type.getNewInstance(subType);
 
             if (entity == null) continue;
@@ -83,7 +85,7 @@ public class EntitySpawner {
     public Location random() {
         if (locationRequests > 500) {
             locationRequests = 0;
-            return new Location(pos1.getWorld(), Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+            return null;
         }
 
         Block block = blocks.get(Util.random(0, blocks.size() - 1));
