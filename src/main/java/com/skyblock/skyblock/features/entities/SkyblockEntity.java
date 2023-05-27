@@ -44,6 +44,7 @@ public abstract class SkyblockEntity {
     @Setter
     private SkyblockPlayer lastDamager;
     private final List<Player> damaged;
+    private EntityNameTag nameTag;
 
     public static class Equipment {
         public ItemStack hand;
@@ -134,6 +135,8 @@ public abstract class SkyblockEntity {
 
             entityHandler.registerEntity(this);
 
+            nameTag = new EntityNameTag(this);
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -145,8 +148,7 @@ public abstract class SkyblockEntity {
                     } else {
                         String name = ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "Lv" + getEntityData().level + ChatColor.DARK_GRAY + "] " + ChatColor.RED + getEntityData().entityName + " " + ChatColor.GREEN + Math.max(0, getEntityData().health) + ChatColor.DARK_GRAY + "/" + ChatColor.GREEN + (getEntityData().maximumHealth) + ChatColor.RED + "❤";
 
-                        vanilla.setCustomNameVisible(true);
-                        vanilla.setCustomName(name);
+                        nameTag.tick(name);
 
                         if (!(vanilla instanceof LivingEntity)) return;
 
@@ -181,6 +183,7 @@ public abstract class SkyblockEntity {
                         lifeSpan--;
 
                         if (lifeSpan < 0) {
+                            nameTag.death();
                             entityHandler.unregisterEntity(vanilla.getEntityId());
                             vanilla.remove();
                             onDespawn();
@@ -214,6 +217,8 @@ public abstract class SkyblockEntity {
     protected void tick() {}
 
     protected void onDeath() {
+        nameTag.death();
+
         if (getLastDamager() != null) {
             boolean foundRareDrop = false;
 

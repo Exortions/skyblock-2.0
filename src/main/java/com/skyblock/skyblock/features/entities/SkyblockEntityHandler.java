@@ -26,6 +26,8 @@ public class SkyblockEntityHandler {
         return entities.get(entity.getEntityId());
     }
 
+    public SkyblockEntity getEntity(int id) { return entities.get(id); }
+
     public SkyblockMobDropHandler getMobDropHandler() {
         return mobDropHandler;
     }

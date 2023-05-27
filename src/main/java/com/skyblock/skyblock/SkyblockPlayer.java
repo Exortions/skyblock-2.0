@@ -70,7 +70,7 @@ import java.util.stream.Collectors;
 public class SkyblockPlayer {
 
     private HashMap<String, Object> dataCache;
-
+    private List<String> cacheChanged;
     private List<BiFunction<SkyblockPlayer, Entity, Integer>> predicateDamageModifiers;
     private List<MinionHandler.MinionSerializable> minions;
     private AuctionCreationGUI.AuctionProgress progress;
@@ -120,6 +120,7 @@ public class SkyblockPlayer {
 
     private SkyblockPlayer(UUID uuid) {
         this.dataCache = new HashMap<>();
+        this.cacheChanged = new ArrayList<>();
         this.predicateDamageModifiers = new ArrayList<>();
         this.activeEffects = new ArrayList<>();
         this.bukkitPlayer = Bukkit.getPlayer(uuid);
@@ -677,16 +678,17 @@ public class SkyblockPlayer {
 
     public void setValue(String path, Object item) {
         dataCache.put(path, item);
+        if (!cacheChanged.contains(path)) cacheChanged.add(path);
+
         forEachStat((s) -> stats.put(s, getDouble("stats." + s.name().toLowerCase())));
 
         if (path.equalsIgnoreCase("stats.purse")) Bukkit.getPluginManager().callEvent(new SkyblockPlayerCoinUpdateEvent(this));
     }
 
     public void saveToDisk() {
-        for (Map.Entry<String, Object> entry : dataCache.entrySet()) {
-            config.set(entry.getKey(), entry.getValue());
+        for (String path : cacheChanged) {
+            config.set(path, dataCache.get(path));
             config.updateYamlFile();
-            config = new SQLConfiguration(configFile, this);
         }
     }
 

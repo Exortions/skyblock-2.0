@@ -199,9 +199,24 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof ArmorStand || event.getEntity().hasMetadata("merchant")) return;
-        if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+        Entity entity = event.getEntity();
+        if (entity instanceof ArmorStand || entity.hasMetadata("merchant")) return;
+        if (entity instanceof Player && event.getDamager() instanceof Player) {
             event.setCancelled(true);
+            return;
+        }
+
+        // Nametag stuff
+        if (entity.getCustomName() != null && entity.getType().equals(EntityType.SLIME) && entity.getCustomName().startsWith("name_slime_")) {
+            int id = Integer.parseInt(entity.getCustomName().split("_")[2]);
+            SkyblockEntity sb = Skyblock.getPlugin().getEntityHandler().getEntity(id);
+
+            if (sb == null) return;
+
+            event.setCancelled(true);
+
+            ((LivingEntity) sb.getVanilla()).damage(0, event.getDamager());
+
             return;
         }
 
@@ -303,9 +318,9 @@ public class PlayerListener implements Listener {
             }
         } else if (event.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) event.getDamager();
-            Entity entity = (Entity) arrow.getShooter();
+            Entity shooter = (Entity) arrow.getShooter();
 
-            Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(entity, event.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, event.getDamage()));
+            Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(shooter, event.getEntity(), EntityDamageEvent.DamageCause.ENTITY_ATTACK, event.getDamage()));
         }
     }
 

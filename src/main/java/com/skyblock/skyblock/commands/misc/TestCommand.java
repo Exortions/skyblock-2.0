@@ -9,7 +9,10 @@ import com.skyblock.skyblock.utilities.command.annotations.Description;
 import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSlime;
+import org.bukkit.entity.*;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 @RequiresPlayer
 @Usage(usage = "/sb test")
@@ -60,9 +63,31 @@ public class TestCommand implements Command {
 
         SkyblockPlayer skyblockPlayer = SkyblockPlayer.getPlayer(player);
 
-        boolean cached = skyblockPlayer.getDataCache().containsKey(args[0]);
-        skyblockPlayer.getValue(args[0]);
+        skyblockPlayer.getConfig().set(args[0], args[1]);
 
-        player.sendMessage(ChatColor.AQUA + "[DEBUG] " + ChatColor.YELLOW + "Took " + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.YELLOW + " to retrieve " + (cached ? "cached" : "uncached") + " data: " + ChatColor.GREEN + args[0] + ChatColor.YELLOW + "!");
+        player.sendMessage(ChatColor.AQUA + "[DEBUG] " + ChatColor.YELLOW + "Took " + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.YELLOW + " to set data: " + ChatColor.GREEN + args[0] + ChatColor.YELLOW + "!");
+
+//        Entity entity = player.getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(args[0].toUpperCase()));
+//
+//        Slime slime = (Slime) entity.getWorld().spawnEntity(entity.getLocation(), EntityType.SLIME);
+////        slime.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, true, true));
+//        slime.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 10, true, true));
+//        slime.setSize(Integer.parseInt(args[1]));
+//
+//        ((CraftSlime) slime).getHandle().ai = false;
+//
+//        slime.setCustomName("name_slime_" + entity.getEntityId());
+//        slime.setCustomNameVisible(false);
+//
+//        ArmorStand stand = (ArmorStand) entity.getWorld().spawnEntity(entity.getLocation(), EntityType.ARMOR_STAND);
+//        stand.setMarker(true);
+//        stand.setCustomNameVisible(true);
+//        stand.setGravity(false);
+////        stand.setVisible(false);
+//
+//        slime.setPassenger(stand);
+//        entity.setPassenger(slime);
+//
+//        player.sendMessage(String.format(ChatColor.AQUA + "[DEBUG] " + ChatColor.YELLOW + "Spawned a %s with size %s.", args[0], args[1]));
     }
 }

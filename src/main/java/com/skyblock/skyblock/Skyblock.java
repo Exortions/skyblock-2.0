@@ -263,10 +263,10 @@ public final class Skyblock extends JavaPlugin {
             skyblockPlayer.onQuit();
         }
 
-        try {
-            DragonAltar.getMainAltar().onDisable();
-            DragonSequence.endingSequence();
-        } catch (Exception ignored) { }
+//        try {
+//            DragonAltar.getMainAltar().onDisable();
+//            DragonSequence.endingSequence();
+//        } catch (Exception ignored) { }
 
         sendMessage("Successfully disabled Skyblock [" + Util.getTimeDifferenceAndColor(start, System.currentTimeMillis()) + ChatColor.WHITE + "]");
     }
