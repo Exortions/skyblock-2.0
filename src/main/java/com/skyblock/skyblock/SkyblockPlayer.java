@@ -265,7 +265,11 @@ public class SkyblockPlayer {
             } else if (getStatNoMult(SkyblockStat.MANA) < getStatNoMult(SkyblockStat.MAX_MANA)) {
                 setStat(SkyblockStat.MANA, getStatNoMult(SkyblockStat.MAX_MANA));
             }
+
+            board.updateScoreboard();
         }
+
+        board.updateTitle();
 
         if (tick % EVERY_THREE_SECONDS == 0) {
             if (getStat(SkyblockStat.HEALTH) < getStat(SkyblockStat.MAX_HEALTH) - (int) (1.5 + getStat(SkyblockStat.MAX_HEALTH) / 100)) {
@@ -275,8 +279,6 @@ public class SkyblockPlayer {
                 getBukkitPlayer().setHealth(getBukkitPlayer().getMaxHealth());
             }
         }
-
-        board.updateScoreboard();
 
         if (!hand.equals(bukkitPlayer.getItemInHand())) {
             ItemStack itemStack = bukkitPlayer.getItemInHand();
