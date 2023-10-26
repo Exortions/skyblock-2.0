@@ -10,9 +10,6 @@ import com.skyblock.skyblock.utilities.command.annotations.RequiresPlayer;
 import com.skyblock.skyblock.utilities.command.annotations.Usage;
 import com.skyblock.skyblock.utilities.item.ItemBuilder;
 import org.bukkit.*;
-import org.bukkit.Note.Tone;
-import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,11 +27,11 @@ import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 @RequiresPlayer
@@ -45,7 +42,7 @@ public class HarpCommand implements Command, Listener {
         EASY,
         HARD,
         EXPERT,
-        VIRTUOSO;
+        VIRTUOSO
     }
 
     protected String formatScore(int score) {
@@ -299,9 +296,9 @@ public class HarpCommand implements Command, Listener {
 
                     ItemMeta meta = icon.getItemMeta();
                     if (!hasNote)
-                        meta.setDisplayName((ChatColor) getNoteColor(note)[1] + "|" + ChatColor.GRAY + " Click!");
+                        meta.setDisplayName(getNoteColor(note)[1] + "|" + ChatColor.GRAY + " Click!");
                     else
-                        meta.setDisplayName((ChatColor) getNoteColor(note)[1] + "| Click!");
+                        meta.setDisplayName(getNoteColor(note)[1] + "| Click!");
 
                     icon.setItemMeta(meta);
 
@@ -325,27 +322,32 @@ public class HarpCommand implements Command, Listener {
             event.setCancelled(true);
             ItemStack i = event.getCurrentItem();
             String n = i.getItemMeta().getDisplayName();
+            if (!event.getClickedInventory().getTitle().startsWith("Harp -")) return;
             if (i != null && i.getDurability() == 0) {
-                Note note = null;
-                if (n.contains(ChatColor.LIGHT_PURPLE + "")) note = Note.natural(0, Tone.C);
-                else if (n.contains(ChatColor.YELLOW + "")) note = Note.natural(0, Tone.D);
-                else if (n.contains(ChatColor.GREEN + "")) note = Note.natural(0, Tone.E);
-                else if (n.contains(ChatColor.DARK_GREEN + "")) note = Note.natural(0, Tone.F);
-                else if (n.contains(ChatColor.DARK_PURPLE + "")) note = Note.natural(1, Tone.G);
-                else if (n.contains(ChatColor.BLUE + "")) note = Note.natural(1, Tone.A);
-                else if (n.contains(ChatColor.AQUA + "")) note = Note.natural(1, Tone.B);
-                else return;
+                float pitch;
+                if (n.contains(ChatColor.LIGHT_PURPLE + "")) pitch = 0.6984127f;
+                else if (n.contains(ChatColor.YELLOW + "")) pitch = 0.7936508f;
+                else if (n.contains(ChatColor.GREEN + "")) pitch = 0.8888889f;
+                else if (n.contains(ChatColor.DARK_GREEN + "")) pitch = 0.93650794f;
+                else if (n.contains(ChatColor.DARK_PURPLE + "")) pitch = 1.0476191f;
+                else if (n.contains(ChatColor.BLUE + "")) pitch = 1.0476191f;
+                else if (n.contains(ChatColor.AQUA + "")) pitch = 1.1746032f;
+                else {
+                    player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_BASS_DRUM, 1F, 6F + (float) Math.random() * 1.5F);
+                    return;
+                }
 
                 ItemMeta meta = i.getItemMeta();
                 meta.setDisplayName(ChatColor.GRAY + "| Click!");
                 i.setItemMeta(meta);
                 
                 player.setExtraData("harpClicks", (int) player.getExtraData("harpClicks") + 1);
-                player.getBukkitPlayer().playNote(player.getBukkitPlayer().getLocation(), Instrument.PIANO, note);
+                player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_PLING, 1F, pitch);
             }
             else {
                 int harpClicks = (int) player.getExtraData("harpClicks");
                 if (harpClicks > 0) player.setExtraData("harpClicks", harpClicks - 1);
+                player.getBukkitPlayer().playSound(player.getBukkitPlayer().getLocation(), Sound.NOTE_BASS_DRUM, 1F, 6F + (float) Math.random() * 1.5F);
             }
         }
         else if (event.getInventory().getTitle().equals("Melody")) {
