@@ -1,3 +1,5 @@
+WE ARE NOT PROVIDING COMPILED JARS - Compile it yourself using the instructions. If the build fails, make an issue with screenshots. Any dry issues like "my build failed" will receive no assistance.
+
 # Credit
 Made by Exortions, OptimusChen, and UltraBlackLinux
 
